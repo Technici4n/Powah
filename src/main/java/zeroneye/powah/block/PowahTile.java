@@ -19,8 +19,8 @@ public abstract class PowahTile extends TileBase.Tickable {
         super(type);
         this.internal = new EnergyStorage() {
             @Override
-            public int getCapacity() {
-                return PowahTile.this.getCapacity();
+            public int getMaxEnergyStored() {
+                return PowahTile.this.getMaxEnergyStored();
             }
 
             @Override
@@ -48,12 +48,12 @@ public abstract class PowahTile extends TileBase.Tickable {
     @Override
     public void readSync(CompoundNBT compound) {
         super.readSync(compound);
-        this.internal.receiveEnergy(compound.getInt("InternalPowah"), false);
+        this.internal.setEnergy(compound.getInt(EnergyStorage.TAG_ENERGEY_STORED));
     }
 
     @Override
     public CompoundNBT writeSync(CompoundNBT compound) {
-        compound.putInt("InternalPowah", this.internal.getEnergyStored());
+        compound.putInt(EnergyStorage.TAG_ENERGEY_STORED, this.internal.getEnergyStored());
         return super.writeSync(compound);
     }
 
@@ -61,7 +61,7 @@ public abstract class PowahTile extends TileBase.Tickable {
         return internal;
     }
 
-    public int getCapacity() {
+    public int getMaxEnergyStored() {
         Block block = getBlockState().getBlock();
         return block instanceof PowahBlock ? ((PowahBlock) block).getCapacity() : 0;
     }
@@ -72,8 +72,7 @@ public abstract class PowahTile extends TileBase.Tickable {
     }
 
     public boolean canReceive() {
-        Block block = getBlockState().getBlock();
-        return !(block instanceof GeneratorBlock);
+        return !(getBlockState().getBlock() instanceof GeneratorBlock);
     }
 
     public boolean canExtract() {
