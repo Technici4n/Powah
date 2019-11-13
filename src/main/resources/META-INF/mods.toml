@@ -1,0 +1,27 @@
+modLoader="javafml" 
+loaderVersion="[28,)"
+issueTrackerURL="https://github.com/zeroneye/stored/issues"
+
+[[mods]]
+modId="stored"
+version="${file.jarVersion}"
+displayName="Powah"
+displayURL="https://www.curseforge.com/minecraft/mc-mods/stored"
+authors="zeroneye"
+description='''
+Powah!!.
+'''
+
+#[[dependencies.stored]]
+#    modId="lollipop"
+#    mandatory=true
+#    versionRange="[0.0.4,)"
+#    ordering="NONE"
+#    side="BOTH"
+
+[[dependencies.stored]]
+    modId="forge"
+    mandatory=true
+    versionRange="[28.1.80,)"
+    ordering="NONE"
+    side="BOTH"

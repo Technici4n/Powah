@@ -1,0 +1,49 @@
+buildscript {
+    repositories {
+        maven { url = 'https://files.minecraftforge.net/maven' }
+        jcenter()
+        mavenCentral()
+    }
+    dependencies {
+        classpath group: 'net.minecraftforge.gradle', name: 'ForgeGradle', version: '3.+', changing: true
+    }
+}
+
+apply plugin: 'net.minecraftforge.gradle'
+apply plugin: 'idea'
+
+final Project lib = project(':Lollipop')
+
+version = lib.minecraft_version + '-' + mod_version
+group = lib.mod_group
+archivesBaseName = mod_name
+
+sourceCompatibility = targetCompatibility = compileJava.sourceCompatibility = compileJava.targetCompatibility = '1.8'
+
+minecraft {
+    mappings channel: lib.mappings_channel, version: lib.mappings_version
+    accessTransformer = file('../Lollipop/src/main/resources/META-INF/at.cfg')
+}
+
+repositories {
+    maven { url "http://dvs1.progwml6.com/files/maven" }
+}
+
+dependencies {
+    minecraft 'net.minecraftforge:forge:' + lib.minecraft_version + '-' + lib.forge_version
+    compileOnly fg.deobf("mezz.jei:jei-${lib.minecraft_version}:${lib.jei_version}:api")
+    runtimeOnly fg.deobf("mezz.jei:jei-${lib.minecraft_version}:${lib.jei_version}")
+    compile lib
+}
+
+jar {
+    manifest {
+        attributes(["Specification-Title"     : mod_name,
+                    "Specification-Vendor"    : lib.mod_group,
+                    "Specification-Version"   : mod_version,
+                    "Implementation-Title"    : project.name,
+                    "Implementation-Version"  : mod_version,
+                    "Implementation-Vendor"   : lib.mod_group,
+                    "Implementation-Timestamp": new Date().format("yyyy-MM-dd'T'HH:mm:ssZ")],)
+    }
+}
