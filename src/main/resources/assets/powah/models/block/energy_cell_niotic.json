@@ -1,0 +1,8 @@
+{
+  "parent": "powah:block/energy_cell",
+  "textures": {
+	"frame": "powah:block/energy_cell_niotic_frame",
+	"in_frame": "powah:block/energy_cell_in_frame",
+	"core": "powah:block/energy_cell_niotic_core"
+  }
+}
