@@ -21,7 +21,7 @@ other than an Application or a Combined Work as defined below.
 
   An "Application" is any work that makes use of an interface provided
 by the Library, but which is not otherwise based on the Library.
-Defining a subclass of a class defined by the Library is deemed a mode
+Defining a subclass of a class defined by the Library is deemed a powerMode
 of using an interface provided by the Library.
 
   A "Combined Work" is a work produced by combining or linking an

@@ -7,6 +7,8 @@ import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import zeroneye.lib.block.IBlockBase;
+import zeroneye.powah.block.storage.EnergyCellBlock;
+import zeroneye.powah.block.storage.EnergyCells;
 import zeroneye.powah.item.ItemGroups;
 
 import java.util.ArrayList;
@@ -16,10 +18,15 @@ import java.util.List;
 public class IBlocks {
     public static final List<BlockItem> BLOCK_ITEMS = new ArrayList<>();
     public static final List<Block> BLOCKS = new ArrayList<>();
-    //public static final Block TIME_PLUS;
+    public static final EnergyCellBlock[] ENERGY_CELLS;
 
     static {
-        // TIME_PLUS = register("time_plus", new TimeBlock(Block.Properties.create(Material.CARPET).lightValue(1).doesNotBlockMovement(), 0xa1ff00));
+        EnergyCells[] values = EnergyCells.values();
+        ENERGY_CELLS = new EnergyCellBlock[values.length];
+        for (int i = 0; i < values.length; i++) {
+            EnergyCells cell = values[i];
+            ENERGY_CELLS[i] = register("energy_cell_" + cell.name().toLowerCase(), new EnergyCellBlock(Block.Properties.create(cell.material).hardnessAndResistance(2.0F, cell.resistance), cell.capacity, cell.transfer).setCreative(cell.isCreative));
+        }
     }
 
     static <T extends Block & IBlockBase> T register(String name, T block) {

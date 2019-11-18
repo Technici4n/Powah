@@ -1,25 +1,25 @@
 modLoader="javafml" 
 loaderVersion="[28,)"
-issueTrackerURL="https://github.com/zeroneye/stored/issues"
+issueTrackerURL="https://github.com/zeroneye/powah/issues"
 
 [[mods]]
-modId="stored"
+modId="powah"
 version="${file.jarVersion}"
-displayName="Powah"
-displayURL="https://www.curseforge.com/minecraft/mc-mods/stored"
+textFormatting="Powah"
+displayURL="https://www.curseforge.com/minecraft/mc-mods/powah"
 authors="zeroneye"
 description='''
 Powah!!.
 '''
 
-#[[dependencies.stored]]
+#[[dependencies.powah]]
 #    modId="lollipop"
 #    mandatory=true
 #    versionRange="[0.0.4,)"
 #    ordering="NONE"
 #    side="BOTH"
 
-[[dependencies.stored]]
+[[dependencies.powah]]
     modId="forge"
     mandatory=true
     versionRange="[28.1.80,)"
