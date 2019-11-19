@@ -1,4 +1,6 @@
-package zeroneye.powah.block;
+package zeroneye.powah.block.generator;
+
+import zeroneye.powah.block.PowahBlock;
 
 public class GeneratorBlock extends PowahBlock {
     private final int perTick;

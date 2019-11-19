@@ -5,6 +5,7 @@ import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import zeroneye.lib.item.IItemBase;
+import zeroneye.lib.item.ItemBase;
 import zeroneye.powah.block.IBlocks;
 
 import java.util.ArrayList;
@@ -13,10 +14,10 @@ import java.util.List;
 @Mod.EventBusSubscriber(bus = Mod.EventBusSubscriber.Bus.MOD)
 public class IItems {
     public static final List<Item> ITEMS = new ArrayList<>(IBlocks.BLOCK_ITEMS);
-    //  public static final Item VIAL;
+    public static final Item CAPACITOR_BASIC;
 
     static {
-        //  VIAL = register("vial", new VialItem(new Item.Properties().group(ItemGroups.MAIN)));
+        CAPACITOR_BASIC = register("capacitor_basic", new ItemBase(new Item.Properties().group(ItemGroups.MAIN)));
     }
 
     static <T extends Item & IItemBase> T register(String name, T item) {

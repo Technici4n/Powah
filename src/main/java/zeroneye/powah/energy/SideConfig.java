@@ -17,6 +17,7 @@ public class SideConfig {
         for (Direction side : Direction.values()) {
             setPowerMode(side, PowerMode.NON);
         }
+        nextPowerMode();
     }
 
     public CompoundNBT write(CompoundNBT compound) {

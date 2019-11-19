@@ -22,7 +22,7 @@ public abstract class PowahTile extends TileBase.Tickable implements IInvBase {
     protected SideConfig sideConfig;
     protected boolean isCreative;
 
-    public PowahTile(TileEntityType<?> type, int capacity, int maxReceive, int maxExtract, boolean canReceive, boolean canExtract, boolean isCreative) {
+    public PowahTile(TileEntityType<?> type, int capacity, int maxReceive, int maxExtract, boolean isCreative) {
         super(type);
         this.internal = new PowahStorage(capacity, maxReceive, maxExtract);
         this.sideConfig = new SideConfig(this);
@@ -33,7 +33,7 @@ public abstract class PowahTile extends TileBase.Tickable implements IInvBase {
     }
 
     public PowahTile(TileEntityType<?> type) {
-        this(type, 0, 0, 0, false, false, false);
+        this(type, 0, 0, 0, false);
     }
 
     @Override
@@ -71,6 +71,7 @@ public abstract class PowahTile extends TileBase.Tickable implements IInvBase {
 
         int extracted = 0;
         for (Direction direction : Direction.values()) {
+            if (!canExtract(direction)) break;
             int amount = Math.min(this.internal.getMaxReceive(), this.internal.getEnergyStored());
             int received = Energy.receive(this.world, this.pos.offset(direction), direction.getOpposite(), amount, false);
             extracted += extractEnergy(received, false, direction);
@@ -78,7 +79,7 @@ public abstract class PowahTile extends TileBase.Tickable implements IInvBase {
 
         for (int i = 0; i < getChargingSlots(); i++) {
             final ItemStack stack = getStackInSlot(i);
-            if (!stack.isEmpty()) {
+            if (!stack.isEmpty() && canExtract(null)) {
                 int amount = Math.min(this.internal.getMaxReceive(), this.internal.getEnergyStored());
                 int received = Energy.receive(stack, amount, false);
                 extracted += extractEnergy(received, false, null);
