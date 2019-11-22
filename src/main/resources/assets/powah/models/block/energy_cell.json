@@ -1,6 +1,6 @@
 {
-  "parent": "block/block",
   "credit": "Made with Blockbench",
+  "parent": "block/block",
   "textures": {
 	"0": "#frame",
 	"1": "#in_frame",

@@ -11,9 +11,11 @@ import zeroneye.lib.Lollipop;
 import zeroneye.lib.block.TileBase;
 import zeroneye.lib.client.gui.ContainerScreenBase;
 import zeroneye.lib.client.gui.botton.IconButton;
+import zeroneye.lib.client.util.Draw2D;
 import zeroneye.lib.inventory.slot.SlotBase;
 import zeroneye.powah.Powah;
 import zeroneye.powah.block.PowahTile;
+import zeroneye.powah.block.generator.GeneratorTile;
 import zeroneye.powah.energy.PowahStorage;
 import zeroneye.powah.energy.PowerMode;
 import zeroneye.powah.energy.RedstoneMode;
@@ -43,6 +45,11 @@ public abstract class PowahScreen<T extends PowahContainer> extends ContainerScr
         super(container, playerInventory, name);
         this.tile = (PowahTile) container.getInv();
         this.sideConfig = this.tile.getSideConfig();
+        this.ySize = 170;
+        for (int i = 0; i < 7; i++) {
+            this.sideButtons[i] = IconButton.EMPTY;
+            this.powerModes[i] = PowerMode.NON;
+        }
     }
 
     @Override
@@ -53,7 +60,7 @@ public abstract class PowahScreen<T extends PowahContainer> extends ContainerScr
         refresh();
     }
 
-    private void addMainButtons(int x, int y, int space) {
+    protected void addMainButtons(int x, int y, int space) {
         this.sideConfigButton = new IconButton(x, y, 15, 15, 0, 0, 15, GUI_WIDGETS_TEXTURE, (button) -> {
             onSideConfig();
             refresh();
@@ -70,7 +77,7 @@ public abstract class PowahScreen<T extends PowahContainer> extends ContainerScr
         addButton(this.switchRMButton);
     }
 
-    private void addSideConfig(int x, int y, int space) {
+    protected void addSideConfig(int x, int y, int space) {
         for (int i = 0; i < this.sideButtons.length; i++) {
             int x1 = x + (i == 4 ? -space : i == 3 ? space : i == 5 ? space : i == 6 ? space : 0);
             int y1 = y + (i == 0 ? space : i == 3 ? space : i == 1 ? -space : i == 6 ? -space : 0);
@@ -173,10 +180,9 @@ public abstract class PowahScreen<T extends PowahContainer> extends ContainerScr
             int cap = storage.getMaxEnergyStored();
             int stored = storage.getEnergyStored();
             if (cap > 0 && stored > 0) {
-                int i = (int) (((float) stored / cap) * 64);
                 if (getBackGroundImage() != null) {
                     bindTexture(getBackGroundImage());
-                    blit(this.x + 4, this.y + 4 + 64 - i, 0, 170 + 64 - i, 14, i);
+                    Draw2D.gaugeV(this.x + 4, this.y + 4, 14, 64, 0, 170, cap, stored);
                 }
             }
         }
@@ -195,7 +201,12 @@ public abstract class PowahScreen<T extends PowahContainer> extends ContainerScr
             List<String> list = new ArrayList<>();
             list.add(TextFormatting.GRAY + getTitle().getString());
             list.add(" " + TextFormatting.GRAY + I18n.format("info.powah.stored", "" + TextFormatting.DARK_GRAY + storage.getEnergyStored(), storage.getMaxEnergyStored()));
-            list.add(" " + TextFormatting.GRAY + I18n.format("info.powah.max.io", "" + TextFormatting.DARK_GRAY + storage.getMaxReceive()));
+            if (this.tile instanceof GeneratorTile) {
+                list.add(" " + TextFormatting.GRAY + I18n.format("info.powah.generates", "" + TextFormatting.DARK_GRAY + ((GeneratorTile) this.tile).perTick()));
+            }
+            int maxOut = storage.getMaxReceive();
+            int maxIn = storage.getMaxExtract();
+            list.add(" " + TextFormatting.GRAY + I18n.format("info.powah.max.io", "" + TextFormatting.DARK_GRAY + (maxOut > 0 ? maxOut : maxIn)));
             renderTooltip(list, mouseX, mouseY);
         }
     }

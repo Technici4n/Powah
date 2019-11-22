@@ -79,4 +79,9 @@ public class PowahStorage extends EnergyStorage {
     public boolean canReceive() {
         return this.maxReceive > 0;
     }
+
+    public boolean isFull() {
+        return this.energy >= this.capacity;
+    }
+
 }

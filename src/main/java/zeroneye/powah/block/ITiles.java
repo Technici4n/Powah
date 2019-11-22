@@ -6,6 +6,7 @@ import net.minecraft.tileentity.TileEntityType;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
+import zeroneye.powah.block.generator.magmatic.MagmaticGenTile;
 import zeroneye.powah.block.storage.EnergyCellTile;
 
 import java.util.ArrayList;
@@ -16,6 +17,7 @@ import java.util.function.Supplier;
 public class ITiles {
     public static final List<TileEntityType<?>> TILE_ENTITY_TYPES = new ArrayList<>();
     public static final TileEntityType<?> ENERGY_CELL = register("energy_cell", EnergyCellTile::new, IBlocks.BLOCKS.stream().filter(block -> block.createTileEntity(block.getDefaultState(), null) instanceof EnergyCellTile).toArray(Block[]::new));
+    public static final TileEntityType<?> MAGMATIC_GENERATOR = register("magmatic_generator", MagmaticGenTile::new, IBlocks.BLOCKS.stream().filter(block -> block.createTileEntity(block.getDefaultState(), null) instanceof MagmaticGenTile).toArray(Block[]::new));
 
     @SuppressWarnings({"unchecked", "ConstantConditions"})
     static <T extends TileEntity> TileEntityType<T> register(String name, Supplier<? extends T> factoryIn, Block... b) {

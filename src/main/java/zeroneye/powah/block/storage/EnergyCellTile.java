@@ -4,12 +4,12 @@ import zeroneye.powah.block.ITiles;
 import zeroneye.powah.block.PowahTile;
 
 public class EnergyCellTile extends PowahTile {
-    public EnergyCellTile(int capacity, int transfer, boolean canReceive, boolean canExtract, boolean isCreative) {
+    public EnergyCellTile(int capacity, int transfer, boolean isCreative) {
         super(ITiles.ENERGY_CELL, capacity, transfer, transfer, isCreative);
     }
 
     public EnergyCellTile() {
-        super(ITiles.ENERGY_CELL);
+        this(0, 0, false);
     }
 
     @Override

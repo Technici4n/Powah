@@ -24,13 +24,6 @@ public abstract class PowahBlock extends BlockBase {
         return new PowahBlockItem(this, properties, group);
     }
 
-//    @Override
-//    protected boolean shouldStorNBTFromStack(CompoundNBT compound) {
-//        PowahStorage storage = new PowahStorage(0);
-//        storage.read(compound.getCompound(NBT.TAG_STACK));
-//        return !(!storage.canReceive() && !storage.canExtract());
-//    }
-
     public int getCapacity() {
         return capacity;
     }

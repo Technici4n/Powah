@@ -24,7 +24,7 @@ public abstract class PowahTile extends TileBase.Tickable implements IInvBase {
 
     public PowahTile(TileEntityType<?> type, int capacity, int maxReceive, int maxExtract, boolean isCreative) {
         super(type);
-        this.internal = new PowahStorage(capacity, maxReceive, maxExtract);
+        this.internal = new PowahStorage(capacity, isCreative ? 0 : maxReceive, maxExtract);
         this.sideConfig = new SideConfig(this);
         this.isCreative = isCreative;
         if (isCreative) {
@@ -66,13 +66,13 @@ public abstract class PowahTile extends TileBase.Tickable implements IInvBase {
     }
 
     @Override
-    protected void postTicks() {
-        if (this.world == null || !checkRedstone()) return;
+    protected boolean postTicks() {
+        if (this.world == null) return false;
 
         int extracted = 0;
         for (Direction direction : Direction.values()) {
             if (!canExtract(direction)) break;
-            int amount = Math.min(this.internal.getMaxReceive(), this.internal.getEnergyStored());
+            int amount = Math.min(this.internal.getMaxExtract(), this.internal.getEnergyStored());
             int received = Energy.receive(this.world, this.pos.offset(direction), direction.getOpposite(), amount, false);
             extracted += extractEnergy(received, false, direction);
         }
@@ -80,20 +80,17 @@ public abstract class PowahTile extends TileBase.Tickable implements IInvBase {
         for (int i = 0; i < getChargingSlots(); i++) {
             final ItemStack stack = getStackInSlot(i);
             if (!stack.isEmpty() && canExtract(null)) {
-                int amount = Math.min(this.internal.getMaxReceive(), this.internal.getEnergyStored());
+                int amount = Math.min(this.internal.getMaxExtract(), this.internal.getEnergyStored());
                 int received = Energy.receive(stack, amount, false);
                 extracted += extractEnergy(received, false, null);
             }
         }
-
-        if (extracted > 0) {
-            sync(true);
-        }
+        return extracted > 0;
     }
 
     @Override
     public int getSyncTicks() {
-        return isContainerOpen() ? 10 : 40;
+        return isContainerOpen() ? 5 : 20;
     }
 
     @Override
@@ -114,6 +111,9 @@ public abstract class PowahTile extends TileBase.Tickable implements IInvBase {
         int energyReceived = Math.min(this.internal.getMaxEnergyStored() - this.internal.getEnergyStored(), Math.min(this.internal.getMaxReceive(), maxReceive));
         if (!simulate) {
             this.internal.setEnergy(this.internal.getEnergyStored() + energyReceived);
+            if (energyReceived > 0) {
+                setReadyToSync(true);
+            }
         }
         return energyReceived;
     }
@@ -123,6 +123,9 @@ public abstract class PowahTile extends TileBase.Tickable implements IInvBase {
         int energyExtracted = Math.min(this.internal.getEnergyStored(), Math.min(this.internal.getMaxExtract(), maxExtract));
         if (!simulate && !this.isCreative) {
             this.internal.setEnergy(this.internal.getEnergyStored() - energyExtracted);
+            if (energyExtracted > 0) {
+                setReadyToSync(true);
+            }
         }
         return energyExtracted;
     }

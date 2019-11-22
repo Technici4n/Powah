@@ -11,12 +11,6 @@ public class EnergyCellScreen extends PowahScreen<EnergyCellContainer> {
 
     public EnergyCellScreen(EnergyCellContainer container, PlayerInventory playerInventory, ITextComponent name) {
         super(container, playerInventory, name);
-        this.ySize = 170;
-    }
-
-    @Override
-    protected void drawGuiContainerForegroundLayer(int mouseX, int mouseY) {
-        super.drawGuiContainerForegroundLayer(mouseX, mouseY);
     }
 
     @Override

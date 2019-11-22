@@ -20,7 +20,7 @@ public class EnergyCellBlock extends PowahBlock {
     @Nullable
     @Override
     public TileEntity createTileEntity(BlockState state, IBlockReader world) {
-        return new EnergyCellTile(getCapacity(), getTransfer(), true, true, isCreative());
+        return new EnergyCellTile(getCapacity(), getTransfer(), isCreative());
     }
 
     @Nullable

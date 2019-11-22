@@ -21,6 +21,12 @@ public class IContainers {
     public static final ContainerType<EnergyCellContainer> ENERGY_CELL_SPIRITED = register("energy_cell_spirited", EnergyCellContainer::createSpirited);
     public static final ContainerType<EnergyCellContainer> ENERGY_CELL_CREATIVE = register("energy_cell_creative", EnergyCellContainer::createCreative);
 
+    public static final ContainerType<MagmaticGenContainer> MAGMATIC_GENERATOR_BASIC = register("magmatic_generator_basic", MagmaticGenContainer::createBasic);
+    public static final ContainerType<MagmaticGenContainer> MAGMATIC_GENERATOR_HARDENED = register("magmatic_generator_hardened", MagmaticGenContainer::createHardened);
+    public static final ContainerType<MagmaticGenContainer> MAGMATIC_GENERATOR_BLAZING = register("magmatic_generator_blazing", MagmaticGenContainer::createBlazing);
+    public static final ContainerType<MagmaticGenContainer> MAGMATIC_GENERATOR_NIOTIC = register("magmatic_generator_niotic", MagmaticGenContainer::createNiotic);
+    public static final ContainerType<MagmaticGenContainer> MAGMATIC_GENERATOR_SPIRITED = register("magmatic_generator_spirited", MagmaticGenContainer::createSpirited);
+
     private static <T extends Container> ContainerType<T> register(String name, IContainerFactory<T> factory) {
         ContainerType<T> containerType = IForgeContainerType.create(factory);
         containerType.setRegistryName(name);
