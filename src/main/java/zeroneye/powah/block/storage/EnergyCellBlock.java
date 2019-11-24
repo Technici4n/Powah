@@ -14,13 +14,13 @@ import javax.annotation.Nullable;
 
 public class EnergyCellBlock extends PowahBlock {
     public EnergyCellBlock(Properties properties, int capacity, int transfer) {
-        super(properties, capacity, transfer);
+        super(properties, capacity, transfer, transfer);
     }
 
     @Nullable
     @Override
     public TileEntity createTileEntity(BlockState state, IBlockReader world) {
-        return new EnergyCellTile(getCapacity(), getTransfer(), isCreative());
+        return new EnergyCellTile(getCapacity(), getMaxExtract(), isCreative());
     }
 
     @Nullable

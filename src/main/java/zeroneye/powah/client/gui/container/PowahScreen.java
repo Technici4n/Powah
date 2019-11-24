@@ -39,7 +39,7 @@ public abstract class PowahScreen<T extends PowahContainer> extends ContainerScr
     protected RedstoneMode redstoneMode = RedstoneMode.IGNORE;
     protected SideConfig sideConfig;
 
-    private final PowahTile tile;
+    protected final PowahTile tile;
 
     public PowahScreen(T container, PlayerInventory playerInventory, ITextComponent name) {
         super(container, playerInventory, name);
@@ -206,7 +206,7 @@ public abstract class PowahScreen<T extends PowahContainer> extends ContainerScr
             }
             int maxOut = storage.getMaxReceive();
             int maxIn = storage.getMaxExtract();
-            list.add(" " + TextFormatting.GRAY + I18n.format("info.powah.max.io", "" + TextFormatting.DARK_GRAY + (maxOut > 0 ? maxOut : maxIn)));
+            list.add(" " + TextFormatting.GRAY + I18n.format("info.powah.max.io", "" + TextFormatting.DARK_GRAY + (maxIn == maxOut ? maxOut : maxIn == 0 || maxOut == 0 ? Math.max(maxIn, maxOut) : (maxIn + "/" + maxOut))));
             renderTooltip(list, mouseX, mouseY);
         }
     }

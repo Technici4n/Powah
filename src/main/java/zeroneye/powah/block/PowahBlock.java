@@ -10,13 +10,15 @@ import javax.annotation.Nullable;
 
 public abstract class PowahBlock extends BlockBase {
     protected final int capacity;
-    protected final int transfer;
+    protected final int maxExtract;
+    protected final int maxReceive;
     protected boolean isCreative;
 
-    public PowahBlock(Properties properties, int capacity, int transfer) {
+    public PowahBlock(Properties properties, int capacity, int maxExtract, int maxReceive) {
         super(properties);
         this.capacity = capacity;
-        this.transfer = transfer;
+        this.maxExtract = maxExtract;
+        this.maxReceive = maxReceive;
     }
 
     @Override
@@ -28,8 +30,12 @@ public abstract class PowahBlock extends BlockBase {
         return capacity;
     }
 
-    public int getTransfer() {
-        return transfer;
+    public int getMaxExtract() {
+        return maxExtract;
+    }
+
+    public int getMaxReceive() {
+        return maxReceive;
     }
 
     public boolean isCreative() {

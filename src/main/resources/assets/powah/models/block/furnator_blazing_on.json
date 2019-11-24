@@ -1,0 +1,7 @@
+{
+  "parent": "powah:block/furnator",
+  "textures": {
+	"face": "powah:block/furnator_face_on",
+	"side": "powah:block/furnator_blazing_side"
+  }
+}

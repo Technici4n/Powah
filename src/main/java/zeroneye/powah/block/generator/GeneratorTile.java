@@ -6,7 +6,8 @@ import zeroneye.powah.block.PowahTile;
 
 public abstract class GeneratorTile extends PowahTile {
     protected int perTick;
-    protected int nextGen;
+    public int nextGenCap;
+    public int nextGen;
 
 
     public GeneratorTile(TileEntityType<?> type, int capacity, int transfer, int perTick) {
@@ -18,14 +19,26 @@ public abstract class GeneratorTile extends PowahTile {
     public void readStorable(CompoundNBT compound) {
         super.readStorable(compound);
         this.perTick = compound.getInt("PerTick");
-        this.nextGen = compound.getInt("NextGen");
     }
 
     @Override
     public CompoundNBT writeStorable(CompoundNBT compound) {
         compound.putInt("PerTick", this.perTick);
-        compound.putInt("NextGen", this.nextGen);
         return super.writeStorable(compound);
+    }
+
+    @Override
+    public void readSync(CompoundNBT compound) {
+        super.readSync(compound);
+        this.nextGenCap = compound.getInt("NextGenCap");
+        this.nextGen = compound.getInt("NextGen");
+    }
+
+    @Override
+    public CompoundNBT writeSync(CompoundNBT compound) {
+        compound.putInt("NextGenCap", this.nextGenCap);
+        compound.putInt("NextGen", this.nextGen);
+        return super.writeSync(compound);
     }
 
     @Override
@@ -35,7 +48,21 @@ public abstract class GeneratorTile extends PowahTile {
         boolean flag = isGenerating();
         boolean flag1 = false;
         if (!this.internal.isFull() && perTick() > 0) {
-            int toGenerate = toGenerate();
+            int toGenerate = 0;
+            if (this.nextGen >= perTick()) {
+                toGenerate = perTick();
+                this.nextGen -= perTick();
+                if (this.nextGen <= 0) {
+                    this.nextGenCap = 0;
+                }
+            } else {
+                if (this.nextGen > 0) {
+                    toGenerate = this.nextGen;
+                    this.nextGen = 0;
+                    this.nextGenCap = 0;
+                }
+            }
+            generate();
             if (toGenerate > 0) {
                 int stored = this.internal.getEnergyStored();
                 int capacity = this.internal.getMaxEnergyStored();
@@ -52,7 +79,12 @@ public abstract class GeneratorTile extends PowahTile {
         return flag1 && super.postTicks();
     }
 
-    protected abstract int toGenerate();
+    @Override
+    public int getChargingSlots() {
+        return 1;
+    }
+
+    protected abstract void generate();
 
     protected boolean isGenerating() {
         return this.nextGen > 0;

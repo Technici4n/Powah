@@ -45,7 +45,7 @@ public class MagmaticGenBlock extends GeneratorBlock {
     @Nullable
     @Override
     public TileEntity createTileEntity(BlockState state, IBlockReader world) {
-        return new MagmaticGenTile(this.capacity, this.transfer, this.perTick, this.buckets);
+        return new MagmaticGenTile(this.capacity, this.maxExtract, this.perTick, this.buckets);
     }
 
     @Nullable
@@ -65,13 +65,13 @@ public class MagmaticGenBlock extends GeneratorBlock {
         return super.getContainer(id, playerInventory, inv);
     }
 
-    public int getBuckets() {
-        return buckets;
+    @Override
+    public boolean isSolid(BlockState state) {
+        return false;
     }
 
-    @Override
-    protected boolean hasLitProp() {
-        return true;
+    public int getBuckets() {
+        return buckets;
     }
 
     @Override

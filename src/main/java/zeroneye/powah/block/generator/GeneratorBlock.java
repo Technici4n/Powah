@@ -12,7 +12,7 @@ public class GeneratorBlock extends PowahBlock {
     protected final int perTick;
 
     public GeneratorBlock(Properties properties, int capacity, int transfer, int perTick) {
-        super(properties, capacity, transfer);
+        super(properties, capacity, transfer, 0);
         this.perTick = perTick;
     }
 
@@ -29,6 +29,6 @@ public class GeneratorBlock extends PowahBlock {
     }
 
     protected boolean hasLitProp() {
-        return false;
+        return true;
     }
 }

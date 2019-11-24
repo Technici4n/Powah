@@ -70,19 +70,24 @@ public abstract class PowahTile extends TileBase.Tickable implements IInvBase {
         if (this.world == null) return false;
 
         int extracted = 0;
-        for (Direction direction : Direction.values()) {
-            if (!canExtract(direction)) break;
-            int amount = Math.min(this.internal.getMaxExtract(), this.internal.getEnergyStored());
-            int received = Energy.receive(this.world, this.pos.offset(direction), direction.getOpposite(), amount, false);
-            extracted += extractEnergy(received, false, direction);
+
+        if (canExtraxtFromSides()) {
+            for (Direction direction : Direction.values()) {
+                if (!canExtract(direction)) break;
+                int amount = Math.min(this.internal.getMaxExtract(), this.internal.getEnergyStored());
+                int received = Energy.receive(this.world, this.pos.offset(direction), direction.getOpposite(), amount, false);
+                extracted += extractEnergy(received, false, direction);
+            }
         }
 
-        for (int i = 0; i < getChargingSlots(); i++) {
-            final ItemStack stack = getStackInSlot(i);
-            if (!stack.isEmpty() && canExtract(null)) {
-                int amount = Math.min(this.internal.getMaxExtract(), this.internal.getEnergyStored());
-                int received = Energy.receive(stack, amount, false);
-                extracted += extractEnergy(received, false, null);
+        if (canchargeItems()) {
+            for (int i = 0; i < getChargingSlots(); i++) {
+                final ItemStack stack = getStackInSlot(i);
+                if (!stack.isEmpty() && canExtract(null)) {
+                    int amount = Math.min(this.internal.getMaxExtract(), this.internal.getEnergyStored());
+                    int received = Energy.receive(stack, amount, false);
+                    extracted += extractEnergy(received, false, null);
+                }
             }
         }
         return extracted > 0;
@@ -171,6 +176,37 @@ public abstract class PowahTile extends TileBase.Tickable implements IInvBase {
         return RedstoneMode.IGNORE.equals(getRedstoneMode())
                 || power && RedstoneMode.ON.equals(getRedstoneMode())
                 || !power && RedstoneMode.OFF.equals(getRedstoneMode());
+    }
+
+    @Override
+    public boolean dropInventoryOnBreak() {
+        return false;
+    }
+
+    @Override
+    public boolean isItemValidForSlot(int index, ItemStack itemStack) {
+        for (int i = 0; i < getChargingSlots(); i++) {
+            if (index == i) {
+                return Energy.getForgeEnergy(itemStack).isPresent();
+            }
+        }
+        return true;
+    }
+
+    protected ExtractionType getExtractionType() {
+        return ExtractionType.ALL;
+    }
+
+    public boolean canExtraxtFromSides() {
+        return getExtractionType().equals(ExtractionType.ALL) || getExtractionType().equals(ExtractionType.TILE);
+    }
+
+    public boolean canchargeItems() {
+        return getExtractionType().equals(ExtractionType.ALL) || getExtractionType().equals(ExtractionType.ITEM);
+    }
+
+    public enum ExtractionType {
+        ALL, ITEM, TILE, OFF
     }
 
     @Override

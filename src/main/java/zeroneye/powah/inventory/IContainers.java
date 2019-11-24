@@ -27,6 +27,16 @@ public class IContainers {
     public static final ContainerType<MagmaticGenContainer> MAGMATIC_GENERATOR_NIOTIC = register("magmatic_generator_niotic", MagmaticGenContainer::createNiotic);
     public static final ContainerType<MagmaticGenContainer> MAGMATIC_GENERATOR_SPIRITED = register("magmatic_generator_spirited", MagmaticGenContainer::createSpirited);
 
+    public static final ContainerType<FurnatorContainer> FURNATOR_BASIC = register("furnator_basic", FurnatorContainer::createBasic);
+    public static final ContainerType<FurnatorContainer> FURNATOR_HARDENED = register("furnator_hardened", FurnatorContainer::createHardened);
+    public static final ContainerType<FurnatorContainer> FURNATOR_BLAZING = register("furnator_blazing", FurnatorContainer::createBlazing);
+    public static final ContainerType<FurnatorContainer> FURNATOR_NIOTIC = register("furnator_niotic", FurnatorContainer::createNiotic);
+    public static final ContainerType<FurnatorContainer> FURNATOR_SPIRITED = register("furnator_spirited", FurnatorContainer::createSpirited);
+
+    public static final ContainerType<PlayerTransmitterContainer> PLAYER_TRANSMITTER = register("player_transmitter", PlayerTransmitterContainer::create);
+    public static final ContainerType<PlayerTransmitterContainer> PLAYER_TRANSMITTER_DIM = register("player_transmitter_dim", PlayerTransmitterContainer::createDim);
+
+
     private static <T extends Container> ContainerType<T> register(String name, IContainerFactory<T> factory) {
         ContainerType<T> containerType = IForgeContainerType.create(factory);
         containerType.setRegistryName(name);

@@ -1,16 +1,20 @@
 package zeroneye.powah.block;
 
 import net.minecraft.block.Block;
+import net.minecraft.block.material.Material;
 import net.minecraft.item.BlockItem;
 import net.minecraft.item.Item;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import zeroneye.lib.block.IBlockBase;
+import zeroneye.powah.block.generator.furnator.FurnatorBlock;
+import zeroneye.powah.block.generator.furnator.Furnators;
 import zeroneye.powah.block.generator.magmatic.MagmaticGenBlock;
 import zeroneye.powah.block.generator.magmatic.MagmaticGenerators;
 import zeroneye.powah.block.storage.EnergyCellBlock;
 import zeroneye.powah.block.storage.EnergyCells;
+import zeroneye.powah.block.transmitter.PlayerTransmitterBlock;
 import zeroneye.powah.item.ItemGroups;
 
 import java.util.ArrayList;
@@ -22,6 +26,9 @@ public class IBlocks {
     public static final List<Block> BLOCKS = new ArrayList<>();
     public static final EnergyCellBlock[] ENERGY_CELLS;
     public static final MagmaticGenBlock[] MAGMATIC_GENERATORS;
+    public static final FurnatorBlock[] FURNATORS;
+    public static final Block PLAYER_TRANSMITTER;
+    public static final Block PLAYER_TRANSMITTER_DIM;
 
     static {
         EnergyCells[] cells = EnergyCells.values();
@@ -30,12 +37,23 @@ public class IBlocks {
             EnergyCells cell = cells[i];
             ENERGY_CELLS[i] = register("energy_cell_" + cell.name().toLowerCase(), new EnergyCellBlock(Block.Properties.create(cell.material).hardnessAndResistance(2.0F, cell.resistance), cell.capacity, cell.transfer).setCreative(cell.isCreative));
         }
+
+        Furnators[] furnators = Furnators.values();
+        FURNATORS = new FurnatorBlock[furnators.length];
+        for (int i = 0; i < furnators.length; i++) {
+            Furnators furnator = furnators[i];
+            FURNATORS[i] = register("furnator_" + furnator.name().toLowerCase(), new FurnatorBlock(Block.Properties.create(furnator.material).hardnessAndResistance(2.0F, furnator.resistance), furnator.capacity, furnator.transfer, furnator.perTick));
+        }
+
         MagmaticGenerators[] magmaticValues = MagmaticGenerators.values();
         MAGMATIC_GENERATORS = new MagmaticGenBlock[magmaticValues.length];
         for (int i = 0; i < magmaticValues.length; i++) {
             MagmaticGenerators magmaticValue = magmaticValues[i];
             MAGMATIC_GENERATORS[i] = register("magmatic_generator_" + magmaticValue.name().toLowerCase(), new MagmaticGenBlock(Block.Properties.create(magmaticValue.material).hardnessAndResistance(2.0F, magmaticValue.resistance), magmaticValue.capacity, magmaticValue.transfer, magmaticValue.perTick, magmaticValue.buckets));
         }
+
+        PLAYER_TRANSMITTER = register("player_transmitter", new PlayerTransmitterBlock(Block.Properties.create(Material.MISCELLANEOUS).hardnessAndResistance(1.0F, 15.0F).doesNotBlockMovement(), 10000, 100, 1, false));
+        PLAYER_TRANSMITTER_DIM = register("player_transmitter_dim", new PlayerTransmitterBlock(Block.Properties.create(Material.MISCELLANEOUS).hardnessAndResistance(1.0F, 15.0F).doesNotBlockMovement(), 100000, 250, 2, true));
     }
 
     static <T extends Block & IBlockBase> T register(String name, T block) {

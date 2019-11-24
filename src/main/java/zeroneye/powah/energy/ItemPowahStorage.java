@@ -13,13 +13,16 @@ public class ItemPowahStorage extends PowahStorage {
         this.isCreative = isCreative;
         if (stack.getTag() != null) {
             read(stack.getTag().getCompound(NBT.TAG_STACK));
+            if (isCreative) {
+                setEnergy(getMaxEnergyStored());
+            }
         }
     }
 
     @Override
     public int receiveEnergy(int maxReceive, boolean simulate) {
         int energy = super.receiveEnergy(maxReceive, simulate);
-        if (energy > 0 && !simulate) {
+        if (energy > 0 && !simulate && !this.isCreative) {
             write(this.stack.getOrCreateChildTag(NBT.TAG_STACK));
         }
         return energy;
@@ -37,5 +40,10 @@ public class ItemPowahStorage extends PowahStorage {
     @Override
     public int getEnergyStored() {
         return this.isCreative ? getMaxEnergyStored() : super.getEnergyStored();
+    }
+
+    @Override
+    public boolean canReceive() {
+        return !this.isCreative && super.canReceive();
     }
 }

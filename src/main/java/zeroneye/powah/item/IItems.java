@@ -22,6 +22,7 @@ public class IItems {
     public static final Item CAPACITOR_BLAZING;
     public static final Item CAPACITOR_NIOTIC;
     public static final Item CAPACITOR_SPIRITED;
+    public static final Item BINDING_CARD;
 
     static {
         DIELECTRIC_PASTE = register("dielectric_paste", new ItemBase(new Item.Properties().group(ItemGroups.MAIN)));
@@ -32,6 +33,7 @@ public class IItems {
         CAPACITOR_BLAZING = register("capacitor_blazing", new ItemBase(new Item.Properties().group(ItemGroups.MAIN)));
         CAPACITOR_NIOTIC = register("capacitor_niotic", new ItemBase(new Item.Properties().group(ItemGroups.MAIN)));
         CAPACITOR_SPIRITED = register("capacitor_spirited", new ItemBase(new Item.Properties().group(ItemGroups.MAIN)));
+        BINDING_CARD = register("binding_card", new BindingCardItem(new Item.Properties().maxStackSize(1).group(ItemGroups.MAIN)));
     }
 
     static <T extends Item & IItemBase> T register(String name, T item) {

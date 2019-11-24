@@ -16,7 +16,7 @@ public class PowahItem extends ItemBase {
     @Nullable
     @Override
     public ICapabilityProvider initCapabilities(ItemStack stack, @Nullable CompoundNBT nbt) {
-        return new ItemEnergyProvider(stack, 20, 20, 0, false);
+        return new ItemEnergyProvider(stack, 20, 0, 20, 20, false);
     }
 
     @Override
