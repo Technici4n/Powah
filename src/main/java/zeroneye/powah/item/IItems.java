@@ -15,6 +15,8 @@ import java.util.List;
 public class IItems {
     public static final List<Item> ITEMS = new ArrayList<>(IBlocks.BLOCK_ITEMS);
     public static final Item DIELECTRIC_PASTE;
+    public static final Item DIELECTRIC_ROD;
+    public static final Item DIELECTRIC_ROD_HORIZONTAL;
     public static final Item DIELECTRIC_CASING;
     public static final Item CAPACITOR_BASIC_TINY;
     public static final Item CAPACITOR_BASIC;
@@ -26,13 +28,15 @@ public class IItems {
 
     static {
         DIELECTRIC_PASTE = register("dielectric_paste", new ItemBase(new Item.Properties().group(ItemGroups.MAIN)));
+        DIELECTRIC_ROD = register("dielectric_rod", new ItemBase(new Item.Properties().group(ItemGroups.MAIN)));
+        DIELECTRIC_ROD_HORIZONTAL = register("dielectric_rod_horizontal", new ItemBase(new Item.Properties().group(ItemGroups.MAIN)));
         DIELECTRIC_CASING = register("dielectric_casing", new ItemBase(new Item.Properties().group(ItemGroups.MAIN)));
-        CAPACITOR_BASIC_TINY = register("capacitor_basic_tiny", new ItemBase(new Item.Properties().group(ItemGroups.MAIN)));
-        CAPACITOR_BASIC = register("capacitor_basic", new ItemBase(new Item.Properties().group(ItemGroups.MAIN)));
-        CAPACITOR_BASIC_LARGE = register("capacitor_basic_large", new ItemBase(new Item.Properties().group(ItemGroups.MAIN)));
-        CAPACITOR_BLAZING = register("capacitor_blazing", new ItemBase(new Item.Properties().group(ItemGroups.MAIN)));
-        CAPACITOR_NIOTIC = register("capacitor_niotic", new ItemBase(new Item.Properties().group(ItemGroups.MAIN)));
-        CAPACITOR_SPIRITED = register("capacitor_spirited", new ItemBase(new Item.Properties().group(ItemGroups.MAIN)));
+        CAPACITOR_BASIC_TINY = register("capacitor_basic_tiny", new CapacitorItem(new Item.Properties().group(ItemGroups.MAIN)));
+        CAPACITOR_BASIC = register("capacitor_basic", new CapacitorItem(new Item.Properties().group(ItemGroups.MAIN)));
+        CAPACITOR_BASIC_LARGE = register("capacitor_basic_large", new CapacitorItem(new Item.Properties().group(ItemGroups.MAIN)));
+        CAPACITOR_BLAZING = register("capacitor_blazing", new CapacitorItem(new Item.Properties().group(ItemGroups.MAIN)));
+        CAPACITOR_NIOTIC = register("capacitor_niotic", new CapacitorItem(new Item.Properties().group(ItemGroups.MAIN)));
+        CAPACITOR_SPIRITED = register("capacitor_spirited", new CapacitorItem(new Item.Properties().group(ItemGroups.MAIN)));
         BINDING_CARD = register("binding_card", new BindingCardItem(new Item.Properties().maxStackSize(1).group(ItemGroups.MAIN)));
     }
 

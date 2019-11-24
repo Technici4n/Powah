@@ -1,0 +1,27 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+	{
+	  "tag": "minecraft:coals"
+	},
+	{
+	  "tag": "minecraft:coals"
+	},
+	{
+	  "tag": "minecraft:coals"
+	},
+	{
+	  "item": "minecraft:clay_ball"
+	},
+	{
+	  "item": "minecraft:clay_ball"
+	},
+	{
+	  "item": "minecraft:lava_bucket"
+	}
+  ],
+  "result": {
+	"item": "powah:dielectric_paste",
+	"count": 16
+  }
+}

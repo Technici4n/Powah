@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+	{
+	  "item": "powah:capacitor_basic"
+	}, {
+	  "item": "powah:capacitor_basic"
+	}, {
+	  "item": "powah:capacitor_basic"
+	}, {
+	  "item": "powah:capacitor_basic"
+	}
+  ],
+  "result": {
+	"item": "powah:capacitor_basic_large"
+  }
+}
