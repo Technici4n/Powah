@@ -5,6 +5,8 @@ import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TextFormatting;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
 import zeroneye.lib.client.util.Draw2D;
 import zeroneye.powah.Powah;
 import zeroneye.powah.block.generator.furnator.FurnatorTile;
@@ -13,6 +15,7 @@ import zeroneye.powah.inventory.FurnatorContainer;
 import java.util.ArrayList;
 import java.util.List;
 
+@OnlyIn(Dist.CLIENT)
 public class FurnatorScreen extends PowahScreen<FurnatorContainer> {
     private static final ResourceLocation GUI_TEXTURE = new ResourceLocation(Powah.MOD_ID, "textures/gui/container/furnator.png");
 

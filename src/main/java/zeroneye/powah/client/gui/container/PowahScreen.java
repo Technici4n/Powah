@@ -7,6 +7,8 @@ import net.minecraft.util.Direction;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TextFormatting;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
 import zeroneye.lib.Lollipop;
 import zeroneye.lib.block.TileBase;
 import zeroneye.lib.client.gui.ContainerScreenBase;
@@ -28,6 +30,7 @@ import javax.annotation.Nullable;
 import java.util.ArrayList;
 import java.util.List;
 
+@OnlyIn(Dist.CLIENT)
 public abstract class PowahScreen<T extends PowahContainer> extends ContainerScreenBase<T> {
     private static final ResourceLocation GUI_TEXTURE = new ResourceLocation(Powah.MOD_ID, "textures/gui/container/energy.png");
     private static final ResourceLocation GUI_CONFIG_TEXTURE = new ResourceLocation(Powah.MOD_ID, "textures/gui/container/configuration.png");
@@ -155,7 +158,9 @@ public abstract class PowahScreen<T extends PowahContainer> extends ContainerScr
 
     @Override
     protected void drawGuiContainerForegroundLayer(int mouseX, int mouseY) {
-        this.font.drawString(this.title.getFormattedText(), 38.0F, -13.0F, 4210752);
+        String s = this.title.getFormattedText();
+        int sw = this.font.getStringWidth(s);
+        this.font.drawStringWithShadow(s, -(sw / 2) + (this.xSize / 2), -14.0F, 0x777777);
         this.font.drawString(this.playerInventory.getDisplayName().getFormattedText(), 8.0F, (float) (this.ySize - 96 + 3), 4210752);
     }
 

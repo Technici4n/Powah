@@ -3,9 +3,12 @@ package zeroneye.powah.client.gui.container;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.ITextComponent;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
 import zeroneye.powah.Powah;
 import zeroneye.powah.inventory.EnergyCellContainer;
 
+@OnlyIn(Dist.CLIENT)
 public class EnergyCellScreen extends PowahScreen<EnergyCellContainer> {
     private static final ResourceLocation GUI_TEXTURE = new ResourceLocation(Powah.MOD_ID, "textures/gui/container/energy_cell.png");
 

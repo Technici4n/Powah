@@ -1,12 +1,15 @@
 package zeroneye.powah.client.gui;
 
 import net.minecraft.client.gui.ScreenManager;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
 import zeroneye.powah.client.gui.container.EnergyCellScreen;
 import zeroneye.powah.client.gui.container.FurnatorScreen;
 import zeroneye.powah.client.gui.container.MagmaticGenScreen;
 import zeroneye.powah.client.gui.container.PlayerTransmitterScreen;
 import zeroneye.powah.inventory.IContainers;
 
+@OnlyIn(Dist.CLIENT)
 public class IScreens {
     public static void register() {
         ScreenManager.registerFactory(IContainers.ENERGY_CELL_BASIC, EnergyCellScreen::new);

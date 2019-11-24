@@ -12,10 +12,13 @@ import net.minecraft.client.renderer.tileentity.TileEntityRenderer;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.minecraft.fluid.Fluid;
 import net.minecraft.util.ResourceLocation;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.capability.templates.FluidTank;
 import zeroneye.powah.block.generator.magmatic.MagmaticGenTile;
 
+@OnlyIn(Dist.CLIENT)
 public class MagmaticGenRenderer extends TileEntityRenderer<MagmaticGenTile> {
     @Override
     public void render(MagmaticGenTile tileEntityIn, double x, double y, double z, float partialTicks, int destroyStage) {
