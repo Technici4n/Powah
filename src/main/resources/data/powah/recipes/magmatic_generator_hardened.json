@@ -1,0 +1,25 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+	"ggg",
+	"cdc",
+	"gfg"
+  ],
+  "key": {
+	"c": {
+	  "item": "powah:capacitor_basic_large"
+	},
+	"g": {
+	  "item": "minecraft:gold_ingot"
+	},
+	"f": {
+	  "item": "powah:magmatic_generator_basic"
+	},
+	"d": {
+	  "item": "powah:dielectric_casing"
+	}
+  },
+  "result": {
+	"item": "powah:magmatic_generator_hardened"
+  }
+}

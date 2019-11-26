@@ -47,13 +47,8 @@ public class MagmaticGenScreen extends PowahScreen<MagmaticGenContainer> {
     }
 
     @Override
-    protected void drawGuiContainerForegroundLayer(int mouseX, int mouseY) {
-        super.drawGuiContainerForegroundLayer(mouseX, mouseY);
-    }
-
-    @Override
-    protected void drawGuiContainerBackgroundLayer(float partialTicks, int mouseX, int mouseY) {
-        super.drawGuiContainerBackgroundLayer(partialTicks, mouseX, mouseY);
+    protected void drawBackground(float partialTicks, int mouseX, int mouseY) {
+        super.drawBackground(partialTicks, mouseX, mouseY);
         MagmaticGenTile genTile = this.container.getInv();
         FluidTank tank = genTile.getTank();
         if (!tank.isEmpty()) {
@@ -93,6 +88,7 @@ public class MagmaticGenScreen extends PowahScreen<MagmaticGenContainer> {
             PowahStorage storage = this.tile.getInternal();
             List<String> list = new ArrayList<>();
             list.add(TextFormatting.GRAY + I18n.format("info.powah.fluid", "" + TextFormatting.GOLD + tank.getFluid().getDisplayName().getString()));
+            list.add(TextFormatting.GRAY + I18n.format("info.powah.stored.fluid", "" + TextFormatting.DARK_GRAY + tank.getFluidAmount(), tank.getCapacity()));
             int perSeq = PowahAPI.getFluidHeat(tank.getFluid().getFluid());
             list.add(TextFormatting.GRAY + I18n.format("info.powah.per.mb", "" + TextFormatting.DARK_GRAY + perSeq, 100));
             renderTooltip(list, mouseX, mouseY);

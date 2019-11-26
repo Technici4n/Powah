@@ -12,16 +12,16 @@ description='''
 Powah!!.
 '''
 
-#[[dependencies.powah]]
-#    modId="lollipop"
-#    mandatory=true
-#    versionRange="[0.0.4,)"
-#    ordering="NONE"
-#    side="BOTH"
+[[dependencies.powah]]
+    modId="lollipop"
+    mandatory=true
+    versionRange="[0.0.5,)"
+    ordering="NONE"
+    side="BOTH"
 
 [[dependencies.powah]]
     modId="forge"
     mandatory=true
-    versionRange="[28.1.80,)"
+    versionRange="[28.1.96,)"
     ordering="NONE"
     side="BOTH"

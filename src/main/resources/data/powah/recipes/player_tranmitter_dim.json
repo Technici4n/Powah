@@ -1,0 +1,22 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+	" e ",
+	"ctc",
+	" e "
+  ],
+  "key": {
+	"t": {
+	  "item": "powah:player_transmitter"
+	},
+	"c": {
+	  "item": "powah:capacitor_blazing"
+	},
+	"e": {
+	  "item": "minecraft:ender_eye"
+	}
+  },
+  "result": {
+	"item": "powah:player_transmitter_dim"
+  }
+}

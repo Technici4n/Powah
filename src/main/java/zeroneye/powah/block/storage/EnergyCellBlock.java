@@ -4,7 +4,7 @@ import net.minecraft.block.BlockState;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.IBlockReader;
-import zeroneye.lib.block.IInvBase;
+import zeroneye.lib.block.TileBase;
 import zeroneye.lib.inventory.ContainerBase;
 import zeroneye.powah.block.PowahBlock;
 import zeroneye.powah.inventory.EnergyCellContainer;
@@ -25,7 +25,7 @@ public class EnergyCellBlock extends PowahBlock {
 
     @Nullable
     @Override
-    public ContainerBase getContainer(int id, PlayerInventory playerInventory, IInvBase inv) {
+    public ContainerBase getContainer(int id, PlayerInventory playerInventory, TileBase.TickableInv inv) {
         if (this == EnergyCells.BASIC.get()) {
             return new EnergyCellContainer(IContainers.ENERGY_CELL_BASIC, id, playerInventory, (EnergyCellTile) inv);
         } else if (this == EnergyCells.HARDENED.get()) {

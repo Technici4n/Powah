@@ -5,7 +5,7 @@ import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.Direction;
 import net.minecraft.world.IBlockReader;
-import zeroneye.lib.block.IInvBase;
+import zeroneye.lib.block.TileBase;
 import zeroneye.lib.inventory.ContainerBase;
 import zeroneye.powah.block.generator.GeneratorBlock;
 import zeroneye.powah.inventory.FurnatorContainer;
@@ -28,7 +28,7 @@ public class FurnatorBlock extends GeneratorBlock {
 
     @Nullable
     @Override
-    public ContainerBase getContainer(int id, PlayerInventory playerInventory, IInvBase inv) {
+    public ContainerBase getContainer(int id, PlayerInventory playerInventory, TileBase.TickableInv inv) {
         if (this == Furnators.BASIC.get()) {
             return new FurnatorContainer(IContainers.FURNATOR_BASIC, id, playerInventory, (FurnatorTile) inv);
         } else if (this == Furnators.HARDENED.get()) {

@@ -1,0 +1,25 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+	"bbb",
+	"cdc",
+	"bfb"
+  ],
+  "key": {
+	"c": {
+	  "item": "powah:capacitor_blazing"
+	},
+	"b": {
+	  "item": "minecraft:blaze_rod"
+	},
+	"f": {
+	  "item": "powah:magmatic_generator_hardened"
+	},
+	"d": {
+	  "item": "powah:dielectric_casing"
+	}
+  },
+  "result": {
+	"item": "powah:magmatic_generator_blazing"
+  }
+}

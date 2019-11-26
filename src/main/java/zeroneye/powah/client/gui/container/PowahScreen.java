@@ -157,7 +157,8 @@ public abstract class PowahScreen<T extends PowahContainer> extends ContainerScr
     }
 
     @Override
-    protected void drawGuiContainerForegroundLayer(int mouseX, int mouseY) {
+    protected void drawForeground(int mouseX, int mouseY) {
+        super.drawForeground(mouseX, mouseY);
         String s = this.title.getFormattedText();
         int sw = this.font.getStringWidth(s);
         this.font.drawStringWithShadow(s, -(sw / 2) + (this.xSize / 2), -14.0F, 0x777777);
@@ -165,8 +166,8 @@ public abstract class PowahScreen<T extends PowahContainer> extends ContainerScr
     }
 
     @Override
-    protected void drawGuiContainerBackgroundLayer(float partialTicks, int mouseX, int mouseY) {
-        super.drawGuiContainerBackgroundLayer(partialTicks, mouseX, mouseY);
+    protected void drawBackground(float partialTicks, int mouseX, int mouseY) {
+        super.drawBackground(partialTicks, mouseX, mouseY);
         if (getBackGroundImage() != null) {
             if (!this.sideButtons[0].visible) {
                 bindTexture(getSubBackGroundImage());

@@ -11,7 +11,7 @@ import net.minecraft.util.math.BlockRayTraceResult;
 import net.minecraft.world.IBlockReader;
 import net.minecraft.world.World;
 import net.minecraftforge.fluids.FluidUtil;
-import zeroneye.lib.block.IInvBase;
+import zeroneye.lib.block.TileBase;
 import zeroneye.lib.inventory.ContainerBase;
 import zeroneye.powah.block.generator.GeneratorBlock;
 import zeroneye.powah.inventory.IContainers;
@@ -50,7 +50,7 @@ public class MagmaticGenBlock extends GeneratorBlock {
 
     @Nullable
     @Override
-    public ContainerBase getContainer(int id, PlayerInventory playerInventory, IInvBase inv) {
+    public ContainerBase getContainer(int id, PlayerInventory playerInventory, TileBase.TickableInv inv) {
         if (this == MagmaticGenerators.BASIC.get()) {
             return new MagmaticGenContainer(IContainers.MAGMATIC_GENERATOR_BASIC, id, playerInventory, (MagmaticGenTile) inv);
         } else if (this == MagmaticGenerators.HARDENED.get()) {

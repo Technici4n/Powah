@@ -7,7 +7,6 @@ import net.minecraft.util.Direction;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.energy.CapabilityEnergy;
-import zeroneye.lib.block.IInvBase;
 import zeroneye.lib.block.TileBase;
 import zeroneye.lib.util.Energy;
 import zeroneye.powah.energy.PowahStorage;
@@ -16,7 +15,7 @@ import zeroneye.powah.energy.SideConfig;
 
 import javax.annotation.Nullable;
 
-public abstract class PowahTile extends TileBase.Tickable implements IInvBase {
+public abstract class PowahTile extends TileBase.TickableInv {
     protected RedstoneMode redstoneMode = RedstoneMode.IGNORE;
     protected final PowahStorage internal;
     protected SideConfig sideConfig;

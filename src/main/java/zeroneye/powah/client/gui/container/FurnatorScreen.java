@@ -24,8 +24,8 @@ public class FurnatorScreen extends PowahScreen<FurnatorContainer> {
     }
 
     @Override
-    protected void drawGuiContainerBackgroundLayer(float partialTicks, int mouseX, int mouseY) {
-        super.drawGuiContainerBackgroundLayer(partialTicks, mouseX, mouseY);
+    protected void drawBackground(float partialTicks, int mouseX, int mouseY) {
+        super.drawBackground(partialTicks, mouseX, mouseY);
         FurnatorTile genTile = this.container.getInv();
         if (genTile.nextGen > 0 && !this.sideButtons[0].visible) {
             bindTexture(getSubBackGroundImage());

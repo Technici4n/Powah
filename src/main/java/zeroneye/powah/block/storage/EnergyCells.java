@@ -4,12 +4,12 @@ import net.minecraft.block.material.Material;
 import zeroneye.powah.block.IBlocks;
 
 public enum EnergyCells {
-    BASIC(Material.ROCK, 3.0F, 250000, 250, false),
-    HARDENED(Material.ROCK, 30.0F, 1000000, 1000, false),
-    BLAZING(Material.IRON, 30.0F, 5000000, 4000, false),
+    BASIC(Material.ROCK, 3.0F, 1000000, 250, false),
+    HARDENED(Material.ROCK, 30.0F, 5000000, 1000, false),
+    BLAZING(Material.IRON, 30.0F, 12000000, 4000, false),
     NIOTIC(Material.IRON, 100.0F, 25000000, 20000, false),
     SPIRITED(Material.IRON, 100.0F, 100000000, 500000, false),
-    CREATIVE(Material.IRON, -1.0F, Integer.MAX_VALUE, Integer.MAX_VALUE, true);
+    CREATIVE(Material.IRON, Float.MAX_VALUE, Integer.MAX_VALUE, Integer.MAX_VALUE, true);
 
     public final Material material;
     public final float resistance;

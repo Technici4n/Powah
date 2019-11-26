@@ -24,6 +24,9 @@ public class IItems {
     public static final Item CAPACITOR_BLAZING;
     public static final Item CAPACITOR_NIOTIC;
     public static final Item CAPACITOR_SPIRITED;
+    public static final Item AERIAL_PEARL;
+    public static final Item PLAYER_AERIAL_PEARL;
+    public static final Item BLANK_CARD;
     public static final Item BINDING_CARD;
 
     static {
@@ -37,6 +40,9 @@ public class IItems {
         CAPACITOR_BLAZING = register("capacitor_blazing", new CapacitorItem(new Item.Properties().group(ItemGroups.MAIN)));
         CAPACITOR_NIOTIC = register("capacitor_niotic", new CapacitorItem(new Item.Properties().group(ItemGroups.MAIN)));
         CAPACITOR_SPIRITED = register("capacitor_spirited", new CapacitorItem(new Item.Properties().group(ItemGroups.MAIN)));
+        AERIAL_PEARL = register("aerial_pearl", new AerialPearlItem(new Item.Properties().group(ItemGroups.MAIN)));
+        PLAYER_AERIAL_PEARL = register("player_aerial_pearl", new AerialPearlItem(new Item.Properties().group(ItemGroups.MAIN)));
+        BLANK_CARD = register("blank_card", new ItemBase(new Item.Properties().group(ItemGroups.MAIN)));
         BINDING_CARD = register("binding_card", new BindingCardItem(new Item.Properties().maxStackSize(1).group(ItemGroups.MAIN)));
     }
 

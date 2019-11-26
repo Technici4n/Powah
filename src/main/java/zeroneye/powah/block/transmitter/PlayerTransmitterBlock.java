@@ -10,7 +10,7 @@ import net.minecraft.util.math.shapes.ISelectionContext;
 import net.minecraft.util.math.shapes.VoxelShape;
 import net.minecraft.world.IBlockReader;
 import net.minecraft.world.IWorldReader;
-import zeroneye.lib.block.IInvBase;
+import zeroneye.lib.block.TileBase;
 import zeroneye.lib.inventory.ContainerBase;
 import zeroneye.lib.util.Energy;
 import zeroneye.powah.block.IBlocks;
@@ -58,7 +58,7 @@ public class PlayerTransmitterBlock extends PowahBlock {
 
     @Nullable
     @Override
-    public ContainerBase getContainer(int id, PlayerInventory playerInventory, IInvBase inv) {
+    public ContainerBase getContainer(int id, PlayerInventory playerInventory, TileBase.TickableInv inv) {
         if (this == IBlocks.PLAYER_TRANSMITTER) {
             return new PlayerTransmitterContainer(IContainers.PLAYER_TRANSMITTER, id, playerInventory, (PlayerTransmitterTile) inv, this.slots);
         } else if (this == IBlocks.PLAYER_TRANSMITTER_DIM) {
