@@ -43,11 +43,10 @@ public abstract class GeneratorTile extends PowahTile {
 
     @Override
     protected boolean postTicks() {
-        super.postTicks();
         if (this.world == null) return false;
         boolean flag = isGenerating();
-        boolean flag1 = false;
-        if (!this.internal.isFull() && perTick() > 0) {
+        boolean flag1 = super.postTicks();
+        if (perTick() > 0) {
             int toGenerate = 0;
             if (this.nextGen >= perTick()) {
                 toGenerate = perTick();
@@ -76,7 +75,7 @@ public abstract class GeneratorTile extends PowahTile {
                 this.world.setBlockState(this.pos, this.world.getBlockState(this.pos).with(GeneratorBlock.LIT, isGenerating()), 3);
             }
         }
-        return flag1 && super.postTicks();
+        return flag1;
     }
 
     @Override

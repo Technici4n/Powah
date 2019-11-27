@@ -3,10 +3,7 @@ package zeroneye.powah.client.gui;
 import net.minecraft.client.gui.ScreenManager;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
-import zeroneye.powah.client.gui.container.EnergyCellScreen;
-import zeroneye.powah.client.gui.container.FurnatorScreen;
-import zeroneye.powah.client.gui.container.MagmaticGenScreen;
-import zeroneye.powah.client.gui.container.PlayerTransmitterScreen;
+import zeroneye.powah.client.gui.container.*;
 import zeroneye.powah.inventory.IContainers;
 
 @OnlyIn(Dist.CLIENT)
@@ -30,6 +27,12 @@ public class IScreens {
         ScreenManager.registerFactory(IContainers.FURNATOR_BLAZING, FurnatorScreen::new);
         ScreenManager.registerFactory(IContainers.FURNATOR_NIOTIC, FurnatorScreen::new);
         ScreenManager.registerFactory(IContainers.FURNATOR_SPIRITED, FurnatorScreen::new);
+
+        ScreenManager.registerFactory(IContainers.SOLAR_PANEL_BASIC, SolarPanelScreen::new);
+        ScreenManager.registerFactory(IContainers.SOLAR_PANEL_HARDENED, SolarPanelScreen::new);
+        ScreenManager.registerFactory(IContainers.SOLAR_PANEL_BLAZING, SolarPanelScreen::new);
+        ScreenManager.registerFactory(IContainers.SOLAR_PANEL_NIOTIC, SolarPanelScreen::new);
+        ScreenManager.registerFactory(IContainers.SOLAR_PANEL_SPIRITED, SolarPanelScreen::new);
 
         ScreenManager.registerFactory(IContainers.PLAYER_TRANSMITTER, PlayerTransmitterScreen::new);
         ScreenManager.registerFactory(IContainers.PLAYER_TRANSMITTER_DIM, PlayerTransmitterScreen::new);

@@ -33,6 +33,12 @@ public class IContainers {
     public static final ContainerType<FurnatorContainer> FURNATOR_NIOTIC = register("furnator_niotic", FurnatorContainer::createNiotic);
     public static final ContainerType<FurnatorContainer> FURNATOR_SPIRITED = register("furnator_spirited", FurnatorContainer::createSpirited);
 
+    public static final ContainerType<SolarPanelContainer> SOLAR_PANEL_BASIC = register("solar_panel_basic", SolarPanelContainer::createBasic);
+    public static final ContainerType<SolarPanelContainer> SOLAR_PANEL_HARDENED = register("solar_panel_hardened", SolarPanelContainer::createHardened);
+    public static final ContainerType<SolarPanelContainer> SOLAR_PANEL_BLAZING = register("solar_panel_blazing", SolarPanelContainer::createBlazing);
+    public static final ContainerType<SolarPanelContainer> SOLAR_PANEL_NIOTIC = register("solar_panel_niotic", SolarPanelContainer::createNiotic);
+    public static final ContainerType<SolarPanelContainer> SOLAR_PANEL_SPIRITED = register("solar_panel_spirited", SolarPanelContainer::createSpirited);
+
     public static final ContainerType<PlayerTransmitterContainer> PLAYER_TRANSMITTER = register("player_transmitter", PlayerTransmitterContainer::create);
     public static final ContainerType<PlayerTransmitterContainer> PLAYER_TRANSMITTER_DIM = register("player_transmitter_dim", PlayerTransmitterContainer::createDim);
 

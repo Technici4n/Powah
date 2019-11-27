@@ -8,6 +8,9 @@ import net.minecraft.util.Direction;
 import net.minecraft.util.Hand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.BlockRayTraceResult;
+import net.minecraft.util.math.shapes.IBooleanFunction;
+import net.minecraft.util.math.shapes.ISelectionContext;
+import net.minecraft.util.math.shapes.VoxelShape;
 import net.minecraft.world.IBlockReader;
 import net.minecraft.world.World;
 import net.minecraftforge.fluids.FluidUtil;
@@ -19,13 +22,27 @@ import zeroneye.powah.inventory.MagmaticGenContainer;
 
 import javax.annotation.Nullable;
 
+import static net.minecraft.util.math.shapes.VoxelShapes.combineAndSimplify;
+import static net.minecraft.util.math.shapes.VoxelShapes.fullCube;
+
 public class MagmaticGenBlock extends GeneratorBlock {
+    public static final VoxelShape SHAPE = combineAndSimplify(makeCuboidShape(1.0D, 8.0D, 1.0D, 15.0D, 16.0D, 15.0D), makeCuboidShape(0.0D, 0.0D, 0.0D, 16.0D, 8.0D, 16.0D), IBooleanFunction.OR);
     private final int buckets;
 
     public MagmaticGenBlock(Properties properties, int capacity, int transfer, int perTick, int buckets) {
         super(properties, capacity, transfer, perTick);
         this.buckets = buckets;
         setDefaultState(this.stateContainer.getBaseState().with(H_FACING, Direction.NORTH).with(LIT, false));
+    }
+
+    @Override
+    public VoxelShape getShape(BlockState state, IBlockReader worldIn, BlockPos pos, ISelectionContext context) {
+        return SHAPE;
+    }
+
+    @Override
+    public VoxelShape getCollisionShape(BlockState state, IBlockReader worldIn, BlockPos pos, ISelectionContext context) {
+        return fullCube();
     }
 
     @Override

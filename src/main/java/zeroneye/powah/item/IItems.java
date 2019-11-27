@@ -28,6 +28,7 @@ public class IItems {
     public static final Item PLAYER_AERIAL_PEARL;
     public static final Item BLANK_CARD;
     public static final Item BINDING_CARD;
+    public static final Item PHOTOELECTRIC_PANE;
 
     static {
         DIELECTRIC_PASTE = register("dielectric_paste", new ItemBase(new Item.Properties().group(ItemGroups.MAIN)));
@@ -44,6 +45,7 @@ public class IItems {
         PLAYER_AERIAL_PEARL = register("player_aerial_pearl", new AerialPearlItem(new Item.Properties().group(ItemGroups.MAIN)));
         BLANK_CARD = register("blank_card", new ItemBase(new Item.Properties().group(ItemGroups.MAIN)));
         BINDING_CARD = register("binding_card", new BindingCardItem(new Item.Properties().maxStackSize(1).group(ItemGroups.MAIN)));
+        PHOTOELECTRIC_PANE = register("photoelectric_pane", new ItemBase(new Item.Properties().group(ItemGroups.MAIN)));
     }
 
     static <T extends Item & IItemBase> T register(String name, T item) {

@@ -11,6 +11,7 @@ import zeroneye.powah.Powah;
 import zeroneye.powah.block.IBlocks;
 import zeroneye.powah.block.generator.furnator.Furnators;
 import zeroneye.powah.block.generator.magmatic.MagmaticGenerators;
+import zeroneye.powah.block.generator.panel.Panels;
 import zeroneye.powah.block.storage.EnergyCells;
 import zeroneye.powah.config.Config;
 import zeroneye.powah.item.IItems;
@@ -34,6 +35,10 @@ public class PowahJEIPlugin implements IModPlugin {
                 .map(Furnators::get)
                 .map(ItemStack::new)
                 .collect(Collectors.toList()), VanillaTypes.ITEM, I18n.format("wiki.powah.furnator"));
+        registration.addIngredientInfo(Stream.of(Panels.values())
+                .map(Panels::get)
+                .map(ItemStack::new)
+                .collect(Collectors.toList()), VanillaTypes.ITEM, I18n.format("wiki.powah.solar_panel"));
 
         registration.addIngredientInfo(new ItemStack(IBlocks.PLAYER_TRANSMITTER), VanillaTypes.ITEM, I18n.format("wiki.powah.player_transmitter"));
         registration.addIngredientInfo(new ItemStack(IBlocks.PLAYER_TRANSMITTER_DIM), VanillaTypes.ITEM, I18n.format("wiki.powah.player_transmitter_dim"));
