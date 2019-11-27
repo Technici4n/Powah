@@ -1,7 +1,6 @@
 package zeroneye.powah;
 
 import net.minecraftforge.fml.ModLoadingContext;
-import net.minecraftforge.fml.client.registry.ClientRegistry;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.config.ModConfig;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
@@ -10,9 +9,8 @@ import net.minecraftforge.fml.event.lifecycle.FMLLoadCompleteEvent;
 import net.minecraftforge.fml.loading.FMLPaths;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import zeroneye.powah.block.generator.magmatic.MagmaticGenTile;
 import zeroneye.powah.client.gui.IScreens;
-import zeroneye.powah.client.renderer.tile.MagmaticGenRenderer;
+import zeroneye.powah.client.renderer.tile.ITileRnderers;
 import zeroneye.powah.config.Config;
 import zeroneye.powah.handler.FluidHandler;
 import zeroneye.powah.network.Packets;
@@ -47,7 +45,7 @@ public class Powah {
     }
 
     void clientSetup(FMLClientSetupEvent event) {
-        ClientRegistry.bindTileEntitySpecialRenderer(MagmaticGenTile.class, new MagmaticGenRenderer());
+        ITileRnderers.register();
         IScreens.register();
     }
 
