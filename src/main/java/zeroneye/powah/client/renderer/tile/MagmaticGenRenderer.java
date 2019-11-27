@@ -14,6 +14,7 @@ import net.minecraft.fluid.Fluid;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
+import net.minecraftforge.fluids.FluidAttributes;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.capability.templates.FluidTank;
 import zeroneye.powah.block.generator.magmatic.MagmaticGenTile;
@@ -26,7 +27,8 @@ public class MagmaticGenRenderer extends TileEntityRenderer<MagmaticGenTile> {
         FluidStack fluidStack = tank.getFluid();
         if (!fluidStack.isEmpty()) {
             Fluid fluid = fluidStack.getFluid();
-            ResourceLocation still = fluid.getAttributes().getStill(fluidStack);
+            FluidAttributes fa = fluid.getAttributes();
+            ResourceLocation still = fa.getStill(fluidStack);
             if (still != null) {
                 GlStateManager.pushMatrix();
                 GlStateManager.translated(x, y + 0.51F, z);
@@ -36,6 +38,12 @@ public class MagmaticGenRenderer extends TileEntityRenderer<MagmaticGenTile> {
                 AtlasTexture textureMap = Minecraft.getInstance().getTextureMap();
                 TextureAtlasSprite sprite = textureMap.getSprite(still);
                 GlStateManager.blendFunc(GlStateManager.SourceFactor.ONE, GlStateManager.DestFactor.ONE);
+                int color = fa.getColor(fluidStack);
+                float red = (color >> 16 & 0xFF) / 255.0F;
+                float green = (color >> 8 & 0xFF) / 255.0F;
+                float blue = (color & 0xFF) / 255.0F;
+                float alpha = ((color >> 24) & 0xFF) / 255F;
+                GlStateManager.color3f(red, green, blue);
                 int j3 = (int) (15728880 / 1.5F);
                 int k3 = j3 >> 16 & '\uffff';
                 int l3 = j3 & '\uffff';
@@ -44,6 +52,7 @@ public class MagmaticGenRenderer extends TileEntityRenderer<MagmaticGenTile> {
                 renderQuad(sprite, 0.65D);
                 RenderHelper.enableStandardItemLighting();
                 GlStateManager.popMatrix();
+                GlStateManager.color3f(1.0F, 1.0F, 1.0F);
             }
 
         }

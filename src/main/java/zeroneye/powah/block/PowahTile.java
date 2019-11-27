@@ -65,6 +65,28 @@ public abstract class PowahTile extends TileBase.TickableInv {
     }
 
     @Override
+    protected void onFirstTick() {
+        if (this.world == null) return;
+        if (!this.world.isRemote) {
+            if (getBlock() instanceof PowahBlock) {
+                PowahBlock powahBlock = (PowahBlock) getBlock();
+                this.internal.setCapacity(powahBlock.capacity);
+                if (isCreative) {
+                    this.internal.setEnergy(powahBlock.capacity);
+                }
+                this.internal.setMaxExtract(powahBlock.maxExtract);
+                this.internal.setMaxReceive(powahBlock.maxReceive);
+                markDirtyAndSync();
+            }
+        }
+    }
+
+    @Override
+    public void onInventoryChanged(int index) {
+        super.onInventoryChanged(index);
+    }
+
+    @Override
     protected boolean postTicks() {
         if (this.world == null) return false;
 
@@ -79,7 +101,7 @@ public abstract class PowahTile extends TileBase.TickableInv {
             }
         }
 
-        if (canchargeItems()) {
+        if (canChargeItems()) {
             for (int i = 0; i < getChargingSlots(); i++) {
                 final ItemStack stack = getStackInSlot(i);
                 if (!stack.isEmpty() && canExtract(null)) {
@@ -200,7 +222,7 @@ public abstract class PowahTile extends TileBase.TickableInv {
         return getExtractionType().equals(ExtractionType.ALL) || getExtractionType().equals(ExtractionType.TILE);
     }
 
-    public boolean canchargeItems() {
+    public boolean canChargeItems() {
         return getExtractionType().equals(ExtractionType.ALL) || getExtractionType().equals(ExtractionType.ITEM);
     }
 

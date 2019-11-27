@@ -17,6 +17,9 @@ public class ItemPowahStorage extends PowahStorage {
                 setEnergy(getMaxEnergyStored());
             }
         }
+        setCapacity(capacity);
+        setMaxExtract(maxExtract);
+        setMaxReceive(maxReceive);
     }
 
     @Override
@@ -35,6 +38,12 @@ public class ItemPowahStorage extends PowahStorage {
             write(this.stack.getOrCreateChildTag(NBT.TAG_STACK));
         }
         return energy;
+    }
+
+    @Override
+    public void setEnergy(int i) {
+        if (this.isCreative && i < getEnergyStored()) return;
+        super.setEnergy(i);
     }
 
     @Override

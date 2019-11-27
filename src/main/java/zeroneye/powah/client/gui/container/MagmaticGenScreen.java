@@ -1,5 +1,6 @@
 package zeroneye.powah.client.gui.container;
 
+import com.mojang.blaze3d.platform.GlStateManager;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.texture.AtlasTexture;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
@@ -11,6 +12,7 @@ import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
+import net.minecraftforge.fluids.FluidAttributes;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.capability.templates.FluidTank;
 import zeroneye.lib.client.util.Draw2D;
@@ -55,11 +57,18 @@ public class MagmaticGenScreen extends PowahScreen<MagmaticGenContainer> {
             FluidStack fluidStack = tank.getFluid();
             Fluid fluid = fluidStack.getFluid();
             AtlasTexture textureMap = Minecraft.getInstance().getTextureMap();
-            ResourceLocation still = fluid.getAttributes().getStill(fluidStack);
+            FluidAttributes fa = fluid.getAttributes();
+            ResourceLocation still = fa.getStill(fluidStack);
             if (still != null) {
+                int color = fa.getColor(fluidStack);
+                float red = (color >> 16 & 0xFF) / 255.0F;
+                float green = (color >> 8 & 0xFF) / 255.0F;
+                float blue = (color & 0xFF) / 255.0F;
+                GlStateManager.color3f(red, green, blue);
                 TextureAtlasSprite sprite = textureMap.getSprite(still);
                 bindTexture(AtlasTexture.LOCATION_BLOCKS_TEXTURE);
                 Draw2D.gaugeV(sprite, x + 158, y + 4, 14, 64, tank.getCapacity(), tank.getFluidAmount());
+                GlStateManager.color3f(1.0F, 1.0F, 1.0F);
             }
         }
         if (genTile.nextGen > 0 && !this.sideButtons[0].visible) {

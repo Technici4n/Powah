@@ -42,6 +42,19 @@ public abstract class GeneratorTile extends PowahTile {
     }
 
     @Override
+    protected void onFirstTick() {
+        super.onFirstTick();
+        if (this.world == null) return;
+        if (!this.world.isRemote) {
+            if (getBlock() instanceof GeneratorBlock) {
+                GeneratorBlock generatorBlock = (GeneratorBlock) getBlock();
+                this.perTick = generatorBlock.perTick;
+                setReadyToSync(true);
+            }
+        }
+    }
+
+    @Override
     protected boolean postTicks() {
         if (this.world == null) return false;
         boolean flag = isGenerating();

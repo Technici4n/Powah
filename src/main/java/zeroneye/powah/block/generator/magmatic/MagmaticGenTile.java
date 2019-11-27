@@ -44,15 +44,28 @@ public class MagmaticGenTile extends GeneratorTile {
     @Override
     public void readStorable(CompoundNBT compound) {
         this.tank.readFromNBT(compound);
-        this.tank.setCapacity(compound.getInt("TanckCap"));
+        this.tank.setCapacity(compound.getInt("TankCap"));
         super.readStorable(compound);
     }
 
     @Override
     public CompoundNBT writeStorable(CompoundNBT compound) {
         this.tank.writeToNBT(compound);
-        compound.putInt("TanckCap", this.tank.getCapacity());
+        compound.putInt("TankCap", this.tank.getCapacity());
         return super.writeStorable(compound);
+    }
+
+    @Override
+    protected void onFirstTick() {
+        super.onFirstTick();
+        if (this.world == null) return;
+        if (!this.world.isRemote) {
+            if (getBlock() instanceof MagmaticGenBlock) {
+                MagmaticGenBlock magmaticGen = (MagmaticGenBlock) getBlock();
+                this.tank.setCapacity(magmaticGen.getCapacity());
+                setReadyToSync(true);
+            }
+        }
     }
 
     @Override

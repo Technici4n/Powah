@@ -50,6 +50,13 @@ public class PowahStorage extends EnergyStorage {
         return (T) this;
     }
 
+    public void setCapacity(int capacity) {
+        this.capacity = capacity;
+        if (getEnergyStored() > capacity) {
+            setEnergy(capacity);
+        }
+    }
+
     public int getMaxReceive() {
         return maxReceive;
     }
