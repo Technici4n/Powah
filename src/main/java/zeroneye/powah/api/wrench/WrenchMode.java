@@ -1,7 +1,7 @@
 package zeroneye.powah.api.wrench;
 
 public enum WrenchMode {
-    ROTATE,
-
-
+    WRENCH,
+    LINK,
+    ROTATE
 }

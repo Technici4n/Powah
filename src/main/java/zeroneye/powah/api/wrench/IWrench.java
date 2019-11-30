@@ -4,7 +4,10 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
 
 public interface IWrench {
-    WrenchMode getWrenchMode(ItemStack stack);
+    default WrenchMode getWrenchMode(ItemStack stack) {
+        CompoundNBT nbt = stack.getOrCreateChildTag("PowahWranchNBT");
+        return WrenchMode.values()[nbt.getInt("WrenchMode")];
+    }
 
     default boolean changeWrenchMode(ItemStack stack, boolean next) {
         if (stack.getItem() instanceof IWrench)

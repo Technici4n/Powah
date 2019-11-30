@@ -1,0 +1,42 @@
+{
+  "multipart": [
+	{
+	  "apply": {"model": "powah:block/cable_niotic"}
+	}, {
+	  "when": {
+		"north": true
+	  },
+	  "apply": {"model": "powah:block/cable_multipart_niotic"}
+	},
+	{
+	  "when": {
+		"east": true
+	  },
+	  "apply": {"model": "powah:block/cable_multipart_niotic", "y": 90}
+	},
+	{
+	  "when": {
+		"south": true
+	  },
+	  "apply": {"model": "powah:block/cable_multipart_niotic", "x": 180}
+	},
+	{
+	  "when": {
+		"west": true
+	  },
+	  "apply": {"model": "powah:block/cable_multipart_niotic", "y": 270}
+	},
+	{
+	  "when": {
+		"up": true
+	  },
+	  "apply": {"model": "powah:block/cable_multipart_niotic", "x": 270}
+	},
+	{
+	  "when": {
+		"down": true
+	  },
+	  "apply": {"model": "powah:block/cable_multipart_niotic", "x": 90}
+	}
+  ]
+}

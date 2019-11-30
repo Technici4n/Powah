@@ -9,6 +9,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import zeroneye.powah.Powah;
 import zeroneye.powah.block.IBlocks;
+import zeroneye.powah.block.cable.Cables;
 import zeroneye.powah.block.generator.furnator.Furnators;
 import zeroneye.powah.block.generator.magmatic.MagmaticGenerators;
 import zeroneye.powah.block.generator.panel.Panels;
@@ -39,6 +40,10 @@ public class PowahJEIPlugin implements IModPlugin {
                 .map(Panels::get)
                 .map(ItemStack::new)
                 .collect(Collectors.toList()), VanillaTypes.ITEM, I18n.format("wiki.powah.solar_panel"));
+        registration.addIngredientInfo(Stream.of(Cables.values())
+                .map(Cables::get)
+                .map(ItemStack::new)
+                .collect(Collectors.toList()), VanillaTypes.ITEM, I18n.format("wiki.powah.cable"));
 
         registration.addIngredientInfo(new ItemStack(IBlocks.PLAYER_TRANSMITTER), VanillaTypes.ITEM, I18n.format("wiki.powah.player_transmitter"));
         registration.addIngredientInfo(new ItemStack(IBlocks.PLAYER_TRANSMITTER_DIM), VanillaTypes.ITEM, I18n.format("wiki.powah.player_transmitter_dim"));

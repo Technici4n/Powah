@@ -42,6 +42,12 @@ public class IContainers {
     public static final ContainerType<PlayerTransmitterContainer> PLAYER_TRANSMITTER = register("player_transmitter", PlayerTransmitterContainer::create);
     public static final ContainerType<PlayerTransmitterContainer> PLAYER_TRANSMITTER_DIM = register("player_transmitter_dim", PlayerTransmitterContainer::createDim);
 
+    public static final ContainerType<CableContainer> CABLE_BASIC = register("cable_basic", CableContainer::createBasic);
+    public static final ContainerType<CableContainer> CABLE_HARDENED = register("cable_hardened", CableContainer::createHardened);
+    public static final ContainerType<CableContainer> CABLE_BLAZING = register("cable_blazing", CableContainer::createBlazing);
+    public static final ContainerType<CableContainer> CABLE_NIOTIC = register("cable_niotic", CableContainer::createNiotic);
+    public static final ContainerType<CableContainer> CABLE_SPIRITED = register("cable_spirited", CableContainer::createSpirited);
+
 
     private static <T extends Container> ContainerType<T> register(String name, IContainerFactory<T> factory) {
         ContainerType<T> containerType = IForgeContainerType.create(factory);

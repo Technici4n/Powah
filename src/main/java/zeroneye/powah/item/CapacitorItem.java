@@ -11,6 +11,7 @@ import net.minecraft.util.Direction;
 import net.minecraft.util.Hand;
 import net.minecraft.util.SoundEvents;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 import net.minecraftforge.items.ItemHandlerHelper;
 import zeroneye.lib.item.ItemBase;
@@ -43,7 +44,7 @@ public class CapacitorItem extends ItemBase {
     }
 
     @Override
-    public ActionResultType onItemUse(World world, BlockPos pos, PlayerEntity player, Hand hand, Direction direction) {
+    public ActionResultType onItemUse(World world, BlockPos pos, PlayerEntity player, Hand hand, Direction direction, Vec3d hit) {
         if (this == IItems.CAPACITOR_BLAZING) {
             if (Config.GENERAL.capacitor_niotic.get()) {
                 ItemStack stack = player.getHeldItem(hand);
@@ -59,7 +60,6 @@ public class CapacitorItem extends ItemBase {
                     return ActionResultType.SUCCESS;
                 }
             }
-        } else if (this == IItems.CAPACITOR_NIOTIC) {
             if (Config.GENERAL.capacitor_spirited.get()) {
                 ItemStack stack = player.getHeldItem(hand);
                 BlockState state = world.getBlockState(pos);
@@ -75,6 +75,6 @@ public class CapacitorItem extends ItemBase {
                 }
             }
         }
-        return super.onItemUse(world, pos, player, hand, direction);
+        return super.onItemUse(world, pos, player, hand, direction, hit);
     }
 }

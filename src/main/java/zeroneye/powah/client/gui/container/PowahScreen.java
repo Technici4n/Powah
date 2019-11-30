@@ -174,9 +174,15 @@ public abstract class PowahScreen<T extends PowahContainer> extends ContainerScr
             } else {
                 bindTexture(getConfigBackGroundImage());
             }
-            this.blit(this.x + 23, this.y, 0, 0, 153, 72);
+            this.blit(this.x + (hasEnergyBare() ? 23 : 0), this.y, 0, 0, 153 + (hasEnergyBare() ? 0 : 23), 72);
         }
-        renderEnergyBare();
+        if (hasEnergyBare()) {
+            renderEnergyBare();
+        }
+    }
+
+    protected boolean hasEnergyBare() {
+        return true;
     }
 
     public void renderEnergyBare() {
@@ -202,7 +208,7 @@ public abstract class PowahScreen<T extends PowahContainer> extends ContainerScr
     @Override
     protected void renderHoveredToolTip(int mouseX, int mouseY) {
         super.renderHoveredToolTip(mouseX, mouseY);
-        if (isMouseOver(mouseX - 3, mouseY - 3, 16, 66)) {
+        if (hasEnergyBare() && isMouseOver(mouseX - 3, mouseY - 3, 16, 66)) {
             PowahStorage storage = this.tile.getInternal();
             List<String> list = new ArrayList<>();
             list.add(TextFormatting.GRAY + getTitle().getString());

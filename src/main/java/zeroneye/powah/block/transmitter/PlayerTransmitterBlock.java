@@ -4,11 +4,13 @@ import net.minecraft.block.BlockState;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.Direction;
+import net.minecraft.util.Rotation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.shapes.IBooleanFunction;
 import net.minecraft.util.math.shapes.ISelectionContext;
 import net.minecraft.util.math.shapes.VoxelShape;
 import net.minecraft.world.IBlockReader;
+import net.minecraft.world.IWorld;
 import net.minecraft.world.IWorldReader;
 import zeroneye.lib.block.TileBase;
 import zeroneye.lib.inventory.ContainerBase;
@@ -73,6 +75,18 @@ public class PlayerTransmitterBlock extends PowahBlock {
         TileEntity tile = worldIn.getTileEntity(blockpos);
         return tile != null && !(tile instanceof PlayerTransmitterTile) && Energy.getForgeEnergy(tile, direction.getOpposite()).isPresent();
     }
+
+    @Override
+    public BlockState rotate(BlockState state, IWorld world, BlockPos pos, Rotation direction) {
+        Direction side = direction.rotate(state.get(FACING));
+        BlockPos blockpos = pos.offset(side.getOpposite());
+        BlockState state1 = world.getBlockState(blockpos);
+        if (isValidPosition(state1, world, blockpos)) {
+            return super.rotate(state, world, pos, direction);
+        }
+        return state;
+    }
+
 
     @Override
     public boolean isSolid(BlockState state) {

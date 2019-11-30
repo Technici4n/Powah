@@ -14,6 +14,7 @@ import java.util.List;
 @Mod.EventBusSubscriber(bus = Mod.EventBusSubscriber.Bus.MOD)
 public class IItems {
     public static final List<Item> ITEMS = new ArrayList<>(IBlocks.BLOCK_ITEMS);
+    public static final Item WRENCH;
     public static final Item DIELECTRIC_PASTE;
     public static final Item DIELECTRIC_ROD;
     public static final Item DIELECTRIC_ROD_HORIZONTAL;
@@ -31,6 +32,7 @@ public class IItems {
     public static final Item PHOTOELECTRIC_PANE;
 
     static {
+        WRENCH = register("wrench", new WrenchItem(new Item.Properties().group(ItemGroups.MAIN).maxStackSize(1)));
         DIELECTRIC_PASTE = register("dielectric_paste", new ItemBase(new Item.Properties().group(ItemGroups.MAIN)));
         DIELECTRIC_ROD = register("dielectric_rod", new ItemBase(new Item.Properties().group(ItemGroups.MAIN)));
         DIELECTRIC_ROD_HORIZONTAL = register("dielectric_rod_horizontal", new ItemBase(new Item.Properties().group(ItemGroups.MAIN)));

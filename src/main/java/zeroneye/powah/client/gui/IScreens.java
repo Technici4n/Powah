@@ -36,5 +36,11 @@ public class IScreens {
 
         ScreenManager.registerFactory(IContainers.PLAYER_TRANSMITTER, PlayerTransmitterScreen::new);
         ScreenManager.registerFactory(IContainers.PLAYER_TRANSMITTER_DIM, PlayerTransmitterScreen::new);
+
+        ScreenManager.registerFactory(IContainers.CABLE_BASIC, CableScreen::new);
+        ScreenManager.registerFactory(IContainers.CABLE_HARDENED, CableScreen::new);
+        ScreenManager.registerFactory(IContainers.CABLE_BLAZING, CableScreen::new);
+        ScreenManager.registerFactory(IContainers.CABLE_NIOTIC, CableScreen::new);
+        ScreenManager.registerFactory(IContainers.CABLE_SPIRITED, CableScreen::new);
     }
 }

@@ -33,7 +33,9 @@ public class PowahBlockItem extends BlockItemBase {
     public void addInformation(ItemStack stack, @Nullable World world, List<ITextComponent> list, ITooltipFlag flag) {
         Energy.getForgeEnergy(stack).ifPresent(storage -> {
             if (storage instanceof ItemPowahStorage && !getBlock().isCreative()) {
-                list.add(new TranslationTextComponent("info.powah.stored", "" + TextFormatting.DARK_GRAY + storage.getEnergyStored(), storage.getMaxEnergyStored()).applyTextStyle(TextFormatting.GRAY));
+                if (storage.getMaxEnergyStored() > 0) {
+                    list.add(new TranslationTextComponent("info.powah.stored", "" + TextFormatting.DARK_GRAY + storage.getEnergyStored(), storage.getMaxEnergyStored()).applyTextStyle(TextFormatting.GRAY));
+                }
                 if (getBlock() instanceof GeneratorBlock) {
                     list.add(new TranslationTextComponent("info.powah.generates", "" + TextFormatting.DARK_GRAY + ((GeneratorBlock) getBlock()).perTick()).applyTextStyle(TextFormatting.GRAY));
                 }

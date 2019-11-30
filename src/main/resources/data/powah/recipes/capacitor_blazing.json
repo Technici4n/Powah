@@ -1,0 +1,23 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+	"pbp",
+	"bcb",
+	"pbp"
+  ],
+  "key": {
+	"p": {
+	  "item": "powah:dielectric_paste"
+	},
+	"c": {
+	  "item": "powah:capacitor_basic_large"
+	},
+	"b": {
+	  "item": "minecraft:blaze_rod"
+	}
+  },
+  "result": {
+	"item": "powah:capacitor_blazing",
+	"count": 2
+  }
+}

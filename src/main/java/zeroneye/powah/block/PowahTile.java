@@ -71,11 +71,13 @@ public abstract class PowahTile extends TileBase.TickableInv {
             if (getBlock() instanceof PowahBlock) {
                 PowahBlock powahBlock = (PowahBlock) getBlock();
                 this.internal.setCapacity(powahBlock.capacity);
-                if (isCreative) {
-                    this.internal.setEnergy(powahBlock.capacity);
-                }
                 this.internal.setMaxExtract(powahBlock.maxExtract);
                 this.internal.setMaxReceive(powahBlock.maxReceive);
+                if (isCreative) {
+                    this.internal.setEnergy(powahBlock.capacity);
+                    this.internal.setMaxReceive(powahBlock.capacity);
+                    this.internal.setMaxExtract(powahBlock.capacity);
+                }
                 markDirtyAndSync();
             }
         }
@@ -94,10 +96,11 @@ public abstract class PowahTile extends TileBase.TickableInv {
 
         if (canExtraxtFromSides()) {
             for (Direction direction : Direction.values()) {
-                if (!canExtract(direction)) break;
-                int amount = Math.min(this.internal.getMaxExtract(), this.internal.getEnergyStored());
-                int received = Energy.receive(this.world, this.pos.offset(direction), direction.getOpposite(), amount, false);
-                extracted += extractEnergy(received, false, direction);
+                if (canExtract(direction)) {
+                    int amount = Math.min(this.internal.getMaxExtract(), this.internal.getEnergyStored());
+                    int received = Energy.receive(this.world, this.pos.offset(direction), direction.getOpposite(), amount, false);
+                    extracted += extractEnergy(received, false, direction);
+                }
             }
         }
 

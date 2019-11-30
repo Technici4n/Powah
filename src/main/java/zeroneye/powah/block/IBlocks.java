@@ -8,6 +8,8 @@ import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import zeroneye.lib.block.IBlockBase;
+import zeroneye.powah.block.cable.CableBlock;
+import zeroneye.powah.block.cable.Cables;
 import zeroneye.powah.block.generator.furnator.FurnatorBlock;
 import zeroneye.powah.block.generator.furnator.Furnators;
 import zeroneye.powah.block.generator.magmatic.MagmaticGenBlock;
@@ -32,6 +34,7 @@ public class IBlocks {
     public static final SolarPanelBlock[] SOLAR_PANELS;
     public static final Block PLAYER_TRANSMITTER;
     public static final Block PLAYER_TRANSMITTER_DIM;
+    public static final CableBlock[] CABLES;
 
     static {
         EnergyCells[] cells = EnergyCells.values();
@@ -64,6 +67,14 @@ public class IBlocks {
 
         PLAYER_TRANSMITTER = register("player_transmitter", new PlayerTransmitterBlock(Block.Properties.create(Material.MISCELLANEOUS).hardnessAndResistance(1.0F, 15.0F).doesNotBlockMovement(), 10000, 100, 1, false));
         PLAYER_TRANSMITTER_DIM = register("player_transmitter_dim", new PlayerTransmitterBlock(Block.Properties.create(Material.MISCELLANEOUS).hardnessAndResistance(1.0F, 15.0F).doesNotBlockMovement(), 100000, 250, 2, true));
+
+
+        Cables[] cables = Cables.values();
+        CABLES = new CableBlock[cables.length];
+        for (int i = 0; i < cables.length; i++) {
+            Cables cable = cables[i];
+            CABLES[i] = register("cable_" + cable.name().toLowerCase(), new CableBlock(Block.Properties.create(cable.material).hardnessAndResistance(1.0F, cable.resistance).doesNotBlockMovement(), cable.transfer, cable.transfer));
+        }
     }
 
     static <T extends Block & IBlockBase> T register(String name, T block) {

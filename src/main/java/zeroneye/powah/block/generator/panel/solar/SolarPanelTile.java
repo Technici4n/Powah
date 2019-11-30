@@ -2,6 +2,8 @@ package zeroneye.powah.block.generator.panel.solar;
 
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.util.Direction;
+import zeroneye.lib.util.Misc;
+import zeroneye.lib.util.Time;
 import zeroneye.powah.block.ITiles;
 import zeroneye.powah.block.generator.GeneratorTile;
 
@@ -36,22 +38,16 @@ public class SolarPanelTile extends GeneratorTile {
         if (this.world == null) return;
         if (this.world.isRemote) return;
 
-        if (!this.world.isDaytime() && this.canSeeSunLight || this.world.getGameTime() % 40L == 0L) {
-            this.canSeeSunLight = this.world.isDaytime() && this.world.canBlockSeeSky(this.pos);
+        if (!Time.isDayTime(this.world) && this.canSeeSunLight || this.ticks % 40L == 0L) {
+            this.canSeeSunLight = Time.isDayTime(this.world) && Misc.canBlockSeeSky(this.world, this.pos, null);
             markDirtyAndSync();
         }
 
         if (this.internal.isFull()) return;
 
-        if (this.nextGen <= 0 && this.noSkyDelay <= 0) {
+        if (this.nextGen <= 0) {
             if (this.canSeeSunLight) {
                 this.nextGen = this.perTick;
-            } else {
-                this.noSkyDelay = 40;
-            }
-        } else {
-            if (this.noSkyDelay > 0) {
-                this.noSkyDelay--;
             }
         }
     }
