@@ -60,25 +60,21 @@ public abstract class GeneratorTile extends PowahTile {
         boolean flag = isGenerating();
         boolean flag1 = super.postTicks();
         if (perTick() > 0) {
-            int toGenerate = 0;
-            if (this.nextGen >= perTick()) {
-                toGenerate = perTick();
-                this.nextGen -= perTick();
+            int toGenerate = Math.min(perTick(), this.internal.getDif());
+            if (this.nextGen > toGenerate) {
+                this.nextGen -= toGenerate;
                 if (this.nextGen <= 0) {
                     this.nextGenCap = 0;
                 }
             } else {
-                if (this.nextGen > 0) {
-                    toGenerate = this.nextGen;
-                    this.nextGen = 0;
-                    this.nextGenCap = 0;
-                }
+                toGenerate = this.nextGen;
+                this.nextGen = 0;
+                this.nextGenCap = 0;
             }
             generate();
             if (toGenerate > 0) {
                 int stored = this.internal.getEnergyStored();
-                int capacity = this.internal.getMaxEnergyStored();
-                this.internal.setEnergy(stored + Math.min(capacity - stored, toGenerate));
+                this.internal.setEnergy(stored + toGenerate);
                 flag1 = true;
             }
         }

@@ -16,6 +16,7 @@ public abstract class PowahBlock extends BlockBase {
 
     public PowahBlock(Properties properties, int capacity, int maxExtract, int maxReceive) {
         super(properties);
+
         this.capacity = capacity;
         this.maxExtract = maxExtract;
         this.maxReceive = maxReceive;

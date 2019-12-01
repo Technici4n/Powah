@@ -73,7 +73,7 @@ public class PlayerTransmitterBlock extends PowahBlock {
         Direction direction = state.get(FACING);
         BlockPos blockpos = pos.offset(direction.getOpposite());
         TileEntity tile = worldIn.getTileEntity(blockpos);
-        return tile != null && !(tile instanceof PlayerTransmitterTile) && Energy.getForgeEnergy(tile, direction.getOpposite()).isPresent();
+        return tile != null && !(tile instanceof PlayerTransmitterTile) && Energy.hasEnergy(tile, direction);
     }
 
     @Override

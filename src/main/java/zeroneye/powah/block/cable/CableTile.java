@@ -1,5 +1,6 @@
 package zeroneye.powah.block.cable;
 
+import net.minecraft.block.Block;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.nbt.ListNBT;
 import net.minecraft.tileentity.TileEntity;
@@ -15,6 +16,7 @@ import java.util.Map;
 
 public class CableTile extends PowahTile {
     public final Map<Direction, LinkedCables> linkedCables = new HashMap<>();
+    public boolean[] flags = new boolean[6];
 
     public CableTile(int maxReceive, int maxExtract, boolean isCreative) {
         super(ITiles.CABLE, 0, maxReceive, maxExtract, isCreative);
@@ -52,6 +54,11 @@ public class CableTile extends PowahTile {
     }
 
     @Override
+    public boolean isNBTStorable() {
+        return false;
+    }
+
+    @Override
     protected boolean postTicks() {
         if (this.world == null) return false;
         final int[] extracted = {0};
@@ -59,28 +66,34 @@ public class CableTile extends PowahTile {
             for (Direction direction : Direction.values()) {
                 BlockPos handlerPos = this.pos.offset(direction);
                 TileEntity handlerTile = this.world.getTileEntity(handlerPos);
-                Energy.getForgeEnergy(handlerTile, direction.getOpposite()).ifPresent(storage -> {
+                Energy.getForgeEnergy(handlerTile, direction).ifPresent(storage -> {
                     if (storage.canExtract() && canReceive(direction)) {
-                        int amount = Math.min(this.internal.getMaxExtract(), storage.getEnergyStored());
                         LinkedCables cables = this.linkedCables.get(direction);
                         cables.cables().forEach(cablePos -> {
+                            int amount = Math.min(this.internal.getMaxExtract() - extracted[0], storage.getEnergyStored());
                             TileEntity cableTile = this.world.getTileEntity(cablePos);
                             if (cableTile instanceof CableTile) {
                                 CableTile cable = (CableTile) cableTile;
                                 for (Direction side : Direction.values()) {
-                                    if (cable.canExtract(side)) {
-                                        TileEntity receiver = this.world.getTileEntity(cablePos.offset(side));
-                                        int received = Energy.receive(receiver, side.getOpposite(), amount, false);
-                                        extracted[0] += storage.extractEnergy(received, false);
+                                    if (amount > 0) {
+                                        if (cable.canExtract(side)) {
+                                            TileEntity receiver = this.world.getTileEntity(cablePos.offset(side));
+                                            int received = Energy.receive(receiver, side.getOpposite(), amount, false);
+                                            extracted[0] += storage.extractEnergy(received, false);
+                                        }
                                     }
                                 }
                             }
                         });
+
+                        int amount = Math.min(this.internal.getMaxExtract() - extracted[0], storage.getEnergyStored());
                         for (Direction side : Direction.values()) {
-                            if (canExtract(side)) {
-                                if (!side.equals(direction)) {
-                                    int received = Energy.receive(this.world, this.pos.offset(side), side.getOpposite(), amount, false);
-                                    extracted[0] += storage.extractEnergy(received, false);
+                            if (amount > 0) {
+                                if (canExtract(side)) {
+                                    if (!side.equals(direction)) {
+                                        int received = Energy.receive(this.world, this.pos.offset(side), side.getOpposite(), amount, false);
+                                        extracted[0] += storage.extractEnergy(received, false);
+                                    }
                                 }
                             }
                         }
@@ -92,7 +105,7 @@ public class CableTile extends PowahTile {
         return extracted[0] > 0;
     }
 
-    public void search(Direction side) {
-        this.linkedCables.get(side).search(this, side).clear();
+    public void search(Block block, Direction side) {
+        this.linkedCables.get(side).search(block, this, side).clear();
     }
 }

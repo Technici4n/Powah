@@ -211,7 +211,7 @@ public abstract class PowahTile extends TileBase.TickableInv {
     public boolean isItemValidForSlot(int index, ItemStack itemStack) {
         for (int i = 0; i < getChargingSlots(); i++) {
             if (index == i) {
-                return Energy.getForgeEnergy(itemStack).isPresent();
+                return Energy.hasEnergy(itemStack);
             }
         }
         return true;

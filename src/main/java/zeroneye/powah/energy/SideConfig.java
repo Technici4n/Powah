@@ -77,4 +77,8 @@ public class SideConfig {
         }
         setPowerMode(side, powerMode);
     }
+
+    public PowerMode getPowerMode(int i) {
+        return powerMode[i];
+    }
 }

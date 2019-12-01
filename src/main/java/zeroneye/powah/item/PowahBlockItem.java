@@ -25,7 +25,7 @@ public class PowahBlockItem extends BlockItemBase {
     private final PowahBlock block;
 
     public PowahBlockItem(PowahBlock block, Properties properties, @Nullable ItemGroup group) {
-        super(block, properties.maxStackSize(1).rarity(block.isCreative() ? Rarity.RARE : Rarity.COMMON), group);
+        super(block, properties.rarity(block.isCreative() ? Rarity.RARE : Rarity.COMMON), group);
         this.block = block;
     }
 

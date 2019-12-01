@@ -57,6 +57,10 @@ public class PowahStorage extends EnergyStorage {
         }
     }
 
+    public int getDif() {
+        return getMaxEnergyStored() - getEnergyStored();
+    }
+
     public int getMaxReceive() {
         return maxReceive;
     }

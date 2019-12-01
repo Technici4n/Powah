@@ -1,5 +1,6 @@
 package zeroneye.powah.block.cable;
 
+import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.nbt.ListNBT;
@@ -71,7 +72,7 @@ public class LinkedCables {
         return cableTiles;
     }
 
-    public Set<BlockPos> search(CableTile tile, Direction side) {
+    public Set<BlockPos> search(Block block, CableTile tile, Direction side) {
         World world = tile.getWorld();
         if (world != null) {
             BlockPos pos = tile.getPos();
@@ -79,7 +80,7 @@ public class LinkedCables {
             for (Direction direction : Direction.values()) {
                 BlockPos blockPos = pos.offset(direction);
                 BlockState state = world.getBlockState(blockPos);
-                if (state.getBlock() instanceof CableBlock) {
+                if (state.getBlock() == block) {
                     TileEntity tileEntity = world.getTileEntity(blockPos);
                     if (tileEntity instanceof CableTile) {
                         add(blockPos);

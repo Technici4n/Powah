@@ -5,14 +5,17 @@ import net.minecraft.block.BlockState;
 import net.minecraft.block.SixWayBlock;
 import net.minecraft.block.SoundType;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.particle.DiggingParticle;
 import net.minecraft.client.particle.ParticleManager;
+import net.minecraft.client.resources.I18n;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.InventoryHelper;
 import net.minecraft.item.BlockItemUseContext;
 import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.state.BooleanProperty;
 import net.minecraft.state.StateContainer;
 import net.minecraft.tileentity.TileEntity;
@@ -28,25 +31,25 @@ import net.minecraft.util.math.shapes.VoxelShapes;
 import net.minecraft.world.IBlockReader;
 import net.minecraft.world.IWorld;
 import net.minecraft.world.World;
+import net.minecraft.world.server.ServerWorld;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import zeroneye.lib.block.TileBase;
+import zeroneye.lib.client.handler.IHud;
 import zeroneye.lib.inventory.ContainerBase;
 import zeroneye.lib.util.Energy;
+import zeroneye.lib.util.Server;
 import zeroneye.lib.util.Side;
-import zeroneye.powah.api.wrench.IWrenchable;
-import zeroneye.powah.api.wrench.WrenchMode;
 import zeroneye.powah.block.PowahBlock;
+import zeroneye.powah.energy.PowerMode;
 import zeroneye.powah.inventory.CableContainer;
 import zeroneye.powah.inventory.IContainers;
+import zeroneye.powah.item.WrenchItem;
 
 import javax.annotation.Nullable;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
-public class CableBlock extends PowahBlock implements IWrenchable {
+public class CableBlock extends PowahBlock implements IHud {
     public static final BooleanProperty NORTH = SixWayBlock.NORTH;
     public static final BooleanProperty EAST = SixWayBlock.EAST;
     public static final BooleanProperty SOUTH = SixWayBlock.SOUTH;
@@ -170,7 +173,12 @@ public class CableBlock extends PowahBlock implements IWrenchable {
         } else {
             TileEntity tileEntity = world.getTileEntity(pos);
             if (tileEntity instanceof CableTile) {
-                InventoryHelper.dropInventoryItems((World) world, pos, (CableTile) tileEntity);
+                CableTile cable = (CableTile) tileEntity;
+                InventoryHelper.dropInventoryItems((World) world, pos, cable);
+                if (world instanceof ServerWorld) {
+                    CableNoneTileData data = Server.getData(CableNoneTileData::new, ((ServerWorld) world).dimension);
+                    data.add(pos, cable.getSideConfig().write(new CompoundNBT()));
+                }
                 tileEntity.remove();
             }
         }
@@ -187,7 +195,7 @@ public class CableBlock extends PowahBlock implements IWrenchable {
             CableTile cable = (CableTile) tileEntity;
             for (Direction direction : Direction.values()) {
                 if (cable.canExtract(direction)) {
-                    cable.search(direction);
+                    cable.search(this, direction);
                 }
             }
         } else {
@@ -196,19 +204,30 @@ public class CableBlock extends PowahBlock implements IWrenchable {
     }
 
     @Override
-    public void onReplaced(BlockState state, World worldIn, BlockPos pos, BlockState newState, boolean isMoving) {
-        searchCables(worldIn, pos, pos);
-        super.onReplaced(state, worldIn, pos, newState, isMoving);
+    public void onBlockAdded(BlockState state, World world, BlockPos pos, BlockState oldState, boolean isMoving) {
+        TileEntity tileEntity = world.getTileEntity(pos);
+        if (tileEntity instanceof CableTile) {
+            CableTile cable = (CableTile) tileEntity;
+            if (world instanceof ServerWorld && cable.ticks == 0) {
+                CableNoneTileData data = Server.getData(CableNoneTileData::new, ((ServerWorld) world).dimension);
+                CompoundNBT nbt = data.get(pos);
+                if (nbt != null) {// TODO
+                    cable.getSideConfig().read(nbt);
+                    cable.setReadyToSync(true);
+                }
+            }
+        }
+        super.onBlockAdded(state, world, pos, oldState, isMoving);
     }
 
     private boolean[] canAttach(BlockState state, IWorld world, BlockPos pos, Direction direction) {
-        return new boolean[]{world.getBlockState(pos.offset(direction)).getBlock() instanceof CableBlock || checkTileType(world, pos, direction), checkTileType(world, pos, direction)};
+        return new boolean[]{world.getBlockState(pos.offset(direction)).getBlock() == this || checkTileType(world, pos, direction), checkTileType(world, pos, direction)};
     }
 
-    private boolean checkTileType(IWorld world, BlockPos pos, Direction direction) {
+    public boolean checkTileType(IWorld world, BlockPos pos, Direction direction) {
         BlockPos pos1 = pos.offset(direction);
         TileEntity tileEntity = world.getTileEntity(pos1);
-        return !(tileEntity instanceof CableTile) && Energy.getForgeEnergy(tileEntity, direction).isPresent();
+        return !(tileEntity instanceof CableTile) && Energy.hasEnergy(tileEntity, direction);
     }
 
     @Override
@@ -222,7 +241,7 @@ public class CableBlock extends PowahBlock implements IWrenchable {
             for (Direction direction : Direction.values()) {
                 BlockPos blockPos = pos.offset(direction);
                 BlockState state = world.getBlockState(blockPos);
-                if (state.getBlock() instanceof CableBlock) {
+                if (state.getBlock() == this) {
                     TileEntity tileEntity = world.getTileEntity(blockPos);
                     if (tileEntity instanceof CableTile) {
                         CableTile cable = (CableTile) tileEntity;
@@ -239,9 +258,15 @@ public class CableBlock extends PowahBlock implements IWrenchable {
     @Override
     public void neighborChanged(BlockState state, World world, BlockPos pos, Block blockIn, BlockPos fromPos, boolean isMoving) {
         super.neighborChanged(state, world, pos, blockIn, fromPos, isMoving);
-        if (Energy.getForgeEnergy(world.getTileEntity(fromPos), Side.fromNeighbor(pos, fromPos).getOpposite()).isPresent()) {
+        if (Energy.hasEnergy(world, fromPos, Side.fromNeighbor(pos, fromPos))) {
             searchCables(world, pos, pos);
         }
+    }
+
+    @Override
+    public void onReplaced(BlockState state, World worldIn, BlockPos pos, BlockState newState, boolean isMoving) {
+        searchCables(worldIn, pos, pos);
+        super.onReplaced(state, worldIn, pos, newState, isMoving);
     }
 
     static final Map<BlockPos, Set<BlockPos>> CACH = new HashMap<>();
@@ -255,13 +280,13 @@ public class CableBlock extends PowahBlock implements IWrenchable {
             for (Direction direction : Direction.values()) {
                 BlockPos blockPos = pos.offset(direction);
                 BlockState state = world.getBlockState(blockPos);
-                if (state.getBlock() instanceof CableBlock) {
+                if (state.getBlock() == this) {
                     TileEntity tileEntity = world.getTileEntity(blockPos);
                     if (tileEntity instanceof CableTile) {
                         CableTile cable = (CableTile) tileEntity;
                         for (Direction side : Direction.values()) {
                             cable.linkedCables.get(side).cables().clear();
-                            cable.search(side);
+                            cable.search(this, side);
                         }
                     }
                     CableBlock cableBlock = (CableBlock) state.getBlock();
@@ -276,15 +301,78 @@ public class CableBlock extends PowahBlock implements IWrenchable {
 
     @Override
     public boolean onBlockActivated(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockRayTraceResult blockRayTraceResult) {
+        ItemStack stack = player.getHeldItem(hand);
+        TileEntity tileEntity = world.getTileEntity(pos);
+        if (tileEntity instanceof CableTile) {
+            CableTile cable = (CableTile) tileEntity;
+            if (stack.getItem() instanceof WrenchItem) {
+                Vec3d hit = blockRayTraceResult.getHitVec();
+                Optional<Direction> sides = getHitSide(hit, pos);
+                boolean[] flag = {false};
+                sides.ifPresent(direction -> {
+                    if (checkTileType(world, pos, direction)) {
+                        cable.getSideConfig().nextPowerMode(direction);
+                        flag[0] = true;
+                    }
+                });
+                if (!world.isRemote && flag[0]) {
+                    cable.markDirtyAndSync();
+                    return true;
+                }
+            }
+        }
         return super.onBlockActivated(state, world, pos, player, hand, blockRayTraceResult);
     }
 
     @Override
-    public boolean onWrench(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, Direction side, WrenchMode mode, Vec3d hit) {
-        TileEntity tileEntity = world.getTileEntity(pos);
+    @OnlyIn(Dist.CLIENT)
+    public boolean renderHud(BlockState state, World world, PlayerEntity player, Hand hand, BlockRayTraceResult result) {
+        ItemStack stack = player.getHeldItem(hand);
+        TileEntity tileEntity = world.getTileEntity(result.getPos());
+        boolean[] flag = {false};
         if (tileEntity instanceof CableTile) {
-
+            CableTile cable = (CableTile) tileEntity;
+            if (stack.getItem() instanceof WrenchItem) {
+                Vec3d hit = result.getHitVec();
+                Optional<Direction> sides = getHitSide(hit, result.getPos());
+                sides.ifPresent(direction -> {
+                    if (checkTileType(world, result.getPos(), direction)) {
+                        Minecraft mc = Minecraft.getInstance();
+                        FontRenderer font = mc.fontRenderer;
+                        int width = mc.mainWindow.getScaledWidth();
+                        int height = mc.mainWindow.getScaledHeight();
+                        String s = I18n.format("info.lollipop.side." + direction.getName(), "");
+                        int sw = font.getStringWidth(s);
+                        font.drawStringWithShadow(s, -(sw / 2) + (width / 2), height - 80, 0x999999);
+                        PowerMode mode = cable.getSideConfig().getPowerMode(direction);
+                        String sideConf = I18n.format("info.powah.mode.cable." + mode.name().toLowerCase(), "");
+                        int sc = font.getStringWidth(sideConf);
+                        font.drawStringWithShadow(sideConf, -(sc / 2) + (width / 2), height - 95, 0x999999);
+                        flag[0] = true;
+                    }
+                });
+            }
         }
-        return false;
+        return flag[0];
+    }
+
+    public Optional<Direction> getHitSide(Vec3d hit, BlockPos pos) {
+        double x = hit.x - pos.getX();
+        double y = hit.y - pos.getY();
+        double z = hit.z - pos.getZ();
+        if (x > 0.0D && x < 0.4D) {
+            return Optional.of(Direction.WEST);
+        } else if (x > 0.6D && x < 1.0D) {
+            return Optional.of(Direction.EAST);
+        } else if (z > 0.0D && z < 0.4D) {
+            return Optional.of(Direction.NORTH);
+        } else if (z > 0.6D && z < 1.0D) {
+            return Optional.of(Direction.SOUTH);
+        } else if (y > 0.6D && y < 1.0D) {
+            return Optional.of(Direction.UP);
+        } else if (y > 0.0D && y < 0.4D) {
+            return Optional.of(Direction.DOWN);
+        }
+        return Optional.empty();
     }
 }
