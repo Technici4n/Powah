@@ -10,7 +10,6 @@ import net.minecraft.world.IBlockReader;
 import zeroneye.lib.block.TileBase;
 import zeroneye.lib.inventory.ContainerBase;
 import zeroneye.powah.block.generator.GeneratorBlock;
-import zeroneye.powah.block.generator.panel.Panels;
 import zeroneye.powah.inventory.IContainers;
 import zeroneye.powah.inventory.SolarPanelContainer;
 
@@ -42,15 +41,15 @@ public class SolarPanelBlock extends GeneratorBlock {
     @Nullable
     @Override
     public ContainerBase getContainer(int id, PlayerInventory playerInventory, TileBase.TickableInv inv) {
-        if (this == Panels.BASIC.get()) {
+        if (this == SolarPanels.BASIC.get()) {
             return new SolarPanelContainer(IContainers.SOLAR_PANEL_BASIC, id, playerInventory, (SolarPanelTile) inv);
-        } else if (this == Panels.HARDENED.get()) {
+        } else if (this == SolarPanels.HARDENED.get()) {
             return new SolarPanelContainer(IContainers.SOLAR_PANEL_HARDENED, id, playerInventory, (SolarPanelTile) inv);
-        } else if (this == Panels.BLAZING.get()) {
+        } else if (this == SolarPanels.BLAZING.get()) {
             return new SolarPanelContainer(IContainers.SOLAR_PANEL_BLAZING, id, playerInventory, (SolarPanelTile) inv);
-        } else if (this == Panels.NIOTIC.get()) {
+        } else if (this == SolarPanels.NIOTIC.get()) {
             return new SolarPanelContainer(IContainers.SOLAR_PANEL_NIOTIC, id, playerInventory, (SolarPanelTile) inv);
-        } else if (this == Panels.SPIRITED.get()) {
+        } else if (this == SolarPanels.SPIRITED.get()) {
             return new SolarPanelContainer(IContainers.SOLAR_PANEL_SPIRITED, id, playerInventory, (SolarPanelTile) inv);
         }
         return super.getContainer(id, playerInventory, inv);

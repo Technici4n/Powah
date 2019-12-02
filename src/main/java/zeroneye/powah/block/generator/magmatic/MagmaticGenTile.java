@@ -18,6 +18,7 @@ import javax.annotation.Nullable;
 public class MagmaticGenTile extends GeneratorTile {
     protected final FluidTank tank;
     private final LazyOptional<IFluidHandler> holder;
+    private int bucketCount;
 
     public MagmaticGenTile(int capacity, int transfer, int perTick, int bucketCount) {
         super(ITiles.MAGMATIC_GENERATOR, capacity, transfer, perTick);
@@ -33,7 +34,7 @@ public class MagmaticGenTile extends GeneratorTile {
                 MagmaticGenTile.this.setReadyToSync(true);
             }
         };
-
+        this.bucketCount = bucketCount;
         this.holder = LazyOptional.of(() -> this.tank);
     }
 
@@ -62,7 +63,7 @@ public class MagmaticGenTile extends GeneratorTile {
         if (!this.world.isRemote) {
             if (getBlock() instanceof MagmaticGenBlock) {
                 MagmaticGenBlock magmaticGen = (MagmaticGenBlock) getBlock();
-                this.tank.setCapacity(magmaticGen.getCapacity());
+                this.tank.setCapacity(FluidAttributes.BUCKET_VOLUME * magmaticGen.getBuckets());
                 setReadyToSync(true);
             }
         }

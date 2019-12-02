@@ -7,6 +7,7 @@ import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import zeroneye.powah.block.cable.CableTile;
+import zeroneye.powah.block.discharger.DischargerTile;
 import zeroneye.powah.block.generator.furnator.FurnatorTile;
 import zeroneye.powah.block.generator.magmatic.MagmaticGenTile;
 import zeroneye.powah.block.generator.panel.solar.SolarPanelTile;
@@ -26,6 +27,7 @@ public class ITiles {
     public static final TileEntityType<?> PLAYER_TRANSMITTER = register("player_transmitter", PlayerTransmitterTile::new, IBlocks.PLAYER_TRANSMITTER, IBlocks.PLAYER_TRANSMITTER_DIM);
     public static final TileEntityType<?> SOLAR_PANEL = register("solar_panel", SolarPanelTile::new, IBlocks.SOLAR_PANELS);
     public static final TileEntityType<?> CABLE = register("cable", CableTile::new, IBlocks.CABLES);
+    public static final TileEntityType<?> DISCHARGER = register("discharger", DischargerTile::new, IBlocks.DISCHARGER);
 
     @SuppressWarnings({"unchecked", "ConstantConditions"})
     static <T extends TileEntity> TileEntityType<T> register(String name, Supplier<? extends T> factoryIn, Block... b) {

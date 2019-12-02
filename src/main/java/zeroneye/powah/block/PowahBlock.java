@@ -9,9 +9,9 @@ import zeroneye.powah.item.PowahBlockItem;
 import javax.annotation.Nullable;
 
 public abstract class PowahBlock extends BlockBase {
-    protected final int capacity;
-    protected final int maxExtract;
-    protected final int maxReceive;
+    protected int capacity;
+    protected int maxExtract;
+    protected int maxReceive;
     protected boolean isCreative;
 
     public PowahBlock(Properties properties, int capacity, int maxExtract, int maxReceive) {
@@ -41,6 +41,23 @@ public abstract class PowahBlock extends BlockBase {
 
     public boolean isCreative() {
         return isCreative;
+    }
+
+    public void setCapacity(int capacity) {
+        this.capacity = capacity;
+    }
+
+    public void setMaxExtract(int maxExtract) {
+        this.maxExtract = maxExtract;
+    }
+
+    public void setMaxReceive(int maxReceive) {
+        this.maxReceive = maxReceive;
+    }
+
+    public void setTransfer(int transfer) {
+        this.maxReceive = transfer;
+        this.maxExtract = transfer;
     }
 
     @SuppressWarnings("unchecked")

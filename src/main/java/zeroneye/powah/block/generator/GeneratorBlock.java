@@ -9,7 +9,7 @@ import zeroneye.powah.block.PowahBlock;
 
 public class GeneratorBlock extends PowahBlock {
     public static final BooleanProperty LIT = RedstoneTorchBlock.LIT;
-    protected final int perTick;
+    protected int perTick;
 
     public GeneratorBlock(Properties properties, int capacity, int transfer, int perTick) {
         super(properties, capacity, transfer, 0);
@@ -18,6 +18,10 @@ public class GeneratorBlock extends PowahBlock {
 
     public int perTick() {
         return perTick;
+    }
+
+    public void setPerTick(int perTick) {
+        this.perTick = perTick;
     }
 
     @Override

@@ -12,7 +12,7 @@ import zeroneye.powah.block.IBlocks;
 import zeroneye.powah.block.cable.Cables;
 import zeroneye.powah.block.generator.furnator.Furnators;
 import zeroneye.powah.block.generator.magmatic.MagmaticGenerators;
-import zeroneye.powah.block.generator.panel.Panels;
+import zeroneye.powah.block.generator.panel.solar.SolarPanels;
 import zeroneye.powah.block.storage.EnergyCells;
 import zeroneye.powah.config.Config;
 import zeroneye.powah.item.IItems;
@@ -36,8 +36,8 @@ public class PowahJEIPlugin implements IModPlugin {
                 .map(Furnators::get)
                 .map(ItemStack::new)
                 .collect(Collectors.toList()), VanillaTypes.ITEM, I18n.format("wiki.powah.furnator"));
-        registration.addIngredientInfo(Stream.of(Panels.values())
-                .map(Panels::get)
+        registration.addIngredientInfo(Stream.of(SolarPanels.values())
+                .map(SolarPanels::get)
                 .map(ItemStack::new)
                 .collect(Collectors.toList()), VanillaTypes.ITEM, I18n.format("wiki.powah.solar_panel"));
         registration.addIngredientInfo(Stream.of(Cables.values())
@@ -57,6 +57,8 @@ public class PowahJEIPlugin implements IModPlugin {
             registration.addIngredientInfo(new ItemStack(IItems.CAPACITOR_SPIRITED), VanillaTypes.ITEM, I18n.format("wiki.powah.capacitor_spirited"));
         if (Config.GENERAL.player_aerial_pearl.get())
             registration.addIngredientInfo(new ItemStack(IItems.PLAYER_AERIAL_PEARL), VanillaTypes.ITEM, I18n.format("wiki.powah.player_aerial_pearl"));
+
+        registration.addIngredientInfo(new ItemStack(IBlocks.DISCHARGER), VanillaTypes.ITEM, I18n.format("wiki.powah.discharger"));
     }
 
     @Override

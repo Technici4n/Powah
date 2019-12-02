@@ -1,10 +1,9 @@
-package zeroneye.powah.block.generator.panel;
+package zeroneye.powah.block.generator.panel.solar;
 
 import net.minecraft.block.material.Material;
 import zeroneye.powah.block.IBlocks;
-import zeroneye.powah.block.generator.panel.solar.SolarPanelBlock;
 
-public enum Panels {
+public enum SolarPanels {
     BASIC(Material.ROCK, 3.0F, 1000, 24, 10),
     HARDENED(Material.ROCK, 30.0F, 10000, 60, 40),
     BLAZING(Material.IRON, 30.0F, 50000, 190, 140),
@@ -17,7 +16,7 @@ public enum Panels {
     public final int transfer;
     public final int perTick;
 
-    Panels(Material material, float resistance, int capacity, int transfer, int perTick) {
+    SolarPanels(Material material, float resistance, int capacity, int transfer, int perTick) {
         this.material = material;
         this.resistance = resistance;
         this.capacity = capacity;

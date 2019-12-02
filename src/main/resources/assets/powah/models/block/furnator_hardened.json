@@ -2,6 +2,7 @@
   "parent": "powah:block/furnator",
   "textures": {
 	"face": "powah:block/furnator_face",
-	"side": "powah:block/furnator_hardened_side"
+	"side": "powah:block/furnator_hardened_side",
+	"top": "powah:block/furnator_top"
   }
 }

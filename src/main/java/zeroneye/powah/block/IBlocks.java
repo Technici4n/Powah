@@ -10,12 +10,13 @@ import net.minecraftforge.fml.common.Mod;
 import zeroneye.lib.block.IBlockBase;
 import zeroneye.powah.block.cable.CableBlock;
 import zeroneye.powah.block.cable.Cables;
+import zeroneye.powah.block.discharger.DischargerBlock;
 import zeroneye.powah.block.generator.furnator.FurnatorBlock;
 import zeroneye.powah.block.generator.furnator.Furnators;
 import zeroneye.powah.block.generator.magmatic.MagmaticGenBlock;
 import zeroneye.powah.block.generator.magmatic.MagmaticGenerators;
-import zeroneye.powah.block.generator.panel.Panels;
 import zeroneye.powah.block.generator.panel.solar.SolarPanelBlock;
+import zeroneye.powah.block.generator.panel.solar.SolarPanels;
 import zeroneye.powah.block.storage.EnergyCellBlock;
 import zeroneye.powah.block.storage.EnergyCells;
 import zeroneye.powah.block.transmitter.PlayerTransmitterBlock;
@@ -32,9 +33,10 @@ public class IBlocks {
     public static final FurnatorBlock[] FURNATORS;
     public static final MagmaticGenBlock[] MAGMATIC_GENERATORS;
     public static final SolarPanelBlock[] SOLAR_PANELS;
-    public static final Block PLAYER_TRANSMITTER;
-    public static final Block PLAYER_TRANSMITTER_DIM;
+    public static final PlayerTransmitterBlock PLAYER_TRANSMITTER;
+    public static final PlayerTransmitterBlock PLAYER_TRANSMITTER_DIM;
     public static final CableBlock[] CABLES;
+    public static final DischargerBlock DISCHARGER;
 
     static {
         EnergyCells[] cells = EnergyCells.values();
@@ -58,16 +60,17 @@ public class IBlocks {
             MAGMATIC_GENERATORS[i] = register("magmatic_generator_" + magmaticValue.name().toLowerCase(), new MagmaticGenBlock(Block.Properties.create(magmaticValue.material).hardnessAndResistance(2.0F, magmaticValue.resistance), magmaticValue.capacity, magmaticValue.transfer, magmaticValue.perTick, magmaticValue.buckets));
         }
 
-        Panels[] panels = Panels.values();
+        DISCHARGER = register("discharger", new DischargerBlock(Block.Properties.create(Material.MISCELLANEOUS).hardnessAndResistance(1.0F, 15.0F), 500000, 1000));
+
+        SolarPanels[] panels = SolarPanels.values();
         SOLAR_PANELS = new SolarPanelBlock[panels.length];
         for (int i = 0; i < panels.length; i++) {
-            Panels panel = panels[i];
+            SolarPanels panel = panels[i];
             SOLAR_PANELS[i] = register("solar_panel_" + panel.name().toLowerCase(), new SolarPanelBlock(Block.Properties.create(panel.material).hardnessAndResistance(2.0F, panel.resistance), panel.capacity, panel.transfer, panel.perTick));
         }
 
         PLAYER_TRANSMITTER = register("player_transmitter", new PlayerTransmitterBlock(Block.Properties.create(Material.MISCELLANEOUS).hardnessAndResistance(1.0F, 15.0F).doesNotBlockMovement(), 10000, 100, 1, false));
         PLAYER_TRANSMITTER_DIM = register("player_transmitter_dim", new PlayerTransmitterBlock(Block.Properties.create(Material.MISCELLANEOUS).hardnessAndResistance(1.0F, 15.0F).doesNotBlockMovement(), 100000, 250, 2, true));
-
 
         Cables[] cables = Cables.values();
         CABLES = new CableBlock[cables.length];
@@ -75,6 +78,7 @@ public class IBlocks {
             Cables cable = cables[i];
             CABLES[i] = register("cable_" + cable.name().toLowerCase(), new CableBlock(Block.Properties.create(cable.material).hardnessAndResistance(1.0F, cable.resistance).doesNotBlockMovement(), cable.transfer, cable.transfer));
         }
+
     }
 
     static <T extends Block & IBlockBase> T register(String name, T block) {

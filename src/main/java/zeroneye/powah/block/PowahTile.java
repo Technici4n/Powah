@@ -31,10 +31,6 @@ public abstract class PowahTile extends TileBase.TickableInv {
         }
     }
 
-    public PowahTile(TileEntityType<?> type) {
-        this(type, 0, 0, 0, false);
-    }
-
     @Override
     public void readStorable(CompoundNBT compound) {
         super.readStorable(compound);

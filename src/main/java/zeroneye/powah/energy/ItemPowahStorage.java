@@ -41,9 +41,9 @@ public class ItemPowahStorage extends PowahStorage {
     }
 
     @Override
-    public void setEnergy(int i) {
-        if (this.isCreative && i < getEnergyStored()) return;
-        super.setEnergy(i);
+    public int setEnergy(int i) {
+        if (this.isCreative && i < getEnergyStored()) return 0;
+        return super.setEnergy(i);
     }
 
     @Override

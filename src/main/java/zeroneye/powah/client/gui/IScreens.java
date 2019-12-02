@@ -42,5 +42,7 @@ public class IScreens {
         ScreenManager.registerFactory(IContainers.CABLE_BLAZING, CableScreen::new);
         ScreenManager.registerFactory(IContainers.CABLE_NIOTIC, CableScreen::new);
         ScreenManager.registerFactory(IContainers.CABLE_SPIRITED, CableScreen::new);
+
+        ScreenManager.registerFactory(IContainers.DISCHARGER, DischargerScreen::new);
     }
 }

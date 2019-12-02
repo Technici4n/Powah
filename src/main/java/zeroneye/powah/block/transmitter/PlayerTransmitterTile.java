@@ -70,11 +70,6 @@ public class PlayerTransmitterTile extends PowahTile {
     }
 
     @Override
-    public int getSyncTicks() {
-        return isContainerOpen() ? 3 : 40;
-    }
-
-    @Override
     public boolean dropInventoryOnBreak() {
         return true;
     }
