@@ -1,6 +1,7 @@
 package zeroneye.powah.block.generator.furnator;
 
 import net.minecraft.block.BlockState;
+import net.minecraft.block.IWaterLoggable;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.Direction;
@@ -13,11 +14,11 @@ import zeroneye.powah.inventory.IContainers;
 
 import javax.annotation.Nullable;
 
-public class FurnatorBlock extends GeneratorBlock {
+public class FurnatorBlock extends GeneratorBlock implements IWaterLoggable {
 
     public FurnatorBlock(Properties properties, int capacity, int transfer, int perTick) {
         super(properties, capacity, transfer, perTick);
-        setDefaultState(this.stateContainer.getBaseState().with(H_FACING, Direction.NORTH).with(LIT, false));
+        setDefaultState(this.stateContainer.getBaseState().with(H_FACING, Direction.NORTH).with(LIT, false).with(WATERLOGGED, false));
     }
 
     @Nullable
@@ -41,6 +42,11 @@ public class FurnatorBlock extends GeneratorBlock {
             return new FurnatorContainer(IContainers.FURNATOR_SPIRITED, id, playerInventory, (FurnatorTile) inv);
         }
         return super.getContainer(id, playerInventory, inv);
+    }
+
+    @Override
+    protected boolean waterLogged() {
+        return true;
     }
 
     @Override

@@ -1,6 +1,7 @@
 package zeroneye.powah.block.discharger;
 
 import net.minecraft.block.BlockState;
+import net.minecraft.block.IWaterLoggable;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.IBlockReader;
@@ -12,9 +13,10 @@ import zeroneye.powah.inventory.IContainers;
 
 import javax.annotation.Nullable;
 
-public class DischargerBlock extends PowahBlock {
+public class DischargerBlock extends PowahBlock implements IWaterLoggable {
     public DischargerBlock(Properties properties, int capacity, int maxExtract) {
         super(properties, capacity, maxExtract, 0);
+        setDefaultState(getDefaultState().with(WATERLOGGED, false));
     }
 
     @Nullable
@@ -32,6 +34,11 @@ public class DischargerBlock extends PowahBlock {
     @Override
     public boolean isSolid(BlockState state) {
         return false;
+    }
+
+    @Override
+    protected boolean waterLogged() {
+        return true;
     }
 
     @Override

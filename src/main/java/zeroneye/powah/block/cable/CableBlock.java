@@ -17,7 +17,6 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.state.BooleanProperty;
 import net.minecraft.state.StateContainer;
-import net.minecraft.state.properties.BlockStateProperties;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.Direction;
 import net.minecraft.util.Hand;
@@ -57,7 +56,6 @@ public class CableBlock extends PowahBlock implements IHud, IWaterLoggable {
     public static final BooleanProperty UP = SixWayBlock.UP;
     public static final BooleanProperty DOWN = SixWayBlock.DOWN;
     public static final BooleanProperty TILE = BooleanProperty.create("tile");
-    public static final BooleanProperty WATERLOGGED = BlockStateProperties.WATERLOGGED;
 
     private static final VoxelShape CABLE = makeCuboidShape(6.5, 6.5, 6.5, 9.5, 9.5, 9.5);
     private static final VoxelShape[] MULTIPARTS = new VoxelShape[]{
@@ -84,16 +82,6 @@ public class CableBlock extends PowahBlock implements IHud, IWaterLoggable {
         if (state.get(UP)) voxelShape = VoxelShapes.or(voxelShape, MULTIPARTS[4]);
         if (state.get(DOWN)) voxelShape = VoxelShapes.or(voxelShape, MULTIPARTS[5]);
         return voxelShape;
-    }
-
-    @Override
-    public boolean propagatesSkylightDown(BlockState state, IBlockReader reader, BlockPos pos) {
-        return !state.get(WATERLOGGED);
-    }
-
-    @Override
-    public IFluidState getFluidState(BlockState state) {
-        return state.get(WATERLOGGED) ? Fluids.WATER.getStillFluidState(false) : super.getFluidState(state);
     }
 
     @Nullable
@@ -159,9 +147,6 @@ public class CableBlock extends PowahBlock implements IHud, IWaterLoggable {
 
     @Override
     public BlockState updatePostPlacement(BlockState stateIn, Direction facing, BlockState facingState, IWorld worldIn, BlockPos currentPos, BlockPos facingPos) {
-        if (stateIn.get(WATERLOGGED)) {
-            worldIn.getPendingFluidTicks().scheduleTick(currentPos, Fluids.WATER, Fluids.WATER.getTickRate(worldIn));
-        }
         return newState(worldIn, currentPos);
     }
 
@@ -198,6 +183,11 @@ public class CableBlock extends PowahBlock implements IHud, IWaterLoggable {
         }
         IFluidState ifluidstate = world.getFluidState(pos);
         return state.with(NORTH, north[0]).with(SOUTH, south[0]).with(WEST, west[0]).with(EAST, east[0]).with(UP, up[0]).with(DOWN, down[0]).with(TILE, tile).with(WATERLOGGED, ifluidstate.getFluid() == Fluids.WATER);
+    }
+
+    @Override
+    protected boolean waterLogged() {
+        return true;
     }
 
     @Override
@@ -246,7 +236,7 @@ public class CableBlock extends PowahBlock implements IHud, IWaterLoggable {
 
     @Override
     protected void fillStateContainer(StateContainer.Builder<Block, BlockState> builder) {
-        builder.add(NORTH, EAST, SOUTH, WEST, UP, DOWN, TILE, WATERLOGGED);
+        builder.add(NORTH, EAST, SOUTH, WEST, UP, DOWN, TILE);
         super.fillStateContainer(builder);
     }
 

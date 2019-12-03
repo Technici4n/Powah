@@ -7,6 +7,7 @@ import zeroneye.lib.util.Energy;
 import zeroneye.lib.util.Player;
 import zeroneye.powah.block.ITiles;
 import zeroneye.powah.block.PowahTile;
+import zeroneye.powah.compat.curios.CuriosCompat;
 import zeroneye.powah.item.BindingCardItem;
 
 public class PlayerTransmitterTile extends PowahTile {
@@ -37,24 +38,28 @@ public class PlayerTransmitterTile extends PowahTile {
     protected boolean postTicks() {
         final int[] i = {0};
         if (this.world == null) return false;
-        if (this.isServerWorld) {
-            if (this.internal.hasEnergy()) {
-                this.stacks.forEach(stack -> {
-                    if (stack.getItem() instanceof BindingCardItem) {
-                        BindingCardItem item = (BindingCardItem) stack.getItem();
-                        item.getPlayer(stack).ifPresent(player -> {
-                            DimensionType type = this.world.dimension.getType();
-                            if (this.acrossDim || player.dimension.equals(type)) {
-                                for (ItemStack stack1 : Player.invStacks(player)) {
-                                    int amount = Math.min(this.internal.getMaxExtract(), this.internal.getEnergyStored());
-                                    int received = Energy.receive(stack1, amount, false);
-                                    i[0] += extractEnergy(received, false, null);
-                                }
+        if (this.world.isRemote) return false;
+        if (this.internal.hasEnergy()) {
+            this.stacks.forEach(stack -> {
+                if (stack.getItem() instanceof BindingCardItem) {
+                    BindingCardItem item = (BindingCardItem) stack.getItem();
+                    item.getPlayer(stack).ifPresent(player -> {
+                        DimensionType type = this.world.dimension.getType();
+                        if (this.acrossDim || player.dimension.equals(type)) {
+                            for (ItemStack stack1 : CuriosCompat.getAllStacks(player)) {
+                                int amount = Math.min(this.internal.getMaxExtract(), this.internal.getEnergyStored());
+                                int received = Energy.receive(stack1, amount, false);
+                                i[0] += extractEnergy(received, false, null);
                             }
-                        });
-                    }
-                });
-            }
+                            for (ItemStack stack1 : Player.invStacks(player)) {
+                                int amount = Math.min(this.internal.getMaxExtract(), this.internal.getEnergyStored());
+                                int received = Energy.receive(stack1, amount, false);
+                                i[0] += extractEnergy(received, false, null);
+                            }
+                        }
+                    });
+                }
+            });
         }
         return i[0] > 0;
     }
@@ -84,6 +89,5 @@ public class PlayerTransmitterTile extends PowahTile {
             }
         }
         return ((BindingCardItem) itemStack.getItem()).getPlayer(itemStack).isPresent() || super.isItemValidForSlot(index, itemStack);
-
     }
 }

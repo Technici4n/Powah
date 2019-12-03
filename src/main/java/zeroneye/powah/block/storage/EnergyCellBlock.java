@@ -1,6 +1,7 @@
 package zeroneye.powah.block.storage;
 
 import net.minecraft.block.BlockState;
+import net.minecraft.block.IWaterLoggable;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.IBlockReader;
@@ -12,9 +13,10 @@ import zeroneye.powah.inventory.IContainers;
 
 import javax.annotation.Nullable;
 
-public class EnergyCellBlock extends PowahBlock {
+public class EnergyCellBlock extends PowahBlock implements IWaterLoggable {
     public EnergyCellBlock(Properties properties, int capacity, int transfer) {
         super(properties, capacity, transfer, transfer);
+        setDefaultState(getDefaultState().with(WATERLOGGED, false));
     }
 
     @Nullable
@@ -40,5 +42,10 @@ public class EnergyCellBlock extends PowahBlock {
             return new EnergyCellContainer(IContainers.ENERGY_CELL_CREATIVE, id, playerInventory, (EnergyCellTile) inv);
         }
         return super.getContainer(id, playerInventory, inv);
+    }
+
+    @Override
+    protected boolean waterLogged() {
+        return true;
     }
 }

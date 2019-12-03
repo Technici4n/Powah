@@ -1,4 +1,6 @@
 0.0.14
+- Added compatibility with "Curios" mod (Player transmitter charge items in "Curios" inventory)
+- Fixed some water logging issues
 
 0.0.13
 - Fixed Energy cables are transferring to the first block only.

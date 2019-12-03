@@ -28,15 +28,17 @@ minecraft {
 repositories {
     maven { url "http://dvs1.progwml6.com/files/maven" } //JEI
     maven { url = "https://tehnut.info/maven/" } //HWYLA
+    maven { url = "https://maven.theillusivec4.top/" } //Curios
 }
 
 dependencies {
     minecraft 'net.minecraftforge:forge:' + lib.minecraft_version + '-' + lib.forge_version
     compileOnly fg.deobf("mezz.jei:jei-${lib.minecraft_version}:${lib.jei_version}:api")
     runtimeOnly fg.deobf("mezz.jei:jei-${lib.minecraft_version}:${lib.jei_version}")
-    
+
     compile fg.deobf("mcp.mobius.waila:Hwyla:${lib.waila_version}_${lib.minecraft_version}")
-    
+
+    compile fg.deobf("top.theillusivec4.curios:curios:FORGE-${lib.minecraft_version}-${lib.curios_version}")
     compile lib
 }
 
