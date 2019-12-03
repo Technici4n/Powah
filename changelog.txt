@@ -1,0 +1,22 @@
+0.0.14
+
+0.0.13
+- Fixed Energy cables are transferring to the first block only.
+  now should transfer to all blocks correctly
+
+0.0.12
+- Most blocks are water logged now
+- Now you can place Player Transmitter on cables.
+
+0.0.11
+- Fixed Energy cables energy leak
+- Added config for energy per fuel tick in furnator.toml
+- Fixed bugs.
+
+0.0.10
+- Added Energy Discharger (Used to drain energy from items and keep it, can hold up to 4 items).
+- Added config for every block capacity, transfer, generation etc...
+- Fixed generation consumption leak.
+- Edited Furnator texture a bit.
+- Fixed more bugs.
+- Fixed Magmatic Generator fluid capacity.

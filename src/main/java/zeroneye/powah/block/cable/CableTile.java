@@ -70,7 +70,7 @@ public class CableTile extends PowahTile {
                     if (storage.canExtract() && canReceive(direction)) {
                         LinkedCables cables = this.linkedCables.get(direction);
                         cables.cables().forEach(cablePos -> {
-                            int amount = Math.min(storage.extractEnergy(this.internal.getMaxExtract() - extracted[0], true), storage.getEnergyStored());
+                            int amount = Math.min(storage.extractEnergy(this.internal.getMaxExtract(), true), storage.getEnergyStored());
                             TileEntity cableTile = this.world.getTileEntity(cablePos);
                             if (cableTile instanceof CableTile) {
                                 CableTile cable = (CableTile) cableTile;
@@ -88,7 +88,7 @@ public class CableTile extends PowahTile {
                             }
                         });
 
-                        int amount = Math.min(storage.extractEnergy(this.internal.getMaxExtract() - extracted[0], true), storage.getEnergyStored());
+                        int amount = Math.min(storage.extractEnergy(this.internal.getMaxExtract(), true), storage.getEnergyStored());
                         for (Direction side : Direction.values()) {
                             if (amount > 0) {
                                 if (canExtract(side)) {
