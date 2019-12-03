@@ -75,7 +75,7 @@
   "wiki.powah.magmatic_generator": "The Magmatic Generator is a block that generates FE energy by consuming high temp fluids like Lava, high tiers processing faster depending on the FE/t.",
   "wiki.powah.player_transmitter": "Player Transmitter is a block that charge items in linked player inventory including armor slots and off hand any wher in the same dimension, require a Binding Card to link.",
   "wiki.powah.player_transmitter_dim": "Dimensional Player Transmitter is a block that charge items in linked player inventory including armor slots and off hand any wher across dimension, require a Binding Card to link, can add max of 2 Binding cards.",
-  "wiki.powah.binding_card": "Used to link player with certain blocks eg: Player Transmitter, Right click to bind.",
+  "wiki.powah.binding_card": "Used to link player with certain block eg: Player Transmitter, Right click to bind.",
   "wiki.powah.cable": "Used to transfer power between machines.",
   "wiki.powah.discharger": "Used to drain energy from items and keep it, can hold up to 4 items.",
   "wiki.powah.capacitor_blazing": "Use a Large Basic Capacitor on a Blaze.",

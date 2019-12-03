@@ -57,6 +57,7 @@ public abstract class GeneratorTile extends PowahTile {
     @Override
     protected boolean postTicks() {
         if (this.world == null) return false;
+        if (this.world.isRemote) return false;
         boolean flag = isGenerating();
         boolean flag1 = super.postTicks();
         if (perTick() > 0) {

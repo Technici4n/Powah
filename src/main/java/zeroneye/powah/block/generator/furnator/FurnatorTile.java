@@ -4,6 +4,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraftforge.common.ForgeHooks;
 import zeroneye.powah.block.ITiles;
 import zeroneye.powah.block.generator.GeneratorTile;
+import zeroneye.powah.config.Config;
 
 public class FurnatorTile extends GeneratorTile {
     public FurnatorTile(int capacity, int transfer, int perTick) {
@@ -18,7 +19,7 @@ public class FurnatorTile extends GeneratorTile {
     protected void generate() {
         final ItemStack fuelStack = getStackInSlot(1);
         if (this.nextGen <= 0 && !fuelStack.isEmpty()) {
-            this.nextGenCap = ForgeHooks.getBurnTime(fuelStack) * 30;// TODO add config burne time
+            this.nextGenCap = ForgeHooks.getBurnTime(fuelStack) * Config.FURNATOR.fuelEnergy.get();
             this.nextGen = this.nextGenCap;
             if (fuelStack.hasContainerItem())
                 setInventorySlotContents(1, fuelStack.getContainerItem());

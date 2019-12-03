@@ -87,6 +87,7 @@ public abstract class PowahTile extends TileBase.TickableInv {
     @Override
     protected boolean postTicks() {
         if (this.world == null) return false;
+        if (this.world.isRemote) return false;
 
         int extracted = 0;
 

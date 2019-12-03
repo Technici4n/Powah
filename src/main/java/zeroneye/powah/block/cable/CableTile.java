@@ -70,15 +70,17 @@ public class CableTile extends PowahTile {
                     if (storage.canExtract() && canReceive(direction)) {
                         LinkedCables cables = this.linkedCables.get(direction);
                         cables.cables().forEach(cablePos -> {
-                            int amount = Math.min(this.internal.getMaxExtract() - extracted[0], storage.getEnergyStored());
+                            int amount = Math.min(storage.extractEnergy(this.internal.getMaxExtract() - extracted[0], true), storage.getEnergyStored());
                             TileEntity cableTile = this.world.getTileEntity(cablePos);
                             if (cableTile instanceof CableTile) {
                                 CableTile cable = (CableTile) cableTile;
                                 for (Direction side : Direction.values()) {
                                     if (amount > 0) {
                                         if (cable.canExtract(side)) {
-                                            TileEntity receiver = this.world.getTileEntity(cablePos.offset(side));
-                                            int received = Energy.receive(receiver, side.getOpposite(), amount, false);
+                                            BlockPos recieverPos = cablePos.offset(side);
+                                            TileEntity receiver = this.world.getTileEntity(recieverPos);
+                                            if (recieverPos.equals(handlerPos)) continue;
+                                            int received = Energy.receive(receiver, side, amount, false);
                                             extracted[0] += storage.extractEnergy(received, false);
                                         }
                                     }
@@ -86,12 +88,14 @@ public class CableTile extends PowahTile {
                             }
                         });
 
-                        int amount = Math.min(this.internal.getMaxExtract() - extracted[0], storage.getEnergyStored());
+                        int amount = Math.min(storage.extractEnergy(this.internal.getMaxExtract() - extracted[0], true), storage.getEnergyStored());
                         for (Direction side : Direction.values()) {
                             if (amount > 0) {
                                 if (canExtract(side)) {
                                     if (!side.equals(direction)) {
-                                        int received = Energy.receive(this.world, this.pos.offset(side), side.getOpposite(), amount, false);
+                                        BlockPos recieverPos = this.pos.offset(side);
+                                        if (recieverPos.equals(handlerPos)) continue;
+                                        int received = Energy.receive(this.world, recieverPos, side, amount, false);
                                         extracted[0] += storage.extractEnergy(received, false);
                                     }
                                 }

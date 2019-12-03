@@ -1,9 +1,6 @@
 package zeroneye.powah.block.cable;
 
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.SixWayBlock;
-import net.minecraft.block.SoundType;
+import net.minecraft.block.*;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.particle.DiggingParticle;
@@ -12,12 +9,15 @@ import net.minecraft.client.resources.I18n;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
+import net.minecraft.fluid.Fluids;
+import net.minecraft.fluid.IFluidState;
 import net.minecraft.inventory.InventoryHelper;
 import net.minecraft.item.BlockItemUseContext;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.state.BooleanProperty;
 import net.minecraft.state.StateContainer;
+import net.minecraft.state.properties.BlockStateProperties;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.Direction;
 import net.minecraft.util.Hand;
@@ -49,7 +49,7 @@ import zeroneye.powah.item.WrenchItem;
 import javax.annotation.Nullable;
 import java.util.*;
 
-public class CableBlock extends PowahBlock implements IHud {
+public class CableBlock extends PowahBlock implements IHud, IWaterLoggable {
     public static final BooleanProperty NORTH = SixWayBlock.NORTH;
     public static final BooleanProperty EAST = SixWayBlock.EAST;
     public static final BooleanProperty SOUTH = SixWayBlock.SOUTH;
@@ -57,6 +57,7 @@ public class CableBlock extends PowahBlock implements IHud {
     public static final BooleanProperty UP = SixWayBlock.UP;
     public static final BooleanProperty DOWN = SixWayBlock.DOWN;
     public static final BooleanProperty TILE = BooleanProperty.create("tile");
+    public static final BooleanProperty WATERLOGGED = BlockStateProperties.WATERLOGGED;
 
     private static final VoxelShape CABLE = makeCuboidShape(6.5, 6.5, 6.5, 9.5, 9.5, 9.5);
     private static final VoxelShape[] MULTIPARTS = new VoxelShape[]{
@@ -70,7 +71,7 @@ public class CableBlock extends PowahBlock implements IHud {
 
     public CableBlock(Properties properties, int maxExtract, int maxReceive) {
         super(properties.sound(SoundType.METAL), 0, maxExtract, maxReceive);
-        setDefaultState(getDefaultState().with(NORTH, false).with(EAST, false).with(SOUTH, false).with(WEST, false).with(UP, false).with(DOWN, false).with(TILE, false));
+        setDefaultState(getDefaultState().with(NORTH, false).with(EAST, false).with(SOUTH, false).with(WEST, false).with(UP, false).with(DOWN, false).with(TILE, false).with(WATERLOGGED, false));
     }
 
     @Override
@@ -83,6 +84,16 @@ public class CableBlock extends PowahBlock implements IHud {
         if (state.get(UP)) voxelShape = VoxelShapes.or(voxelShape, MULTIPARTS[4]);
         if (state.get(DOWN)) voxelShape = VoxelShapes.or(voxelShape, MULTIPARTS[5]);
         return voxelShape;
+    }
+
+    @Override
+    public boolean propagatesSkylightDown(BlockState state, IBlockReader reader, BlockPos pos) {
+        return !state.get(WATERLOGGED);
+    }
+
+    @Override
+    public IFluidState getFluidState(BlockState state) {
+        return state.get(WATERLOGGED) ? Fluids.WATER.getStillFluidState(false) : super.getFluidState(state);
     }
 
     @Nullable
@@ -148,6 +159,9 @@ public class CableBlock extends PowahBlock implements IHud {
 
     @Override
     public BlockState updatePostPlacement(BlockState stateIn, Direction facing, BlockState facingState, IWorld worldIn, BlockPos currentPos, BlockPos facingPos) {
+        if (stateIn.get(WATERLOGGED)) {
+            worldIn.getPendingFluidTicks().scheduleTick(currentPos, Fluids.WATER, Fluids.WATER.getTickRate(worldIn));
+        }
         return newState(worldIn, currentPos);
     }
 
@@ -182,8 +196,8 @@ public class CableBlock extends PowahBlock implements IHud {
                 tileEntity.remove();
             }
         }
-
-        return state.with(NORTH, north[0]).with(SOUTH, south[0]).with(WEST, west[0]).with(EAST, east[0]).with(UP, up[0]).with(DOWN, down[0]).with(TILE, tile);
+        IFluidState ifluidstate = world.getFluidState(pos);
+        return state.with(NORTH, north[0]).with(SOUTH, south[0]).with(WEST, west[0]).with(EAST, east[0]).with(UP, up[0]).with(DOWN, down[0]).with(TILE, tile).with(WATERLOGGED, ifluidstate.getFluid() == Fluids.WATER);
     }
 
     @Override
@@ -232,7 +246,7 @@ public class CableBlock extends PowahBlock implements IHud {
 
     @Override
     protected void fillStateContainer(StateContainer.Builder<Block, BlockState> builder) {
-        builder.add(NORTH, EAST, SOUTH, WEST, UP, DOWN, TILE);
+        builder.add(NORTH, EAST, SOUTH, WEST, UP, DOWN, TILE, WATERLOGGED);
         super.fillStateContainer(builder);
     }
 
