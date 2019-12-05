@@ -30,6 +30,7 @@ public class IItems {
     public static final Item BLANK_CARD;
     public static final Item BINDING_CARD;
     public static final Item PHOTOELECTRIC_PANE;
+    public static final Item THERMOELECTRIC_PLATE;
 
     static {
         WRENCH = register("wrench", new WrenchItem(new Item.Properties().group(ItemGroups.MAIN).maxStackSize(1)));
@@ -48,6 +49,7 @@ public class IItems {
         BLANK_CARD = register("blank_card", new ItemBase(new Item.Properties().group(ItemGroups.MAIN)));
         BINDING_CARD = register("binding_card", new BindingCardItem(new Item.Properties().maxStackSize(1).group(ItemGroups.MAIN)));
         PHOTOELECTRIC_PANE = register("photoelectric_pane", new ItemBase(new Item.Properties().group(ItemGroups.MAIN)));
+        THERMOELECTRIC_PLATE = register("thermoelectric_plate", new ItemBase(new Item.Properties().group(ItemGroups.MAIN)));
     }
 
     static <T extends Item & IItemBase> T register(String name, T item) {

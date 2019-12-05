@@ -13,6 +13,7 @@ import zeroneye.powah.block.cable.Cables;
 import zeroneye.powah.block.generator.furnator.Furnators;
 import zeroneye.powah.block.generator.magmatic.MagmaticGenerators;
 import zeroneye.powah.block.generator.panel.solar.SolarPanels;
+import zeroneye.powah.block.generator.thermoelectric.ThermoGenerators;
 import zeroneye.powah.block.storage.EnergyCells;
 import zeroneye.powah.config.Config;
 import zeroneye.powah.item.IItems;
@@ -44,6 +45,10 @@ public class PowahJEIPlugin implements IModPlugin {
                 .map(Cables::get)
                 .map(ItemStack::new)
                 .collect(Collectors.toList()), VanillaTypes.ITEM, I18n.format("wiki.powah.cable"));
+        registration.addIngredientInfo(Stream.of(ThermoGenerators.values())
+                .map(ThermoGenerators::get)
+                .map(ItemStack::new)
+                .collect(Collectors.toList()), VanillaTypes.ITEM, I18n.format("wiki.powah.thermo_generator"));
 
         registration.addIngredientInfo(new ItemStack(IBlocks.PLAYER_TRANSMITTER), VanillaTypes.ITEM, I18n.format("wiki.powah.player_transmitter"));
         registration.addIngredientInfo(new ItemStack(IBlocks.PLAYER_TRANSMITTER_DIM), VanillaTypes.ITEM, I18n.format("wiki.powah.player_transmitter_dim"));

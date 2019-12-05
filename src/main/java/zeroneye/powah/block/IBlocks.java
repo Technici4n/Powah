@@ -17,6 +17,8 @@ import zeroneye.powah.block.generator.magmatic.MagmaticGenBlock;
 import zeroneye.powah.block.generator.magmatic.MagmaticGenerators;
 import zeroneye.powah.block.generator.panel.solar.SolarPanelBlock;
 import zeroneye.powah.block.generator.panel.solar.SolarPanels;
+import zeroneye.powah.block.generator.thermoelectric.ThermoGeneratorBlock;
+import zeroneye.powah.block.generator.thermoelectric.ThermoGenerators;
 import zeroneye.powah.block.storage.EnergyCellBlock;
 import zeroneye.powah.block.storage.EnergyCells;
 import zeroneye.powah.block.transmitter.PlayerTransmitterBlock;
@@ -33,6 +35,7 @@ public class IBlocks {
     public static final FurnatorBlock[] FURNATORS;
     public static final MagmaticGenBlock[] MAGMATIC_GENERATORS;
     public static final SolarPanelBlock[] SOLAR_PANELS;
+    public static final ThermoGeneratorBlock[] THERMO_GENERATORS;
     public static final PlayerTransmitterBlock PLAYER_TRANSMITTER;
     public static final PlayerTransmitterBlock PLAYER_TRANSMITTER_DIM;
     public static final CableBlock[] CABLES;
@@ -67,6 +70,13 @@ public class IBlocks {
         for (int i = 0; i < panels.length; i++) {
             SolarPanels panel = panels[i];
             SOLAR_PANELS[i] = register("solar_panel_" + panel.name().toLowerCase(), new SolarPanelBlock(Block.Properties.create(panel.material).hardnessAndResistance(2.0F, panel.resistance), panel.capacity, panel.transfer, panel.perTick));
+        }
+
+        ThermoGenerators[] thermoGenerators = ThermoGenerators.values();
+        THERMO_GENERATORS = new ThermoGeneratorBlock[thermoGenerators.length];
+        for (int i = 0; i < thermoGenerators.length; i++) {
+            ThermoGenerators tg = thermoGenerators[i];
+            THERMO_GENERATORS[i] = register("thermo_generator_" + tg.name().toLowerCase(), new ThermoGeneratorBlock(Block.Properties.create(tg.material).hardnessAndResistance(2.0F, tg.resistance), tg.capacity, tg.transfer, tg.perTick, tg.buckets));
         }
 
         PLAYER_TRANSMITTER = register("player_transmitter", new PlayerTransmitterBlock(Block.Properties.create(Material.MISCELLANEOUS).hardnessAndResistance(1.0F, 15.0F).doesNotBlockMovement(), 10000, 100, 1, false));

@@ -1,6 +1,18 @@
+0.0.17
+
+0.0.16
+- Added Thermoelectric Generator (Generates FE when placed on top of a high temp block/fluid like lava...,require a coolant fluid like water.)
+- Updated Lollipop to 0.0.14
+- IMPORTANT NOTE!!, Moved Magmatic fluid list config to Magmatic_Generator.toml
+
+0.0.15
+- Player Transmitter charge player inventory before Curios inventory now.
+- Fix some blocks not dropping closes #8
+
 0.0.14
 - Added compatibility with "Curios" mod (Player transmitter charge items in "Curios" inventory)
 - Fixed some water logging issues
+- Updated Lollipop to 0.0.13
 
 0.0.13
 - Fixed Energy cables are transferring to the first block only.

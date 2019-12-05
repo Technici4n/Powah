@@ -11,6 +11,7 @@ import zeroneye.powah.block.discharger.DischargerTile;
 import zeroneye.powah.block.generator.furnator.FurnatorTile;
 import zeroneye.powah.block.generator.magmatic.MagmaticGenTile;
 import zeroneye.powah.block.generator.panel.solar.SolarPanelTile;
+import zeroneye.powah.block.generator.thermoelectric.ThermoGeneratorTile;
 import zeroneye.powah.block.storage.EnergyCellTile;
 import zeroneye.powah.block.transmitter.PlayerTransmitterTile;
 
@@ -26,6 +27,7 @@ public class ITiles {
     public static final TileEntityType<?> FURNATOR = register("furnator", FurnatorTile::new, IBlocks.FURNATORS);
     public static final TileEntityType<?> PLAYER_TRANSMITTER = register("player_transmitter", PlayerTransmitterTile::new, IBlocks.PLAYER_TRANSMITTER, IBlocks.PLAYER_TRANSMITTER_DIM);
     public static final TileEntityType<?> SOLAR_PANEL = register("solar_panel", SolarPanelTile::new, IBlocks.SOLAR_PANELS);
+    public static final TileEntityType<?> THERMO_GENERATOR = register("thermo_generator_", ThermoGeneratorTile::new, IBlocks.THERMO_GENERATORS);
     public static final TileEntityType<?> CABLE = register("cable", CableTile::new, IBlocks.CABLES);
     public static final TileEntityType<?> DISCHARGER = register("discharger", DischargerTile::new, IBlocks.DISCHARGER);
 

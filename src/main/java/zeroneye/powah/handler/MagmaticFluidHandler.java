@@ -13,15 +13,15 @@ import java.util.Map;
 import static zeroneye.powah.Powah.LOGGER;
 import static zeroneye.powah.config.Config.MARKER;
 
-public class FluidHandler {
+public class MagmaticFluidHandler {
     private static final Map<Fluid, Integer> MAGMATIC_FLUIDS = new HashMap<>();
 
     public static void post() {
-        if (Config.GENERAL.magmaticFluidsAPI.get()) {
+        if (Config.MAGMATIC_GENERATOR.magmaticFluidsAPI.get()) {
             MAGMATIC_FLUIDS.putAll(PowahAPI.MAGMATIC_FLUIDS);
         }
 
-        Config.GENERAL.magmaticFluids.get().forEach(s -> {
+        Config.MAGMATIC_GENERATOR.magmaticFluids.get().forEach(s -> {
             String[] args = s.split("=");
             if (args.length == 2) {
                 String regName = args[0];

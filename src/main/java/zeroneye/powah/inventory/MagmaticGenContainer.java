@@ -40,7 +40,7 @@ public class MagmaticGenContainer extends PowahContainer<MagmaticGenTile> {
     }
 
     private void addContainer(PlayerInventory playerInventory, MagmaticGenTile tile) {
-        addSlot(new SlotBase(tile, 0, 13 + 23, 45));
+        addSlot(new SlotBase(tile, 0, 36, 45));
         addPlayerInv(playerInventory, 8, 146, 88);
     }
 }

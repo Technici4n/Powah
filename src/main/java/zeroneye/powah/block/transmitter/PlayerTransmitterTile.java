@@ -25,13 +25,26 @@ public class PlayerTransmitterTile extends PowahTile {
     @Override
     public void readStorable(CompoundNBT compound) {
         super.readStorable(compound);
-        this.acrossDim = compound.getBoolean("AcrossDimention");
+        this.acrossDim = compound.getBoolean("AcrossDimension");
     }
 
     @Override
     public CompoundNBT writeStorable(CompoundNBT compound) {
-        compound.putBoolean("AcrossDimention", this.acrossDim);
+        compound.putBoolean("AcrossDimension", this.acrossDim);
         return super.writeStorable(compound);
+    }
+
+    @Override
+    protected void onFirstTick() { //TODO remove 03/11/2019
+        if (this.world == null) return;
+        if (!this.world.isRemote) {
+            if (getBlock() instanceof PlayerTransmitterBlock) {
+                PlayerTransmitterBlock powahBlock = (PlayerTransmitterBlock) getBlock();
+                this.acrossDim = powahBlock.isAcrossDim();
+                markDirtyAndSync();
+            }
+        }
+        super.onFirstTick();
     }
 
     @Override
@@ -46,12 +59,12 @@ public class PlayerTransmitterTile extends PowahTile {
                     item.getPlayer(stack).ifPresent(player -> {
                         DimensionType type = this.world.dimension.getType();
                         if (this.acrossDim || player.dimension.equals(type)) {
-                            for (ItemStack stack1 : CuriosCompat.getAllStacks(player)) {
+                            for (ItemStack stack1 : Player.invStacks(player)) {
                                 int amount = Math.min(this.internal.getMaxExtract(), this.internal.getEnergyStored());
                                 int received = Energy.receive(stack1, amount, false);
                                 i[0] += extractEnergy(received, false, null);
                             }
-                            for (ItemStack stack1 : Player.invStacks(player)) {
+                            for (ItemStack stack1 : CuriosCompat.getAllStacks(player)) {
                                 int amount = Math.min(this.internal.getMaxExtract(), this.internal.getEnergyStored());
                                 int received = Energy.receive(stack1, amount, false);
                                 i[0] += extractEnergy(received, false, null);

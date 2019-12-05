@@ -19,7 +19,7 @@ public class FurnatorTile extends GeneratorTile {
     protected void generate() {
         final ItemStack fuelStack = getStackInSlot(1);
         if (this.nextGen <= 0 && !fuelStack.isEmpty()) {
-            this.nextGenCap = ForgeHooks.getBurnTime(fuelStack) * Config.FURNATOR.fuelEnergy.get();
+            this.nextGenCap = ForgeHooks.getBurnTime(fuelStack) * Config.FURNATOR_CONFIG.fuelEnergy.get();
             this.nextGen = this.nextGenCap;
             if (fuelStack.hasContainerItem())
                 setInventorySlotContents(1, fuelStack.getContainerItem());

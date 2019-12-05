@@ -10,7 +10,9 @@ import zeroneye.powah.client.gui.IScreens;
 import zeroneye.powah.client.renderer.tile.ITileRnderers;
 import zeroneye.powah.config.Config;
 import zeroneye.powah.config.ConfigHandler;
-import zeroneye.powah.handler.FluidHandler;
+import zeroneye.powah.handler.CoolingFluidHandler;
+import zeroneye.powah.handler.HeatBlockHandler;
+import zeroneye.powah.handler.MagmaticFluidHandler;
 import zeroneye.powah.network.Packets;
 
 import static zeroneye.lib.Lollipop.addModListener;
@@ -37,7 +39,9 @@ public class Powah {
     }
 
     void loadComplete(FMLLoadCompleteEvent event) {
-        FluidHandler.post();
+        MagmaticFluidHandler.post();
+        CoolingFluidHandler.post();
+        HeatBlockHandler.post();
         ConfigHandler.reload();
     }
 }

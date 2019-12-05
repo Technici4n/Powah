@@ -34,6 +34,12 @@ public class IScreens {
         ScreenManager.registerFactory(IContainers.SOLAR_PANEL_NIOTIC, SolarPanelScreen::new);
         ScreenManager.registerFactory(IContainers.SOLAR_PANEL_SPIRITED, SolarPanelScreen::new);
 
+        ScreenManager.registerFactory(IContainers.THERMO_GENERATOR_BASIC, ThermoGenScreen::new);
+        ScreenManager.registerFactory(IContainers.THERMO_GENERATOR_HARDENED, ThermoGenScreen::new);
+        ScreenManager.registerFactory(IContainers.THERMO_GENERATOR_BLAZING, ThermoGenScreen::new);
+        ScreenManager.registerFactory(IContainers.THERMO_GENERATOR_NIOTIC, ThermoGenScreen::new);
+        ScreenManager.registerFactory(IContainers.THERMO_GENERATOR_SPIRITED, ThermoGenScreen::new);
+
         ScreenManager.registerFactory(IContainers.PLAYER_TRANSMITTER, PlayerTransmitterScreen::new);
         ScreenManager.registerFactory(IContainers.PLAYER_TRANSMITTER_DIM, PlayerTransmitterScreen::new);
 

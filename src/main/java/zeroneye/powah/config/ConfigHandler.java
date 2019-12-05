@@ -5,6 +5,7 @@ import zeroneye.powah.block.cable.Cables;
 import zeroneye.powah.block.generator.furnator.Furnators;
 import zeroneye.powah.block.generator.magmatic.MagmaticGenerators;
 import zeroneye.powah.block.generator.panel.solar.SolarPanels;
+import zeroneye.powah.block.generator.thermoelectric.ThermoGenerators;
 import zeroneye.powah.block.storage.EnergyCells;
 
 public class ConfigHandler {
@@ -12,16 +13,16 @@ public class ConfigHandler {
         for (int i = 0; i < EnergyCells.values().length; i++) {
             EnergyCells cell = EnergyCells.values()[i];
             if (cell.equals(EnergyCells.CREATIVE)) continue;
-            IBlocks.ENERGY_CELLS[i].setCapacity(getSafe(Config.CELL.caps[i].get(), cell.capacity));
-            IBlocks.ENERGY_CELLS[i].setMaxExtract(getSafe(Config.CELL.transfers[i].get(), cell.transfer));
-            IBlocks.ENERGY_CELLS[i].setMaxReceive(getSafe(Config.CELL.transfers[i].get(), cell.transfer));
+            IBlocks.ENERGY_CELLS[i].setCapacity(getSafe(Config.CELL_CONFIG.caps[i].get(), cell.capacity));
+            IBlocks.ENERGY_CELLS[i].setMaxExtract(getSafe(Config.CELL_CONFIG.transfers[i].get(), cell.transfer));
+            IBlocks.ENERGY_CELLS[i].setMaxReceive(getSafe(Config.CELL_CONFIG.transfers[i].get(), cell.transfer));
         }
 
         for (int i = 0; i < Furnators.values().length; i++) {
             Furnators furnator = Furnators.values()[i];
-            IBlocks.FURNATORS[i].setCapacity(getSafe(Config.FURNATOR.caps[i].get(), furnator.capacity));
-            IBlocks.FURNATORS[i].setMaxExtract(getSafe(Config.FURNATOR.transfers[i].get(), furnator.transfer));
-            IBlocks.FURNATORS[i].setPerTick(getSafe(Config.FURNATOR.generations[i].get(), furnator.perTick));
+            IBlocks.FURNATORS[i].setCapacity(getSafe(Config.FURNATOR_CONFIG.caps[i].get(), furnator.capacity));
+            IBlocks.FURNATORS[i].setMaxExtract(getSafe(Config.FURNATOR_CONFIG.transfers[i].get(), furnator.transfer));
+            IBlocks.FURNATORS[i].setPerTick(getSafe(Config.FURNATOR_CONFIG.generations[i].get(), furnator.perTick));
         }
 
         for (int i = 0; i < MagmaticGenerators.values().length; i++) {
@@ -29,6 +30,13 @@ public class ConfigHandler {
             IBlocks.MAGMATIC_GENERATORS[i].setCapacity(getSafe(Config.MAGMATIC_GENERATOR.caps[i].get(), magmaticGenerator.capacity));
             IBlocks.MAGMATIC_GENERATORS[i].setMaxExtract(getSafe(Config.MAGMATIC_GENERATOR.transfers[i].get(), magmaticGenerator.transfer));
             IBlocks.MAGMATIC_GENERATORS[i].setPerTick(getSafe(Config.MAGMATIC_GENERATOR.generations[i].get(), magmaticGenerator.perTick));
+        }
+
+        for (int i = 0; i < ThermoGenerators.values().length; i++) {
+            ThermoGenerators thermoGenerators = ThermoGenerators.values()[i];
+            IBlocks.THERMO_GENERATORS[i].setCapacity(getSafe(Config.THERMO_GEN_CONFIG.caps[i].get(), thermoGenerators.capacity));
+            IBlocks.THERMO_GENERATORS[i].setMaxExtract(getSafe(Config.THERMO_GEN_CONFIG.transfers[i].get(), thermoGenerators.transfer));
+            IBlocks.THERMO_GENERATORS[i].setPerTick(getSafe(Config.THERMO_GEN_CONFIG.generations[i].get(), thermoGenerators.perTick));
         }
 
         for (int i = 0; i < SolarPanels.values().length; i++) {
@@ -40,7 +48,7 @@ public class ConfigHandler {
 
         for (int i = 0; i < Cables.values().length; i++) {
             Cables cable = Cables.values()[i];
-            IBlocks.CABLES[i].setMaxExtract(getSafe(Config.CABLE.transfers[i].get(), cable.transfer));
+            IBlocks.CABLES[i].setMaxExtract(getSafe(Config.CABLE_CONFIG.transfers[i].get(), cable.transfer));
         }
 
         IBlocks.PLAYER_TRANSMITTER.setCapacity(getSafe(Config.MISC_ENERGY.playerTransmitterCap.get(), IBlocks.PLAYER_TRANSMITTER.getCapacity()));

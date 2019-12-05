@@ -39,6 +39,12 @@ public class IContainers {
     public static final ContainerType<SolarPanelContainer> SOLAR_PANEL_NIOTIC = register("solar_panel_niotic", SolarPanelContainer::createNiotic);
     public static final ContainerType<SolarPanelContainer> SOLAR_PANEL_SPIRITED = register("solar_panel_spirited", SolarPanelContainer::createSpirited);
 
+    public static final ContainerType<ThermoGenContainer> THERMO_GENERATOR_BASIC = register("thermo_generator_basic", ThermoGenContainer::createBasic);
+    public static final ContainerType<ThermoGenContainer> THERMO_GENERATOR_HARDENED = register("thermo_generator_hardened", ThermoGenContainer::createHardened);
+    public static final ContainerType<ThermoGenContainer> THERMO_GENERATOR_BLAZING = register("thermo_generator_blazing", ThermoGenContainer::createBlazing);
+    public static final ContainerType<ThermoGenContainer> THERMO_GENERATOR_NIOTIC = register("thermo_generator_niotic", ThermoGenContainer::createNiotic);
+    public static final ContainerType<ThermoGenContainer> THERMO_GENERATOR_SPIRITED = register("thermo_generator_spirited", ThermoGenContainer::createSpirited);
+
     public static final ContainerType<PlayerTransmitterContainer> PLAYER_TRANSMITTER = register("player_transmitter", PlayerTransmitterContainer::create);
     public static final ContainerType<PlayerTransmitterContainer> PLAYER_TRANSMITTER_DIM = register("player_transmitter_dim", PlayerTransmitterContainer::createDim);
 

@@ -18,7 +18,6 @@ import javax.annotation.Nullable;
 public class MagmaticGenTile extends GeneratorTile {
     protected final FluidTank tank;
     private final LazyOptional<IFluidHandler> holder;
-    private int bucketCount;
 
     public MagmaticGenTile(int capacity, int transfer, int perTick, int bucketCount) {
         super(ITiles.MAGMATIC_GENERATOR, capacity, transfer, perTick);
@@ -34,7 +33,6 @@ public class MagmaticGenTile extends GeneratorTile {
                 MagmaticGenTile.this.setReadyToSync(true);
             }
         };
-        this.bucketCount = bucketCount;
         this.holder = LazyOptional.of(() -> this.tank);
     }
 
