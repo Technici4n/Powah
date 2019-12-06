@@ -3,6 +3,9 @@ package zeroneye.powah.compat.jei;
 import mezz.jei.api.IModPlugin;
 import mezz.jei.api.JeiPlugin;
 import mezz.jei.api.constants.VanillaTypes;
+import mezz.jei.api.helpers.IGuiHelper;
+import mezz.jei.api.registration.IRecipeCatalystRegistration;
+import mezz.jei.api.registration.IRecipeCategoryRegistration;
 import mezz.jei.api.registration.IRecipeRegistration;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.item.ItemStack;
@@ -15,6 +18,9 @@ import zeroneye.powah.block.generator.magmatic.MagmaticGenerators;
 import zeroneye.powah.block.generator.panel.solar.SolarPanels;
 import zeroneye.powah.block.generator.thermoelectric.ThermoGenerators;
 import zeroneye.powah.block.storage.EnergyCells;
+import zeroneye.powah.compat.jei.magmatic.MagmaticCategory;
+import zeroneye.powah.compat.jei.thermo.CoolantCategory;
+import zeroneye.powah.compat.jei.thermo.HeatCategory;
 import zeroneye.powah.config.Config;
 import zeroneye.powah.item.IItems;
 
@@ -23,8 +29,33 @@ import java.util.stream.Stream;
 
 @JeiPlugin
 public class PowahJEIPlugin implements IModPlugin {
+
+    @Override
+    public void registerCategories(IRecipeCategoryRegistration registration) {
+        IGuiHelper helper = registration.getJeiHelpers().getGuiHelper();
+        registration.addRecipeCategories(new MagmaticCategory(helper));
+        registration.addRecipeCategories(new CoolantCategory(helper));
+        registration.addRecipeCategories(new HeatCategory(helper));
+    }
+
+    @Override
+    public void registerRecipeCatalysts(IRecipeCatalystRegistration registration) {
+        for (MagmaticGenerators mg : MagmaticGenerators.values()) {
+            registration.addRecipeCatalyst(new ItemStack(mg.get()), MagmaticCategory.ID);
+        }
+        for (ThermoGenerators tg : ThermoGenerators.values()) {
+            registration.addRecipeCatalyst(new ItemStack(tg.get()), CoolantCategory.ID);
+            registration.addRecipeCatalyst(new ItemStack(tg.get()), HeatCategory.ID);
+        }
+    }
+
     @Override
     public void registerRecipes(IRecipeRegistration registration) {
+        registration.addRecipes(MagmaticCategory.Maker.getBucketRecipes(registration.getIngredientManager()), MagmaticCategory.ID);
+        registration.addRecipes(CoolantCategory.Maker.getBucketRecipes(registration.getIngredientManager()), CoolantCategory.ID);
+        registration.addRecipes(HeatCategory.Maker.getBucketRecipes(registration.getIngredientManager()), HeatCategory.ID);
+
+        // Info's
         registration.addIngredientInfo(Stream.of(EnergyCells.values())
                 .map(EnergyCells::get)
                 .map(ItemStack::new)

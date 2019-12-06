@@ -49,7 +49,7 @@ public class ThermoGenScreen extends PowahScreen<ThermoGenContainer> {
     protected void drawForeground(int mouseX, int mouseY) {
         super.drawForeground(mouseX, mouseY);
         ThermoGeneratorTile genTile = this.container.getInv();
-        int percent = genTile.perTick() > 0 ? (100 * genTile.nextGen) / genTile.perTick() : 0;
+        int percent = genTile.perTick > 0 ? (100 * genTile.nextGen) / genTile.perTick : 0;
         this.font.drawString(percent + "%" + " (" + genTile.nextGen + " EF/t)", 29, 10, 5592405);
     }
 

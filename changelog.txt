@@ -1,4 +1,7 @@
 0.0.17
+- Added JEI for Magmatic generator fluids and Thermoelectric generator heat source blocks and coolants.
+- Added Magmatic Block to Thermoelectric generator heat source list with heat of 1200.
+- Fixed Thermoelectric generator generation when is more than 100%.
 
 0.0.16
 - Added Thermoelectric Generator (Generates FE when placed on top of a high temp block/fluid like lava...,require a coolant fluid like water.)

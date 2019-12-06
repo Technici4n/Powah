@@ -105,6 +105,11 @@ public class ThermoGeneratorTile extends GeneratorTile {
     }
 
     @Override
+    public int perTick() {
+        return this.nextGenCap > super.perTick() ? this.nextGenCap : super.perTick();
+    }
+
+    @Override
     public int getChargingSlots() {
         return 1;
     }

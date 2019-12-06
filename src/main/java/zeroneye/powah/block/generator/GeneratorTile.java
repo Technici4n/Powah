@@ -5,7 +5,7 @@ import net.minecraft.tileentity.TileEntityType;
 import zeroneye.powah.block.PowahTile;
 
 public abstract class GeneratorTile extends PowahTile {
-    protected int perTick;
+    public int perTick;
     public int nextGenCap;
     public int nextGen;
 
