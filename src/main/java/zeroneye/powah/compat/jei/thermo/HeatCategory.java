@@ -92,7 +92,7 @@ public class HeatCategory implements IRecipeCategory<HeatCategory.Recipe> {
     @Override
     public void draw(Recipe recipe, double mouseX, double mouseY) {
         Minecraft minecraft = Minecraft.getInstance();
-        minecraft.fontRenderer.drawString(TextFormatting.DARK_GRAY + "Heat: " + TextFormatting.RESET + recipe.heat, 30.0F, 9.0F, 0xc43400);
+        minecraft.fontRenderer.drawString(TextFormatting.DARK_GRAY + I18n.format("info.powah.heat", "" + TextFormatting.RESET + recipe.heat), 30.0F, 9.0F, 0xc43400);
     }
 
     public static class Maker {

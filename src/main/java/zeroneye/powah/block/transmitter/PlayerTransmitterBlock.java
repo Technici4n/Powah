@@ -81,15 +81,15 @@ public class PlayerTransmitterBlock extends PowahBlock implements IWaterLoggable
 
     @Override
     public BlockState rotate(BlockState state, IWorld world, BlockPos pos, Rotation direction) {
-        Direction side = direction.rotate(state.get(FACING));
-        BlockPos blockpos = pos.offset(side.getOpposite());
-        BlockState state1 = world.getBlockState(blockpos);
-        if (isValidPosition(state1, world, blockpos)) {
-            return super.rotate(state, world, pos, direction);
+        for (Rotation rotation : Rotation.values()) {
+            if (!rotation.equals(Rotation.NONE)) {
+                if (isValidPosition(super.rotate(state, world, pos, rotation), world, pos)) {
+                    return super.rotate(state, world, pos, rotation);
+                }
+            }
         }
         return state;
     }
-
 
     @Override
     public boolean isSolid(BlockState state) {

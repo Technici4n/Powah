@@ -1,5 +1,11 @@
+0.0.20
+
+0.0.19
+- Now Wrench has two modes (Wrench, Rotate)
+- Updated Lollipop to 0.0.15
+
 0.0.17
-- Added JEI for Magmatic generator fluids and Thermoelectric generator heat source blocks and coolants.
+- Added JEI support for Magmatic generator fluids and Thermoelectric generator heat source blocks and coolant fluids.
 - Added Magmatic Block to Thermoelectric generator heat source list with heat of 1200.
 - Fixed Thermoelectric generator generation when is more than 100%.
 

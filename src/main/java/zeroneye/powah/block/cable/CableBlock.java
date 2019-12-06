@@ -215,7 +215,7 @@ public class CableBlock extends PowahBlock implements IHud, IWaterLoggable {
             if (world instanceof ServerWorld && cable.ticks == 0) {
                 CableNoneTileData data = Server.getData(CableNoneTileData::new, ((ServerWorld) world).dimension);
                 CompoundNBT nbt = data.get(pos);
-                if (nbt != null) {// TODO
+                if (nbt != null) {// TODO keep data on tile entity remove
                     cable.getSideConfig().read(nbt);
                     cable.setReadyToSync(true);
                 }

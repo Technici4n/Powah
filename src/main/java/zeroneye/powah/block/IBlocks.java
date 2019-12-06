@@ -65,13 +65,6 @@ public class IBlocks {
 
         DISCHARGER = register("discharger", new DischargerBlock(Block.Properties.create(Material.MISCELLANEOUS).hardnessAndResistance(1.0F, 15.0F), 500000, 1000));
 
-        SolarPanels[] panels = SolarPanels.values();
-        SOLAR_PANELS = new SolarPanelBlock[panels.length];
-        for (int i = 0; i < panels.length; i++) {
-            SolarPanels panel = panels[i];
-            SOLAR_PANELS[i] = register("solar_panel_" + panel.name().toLowerCase(), new SolarPanelBlock(Block.Properties.create(panel.material).hardnessAndResistance(2.0F, panel.resistance), panel.capacity, panel.transfer, panel.perTick));
-        }
-
         ThermoGenerators[] thermoGenerators = ThermoGenerators.values();
         THERMO_GENERATORS = new ThermoGeneratorBlock[thermoGenerators.length];
         for (int i = 0; i < thermoGenerators.length; i++) {
@@ -79,6 +72,12 @@ public class IBlocks {
             THERMO_GENERATORS[i] = register("thermo_generator_" + tg.name().toLowerCase(), new ThermoGeneratorBlock(Block.Properties.create(tg.material).hardnessAndResistance(2.0F, tg.resistance), tg.capacity, tg.transfer, tg.perTick, tg.buckets));
         }
 
+        SolarPanels[] panels = SolarPanels.values();
+        SOLAR_PANELS = new SolarPanelBlock[panels.length];
+        for (int i = 0; i < panels.length; i++) {
+            SolarPanels panel = panels[i];
+            SOLAR_PANELS[i] = register("solar_panel_" + panel.name().toLowerCase(), new SolarPanelBlock(Block.Properties.create(panel.material).hardnessAndResistance(2.0F, panel.resistance), panel.capacity, panel.transfer, panel.perTick));
+        }
         PLAYER_TRANSMITTER = register("player_transmitter", new PlayerTransmitterBlock(Block.Properties.create(Material.MISCELLANEOUS).hardnessAndResistance(1.0F, 15.0F).doesNotBlockMovement(), 10000, 100, 1, false));
         PLAYER_TRANSMITTER_DIM = register("player_transmitter_dim", new PlayerTransmitterBlock(Block.Properties.create(Material.MISCELLANEOUS).hardnessAndResistance(1.0F, 15.0F).doesNotBlockMovement(), 100000, 250, 2, true));
 

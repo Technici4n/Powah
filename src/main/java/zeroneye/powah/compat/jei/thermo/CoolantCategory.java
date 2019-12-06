@@ -83,7 +83,7 @@ public class CoolantCategory implements IRecipeCategory<CoolantCategory.Recipe> 
     @Override
     public void draw(Recipe recipe, double mouseX, double mouseY) {
         Minecraft minecraft = Minecraft.getInstance();
-        minecraft.fontRenderer.drawString("Coolant Temp: " + TextFormatting.BLUE + recipe.coldness, 30.0F, 9.0F, 0x444444);
+        minecraft.fontRenderer.drawString(I18n.format("info.powah.cooling.mb", "" + TextFormatting.BLUE + recipe.coldness), 30.0F, 9.0F, 0x444444);
     }
 
     public static class Maker {
