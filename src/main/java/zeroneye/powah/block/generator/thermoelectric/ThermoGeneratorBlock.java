@@ -36,7 +36,7 @@ public class ThermoGeneratorBlock extends GeneratorBlock implements IWaterLoggab
     public ThermoGeneratorBlock(Properties properties, int capacity, int transfer, int perTick, int buckets) {
         super(properties, capacity, transfer, perTick);
         this.buckets = buckets;
-        setDefaultState(getDefaultState().with(WATERLOGGED, false));
+        setDefaultState(this.stateContainer.getBaseState().with(WATERLOGGED, false));
     }
 
     @Override

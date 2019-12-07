@@ -20,6 +20,7 @@ import net.minecraft.state.StateContainer;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.Direction;
 import net.minecraft.util.Hand;
+import net.minecraft.util.Rotation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.BlockRayTraceResult;
 import net.minecraft.util.math.MathHelper;
@@ -69,7 +70,7 @@ public class CableBlock extends PowahBlock implements IHud, IWaterLoggable {
 
     public CableBlock(Properties properties, int maxExtract, int maxReceive) {
         super(properties.sound(SoundType.METAL), 0, maxExtract, maxReceive);
-        setDefaultState(getDefaultState().with(NORTH, false).with(EAST, false).with(SOUTH, false).with(WEST, false).with(UP, false).with(DOWN, false).with(TILE, false).with(WATERLOGGED, false));
+        setDefaultState(this.stateContainer.getBaseState().with(NORTH, false).with(EAST, false).with(SOUTH, false).with(WEST, false).with(UP, false).with(DOWN, false).with(TILE, false).with(WATERLOGGED, false));
     }
 
     @Override
@@ -378,5 +379,15 @@ public class CableBlock extends PowahBlock implements IHud, IWaterLoggable {
             return Optional.of(Direction.DOWN);
         }
         return Optional.empty();
+    }
+
+    @Override
+    public BlockState rotate(BlockState state, Rotation direction) {
+        return state;
+    }
+
+    @Override
+    public BlockState rotate(BlockState state, IWorld world, BlockPos pos, Rotation direction) {
+        return state;
     }
 }

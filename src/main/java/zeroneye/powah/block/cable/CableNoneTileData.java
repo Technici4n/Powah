@@ -20,7 +20,7 @@ public class CableNoneTileData extends WorldSavedData {
 
     @Override
     public void read(CompoundNBT nbt) {
-        ListNBT listNBT = nbt.getList("CableDatas", Constants.NBT.TAG_COMPOUND);
+        ListNBT listNBT = nbt.getList("CableData", Constants.NBT.TAG_COMPOUND);
         listNBT.forEach(inbt -> {
             if (inbt instanceof CompoundNBT) {
                 CompoundNBT nbt1 = (CompoundNBT) inbt;
@@ -38,7 +38,7 @@ public class CableNoneTileData extends WorldSavedData {
             nbt.put("Tag", nbt);
             listNBT.add(nbt1);
         });
-        compound.put("CableDatas", listNBT);
+        compound.put("CableData", listNBT);
         return compound;
     }
 

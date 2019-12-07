@@ -16,7 +16,7 @@ import javax.annotation.Nullable;
 public class EnergyCellBlock extends PowahBlock implements IWaterLoggable {
     public EnergyCellBlock(Properties properties, int capacity, int transfer) {
         super(properties, capacity, transfer, transfer);
-        setDefaultState(getDefaultState().with(WATERLOGGED, false));
+        setDefaultState(this.stateContainer.getBaseState().with(WATERLOGGED, false));
     }
 
     @Nullable

@@ -1,4 +1,8 @@
+0.0.21
+
 0.0.20
+- Fixed game crash when trying to rotate cables with wrench.
+- Updated Lollipop to 0.0.16
 
 0.0.19
 - Now Wrench has two modes (Wrench, Rotate)

@@ -16,7 +16,7 @@ import javax.annotation.Nullable;
 public class DischargerBlock extends PowahBlock implements IWaterLoggable {
     public DischargerBlock(Properties properties, int capacity, int maxExtract) {
         super(properties, capacity, maxExtract, 0);
-        setDefaultState(getDefaultState().with(WATERLOGGED, false));
+        setDefaultState(this.stateContainer.getBaseState().with(WATERLOGGED, false));
     }
 
     @Nullable

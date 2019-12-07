@@ -40,6 +40,7 @@ public class IBlocks {
     public static final PlayerTransmitterBlock PLAYER_TRANSMITTER_DIM;
     public static final CableBlock[] CABLES;
     public static final DischargerBlock DISCHARGER;
+    // public static final EnergyHopperBlock ENERGY_HOPPER;
 
     static {
         EnergyCells[] cells = EnergyCells.values();
@@ -80,6 +81,7 @@ public class IBlocks {
         }
         PLAYER_TRANSMITTER = register("player_transmitter", new PlayerTransmitterBlock(Block.Properties.create(Material.MISCELLANEOUS).hardnessAndResistance(1.0F, 15.0F).doesNotBlockMovement(), 10000, 100, 1, false));
         PLAYER_TRANSMITTER_DIM = register("player_transmitter_dim", new PlayerTransmitterBlock(Block.Properties.create(Material.MISCELLANEOUS).hardnessAndResistance(1.0F, 15.0F).doesNotBlockMovement(), 100000, 250, 2, true));
+        // ENERGY_HOPPER = register("energy_hopper", new EnergyHopperBlock(Block.Properties.create(Material.MISCELLANEOUS).hardnessAndResistance(1.0F, 15.0F).doesNotBlockMovement(), 100000, 250));
 
         Cables[] cables = Cables.values();
         CABLES = new CableBlock[cables.length];

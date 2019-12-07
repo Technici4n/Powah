@@ -21,7 +21,7 @@ public class SolarPanelBlock extends GeneratorBlock implements IWaterLoggable {
 
     public SolarPanelBlock(Properties properties, int capacity, int transfer, int perTick) {
         super(properties, capacity, transfer, perTick);
-        setDefaultState(getDefaultState().with(WATERLOGGED, false));
+        setDefaultState(this.stateContainer.getBaseState().with(WATERLOGGED, false));
     }
 
     @Override

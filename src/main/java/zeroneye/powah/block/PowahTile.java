@@ -101,17 +101,25 @@ public abstract class PowahTile extends TileBase.TickableInv {
             }
         }
 
-        if (canChargeItems()) {
+        if (canChargeItems() && canExtract(null)) {
             for (int i = 0; i < getChargingSlots(); i++) {
-                final ItemStack stack = getStackInSlot(i);
-                if (!stack.isEmpty() && canExtract(null)) {
-                    int amount = Math.min(this.internal.getMaxExtract(), this.internal.getEnergyStored());
-                    int received = Energy.receive(stack, amount, false);
-                    extracted += extractEnergy(received, false, null);
-                }
+                extracted += chargeItem(getStackInSlot(i));
             }
         }
         return extracted > 0;
+    }
+
+    protected int chargeItem(ItemStack stack) {
+        return chargeItem(stack, this.internal.getMaxExtract());
+    }
+
+    protected int chargeItem(ItemStack stack, int transfer) {
+        if (!stack.isEmpty()) {
+            int amount = Math.min(transfer, this.internal.getEnergyStored());
+            int received = Energy.receive(stack, amount, false);
+            return extractEnergy(received, false, null);
+        }
+        return 0;
     }
 
     @Override

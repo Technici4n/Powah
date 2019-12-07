@@ -9,10 +9,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class CuriosCompat {
+    public static final String ID = "curios";
     private static int LOADED;
 
     public static boolean isLoaded() {
-        if (LOADED == 0) LOADED = ModList.get().isLoaded("curios") ? 1 : -1;
+        if (LOADED == 0) LOADED = ModList.get().isLoaded(ID) ? 1 : -1;
         return LOADED == 1;
     }
 
