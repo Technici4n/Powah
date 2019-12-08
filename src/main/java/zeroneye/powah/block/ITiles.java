@@ -12,6 +12,7 @@ import zeroneye.powah.block.generator.furnator.FurnatorTile;
 import zeroneye.powah.block.generator.magmatic.MagmaticGenTile;
 import zeroneye.powah.block.generator.panel.solar.SolarPanelTile;
 import zeroneye.powah.block.generator.thermoelectric.ThermoGeneratorTile;
+import zeroneye.powah.block.hopper.EnergyHopperTile;
 import zeroneye.powah.block.storage.EnergyCellTile;
 import zeroneye.powah.block.transmitter.PlayerTransmitterTile;
 
@@ -30,7 +31,7 @@ public class ITiles {
     public static final TileEntityType<?> THERMO_GENERATOR = register("thermo_generator_", ThermoGeneratorTile::new, IBlocks.THERMO_GENERATORS);
     public static final TileEntityType<?> CABLE = register("cable", CableTile::new, IBlocks.CABLES);
     public static final TileEntityType<?> DISCHARGER = register("discharger", DischargerTile::new, IBlocks.DISCHARGER);
-    // public static final TileEntityType<?> ENERGY_HOPPER = register("energy_hopper", EnergyHopperTile::new, IBlocks.ENERGY_HOPPER);
+    public static final TileEntityType<?> ENERGY_HOPPER = register("energy_hopper", EnergyHopperTile::new, IBlocks.ENERGY_HOPPER);
 
     @SuppressWarnings({"unchecked", "ConstantConditions"})
     static <T extends TileEntity> TileEntityType<T> register(String name, Supplier<? extends T> factoryIn, Block... b) {

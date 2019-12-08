@@ -50,5 +50,6 @@ public class IScreens {
         ScreenManager.registerFactory(IContainers.CABLE_SPIRITED, CableScreen::new);
 
         ScreenManager.registerFactory(IContainers.DISCHARGER, DischargerScreen::new);
+        ScreenManager.registerFactory(IContainers.ENERGY_HOPPER, EnergyHopperScreen::new);
     }
 }

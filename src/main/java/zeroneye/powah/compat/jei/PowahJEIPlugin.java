@@ -84,6 +84,8 @@ public class PowahJEIPlugin implements IModPlugin {
         registration.addIngredientInfo(new ItemStack(IBlocks.PLAYER_TRANSMITTER), VanillaTypes.ITEM, I18n.format("wiki.powah.player_transmitter"));
         registration.addIngredientInfo(new ItemStack(IBlocks.PLAYER_TRANSMITTER_DIM), VanillaTypes.ITEM, I18n.format("wiki.powah.player_transmitter_dim"));
         registration.addIngredientInfo(new ItemStack(IItems.BINDING_CARD), VanillaTypes.ITEM, I18n.format("wiki.powah.binding_card"));
+        registration.addIngredientInfo(new ItemStack(IBlocks.DISCHARGER), VanillaTypes.ITEM, I18n.format("wiki.powah.discharger"));
+        registration.addIngredientInfo(new ItemStack(IBlocks.ENERGY_HOPPER), VanillaTypes.ITEM, I18n.format("wiki.powah.energy_hopper"));
 
         if (Config.GENERAL.capacitor_blazing.get())
             registration.addIngredientInfo(new ItemStack(IItems.CAPACITOR_BLAZING), VanillaTypes.ITEM, I18n.format("wiki.powah.capacitor_blazing"));
@@ -94,7 +96,6 @@ public class PowahJEIPlugin implements IModPlugin {
         if (Config.GENERAL.player_aerial_pearl.get())
             registration.addIngredientInfo(new ItemStack(IItems.PLAYER_AERIAL_PEARL), VanillaTypes.ITEM, I18n.format("wiki.powah.player_aerial_pearl"));
 
-        registration.addIngredientInfo(new ItemStack(IBlocks.DISCHARGER), VanillaTypes.ITEM, I18n.format("wiki.powah.discharger"));
     }
 
     @Override

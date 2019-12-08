@@ -55,6 +55,7 @@ public class IContainers {
     public static final ContainerType<CableContainer> CABLE_SPIRITED = register("cable_spirited", CableContainer::createSpirited);
 
     public static final ContainerType<DischargerContainer> DISCHARGER = register("discharger", DischargerContainer::create);
+    public static final ContainerType<EnergyHopperContainer> ENERGY_HOPPER = register("energy_hopper", EnergyHopperContainer::create);
 
     private static <T extends Container> ContainerType<T> register(String name, IContainerFactory<T> factory) {
         ContainerType<T> containerType = IForgeContainerType.create(factory);

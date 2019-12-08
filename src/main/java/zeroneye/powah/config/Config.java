@@ -52,11 +52,11 @@ public class Config {
         ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, GENERAL_CONFIG_SPEC, Powah.MOD_ID + "/general_common.toml");
         ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, CELL_CONFIG_SPEC, energyFolder + "/energy_cell.toml");
         ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, FURNATOR_CONFIG_SPEC, energyFolder + "/furnator.toml");
-        ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, MAGMATIC_GENERATOR_CONFIG_SPEC, energyFolder + "/Magmatic_Generator.toml");
-        ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, SOLAR_PANEL_CONFIG_SPEC, energyFolder + "/Solar_Panel.toml");
-        ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, THERMO_GEN_CONFIG_SPEC, energyFolder + "/Thermoelectric_Generator.toml");
-        ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, CABLE_CONFIG_SPEC, energyFolder + "/Energy_cable.toml");
-        ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, MISC_ENERGY_CONFIG_SPEC, energyFolder + "/Misc.toml");
+        ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, MAGMATIC_GENERATOR_CONFIG_SPEC, energyFolder + "/magmatic_generator.toml");
+        ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, SOLAR_PANEL_CONFIG_SPEC, energyFolder + "/solar_panel.toml");
+        ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, THERMO_GEN_CONFIG_SPEC, energyFolder + "/thermoelectric_generator.toml");
+        ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, CABLE_CONFIG_SPEC, energyFolder + "/energy_cable.toml");
+        ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, MISC_ENERGY_CONFIG_SPEC, energyFolder + "/misc.toml");
     }
 
     public static class General {

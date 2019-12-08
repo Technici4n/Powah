@@ -57,6 +57,8 @@ public class ConfigHandler {
         IBlocks.PLAYER_TRANSMITTER_DIM.setTransfer(getSafe(Config.MISC_ENERGY.playerTransmitterDimTransfer.get(), IBlocks.PLAYER_TRANSMITTER_DIM.getMaxExtract()));
         IBlocks.DISCHARGER.setCapacity(getSafe(Config.MISC_ENERGY.dischargerCap.get(), IBlocks.DISCHARGER.getCapacity()));
         IBlocks.DISCHARGER.setMaxExtract(getSafe(Config.MISC_ENERGY.dischargerTransfer.get(), IBlocks.DISCHARGER.getMaxExtract()));
+        IBlocks.ENERGY_HOPPER.setCapacity(getSafe(Config.MISC_ENERGY.hopperCap.get(), IBlocks.ENERGY_HOPPER.getCapacity()));
+        IBlocks.ENERGY_HOPPER.setTransfer(getSafe(Config.MISC_ENERGY.hopperTransfer.get(), IBlocks.ENERGY_HOPPER.getMaxReceive()));
     }
 
     private static int getSafe(Object s, int defaultV) {

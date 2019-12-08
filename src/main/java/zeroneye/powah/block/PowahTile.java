@@ -129,15 +129,20 @@ public abstract class PowahTile extends TileBase.TickableInv {
 
     @Override
     public int getSizeInventory() {
-        return getChargingSlots() + getUpgradSlots();
+        return getChargingSlots() + getUpgradeSlots();
     }
 
-    private int getUpgradSlots() {
+    private int getUpgradeSlots() {
         return 0;
     }
 
     public int getChargingSlots() {
         return 0;
+    }
+
+    @Override
+    public int maxStackSize(int index) {
+        return 1;
     }
 
     public int receiveEnergy(int maxReceive, boolean simulate, @Nullable Direction side) {

@@ -9,13 +9,13 @@ textFormatting="Powah"
 displayURL="https://www.curseforge.com/minecraft/mc-mods/powah"
 authors="zeroneye"
 description='''
-Various ways to generate, store and transmit FE power .
+Various ways to generate, store and transmit FE power.
 '''
 
 [[dependencies.powah]]
     modId="lollipop"
     mandatory=true
-    versionRange="[0.0.15,)"
+    versionRange="[0.0.17,)"
     ordering="NONE"
     side="BOTH"
 

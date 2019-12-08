@@ -20,7 +20,6 @@ import net.minecraft.state.StateContainer;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.Direction;
 import net.minecraft.util.Hand;
-import net.minecraft.util.Rotation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.BlockRayTraceResult;
 import net.minecraft.util.math.MathHelper;
@@ -59,7 +58,7 @@ public class CableBlock extends PowahBlock implements IHud, IWaterLoggable {
     public static final BooleanProperty TILE = BooleanProperty.create("tile");
 
     private static final VoxelShape CABLE = makeCuboidShape(6.5, 6.5, 6.5, 9.5, 9.5, 9.5);
-    private static final VoxelShape[] MULTIPARTS = new VoxelShape[]{
+    private static final VoxelShape[] MULTIPART = new VoxelShape[]{
             makeCuboidShape(7, 7, 0, 9, 9, 6.5),
             makeCuboidShape(9.5, 7, 7, 16, 9, 9),
             makeCuboidShape(7, 7, 9.5, 9, 9, 16),
@@ -76,12 +75,12 @@ public class CableBlock extends PowahBlock implements IHud, IWaterLoggable {
     @Override
     public VoxelShape getShape(BlockState state, IBlockReader worldIn, BlockPos pos, ISelectionContext context) {
         VoxelShape voxelShape = CABLE;
-        if (state.get(NORTH)) voxelShape = VoxelShapes.or(voxelShape, MULTIPARTS[0]);
-        if (state.get(EAST)) voxelShape = VoxelShapes.or(voxelShape, MULTIPARTS[1]);
-        if (state.get(SOUTH)) voxelShape = VoxelShapes.or(voxelShape, MULTIPARTS[2]);
-        if (state.get(WEST)) voxelShape = VoxelShapes.or(voxelShape, MULTIPARTS[3]);
-        if (state.get(UP)) voxelShape = VoxelShapes.or(voxelShape, MULTIPARTS[4]);
-        if (state.get(DOWN)) voxelShape = VoxelShapes.or(voxelShape, MULTIPARTS[5]);
+        if (state.get(NORTH)) voxelShape = VoxelShapes.or(voxelShape, MULTIPART[0]);
+        if (state.get(EAST)) voxelShape = VoxelShapes.or(voxelShape, MULTIPART[1]);
+        if (state.get(SOUTH)) voxelShape = VoxelShapes.or(voxelShape, MULTIPART[2]);
+        if (state.get(WEST)) voxelShape = VoxelShapes.or(voxelShape, MULTIPART[3]);
+        if (state.get(UP)) voxelShape = VoxelShapes.or(voxelShape, MULTIPART[4]);
+        if (state.get(DOWN)) voxelShape = VoxelShapes.or(voxelShape, MULTIPART[5]);
         return voxelShape;
     }
 
@@ -379,15 +378,5 @@ public class CableBlock extends PowahBlock implements IHud, IWaterLoggable {
             return Optional.of(Direction.DOWN);
         }
         return Optional.empty();
-    }
-
-    @Override
-    public BlockState rotate(BlockState state, Rotation direction) {
-        return state;
-    }
-
-    @Override
-    public BlockState rotate(BlockState state, IWorld world, BlockPos pos, Rotation direction) {
-        return state;
     }
 }

@@ -1,4 +1,8 @@
+0.0.22
 0.0.21
+- Added Energy Hopper (a block that Charge chargeable items in an adjacent inventory).
+- Re-Fixed game crash when trying to rotate cables and Energy Cells with wrench.
+- Updated Lollipop to 0.0.17
 
 0.0.20
 - Fixed game crash when trying to rotate cables with wrench.
