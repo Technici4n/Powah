@@ -5,7 +5,8 @@ issueTrackerURL="https://github.com/zeroneye/powah/issues"
 [[mods]]
 modId="powah"
 version="${file.jarVersion}"
-textFormatting="Powah"
+#updateJSONURL="https://raw.githubusercontent.com/zeroneye/powah/master/update.json"
+displayName="Powah"
 displayURL="https://www.curseforge.com/minecraft/mc-mods/powah"
 authors="zeroneye"
 description='''
