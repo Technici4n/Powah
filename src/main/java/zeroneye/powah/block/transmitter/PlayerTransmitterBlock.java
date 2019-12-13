@@ -16,9 +16,9 @@ import net.minecraft.world.IWorldReader;
 import zeroneye.lib.block.TileBase;
 import zeroneye.lib.inventory.ContainerBase;
 import zeroneye.lib.util.Energy;
+import zeroneye.powah.api.cable.ICable;
 import zeroneye.powah.block.IBlocks;
 import zeroneye.powah.block.PowahBlock;
-import zeroneye.powah.block.cable.CableBlock;
 import zeroneye.powah.inventory.IContainers;
 import zeroneye.powah.inventory.PlayerTransmitterContainer;
 
@@ -37,7 +37,7 @@ public class PlayerTransmitterBlock extends PowahBlock implements IWaterLoggable
         super(properties, capacity, transfer, transfer);
         this.slots = slots;
         this.acrossDim = acrossDim;
-        setDefaultState(this.stateContainer.getBaseState().with(FACING, Direction.UP).with(WATERLOGGED, false));
+        setDefaultState(this.stateContainer.getBaseState().with(FACING, Direction.DOWN).with(WATERLOGGED, false));
     }
 
     static {
@@ -62,7 +62,7 @@ public class PlayerTransmitterBlock extends PowahBlock implements IWaterLoggable
 
     @Nullable
     @Override
-    public ContainerBase getContainer(int id, PlayerInventory playerInventory, TileBase.TickableInv inv) {
+    public ContainerBase getContainer(int id, PlayerInventory playerInventory, TileBase inv) {
         if (this == IBlocks.PLAYER_TRANSMITTER) {
             return new PlayerTransmitterContainer(IContainers.PLAYER_TRANSMITTER, id, playerInventory, (PlayerTransmitterTile) inv, this.slots);
         } else if (this == IBlocks.PLAYER_TRANSMITTER_DIM) {
@@ -77,7 +77,13 @@ public class PlayerTransmitterBlock extends PowahBlock implements IWaterLoggable
         BlockPos blockpos = pos.offset(direction);
         BlockState state1 = worldIn.getBlockState(blockpos);
         TileEntity tile = worldIn.getTileEntity(blockpos);
-        return state1.getBlock() instanceof CableBlock || tile != null && !(tile instanceof PlayerTransmitterTile) && Energy.hasEnergy(tile, direction);
+        final boolean[] flag = {false};
+
+        Energy.getForgeEnergy(tile, direction).ifPresent(storage -> {
+            flag[0] = storage.canExtract();
+        });
+
+        return state1.getBlock() instanceof ICable || tile != null && !(tile instanceof PlayerTransmitterTile) && flag[0];
     }
 
     @Override
@@ -103,11 +109,6 @@ public class PlayerTransmitterBlock extends PowahBlock implements IWaterLoggable
 
     public boolean isAcrossDim() {
         return acrossDim;
-    }
-
-    @Override
-    protected boolean waterLogged() {
-        return true;
     }
 
     @Override

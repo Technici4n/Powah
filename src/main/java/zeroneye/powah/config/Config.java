@@ -17,28 +17,31 @@ import java.nio.file.Paths;
 public class Config {
     public static final Marker MARKER = new MarkerManager.Log4jMarker("CONFIG");
     public static final General GENERAL;
-    public static final ForgeConfigSpec GENERAL_CONFIG_SPEC;
+    private static final ForgeConfigSpec GENERAL_CONFIG_SPEC;
 
     public static final CellConfig CELL_CONFIG;
-    public static final ForgeConfigSpec CELL_CONFIG_SPEC;
+    private static final ForgeConfigSpec CELL_CONFIG_SPEC;
 
     public static final FurnatorConfig FURNATOR_CONFIG;
-    public static final ForgeConfigSpec FURNATOR_CONFIG_SPEC;
+    private static final ForgeConfigSpec FURNATOR_CONFIG_SPEC;
 
     public static final MagmaticGeneratorConfig MAGMATIC_GENERATOR;
-    public static final ForgeConfigSpec MAGMATIC_GENERATOR_CONFIG_SPEC;
+    private static final ForgeConfigSpec MAGMATIC_GENERATOR_CONFIG_SPEC;
 
     public static final SolarPanelConfig SOLAR_PANEL;
-    public static final ForgeConfigSpec SOLAR_PANEL_CONFIG_SPEC;
+    private static final ForgeConfigSpec SOLAR_PANEL_CONFIG_SPEC;
 
     public static final ThermoGeneratorConfig THERMO_GEN_CONFIG;
-    public static final ForgeConfigSpec THERMO_GEN_CONFIG_SPEC;
+    private static final ForgeConfigSpec THERMO_GEN_CONFIG_SPEC;
 
     public static final CableConfig CABLE_CONFIG;
-    public static final ForgeConfigSpec CABLE_CONFIG_SPEC;
+    private static final ForgeConfigSpec CABLE_CONFIG_SPEC;
+
+    public static final EnergizingConfig ENERGIZING_CONFIG;
+    private static final ForgeConfigSpec ENERGIZING_CONFIG_SPEC;
 
     public static final MiscEnergyConfig MISC_ENERGY;
-    public static final ForgeConfigSpec MISC_ENERGY_CONFIG_SPEC;
+    private static final ForgeConfigSpec MISC_ENERGY_CONFIG_SPEC;
 
     public static void setup() {
         Path dir = FMLPaths.CONFIGDIR.get();
@@ -56,6 +59,7 @@ public class Config {
         ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, SOLAR_PANEL_CONFIG_SPEC, energyFolder + "/solar_panel.toml");
         ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, THERMO_GEN_CONFIG_SPEC, energyFolder + "/thermoelectric_generator.toml");
         ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, CABLE_CONFIG_SPEC, energyFolder + "/energy_cable.toml");
+        ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, ENERGIZING_CONFIG_SPEC, energyFolder + "/Energizing.toml");
         ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, MISC_ENERGY_CONFIG_SPEC, energyFolder + "/misc.toml");
     }
 
@@ -92,6 +96,9 @@ public class Config {
         final Pair<ThermoGeneratorConfig, ForgeConfigSpec> thermoGeneratorConfigForgeConfigSpecPair = new ForgeConfigSpec.Builder().configure(ThermoGeneratorConfig::new);
         THERMO_GEN_CONFIG = thermoGeneratorConfigForgeConfigSpecPair.getLeft();
         THERMO_GEN_CONFIG_SPEC = thermoGeneratorConfigForgeConfigSpecPair.getRight();
+        final Pair<EnergizingConfig, ForgeConfigSpec> energizingConfigForgeConfigSpecPair = new ForgeConfigSpec.Builder().configure(EnergizingConfig::new);
+        ENERGIZING_CONFIG = energizingConfigForgeConfigSpecPair.getLeft();
+        ENERGIZING_CONFIG_SPEC = energizingConfigForgeConfigSpecPair.getRight();
         final Pair<CableConfig, ForgeConfigSpec> CablesForgeConfigSpecPair = new ForgeConfigSpec.Builder().configure(CableConfig::new);
         CABLE_CONFIG = CablesForgeConfigSpecPair.getLeft();
         CABLE_CONFIG_SPEC = CablesForgeConfigSpecPair.getRight();

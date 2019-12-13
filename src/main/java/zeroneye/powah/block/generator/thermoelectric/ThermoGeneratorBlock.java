@@ -71,7 +71,7 @@ public class ThermoGeneratorBlock extends GeneratorBlock implements IWaterLoggab
 
     @Nullable
     @Override
-    public ContainerBase getContainer(int id, PlayerInventory playerInventory, TileBase.TickableInv inv) {
+    public ContainerBase getContainer(int id, PlayerInventory playerInventory, TileBase inv) {
         if (this == ThermoGenerators.BASIC.get()) {
             return new ThermoGenContainer(IContainers.THERMO_GENERATOR_BASIC, id, playerInventory, (ThermoGeneratorTile) inv);
         } else if (this == ThermoGenerators.HARDENED.get()) {
@@ -103,10 +103,5 @@ public class ThermoGeneratorBlock extends GeneratorBlock implements IWaterLoggab
     @Override
     protected boolean hasLitProp() {
         return false;
-    }
-
-    @Override
-    protected boolean waterLogged() {
-        return true;
     }
 }

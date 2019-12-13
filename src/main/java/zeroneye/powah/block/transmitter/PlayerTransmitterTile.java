@@ -16,6 +16,7 @@ public class PlayerTransmitterTile extends PowahTile {
     public PlayerTransmitterTile(int capacity, int transfer, boolean acrossDim) {
         super(ITiles.PLAYER_TRANSMITTER, capacity, transfer, transfer, false);
         this.acrossDim = acrossDim;
+        this.inv.add(2);
     }
 
     public PlayerTransmitterTile() {
@@ -53,7 +54,7 @@ public class PlayerTransmitterTile extends PowahTile {
         if (this.world == null) return false;
         if (this.world.isRemote) return false;
         if (this.internal.hasEnergy()) {
-            this.stacks.forEach(stack -> {
+            this.inv.getStacks().forEach(stack -> {
                 if (stack.getItem() instanceof BindingCardItem) {
                     BindingCardItem item = (BindingCardItem) stack.getItem();
                     item.getPlayer(stack).ifPresent(player -> {
@@ -78,29 +79,24 @@ public class PlayerTransmitterTile extends PowahTile {
     }
 
     @Override
-    public int getSizeInventory() {
-        return 2;
-    }
-
-    @Override
     protected ExtractionType getExtractionType() {
         return ExtractionType.OFF;
     }
 
     @Override
-    public boolean dropInventoryOnBreak() {
-        return true;
+    public boolean keepInventory() {
+        return false;
     }
 
     @Override
-    public boolean isItemValidForSlot(int index, ItemStack itemStack) {
-        if (this.world == null || !(itemStack.getItem() instanceof BindingCardItem)) {
+    public boolean canInsert(int index, ItemStack stack) {
+        if (this.world == null || !(stack.getItem() instanceof BindingCardItem)) {
             return false;
         } else {
             if (getBlock() instanceof PlayerTransmitterBlock && index == 1 && ((PlayerTransmitterBlock) getBlock()).getSlots() < 2) {
                 return false;
             }
         }
-        return ((BindingCardItem) itemStack.getItem()).getPlayer(itemStack).isPresent() || super.isItemValidForSlot(index, itemStack);
+        return ((BindingCardItem) stack.getItem()).getPlayer(stack).isPresent() || super.canInsert(index, stack);
     }
 }

@@ -29,7 +29,7 @@ public class FurnatorBlock extends GeneratorBlock implements IWaterLoggable {
 
     @Nullable
     @Override
-    public ContainerBase getContainer(int id, PlayerInventory playerInventory, TileBase.TickableInv inv) {
+    public ContainerBase getContainer(int id, PlayerInventory playerInventory, TileBase inv) {
         if (this == Furnators.BASIC.get()) {
             return new FurnatorContainer(IContainers.FURNATOR_BASIC, id, playerInventory, (FurnatorTile) inv);
         } else if (this == Furnators.HARDENED.get()) {
@@ -42,11 +42,6 @@ public class FurnatorBlock extends GeneratorBlock implements IWaterLoggable {
             return new FurnatorContainer(IContainers.FURNATOR_SPIRITED, id, playerInventory, (FurnatorTile) inv);
         }
         return super.getContainer(id, playerInventory, inv);
-    }
-
-    @Override
-    protected boolean waterLogged() {
-        return true;
     }
 
     @Override

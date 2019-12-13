@@ -7,13 +7,13 @@
   ],
   "key": {
 	"c": {
-	  "item": "powah:capacitor_basic_large"
+	  "item": "powah:capacitor_hardened"
 	},
 	"i": {
 	  "item": "powah:dielectric_paste"
 	},
 	"g": {
-	  "item": "minecraft:gold_ingot"
+	  "item": "powah:energised_steel"
 	},
 	"p": {
 	  "item": "powah:thermoelectric_plate"

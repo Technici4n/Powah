@@ -68,7 +68,7 @@ public class MagmaticGenBlock extends GeneratorBlock implements IWaterLoggable {
 
     @Nullable
     @Override
-    public ContainerBase getContainer(int id, PlayerInventory playerInventory, TileBase.TickableInv inv) {
+    public ContainerBase getContainer(int id, PlayerInventory playerInventory, TileBase inv) {
         if (this == MagmaticGenerators.BASIC.get()) {
             return new MagmaticGenContainer(IContainers.MAGMATIC_GENERATOR_BASIC, id, playerInventory, (MagmaticGenTile) inv);
         } else if (this == MagmaticGenerators.HARDENED.get()) {
@@ -94,11 +94,6 @@ public class MagmaticGenBlock extends GeneratorBlock implements IWaterLoggable {
 
     public void setBuckets(int buckets) {
         this.buckets = buckets;
-    }
-
-    @Override
-    protected boolean waterLogged() {
-        return true;
     }
 
     @Override

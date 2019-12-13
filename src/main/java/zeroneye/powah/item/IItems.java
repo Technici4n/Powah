@@ -22,6 +22,7 @@ public class IItems {
     public static final Item CAPACITOR_BASIC_TINY;
     public static final Item CAPACITOR_BASIC;
     public static final Item CAPACITOR_BASIC_LARGE;
+    public static final Item CAPACITOR_HARDENED;
     public static final Item CAPACITOR_BLAZING;
     public static final Item CAPACITOR_NIOTIC;
     public static final Item CAPACITOR_SPIRITED;
@@ -31,6 +32,11 @@ public class IItems {
     public static final Item BINDING_CARD;
     public static final Item PHOTOELECTRIC_PANE;
     public static final Item THERMOELECTRIC_PLATE;
+    public static final Item ENERGISED_STEEL;
+    public static final Item BLAZING_CRYSTAL;
+    public static final Item NIOTIC_CRYSTAL;
+    public static final Item SPIRITED_CRYSTAL;
+    public static final Item CHARGED_SNOWBALL;
 
     static {
         WRENCH = register("wrench", new WrenchItem(new Item.Properties().group(ItemGroups.MAIN).maxStackSize(1)));
@@ -41,6 +47,7 @@ public class IItems {
         CAPACITOR_BASIC_TINY = register("capacitor_basic_tiny", new CapacitorItem(new Item.Properties().group(ItemGroups.MAIN)));
         CAPACITOR_BASIC = register("capacitor_basic", new CapacitorItem(new Item.Properties().group(ItemGroups.MAIN)));
         CAPACITOR_BASIC_LARGE = register("capacitor_basic_large", new CapacitorItem(new Item.Properties().group(ItemGroups.MAIN)));
+        CAPACITOR_HARDENED = register("capacitor_hardened", new CapacitorItem(new Item.Properties().group(ItemGroups.MAIN)));
         CAPACITOR_BLAZING = register("capacitor_blazing", new CapacitorItem(new Item.Properties().group(ItemGroups.MAIN)));
         CAPACITOR_NIOTIC = register("capacitor_niotic", new CapacitorItem(new Item.Properties().group(ItemGroups.MAIN)));
         CAPACITOR_SPIRITED = register("capacitor_spirited", new CapacitorItem(new Item.Properties().group(ItemGroups.MAIN)));
@@ -50,6 +57,11 @@ public class IItems {
         BINDING_CARD = register("binding_card", new BindingCardItem(new Item.Properties().maxStackSize(1).group(ItemGroups.MAIN)));
         PHOTOELECTRIC_PANE = register("photoelectric_pane", new ItemBase(new Item.Properties().group(ItemGroups.MAIN)));
         THERMOELECTRIC_PLATE = register("thermoelectric_plate", new ItemBase(new Item.Properties().group(ItemGroups.MAIN)));
+        ENERGISED_STEEL = register("energised_steel", new ItemBase(new Item.Properties().group(ItemGroups.MAIN)));
+        BLAZING_CRYSTAL = register("blazing_crystal", new ItemBase(new Item.Properties().group(ItemGroups.MAIN)));
+        NIOTIC_CRYSTAL = register("niotic_crystal", new ItemBase(new Item.Properties().group(ItemGroups.MAIN)));
+        SPIRITED_CRYSTAL = register("spirited_crystal", new ItemBase(new Item.Properties().group(ItemGroups.MAIN)));
+        CHARGED_SNOWBALL = register("charged_snowball", new ChargedSnowballItem(new Item.Properties().group(ItemGroups.MAIN).maxStackSize(16)));
     }
 
     static <T extends Item & IItemBase> T register(String name, T item) {

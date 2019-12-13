@@ -7,10 +7,10 @@
   ],
   "key": {
 	"c": {
-	  "item": "powah:capacitor_basic_large"
+	  "item": "powah:capacitor_hardened"
 	},
 	"g": {
-	  "item": "minecraft:gold_ingot"
+	  "item": "powah:energised_steel"
 	},
 	"f": {
 	  "item": "powah:magmatic_generator_basic"

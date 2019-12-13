@@ -9,6 +9,7 @@ import zeroneye.powah.config.Config;
 public class FurnatorTile extends GeneratorTile {
     public FurnatorTile(int capacity, int transfer, int perTick) {
         super(ITiles.FURNATOR, capacity, transfer, perTick);
+        this.inv.add(1);
     }
 
     public FurnatorTile() {
@@ -17,21 +18,16 @@ public class FurnatorTile extends GeneratorTile {
 
     @Override
     protected void generate() {
-        final ItemStack fuelStack = getStackInSlot(1);
+        final ItemStack fuelStack = this.inv.getStackInSlot(1);
         if (this.nextGen <= 0 && !fuelStack.isEmpty()) {
             this.nextGenCap = ForgeHooks.getBurnTime(fuelStack) * Config.FURNATOR_CONFIG.fuelEnergy.get();
             this.nextGen = this.nextGenCap;
             if (fuelStack.hasContainerItem())
-                setInventorySlotContents(1, fuelStack.getContainerItem());
+                this.inv.setStack(1, fuelStack.getContainerItem());
             else {
                 fuelStack.shrink(1);
             }
         }
-    }
-
-    @Override
-    public int getSizeInventory() {
-        return 1 + super.getSizeInventory();
     }
 
     @Override
@@ -40,7 +36,7 @@ public class FurnatorTile extends GeneratorTile {
     }
 
     @Override
-    public boolean isItemValidForSlot(int index, ItemStack itemStack) {
-        return (ForgeHooks.getBurnTime(itemStack) > 0 && index == 1) && super.isItemValidForSlot(index, itemStack);
+    public boolean canInsert(int index, ItemStack stack) {
+        return (ForgeHooks.getBurnTime(stack) > 0 && index == 1) || super.canInsert(index, stack);
     }
 }

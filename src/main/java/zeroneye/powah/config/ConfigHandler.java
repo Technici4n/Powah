@@ -2,6 +2,7 @@ package zeroneye.powah.config;
 
 import zeroneye.powah.block.IBlocks;
 import zeroneye.powah.block.cable.Cables;
+import zeroneye.powah.block.energizing.EnergizingRods;
 import zeroneye.powah.block.generator.furnator.Furnators;
 import zeroneye.powah.block.generator.magmatic.MagmaticGenerators;
 import zeroneye.powah.block.generator.panel.solar.SolarPanels;
@@ -44,6 +45,13 @@ public class ConfigHandler {
             IBlocks.SOLAR_PANELS[i].setCapacity(getSafe(Config.SOLAR_PANEL.caps[i].get(), solarPanel.capacity));
             IBlocks.SOLAR_PANELS[i].setMaxExtract(getSafe(Config.SOLAR_PANEL.transfers[i].get(), solarPanel.transfer));
             IBlocks.SOLAR_PANELS[i].setPerTick(getSafe(Config.SOLAR_PANEL.generations[i].get(), solarPanel.perTick));
+        }
+
+        for (int i = 0; i < EnergizingRods.values().length; i++) {
+            EnergizingRods rods = EnergizingRods.values()[i];
+            IBlocks.ENERGIZING_RODS[i].setCapacity(getSafe(Config.ENERGIZING_CONFIG.caps[i].get(), rods.capacity));
+            IBlocks.ENERGIZING_RODS[i].setMaxReceive(getSafe(Config.ENERGIZING_CONFIG.transfers[i].get(), rods.transfer));
+            IBlocks.ENERGIZING_RODS[i].setEnergizingSpeed(getSafe(Config.ENERGIZING_CONFIG.energizingSpeed[i].get(), rods.energizingSpeed));
         }
 
         for (int i = 0; i < Cables.values().length; i++) {

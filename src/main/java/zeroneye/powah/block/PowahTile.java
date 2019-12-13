@@ -15,7 +15,7 @@ import zeroneye.powah.energy.SideConfig;
 
 import javax.annotation.Nullable;
 
-public abstract class PowahTile extends TileBase.TickableInv {
+public abstract class PowahTile extends TileBase.Tickable {
     protected RedstoneMode redstoneMode = RedstoneMode.IGNORE;
     protected final PowahStorage internal;
     protected SideConfig sideConfig;
@@ -29,6 +29,8 @@ public abstract class PowahTile extends TileBase.TickableInv {
         if (isCreative) {
             this.internal.setEnergy(capacity);
         }
+
+        this.inv.add(getChargingSlots() + getUpgradeSlots());
     }
 
     @Override
@@ -80,18 +82,13 @@ public abstract class PowahTile extends TileBase.TickableInv {
     }
 
     @Override
-    public void onInventoryChanged(int index) {
-        super.onInventoryChanged(index);
-    }
-
-    @Override
     protected boolean postTicks() {
         if (this.world == null) return false;
         if (this.world.isRemote) return false;
 
         int extracted = 0;
 
-        if (canExtraxtFromSides()) {
+        if (canExtractFromSides()) {
             for (Direction direction : Direction.values()) {
                 if (canExtract(direction)) {
                     int amount = Math.min(this.internal.getMaxExtract(), this.internal.getEnergyStored());
@@ -103,7 +100,7 @@ public abstract class PowahTile extends TileBase.TickableInv {
 
         if (canChargeItems() && canExtract(null)) {
             for (int i = 0; i < getChargingSlots(); i++) {
-                extracted += chargeItem(getStackInSlot(i));
+                extracted += chargeItem(this.inv.getStackInSlot(i));
             }
         }
         return extracted > 0;
@@ -127,11 +124,6 @@ public abstract class PowahTile extends TileBase.TickableInv {
         return isContainerOpen() ? 5 : 20;
     }
 
-    @Override
-    public int getSizeInventory() {
-        return getChargingSlots() + getUpgradeSlots();
-    }
-
     private int getUpgradeSlots() {
         return 0;
     }
@@ -141,7 +133,7 @@ public abstract class PowahTile extends TileBase.TickableInv {
     }
 
     @Override
-    public int maxStackSize(int index) {
+    public int getSlotLimit(int index) {
         return 1;
     }
 
@@ -151,7 +143,7 @@ public abstract class PowahTile extends TileBase.TickableInv {
         if (!simulate) {
             this.internal.setEnergy(this.internal.getEnergyStored() + energyReceived);
             if (energyReceived > 0) {
-                setReadyToSync(true);
+                sync(getSyncTicks());
             }
         }
         return energyReceived;
@@ -163,7 +155,7 @@ public abstract class PowahTile extends TileBase.TickableInv {
         if (!simulate && !this.isCreative) {
             this.internal.setEnergy(this.internal.getEnergyStored() - energyExtracted);
             if (energyExtracted > 0) {
-                setReadyToSync(true);
+                sync(getSyncTicks());
             }
         }
         return energyExtracted;
@@ -201,7 +193,7 @@ public abstract class PowahTile extends TileBase.TickableInv {
     }
 
     @Override
-    protected boolean doTicks() {
+    protected boolean doTick() {
         return checkRedstone();
     }
 
@@ -213,15 +205,15 @@ public abstract class PowahTile extends TileBase.TickableInv {
     }
 
     @Override
-    public boolean dropInventoryOnBreak() {
-        return false;
+    public boolean keepInventory() {
+        return true;
     }
 
     @Override
-    public boolean isItemValidForSlot(int index, ItemStack itemStack) {
+    public boolean canInsert(int index, ItemStack stack) {
         for (int i = 0; i < getChargingSlots(); i++) {
             if (index == i) {
-                return Energy.hasEnergy(itemStack);
+                return Energy.hasEnergy(stack);
             }
         }
         return true;
@@ -231,7 +223,7 @@ public abstract class PowahTile extends TileBase.TickableInv {
         return ExtractionType.ALL;
     }
 
-    public boolean canExtraxtFromSides() {
+    public boolean canExtractFromSides() {
         return getExtractionType().equals(ExtractionType.ALL) || getExtractionType().equals(ExtractionType.TILE);
     }
 

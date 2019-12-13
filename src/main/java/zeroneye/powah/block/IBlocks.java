@@ -11,6 +11,9 @@ import zeroneye.lib.block.IBlockBase;
 import zeroneye.powah.block.cable.CableBlock;
 import zeroneye.powah.block.cable.Cables;
 import zeroneye.powah.block.discharger.DischargerBlock;
+import zeroneye.powah.block.energizing.EnergizingOrbBlock;
+import zeroneye.powah.block.energizing.EnergizingRodBlock;
+import zeroneye.powah.block.energizing.EnergizingRods;
 import zeroneye.powah.block.generator.furnator.FurnatorBlock;
 import zeroneye.powah.block.generator.furnator.Furnators;
 import zeroneye.powah.block.generator.magmatic.MagmaticGenBlock;
@@ -42,6 +45,8 @@ public class IBlocks {
     public static final CableBlock[] CABLES;
     public static final DischargerBlock DISCHARGER;
     public static final EnergyHopperBlock ENERGY_HOPPER;
+    public static final EnergizingOrbBlock ENERGIZING_ORB;
+    public static final EnergizingRodBlock[] ENERGIZING_RODS;
 
     static {
         EnergyCells[] cells = EnergyCells.values();
@@ -79,6 +84,14 @@ public class IBlocks {
             SOLAR_PANELS[i] = register("solar_panel_" + panel.name().toLowerCase(), new SolarPanelBlock(Block.Properties.create(panel.material).hardnessAndResistance(2.0F, panel.resistance), panel.capacity, panel.transfer, panel.perTick));
         }
 
+        ENERGIZING_ORB = register("energizing_orb", new EnergizingOrbBlock(Block.Properties.create(Material.MISCELLANEOUS).hardnessAndResistance(1.0F, 15.0F)));
+        EnergizingRods[] rods = EnergizingRods.values();
+        ENERGIZING_RODS = new EnergizingRodBlock[rods.length];
+        for (int i = 0; i < rods.length; i++) {
+            EnergizingRods rod = rods[i];
+            ENERGIZING_RODS[i] = register("energizing_rod_" + rod.name().toLowerCase(), new EnergizingRodBlock(Block.Properties.create(rod.material).hardnessAndResistance(1.0F, rod.resistance).doesNotBlockMovement(), rod.capacity, rod.transfer, rod.energizingSpeed));
+        }
+
         DISCHARGER = register("discharger", new DischargerBlock(Block.Properties.create(Material.MISCELLANEOUS).hardnessAndResistance(1.0F, 15.0F), 500000, 1000));
         ENERGY_HOPPER = register("energy_hopper", new EnergyHopperBlock(Block.Properties.create(Material.MISCELLANEOUS).hardnessAndResistance(1.0F, 15.0F), 500000, 1000));
         PLAYER_TRANSMITTER = register("player_transmitter", new PlayerTransmitterBlock(Block.Properties.create(Material.MISCELLANEOUS).hardnessAndResistance(1.0F, 15.0F).doesNotBlockMovement(), 10000, 100, 1, false));
@@ -90,6 +103,7 @@ public class IBlocks {
             Cables cable = cables[i];
             CABLES[i] = register("cable_" + cable.name().toLowerCase(), new CableBlock(Block.Properties.create(cable.material).hardnessAndResistance(1.0F, cable.resistance).doesNotBlockMovement(), cable.transfer, cable.transfer));
         }
+
 
     }
 

@@ -40,8 +40,8 @@ public class FurnatorContainer extends PowahContainer<FurnatorTile> {
     }
 
     private void addContainer(PlayerInventory playerInventory, FurnatorTile tile) {
-        addSlot(new SlotBase(tile, 0, 13 + 23, 45));
-        addSlot(new SlotBase(tile, 1, 57 + 23, 17));
+        addSlot(new SlotBase(tile.getInventory(), 0, 13 + 23, 45));
+        addSlot(new SlotBase(tile.getInventory(), 1, 57 + 23, 17));
         addPlayerInv(playerInventory, 8, 146, 88);
     }
 }

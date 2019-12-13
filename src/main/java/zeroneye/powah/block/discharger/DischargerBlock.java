@@ -27,18 +27,13 @@ public class DischargerBlock extends PowahBlock implements IWaterLoggable {
 
     @Nullable
     @Override
-    public ContainerBase getContainer(int id, PlayerInventory playerInventory, TileBase.TickableInv inv) {
+    public ContainerBase getContainer(int id, PlayerInventory playerInventory, TileBase inv) {
         return new DischargerContainer(IContainers.DISCHARGER, id, playerInventory, (DischargerTile) inv);
     }
 
     @Override
     public boolean isSolid(BlockState state) {
         return false;
-    }
-
-    @Override
-    protected boolean waterLogged() {
-        return true;
     }
 
     @Override

@@ -34,7 +34,7 @@ public class ThermoGeneratorTile extends GeneratorTile {
             @Override
             protected void onContentsChanged() {
                 super.onContentsChanged();
-                ThermoGeneratorTile.this.setReadyToSync(true);
+                ThermoGeneratorTile.this.sync(5);
             }
         };
         this.holder = LazyOptional.of(() -> this.tank);
@@ -67,7 +67,7 @@ public class ThermoGeneratorTile extends GeneratorTile {
             if (getBlock() instanceof ThermoGeneratorBlock) {
                 ThermoGeneratorBlock thermoGenerator = (ThermoGeneratorBlock) getBlock();
                 this.tank.setCapacity(FluidAttributes.BUCKET_VOLUME * thermoGenerator.buckets);
-                setReadyToSync(true);
+                sync(getSyncTicks());
             }
         }
     }

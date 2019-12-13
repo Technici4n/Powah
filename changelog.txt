@@ -1,3 +1,12 @@
+0.1.0
+- Added Energizing Orb (Used to energize items, require at least one Energizing Rod in a configurable range to work).
+- Added Energizing Rods (Used to energize items inside an Energizing Orb).
+- Added Energised Steel, Blazing Crystal, Niotic Crystal and Spirited Crystal.
+- Added Charged Snowball (When thrown will cause lightning).
+- Added Hardened Capacitor.
+- Changed some crafting recipes using the new materials.
+- Updated Lollipop to 0.0.18
+
 0.0.22
 - Improved items/blocks textures a bit, re-balanced colors and contrast too.
 

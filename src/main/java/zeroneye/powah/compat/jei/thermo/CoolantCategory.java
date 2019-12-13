@@ -37,7 +37,6 @@ public class CoolantCategory implements IRecipeCategory<CoolantCategory.Recipe> 
         this.background = guiHelper.drawableBuilder(GUI_BACK, 0, 0, 160, 24).addPadding(1, 0, 0, 0).build();
         this.icon = guiHelper.createDrawableIngredient(new ItemStack(ThermoGenerators.BASIC.get()));
         this.localizedName = I18n.format("gui.powah.jei.category.coolant");
-
     }
 
     @Override

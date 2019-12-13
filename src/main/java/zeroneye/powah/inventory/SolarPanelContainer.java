@@ -40,7 +40,7 @@ public class SolarPanelContainer extends PowahContainer<SolarPanelTile> {
     }
 
     private void addContainer(PlayerInventory playerInventory, SolarPanelTile tile) {
-        addSlot(new SlotBase(tile, 0, 13 + 23, 45));
+        addSlot(new SlotBase(tile.getInventory(), 0, 13 + 23, 45));
         addPlayerInv(playerInventory, 8, 146, 88);
     }
 }

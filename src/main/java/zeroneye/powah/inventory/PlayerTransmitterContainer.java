@@ -33,10 +33,10 @@ public class PlayerTransmitterContainer extends PowahContainer<PlayerTransmitter
 
     private void addContainer(PlayerInventory playerInventory, PlayerTransmitterTile tile) {
         if (this.slots > 1) {
-            addSlot(new SlotBase(tile, 0, 69, 37));
-            addSlot(new SlotBase(tile, 1, 69 + 23, 37));
+            addSlot(new SlotBase(tile.getInventory(), 0, 69, 37));
+            addSlot(new SlotBase(tile.getInventory(), 1, 69 + 23, 37));
         } else {
-            addSlot(new SlotBase(tile, 0, 80, 37));
+            addSlot(new SlotBase(tile.getInventory(), 0, 80, 37));
         }
         addPlayerInv(playerInventory, 8, 146, 88);
     }

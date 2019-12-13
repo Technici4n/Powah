@@ -38,8 +38,8 @@ public class SolarPanelTile extends GeneratorTile {
         if (this.world == null) return;
         if (this.world.isRemote) return;
 
-        if (!Time.isDayTime(this.world) && this.canSeeSunLight || this.ticks % 40L == 0L) {
-            this.canSeeSunLight = Time.isDayTime(this.world) && Misc.canBlockSeeSky(this.world, this.pos, null);
+        if (!Time.isDay(this.world) && this.canSeeSunLight || this.ticks % 40L == 0L) {
+            this.canSeeSunLight = Time.isDay(this.world) && Misc.canBlockSeeSky(this.world, this.pos, null);
             markDirtyAndSync();
         }
 

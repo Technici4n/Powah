@@ -11,7 +11,6 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.fluid.Fluids;
 import net.minecraft.fluid.IFluidState;
-import net.minecraft.inventory.InventoryHelper;
 import net.minecraft.item.BlockItemUseContext;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
@@ -39,6 +38,7 @@ import zeroneye.lib.inventory.ContainerBase;
 import zeroneye.lib.util.Energy;
 import zeroneye.lib.util.Server;
 import zeroneye.lib.util.Side;
+import zeroneye.powah.api.cable.ICable;
 import zeroneye.powah.block.PowahBlock;
 import zeroneye.powah.energy.PowerMode;
 import zeroneye.powah.inventory.CableContainer;
@@ -48,7 +48,7 @@ import zeroneye.powah.item.WrenchItem;
 import javax.annotation.Nullable;
 import java.util.*;
 
-public class CableBlock extends PowahBlock implements IHud, IWaterLoggable {
+public class CableBlock extends PowahBlock implements ICable, IHud, IWaterLoggable {
     public static final BooleanProperty NORTH = SixWayBlock.NORTH;
     public static final BooleanProperty EAST = SixWayBlock.EAST;
     public static final BooleanProperty SOUTH = SixWayBlock.SOUTH;
@@ -73,6 +73,11 @@ public class CableBlock extends PowahBlock implements IHud, IWaterLoggable {
     }
 
     @Override
+    public int stackSize() {
+        return 64;
+    }
+
+    @Override
     public VoxelShape getShape(BlockState state, IBlockReader worldIn, BlockPos pos, ISelectionContext context) {
         VoxelShape voxelShape = CABLE;
         if (state.get(NORTH)) voxelShape = VoxelShapes.or(voxelShape, MULTIPART[0]);
@@ -86,7 +91,7 @@ public class CableBlock extends PowahBlock implements IHud, IWaterLoggable {
 
     @Nullable
     @Override
-    public ContainerBase getContainer(int id, PlayerInventory playerInventory, TileBase.TickableInv inv) {
+    public ContainerBase getContainer(int id, PlayerInventory playerInventory, TileBase inv) {
         if (this == Cables.BASIC.get()) {
             return new CableContainer(IContainers.CABLE_BASIC, id, playerInventory, (CableTile) inv);
         } else if (this == Cables.HARDENED.get()) {
@@ -173,7 +178,7 @@ public class CableBlock extends PowahBlock implements IHud, IWaterLoggable {
             TileEntity tileEntity = world.getTileEntity(pos);
             if (tileEntity instanceof CableTile) {
                 CableTile cable = (CableTile) tileEntity;
-                InventoryHelper.dropInventoryItems((World) world, pos, cable);
+                cable.getInventory().drop((World) world, pos);
                 if (world instanceof ServerWorld) {
                     CableNoneTileData data = Server.getData(CableNoneTileData::new, ((ServerWorld) world).dimension);
                     data.add(pos, cable.getSideConfig().write(new CompoundNBT()));
@@ -183,11 +188,6 @@ public class CableBlock extends PowahBlock implements IHud, IWaterLoggable {
         }
         IFluidState ifluidstate = world.getFluidState(pos);
         return state.with(NORTH, north[0]).with(SOUTH, south[0]).with(WEST, west[0]).with(EAST, east[0]).with(UP, up[0]).with(DOWN, down[0]).with(TILE, tile).with(WATERLOGGED, ifluidstate.getFluid() == Fluids.WATER);
-    }
-
-    @Override
-    protected boolean waterLogged() {
-        return true;
     }
 
     @Override
@@ -217,7 +217,7 @@ public class CableBlock extends PowahBlock implements IHud, IWaterLoggable {
                 CompoundNBT nbt = data.get(pos);
                 if (nbt != null) {// TODO keep data on tile entity remove
                     cable.getSideConfig().read(nbt);
-                    cable.setReadyToSync(true);
+                    cable.sync(5);
                 }
             }
         }

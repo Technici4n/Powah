@@ -11,13 +11,16 @@ import net.minecraft.client.resources.I18n;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import zeroneye.powah.Powah;
+import zeroneye.powah.api.recipe.energizing.EnergizingRecipeSorter;
 import zeroneye.powah.block.IBlocks;
 import zeroneye.powah.block.cable.Cables;
+import zeroneye.powah.block.energizing.EnergizingRods;
 import zeroneye.powah.block.generator.furnator.Furnators;
 import zeroneye.powah.block.generator.magmatic.MagmaticGenerators;
 import zeroneye.powah.block.generator.panel.solar.SolarPanels;
 import zeroneye.powah.block.generator.thermoelectric.ThermoGenerators;
 import zeroneye.powah.block.storage.EnergyCells;
+import zeroneye.powah.compat.jei.energizing.EnergizingCategory;
 import zeroneye.powah.compat.jei.magmatic.MagmaticCategory;
 import zeroneye.powah.compat.jei.thermo.CoolantCategory;
 import zeroneye.powah.compat.jei.thermo.HeatCategory;
@@ -36,6 +39,7 @@ public class PowahJEIPlugin implements IModPlugin {
         registration.addRecipeCategories(new MagmaticCategory(helper));
         registration.addRecipeCategories(new CoolantCategory(helper));
         registration.addRecipeCategories(new HeatCategory(helper));
+        registration.addRecipeCategories(new EnergizingCategory(helper));
     }
 
     @Override
@@ -47,6 +51,10 @@ public class PowahJEIPlugin implements IModPlugin {
             registration.addRecipeCatalyst(new ItemStack(tg.get()), CoolantCategory.ID);
             registration.addRecipeCatalyst(new ItemStack(tg.get()), HeatCategory.ID);
         }
+        registration.addRecipeCatalyst(new ItemStack(IBlocks.ENERGIZING_ORB), EnergizingCategory.ID);
+        for (EnergizingRods er : EnergizingRods.values()) {
+            registration.addRecipeCatalyst(new ItemStack(er.get()), EnergizingCategory.ID);
+        }
     }
 
     @Override
@@ -54,6 +62,7 @@ public class PowahJEIPlugin implements IModPlugin {
         registration.addRecipes(MagmaticCategory.Maker.getBucketRecipes(registration.getIngredientManager()), MagmaticCategory.ID);
         registration.addRecipes(CoolantCategory.Maker.getBucketRecipes(registration.getIngredientManager()), CoolantCategory.ID);
         registration.addRecipes(HeatCategory.Maker.getBucketRecipes(registration.getIngredientManager()), HeatCategory.ID);
+        registration.addRecipes(EnergizingRecipeSorter.RECIPES, EnergizingCategory.ID);
 
         // Info's
         registration.addIngredientInfo(Stream.of(EnergyCells.values())
@@ -81,11 +90,20 @@ public class PowahJEIPlugin implements IModPlugin {
                 .map(ItemStack::new)
                 .collect(Collectors.toList()), VanillaTypes.ITEM, I18n.format("wiki.powah.thermo_generator"));
 
+        int range = (Config.ENERGIZING_CONFIG.range.get() * 2) + 1;
+
+        registration.addIngredientInfo(Stream.of(EnergizingRods.values())
+                .map(EnergizingRods::get)
+                .map(ItemStack::new)
+                .collect(Collectors.toList()), VanillaTypes.ITEM, I18n.format("wiki.powah.energizing_rod", range + "X" + range));
+
         registration.addIngredientInfo(new ItemStack(IBlocks.PLAYER_TRANSMITTER), VanillaTypes.ITEM, I18n.format("wiki.powah.player_transmitter"));
         registration.addIngredientInfo(new ItemStack(IBlocks.PLAYER_TRANSMITTER_DIM), VanillaTypes.ITEM, I18n.format("wiki.powah.player_transmitter_dim"));
         registration.addIngredientInfo(new ItemStack(IItems.BINDING_CARD), VanillaTypes.ITEM, I18n.format("wiki.powah.binding_card"));
         registration.addIngredientInfo(new ItemStack(IBlocks.DISCHARGER), VanillaTypes.ITEM, I18n.format("wiki.powah.discharger"));
         registration.addIngredientInfo(new ItemStack(IBlocks.ENERGY_HOPPER), VanillaTypes.ITEM, I18n.format("wiki.powah.energy_hopper"));
+        registration.addIngredientInfo(new ItemStack(IBlocks.ENERGIZING_ORB), VanillaTypes.ITEM, I18n.format("wiki.powah.energizing_orb", range + "X" + range));
+        registration.addIngredientInfo(new ItemStack(IItems.CHARGED_SNOWBALL), VanillaTypes.ITEM, I18n.format("wiki.powah.charged_snowball"));
 
         if (Config.GENERAL.capacitor_blazing.get())
             registration.addIngredientInfo(new ItemStack(IItems.CAPACITOR_BLAZING), VanillaTypes.ITEM, I18n.format("wiki.powah.capacitor_blazing"));

@@ -8,6 +8,8 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import zeroneye.powah.block.cable.CableTile;
 import zeroneye.powah.block.discharger.DischargerTile;
+import zeroneye.powah.block.energizing.EnergizingOrbTile;
+import zeroneye.powah.block.energizing.EnergizingRodTile;
 import zeroneye.powah.block.generator.furnator.FurnatorTile;
 import zeroneye.powah.block.generator.magmatic.MagmaticGenTile;
 import zeroneye.powah.block.generator.panel.solar.SolarPanelTile;
@@ -32,6 +34,8 @@ public class ITiles {
     public static final TileEntityType<?> CABLE = register("cable", CableTile::new, IBlocks.CABLES);
     public static final TileEntityType<?> DISCHARGER = register("discharger", DischargerTile::new, IBlocks.DISCHARGER);
     public static final TileEntityType<?> ENERGY_HOPPER = register("energy_hopper", EnergyHopperTile::new, IBlocks.ENERGY_HOPPER);
+    public static final TileEntityType<?> ENERGIZING_ORB = register("energizing_orb", EnergizingOrbTile::new, IBlocks.ENERGIZING_ORB);
+    public static final TileEntityType<?> ENERGIZING_ROD = register("energizing_rod", EnergizingRodTile::new, IBlocks.ENERGIZING_RODS);
 
     @SuppressWarnings({"unchecked", "ConstantConditions"})
     static <T extends TileEntity> TileEntityType<T> register(String name, Supplier<? extends T> factoryIn, Block... b) {

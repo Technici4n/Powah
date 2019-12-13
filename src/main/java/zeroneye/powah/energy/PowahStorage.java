@@ -77,6 +77,10 @@ public class PowahStorage extends EnergyStorage {
         this.maxExtract = maxExtract;
     }
 
+    public int consume(int amount) {
+        return setEnergy(getEnergyStored() - amount);
+    }
+
     public int setEnergy(int i) {
         int e = Math.max(0, Math.min(this.capacity, i));
         this.energy = e;

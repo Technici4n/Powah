@@ -8,6 +8,7 @@ import zeroneye.powah.block.PowahTile;
 public class DischargerTile extends PowahTile {
     public DischargerTile(int capacity, int maxExtract) {
         super(ITiles.DISCHARGER, capacity, 0, maxExtract, false);
+        this.inv.add(4);
     }
 
     public DischargerTile() {
@@ -20,7 +21,7 @@ public class DischargerTile extends PowahTile {
         final int[] extracted = {0};
 
         for (int i = 0; i < 4; i++) {
-            final ItemStack stack = getStackInSlot(i);
+            final ItemStack stack = this.inv.getStackInSlot(i);
             int amount = Math.min(this.internal.getMaxExtract(), Energy.getStored(stack));
             int received = Math.min(this.internal.getMaxEnergyStored() - this.internal.getEnergyStored(), amount);
             int j = Energy.extract(stack, received, false);
@@ -32,19 +33,14 @@ public class DischargerTile extends PowahTile {
     }
 
     @Override
-    public int getSizeInventory() {
-        return 4;
-    }
-
-    @Override
     protected ExtractionType getExtractionType() {
         return ExtractionType.TILE;
     }
 
     @Override
-    public boolean isItemValidForSlot(int index, ItemStack itemStack) {
+    public boolean canInsert(int index, ItemStack stack) {
         final boolean[] b = {false};
-        Energy.getForgeEnergy(itemStack).ifPresent(storage -> {
+        Energy.getForgeEnergy(stack).ifPresent(storage -> {
             if (storage.canExtract()) {
                 b[0] = storage.getEnergyStored() > 0;
             }

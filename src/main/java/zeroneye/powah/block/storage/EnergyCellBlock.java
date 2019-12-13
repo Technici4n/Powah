@@ -27,7 +27,7 @@ public class EnergyCellBlock extends PowahBlock implements IWaterLoggable {
 
     @Nullable
     @Override
-    public ContainerBase getContainer(int id, PlayerInventory playerInventory, TileBase.TickableInv inv) {
+    public ContainerBase getContainer(int id, PlayerInventory playerInventory, TileBase inv) {
         if (this == EnergyCells.BASIC.get()) {
             return new EnergyCellContainer(IContainers.ENERGY_CELL_BASIC, id, playerInventory, (EnergyCellTile) inv);
         } else if (this == EnergyCells.HARDENED.get()) {
@@ -42,10 +42,5 @@ public class EnergyCellBlock extends PowahBlock implements IWaterLoggable {
             return new EnergyCellContainer(IContainers.ENERGY_CELL_CREATIVE, id, playerInventory, (EnergyCellTile) inv);
         }
         return super.getContainer(id, playerInventory, inv);
-    }
-
-    @Override
-    protected boolean waterLogged() {
-        return true;
     }
 }

@@ -49,7 +49,7 @@ public abstract class GeneratorTile extends PowahTile {
             if (getBlock() instanceof GeneratorBlock) {
                 GeneratorBlock generatorBlock = (GeneratorBlock) getBlock();
                 this.perTick = generatorBlock.perTick;
-                setReadyToSync(true);
+                sync(getSyncTicks());
             }
         }
     }

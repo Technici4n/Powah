@@ -62,18 +62,13 @@ public class EnergyHopperBlock extends PowahBlock implements IWaterLoggable {
 
     @Nullable
     @Override
-    public ContainerBase getContainer(int id, PlayerInventory playerInventory, TileBase.TickableInv inv) {
+    public ContainerBase getContainer(int id, PlayerInventory playerInventory, TileBase inv) {
         return new EnergyHopperContainer(IContainers.ENERGY_HOPPER, id, playerInventory, (EnergyHopperTile) inv);
     }
 
     @Override
     public boolean isSolid(BlockState state) {
         return false;
-    }
-
-    @Override
-    protected boolean waterLogged() {
-        return true;
     }
 
     @Override

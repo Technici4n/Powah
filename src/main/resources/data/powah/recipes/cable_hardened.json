@@ -10,7 +10,7 @@
 	  "item": "powah:dielectric_rod_horizontal"
 	},
 	"c": {
-	  "item": "powah:capacitor_basic_large"
+	  "item": "powah:capacitor_hardened"
 	},
 	"t": {
 	  "item": "powah:cable_basic"

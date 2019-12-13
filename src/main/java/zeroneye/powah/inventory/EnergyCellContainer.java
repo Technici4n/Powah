@@ -44,8 +44,8 @@ public class EnergyCellContainer extends PowahContainer<EnergyCellTile> {
     }
 
     private void addContainer(PlayerInventory playerInventory, EnergyCellTile tile) {
-        addSlot(new SlotBase(tile, 0, 13 + 23, 45));
-        addSlot(new SlotBase(tile, 1, 36 + 23, 45));
+        addSlot(new SlotBase(tile.getInventory(), 0, 13 + 23, 45));
+        addSlot(new SlotBase(tile.getInventory(), 1, 36 + 23, 45));
         addPlayerInv(playerInventory, 8, 146, 88);
     }
 }

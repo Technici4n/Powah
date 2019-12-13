@@ -30,7 +30,7 @@ public class MagmaticGenTile extends GeneratorTile {
             @Override
             protected void onContentsChanged() {
                 super.onContentsChanged();
-                MagmaticGenTile.this.setReadyToSync(true);
+                MagmaticGenTile.this.sync(5);
             }
         };
         this.holder = LazyOptional.of(() -> this.tank);
@@ -62,7 +62,7 @@ public class MagmaticGenTile extends GeneratorTile {
             if (getBlock() instanceof MagmaticGenBlock) {
                 MagmaticGenBlock magmaticGen = (MagmaticGenBlock) getBlock();
                 this.tank.setCapacity(FluidAttributes.BUCKET_VOLUME * magmaticGen.getBuckets());
-                setReadyToSync(true);
+                sync(getSyncTicks());
             }
         }
     }

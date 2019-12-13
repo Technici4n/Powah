@@ -2,14 +2,23 @@ package zeroneye.powah.api;
 
 import net.minecraft.block.Block;
 import net.minecraft.fluid.Fluid;
+import zeroneye.powah.api.recipe.energizing.IEnergizingRegistry;
 
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
+import java.util.Set;
 
 public class PowahAPI {
+    public static final Set<IEnergizingRegistry> ENERGIZING_REGISTRIES = new HashSet<>();
+
     public static final Map<Fluid, Integer> MAGMATIC_FLUIDS = new HashMap<>();
     public static final Map<Fluid, Integer> COOLANT_FLUIDS = new HashMap<>();
     public static final Map<Block, Integer> HEAT_BLOCKS = new HashMap<>();
+
+    public static void register(IEnergizingRegistry registry) {
+        ENERGIZING_REGISTRIES.add(registry);
+    }
 
     public static void registerMagmaticFluid(Fluid fluid, int heat) {
         MAGMATIC_FLUIDS.put(fluid, heat);

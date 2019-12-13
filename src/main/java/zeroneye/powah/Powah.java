@@ -6,8 +6,12 @@ import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLLoadCompleteEvent;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import zeroneye.powah.api.PowahAPI;
+import zeroneye.powah.api.recipe.energizing.EnergizingRecipeSorter;
+import zeroneye.powah.block.energizing.EnergizingRecipes;
 import zeroneye.powah.client.gui.IScreens;
-import zeroneye.powah.client.renderer.tile.ITileRnderers;
+import zeroneye.powah.client.renderer.entity.EntityRenderer;
+import zeroneye.powah.client.renderer.tile.TileRenderer;
 import zeroneye.powah.config.Config;
 import zeroneye.powah.config.ConfigHandler;
 import zeroneye.powah.handler.CoolingFluidHandler;
@@ -31,10 +35,13 @@ public class Powah {
 
     void commonSetup(FMLCommonSetupEvent event) {
         Packets.register();
+
+        PowahAPI.register(EnergizingRecipes.all());
     }
 
     void clientSetup(FMLClientSetupEvent event) {
-        ITileRnderers.register();
+        TileRenderer.register();
+        EntityRenderer.register();
         IScreens.register();
     }
 
@@ -42,6 +49,9 @@ public class Powah {
         MagmaticFluidHandler.post();
         CoolingFluidHandler.post();
         HeatBlockHandler.post();
+
         ConfigHandler.reload();
+
+        EnergizingRecipeSorter.sort();
     }
 }

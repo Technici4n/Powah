@@ -40,7 +40,7 @@ public class ThermoGenContainer extends PowahContainer<ThermoGeneratorTile> {
     }
 
     private void addContainer(PlayerInventory playerInventory, ThermoGeneratorTile tile) {
-        addSlot(new SlotBase(tile, 0, 36, 45));
+        addSlot(new SlotBase(tile.getInventory(), 0, 36, 45));
         addPlayerInv(playerInventory, 8, 146, 88);
     }
 }

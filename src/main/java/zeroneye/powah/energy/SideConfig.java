@@ -58,7 +58,7 @@ public class SideConfig {
         for (Direction side : Direction.values()) {
             i = i == -1 ? getPowerMode(side).ordinal() + 1 : i;
             PowerMode powerMode = PowerMode.values()[i > 3 ? 0 : i];
-            if ((!this.tile.getInternal().canExtract() || !this.tile.canExtraxtFromSides()) && powerMode.isOut()) {
+            if ((!this.tile.getInternal().canExtract() || !this.tile.canExtractFromSides()) && powerMode.isOut()) {
                 powerMode = PowerMode.IN;
             } else if (!this.tile.getInternal().canReceive() && powerMode.isIn()) {
                 powerMode = PowerMode.NON.equals(powerMode) || PowerMode.ALL.equals(powerMode) ? PowerMode.OUT : PowerMode.NON;
@@ -70,7 +70,7 @@ public class SideConfig {
     public void nextPowerMode(@Nullable Direction side) {
         int i = getPowerMode(side).ordinal() + 1;
         PowerMode powerMode = PowerMode.values()[i > 3 ? 0 : i];
-        if ((!this.tile.getInternal().canExtract() || !this.tile.canExtraxtFromSides()) && powerMode.isOut()) {
+        if ((!this.tile.getInternal().canExtract() || !this.tile.canExtractFromSides()) && powerMode.isOut()) {
             powerMode = PowerMode.IN;
         } else if (!this.tile.getInternal().canReceive() && powerMode.isIn()) {
             powerMode = PowerMode.NON.equals(powerMode) || PowerMode.ALL.equals(powerMode) ? PowerMode.OUT : PowerMode.NON;

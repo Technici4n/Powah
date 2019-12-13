@@ -42,7 +42,7 @@ public class SolarPanelBlock extends GeneratorBlock implements IWaterLoggable {
 
     @Nullable
     @Override
-    public ContainerBase getContainer(int id, PlayerInventory playerInventory, TileBase.TickableInv inv) {
+    public ContainerBase getContainer(int id, PlayerInventory playerInventory, TileBase inv) {
         if (this == SolarPanels.BASIC.get()) {
             return new SolarPanelContainer(IContainers.SOLAR_PANEL_BASIC, id, playerInventory, (SolarPanelTile) inv);
         } else if (this == SolarPanels.HARDENED.get()) {
@@ -60,11 +60,6 @@ public class SolarPanelBlock extends GeneratorBlock implements IWaterLoggable {
     @Override
     public boolean isSolid(BlockState state) {
         return false;
-    }
-
-    @Override
-    protected boolean waterLogged() {
-        return true;
     }
 
     @Override
