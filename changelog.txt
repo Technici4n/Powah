@@ -1,3 +1,6 @@
+0.1.1
+Fixed crash when you right click with an item on energizing orb closes #10
+
 0.1.0
 - Added Energizing Orb (Used to energize items, require at least one Energizing Rod in a configurable range to work).
 - Added Energizing Rods (Used to energize items inside an Energizing Orb).
