@@ -47,7 +47,20 @@ public class EnergizingOrbTile extends TileBase.Tickable {
     }
 
     @Override
+    protected void onFirstTick() {
+        super.onFirstTick();
+        checkRecipe();
+    }
+
+    @Override
     public void onSlotChanged(int index) {
+        if (isServerWorld()) {
+            this.energy = 0;
+            checkRecipe();
+        }
+    }
+
+    private void checkRecipe() {
         if (this.world != null && !this.world.isRemote) {
             this.recipe = EnergizingRecipeSorter.get(this.inv, this.world, this.pos);
             if (this.recipe != null) {
@@ -56,9 +69,8 @@ public class EnergizingOrbTile extends TileBase.Tickable {
                 this.requiredEnergy = 0;
             }
             setContainRecipe(this.recipe != null);
-            this.energy = 0;
-            sync(1);
         }
+        sync(1);
     }
 
     public int fillEnergy(int amount) {
