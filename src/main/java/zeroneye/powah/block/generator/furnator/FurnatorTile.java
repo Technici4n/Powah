@@ -18,7 +18,7 @@ public class FurnatorTile extends GeneratorTile {
 
     @Override
     protected void generate() {
-        final ItemStack fuelStack = this.inv.getStackInSlot(1);
+        final ItemStack fuelStack = this.inv.getStackInSlot(builtInSlots());
         if (this.nextGen <= 0 && !fuelStack.isEmpty()) {
             this.nextGenCap = ForgeHooks.getBurnTime(fuelStack) * Config.FURNATOR_CONFIG.fuelEnergy.get();
             this.nextGen = this.nextGenCap;
@@ -37,6 +37,6 @@ public class FurnatorTile extends GeneratorTile {
 
     @Override
     public boolean canInsert(int index, ItemStack stack) {
-        return (ForgeHooks.getBurnTime(stack) > 0 && index == 1) || super.canInsert(index, stack);
+        return index == builtInSlots() ? ForgeHooks.getBurnTime(stack) > 0 : super.canInsert(index, stack);
     }
 }

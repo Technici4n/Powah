@@ -124,17 +124,27 @@ public abstract class PowahTile extends TileBase.Tickable {
         return isContainerOpen() ? 5 : 20;
     }
 
+    @Override
+    public int getSlotLimit(int index) {
+        for (int i = 0; i < builtInSlots(); i++) {
+            if (index == i) {
+                return 1;
+            }
+        }
+
+        return 64;
+    }
+
+    public int builtInSlots() {
+        return getChargingSlots() + getUpgradeSlots();
+    }
+
     private int getUpgradeSlots() {
         return 0;
     }
 
     public int getChargingSlots() {
         return 0;
-    }
-
-    @Override
-    public int getSlotLimit(int index) {
-        return 1;
     }
 
     public int receiveEnergy(int maxReceive, boolean simulate, @Nullable Direction side) {

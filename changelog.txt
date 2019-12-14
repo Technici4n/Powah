@@ -1,3 +1,6 @@
+0.1.2
+Fixed coal generator it will only take one piece at a time closes #12.
+
 0.1.1
 Fixed crash when you right click with an item on energizing orb closes #10
 

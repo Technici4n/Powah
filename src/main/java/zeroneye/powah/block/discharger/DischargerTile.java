@@ -20,7 +20,7 @@ public class DischargerTile extends PowahTile {
         super.postTicks();
         final int[] extracted = {0};
 
-        for (int i = 0; i < 4; i++) {
+        for (int i = builtInSlots(); i < 4 + builtInSlots(); i++) {
             final ItemStack stack = this.inv.getStackInSlot(i);
             int amount = Math.min(this.internal.getMaxExtract(), Energy.getStored(stack));
             int received = Math.min(this.internal.getMaxEnergyStored() - this.internal.getEnergyStored(), amount);
@@ -30,6 +30,11 @@ public class DischargerTile extends PowahTile {
         }
 
         return extracted[0] > 0;
+    }
+
+    @Override
+    public int getSlotLimit(int index) {
+        return super.getSlotLimit(index);
     }
 
     @Override

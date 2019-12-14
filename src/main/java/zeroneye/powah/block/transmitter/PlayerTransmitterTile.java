@@ -2,6 +2,7 @@ package zeroneye.powah.block.transmitter;
 
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.util.NonNullList;
 import net.minecraft.world.dimension.DimensionType;
 import zeroneye.lib.util.Energy;
 import zeroneye.lib.util.Player;
@@ -54,7 +55,9 @@ public class PlayerTransmitterTile extends PowahTile {
         if (this.world == null) return false;
         if (this.world.isRemote) return false;
         if (this.internal.hasEnergy()) {
-            this.inv.getStacks().forEach(stack -> {
+            NonNullList<ItemStack> stacks = this.inv.getStacks();
+            for (int i1 = 0; i1 < stacks.size(); i1++) {
+                ItemStack stack = stacks.get(i1);
                 if (stack.getItem() instanceof BindingCardItem) {
                     BindingCardItem item = (BindingCardItem) stack.getItem();
                     item.getPlayer(stack).ifPresent(player -> {
@@ -73,7 +76,7 @@ public class PlayerTransmitterTile extends PowahTile {
                         }
                     });
                 }
-            });
+            }
         }
         return i[0] > 0;
     }
