@@ -57,7 +57,7 @@ public class EnergyHopperBlock extends PowahBlock implements IWaterLoggable {
         BlockPos blockpos = pos.offset(direction);
         BlockState state1 = worldIn.getBlockState(blockpos);
         TileEntity tile = worldIn.getTileEntity(blockpos);
-        return (tile instanceof IInventory || tile != null && tile.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, direction).isPresent()) && !Energy.hasEnergy(tile, direction);
+        return (tile instanceof IInventory || tile != null && tile.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, direction).isPresent()) && !Energy.isPresent(tile, direction);
     }
 
     @Nullable

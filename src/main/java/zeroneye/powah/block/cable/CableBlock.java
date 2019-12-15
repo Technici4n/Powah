@@ -172,16 +172,17 @@ public class CableBlock extends PowahBlock implements ICable, IHud, IWaterLoggab
         boolean[] down = canAttach(state, world, pos, Direction.DOWN);
 
         boolean tile = false;
+        TileEntity tileEntity = world.getTileEntity(pos);
         if (north[1] || south[1] || west[1] || east[1] || up[1] || down[1]) {
             tile = true;
         } else {
-            TileEntity tileEntity = world.getTileEntity(pos);
             if (tileEntity instanceof CableTile) {
                 CableTile cable = (CableTile) tileEntity;
                 cable.getInventory().drop((World) world, pos);
                 if (world instanceof ServerWorld) {
                     CableNoneTileData data = Server.getData(CableNoneTileData::new, ((ServerWorld) world).dimension);
                     data.add(pos, cable.getSideConfig().write(new CompoundNBT()));
+                    ((ServerWorld) world).getChunkAt(pos).markDirty();
                 }
                 tileEntity.remove();
             }
@@ -212,6 +213,12 @@ public class CableBlock extends PowahBlock implements ICable, IHud, IWaterLoggab
         TileEntity tileEntity = world.getTileEntity(pos);
         if (tileEntity instanceof CableTile) {
             CableTile cable = (CableTile) tileEntity;
+            cable.energySides.clear();
+            for (Direction direction : Direction.values()) {
+                if (canAttach(state, world, pos, direction)[1]) {
+                    cable.energySides.add(direction);
+                }
+            }
             if (world instanceof ServerWorld && cable.ticks == 0) {
                 CableNoneTileData data = Server.getData(CableNoneTileData::new, ((ServerWorld) world).dimension);
                 CompoundNBT nbt = data.get(pos);
@@ -224,14 +231,14 @@ public class CableBlock extends PowahBlock implements ICable, IHud, IWaterLoggab
         super.onBlockAdded(state, world, pos, oldState, isMoving);
     }
 
-    private boolean[] canAttach(BlockState state, IWorld world, BlockPos pos, Direction direction) {
+    public boolean[] canAttach(BlockState state, IWorld world, BlockPos pos, Direction direction) {
         return new boolean[]{world.getBlockState(pos.offset(direction)).getBlock() == this || checkTileType(world, pos, direction), checkTileType(world, pos, direction)};
     }
 
     public boolean checkTileType(IWorld world, BlockPos pos, Direction direction) {
         BlockPos pos1 = pos.offset(direction);
         TileEntity tileEntity = world.getTileEntity(pos1);
-        return !(tileEntity instanceof CableTile) && Energy.hasEnergy(tileEntity, direction);
+        return !(tileEntity instanceof CableTile) && Energy.isPresent(tileEntity, direction);
     }
 
     @Override
@@ -262,7 +269,7 @@ public class CableBlock extends PowahBlock implements ICable, IHud, IWaterLoggab
     @Override
     public void neighborChanged(BlockState state, World world, BlockPos pos, Block blockIn, BlockPos fromPos, boolean isMoving) {
         super.neighborChanged(state, world, pos, blockIn, fromPos, isMoving);
-        if (Energy.hasEnergy(world, fromPos, Side.fromNeighbor(pos, fromPos))) {
+        if (Energy.isPresent(world.getTileEntity(fromPos), Side.fromNeighbor(pos, fromPos))) {
             searchCables(world, pos, pos);
         }
     }

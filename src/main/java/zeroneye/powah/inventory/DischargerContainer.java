@@ -24,7 +24,7 @@ public class DischargerContainer extends PowahContainer<DischargerTile> {
     }
 
     private void addContainer(PlayerInventory playerInventory, DischargerTile tile) {
-        for (int i = 0; i < 4; ++i) {
+        for (int i : tile.nonBuiltInSlots()) {
             addSlot(new SlotBase(tile.getInventory(), i, 46 + i * 23, 37));
         }
         addPlayerInv(playerInventory, 8, 146, 88);

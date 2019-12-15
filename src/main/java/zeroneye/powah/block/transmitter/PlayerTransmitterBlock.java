@@ -77,13 +77,7 @@ public class PlayerTransmitterBlock extends PowahBlock implements IWaterLoggable
         BlockPos blockpos = pos.offset(direction);
         BlockState state1 = worldIn.getBlockState(blockpos);
         TileEntity tile = worldIn.getTileEntity(blockpos);
-        final boolean[] flag = {false};
-
-        Energy.getForgeEnergy(tile, direction).ifPresent(storage -> {
-            flag[0] = storage.canExtract();
-        });
-
-        return state1.getBlock() instanceof ICable || tile != null && !(tile instanceof PlayerTransmitterTile) && flag[0];
+        return state1.getBlock() instanceof ICable || tile != null && !(tile instanceof PlayerTransmitterTile) && Energy.getForgeEnergy(tile, direction).isPresent();
     }
 
     @Override

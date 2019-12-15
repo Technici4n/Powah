@@ -102,7 +102,7 @@
   "gui.powah.jei.category.energizing": "Energizing",
   "chat.powah.no.binding": "This Card already bound to %s!",
   "wiki.powah.energizing_orb": "Used to energize items, require at least one Energizing Rod in range of %s to work, the energizing speed depends on amount of rods and rod tier.",
-  "wiki.powah.energizing_rod": "Used to energize items inside an Energizing Orb in range of %s.",
+  "wiki.powah.energizing_rod": "Used to energize items inside an Energizing Orb in range of %s, must be placed on a power cable, generator or any FE energy source.",
   "wiki.powah.charged_snowball": "When thrown will cause lightning.",
   "wiki.powah.energy_cell": "The Energy Cell is an FE energy storage device, Input an output energy from 6 configurable sides, high tiers store more energy.",
   "wiki.powah.solar_panel": "The Solar panel is a block that generates FE energy from sun light, high tiers generates more FE/t.",

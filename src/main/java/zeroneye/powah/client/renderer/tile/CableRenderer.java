@@ -36,7 +36,7 @@ public class CableRenderer extends TileEntityRenderer<CableTile> {
             for (Direction side : Direction.values()) {
                 final BlockPos pos = cable.getPos().offset(side);
                 final BlockState state = world.getBlockState(pos);
-                if (!(state.getBlock() instanceof CableBlock) && Energy.hasEnergy(getWorld(), pos, side)) {
+                if (!(state.getBlock() instanceof CableBlock) && Energy.isPresent(getWorld().getTileEntity(pos), side)) {
                     ItemStack stack = player.getHeldItemMainhand();
                     if (stack.getItem() instanceof WrenchItem) {
                         bindTexture(new ResourceLocation(Powah.MOD_ID, "textures/ter/cable_face_" + cable.getSideConfig().getPowerMode(side).name().toLowerCase() + ".png"));

@@ -71,7 +71,7 @@ public abstract class PowahTile extends TileBase.Tickable {
                 this.internal.setCapacity(powahBlock.capacity);
                 this.internal.setMaxExtract(powahBlock.maxExtract);
                 this.internal.setMaxReceive(powahBlock.maxReceive);
-                if (isCreative) {
+                if (this.isCreative) {
                     this.internal.setEnergy(powahBlock.capacity);
                     this.internal.setMaxReceive(powahBlock.capacity);
                     this.internal.setMaxExtract(powahBlock.capacity);
@@ -92,7 +92,7 @@ public abstract class PowahTile extends TileBase.Tickable {
             for (Direction direction : Direction.values()) {
                 if (canExtract(direction)) {
                     int amount = Math.min(this.internal.getMaxExtract(), this.internal.getEnergyStored());
-                    int received = Energy.receive(this.world, this.pos.offset(direction), direction.getOpposite(), amount, false);
+                    int received = Energy.receive(this.world.getTileEntity(this.pos.offset(direction)), direction, amount, false);
                     extracted += extractEnergy(received, false, direction);
                 }
             }
@@ -126,13 +126,18 @@ public abstract class PowahTile extends TileBase.Tickable {
 
     @Override
     public int getSlotLimit(int index) {
-        for (int i = 0; i < builtInSlots(); i++) {
-            if (index == i) {
-                return 1;
-            }
+        if (index < builtInSlots()) {
+            return 1;
         }
-
         return 64;
+    }
+
+    public int[] nonBuiltInSlots() {
+        int[] slots = new int[this.inv.getSlots() - builtInSlots()];
+        for (int i = builtInSlots(); i < this.inv.getSlots(); i++) {
+            slots[i] = i - builtInSlots();
+        }
+        return slots;
     }
 
     public int builtInSlots() {
@@ -221,10 +226,8 @@ public abstract class PowahTile extends TileBase.Tickable {
 
     @Override
     public boolean canInsert(int index, ItemStack stack) {
-        for (int i = 0; i < getChargingSlots(); i++) {
-            if (index == i) {
-                return Energy.hasEnergy(stack);
-            }
+        if (index < getChargingSlots()) {
+            return Energy.isPresent(stack);
         }
         return true;
     }
