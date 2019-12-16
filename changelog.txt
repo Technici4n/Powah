@@ -1,3 +1,6 @@
+0.1.5
+- Fixed energy transfer when one cable between two blocks in the same line
+
 0.1.4
 - Fixed Cables compatibility with some mods like rftools...
 - Improved cables performance more.

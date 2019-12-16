@@ -91,9 +91,9 @@ public class CableTile extends PowahTile {
                     BlockPos pos1 = this.pos.offset(side);
                     TileEntity tile = this.world.getTileEntity(pos1);
                     if (Energy.canReceive(tile, side)) {
-                        if (tile instanceof CableTile || pos1.equals(this.pos.offset(direction.getOpposite())))
+                        if (tile instanceof CableTile)
                             continue;
-                        received += Energy.receive(tile, side, net, false);
+                        received += Energy.receive(tile, side, net, simulate);
                         if (maxReceive - received <= 0) {
                             return received;
                         }
