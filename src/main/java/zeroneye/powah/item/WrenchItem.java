@@ -53,7 +53,7 @@ public class WrenchItem extends ItemBase implements IWrench {
         ItemStack stack = playerIn.getHeldItem(handIn);
         if (playerIn.isSneaking()) {
             nextWrenchMode(stack);
-            playerIn.sendStatusMessage(new TranslationTextComponent("info.powah.mode", TextFormatting.YELLOW + I18n.format("info.powah.wrench.mode." + getWrenchMode(stack).name().toLowerCase())).applyTextStyle(TextFormatting.GRAY), true);
+            playerIn.sendStatusMessage(new TranslationTextComponent("info.powah.wrench.mode." + getWrenchMode(stack).name().toLowerCase(), TextFormatting.YELLOW).applyTextStyle(TextFormatting.GRAY), true);
             return ActionResult.newResult(ActionResultType.SUCCESS, stack);
         }
         return ActionResult.newResult(ActionResultType.PASS, stack);
@@ -69,7 +69,7 @@ public class WrenchItem extends ItemBase implements IWrench {
             boolean flag = nbt.getBoolean("ChatInfo");
             if (Stack.orEquals(stack, mainHand, offhand)) {
                 if (!flag) {
-                    player.sendStatusMessage(new TranslationTextComponent("info.powah.mode", TextFormatting.YELLOW + I18n.format("info.powah.wrench.mode." + getWrenchMode(stack).name().toLowerCase())).applyTextStyle(TextFormatting.GRAY), true);
+                    player.sendStatusMessage(new TranslationTextComponent("info.powah.wrench.mode." + getWrenchMode(stack).name().toLowerCase(), TextFormatting.YELLOW).applyTextStyle(TextFormatting.GRAY), true);
                     nbt.putBoolean("ChatInfo", true);
                 }
             } else if (flag) {

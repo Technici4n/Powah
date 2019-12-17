@@ -63,7 +63,7 @@ public class BindingCardItem extends ItemBase {
         if (nbt == null) {
             tooltip.add(new TranslationTextComponent("info.powah.click.to.bind").applyTextStyle(TextFormatting.GRAY));
         } else if (nbt.hasUniqueId("BindedPlayerId")) {
-            tooltip.add(new TranslationTextComponent("info.powah.binded.to.player", nbt.getString("BindedPlayerName")).applyTextStyle(TextFormatting.GRAY));
+            tooltip.add(new TranslationTextComponent("info.powah.owner", nbt.getString("BindedPlayerName")).applyTextStyle(TextFormatting.GRAY));
             tooltip.add(new StringTextComponent(""));
         }
     }
