@@ -1,4 +1,4 @@
-0.1.7
+0.1.7 & 0.1.8
 - New Wrench "Link" mode.
 - Now you can re-link Energizing Rod to any Energizing Orb in range.
 - When holding a Wrench with "Link" mode will show you linked orbs and rods.
