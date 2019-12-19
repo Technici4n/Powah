@@ -17,7 +17,7 @@ public class GeneratorBlock extends PowahBlock {
     }
 
     public int perTick() {
-        return perTick;
+        return this.perTick;
     }
 
     public void setPerTick(int perTick) {

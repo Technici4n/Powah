@@ -67,7 +67,7 @@ public class MagmaticGenScreen extends PowahScreen<MagmaticGenContainer> {
                 GlStateManager.color3f(red, green, blue);
                 TextureAtlasSprite sprite = textureMap.getSprite(still);
                 bindTexture(AtlasTexture.LOCATION_BLOCKS_TEXTURE);
-                Draw2D.gaugeV(sprite, x + 158, y + 4, 14, 64, tank.getCapacity(), tank.getFluidAmount());
+                Draw2D.gaugeV(sprite, this.x + 158, this.y + 4, 14, 64, tank.getCapacity(), tank.getFluidAmount());
                 GlStateManager.color3f(1.0F, 1.0F, 1.0F);
             }
         }

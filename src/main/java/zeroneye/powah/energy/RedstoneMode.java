@@ -16,7 +16,7 @@ public enum RedstoneMode {
     }
 
     public int getIconXUV() {
-        return iconXUV;
+        return this.iconXUV;
     }
 
     public String getDisplayName() {

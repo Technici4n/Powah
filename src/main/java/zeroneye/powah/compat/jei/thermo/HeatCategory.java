@@ -143,15 +143,15 @@ public class HeatCategory implements IRecipeCategory<HeatCategory.Recipe> {
 
         @Nullable
         public Fluid getFluid() {
-            return fluid;
+            return this.fluid;
         }
 
         public Block getBlock() {
-            return block;
+            return this.block;
         }
 
         public int getHeat() {
-            return heat;
+            return this.heat;
         }
     }
 }

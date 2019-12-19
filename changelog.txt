@@ -1,3 +1,14 @@
+0.1.7
+- New Wrench "Link" mode.
+- Now you can re-link Energizing Rod to any Energizing Orb in range.
+- When holding a Wrench with "Link" mode will show you linked orbs and rods.
+- Improved Energizing Rod beam so rendering better now.
+- Clean up JEI info text a bit.
+- Updated Lollipop to 0.0.20
+
+0.1.6
+- Fixed wrench in player's inventory causes server-side Exception Closes #15.
+
 0.1.5
 - Fixed energy transfer when one cable between two blocks in the same line
 

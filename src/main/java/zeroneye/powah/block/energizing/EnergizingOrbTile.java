@@ -102,7 +102,7 @@ public class EnergizingOrbTile extends TileBase.Tickable {
     }
 
     public boolean containRecipe() {
-        return containRecipe;
+        return this.containRecipe;
     }
 
     public void setContainRecipe(boolean containRecipe) {
@@ -110,7 +110,7 @@ public class EnergizingOrbTile extends TileBase.Tickable {
     }
 
     public int getEnergy() {
-        return energy;
+        return this.energy;
     }
 
     public void setEnergy(int energy) {

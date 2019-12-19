@@ -53,7 +53,7 @@ public class SolarPanelTile extends GeneratorTile {
     }
 
     public boolean canSeeSunLight() {
-        return canSeeSunLight;
+        return this.canSeeSunLight;
     }
 
     @Override

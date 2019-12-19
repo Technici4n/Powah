@@ -84,7 +84,7 @@ public class MagmaticGenTile extends GeneratorTile {
     }
 
     public FluidTank getTank() {
-        return tank;
+        return this.tank;
     }
 
     @Override

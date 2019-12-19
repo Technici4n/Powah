@@ -102,6 +102,6 @@ public class LinkedCables {
     }
 
     public Set<BlockPos> cables() {
-        return cables;
+        return this.cables;
     }
 }

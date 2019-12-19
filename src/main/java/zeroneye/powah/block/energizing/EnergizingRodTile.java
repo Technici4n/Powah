@@ -77,6 +77,7 @@ public class EnergizingRodTile extends PowahTile {
                 }
             }
         }
+
         return super.postTicks() || flag;
     }
 
@@ -86,12 +87,12 @@ public class EnergizingRodTile extends PowahTile {
     }
 
     public BlockPos getOrbPos() {
-        return orbPos;
+        return this.orbPos;
     }
 
     public void setOrbPos(BlockPos orbPos) {
         this.orbPos = orbPos;
-        sync(5);
+        sync(2);
     }
 
     @Override

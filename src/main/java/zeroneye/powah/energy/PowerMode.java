@@ -22,15 +22,15 @@ public enum PowerMode {
     }
 
     public boolean isOut() {
-        return out;
+        return this.out;
     }
 
     public boolean isIn() {
-        return in;
+        return this.in;
     }
 
     public int getIconXUV() {
-        return iconXUV;
+        return this.iconXUV;
     }
 
     public String getDisplayName() {

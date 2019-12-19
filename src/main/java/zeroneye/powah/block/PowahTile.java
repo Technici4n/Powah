@@ -177,11 +177,11 @@ public abstract class PowahTile extends TileBase.Tickable {
     }
 
     public PowahStorage getInternal() {
-        return internal;
+        return this.internal;
     }
 
     public SideConfig getSideConfig() {
-        return sideConfig;
+        return this.sideConfig;
     }
 
     public boolean canExtract(@Nullable Direction side) {
@@ -193,7 +193,7 @@ public abstract class PowahTile extends TileBase.Tickable {
     }
 
     public RedstoneMode getRedstoneMode() {
-        return redstoneMode;
+        return this.redstoneMode;
     }
 
     public void setRedstoneMode(RedstoneMode redstoneMode) {

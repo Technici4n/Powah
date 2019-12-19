@@ -42,7 +42,7 @@ public class SideConfig {
 
     public PowerMode getPowerMode(@Nullable Direction side) {
         if (side != null) {
-            return powerMode[side.getIndex()];
+            return this.powerMode[side.getIndex()];
         }
         return PowerMode.NON;
     }
@@ -79,6 +79,6 @@ public class SideConfig {
     }
 
     public PowerMode getPowerMode(int i) {
-        return powerMode[i];
+        return this.powerMode[i];
     }
 }

@@ -66,19 +66,19 @@ public abstract class PowahBlock extends BlockBase {
     }
 
     public int getCapacity() {
-        return capacity;
+        return this.capacity;
     }
 
     public int getMaxExtract() {
-        return maxExtract;
+        return this.maxExtract;
     }
 
     public int getMaxReceive() {
-        return maxReceive;
+        return this.maxReceive;
     }
 
     public boolean isCreative() {
-        return isCreative;
+        return this.isCreative;
     }
 
     public void setCapacity(int capacity) {

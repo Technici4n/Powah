@@ -1,7 +1,6 @@
 package zeroneye.powah.item;
 
 import net.minecraft.block.BlockState;
-import net.minecraft.client.resources.I18n;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.PlayerEntity;
@@ -80,6 +79,6 @@ public class WrenchItem extends ItemBase implements IWrench {
 
     @Override
     public void addInformation(ItemStack stack, @Nullable World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
-        tooltip.add(new TranslationTextComponent("info.powah.mode", TextFormatting.DARK_GRAY + I18n.format("info.powah.wrench.mode." + getWrenchMode(stack).name().toLowerCase())).applyTextStyle(TextFormatting.GRAY));
+        tooltip.add(new TranslationTextComponent("info.powah.wrench.mode." + getWrenchMode(stack).name().toLowerCase(), TextFormatting.YELLOW).applyTextStyle(TextFormatting.GRAY));
     }
 }

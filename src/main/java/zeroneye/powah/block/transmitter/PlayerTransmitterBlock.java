@@ -98,11 +98,11 @@ public class PlayerTransmitterBlock extends PowahBlock implements IWaterLoggable
     }
 
     public int getSlots() {
-        return slots;
+        return this.slots;
     }
 
     public boolean isAcrossDim() {
-        return acrossDim;
+        return this.acrossDim;
     }
 
     @Override

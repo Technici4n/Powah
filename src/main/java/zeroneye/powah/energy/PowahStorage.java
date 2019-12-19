@@ -62,7 +62,7 @@ public class PowahStorage extends EnergyStorage {
     }
 
     public int getMaxReceive() {
-        return maxReceive;
+        return this.maxReceive;
     }
 
     public void setMaxReceive(int maxReceive) {
@@ -70,7 +70,7 @@ public class PowahStorage extends EnergyStorage {
     }
 
     public int getMaxExtract() {
-        return maxExtract;
+        return this.maxExtract;
     }
 
     public void setMaxExtract(int maxExtract) {

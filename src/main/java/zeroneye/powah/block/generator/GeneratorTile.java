@@ -100,6 +100,6 @@ public abstract class GeneratorTile extends PowahTile {
     }
 
     public int perTick() {
-        return perTick;
+        return this.perTick;
     }
 }

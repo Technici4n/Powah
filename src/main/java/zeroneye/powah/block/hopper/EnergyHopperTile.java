@@ -32,7 +32,7 @@ public class EnergyHopperTile extends PowahTile {
             for (int i = 0; i < inventory.getSizeInventory(); i++) {
                 ItemStack stack = inventory.getStackInSlot(i);
                 if (stack.getCount() == 1) {
-                    extracted[0] += chargeItem(stack, internal.getMaxReceive());
+                    extracted[0] += chargeItem(stack, this.internal.getMaxReceive());
                 }
             }
         } else if (tile != null) {
@@ -40,7 +40,7 @@ public class EnergyHopperTile extends PowahTile {
                 for (int i = 0; i < iItemHandler.getSlots(); i++) {
                     ItemStack stack = iItemHandler.getStackInSlot(i);
                     if (stack.getCount() == 1) {
-                        extracted[0] += chargeItem(stack, internal.getMaxReceive());
+                        extracted[0] += chargeItem(stack, this.internal.getMaxReceive());
                     }
                 }
             });

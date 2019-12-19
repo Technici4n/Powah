@@ -3,11 +3,16 @@ package zeroneye.powah.block.energizing;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.IWaterLoggable;
 import net.minecraft.client.util.ITooltipFlag;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.nbt.NBTUtil;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.Direction;
+import net.minecraft.util.Hand;
 import net.minecraft.util.Rotation;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.Vec3d;
 import net.minecraft.util.math.shapes.IBooleanFunction;
 import net.minecraft.util.math.shapes.ISelectionContext;
 import net.minecraft.util.math.shapes.VoxelShape;
@@ -18,6 +23,11 @@ import net.minecraft.world.IBlockReader;
 import net.minecraft.world.IWorld;
 import net.minecraft.world.IWorldReader;
 import net.minecraft.world.World;
+import net.minecraftforge.common.util.Constants;
+import zeroneye.lib.util.math.V3d;
+import zeroneye.powah.api.wrench.IWrench;
+import zeroneye.powah.api.wrench.IWrenchable;
+import zeroneye.powah.api.wrench.WrenchMode;
 import zeroneye.powah.block.IBlocks;
 import zeroneye.powah.block.PowahBlock;
 import zeroneye.powah.config.Config;
@@ -30,7 +40,7 @@ import java.util.stream.Collectors;
 
 import static net.minecraft.util.math.shapes.VoxelShapes.combineAndSimplify;
 
-public class EnergizingRodBlock extends PowahBlock implements IWaterLoggable {
+public class EnergizingRodBlock extends PowahBlock implements IWaterLoggable, IWrenchable {
     private static final Map<Direction, VoxelShape> VOXEL_SHAPES = new HashMap<>();
     private int energizingSpeed;
 
@@ -107,10 +117,45 @@ public class EnergizingRodBlock extends PowahBlock implements IWaterLoggable {
     }
 
     public int getEnergizingSpeed() {
-        return energizingSpeed;
+        return this.energizingSpeed;
     }
 
     public void setEnergizingSpeed(int energizingSpeed) {
         this.energizingSpeed = energizingSpeed;
+    }
+
+    @Override
+    public boolean onWrench(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, Direction side, WrenchMode mode, Vec3d hit) {
+        if (mode.link()) {
+            ItemStack stack = player.getHeldItem(hand);
+            if (stack.getItem() instanceof IWrench) {
+                IWrench wrench = (IWrench) stack.getItem();
+                TileEntity tileEntity = world.getTileEntity(pos);
+                if (tileEntity instanceof EnergizingRodTile) {
+                    EnergizingRodTile rod = (EnergizingRodTile) tileEntity;
+                    CompoundNBT nbt = wrench.getWrenchNBT(stack);
+                    if (nbt.contains("OrbPos", Constants.NBT.TAG_COMPOUND)) {
+                        BlockPos orbPos = NBTUtil.readBlockPos(nbt.getCompound("OrbPos"));
+                        TileEntity tileEntity1 = world.getTileEntity(orbPos);
+                        if (tileEntity1 instanceof EnergizingOrbTile) {
+                            EnergizingOrbTile orb = (EnergizingOrbTile) tileEntity1;
+                            V3d v3d = V3d.from(orbPos);
+                            if ((int) v3d.distance(pos) <= Config.ENERGIZING_CONFIG.range.get()) {
+                                rod.setOrbPos(orbPos);
+                                player.sendStatusMessage(new TranslationTextComponent("chat.powah.wrench.link.done").applyTextStyle(TextFormatting.GOLD), true);
+                            } else {
+                                player.sendStatusMessage(new TranslationTextComponent("chat.powah.wrench.link.fail").applyTextStyle(TextFormatting.RED), true);
+                            }
+                        }
+                        nbt.remove("OrbPos");
+                    } else {
+                        nbt.put("RodPos", NBTUtil.writeBlockPos(pos));
+                        player.sendStatusMessage(new TranslationTextComponent("chat.powah.wrench.link.start").applyTextStyle(TextFormatting.YELLOW), true);
+                    }
+                    return true;
+                }
+            }
+        }
+        return false;
     }
 }

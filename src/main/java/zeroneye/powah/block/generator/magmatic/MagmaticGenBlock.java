@@ -89,7 +89,7 @@ public class MagmaticGenBlock extends GeneratorBlock implements IWaterLoggable {
     }
 
     public int getBuckets() {
-        return buckets;
+        return this.buckets;
     }
 
     public void setBuckets(int buckets) {

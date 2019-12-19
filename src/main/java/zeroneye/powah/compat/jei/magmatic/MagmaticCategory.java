@@ -130,15 +130,15 @@ public class MagmaticCategory implements IRecipeCategory<MagmaticCategory.Recipe
         }
 
         public BucketItem getBucket() {
-            return bucket;
+            return this.bucket;
         }
 
         public Fluid getFluid() {
-            return fluid;
+            return this.fluid;
         }
 
         public int getHeat() {
-            return heat;
+            return this.heat;
         }
     }
 }

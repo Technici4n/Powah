@@ -131,15 +131,15 @@ public class CoolantCategory implements IRecipeCategory<CoolantCategory.Recipe> 
         }
 
         public BucketItem getBucket() {
-            return bucket;
+            return this.bucket;
         }
 
         public Fluid getFluid() {
-            return fluid;
+            return this.fluid;
         }
 
         public int getColdness() {
-            return coldness;
+            return this.coldness;
         }
     }
 }
