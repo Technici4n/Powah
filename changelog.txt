@@ -1,3 +1,7 @@
+0.1.9
+- Fixed some block name are invisible in the gui.
+- Fixed Solar panels Day/Night time calculation.
+
 0.1.7 & 0.1.8
 - New Wrench "Link" mode.
 - Now you can re-link Energizing Rod to any Energizing Orb in range.
