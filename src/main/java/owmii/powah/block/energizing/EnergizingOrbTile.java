@@ -47,8 +47,8 @@ public class EnergizingOrbTile extends TileBase.Tickable {
     }
 
     @Override
-    protected void onFirstTick() {
-        super.onFirstTick();
+    protected void firstTick() {
+        super.firstTick();
         checkRecipe();
     }
 

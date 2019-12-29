@@ -137,9 +137,9 @@ public class CableTile extends PowahTile {
     }
 
     @Override
-    protected void onFirstTick() { // TODO 15/12/2019
+    protected void firstTick() { // TODO 15/12/2019
         if (this.world == null) return;
-        super.onFirstTick();
+        super.firstTick();
         if (this.energySides.isEmpty()) {
             for (Direction direction : Direction.values()) {
                 if (IBlocks.CABLES[0].canAttach(getBlockState(), this.world, this.pos, direction)[1]) {

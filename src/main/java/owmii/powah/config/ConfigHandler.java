@@ -2,12 +2,14 @@ package owmii.powah.config;
 
 import owmii.powah.block.IBlocks;
 import owmii.powah.block.cable.Cables;
+import owmii.powah.block.endercell.EnderCells;
+import owmii.powah.block.endergate.EnderGates;
 import owmii.powah.block.energizing.EnergizingRods;
+import owmii.powah.block.energycell.EnergyCells;
 import owmii.powah.block.generator.furnator.Furnators;
 import owmii.powah.block.generator.magmatic.MagmaticGenerators;
 import owmii.powah.block.generator.panel.solar.SolarPanels;
 import owmii.powah.block.generator.thermoelectric.ThermoGenerators;
-import owmii.powah.block.storage.energycell.EnergyCells;
 
 public class ConfigHandler {
     public static void reload() {
@@ -15,8 +17,21 @@ public class ConfigHandler {
             EnergyCells cell = EnergyCells.values()[i];
             if (cell.equals(EnergyCells.CREATIVE)) continue;
             IBlocks.ENERGY_CELLS[i].setCapacity(getSafe(Config.CELL_CONFIG.caps[i].get(), cell.capacity));
-            IBlocks.ENERGY_CELLS[i].setMaxExtract(getSafe(Config.CELL_CONFIG.transfers[i].get(), cell.transfer));
-            IBlocks.ENERGY_CELLS[i].setMaxReceive(getSafe(Config.CELL_CONFIG.transfers[i].get(), cell.transfer));
+            IBlocks.ENERGY_CELLS[i].setTransfer(getSafe(Config.CELL_CONFIG.transfers[i].get(), cell.transfer));
+        }
+
+        for (int i = 0; i < EnderCells.values().length; i++) {
+            EnderCells cell = EnderCells.values()[i];
+            int j = getSafe(Config.ENDER_CELL_CONFIG.channels[i].get(), cell.channels);
+            IBlocks.ENDER_CELLS[i].setChannels(Math.min(16, Math.max(1, j)));
+            IBlocks.ENDER_CELLS[i].setTransfer(getSafe(Config.ENDER_CELL_CONFIG.transfers[i].get(), cell.transfer));
+        }
+
+        for (int i = 0; i < EnderGates.values().length; i++) {
+            EnderGates gate = EnderGates.values()[i];
+            int j = getSafe(Config.ENDER_GATE_CONFIG.channels[i].get(), gate.channels);
+            IBlocks.ENDER_GATES[i].setChannels(Math.min(16, Math.max(1, j)));
+            IBlocks.ENDER_GATES[i].setTransfer(getSafe(Config.ENDER_GATE_CONFIG.transfers[i].get(), gate.transfer));
         }
 
         for (int i = 0; i < Furnators.values().length; i++) {

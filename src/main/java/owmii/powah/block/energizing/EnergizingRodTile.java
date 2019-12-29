@@ -3,12 +3,16 @@ package owmii.powah.block.energizing;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.nbt.NBTUtil;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.Direction;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
+import owmii.lib.block.BlockBase;
 import owmii.lib.util.Ticker;
 import owmii.powah.block.ITiles;
 import owmii.powah.block.PowahTile;
 import owmii.powah.config.Config;
+
+import javax.annotation.Nullable;
 
 public class EnergizingRodTile extends PowahTile {
     private BlockPos orbPos = BlockPos.ZERO;
@@ -39,7 +43,7 @@ public class EnergizingRodTile extends PowahTile {
     }
 
     @Override
-    protected void onFirstTick() {
+    protected void firstTick() {
         if (this.world == null) return;
         if (!this.world.isRemote) {
             if (getBlock() instanceof EnergizingRodBlock) {
@@ -47,7 +51,7 @@ public class EnergizingRodTile extends PowahTile {
                 this.energizingSpeed = rodBlock.getEnergizingSpeed();
             }
         }
-        super.onFirstTick();
+        super.firstTick();
     }
 
     @Override
@@ -99,5 +103,10 @@ public class EnergizingRodTile extends PowahTile {
     public AxisAlignedBB getRenderBoundingBox() {
         int range = Config.ENERGIZING_CONFIG.range.get();
         return new AxisAlignedBB(getPos()).grow(range);
+    }
+
+    @Override
+    public boolean isEnergyPresent(@Nullable Direction side) {
+        return side != null && side.equals(getBlockState().get(BlockBase.FACING));
     }
 }

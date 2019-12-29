@@ -69,18 +69,7 @@ public class MagmaticGenBlock extends GeneratorBlock implements IWaterLoggable {
     @Nullable
     @Override
     public ContainerBase getContainer(int id, PlayerInventory playerInventory, TileBase inv) {
-        if (this == MagmaticGenerators.BASIC.get()) {
-            return new MagmaticGenContainer(IContainers.MAGMATIC_GENERATOR_BASIC, id, playerInventory, (MagmaticGenTile) inv);
-        } else if (this == MagmaticGenerators.HARDENED.get()) {
-            return new MagmaticGenContainer(IContainers.MAGMATIC_GENERATOR_HARDENED, id, playerInventory, (MagmaticGenTile) inv);
-        } else if (this == MagmaticGenerators.BLAZING.get()) {
-            return new MagmaticGenContainer(IContainers.MAGMATIC_GENERATOR_BLAZING, id, playerInventory, (MagmaticGenTile) inv);
-        } else if (this == MagmaticGenerators.NIOTIC.get()) {
-            return new MagmaticGenContainer(IContainers.MAGMATIC_GENERATOR_NIOTIC, id, playerInventory, (MagmaticGenTile) inv);
-        } else if (this == MagmaticGenerators.SPIRITED.get()) {
-            return new MagmaticGenContainer(IContainers.MAGMATIC_GENERATOR_SPIRITED, id, playerInventory, (MagmaticGenTile) inv);
-        }
-        return super.getContainer(id, playerInventory, inv);
+        return new MagmaticGenContainer(IContainers.MAGMATIC_GENERATOR, id, playerInventory, (MagmaticGenTile) inv);
     }
 
     @Override

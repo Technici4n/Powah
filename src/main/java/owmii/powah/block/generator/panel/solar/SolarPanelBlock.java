@@ -43,18 +43,7 @@ public class SolarPanelBlock extends GeneratorBlock implements IWaterLoggable {
     @Nullable
     @Override
     public ContainerBase getContainer(int id, PlayerInventory playerInventory, TileBase inv) {
-        if (this == SolarPanels.BASIC.get()) {
-            return new SolarPanelContainer(IContainers.SOLAR_PANEL_BASIC, id, playerInventory, (SolarPanelTile) inv);
-        } else if (this == SolarPanels.HARDENED.get()) {
-            return new SolarPanelContainer(IContainers.SOLAR_PANEL_HARDENED, id, playerInventory, (SolarPanelTile) inv);
-        } else if (this == SolarPanels.BLAZING.get()) {
-            return new SolarPanelContainer(IContainers.SOLAR_PANEL_BLAZING, id, playerInventory, (SolarPanelTile) inv);
-        } else if (this == SolarPanels.NIOTIC.get()) {
-            return new SolarPanelContainer(IContainers.SOLAR_PANEL_NIOTIC, id, playerInventory, (SolarPanelTile) inv);
-        } else if (this == SolarPanels.SPIRITED.get()) {
-            return new SolarPanelContainer(IContainers.SOLAR_PANEL_SPIRITED, id, playerInventory, (SolarPanelTile) inv);
-        }
-        return super.getContainer(id, playerInventory, inv);
+        return new SolarPanelContainer(IContainers.SOLAR_PANEL, id, playerInventory, (SolarPanelTile) inv);
     }
 
     @Override
@@ -64,6 +53,11 @@ public class SolarPanelBlock extends GeneratorBlock implements IWaterLoggable {
 
     @Override
     protected boolean hasLitProp() {
+        return false;
+    }
+
+    @Override
+    public boolean propagatesSkylightDown(BlockState state, IBlockReader reader, BlockPos pos) {
         return false;
     }
 }

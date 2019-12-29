@@ -19,24 +19,8 @@ public class SolarPanelContainer extends PowahContainer<SolarPanelTile> {
         addContainer(playerInventory, tile);
     }
 
-    public static SolarPanelContainer createBasic(int i, PlayerInventory playerInventory, PacketBuffer buffer) {
-        return new SolarPanelContainer(IContainers.SOLAR_PANEL_BASIC, i, playerInventory, buffer);
-    }
-
-    public static SolarPanelContainer createSpirited(int i, PlayerInventory playerInventory, PacketBuffer buffer) {
-        return new SolarPanelContainer(IContainers.SOLAR_PANEL_SPIRITED, i, playerInventory, buffer);
-    }
-
-    public static SolarPanelContainer createNiotic(int i, PlayerInventory playerInventory, PacketBuffer buffer) {
-        return new SolarPanelContainer(IContainers.SOLAR_PANEL_NIOTIC, i, playerInventory, buffer);
-    }
-
-    public static SolarPanelContainer createBlazing(int i, PlayerInventory playerInventory, PacketBuffer buffer) {
-        return new SolarPanelContainer(IContainers.SOLAR_PANEL_BLAZING, i, playerInventory, buffer);
-    }
-
-    public static SolarPanelContainer createHardened(int i, PlayerInventory playerInventory, PacketBuffer buffer) {
-        return new SolarPanelContainer(IContainers.SOLAR_PANEL_HARDENED, i, playerInventory, buffer);
+    public static SolarPanelContainer create(int i, PlayerInventory playerInventory, PacketBuffer buffer) {
+        return new SolarPanelContainer(IContainers.SOLAR_PANEL, i, playerInventory, buffer);
     }
 
     private void addContainer(PlayerInventory playerInventory, SolarPanelTile tile) {

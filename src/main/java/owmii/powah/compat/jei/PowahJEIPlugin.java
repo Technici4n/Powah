@@ -14,12 +14,14 @@ import owmii.powah.Powah;
 import owmii.powah.api.recipe.energizing.EnergizingRecipeSorter;
 import owmii.powah.block.IBlocks;
 import owmii.powah.block.cable.Cables;
+import owmii.powah.block.endercell.EnderCells;
+import owmii.powah.block.endergate.EnderGates;
 import owmii.powah.block.energizing.EnergizingRods;
+import owmii.powah.block.energycell.EnergyCells;
 import owmii.powah.block.generator.furnator.Furnators;
 import owmii.powah.block.generator.magmatic.MagmaticGenerators;
 import owmii.powah.block.generator.panel.solar.SolarPanels;
 import owmii.powah.block.generator.thermoelectric.ThermoGenerators;
-import owmii.powah.block.storage.energycell.EnergyCells;
 import owmii.powah.compat.jei.energizing.EnergizingCategory;
 import owmii.powah.compat.jei.magmatic.MagmaticCategory;
 import owmii.powah.compat.jei.thermo.CoolantCategory;
@@ -89,6 +91,14 @@ public class PowahJEIPlugin implements IModPlugin {
                 .map(ThermoGenerators::get)
                 .map(ItemStack::new)
                 .collect(Collectors.toList()), VanillaTypes.ITEM, I18n.format("wiki.powah.thermo_generator"));
+        registration.addIngredientInfo(Stream.of(EnderCells.values())
+                .map(EnderCells::get)
+                .map(ItemStack::new)
+                .collect(Collectors.toList()), VanillaTypes.ITEM, I18n.format("wiki.powah.ender_cell"));
+        registration.addIngredientInfo(Stream.of(EnderGates.values())
+                .map(EnderGates::get)
+                .map(ItemStack::new)
+                .collect(Collectors.toList()), VanillaTypes.ITEM, I18n.format("wiki.powah.ender_gate"));
 
         int range = (Config.ENERGIZING_CONFIG.range.get() * 2) + 1;
 

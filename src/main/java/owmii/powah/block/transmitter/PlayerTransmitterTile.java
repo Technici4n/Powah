@@ -2,13 +2,17 @@ package owmii.powah.block.transmitter;
 
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.util.Direction;
 import net.minecraft.world.dimension.DimensionType;
+import owmii.lib.block.BlockBase;
 import owmii.lib.util.Energy;
 import owmii.lib.util.Player;
 import owmii.powah.block.ITiles;
 import owmii.powah.block.PowahTile;
 import owmii.powah.compat.curios.CuriosCompat;
 import owmii.powah.item.BindingCardItem;
+
+import javax.annotation.Nullable;
 
 public class PlayerTransmitterTile extends PowahTile {
     private boolean acrossDim;
@@ -36,7 +40,7 @@ public class PlayerTransmitterTile extends PowahTile {
     }
 
     @Override
-    protected void onFirstTick() { //TODO remove 03/11/2019
+    protected void firstTick() { //TODO remove 03/11/2019
         if (this.world == null) return;
         if (!this.world.isRemote) {
             if (getBlock() instanceof PlayerTransmitterBlock) {
@@ -45,7 +49,7 @@ public class PlayerTransmitterTile extends PowahTile {
                 markDirtyAndSync();
             }
         }
-        super.onFirstTick();
+        super.firstTick();
     }
 
     @Override
@@ -98,6 +102,11 @@ public class PlayerTransmitterTile extends PowahTile {
                 return false;
             }
         }
-        return ((BindingCardItem) stack.getItem()).getPlayer(stack).isPresent() || super.canInsert(index, stack);
+        return ((BindingCardItem) stack.getItem()).getPlayer(stack).isPresent();
+    }
+
+    @Override
+    public boolean isEnergyPresent(@Nullable Direction side) {
+        return side != null && side.equals(getBlockState().get(BlockBase.FACING));
     }
 }

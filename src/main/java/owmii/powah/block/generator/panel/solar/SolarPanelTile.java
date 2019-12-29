@@ -39,9 +39,10 @@ public class SolarPanelTile extends GeneratorTile {
         if (this.world.isRemote) return;
 
         if (!Time.isDay(this.world) && this.canSeeSunLight || this.ticks % 40L == 0L) {
-            this.canSeeSunLight = Time.isDay(this.world) && Misc.canBlockSeeSky(this.world, this.pos, null);
+            this.canSeeSunLight = Time.isDay(this.world) && Misc.canBlockSeeSky(this.world, this.pos);
             markDirtyAndSync();
         }
+
         if (this.internal.isFull()) return;
 
         if (this.nextGen <= 0) {
@@ -61,7 +62,7 @@ public class SolarPanelTile extends GeneratorTile {
     }
 
     @Override
-    public boolean canExtract(@Nullable Direction side) {
-        return side != Direction.UP && super.canExtract(side);
+    public boolean isEnergyPresent(@Nullable Direction side) {
+        return side != Direction.UP;
     }
 }

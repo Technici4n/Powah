@@ -8,15 +8,16 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import owmii.powah.block.cable.CableTile;
 import owmii.powah.block.discharger.DischargerTile;
+import owmii.powah.block.endercell.EnderCellTile;
+import owmii.powah.block.endergate.EnderGateTile;
 import owmii.powah.block.energizing.EnergizingOrbTile;
 import owmii.powah.block.energizing.EnergizingRodTile;
+import owmii.powah.block.energycell.EnergyCellTile;
 import owmii.powah.block.generator.furnator.FurnatorTile;
 import owmii.powah.block.generator.magmatic.MagmaticGenTile;
 import owmii.powah.block.generator.panel.solar.SolarPanelTile;
 import owmii.powah.block.generator.thermoelectric.ThermoGeneratorTile;
 import owmii.powah.block.hopper.EnergyHopperTile;
-import owmii.powah.block.storage.endercell.EnderCellTile;
-import owmii.powah.block.storage.energycell.EnergyCellTile;
 import owmii.powah.block.transmitter.PlayerTransmitterTile;
 
 import java.util.ArrayList;
@@ -28,6 +29,7 @@ public class ITiles {
     public static final List<TileEntityType<?>> TILE_ENTITY_TYPES = new ArrayList<>();
     public static final TileEntityType<?> ENERGY_CELL = register("energy_cell", EnergyCellTile::new, IBlocks.ENERGY_CELLS);
     public static final TileEntityType<?> ENDER_CELL = register("ender_cell", EnderCellTile::new, IBlocks.ENDER_CELLS);
+    public static final TileEntityType<?> ENDER_GATE = register("ender_gate", EnderGateTile::new, IBlocks.ENDER_GATES);
     public static final TileEntityType<?> MAGMATIC_GENERATOR = register("magmatic_generator", MagmaticGenTile::new, IBlocks.MAGMATIC_GENERATORS);
     public static final TileEntityType<?> FURNATOR = register("furnator", FurnatorTile::new, IBlocks.FURNATORS);
     public static final TileEntityType<?> PLAYER_TRANSMITTER = register("player_transmitter", PlayerTransmitterTile::new, IBlocks.PLAYER_TRANSMITTER, IBlocks.PLAYER_TRANSMITTER_DIM);

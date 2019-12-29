@@ -60,8 +60,8 @@ public class ThermoGeneratorTile extends GeneratorTile {
     }
 
     @Override
-    protected void onFirstTick() {
-        super.onFirstTick();
+    protected void firstTick() {
+        super.firstTick();
         if (this.world == null) return;
         if (!this.world.isRemote) {
             if (getBlock() instanceof ThermoGeneratorBlock) {

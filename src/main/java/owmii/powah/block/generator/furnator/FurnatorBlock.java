@@ -30,18 +30,8 @@ public class FurnatorBlock extends GeneratorBlock implements IWaterLoggable {
     @Nullable
     @Override
     public ContainerBase getContainer(int id, PlayerInventory playerInventory, TileBase inv) {
-        if (this == Furnators.BASIC.get()) {
-            return new FurnatorContainer(IContainers.FURNATOR_BASIC, id, playerInventory, (FurnatorTile) inv);
-        } else if (this == Furnators.HARDENED.get()) {
-            return new FurnatorContainer(IContainers.FURNATOR_HARDENED, id, playerInventory, (FurnatorTile) inv);
-        } else if (this == Furnators.BLAZING.get()) {
-            return new FurnatorContainer(IContainers.FURNATOR_BLAZING, id, playerInventory, (FurnatorTile) inv);
-        } else if (this == Furnators.NIOTIC.get()) {
-            return new FurnatorContainer(IContainers.FURNATOR_NIOTIC, id, playerInventory, (FurnatorTile) inv);
-        } else if (this == Furnators.SPIRITED.get()) {
-            return new FurnatorContainer(IContainers.FURNATOR_SPIRITED, id, playerInventory, (FurnatorTile) inv);
-        }
-        return super.getContainer(id, playerInventory, inv);
+        return new FurnatorContainer(IContainers.FURNATOR, id, playerInventory, (FurnatorTile) inv);
+
     }
 
     @Override

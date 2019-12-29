@@ -72,18 +72,7 @@ public class ThermoGeneratorBlock extends GeneratorBlock implements IWaterLoggab
     @Nullable
     @Override
     public ContainerBase getContainer(int id, PlayerInventory playerInventory, TileBase inv) {
-        if (this == ThermoGenerators.BASIC.get()) {
-            return new ThermoGenContainer(IContainers.THERMO_GENERATOR_BASIC, id, playerInventory, (ThermoGeneratorTile) inv);
-        } else if (this == ThermoGenerators.HARDENED.get()) {
-            return new ThermoGenContainer(IContainers.THERMO_GENERATOR_HARDENED, id, playerInventory, (ThermoGeneratorTile) inv);
-        } else if (this == ThermoGenerators.BLAZING.get()) {
-            return new ThermoGenContainer(IContainers.THERMO_GENERATOR_BLAZING, id, playerInventory, (ThermoGeneratorTile) inv);
-        } else if (this == ThermoGenerators.NIOTIC.get()) {
-            return new ThermoGenContainer(IContainers.THERMO_GENERATOR_NIOTIC, id, playerInventory, (ThermoGeneratorTile) inv);
-        } else if (this == ThermoGenerators.SPIRITED.get()) {
-            return new ThermoGenContainer(IContainers.THERMO_GENERATOR_SPIRITED, id, playerInventory, (ThermoGeneratorTile) inv);
-        }
-        return super.getContainer(id, playerInventory, inv);
+        return new ThermoGenContainer(IContainers.THERMO_GENERATOR, id, playerInventory, (ThermoGeneratorTile) inv);
     }
 
     @Override

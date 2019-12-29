@@ -26,6 +26,7 @@ import net.minecraft.util.math.Vec3d;
 import net.minecraft.util.math.shapes.ISelectionContext;
 import net.minecraft.util.math.shapes.VoxelShape;
 import net.minecraft.util.math.shapes.VoxelShapes;
+import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.IBlockReader;
 import net.minecraft.world.IWorld;
 import net.minecraft.world.World;
@@ -80,30 +81,25 @@ public class CableBlock extends PowahBlock implements ICable, IHud, IWaterLoggab
     @Override
     public VoxelShape getShape(BlockState state, IBlockReader worldIn, BlockPos pos, ISelectionContext context) {
         VoxelShape voxelShape = CABLE;
-        if (state.get(NORTH)) voxelShape = VoxelShapes.or(voxelShape, MULTIPART[0]);
-        if (state.get(EAST)) voxelShape = VoxelShapes.or(voxelShape, MULTIPART[1]);
-        if (state.get(SOUTH)) voxelShape = VoxelShapes.or(voxelShape, MULTIPART[2]);
-        if (state.get(WEST)) voxelShape = VoxelShapes.or(voxelShape, MULTIPART[3]);
-        if (state.get(UP)) voxelShape = VoxelShapes.or(voxelShape, MULTIPART[4]);
-        if (state.get(DOWN)) voxelShape = VoxelShapes.or(voxelShape, MULTIPART[5]);
+        if (state.get(NORTH) || canAttach(state, (IWorld) worldIn, pos, Direction.NORTH)[1])
+            voxelShape = VoxelShapes.or(voxelShape, MULTIPART[0]);
+        if (state.get(EAST) || canAttach(state, (IWorld) worldIn, pos, Direction.EAST)[1])
+            voxelShape = VoxelShapes.or(voxelShape, MULTIPART[1]);
+        if (state.get(SOUTH) || canAttach(state, (IWorld) worldIn, pos, Direction.SOUTH)[1])
+            voxelShape = VoxelShapes.or(voxelShape, MULTIPART[2]);
+        if (state.get(WEST) || canAttach(state, (IWorld) worldIn, pos, Direction.WEST)[1])
+            voxelShape = VoxelShapes.or(voxelShape, MULTIPART[3]);
+        if (state.get(UP) || canAttach(state, (IWorld) worldIn, pos, Direction.UP)[1])
+            voxelShape = VoxelShapes.or(voxelShape, MULTIPART[4]);
+        if (state.get(DOWN) || canAttach(state, (IWorld) worldIn, pos, Direction.DOWN)[1])
+            voxelShape = VoxelShapes.or(voxelShape, MULTIPART[5]);
         return voxelShape;
     }
 
     @Nullable
     @Override
     public ContainerBase getContainer(int id, PlayerInventory playerInventory, TileBase inv) {
-        if (this == Cables.BASIC.get()) {
-            return new CableContainer(IContainers.CABLE_BASIC, id, playerInventory, (CableTile) inv);
-        } else if (this == Cables.HARDENED.get()) {
-            return new CableContainer(IContainers.CABLE_HARDENED, id, playerInventory, (CableTile) inv);
-        } else if (this == Cables.BLAZING.get()) {
-            return new CableContainer(IContainers.CABLE_BLAZING, id, playerInventory, (CableTile) inv);
-        } else if (this == Cables.NIOTIC.get()) {
-            return new CableContainer(IContainers.CABLE_NIOTIC, id, playerInventory, (CableTile) inv);
-        } else if (this == Cables.SPIRITED.get()) {
-            return new CableContainer(IContainers.CABLE_SPIRITED, id, playerInventory, (CableTile) inv);
-        }
-        return super.getContainer(id, playerInventory, inv);
+        return new CableContainer(IContainers.CABLE, id, playerInventory, (CableTile) inv);
     }
 
     @Override
@@ -151,8 +147,8 @@ public class CableBlock extends PowahBlock implements ICable, IHud, IWaterLoggab
     }
 
     @Override
-    public BlockState updatePostPlacement(BlockState stateIn, Direction facing, BlockState facingState, IWorld worldIn, BlockPos currentPos, BlockPos facingPos) {
-        return newState(worldIn, currentPos);
+    public BlockState updatePostPlacement(BlockState stateIn, Direction facing, BlockState facingState, IWorld world, BlockPos currentPos, BlockPos facingPos) {
+        return newState(world, currentPos);
     }
 
     @Nullable
@@ -188,7 +184,15 @@ public class CableBlock extends PowahBlock implements ICable, IHud, IWaterLoggab
             }
         }
         IFluidState ifluidstate = world.getFluidState(pos);
-        return state.with(NORTH, north[0]).with(SOUTH, south[0]).with(WEST, west[0]).with(EAST, east[0]).with(UP, up[0]).with(DOWN, down[0]).with(TILE, tile).with(WATERLOGGED, ifluidstate.getFluid() == Fluids.WATER);
+        return state
+                .with(NORTH, north[0] && !north[1])
+                .with(SOUTH, south[0] && !south[1])
+                .with(WEST, west[0] && !west[1])
+                .with(EAST, east[0] && !east[1])
+                .with(UP, up[0] && !up[1])
+                .with(DOWN, down[0] && !down[1])
+                .with(TILE, tile)
+                .with(WATERLOGGED, ifluidstate.getFluid() == Fluids.WATER);
     }
 
     @Override
@@ -224,9 +228,9 @@ public class CableBlock extends PowahBlock implements ICable, IHud, IWaterLoggab
                 CompoundNBT nbt = data.get(pos);
                 if (nbt != null) {// TODO keep data on tile entity remove
                     cable.getSideConfig().read(nbt);
-                    cable.sync(5);
                 }
             }
+            cable.sync(1);
         }
         super.onBlockAdded(state, world, pos, oldState, isMoving);
     }
@@ -271,6 +275,17 @@ public class CableBlock extends PowahBlock implements ICable, IHud, IWaterLoggab
         super.neighborChanged(state, world, pos, blockIn, fromPos, isMoving);
         if (Energy.isPresent(world.getTileEntity(fromPos), Side.fromNeighbor(pos, fromPos))) {
             searchCables(world, pos, pos);
+            TileEntity tileEntity = world.getTileEntity(pos);
+            if (tileEntity instanceof CableTile) {
+                CableTile cable = (CableTile) tileEntity;
+                cable.energySides.clear();
+                for (Direction direction : Direction.values()) {
+                    if (canAttach(state, world, pos, direction)[1]) {
+                        cable.energySides.add(direction);
+                    }
+                }
+                cable.markDirtyAndSync();
+            }
         }
     }
 
@@ -352,13 +367,14 @@ public class CableBlock extends PowahBlock implements ICable, IHud, IWaterLoggab
                         FontRenderer font = mc.fontRenderer;
                         int width = mc.mainWindow.getScaledWidth();
                         int height = mc.mainWindow.getScaledHeight();
-                        String s = I18n.format("info.lollipop.side." + direction.getName(), "");
+                        String s = I18n.format("info.lollipop.side." + direction.getName(), TextFormatting.WHITE);
                         int sw = font.getStringWidth(s);
-                        font.drawStringWithShadow(s, -(sw / 2) + (width / 2), height - 80, 0x999999);
+                        font.drawStringWithShadow(s, -(sw / 2) + (width / 2), height - 84, 0xbfbfbf);
                         PowerMode mode = cable.getSideConfig().getPowerMode(direction);
-                        String sideConf = I18n.format("info.powah.mode.cable." + mode.name().toLowerCase(), "");
+                        TextFormatting tf = mode.equals(PowerMode.ALL) ? TextFormatting.GRAY : mode.equals(PowerMode.IN) ? TextFormatting.DARK_AQUA : mode.equals(PowerMode.OUT) ? TextFormatting.GOLD : TextFormatting.YELLOW;
+                        String sideConf = I18n.format("info.powah.mode.cable." + mode.name().toLowerCase(), TextFormatting.YELLOW);
                         int sc = font.getStringWidth(sideConf);
-                        font.drawStringWithShadow(sideConf, -(sc / 2) + (width / 2), height - 95, 0x999999);
+                        font.drawStringWithShadow(sideConf, -(sc / 2) + (width / 2), height - 98, 0xbfbfbf);
                         flag[0] = true;
                     }
                 });

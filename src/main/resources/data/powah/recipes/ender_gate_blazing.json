@@ -1,0 +1,23 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+	"oio",
+	"ici",
+	"oio"
+  ],
+  "key": {
+	"c": {
+	  "item": "powah:ender_core"
+	},
+	"i": {
+	  "item": "powah:cable_blazing"
+	},
+	"o": {
+	  "item": "minecraft:obsidian"
+	}
+  },
+  "result": {
+	"item": "powah:ender_gate_blazing",
+	"count": 4
+  }
+}

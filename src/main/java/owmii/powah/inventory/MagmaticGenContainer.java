@@ -19,24 +19,8 @@ public class MagmaticGenContainer extends PowahContainer<MagmaticGenTile> {
         addContainer(playerInventory, tile);
     }
 
-    public static MagmaticGenContainer createBasic(int i, PlayerInventory playerInventory, PacketBuffer buffer) {
-        return new MagmaticGenContainer(IContainers.MAGMATIC_GENERATOR_BASIC, i, playerInventory, buffer);
-    }
-
-    public static MagmaticGenContainer createSpirited(int i, PlayerInventory playerInventory, PacketBuffer buffer) {
-        return new MagmaticGenContainer(IContainers.MAGMATIC_GENERATOR_SPIRITED, i, playerInventory, buffer);
-    }
-
-    public static MagmaticGenContainer createNiotic(int i, PlayerInventory playerInventory, PacketBuffer buffer) {
-        return new MagmaticGenContainer(IContainers.MAGMATIC_GENERATOR_NIOTIC, i, playerInventory, buffer);
-    }
-
-    public static MagmaticGenContainer createBlazing(int i, PlayerInventory playerInventory, PacketBuffer buffer) {
-        return new MagmaticGenContainer(IContainers.MAGMATIC_GENERATOR_BLAZING, i, playerInventory, buffer);
-    }
-
-    public static MagmaticGenContainer createHardened(int i, PlayerInventory playerInventory, PacketBuffer buffer) {
-        return new MagmaticGenContainer(IContainers.MAGMATIC_GENERATOR_HARDENED, i, playerInventory, buffer);
+    public static MagmaticGenContainer create(int i, PlayerInventory playerInventory, PacketBuffer buffer) {
+        return new MagmaticGenContainer(IContainers.MAGMATIC_GENERATOR, i, playerInventory, buffer);
     }
 
     private void addContainer(PlayerInventory playerInventory, MagmaticGenTile tile) {

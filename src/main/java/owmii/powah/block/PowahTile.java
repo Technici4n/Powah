@@ -23,11 +23,12 @@ public abstract class PowahTile extends TileBase.Tickable {
 
     public PowahTile(TileEntityType<?> type, int capacity, int maxReceive, int maxExtract, boolean isCreative) {
         super(type);
-        this.internal = new PowahStorage(capacity, isCreative ? 0 : maxReceive, maxExtract);
+        this.internal = new PowahStorage(capacity, maxReceive, maxExtract);
         this.sideConfig = new SideConfig(this);
         this.isCreative = isCreative;
         if (isCreative) {
             this.internal.setEnergy(capacity);
+            this.internal.setMaxReceive(0);
         }
 
         this.inv.add(getChargingSlots() + getUpgradeSlots());
@@ -63,7 +64,7 @@ public abstract class PowahTile extends TileBase.Tickable {
     }
 
     @Override
-    protected void onFirstTick() {
+    protected void firstTick() {
         if (this.world == null) return;
         if (!this.world.isRemote) {
             if (getBlock() instanceof PowahBlock) {
@@ -73,8 +74,8 @@ public abstract class PowahTile extends TileBase.Tickable {
                 this.internal.setMaxReceive(powahBlock.maxReceive);
                 if (this.isCreative) {
                     this.internal.setEnergy(powahBlock.capacity);
-                    this.internal.setMaxReceive(powahBlock.capacity);
                     this.internal.setMaxExtract(powahBlock.capacity);
+                    this.internal.setMaxReceive(0);
                 }
                 markDirtyAndSync();
             }
@@ -156,7 +157,7 @@ public abstract class PowahTile extends TileBase.Tickable {
         if (!canReceive(side)) return 0;
         int energyReceived = Math.min(getCapacity() - getEnergyStored(), Math.min(getMaxReceive(), maxReceive));
         if (!simulate) {
-            setEnergy(getEnergyStored() + energyReceived);
+            setEnergy(getEnergyStored() + energyReceived, side);
             if (energyReceived > 0) {
                 sync(getSyncTicks());
             }
@@ -168,7 +169,7 @@ public abstract class PowahTile extends TileBase.Tickable {
         if (!canExtract(side)) return 0;
         int energyExtracted = Math.min(getEnergyStored(), Math.min(getMaxExtract(), maxExtract));
         if (!simulate && !this.isCreative) {
-            setEnergy(getEnergyStored() - energyExtracted);
+            setEnergy(getEnergyStored() - energyExtracted, side);
             if (energyExtracted > 0) {
                 sync(getSyncTicks());
             }
@@ -184,7 +185,7 @@ public abstract class PowahTile extends TileBase.Tickable {
         return this.internal.getMaxExtract();
     }
 
-    public void setEnergy(int amount) {
+    public void setEnergy(int amount, @Nullable Direction side) {
         this.internal.setEnergy(amount);
     }
 
@@ -204,12 +205,24 @@ public abstract class PowahTile extends TileBase.Tickable {
         return this.sideConfig;
     }
 
+    public boolean isCreative() {
+        return this.isCreative;
+    }
+
     public boolean canExtract(@Nullable Direction side) {
-        return checkRedstone() && (this.sideConfig.getPowerMode(side).isOut() || side == null) && this.internal.canExtract();
+        return checkRedstone() && (isOut(side) || side == null) && this.internal.canExtract();
+    }
+
+    public boolean isOut(@Nullable Direction side) {
+        return side != null && this.sideConfig.getPowerMode(side).isOut();
     }
 
     public boolean canReceive(@Nullable Direction side) {
-        return checkRedstone() && (this.sideConfig.getPowerMode(side).isIn() || side == null) && this.internal.canReceive() && !this.isCreative;
+        return checkRedstone() && (isIn(side) || side == null) && this.internal.canReceive();
+    }
+
+    public boolean isIn(@Nullable Direction side) {
+        return side != null && this.sideConfig.getPowerMode(side).isIn();
     }
 
     public RedstoneMode getRedstoneMode() {
@@ -270,7 +283,7 @@ public abstract class PowahTile extends TileBase.Tickable {
 
     @Override
     public <T> LazyOptional<T> getCapability(Capability<T> cap, @Nullable Direction side) {
-        return cap == CapabilityEnergy.ENERGY ? LazyOptional.of(() -> new PowahStorage(getInternal()) {
+        return cap == CapabilityEnergy.ENERGY && hasWorld() && isEnergyPresent(side) ? LazyOptional.of(() -> new PowahStorage(getInternal()) {
             @Override
             public int extractEnergy(int maxExtract, boolean simulate) {
                 return PowahTile.this.extractEnergy(maxExtract, simulate, side);
@@ -291,5 +304,9 @@ public abstract class PowahTile extends TileBase.Tickable {
                 return PowahTile.this.canExtract(side);
             }
         }).cast() : super.getCapability(cap, side);
+    }
+
+    public boolean isEnergyPresent(@Nullable Direction side) {
+        return true;
     }
 }

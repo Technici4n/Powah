@@ -5,13 +5,11 @@ import net.minecraft.block.IWaterLoggable;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.Direction;
-import net.minecraft.util.Rotation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.shapes.IBooleanFunction;
 import net.minecraft.util.math.shapes.ISelectionContext;
 import net.minecraft.util.math.shapes.VoxelShape;
 import net.minecraft.world.IBlockReader;
-import net.minecraft.world.IWorld;
 import net.minecraft.world.IWorldReader;
 import owmii.lib.block.TileBase;
 import owmii.lib.inventory.ContainerBase;
@@ -78,18 +76,6 @@ public class PlayerTransmitterBlock extends PowahBlock implements IWaterLoggable
         BlockState state1 = worldIn.getBlockState(blockpos);
         TileEntity tile = worldIn.getTileEntity(blockpos);
         return state1.getBlock() instanceof ICable || tile != null && !(tile instanceof PlayerTransmitterTile) && Energy.getForgeEnergy(tile, direction).isPresent();
-    }
-
-    @Override
-    public BlockState rotate(BlockState state, IWorld world, BlockPos pos, Rotation direction) {
-        for (Rotation rotation : Rotation.values()) {
-            if (!rotation.equals(Rotation.NONE)) {
-                if (isValidPosition(super.rotate(state, world, pos, rotation), world, pos)) {
-                    return super.rotate(state, world, pos, rotation);
-                }
-            }
-        }
-        return state;
     }
 
     @Override

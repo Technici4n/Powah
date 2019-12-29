@@ -18,24 +18,8 @@ public class CableContainer extends PowahContainer<CableTile> {
         addContainer(playerInventory, tile);
     }
 
-    public static CableContainer createBasic(int i, PlayerInventory playerInventory, PacketBuffer buffer) {
-        return new CableContainer(IContainers.CABLE_BASIC, i, playerInventory, buffer);
-    }
-
-    public static CableContainer createSpirited(int i, PlayerInventory playerInventory, PacketBuffer buffer) {
-        return new CableContainer(IContainers.CABLE_SPIRITED, i, playerInventory, buffer);
-    }
-
-    public static CableContainer createNiotic(int i, PlayerInventory playerInventory, PacketBuffer buffer) {
-        return new CableContainer(IContainers.CABLE_NIOTIC, i, playerInventory, buffer);
-    }
-
-    public static CableContainer createBlazing(int i, PlayerInventory playerInventory, PacketBuffer buffer) {
-        return new CableContainer(IContainers.CABLE_BLAZING, i, playerInventory, buffer);
-    }
-
-    public static CableContainer createHardened(int i, PlayerInventory playerInventory, PacketBuffer buffer) {
-        return new CableContainer(IContainers.CABLE_HARDENED, i, playerInventory, buffer);
+    public static CableContainer create(int i, PlayerInventory playerInventory, PacketBuffer buffer) {
+        return new CableContainer(IContainers.CABLE, i, playerInventory, buffer);
     }
 
     private void addContainer(PlayerInventory playerInventory, CableTile tile) {

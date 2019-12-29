@@ -5,7 +5,6 @@ import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.util.*;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
@@ -14,7 +13,6 @@ import net.minecraft.util.text.TextFormatting;
 import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.World;
 import owmii.lib.item.ItemBase;
-import owmii.lib.util.Stack;
 import owmii.powah.api.wrench.IWrench;
 import owmii.powah.api.wrench.IWrenchable;
 import owmii.powah.api.wrench.WrenchMode;
@@ -62,18 +60,7 @@ public class WrenchItem extends ItemBase implements IWrench {
     public void inventoryTick(ItemStack stack, World worldIn, Entity entityIn, int itemSlot, boolean isSelected) {
         if (entityIn instanceof PlayerEntity) {
             PlayerEntity player = (PlayerEntity) entityIn;
-            CompoundNBT nbt = getWrenchNBT(stack);
-            ItemStack mainHand = player.getHeldItemMainhand();
-            ItemStack offhand = player.getHeldItemOffhand();
-            boolean flag = nbt.getBoolean("ChatInfo");
-            if (Stack.orEquals(stack, mainHand, offhand)) {
-                if (!flag) {
-                    player.sendStatusMessage(new TranslationTextComponent("info.powah.wrench.mode." + getWrenchMode(stack).name().toLowerCase(), TextFormatting.YELLOW).applyTextStyle(TextFormatting.GRAY), true);
-                    nbt.putBoolean("ChatInfo", true);
-                }
-            } else if (flag) {
-                nbt.putBoolean("ChatInfo", false);
-            }
+            oneTimeInfo(player, stack, new TranslationTextComponent("info.powah.wrench.mode." + getWrenchMode(stack).name().toLowerCase(), TextFormatting.YELLOW).applyTextStyle(TextFormatting.GRAY));
         }
     }
 

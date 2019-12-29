@@ -66,6 +66,7 @@ public class EnergizingRodBlock extends PowahBlock implements IWaterLoggable, IW
 
     @Override
     public void onBlockAdded(BlockState state, World worldIn, BlockPos pos, BlockState oldState, boolean isMoving) {
+        super.onBlockAdded(state, worldIn, pos, oldState, isMoving);
         TileEntity tileEntity = worldIn.getTileEntity(pos);
         if (tileEntity instanceof EnergizingRodTile) {
             setOrbPos(worldIn, pos, (EnergizingRodTile) tileEntity);

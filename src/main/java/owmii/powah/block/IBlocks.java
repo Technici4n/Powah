@@ -11,9 +11,15 @@ import owmii.lib.block.IBlockBase;
 import owmii.powah.block.cable.CableBlock;
 import owmii.powah.block.cable.Cables;
 import owmii.powah.block.discharger.DischargerBlock;
+import owmii.powah.block.endercell.EnderCellBlock;
+import owmii.powah.block.endercell.EnderCells;
+import owmii.powah.block.endergate.EnderGateBlock;
+import owmii.powah.block.endergate.EnderGates;
 import owmii.powah.block.energizing.EnergizingOrbBlock;
 import owmii.powah.block.energizing.EnergizingRodBlock;
 import owmii.powah.block.energizing.EnergizingRods;
+import owmii.powah.block.energycell.EnergyCellBlock;
+import owmii.powah.block.energycell.EnergyCells;
 import owmii.powah.block.generator.furnator.FurnatorBlock;
 import owmii.powah.block.generator.furnator.Furnators;
 import owmii.powah.block.generator.magmatic.MagmaticGenBlock;
@@ -23,10 +29,6 @@ import owmii.powah.block.generator.panel.solar.SolarPanels;
 import owmii.powah.block.generator.thermoelectric.ThermoGeneratorBlock;
 import owmii.powah.block.generator.thermoelectric.ThermoGenerators;
 import owmii.powah.block.hopper.EnergyHopperBlock;
-import owmii.powah.block.storage.endercell.EnderCellBlock;
-import owmii.powah.block.storage.endercell.EnderCells;
-import owmii.powah.block.storage.energycell.EnergyCellBlock;
-import owmii.powah.block.storage.energycell.EnergyCells;
 import owmii.powah.block.transmitter.PlayerTransmitterBlock;
 import owmii.powah.item.ItemGroups;
 
@@ -38,18 +40,19 @@ public class IBlocks {
     public static final List<BlockItem> BLOCK_ITEMS = new ArrayList<>();
     public static final List<Block> BLOCKS = new ArrayList<>();
     public static final EnergyCellBlock[] ENERGY_CELLS;
-    public static final EnderCellBlock[] ENDER_CELLS;
+    public static final EnderGateBlock[] ENDER_GATES;
     public static final FurnatorBlock[] FURNATORS;
     public static final MagmaticGenBlock[] MAGMATIC_GENERATORS;
     public static final SolarPanelBlock[] SOLAR_PANELS;
     public static final ThermoGeneratorBlock[] THERMO_GENERATORS;
     public static final PlayerTransmitterBlock PLAYER_TRANSMITTER;
     public static final PlayerTransmitterBlock PLAYER_TRANSMITTER_DIM;
-    public static final CableBlock[] CABLES;
     public static final DischargerBlock DISCHARGER;
     public static final EnergyHopperBlock ENERGY_HOPPER;
     public static final EnergizingOrbBlock ENERGIZING_ORB;
     public static final EnergizingRodBlock[] ENERGIZING_RODS;
+    public static final CableBlock[] CABLES;
+    public static final EnderCellBlock[] ENDER_CELLS;
 
     static {
         EnergyCells[] cells = EnergyCells.values();
@@ -94,6 +97,11 @@ public class IBlocks {
             SOLAR_PANELS[i] = register("solar_panel_" + panel.name().toLowerCase(), new SolarPanelBlock(Block.Properties.create(panel.material).hardnessAndResistance(2.0F, panel.resistance), panel.capacity, panel.transfer, panel.perTick));
         }
 
+        DISCHARGER = register("discharger", new DischargerBlock(Block.Properties.create(Material.MISCELLANEOUS).hardnessAndResistance(1.0F, 15.0F), 500000, 1000));
+        ENERGY_HOPPER = register("energy_hopper", new EnergyHopperBlock(Block.Properties.create(Material.MISCELLANEOUS).hardnessAndResistance(1.0F, 15.0F), 500000, 1000));
+        PLAYER_TRANSMITTER = register("player_transmitter", new PlayerTransmitterBlock(Block.Properties.create(Material.MISCELLANEOUS).hardnessAndResistance(1.0F, 15.0F).doesNotBlockMovement(), 10000, 100, 1, false));
+        PLAYER_TRANSMITTER_DIM = register("player_transmitter_dim", new PlayerTransmitterBlock(Block.Properties.create(Material.MISCELLANEOUS).hardnessAndResistance(1.0F, 15.0F).doesNotBlockMovement(), 100000, 250, 2, true));
+
         ENERGIZING_ORB = register("energizing_orb", new EnergizingOrbBlock(Block.Properties.create(Material.MISCELLANEOUS).hardnessAndResistance(1.0F, 15.0F)));
         EnergizingRods[] rods = EnergizingRods.values();
         ENERGIZING_RODS = new EnergizingRodBlock[rods.length];
@@ -102,16 +110,18 @@ public class IBlocks {
             ENERGIZING_RODS[i] = register("energizing_rod_" + rod.name().toLowerCase(), new EnergizingRodBlock(Block.Properties.create(rod.material).hardnessAndResistance(1.0F, rod.resistance).doesNotBlockMovement(), rod.capacity, rod.transfer, rod.energizingSpeed));
         }
 
-        DISCHARGER = register("discharger", new DischargerBlock(Block.Properties.create(Material.MISCELLANEOUS).hardnessAndResistance(1.0F, 15.0F), 500000, 1000));
-        ENERGY_HOPPER = register("energy_hopper", new EnergyHopperBlock(Block.Properties.create(Material.MISCELLANEOUS).hardnessAndResistance(1.0F, 15.0F), 500000, 1000));
-        PLAYER_TRANSMITTER = register("player_transmitter", new PlayerTransmitterBlock(Block.Properties.create(Material.MISCELLANEOUS).hardnessAndResistance(1.0F, 15.0F).doesNotBlockMovement(), 10000, 100, 1, false));
-        PLAYER_TRANSMITTER_DIM = register("player_transmitter_dim", new PlayerTransmitterBlock(Block.Properties.create(Material.MISCELLANEOUS).hardnessAndResistance(1.0F, 15.0F).doesNotBlockMovement(), 100000, 250, 2, true));
-
         Cables[] cables = Cables.values();
         CABLES = new CableBlock[cables.length];
         for (int i = 0; i < cables.length; i++) {
             Cables cable = cables[i];
             CABLES[i] = register("cable_" + cable.name().toLowerCase(), new CableBlock(Block.Properties.create(cable.material).hardnessAndResistance(1.0F, cable.resistance).doesNotBlockMovement(), cable.transfer, cable.transfer));
+        }
+
+        EnderGates[] gates = EnderGates.values();
+        ENDER_GATES = new EnderGateBlock[gates.length];
+        for (int i = 0; i < gates.length; i++) {
+            EnderGates gate = gates[i];
+            ENDER_GATES[i] = register("ender_gate_" + gate.name().toLowerCase(), new EnderGateBlock(Block.Properties.create(gate.material).hardnessAndResistance(2.0F, gate.resistance).doesNotBlockMovement().lightValue(2), gate.transfer, gate.transfer, gate.channels));
         }
     }
 

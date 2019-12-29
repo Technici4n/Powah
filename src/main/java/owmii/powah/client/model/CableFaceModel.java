@@ -58,7 +58,7 @@ public class CableFaceModel extends Model {
         setRotation(this.down, 1.570796F, -1.570796F, 0F);
     }
 
-    public void render(Direction side, float scale, float f) {
+    public void render(Direction side, float scale) {
         float sc = 0.0310f;
         if (side == Direction.UP) {
             GlStateManager.pushMatrix();

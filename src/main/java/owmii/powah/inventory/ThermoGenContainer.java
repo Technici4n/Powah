@@ -19,24 +19,8 @@ public class ThermoGenContainer extends PowahContainer<ThermoGeneratorTile> {
         addContainer(playerInventory, tile);
     }
 
-    public static ThermoGenContainer createBasic(int i, PlayerInventory playerInventory, PacketBuffer buffer) {
-        return new ThermoGenContainer(IContainers.MAGMATIC_GENERATOR_BASIC, i, playerInventory, buffer);
-    }
-
-    public static ThermoGenContainer createSpirited(int i, PlayerInventory playerInventory, PacketBuffer buffer) {
-        return new ThermoGenContainer(IContainers.MAGMATIC_GENERATOR_SPIRITED, i, playerInventory, buffer);
-    }
-
-    public static ThermoGenContainer createNiotic(int i, PlayerInventory playerInventory, PacketBuffer buffer) {
-        return new ThermoGenContainer(IContainers.MAGMATIC_GENERATOR_NIOTIC, i, playerInventory, buffer);
-    }
-
-    public static ThermoGenContainer createBlazing(int i, PlayerInventory playerInventory, PacketBuffer buffer) {
-        return new ThermoGenContainer(IContainers.MAGMATIC_GENERATOR_BLAZING, i, playerInventory, buffer);
-    }
-
-    public static ThermoGenContainer createHardened(int i, PlayerInventory playerInventory, PacketBuffer buffer) {
-        return new ThermoGenContainer(IContainers.MAGMATIC_GENERATOR_HARDENED, i, playerInventory, buffer);
+    public static ThermoGenContainer create(int i, PlayerInventory playerInventory, PacketBuffer buffer) {
+        return new ThermoGenContainer(IContainers.MAGMATIC_GENERATOR, i, playerInventory, buffer);
     }
 
     private void addContainer(PlayerInventory playerInventory, ThermoGeneratorTile tile) {

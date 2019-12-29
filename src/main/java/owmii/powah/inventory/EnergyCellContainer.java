@@ -4,7 +4,7 @@ import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.container.ContainerType;
 import net.minecraft.network.PacketBuffer;
 import owmii.lib.inventory.slot.SlotBase;
-import owmii.powah.block.storage.energycell.EnergyCellTile;
+import owmii.powah.block.energycell.EnergyCellTile;
 
 import javax.annotation.Nullable;
 
@@ -19,28 +19,8 @@ public class EnergyCellContainer extends PowahContainer<EnergyCellTile> {
         addContainer(playerInventory, tile);
     }
 
-    public static EnergyCellContainer createBasic(int i, PlayerInventory playerInventory, PacketBuffer buffer) {
-        return new EnergyCellContainer(IContainers.ENERGY_CELL_BASIC, i, playerInventory, buffer);
-    }
-
-    public static EnergyCellContainer createSpirited(int i, PlayerInventory playerInventory, PacketBuffer buffer) {
-        return new EnergyCellContainer(IContainers.ENERGY_CELL_SPIRITED, i, playerInventory, buffer);
-    }
-
-    public static EnergyCellContainer createNiotic(int i, PlayerInventory playerInventory, PacketBuffer buffer) {
-        return new EnergyCellContainer(IContainers.ENERGY_CELL_NIOTIC, i, playerInventory, buffer);
-    }
-
-    public static EnergyCellContainer createBlazing(int i, PlayerInventory playerInventory, PacketBuffer buffer) {
-        return new EnergyCellContainer(IContainers.ENERGY_CELL_BLAZING, i, playerInventory, buffer);
-    }
-
-    public static EnergyCellContainer createHardened(int i, PlayerInventory playerInventory, PacketBuffer buffer) {
-        return new EnergyCellContainer(IContainers.ENERGY_CELL_HARDENED, i, playerInventory, buffer);
-    }
-
-    public static EnergyCellContainer createCreative(int i, PlayerInventory playerInventory, PacketBuffer buffer) {
-        return new EnergyCellContainer(IContainers.ENERGY_CELL_CREATIVE, i, playerInventory, buffer);
+    public static EnergyCellContainer create(int i, PlayerInventory playerInventory, PacketBuffer buffer) {
+        return new EnergyCellContainer(IContainers.ENERGY_CELL, i, playerInventory, buffer);
     }
 
     private void addContainer(PlayerInventory playerInventory, EnergyCellTile tile) {

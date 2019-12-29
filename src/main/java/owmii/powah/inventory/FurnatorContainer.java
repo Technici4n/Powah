@@ -19,24 +19,8 @@ public class FurnatorContainer extends PowahContainer<FurnatorTile> {
         addContainer(playerInventory, tile);
     }
 
-    public static FurnatorContainer createBasic(int i, PlayerInventory playerInventory, PacketBuffer buffer) {
-        return new FurnatorContainer(IContainers.FURNATOR_BASIC, i, playerInventory, buffer);
-    }
-
-    public static FurnatorContainer createSpirited(int i, PlayerInventory playerInventory, PacketBuffer buffer) {
-        return new FurnatorContainer(IContainers.FURNATOR_SPIRITED, i, playerInventory, buffer);
-    }
-
-    public static FurnatorContainer createNiotic(int i, PlayerInventory playerInventory, PacketBuffer buffer) {
-        return new FurnatorContainer(IContainers.FURNATOR_NIOTIC, i, playerInventory, buffer);
-    }
-
-    public static FurnatorContainer createBlazing(int i, PlayerInventory playerInventory, PacketBuffer buffer) {
-        return new FurnatorContainer(IContainers.FURNATOR_BLAZING, i, playerInventory, buffer);
-    }
-
-    public static FurnatorContainer createHardened(int i, PlayerInventory playerInventory, PacketBuffer buffer) {
-        return new FurnatorContainer(IContainers.FURNATOR_HARDENED, i, playerInventory, buffer);
+    public static FurnatorContainer create(int i, PlayerInventory playerInventory, PacketBuffer buffer) {
+        return new FurnatorContainer(IContainers.FURNATOR, i, playerInventory, buffer);
     }
 
     private void addContainer(PlayerInventory playerInventory, FurnatorTile tile) {

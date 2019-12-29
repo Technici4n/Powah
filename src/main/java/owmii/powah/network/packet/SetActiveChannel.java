@@ -5,13 +5,14 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.server.ServerWorld;
 import net.minecraftforge.fml.network.NetworkEvent;
+import owmii.lib.network.IPacket;
 import owmii.lib.util.Server;
-import owmii.powah.block.storage.endercell.EnderCellTile;
+import owmii.powah.block.endercell.EnderCellTile;
 
 import java.util.Optional;
 import java.util.function.Supplier;
 
-public class SetActiveChannel {
+public class SetActiveChannel implements IPacket<SetActiveChannel> {
     private int activeChannel;
     private int dim;
     private BlockPos pos;
@@ -22,17 +23,24 @@ public class SetActiveChannel {
         this.pos = pos;
     }
 
-    public static void encode(SetActiveChannel msg, PacketBuffer buffer) {
+    public SetActiveChannel() {
+        this(0, 0, BlockPos.ZERO);
+    }
+
+    @Override
+    public void encode(SetActiveChannel msg, PacketBuffer buffer) {
         buffer.writeInt(msg.activeChannel);
         buffer.writeInt(msg.dim);
         buffer.writeBlockPos(msg.pos);
     }
 
-    public static SetActiveChannel decode(PacketBuffer buffer) {
+    @Override
+    public SetActiveChannel decode(PacketBuffer buffer) {
         return new SetActiveChannel(buffer.readInt(), buffer.readInt(), buffer.readBlockPos());
     }
 
-    public static void handle(SetActiveChannel msg, Supplier<NetworkEvent.Context> ctx) {
+    @Override
+    public void handle(SetActiveChannel msg, Supplier<NetworkEvent.Context> ctx) {
         ctx.get().enqueueWork(() -> {
             Optional<ServerWorld> world = Server.getWorld(msg.dim);
             world.ifPresent(serverWorld -> {

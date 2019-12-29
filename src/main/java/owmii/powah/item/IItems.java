@@ -37,6 +37,7 @@ public class IItems {
     public static final Item NIOTIC_CRYSTAL;
     public static final Item SPIRITED_CRYSTAL;
     public static final Item CHARGED_SNOWBALL;
+    public static final Item ENDER_CORE;
 
     static {
         WRENCH = register("wrench", new WrenchItem(new Item.Properties().group(ItemGroups.MAIN).maxStackSize(1)));
@@ -62,6 +63,7 @@ public class IItems {
         NIOTIC_CRYSTAL = register("niotic_crystal", new ItemBase(new Item.Properties().group(ItemGroups.MAIN)));
         SPIRITED_CRYSTAL = register("spirited_crystal", new ItemBase(new Item.Properties().group(ItemGroups.MAIN)));
         CHARGED_SNOWBALL = register("charged_snowball", new ChargedSnowballItem(new Item.Properties().group(ItemGroups.MAIN).maxStackSize(16)));
+        ENDER_CORE = register("ender_core", new ItemBase(new Item.Properties().group(ItemGroups.MAIN)));
     }
 
     static <T extends Item & IItemBase> T register(String name, T item) {

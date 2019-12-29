@@ -22,6 +22,7 @@ public class EnergizingRecipes implements IEnergizingRegistry {
         INSTANCE.addRecipe(new ItemStack(IItems.NIOTIC_CRYSTAL), 300000, Ingredient.fromTag(Tags.Items.GEMS_DIAMOND));
         INSTANCE.addRecipe(new ItemStack(IItems.SPIRITED_CRYSTAL), 1000000, Ingredient.fromTag(Tags.Items.GEMS_EMERALD));
         INSTANCE.addRecipe(new ItemStack(IItems.CHARGED_SNOWBALL), 500000, Ingredient.fromStacks(new ItemStack(Items.SNOWBALL)));
+        INSTANCE.addRecipe(new ItemStack(IItems.ENDER_CORE), 50000, Ingredient.fromStacks(new ItemStack(Items.ENDER_EYE)), Ingredient.fromStacks(new ItemStack(IItems.DIELECTRIC_CASING)), Ingredient.fromStacks(new ItemStack(IItems.CAPACITOR_BASIC_TINY)));
         return INSTANCE;
     }
 

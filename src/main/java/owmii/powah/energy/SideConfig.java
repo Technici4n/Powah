@@ -7,17 +7,25 @@ import owmii.powah.block.PowahTile;
 
 import javax.annotation.Nullable;
 
+import static owmii.powah.energy.PowerMode.*;
+
 public class SideConfig {
-    private final PowerMode[] powerMode = new PowerMode[Direction.values().length];
+    private final PowerMode[] powerMode = new PowerMode[]{NON, NON, NON, NON, NON, NON};
     private final Direction[] sides = Direction.values();
     private final PowahTile tile;
 
     public SideConfig(PowahTile tile) {
         this.tile = tile;
+    }
+
+    public void init() {
         for (Direction side : Direction.values()) {
-            setPowerMode(side, PowerMode.NON);
+            if (this.tile.isEnergyPresent(side)) {
+                boolean e = this.tile.internal.canExtract() && this.tile.canExtractFromSides();
+                boolean r = this.tile.internal.canReceive();
+                setPowerMode(side, r && e ? ALL : r ? IN : e ? OUT : NON);
+            }
         }
-        nextPowerMode();
     }
 
     public CompoundNBT write(CompoundNBT compound) {
@@ -44,7 +52,7 @@ public class SideConfig {
         if (side != null) {
             return this.powerMode[side.getIndex()];
         }
-        return PowerMode.NON;
+        return NON;
     }
 
     public void setPowerMode(@Nullable Direction side, PowerMode powerMode) {
@@ -53,29 +61,31 @@ public class SideConfig {
         }
     }
 
-    public void nextPowerMode() {
+    public void nextPowerModeAllSides() {
         int i = -1;
         for (Direction side : Direction.values()) {
-            i = i == -1 ? getPowerMode(side).ordinal() + 1 : i;
-            PowerMode powerMode = PowerMode.values()[i > 3 ? 0 : i];
-            if ((!this.tile.internal.canExtract() || !this.tile.canExtractFromSides()) && powerMode.isOut()) {
-                powerMode = PowerMode.IN;
-            } else if (!this.tile.internal.canReceive() && powerMode.isIn()) {
-                powerMode = PowerMode.NON.equals(powerMode) || PowerMode.ALL.equals(powerMode) ? PowerMode.OUT : PowerMode.NON;
+            if (this.tile.isEnergyPresent(side)) {
+                i = i == -1 ? getPowerMode(side).ordinal() + 1 : i;
+                PowerMode mode = PowerMode.values()[i > 3 ? 0 : i];
+                if ((!this.tile.internal.canExtract() || !this.tile.canExtractFromSides()) && mode.isOut())
+                    mode = IN;
+                else if (!this.tile.internal.canReceive() && mode.isIn())
+                    mode = NON.equals(mode) || ALL.equals(mode) ? OUT : NON;
+                setPowerMode(side, mode);
             }
-            setPowerMode(side, powerMode);
         }
     }
 
     public void nextPowerMode(@Nullable Direction side) {
-        int i = getPowerMode(side).ordinal() + 1;
-        PowerMode powerMode = PowerMode.values()[i > 3 ? 0 : i];
-        if ((!this.tile.internal.canExtract() || !this.tile.canExtractFromSides()) && powerMode.isOut()) {
-            powerMode = PowerMode.IN;
-        } else if (!this.tile.internal.canReceive() && powerMode.isIn()) {
-            powerMode = PowerMode.NON.equals(powerMode) || PowerMode.ALL.equals(powerMode) ? PowerMode.OUT : PowerMode.NON;
+        if (this.tile.isEnergyPresent(side)) {
+            int i = getPowerMode(side).ordinal() + 1;
+            PowerMode mode = PowerMode.values()[i > 3 ? 0 : i];
+            if ((!this.tile.internal.canExtract() || !this.tile.canExtractFromSides()) && mode.isOut())
+                mode = IN;
+            else if (!this.tile.internal.canReceive() && mode.isIn())
+                mode = NON.equals(mode) || ALL.equals(mode) ? OUT : NON;
+            setPowerMode(side, mode);
         }
-        setPowerMode(side, powerMode);
     }
 
     public PowerMode getPowerMode(int i) {

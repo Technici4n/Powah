@@ -1,7 +1,7 @@
 package owmii.powah.energy;
 
 import net.minecraft.item.ItemStack;
-import owmii.lib.util.NBT;
+import owmii.lib.util.Const;
 
 public class ItemPowahStorage extends PowahStorage {
     private final ItemStack stack;
@@ -12,7 +12,7 @@ public class ItemPowahStorage extends PowahStorage {
         this.stack = stack;
         this.isCreative = isCreative;
         if (stack.getTag() != null) {
-            read(stack.getTag().getCompound(NBT.TAG_STACK));
+            read(stack.getTag().getCompound(Const.TAG_STORABLE));
             if (isCreative) {
                 setEnergy(getMaxEnergyStored());
             }
@@ -26,7 +26,7 @@ public class ItemPowahStorage extends PowahStorage {
     public int receiveEnergy(int maxReceive, boolean simulate) {
         int energy = super.receiveEnergy(maxReceive, simulate);
         if (energy > 0 && !simulate && !this.isCreative) {
-            write(this.stack.getOrCreateChildTag(NBT.TAG_STACK));
+            write(this.stack.getOrCreateChildTag(Const.TAG_STORABLE));
         }
         return energy;
     }
@@ -35,7 +35,7 @@ public class ItemPowahStorage extends PowahStorage {
     public int extractEnergy(int maxExtract, boolean simulate) {
         int energy = super.extractEnergy(maxExtract, simulate);
         if (energy > 0 && !simulate && !this.isCreative) {
-            write(this.stack.getOrCreateChildTag(NBT.TAG_STACK));
+            write(this.stack.getOrCreateChildTag(Const.TAG_STORABLE));
         }
         return energy;
     }

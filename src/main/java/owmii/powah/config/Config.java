@@ -19,8 +19,14 @@ public class Config {
     public static final General GENERAL;
     private static final ForgeConfigSpec GENERAL_CONFIG_SPEC;
 
-    public static final CellConfig CELL_CONFIG;
+    public static final EnergyCellConfig CELL_CONFIG;
     private static final ForgeConfigSpec CELL_CONFIG_SPEC;
+
+    public static final EnderCellConfig ENDER_CELL_CONFIG;
+    private static final ForgeConfigSpec ENDER_CELL_CONFIG_SPEC;
+
+    public static final EnderGateConfig ENDER_GATE_CONFIG;
+    private static final ForgeConfigSpec ENDER_GATE_CONFIG_SPEC;
 
     public static final FurnatorConfig FURNATOR_CONFIG;
     private static final ForgeConfigSpec FURNATOR_CONFIG_SPEC;
@@ -54,6 +60,8 @@ public class Config {
         }
         ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, GENERAL_CONFIG_SPEC, Powah.MOD_ID + "/general_common.toml");
         ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, CELL_CONFIG_SPEC, energyFolder + "/energy_cell.toml");
+        ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, ENDER_CELL_CONFIG_SPEC, energyFolder + "/ender_cell.toml");
+        ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, ENDER_GATE_CONFIG_SPEC, energyFolder + "/ender_gate.toml");
         ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, FURNATOR_CONFIG_SPEC, energyFolder + "/furnator.toml");
         ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, MAGMATIC_GENERATOR_CONFIG_SPEC, energyFolder + "/magmatic_generator.toml");
         ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, SOLAR_PANEL_CONFIG_SPEC, energyFolder + "/solar_panel.toml");
@@ -81,9 +89,15 @@ public class Config {
         final Pair<General, ForgeConfigSpec> generalForgeConfigSpecPair = new ForgeConfigSpec.Builder().configure(General::new);
         GENERAL = generalForgeConfigSpecPair.getLeft();
         GENERAL_CONFIG_SPEC = generalForgeConfigSpecPair.getRight();
-        final Pair<CellConfig, ForgeConfigSpec> cellsForgeConfigSpecPair = new ForgeConfigSpec.Builder().configure(CellConfig::new);
+        final Pair<EnergyCellConfig, ForgeConfigSpec> cellsForgeConfigSpecPair = new ForgeConfigSpec.Builder().configure(EnergyCellConfig::new);
         CELL_CONFIG = cellsForgeConfigSpecPair.getLeft();
         CELL_CONFIG_SPEC = cellsForgeConfigSpecPair.getRight();
+        final Pair<EnderCellConfig, ForgeConfigSpec> enderCellConfigForgeConfigSpecPair = new ForgeConfigSpec.Builder().configure(EnderCellConfig::new);
+        ENDER_CELL_CONFIG = enderCellConfigForgeConfigSpecPair.getLeft();
+        ENDER_CELL_CONFIG_SPEC = enderCellConfigForgeConfigSpecPair.getRight();
+        final Pair<EnderGateConfig, ForgeConfigSpec> enderGateConfigForgeConfigSpecPair = new ForgeConfigSpec.Builder().configure(EnderGateConfig::new);
+        ENDER_GATE_CONFIG = enderGateConfigForgeConfigSpecPair.getLeft();
+        ENDER_GATE_CONFIG_SPEC = enderGateConfigForgeConfigSpecPair.getRight();
         final Pair<FurnatorConfig, ForgeConfigSpec> FurnatorsForgeConfigSpecPair = new ForgeConfigSpec.Builder().configure(FurnatorConfig::new);
         FURNATOR_CONFIG = FurnatorsForgeConfigSpecPair.getLeft();
         FURNATOR_CONFIG_SPEC = FurnatorsForgeConfigSpecPair.getRight();

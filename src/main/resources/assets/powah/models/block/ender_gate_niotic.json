@@ -1,0 +1,6 @@
+{
+  "parent": "powah:block/ender_gate",
+  "textures": {
+	"gate": "powah:block/ender_gate_niotic"
+  }
+}
