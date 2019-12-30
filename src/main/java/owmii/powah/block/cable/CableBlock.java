@@ -81,17 +81,17 @@ public class CableBlock extends PowahBlock implements ICable, IHud, IWaterLoggab
     @Override
     public VoxelShape getShape(BlockState state, IBlockReader worldIn, BlockPos pos, ISelectionContext context) {
         VoxelShape voxelShape = CABLE;
-        if (state.get(NORTH) || canAttach(state, (IWorld) worldIn, pos, Direction.NORTH)[1])
+        if (state.get(NORTH) || canConnectEnergy(worldIn, pos, Direction.NORTH))
             voxelShape = VoxelShapes.or(voxelShape, MULTIPART[0]);
-        if (state.get(EAST) || canAttach(state, (IWorld) worldIn, pos, Direction.EAST)[1])
+        if (state.get(EAST) || canConnectEnergy(worldIn, pos, Direction.EAST))
             voxelShape = VoxelShapes.or(voxelShape, MULTIPART[1]);
-        if (state.get(SOUTH) || canAttach(state, (IWorld) worldIn, pos, Direction.SOUTH)[1])
+        if (state.get(SOUTH) || canConnectEnergy(worldIn, pos, Direction.SOUTH))
             voxelShape = VoxelShapes.or(voxelShape, MULTIPART[2]);
-        if (state.get(WEST) || canAttach(state, (IWorld) worldIn, pos, Direction.WEST)[1])
+        if (state.get(WEST) || canConnectEnergy(worldIn, pos, Direction.WEST))
             voxelShape = VoxelShapes.or(voxelShape, MULTIPART[3]);
-        if (state.get(UP) || canAttach(state, (IWorld) worldIn, pos, Direction.UP)[1])
+        if (state.get(UP) || canConnectEnergy(worldIn, pos, Direction.UP))
             voxelShape = VoxelShapes.or(voxelShape, MULTIPART[4]);
-        if (state.get(DOWN) || canAttach(state, (IWorld) worldIn, pos, Direction.DOWN)[1])
+        if (state.get(DOWN) || canConnectEnergy(worldIn, pos, Direction.DOWN))
             voxelShape = VoxelShapes.or(voxelShape, MULTIPART[5]);
         return voxelShape;
     }
@@ -236,10 +236,14 @@ public class CableBlock extends PowahBlock implements ICable, IHud, IWaterLoggab
     }
 
     public boolean[] canAttach(BlockState state, IWorld world, BlockPos pos, Direction direction) {
-        return new boolean[]{world.getBlockState(pos.offset(direction)).getBlock() == this || checkTileType(world, pos, direction), checkTileType(world, pos, direction)};
+        return new boolean[]{world.getBlockState(pos.offset(direction)).getBlock() == this || checkEnergyTile(world, pos, direction), checkEnergyTile(world, pos, direction)};
     }
 
-    public boolean checkTileType(IWorld world, BlockPos pos, Direction direction) {
+    public boolean checkEnergyTile(IWorld world, BlockPos pos, Direction direction) {
+        return canConnectEnergy(world, pos, direction);
+    }
+
+    public boolean canConnectEnergy(IBlockReader world, BlockPos pos, Direction direction) {
         BlockPos pos1 = pos.offset(direction);
         TileEntity tileEntity = world.getTileEntity(pos1);
         return !(tileEntity instanceof CableTile) && Energy.isPresent(tileEntity, direction);
@@ -336,7 +340,7 @@ public class CableBlock extends PowahBlock implements ICable, IHud, IWaterLoggab
                 Optional<Direction> sides = getHitSide(hit, pos);
                 boolean[] flag = {false};
                 sides.ifPresent(direction -> {
-                    if (checkTileType(world, pos, direction)) {
+                    if (checkEnergyTile(world, pos, direction)) {
                         cable.getSideConfig().nextPowerMode(direction);
                         flag[0] = true;
                     }
@@ -362,7 +366,7 @@ public class CableBlock extends PowahBlock implements ICable, IHud, IWaterLoggab
                 Vec3d hit = result.getHitVec();
                 Optional<Direction> sides = getHitSide(hit, result.getPos());
                 sides.ifPresent(direction -> {
-                    if (checkTileType(world, result.getPos(), direction)) {
+                    if (checkEnergyTile(world, result.getPos(), direction)) {
                         Minecraft mc = Minecraft.getInstance();
                         FontRenderer font = mc.fontRenderer;
                         int width = mc.mainWindow.getScaledWidth();
