@@ -1,11 +1,17 @@
+0.1.11
+- Fixed Crash when adding binding card to player transmitter Closes #18.
+
+0.1.10
+- Fix Crash with Optifine closes #16.
+
 0.1.9
-- Added Ender Cell (A type of Energy Cell that can store energy to the owner ender network)
-- Added Ender Gate (Transfer energy between the adjacent block and the ender network)
-- Added Ender Core (like dielectric casing)
+- Added Ender Cell (A type of Energy Cell that can store energy to the owner ender network).
+- Added Ender Gate (Transfer energy between the adjacent block and the ender network).
+- Added Ender Core (like dielectric casing).
 - Improved Cables rendering when attaching to a FE provider.
 - Fixed some block name are invisible in the gui.
 - Fixed Solar panels Day/Night time calculation.
-- Updated Lollipop to 0.0.21
+- Updated Lollipop to 0.0.21.
 
 0.1.7 & 0.1.8
 - New Wrench "Link" mode.

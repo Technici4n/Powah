@@ -97,12 +97,10 @@ public class PlayerTransmitterTile extends PowahTile {
     public boolean canInsert(int index, ItemStack stack) {
         if (this.world == null || !(stack.getItem() instanceof BindingCardItem)) {
             return false;
-        } else {
-            if (getBlock() instanceof PlayerTransmitterBlock && index == 1 && ((PlayerTransmitterBlock) getBlock()).getSlots() < 2) {
-                return false;
-            }
+        } else if (getBlock() instanceof PlayerTransmitterBlock && index == 1 && ((PlayerTransmitterBlock) getBlock()).getSlots() < 2) {
+            return false;
         }
-        return ((BindingCardItem) stack.getItem()).getPlayer(stack).isPresent();
+        return stack.getTag() != null && stack.getTag().hasUniqueId("BindedPlayerId");
     }
 
     @Override
