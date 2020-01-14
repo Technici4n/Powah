@@ -1,0 +1,42 @@
+{
+  "multipart": [
+	{
+	  "apply": {"model": "powah:block/cable_spirited"}
+	}, {
+	  "when": {
+		"north": true
+	  },
+	  "apply": {"model": "powah:block/cable_multipart_spirited"}
+	},
+	{
+	  "when": {
+		"east": true
+	  },
+	  "apply": {"model": "powah:block/cable_multipart_spirited", "y": 90}
+	},
+	{
+	  "when": {
+		"south": true
+	  },
+	  "apply": {"model": "powah:block/cable_multipart_spirited", "x": 180}
+	},
+	{
+	  "when": {
+		"west": true
+	  },
+	  "apply": {"model": "powah:block/cable_multipart_spirited", "y": 270}
+	},
+	{
+	  "when": {
+		"up": true
+	  },
+	  "apply": {"model": "powah:block/cable_multipart_spirited", "x": 270}
+	},
+	{
+	  "when": {
+		"down": true
+	  },
+	  "apply": {"model": "powah:block/cable_multipart_spirited", "x": 90}
+	}
+  ]
+}

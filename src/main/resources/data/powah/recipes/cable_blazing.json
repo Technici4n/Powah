@@ -1,0 +1,23 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+	"ddd",
+	"tct",
+	"ddd"
+  ],
+  "key": {
+	"d": {
+	  "item": "powah:dielectric_rod_horizontal"
+	},
+	"c": {
+	  "item": "powah:capacitor_blazing"
+	},
+	"t": {
+	  "item": "powah:cable_hardened"
+	}
+  },
+  "result": {
+	"item": "powah:cable_blazing",
+	"count": 6
+  }
+}

@@ -1,0 +1,23 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+	"ddd",
+	"tct",
+	"ddd"
+  ],
+  "key": {
+	"d": {
+	  "item": "powah:dielectric_rod_horizontal"
+	},
+	"c": {
+	  "item": "powah:capacitor_spirited"
+	},
+	"t": {
+	  "item": "powah:cable_niotic"
+	}
+  },
+  "result": {
+	"item": "powah:cable_spirited",
+	"count": 6
+  }
+}

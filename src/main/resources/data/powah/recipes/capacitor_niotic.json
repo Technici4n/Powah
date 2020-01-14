@@ -1,0 +1,22 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+	"pbp",
+	"bcb",
+	"pbp"
+  ],
+  "key": {
+	"p": {
+	  "item": "powah:dielectric_paste"
+	},
+	"c": {
+	  "item": "powah:capacitor_basic_large"
+	},
+	"b": {
+	  "item": "powah:niotic_crystal"
+	}
+  },
+  "result": {
+	"item": "powah:capacitor_niotic"
+  }
+}

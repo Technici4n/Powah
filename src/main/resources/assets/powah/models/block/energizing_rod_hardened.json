@@ -1,0 +1,6 @@
+{
+  "parent": "powah:block/energizing_rod",
+  "textures": {
+	"rod": "powah:block/energizing_rod_hardened"
+  }
+}

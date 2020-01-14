@@ -1,0 +1,118 @@
+0.2.0
+- Added Reactors (A multi-block (FE) generator).
+- Added Uraninite Ore, Raw Uraninite and Uraninite.
+- Added CraftTweaker support for the energizing recipes.
+- Added a gide book (Mod Manual).
+- Removed JEI info because now there is a gide book.
+- Fixed a lots of bugs.
+- Updated Lollipop to 0.0.23.
+
+0.1.11
+- Fixed Crash when adding binding card to player transmitter Closes #18.
+- Updated Lollipop to 0.0.22.
+
+0.1.10
+- Fix Crash with Optifine closes #16.
+
+0.1.9
+- Added Ender Cell (A type of Energy Cell that can store energy to the owner ender network).
+- Added Ender Gate (Transfer energy between the adjacent block and the ender network).
+- Added Ender Core (like dielectric casing).
+- Improved Cables rendering when attaching to a FE provider.
+- Fixed some block name are invisible in the gui.
+- Fixed Solar panels Day/Night time calculation.
+- Updated Lollipop to 0.0.21.
+
+0.1.7 & 0.1.8
+- New Wrench "Link" mode.
+- Now you can re-link Energizing Rod to any Energizing Orb in range.
+- When holding a Wrench with "Link" mode will show you linked orbs and rods.
+- Improved Energizing Rod beam so rendering better now.
+- Clean up JEI info text a bit.
+- Updated Lollipop to 0.0.20
+
+0.1.6
+- Fixed wrench in player's inventory causes server-side Exception Closes #15.
+
+0.1.5
+- Fixed energy transfer when one cable between two blocks in the same line
+
+0.1.4
+- Fixed Cables compatibility with some mods like rftools...
+- Improved cables performance more.
+- Fixed Energizing rod FE block recognition.
+- Updated Lollipop to 0.0.19.
+
+0.1.3
+- Fixed Energizing Orb recipe not working when world/chunk load.
+
+0.1.2
+- Fixed coal generator it will only take one piece at a time closes #12.
+
+0.1.1
+- Fixed crash when you right click with an item on energizing orb closes #10
+
+0.1.0
+- Added Energizing Orb (Used to energize items, require at least one Energizing Rod in a configurable range to work).
+- Added Energizing Rods (Used to energize items inside an Energizing Orb).
+- Added Energised Steel, Blazing Crystal, Niotic Crystal and Spirited Crystal.
+- Added Charged Snowball (When thrown will cause lightning).
+- Added Hardened Capacitor.
+- Changed some crafting recipes using the new materials.
+- Updated Lollipop to 0.0.18
+
+0.0.22
+- Improved items/blocks textures a bit, re-balanced colors and contrast too.
+
+0.0.21
+- Added Energy Hopper (a block that Charge chargeable items in an adjacent inventory).
+- Re-Fixed game crash when trying to rotate cables and Energy Cells with wrench.
+- Updated Lollipop to 0.0.17
+
+0.0.20
+- Fixed game crash when trying to rotate cables with wrench.
+- Updated Lollipop to 0.0.16
+
+0.0.19
+- Now Wrench has two modes (Wrench, Rotate)
+- Updated Lollipop to 0.0.15
+
+0.0.17
+- Added JEI support for Magmatic generator fluids and Thermoelectric generator heat source blocks and coolant fluids.
+- Added Magmatic Block to Thermoelectric generator heat source list with heat of 1200.
+- Fixed Thermoelectric generator generation when is more than 100%.
+
+0.0.16
+- Added Thermoelectric Generator (Generates FE when placed on top of a high temp block/fluid like lava...,require a coolant fluid like water.)
+- Updated Lollipop to 0.0.14
+- IMPORTANT NOTE!!, Moved Magmatic fluid list config to Magmatic_Generator.toml
+
+0.0.15
+- Player Transmitter charge player inventory before Curios inventory now.
+- Fix some blocks not dropping closes #8
+
+0.0.14
+- Added compatibility with "Curios" mod (Player transmitter charge items in "Curios" inventory)
+- Fixed some water logging issues
+- Updated Lollipop to 0.0.13
+
+0.0.13
+- Fixed Energy cables are transferring to the first block only.
+  now should transfer to all blocks correctly
+
+0.0.12
+- Most blocks are water logged now
+- Now you can place Player Transmitter on cables.
+
+0.0.11
+- Fixed Energy cables energy leak
+- Added config for energy per fuel tick in furnator.toml
+- Fixed bugs.
+
+0.0.10
+- Added Energy Discharger (Used to drain energy from items and keep it, can hold up to 4 items).
+- Added config for every block capacity, transfer, generation etc...
+- Fixed generation consumption leak.
+- Edited Furnator texture a bit.
+- Fixed more bugs.
+- Fixed Magmatic Generator fluid capacity.

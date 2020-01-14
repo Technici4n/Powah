@@ -1,0 +1,6 @@
+{
+  "parent": "powah:block/player_transmitter_wall_base",
+  "textures": {
+	"transmitter": "powah:block/player_transmitter_dim"
+  }
+}
