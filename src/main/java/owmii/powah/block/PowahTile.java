@@ -269,6 +269,10 @@ public abstract class PowahTile extends TileBase.Tickable {
         return ExtractionType.ALL;
     }
 
+    public boolean isExtractor() {
+        return canExtractFromSides();
+    }
+
     public boolean canExtractFromSides() {
         return getExtractionType().equals(ExtractionType.ALL) || getExtractionType().equals(ExtractionType.TILE);
     }

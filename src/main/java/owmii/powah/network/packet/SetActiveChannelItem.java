@@ -8,7 +8,7 @@ import net.minecraft.util.Hand;
 import net.minecraftforge.common.util.Constants;
 import net.minecraftforge.fml.network.NetworkEvent;
 import owmii.lib.network.IPacket;
-import owmii.lib.util.Const;
+import owmii.lib.util.Data;
 
 import java.util.function.Supplier;
 
@@ -41,11 +41,11 @@ public class SetActiveChannelItem implements IPacket<SetActiveChannelItem> {
                 for (Hand hand : Hand.values()) {
                     ItemStack stack = player.getHeldItem(hand);
                     CompoundNBT tag = stack.getTag() != null ? stack.getTag() : new CompoundNBT();
-                    if (tag.contains(Const.TAG_STORABLE, Constants.NBT.TAG_COMPOUND)) {
-                        CompoundNBT stackTag = tag.getCompound(Const.TAG_STORABLE);
+                    if (tag.contains(Data.TAG_STORABLE, Constants.NBT.TAG_COMPOUND)) {
+                        CompoundNBT stackTag = tag.getCompound(Data.TAG_STORABLE);
                         if (stackTag.contains("ActiveChannel", Constants.NBT.TAG_INT)) {
                             stackTag.putInt("ActiveChannel", msg.activeChannel);
-                            tag.put(Const.TAG_STORABLE, stackTag);
+                            tag.put(Data.TAG_STORABLE, stackTag);
                             break;
                         }
                     }

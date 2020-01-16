@@ -14,6 +14,7 @@ import java.util.List;
 @Mod.EventBusSubscriber(bus = Mod.EventBusSubscriber.Bus.MOD)
 public class IItems {
     public static final List<Item> ITEMS = new ArrayList<>(IBlocks.BLOCK_ITEMS);
+    public static final Item BOOK;
     public static final Item WRENCH;
     public static final Item DIELECTRIC_PASTE;
     public static final Item DIELECTRIC_ROD;
@@ -38,8 +39,13 @@ public class IItems {
     public static final Item SPIRITED_CRYSTAL;
     public static final Item CHARGED_SNOWBALL;
     public static final Item ENDER_CORE;
+    public static final Item URANINITE_RAW_POOR;
+    public static final Item URANINITE_RAW;
+    public static final Item URANINITE_RAW_DENSE;
+    public static final Item URANINITE;
 
     static {
+        BOOK = register("book", new PowahBookItem(new Item.Properties().group(ItemGroups.MAIN).maxStackSize(1)));
         WRENCH = register("wrench", new WrenchItem(new Item.Properties().group(ItemGroups.MAIN).maxStackSize(1)));
         DIELECTRIC_PASTE = register("dielectric_paste", new ItemBase(new Item.Properties().group(ItemGroups.MAIN)));
         DIELECTRIC_ROD = register("dielectric_rod", new ItemBase(new Item.Properties().group(ItemGroups.MAIN)));
@@ -64,6 +70,10 @@ public class IItems {
         SPIRITED_CRYSTAL = register("spirited_crystal", new ItemBase(new Item.Properties().group(ItemGroups.MAIN)));
         CHARGED_SNOWBALL = register("charged_snowball", new ChargedSnowballItem(new Item.Properties().group(ItemGroups.MAIN).maxStackSize(16)));
         ENDER_CORE = register("ender_core", new ItemBase(new Item.Properties().group(ItemGroups.MAIN)));
+        URANINITE_RAW_POOR = register("uraninite_raw_poor", new UraniniteItem(new Item.Properties().group(ItemGroups.MAIN)));
+        URANINITE_RAW = register("uraninite_raw", new UraniniteItem(new Item.Properties().group(ItemGroups.MAIN)));
+        URANINITE_RAW_DENSE = register("uraninite_raw_dense", new UraniniteItem(new Item.Properties().group(ItemGroups.MAIN)));
+        URANINITE = register("uraninite", new UraniniteItem(new Item.Properties().group(ItemGroups.MAIN)));
     }
 
     static <T extends Item & IItemBase> T register(String name, T item) {

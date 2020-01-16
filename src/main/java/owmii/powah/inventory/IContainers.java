@@ -19,6 +19,7 @@ public class IContainers {
     public static final ContainerType<MagmaticGenContainer> MAGMATIC_GENERATOR = register("magmatic_generator", MagmaticGenContainer::create);
     public static final ContainerType<FurnatorContainer> FURNATOR = register("furnator", FurnatorContainer::create);
     public static final ContainerType<SolarPanelContainer> SOLAR_PANEL = register("solar_panel", SolarPanelContainer::create);
+    public static final ContainerType<ReactorContainer> REACTOR = register("reactor", ReactorContainer::create);
     public static final ContainerType<ThermoGenContainer> THERMO_GENERATOR = register("thermo_generator", ThermoGenContainer::create);
     public static final ContainerType<CableContainer> CABLE = register("cable", CableContainer::create);
     public static final ContainerType<PlayerTransmitterContainer> PLAYER_TRANSMITTER = register("player_transmitter", PlayerTransmitterContainer::create);

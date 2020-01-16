@@ -1,0 +1,14 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+	{
+	  "item": "powah:dielectric_paste"
+	},
+	{
+	  "item": "minecraft:book"
+	}
+  ],
+  "result": {
+	"item": "powah:book"
+  }
+}

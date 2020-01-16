@@ -1,4 +1,4 @@
-package owmii.powah.compat.jei.thermo;
+package owmii.powah.compat.jei.reactor;
 
 import mezz.jei.api.constants.VanillaTypes;
 import mezz.jei.api.gui.IRecipeLayout;
@@ -20,22 +20,22 @@ import net.minecraft.util.text.TextFormatting;
 import net.minecraftforge.fluids.FluidStack;
 import owmii.powah.Powah;
 import owmii.powah.api.PowahAPI;
-import owmii.powah.block.generator.thermoelectric.ThermoGenerators;
+import owmii.powah.block.generator.reactor.Reactors;
 
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
-public class CoolantCategory implements IRecipeCategory<CoolantCategory.Recipe> {
+public class ReactorCoolantCategory implements IRecipeCategory<ReactorCoolantCategory.Recipe> {
     public static final ResourceLocation GUI_BACK = new ResourceLocation(Powah.MOD_ID, "textures/gui/jei/misc.png");
-    public static final ResourceLocation ID = new ResourceLocation(Powah.MOD_ID, "coolant");
+    public static final ResourceLocation ID = new ResourceLocation(Powah.MOD_ID, ".reactor.coolant");
     private final IDrawable background;
     private final IDrawable icon;
     private final String localizedName;
 
-    public CoolantCategory(IGuiHelper guiHelper) {
+    public ReactorCoolantCategory(IGuiHelper guiHelper) {
         this.background = guiHelper.drawableBuilder(GUI_BACK, 0, 0, 160, 24).addPadding(1, 0, 0, 0).build();
-        this.icon = guiHelper.createDrawableIngredient(new ItemStack(ThermoGenerators.BASIC.get()));
+        this.icon = guiHelper.createDrawableIngredient(new ItemStack(Reactors.BASIC.get()));
         this.localizedName = I18n.format("gui.powah.jei.category.coolant");
     }
 
@@ -82,7 +82,7 @@ public class CoolantCategory implements IRecipeCategory<CoolantCategory.Recipe> 
     @Override
     public void draw(Recipe recipe, double mouseX, double mouseY) {
         Minecraft minecraft = Minecraft.getInstance();
-        minecraft.fontRenderer.drawString(I18n.format("info.powah.cooling.mb", "" + TextFormatting.BLUE + recipe.coldness), 30.0F, 9.0F, 0x444444);
+        minecraft.fontRenderer.drawString(I18n.format("info.powah.coldness", "" + TextFormatting.BLUE + recipe.coldness), 30.0F, 9.0F, 0x444444);
     }
 
     public static class Maker {
@@ -94,19 +94,15 @@ public class CoolantCategory implements IRecipeCategory<CoolantCategory.Recipe> 
                 if (stack.getItem() instanceof BucketItem && !(stack.getItem() instanceof FishBucketItem)) {
                     BucketItem bucket = (BucketItem) stack.getItem();
                     Fluid fluid = bucket.getFluid();
-                    if (PowahAPI.COOLANT_FLUIDS.containsKey(fluid)) {
-                        recipes.add(new Recipe(bucket, PowahAPI.getCoolantFluid(fluid)));
+                    if (PowahAPI.REACTOR_COOLANTS.containsKey(fluid)) {
+                        recipes.add(new Recipe(bucket, PowahAPI.getReactorCoolant(fluid)));
                     }
                 }
             });
 
-            List<Fluid> fluids = new ArrayList<>(PowahAPI.COOLANT_FLUIDS.keySet());
+            List<Fluid> fluids = new ArrayList<>(PowahAPI.REACTOR_COOLANTS.keySet());
             recipes.forEach(recipe -> {
                 fluids.remove(recipe.fluid);
-            });
-
-            fluids.forEach(fluid -> {
-                recipes.add(new Recipe(fluid, PowahAPI.getFluidHeat(fluid)));
             });
 
             return recipes;

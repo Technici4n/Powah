@@ -21,7 +21,7 @@ import net.minecraft.world.World;
 import owmii.lib.block.TileBase;
 import owmii.lib.inventory.ContainerBase;
 import owmii.lib.item.BlockItemBase;
-import owmii.lib.util.Const;
+import owmii.lib.util.Data;
 import owmii.powah.block.PowahBlock;
 import owmii.powah.inventory.EnderCellContainer;
 import owmii.powah.inventory.IContainers;
@@ -69,16 +69,12 @@ public class EnderCellBlock extends PowahBlock implements IWaterLoggable {
     }
 
     @Override
-    protected void preTooltip(ItemStack stack, @Nullable IBlockReader worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
-    }
-
-    @Override
     protected void postTooltip(ItemStack stack, @Nullable IBlockReader worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
         tooltip.remove(new StringTextComponent(""));
         tooltip.add(new TranslationTextComponent("info.powah.max.channels", "" + TextFormatting.DARK_GRAY + this.channels).applyTextStyle(TextFormatting.GRAY));
         tooltip.add(new StringTextComponent(""));
         CompoundNBT tag = stack.getTag() != null ? stack.getTag() : new CompoundNBT();
-        CompoundNBT stackTag = tag.getCompound(Const.TAG_STORABLE);
+        CompoundNBT stackTag = tag.getCompound(Data.TAG_STORABLE);
         int activeChannel = stackTag.getInt("ActiveChannel");
         String owner = stackTag.getString("OwnerName");
         if (!owner.isEmpty()) {

@@ -13,13 +13,16 @@ import net.minecraft.util.Hand;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.World;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.common.util.Constants;
-import owmii.lib.util.Const;
+import owmii.lib.util.Data;
 import owmii.lib.util.Player;
 import owmii.powah.block.endercell.EnderCellBlock;
 import owmii.powah.client.screen.IScreens;
 
 import javax.annotation.Nullable;
+import java.util.Map;
 
 public class EnderCellItem extends PowahBlockItem {
     private final EnderCellBlock block;
@@ -33,13 +36,13 @@ public class EnderCellItem extends PowahBlockItem {
     public void onCreated(ItemStack stack, World worldIn, PlayerEntity playerIn) {
         if (Player.isFake(playerIn)) return;
         CompoundNBT tag = stack.getOrCreateTag();
-        if (!tag.contains(Const.TAG_STORABLE, Constants.NBT.TAG_COMPOUND)) {
+        if (!tag.contains(Data.TAG_STORABLE, Constants.NBT.TAG_COMPOUND)) {
             CompoundNBT nbt = new CompoundNBT();
             nbt.putInt("TotalChannels", getBlock().getChannels());
             nbt.putUniqueId("OwnerId", playerIn.getGameProfile().getId());
             nbt.putString("OwnerName", playerIn.getGameProfile().getName());
             nbt.putInt("ActiveChannel", 0);
-            tag.put(Const.TAG_STORABLE, nbt);
+            tag.put(Data.TAG_STORABLE, nbt);
         }
     }
 
@@ -54,16 +57,16 @@ public class EnderCellItem extends PowahBlockItem {
         ItemStack stack = playerIn.getHeldItem(handIn);
         if (Player.isFake(playerIn)) return ActionResult.newResult(ActionResultType.FAIL, stack);
         CompoundNBT tag = stack.getOrCreateTag();
-        if (!tag.contains(Const.TAG_STORABLE, Constants.NBT.TAG_COMPOUND)) {
+        if (!tag.contains(Data.TAG_STORABLE, Constants.NBT.TAG_COMPOUND)) {
             CompoundNBT nbt = new CompoundNBT();
             nbt.putInt("TotalChannels", getBlock().getChannels());
             nbt.putUniqueId("OwnerId", playerIn.getGameProfile().getId());
             nbt.putString("OwnerName", playerIn.getGameProfile().getName());
             nbt.putInt("ActiveChannel", 0);
-            tag.put(Const.TAG_STORABLE, nbt);
+            tag.put(Data.TAG_STORABLE, nbt);
         }
         if (worldIn.isRemote) {
-            CompoundNBT nbt = tag.getCompound(Const.TAG_STORABLE);
+            CompoundNBT nbt = tag.getCompound(Data.TAG_STORABLE);
             IScreens.openEnderNetScreen(stack, nbt);
         }
         return ActionResult.newResult(ActionResultType.SUCCESS, stack);
@@ -74,13 +77,21 @@ public class EnderCellItem extends PowahBlockItem {
         if (entityIn instanceof PlayerEntity) {
             PlayerEntity player = (PlayerEntity) entityIn;
             CompoundNBT tag = stack.getTag() != null ? stack.getTag() : new CompoundNBT();
-            if (tag.contains(Const.TAG_STORABLE, Constants.NBT.TAG_COMPOUND)) {
-                CompoundNBT stackTag = tag.getCompound(Const.TAG_STORABLE);
+            if (tag.contains(Data.TAG_STORABLE, Constants.NBT.TAG_COMPOUND)) {
+                CompoundNBT stackTag = tag.getCompound(Data.TAG_STORABLE);
                 if (stackTag.contains("ActiveChannel", Constants.NBT.TAG_INT)) {
                     oneTimeInfo(player, stack, new TranslationTextComponent("info.powah.channel", "" + TextFormatting.DARK_AQUA + (stackTag.getInt("ActiveChannel") + 1)).applyTextStyle(TextFormatting.GRAY));
                 }
             }
         }
+    }
+
+    @Override
+    @OnlyIn(Dist.CLIENT)
+    public Map<String, Object[]> getBookInfo(ItemStack stack, Map<String, Object[]> lines) {
+        final Map<String, Object[]> bookInfo = super.getBookInfo(stack, lines);
+        bookInfo.put("info.powah.max.channels", new Object[]{getBlock().getChannels()});
+        return bookInfo;
     }
 
     @Override

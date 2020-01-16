@@ -1,5 +1,19 @@
+0.2.2
+Added Solid coolant category to JEI.
+Fixed Uraninite Ores has no hardness.
+
+0.2.0
+- Added Reactors (A multi-block (FE) generator).
+- Added Uraninite Ore, Raw Uraninite and Uraninite.
+- Added CraftTweaker support for the energizing recipes.
+- Added a guide book (Mod Manual).
+- Removed JEI info because now there is a guide book.
+- Fixed a lots of bugs.
+- Updated Lollipop to 0.0.23.
+
 0.1.11
 - Fixed Crash when adding binding card to player transmitter Closes #18.
+- Updated Lollipop to 0.0.22.
 
 0.1.10
 - Fix Crash with Optifine closes #16.

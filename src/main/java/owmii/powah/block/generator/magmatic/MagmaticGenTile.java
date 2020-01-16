@@ -72,7 +72,7 @@ public class MagmaticGenTile extends GeneratorTile {
         if (this.nextGen <= 0 && !this.tank.isEmpty()) {
             FluidStack fluid = this.tank.getFluid();
             if (PowahAPI.MAGMATIC_FLUIDS.containsKey(fluid.getFluid())) {
-                int fluidHeat = PowahAPI.getFluidHeat(fluid.getFluid());
+                int fluidHeat = PowahAPI.getMagmaticFluidHeat(fluid.getFluid());
                 if (fluidHeat > 0 && this.perTick > 0) {
                     int minStored = Math.min(this.tank.getFluidAmount(), 100);
                     this.nextGenCap = (minStored * fluidHeat / 100);

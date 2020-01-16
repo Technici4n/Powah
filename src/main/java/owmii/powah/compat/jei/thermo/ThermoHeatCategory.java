@@ -28,14 +28,14 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
-public class HeatCategory implements IRecipeCategory<HeatCategory.Recipe> {
+public class ThermoHeatCategory implements IRecipeCategory<ThermoHeatCategory.Recipe> {
     public static final ResourceLocation GUI_BACK = new ResourceLocation(Powah.MOD_ID, "textures/gui/jei/misc.png");
     public static final ResourceLocation ID = new ResourceLocation(Powah.MOD_ID, "heat.sources");
     private final IDrawable background;
     private final IDrawable icon;
     private final String localizedName;
 
-    public HeatCategory(IGuiHelper guiHelper) {
+    public ThermoHeatCategory(IGuiHelper guiHelper) {
         this.background = guiHelper.drawableBuilder(GUI_BACK, 0, 0, 160, 24).addPadding(1, 0, 0, 0).build();
         this.icon = guiHelper.createDrawableIngredient(new ItemStack(ThermoGenerators.BASIC.get()));
         this.localizedName = I18n.format("gui.powah.jei.category.heat.sources");
@@ -103,8 +103,8 @@ public class HeatCategory implements IRecipeCategory<HeatCategory.Recipe> {
                 if (stack.getItem() instanceof BlockItem) {
                     BlockItem item = (BlockItem) stack.getItem();
                     Block block = item.getBlock();
-                    if (PowahAPI.HEAT_BLOCKS.containsKey(block)) {
-                        recipes.add(new Recipe(block, PowahAPI.getBlockHeat(block)));
+                    if (PowahAPI.THERMO_HEAT_SOURCES.containsKey(block)) {
+                        recipes.add(new Recipe(block, PowahAPI.getThermoHeatSource(block)));
                     }
                 }
             });
@@ -114,8 +114,8 @@ public class HeatCategory implements IRecipeCategory<HeatCategory.Recipe> {
             allIngredients.forEach(fluidStack -> {
                 if (!fluidStack.isEmpty()) {
                     Block block = fluidStack.getFluid().getDefaultState().getBlockState().getBlock();
-                    if (PowahAPI.HEAT_BLOCKS.containsKey(block)) {
-                        recipes.add(new Recipe(block, PowahAPI.getBlockHeat(block)));
+                    if (PowahAPI.THERMO_HEAT_SOURCES.containsKey(block)) {
+                        recipes.add(new Recipe(block, PowahAPI.getThermoHeatSource(block)));
                     }
                 }
             });

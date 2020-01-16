@@ -22,7 +22,7 @@ public class ThermoGeneratorConfig {
                 .comment("", "List of heat blocks used under Thermoelectric Generator.",
                         "Block registry name = heat, eg: [\"minecraft:lava=1000\", \"minecraft:magma_block=1200\"]",
                         "Min = 1, max = " + Integer.MAX_VALUE)
-                .define("heatBlocks", Lists.newArrayList("minecraft:lava=1000", "minecraft:magma_block=1200"));
+                .define("solidCoolants", Lists.newArrayList("minecraft:lava=1000", "minecraft:magma_block=1200"));
         this.heatBlocksAPI = builder.comment("Enable this to allow other mods to add their heat blocks. [default:true]").define("heatBlocksAPI", true);
 
         this.coolantFluids = builder

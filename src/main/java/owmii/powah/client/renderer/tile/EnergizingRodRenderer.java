@@ -36,13 +36,13 @@ public class EnergizingRodRenderer extends TileEntityRenderer<EnergizingRodTile>
         GlStateManager.enableBlend();
         GlStateManager.blendFunc(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE);
         GlStateManager.depthMask(false);
-        float f0 = Math.max(rod.coolDown.getTicks() / (float) (rod.coolDown.getMax()), 0.0F);
-        float f1 = 0.5F + f0 / 5.0F;
+        double f0 = Math.max(rod.coolDown.getTicks() / (float) (rod.coolDown.getMax()), 0.0F);
+        double f1 = 0.5F + f0 / 5.0F;
         GlStateManager.translated(0.5D, 0.5D, 0.5D);
         RenderHelper.disableStandardItemLighting();
 
         GlStateManager.pushMatrix();
-        GlStateManager.scalef(f1, f1, f1);
+        GlStateManager.scaled(f1, f1, f1);
         bindTexture(CHARGE_TEXTURE);
         CHARGE_MODEL.render(0.0625F);
         GlStateManager.popMatrix();

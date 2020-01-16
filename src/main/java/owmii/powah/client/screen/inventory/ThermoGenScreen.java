@@ -73,8 +73,6 @@ public class ThermoGenScreen extends PowahScreen<ThermoGenContainer> {
                 GlStateManager.color3f(1.0F, 1.0F, 1.0F);
             }
         }
-
-
     }
 
     @Override
@@ -87,8 +85,8 @@ public class ThermoGenScreen extends PowahScreen<ThermoGenContainer> {
             List<String> list = new ArrayList<>();
             list.add(TextFormatting.GRAY + I18n.format("info.powah.coolant", "" + TextFormatting.AQUA + tank.getFluid().getDisplayName().getString()));
             list.add(TextFormatting.GRAY + I18n.format("info.powah.stored.fluid", "" + TextFormatting.DARK_GRAY + tank.getFluidAmount(), tank.getCapacity()));
-            int perSeq = PowahAPI.getCoolantFluid(tank.getFluid().getFluid());
-            list.add(TextFormatting.GRAY + I18n.format("info.powah.cooling.mb", "" + TextFormatting.DARK_GRAY + perSeq));
+            int perSeq = PowahAPI.getThermoCoolant(tank.getFluid().getFluid());
+            list.add(TextFormatting.GRAY + I18n.format("info.powah.coldness", "" + TextFormatting.DARK_GRAY + perSeq));
             renderTooltip(list, mouseX, mouseY);
         }
     }

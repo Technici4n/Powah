@@ -58,7 +58,7 @@ public class ThermoGeneratorItem extends PowahBlockItem {
                     BlockState blockState = worldIn.getBlockState(blockPos);
                     Material material = blockState.getMaterial();
                     IFluidState ifluidstate = worldIn.getFluidState(blockPos);
-                    if (PowahAPI.HEAT_BLOCKS.containsKey(blockState.getBlock()) && worldIn.isAirBlock(blockPos1)) {
+                    if (PowahAPI.THERMO_HEAT_SOURCES.containsKey(blockState.getBlock()) && worldIn.isAirBlock(blockPos1)) {
                         worldIn.setBlockState(blockPos1, getBlock().getDefaultState(), 11);
 
                         BlockState blockState1 = worldIn.getBlockState(blockPos1);

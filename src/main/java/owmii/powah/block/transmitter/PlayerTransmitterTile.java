@@ -40,19 +40,6 @@ public class PlayerTransmitterTile extends PowahTile {
     }
 
     @Override
-    protected void firstTick() { //TODO remove 03/11/2019
-        if (this.world == null) return;
-        if (!this.world.isRemote) {
-            if (getBlock() instanceof PlayerTransmitterBlock) {
-                PlayerTransmitterBlock powahBlock = (PlayerTransmitterBlock) getBlock();
-                this.acrossDim = powahBlock.isAcrossDim();
-                markDirtyAndSync();
-            }
-        }
-        super.firstTick();
-    }
-
-    @Override
     protected boolean postTicks() {
         final int[] i = {0};
         if (this.world == null) return false;

@@ -94,7 +94,7 @@ public class MagmaticCategory implements IRecipeCategory<MagmaticCategory.Recipe
                     BucketItem bucket = (BucketItem) stack.getItem();
                     Fluid fluid = bucket.getFluid();
                     if (PowahAPI.MAGMATIC_FLUIDS.containsKey(fluid)) {
-                        recipes.add(new Recipe(bucket, PowahAPI.getFluidHeat(fluid)));
+                        recipes.add(new Recipe(bucket, PowahAPI.getMagmaticFluidHeat(fluid)));
                     }
                 }
             });
@@ -105,7 +105,7 @@ public class MagmaticCategory implements IRecipeCategory<MagmaticCategory.Recipe
             });
 
             fluids.forEach(fluid -> {
-                recipes.add(new Recipe(fluid, PowahAPI.getFluidHeat(fluid)));
+                recipes.add(new Recipe(fluid, PowahAPI.getMagmaticFluidHeat(fluid)));
             });
 
             return recipes;

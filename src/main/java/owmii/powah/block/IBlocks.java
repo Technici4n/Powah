@@ -26,6 +26,8 @@ import owmii.powah.block.generator.magmatic.MagmaticGenBlock;
 import owmii.powah.block.generator.magmatic.MagmaticGenerators;
 import owmii.powah.block.generator.panel.solar.SolarPanelBlock;
 import owmii.powah.block.generator.panel.solar.SolarPanels;
+import owmii.powah.block.generator.reactor.ReactorBlock;
+import owmii.powah.block.generator.reactor.Reactors;
 import owmii.powah.block.generator.thermoelectric.ThermoGeneratorBlock;
 import owmii.powah.block.generator.thermoelectric.ThermoGenerators;
 import owmii.powah.block.hopper.EnergyHopperBlock;
@@ -43,8 +45,9 @@ public class IBlocks {
     public static final EnderGateBlock[] ENDER_GATES;
     public static final FurnatorBlock[] FURNATORS;
     public static final MagmaticGenBlock[] MAGMATIC_GENERATORS;
-    public static final SolarPanelBlock[] SOLAR_PANELS;
     public static final ThermoGeneratorBlock[] THERMO_GENERATORS;
+    public static final SolarPanelBlock[] SOLAR_PANELS;
+    public static final ReactorBlock[] REACTORS;
     public static final PlayerTransmitterBlock PLAYER_TRANSMITTER;
     public static final PlayerTransmitterBlock PLAYER_TRANSMITTER_DIM;
     public static final DischargerBlock DISCHARGER;
@@ -53,6 +56,9 @@ public class IBlocks {
     public static final EnergizingRodBlock[] ENERGIZING_RODS;
     public static final CableBlock[] CABLES;
     public static final EnderCellBlock[] ENDER_CELLS;
+    public static final UraniniteOreBlock URANINITE_ORE_POOR;
+    public static final UraniniteOreBlock URANINITE_ORE;
+    public static final UraniniteOreBlock URANINITE_ORE_DENSE;
 
     static {
         EnergyCells[] cells = EnergyCells.values();
@@ -87,7 +93,7 @@ public class IBlocks {
         THERMO_GENERATORS = new ThermoGeneratorBlock[thermoGenerators.length];
         for (int i = 0; i < thermoGenerators.length; i++) {
             ThermoGenerators tg = thermoGenerators[i];
-            THERMO_GENERATORS[i] = register("thermo_generator_" + tg.name().toLowerCase(), new ThermoGeneratorBlock(Block.Properties.create(tg.material).hardnessAndResistance(2.0F, tg.resistance), tg.capacity, tg.transfer, tg.perTick, tg.buckets));
+            THERMO_GENERATORS[i] = register("thermo_generator_" + tg.name().toLowerCase(), new ThermoGeneratorBlock(Block.Properties.create(tg.material).hardnessAndResistance(2.0F, tg.resistance), tg.capacity, tg.transfer, tg.perTick));
         }
 
         SolarPanels[] panels = SolarPanels.values();
@@ -95,6 +101,13 @@ public class IBlocks {
         for (int i = 0; i < panels.length; i++) {
             SolarPanels panel = panels[i];
             SOLAR_PANELS[i] = register("solar_panel_" + panel.name().toLowerCase(), new SolarPanelBlock(Block.Properties.create(panel.material).hardnessAndResistance(2.0F, panel.resistance), panel.capacity, panel.transfer, panel.perTick));
+        }
+
+        Reactors[] reactors = Reactors.values();
+        REACTORS = new ReactorBlock[reactors.length];
+        for (int i = 0; i < reactors.length; i++) {
+            Reactors reactor = reactors[i];
+            REACTORS[i] = register("reactor_" + reactor.name().toLowerCase(), new ReactorBlock(Block.Properties.create(reactor.material).hardnessAndResistance(15.0F, reactor.resistance), reactor.capacity, reactor.transfer, reactor.perTick));
         }
 
         DISCHARGER = register("discharger", new DischargerBlock(Block.Properties.create(Material.MISCELLANEOUS).hardnessAndResistance(1.0F, 15.0F), 500000, 1000));
@@ -123,6 +136,10 @@ public class IBlocks {
             EnderGates gate = gates[i];
             ENDER_GATES[i] = register("ender_gate_" + gate.name().toLowerCase(), new EnderGateBlock(Block.Properties.create(gate.material).hardnessAndResistance(2.0F, gate.resistance).doesNotBlockMovement().lightValue(2), gate.transfer, gate.transfer, gate.channels));
         }
+
+        URANINITE_ORE_POOR = register("uraninite_ore_poor", new UraniniteOreBlock(Block.Properties.create(Material.ROCK).hardnessAndResistance(2)));
+        URANINITE_ORE = register("uraninite_ore", new UraniniteOreBlock(Block.Properties.create(Material.ROCK).hardnessAndResistance(2)));
+        URANINITE_ORE_DENSE = register("uraninite_ore_dense", new UraniniteOreBlock(Block.Properties.create(Material.ROCK).hardnessAndResistance(2)));
     }
 
     static <T extends Block & IBlockBase> T register(String name, T block) {

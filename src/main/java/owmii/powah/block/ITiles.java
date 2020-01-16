@@ -16,6 +16,7 @@ import owmii.powah.block.energycell.EnergyCellTile;
 import owmii.powah.block.generator.furnator.FurnatorTile;
 import owmii.powah.block.generator.magmatic.MagmaticGenTile;
 import owmii.powah.block.generator.panel.solar.SolarPanelTile;
+import owmii.powah.block.generator.reactor.ReactorTile;
 import owmii.powah.block.generator.thermoelectric.ThermoGeneratorTile;
 import owmii.powah.block.hopper.EnergyHopperTile;
 import owmii.powah.block.transmitter.PlayerTransmitterTile;
@@ -40,6 +41,7 @@ public class ITiles {
     public static final TileEntityType<?> ENERGY_HOPPER = register("energy_hopper", EnergyHopperTile::new, IBlocks.ENERGY_HOPPER);
     public static final TileEntityType<?> ENERGIZING_ORB = register("energizing_orb", EnergizingOrbTile::new, IBlocks.ENERGIZING_ORB);
     public static final TileEntityType<?> ENERGIZING_ROD = register("energizing_rod", EnergizingRodTile::new, IBlocks.ENERGIZING_RODS);
+    public static final TileEntityType<?> REACTOR = register("reactor", ReactorTile::new, IBlocks.REACTORS);
 
     @SuppressWarnings({"unchecked", "ConstantConditions"})
     static <T extends TileEntity> TileEntityType<T> register(String name, Supplier<? extends T> factoryIn, Block... b) {

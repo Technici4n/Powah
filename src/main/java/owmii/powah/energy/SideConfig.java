@@ -21,7 +21,7 @@ public class SideConfig {
     public void init() {
         for (Direction side : Direction.values()) {
             if (this.tile.isEnergyPresent(side)) {
-                boolean e = this.tile.internal.canExtract() && this.tile.canExtractFromSides();
+                boolean e = this.tile.internal.canExtract() && this.tile.isExtractor();
                 boolean r = this.tile.internal.canReceive();
                 setPowerMode(side, r && e ? ALL : r ? IN : e ? OUT : NON);
             }
@@ -67,7 +67,7 @@ public class SideConfig {
             if (this.tile.isEnergyPresent(side)) {
                 i = i == -1 ? getPowerMode(side).ordinal() + 1 : i;
                 PowerMode mode = PowerMode.values()[i > 3 ? 0 : i];
-                if ((!this.tile.internal.canExtract() || !this.tile.canExtractFromSides()) && mode.isOut())
+                if ((!this.tile.internal.canExtract() || !this.tile.isExtractor()) && mode.isOut())
                     mode = IN;
                 else if (!this.tile.internal.canReceive() && mode.isIn())
                     mode = NON.equals(mode) || ALL.equals(mode) ? OUT : NON;
@@ -80,7 +80,7 @@ public class SideConfig {
         if (this.tile.isEnergyPresent(side)) {
             int i = getPowerMode(side).ordinal() + 1;
             PowerMode mode = PowerMode.values()[i > 3 ? 0 : i];
-            if ((!this.tile.internal.canExtract() || !this.tile.canExtractFromSides()) && mode.isOut())
+            if ((!this.tile.internal.canExtract() || !this.tile.isExtractor()) && mode.isOut())
                 mode = IN;
             else if (!this.tile.internal.canReceive() && mode.isIn())
                 mode = NON.equals(mode) || ALL.equals(mode) ? OUT : NON;

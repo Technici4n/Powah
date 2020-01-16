@@ -9,6 +9,7 @@ import owmii.powah.block.energycell.EnergyCells;
 import owmii.powah.block.generator.furnator.Furnators;
 import owmii.powah.block.generator.magmatic.MagmaticGenerators;
 import owmii.powah.block.generator.panel.solar.SolarPanels;
+import owmii.powah.block.generator.reactor.Reactors;
 import owmii.powah.block.generator.thermoelectric.ThermoGenerators;
 
 public class ConfigHandler {
@@ -60,6 +61,13 @@ public class ConfigHandler {
             IBlocks.SOLAR_PANELS[i].setCapacity(getSafe(Config.SOLAR_PANEL.caps[i].get(), solarPanel.capacity));
             IBlocks.SOLAR_PANELS[i].setMaxExtract(getSafe(Config.SOLAR_PANEL.transfers[i].get(), solarPanel.transfer));
             IBlocks.SOLAR_PANELS[i].setPerTick(getSafe(Config.SOLAR_PANEL.generations[i].get(), solarPanel.perTick));
+        }
+
+        for (int i = 0; i < Reactors.values().length; i++) {
+            Reactors reactors = Reactors.values()[i];
+            IBlocks.REACTORS[i].setCapacity(getSafe(Config.REACTOR_CONFIG.caps[i].get(), reactors.capacity));
+            IBlocks.REACTORS[i].setMaxExtract(getSafe(Config.REACTOR_CONFIG.transfers[i].get(), reactors.transfer));
+            IBlocks.REACTORS[i].setPerTick(getSafe(Config.REACTOR_CONFIG.generations[i].get(), reactors.perTick));
         }
 
         for (int i = 0; i < EnergizingRods.values().length; i++) {

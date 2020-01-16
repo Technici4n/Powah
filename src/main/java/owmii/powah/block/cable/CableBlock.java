@@ -299,10 +299,10 @@ public class CableBlock extends PowahBlock implements ICable, IHud, IWaterLoggab
         super.onReplaced(state, worldIn, pos, newState, isMoving);
     }
 
-    static final Map<BlockPos, Set<BlockPos>> CACH = new HashMap<>();
+    static final Map<BlockPos, Set<BlockPos>> CACHE = new HashMap<>();
 
     public void searchCables(IWorld world, BlockPos poss, BlockPos pos) {
-        Set<BlockPos> ss = CACH.get(poss);
+        Set<BlockPos> ss = CACHE.get(poss);
         if (ss == null) {
             ss = new HashSet<>();
         }
@@ -321,12 +321,12 @@ public class CableBlock extends PowahBlock implements ICable, IHud, IWaterLoggab
                     }
                     CableBlock cableBlock = (CableBlock) state.getBlock();
                     ss.add(pos);
-                    CACH.put(poss, ss);
+                    CACHE.put(poss, ss);
                     cableBlock.searchCables(world, poss, blockPos);
                 }
             }
         }
-        CACH.clear();
+        CACHE.clear();
     }
 
     @Override

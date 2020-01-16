@@ -8,7 +8,6 @@ import net.minecraft.util.Direction;
 import net.minecraft.util.math.BlockPos;
 import net.minecraftforge.common.util.Constants;
 import owmii.lib.util.Energy;
-import owmii.powah.block.IBlocks;
 import owmii.powah.block.ITiles;
 import owmii.powah.block.PowahTile;
 
@@ -134,18 +133,5 @@ public class CableTile extends PowahTile {
 
     public void search(Block block, Direction side) {
         this.linkedCables.get(side).search(block, this, side).clear();
-    }
-
-    @Override
-    protected void firstTick() { // TODO 15/12/2019
-        if (this.world == null) return;
-        super.firstTick();
-        if (this.energySides.isEmpty()) {
-            for (Direction direction : Direction.values()) {
-                if (IBlocks.CABLES[0].canAttach(getBlockState(), this.world, this.pos, direction)[1]) {
-                    this.energySides.add(direction);
-                }
-            }
-        }
     }
 }

@@ -10,11 +10,11 @@ import java.util.List;
 
 public class CuriosCompat {
     public static final String ID = "curios";
-    private static int LOADED;
+    private static int loaded;
 
     public static boolean isLoaded() {
-        if (LOADED == 0) LOADED = ModList.get().isLoaded(ID) ? 1 : -1;
-        return LOADED == 1;
+        if (loaded == 0) loaded = ModList.get().isLoaded(ID) ? 1 : -1;
+        return loaded == 1;
     }
 
     public static List<ItemStack> getAllStacks(PlayerEntity player) {

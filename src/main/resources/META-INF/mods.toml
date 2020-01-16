@@ -1,11 +1,11 @@
 modLoader="javafml" 
 loaderVersion="[28,)"
-issueTrackerURL="https://github.com/zeroneye/powah/issues"
+issueTrackerURL="https://github.com/owmii/powah/issues"
 
 [[mods]]
 modId="powah"
 version="${file.jarVersion}"
-#updateJSONURL="https://raw.githubusercontent.com/zeroneye/powah/master/update.json"
+#updateJSONURL="https://raw.githubusercontent.com/owmii/powah/1.14/update.json"
 displayName="Powah"
 displayURL="https://www.curseforge.com/minecraft/mc-mods/powah"
 authors="zeroneye"
@@ -16,7 +16,7 @@ Various ways to generate, store and transmit FE power.
 [[dependencies.powah]]
     modId="lollipop"
     mandatory=true
-    versionRange="[0.0.21,)"
+    versionRange="[0.0.22,)"
     ordering="NONE"
     side="BOTH"
 

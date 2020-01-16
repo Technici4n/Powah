@@ -57,14 +57,14 @@ public abstract class PowahBlock extends BlockBase {
         Energy.getForgeEnergy(stack).ifPresent(storage -> {
             if (storage instanceof ItemPowahStorage && !isCreative()) {
                 if (storage.getMaxEnergyStored() > 0) {
-                    tooltip.add(new TranslationTextComponent("info.powah.stored", "" + TextFormatting.DARK_GRAY + Text.addCommas(storage.getEnergyStored()), Text.numFormat(storage.getMaxEnergyStored())).applyTextStyle(TextFormatting.GRAY));
+                    tooltip.add(new TranslationTextComponent("info.powah.stored", TextFormatting.DARK_GRAY + Text.addCommas(storage.getEnergyStored()), Text.numFormat(storage.getMaxEnergyStored())).applyTextStyle(TextFormatting.GRAY));
                 }
                 if (getBlock() instanceof GeneratorBlock) {
-                    tooltip.add(new TranslationTextComponent("info.powah.generates", "" + TextFormatting.DARK_GRAY + Text.numFormat(((GeneratorBlock) getBlock()).perTick())).applyTextStyle(TextFormatting.GRAY));
+                    tooltip.add(new TranslationTextComponent("info.powah.generates", TextFormatting.DARK_GRAY + Text.numFormat(((GeneratorBlock) getBlock()).perTick())).applyTextStyle(TextFormatting.GRAY));
                 }
                 int maxIn = getMaxReceive();
                 int maxOut = getMaxExtract();
-                tooltip.add(new TranslationTextComponent("info.powah.max.io", "" + TextFormatting.DARK_GRAY + (maxIn == maxOut ? Text.numFormat(maxOut) : maxIn == 0 || maxOut == 0 ? Text.numFormat(Math.max(maxIn, maxOut)) : (Text.numFormat(maxIn) + "/" + Text.numFormat(maxOut)))).applyTextStyle(TextFormatting.GRAY));
+                tooltip.add(new TranslationTextComponent("info.powah.max.io", TextFormatting.DARK_GRAY + (maxIn == maxOut ? Text.numFormat(maxOut) : maxIn == 0 || maxOut == 0 ? Text.numFormat(Math.max(maxIn, maxOut)) : (Text.numFormat(maxIn) + "/" + Text.numFormat(maxOut)))).applyTextStyle(TextFormatting.GRAY));
                 tooltip.add(new StringTextComponent(""));
             }
         });

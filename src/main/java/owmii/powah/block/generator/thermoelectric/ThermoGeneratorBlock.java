@@ -31,11 +31,9 @@ import static net.minecraft.util.math.shapes.VoxelShapes.fullCube;
 
 public class ThermoGeneratorBlock extends GeneratorBlock implements IWaterLoggable {
     public static final VoxelShape SHAPE = combineAndSimplify(makeCuboidShape(2.0D, 1.0D, 2.0D, 14.0D, 14.0D, 14.0D), combineAndSimplify(makeCuboidShape(0.0D, 0.0D, 0.0D, 16.0D, 1.0D, 16.0D), combineAndSimplify(makeCuboidShape(0.5D, 1.5D, 0.5D, 15.5D, 2.5D, 15.5D), makeCuboidShape(0.5D, 3.25D, 0.5D, 15.5D, 4.25D, 15.5D), IBooleanFunction.OR), IBooleanFunction.OR), IBooleanFunction.OR);
-    public int buckets;
 
-    public ThermoGeneratorBlock(Properties properties, int capacity, int transfer, int perTick, int buckets) {
+    public ThermoGeneratorBlock(Properties properties, int capacity, int transfer, int perTick) {
         super(properties, capacity, transfer, perTick);
-        this.buckets = buckets;
         setDefaultState(this.stateContainer.getBaseState().with(WATERLOGGED, false));
     }
 
@@ -52,7 +50,7 @@ public class ThermoGeneratorBlock extends GeneratorBlock implements IWaterLoggab
     @Nullable
     @Override
     public TileEntity createTileEntity(BlockState state, IBlockReader world) {
-        return new ThermoGeneratorTile(this.capacity, this.maxExtract, this.perTick, this.buckets);
+        return new ThermoGeneratorTile(this.capacity, this.maxExtract, this.perTick);
     }
 
     @Override
@@ -83,10 +81,6 @@ public class ThermoGeneratorBlock extends GeneratorBlock implements IWaterLoggab
     @Override
     public BlockItemBase getBlockItem(Item.Properties properties, @Nullable ItemGroup group) {
         return new ThermoGeneratorItem(this, properties, group);
-    }
-
-    public void setBuckets(int buckets) {
-        this.buckets = buckets;
     }
 
     @Override

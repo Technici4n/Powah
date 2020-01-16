@@ -18,7 +18,7 @@ public class HeatBlockHandler {
 
     public static void post() {
         if (Config.THERMO_GEN_CONFIG.heatBlocksAPI.get()) {
-            HEAT_BLOCKS.putAll(PowahAPI.HEAT_BLOCKS);
+            HEAT_BLOCKS.putAll(PowahAPI.THERMO_HEAT_SOURCES);
         }
 
         Config.THERMO_GEN_CONFIG.heatBlocks.get().forEach(s -> {
@@ -58,7 +58,7 @@ public class HeatBlockHandler {
                 }
             }
         });
-        PowahAPI.HEAT_BLOCKS.clear();
-        PowahAPI.HEAT_BLOCKS.putAll(HEAT_BLOCKS);
+        PowahAPI.THERMO_HEAT_SOURCES.clear();
+        PowahAPI.THERMO_HEAT_SOURCES.putAll(HEAT_BLOCKS);
     }
 }

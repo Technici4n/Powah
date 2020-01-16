@@ -40,6 +40,9 @@ public class Config {
     public static final ThermoGeneratorConfig THERMO_GEN_CONFIG;
     private static final ForgeConfigSpec THERMO_GEN_CONFIG_SPEC;
 
+    public static final ReactorConfig REACTOR_CONFIG;
+    private static final ForgeConfigSpec REACTOR_CONFIG_SPEC;
+
     public static final CableConfig CABLE_CONFIG;
     private static final ForgeConfigSpec CABLE_CONFIG_SPEC;
 
@@ -65,7 +68,8 @@ public class Config {
         ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, FURNATOR_CONFIG_SPEC, energyFolder + "/furnator.toml");
         ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, MAGMATIC_GENERATOR_CONFIG_SPEC, energyFolder + "/magmatic_generator.toml");
         ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, SOLAR_PANEL_CONFIG_SPEC, energyFolder + "/solar_panel.toml");
-        ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, THERMO_GEN_CONFIG_SPEC, energyFolder + "/thermoelectric_generator.toml");
+        ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, THERMO_GEN_CONFIG_SPEC, energyFolder + "/thermo_generator.toml");
+        ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, REACTOR_CONFIG_SPEC, energyFolder + "/reactor.toml");
         ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, CABLE_CONFIG_SPEC, energyFolder + "/energy_cable.toml");
         ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, ENERGIZING_CONFIG_SPEC, energyFolder + "/Energizing.toml");
         ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, MISC_ENERGY_CONFIG_SPEC, energyFolder + "/misc.toml");
@@ -110,6 +114,9 @@ public class Config {
         final Pair<ThermoGeneratorConfig, ForgeConfigSpec> thermoGeneratorConfigForgeConfigSpecPair = new ForgeConfigSpec.Builder().configure(ThermoGeneratorConfig::new);
         THERMO_GEN_CONFIG = thermoGeneratorConfigForgeConfigSpecPair.getLeft();
         THERMO_GEN_CONFIG_SPEC = thermoGeneratorConfigForgeConfigSpecPair.getRight();
+        final Pair<ReactorConfig, ForgeConfigSpec> reactorConfigForgeConfigSpecPair = new ForgeConfigSpec.Builder().configure(ReactorConfig::new);
+        REACTOR_CONFIG = reactorConfigForgeConfigSpecPair.getLeft();
+        REACTOR_CONFIG_SPEC = reactorConfigForgeConfigSpecPair.getRight();
         final Pair<EnergizingConfig, ForgeConfigSpec> energizingConfigForgeConfigSpecPair = new ForgeConfigSpec.Builder().configure(EnergizingConfig::new);
         ENERGIZING_CONFIG = energizingConfigForgeConfigSpecPair.getLeft();
         ENERGIZING_CONFIG_SPEC = energizingConfigForgeConfigSpecPair.getRight();
