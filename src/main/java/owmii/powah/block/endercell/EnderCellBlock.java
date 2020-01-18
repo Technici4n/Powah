@@ -65,7 +65,10 @@ public class EnderCellBlock extends PowahBlock implements IWaterLoggable {
     @Nullable
     @Override
     public ContainerBase getContainer(int id, PlayerInventory playerInventory, TileBase inv) {
-        return new EnderCellContainer(IContainers.ENDER_CELL, id, playerInventory, (EnderCellTile) inv);
+        if (inv instanceof EnderCellTile) {
+            return new EnderCellContainer(IContainers.ENDER_CELL, id, playerInventory, (EnderCellTile) inv);
+        }
+        return null;
     }
 
     @Override

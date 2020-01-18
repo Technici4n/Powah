@@ -87,7 +87,10 @@ public class ReactorBlock extends GeneratorBlock {
     @Nullable
     @Override
     public ContainerBase getContainer(int id, PlayerInventory playerInventory, TileBase inv) {
-        return new ReactorContainer(IContainers.REACTOR, id, playerInventory, (ReactorTile) inv);
+        if (inv instanceof ReactorTile) {
+            return new ReactorContainer(IContainers.REACTOR, id, playerInventory, (ReactorTile) inv);
+        }
+        return null;
     }
 
     @Override

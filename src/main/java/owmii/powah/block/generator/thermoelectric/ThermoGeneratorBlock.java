@@ -70,7 +70,10 @@ public class ThermoGeneratorBlock extends GeneratorBlock implements IWaterLoggab
     @Nullable
     @Override
     public ContainerBase getContainer(int id, PlayerInventory playerInventory, TileBase inv) {
-        return new ThermoGenContainer(IContainers.THERMO_GENERATOR, id, playerInventory, (ThermoGeneratorTile) inv);
+        if (inv instanceof ThermoGeneratorTile) {
+            return new ThermoGenContainer(IContainers.THERMO_GENERATOR, id, playerInventory, (ThermoGeneratorTile) inv);
+        }
+        return null;
     }
 
     @Override

@@ -62,7 +62,10 @@ public class EnderGateBlock extends EnderCellBlock implements IWaterLoggable {
     @Nullable
     @Override
     public ContainerBase getContainer(int id, PlayerInventory playerInventory, TileBase inv) {
-        return new EnderCellContainer(IContainers.ENDER_CELL, id, playerInventory, (EnderGateTile) inv);
+        if (inv instanceof EnderGateTile) {
+            return new EnderCellContainer(IContainers.ENDER_CELL, id, playerInventory, (EnderGateTile) inv);
+        }
+        return null;
     }
 
     @Override

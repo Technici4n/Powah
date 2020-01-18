@@ -28,6 +28,9 @@ public class EnergyCellBlock extends PowahBlock implements IWaterLoggable {
     @Nullable
     @Override
     public ContainerBase getContainer(int id, PlayerInventory playerInventory, TileBase inv) {
-        return new EnergyCellContainer(IContainers.ENERGY_CELL, id, playerInventory, (EnergyCellTile) inv);
+        if (inv instanceof EnergyCellTile) {
+            return new EnergyCellContainer(IContainers.ENERGY_CELL, id, playerInventory, (EnergyCellTile) inv);
+        }
+        return null;
     }
 }

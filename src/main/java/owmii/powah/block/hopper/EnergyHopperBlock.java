@@ -63,7 +63,10 @@ public class EnergyHopperBlock extends PowahBlock implements IWaterLoggable {
     @Nullable
     @Override
     public ContainerBase getContainer(int id, PlayerInventory playerInventory, TileBase inv) {
-        return new EnergyHopperContainer(IContainers.ENERGY_HOPPER, id, playerInventory, (EnergyHopperTile) inv);
+        if (inv instanceof EnergyHopperTile) {
+            return new EnergyHopperContainer(IContainers.ENERGY_HOPPER, id, playerInventory, (EnergyHopperTile) inv);
+        }
+        return null;
     }
 
     @Override

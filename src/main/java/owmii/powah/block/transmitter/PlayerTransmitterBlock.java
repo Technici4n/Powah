@@ -61,12 +61,14 @@ public class PlayerTransmitterBlock extends PowahBlock implements IWaterLoggable
     @Nullable
     @Override
     public ContainerBase getContainer(int id, PlayerInventory playerInventory, TileBase inv) {
-        if (this == IBlocks.PLAYER_TRANSMITTER) {
-            return new PlayerTransmitterContainer(IContainers.PLAYER_TRANSMITTER, id, playerInventory, (PlayerTransmitterTile) inv, this.slots);
-        } else if (this == IBlocks.PLAYER_TRANSMITTER_DIM) {
-            return new PlayerTransmitterContainer(IContainers.PLAYER_TRANSMITTER_DIM, id, playerInventory, (PlayerTransmitterTile) inv, this.slots);
+        if (inv instanceof PlayerTransmitterTile) {
+            if (this == IBlocks.PLAYER_TRANSMITTER) {
+                return new PlayerTransmitterContainer(IContainers.PLAYER_TRANSMITTER, id, playerInventory, (PlayerTransmitterTile) inv, this.slots);
+            } else if (this == IBlocks.PLAYER_TRANSMITTER_DIM) {
+                return new PlayerTransmitterContainer(IContainers.PLAYER_TRANSMITTER_DIM, id, playerInventory, (PlayerTransmitterTile) inv, this.slots);
+            }
         }
-        return super.getContainer(id, playerInventory, inv);
+        return null;
     }
 
     @Override

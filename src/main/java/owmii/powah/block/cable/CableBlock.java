@@ -99,7 +99,10 @@ public class CableBlock extends PowahBlock implements ICable, IHud, IWaterLoggab
     @Nullable
     @Override
     public ContainerBase getContainer(int id, PlayerInventory playerInventory, TileBase inv) {
-        return new CableContainer(IContainers.CABLE, id, playerInventory, (CableTile) inv);
+        if (inv instanceof CableTile) {
+            return new CableContainer(IContainers.CABLE, id, playerInventory, (CableTile) inv);
+        }
+        return null;
     }
 
     @Override

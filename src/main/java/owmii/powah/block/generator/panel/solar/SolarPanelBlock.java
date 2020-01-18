@@ -43,7 +43,10 @@ public class SolarPanelBlock extends GeneratorBlock implements IWaterLoggable {
     @Nullable
     @Override
     public ContainerBase getContainer(int id, PlayerInventory playerInventory, TileBase inv) {
-        return new SolarPanelContainer(IContainers.SOLAR_PANEL, id, playerInventory, (SolarPanelTile) inv);
+        if (inv instanceof SolarPanelTile) {
+            return new SolarPanelContainer(IContainers.SOLAR_PANEL, id, playerInventory, (SolarPanelTile) inv);
+        }
+        return null;
     }
 
     @Override

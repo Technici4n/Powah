@@ -30,8 +30,10 @@ public class FurnatorBlock extends GeneratorBlock implements IWaterLoggable {
     @Nullable
     @Override
     public ContainerBase getContainer(int id, PlayerInventory playerInventory, TileBase inv) {
-        return new FurnatorContainer(IContainers.FURNATOR, id, playerInventory, (FurnatorTile) inv);
-
+        if (inv instanceof FurnatorTile) {
+            return new FurnatorContainer(IContainers.FURNATOR, id, playerInventory, (FurnatorTile) inv);
+        }
+        return null;
     }
 
     @Override
