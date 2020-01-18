@@ -56,9 +56,10 @@ public class IBlocks {
     public static final EnergizingRodBlock[] ENERGIZING_RODS;
     public static final CableBlock[] CABLES;
     public static final EnderCellBlock[] ENDER_CELLS;
-    public static final UraniniteOreBlock URANINITE_ORE_POOR;
-    public static final UraniniteOreBlock URANINITE_ORE;
-    public static final UraniniteOreBlock URANINITE_ORE_DENSE;
+    public static final OreBlockBase URANINITE_ORE_POOR;
+    public static final OreBlockBase URANINITE_ORE;
+    public static final OreBlockBase URANINITE_ORE_DENSE;
+    public static final OreBlockBase DRY_ICE;
 
     static {
         EnergyCells[] cells = EnergyCells.values();
@@ -137,9 +138,10 @@ public class IBlocks {
             ENDER_GATES[i] = register("ender_gate_" + gate.name().toLowerCase(), new EnderGateBlock(Block.Properties.create(gate.material).hardnessAndResistance(2.0F, gate.resistance).doesNotBlockMovement().lightValue(2), gate.transfer, gate.transfer, gate.channels));
         }
 
-        URANINITE_ORE_POOR = register("uraninite_ore_poor", new UraniniteOreBlock(Block.Properties.create(Material.ROCK).hardnessAndResistance(2)));
-        URANINITE_ORE = register("uraninite_ore", new UraniniteOreBlock(Block.Properties.create(Material.ROCK).hardnessAndResistance(2)));
-        URANINITE_ORE_DENSE = register("uraninite_ore_dense", new UraniniteOreBlock(Block.Properties.create(Material.ROCK).hardnessAndResistance(2)));
+        URANINITE_ORE_POOR = register("uraninite_ore_poor", new OreBlockBase(Block.Properties.create(Material.ROCK).hardnessAndResistance(2)));
+        URANINITE_ORE = register("uraninite_ore", new OreBlockBase(Block.Properties.create(Material.ROCK).hardnessAndResistance(2)));
+        URANINITE_ORE_DENSE = register("uraninite_ore_dense", new OreBlockBase(Block.Properties.create(Material.ROCK).hardnessAndResistance(2)));
+        DRY_ICE = register("dry_ice", new OreBlockBase(Block.Properties.create(Material.ROCK).hardnessAndResistance(2)));
     }
 
     static <T extends Block & IBlockBase> T register(String name, T block) {

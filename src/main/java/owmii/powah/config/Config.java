@@ -81,11 +81,27 @@ public class Config {
         public final ForgeConfigSpec.BooleanValue capacitor_spirited;
         public final ForgeConfigSpec.BooleanValue player_aerial_pearl;
 
+        public final ForgeConfigSpec.BooleanValue oreGen;
+        public final ForgeConfigSpec.IntValue poorUraniniteGenChance;
+        public final ForgeConfigSpec.IntValue uraniniteGenChance;
+        public final ForgeConfigSpec.IntValue denseUraniniteGenChance;
+        public final ForgeConfigSpec.IntValue dryIceGenChance;
+
         public General(ForgeConfigSpec.Builder builder) {
+            builder.push("World Gen");
+            this.oreGen = builder.comment("Enable/Disable ore generation. [default:true]").define("oreGen", true);
+            this.poorUraniniteGenChance = builder.comment("Poor Uraninite Ore generation chance").defineInRange("poorUraniniteGenChance", 11, 1, 64);
+            this.uraniniteGenChance = builder.comment("Enable/Disable ore generation. [default:true]").defineInRange("uraniniteGenChance", 7, 1, 64);
+            this.denseUraniniteGenChance = builder.comment("Enable/Disable ore generation. [default:true]").defineInRange("denseUraniniteGenChance", 3, 1, 64);
+            this.dryIceGenChance = builder.comment("Enable/Disable ore generation. [default:true]").defineInRange("dryIceGenChance", 12, 1, 64);
+
+            builder.pop();
+            builder.push("Capacitors");
             this.capacitor_blazing = builder.comment("", "Enable this to get Blazing Capacitor by right clicking a blaze with a Large Basic Capacitor. [default:true]").define("capacitor_blazing", true);
             this.capacitor_niotic = builder.comment("", "Enable this to get Niotic Capacitor by right clicking a Diamond Ore with a Blazing Capacitor. [default:true]").define("capacitor_niotic", true);
             this.capacitor_spirited = builder.comment("", "Enable this to get Spirited Capacitor by right clicking an Emerald Ore with a Niotic Capacitor. [default:true]").define("capacitor_spirited", true);
             this.player_aerial_pearl = builder.comment("", "Enable this to get Player Aerial Pearl by right clicking a Zombie or Husk with a Aerial Pearl. [default:true]").define("player_aerial_pearl", true);
+            builder.pop();
         }
     }
 

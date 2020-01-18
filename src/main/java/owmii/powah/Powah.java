@@ -11,6 +11,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import owmii.powah.api.PowahAPI;
 import owmii.powah.api.recipe.energizing.EnergizingRecipeSorter;
+import owmii.powah.block.IBlocks;
 import owmii.powah.block.energizing.EnergizingRecipes;
 import owmii.powah.book.PowahBook;
 import owmii.powah.client.renderer.entity.EntityRenderer;
@@ -46,11 +47,11 @@ public class Powah {
         IFeatures.register();
         PowahAPI.register(EnergizingRecipes.all());
 
-
         PowahAPI.registerReactorCoolant(Fluids.WATER, 1);
         PowahAPI.registerReactorSolidCoolant(Blocks.ICE, 48, -7);
-        PowahAPI.registerReactorSolidCoolant(Blocks.PACKED_ICE, 192, -14);
-        PowahAPI.registerReactorSolidCoolant(Blocks.BLUE_ICE, 768, -20);
+        PowahAPI.registerReactorSolidCoolant(Blocks.PACKED_ICE, 192, -13);
+        PowahAPI.registerReactorSolidCoolant(Blocks.BLUE_ICE, 568, -18);
+        PowahAPI.registerReactorSolidCoolant(IBlocks.DRY_ICE, 712, -32);
 
         PowahAPI.registerReactorSolidCoolant(Blocks.SNOW_BLOCK, 48, -4);
         PowahAPI.registerReactorSolidCoolant(Items.SNOWBALL, 12, -4);

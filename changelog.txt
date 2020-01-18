@@ -1,3 +1,8 @@
+0.2.3
+- Added Dry Ice Block (Generated under ground of cold biomes, used as solid coolant).
+- Added world gen config options.
+- Fixed Game crash on right click block with container Closes #24.
+
 0.2.2
 Added Solid coolant category to JEI.
 Fixed Uraninite Ores has no hardness.
