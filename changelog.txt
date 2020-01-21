@@ -1,3 +1,6 @@
+0.2.4
+- Fixed server crash (forgot to set required lollipop version to v0.0.23) Closes #26.
+- Clean up.
 0.2.3
 - Added Dry Ice Block (Generated under ground of cold biomes, used as solid coolant).
 - Added world gen config options.

@@ -16,7 +16,7 @@ Various ways to generate, store and transmit FE power.
 [[dependencies.powah]]
     modId="lollipop"
     mandatory=true
-    versionRange="[0.0.22,)"
+    versionRange="[0.0.23,)"
     ordering="NONE"
     side="BOTH"
 
