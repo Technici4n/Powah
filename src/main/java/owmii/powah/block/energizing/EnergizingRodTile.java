@@ -81,7 +81,6 @@ public class EnergizingRodTile extends PowahTile {
                 }
             }
         }
-
         return super.postTicks() || flag;
     }
 

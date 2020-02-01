@@ -133,7 +133,6 @@ public class EnergizingOrbBlock extends BlockBase implements IWaterLoggable, IWr
 
     @Nullable
     @Override
-
     public TileEntity createTileEntity(BlockState state, IBlockReader world) {
         return new EnergizingOrbTile();
     }
@@ -141,6 +140,21 @@ public class EnergizingOrbBlock extends BlockBase implements IWaterLoggable, IWr
     @Override
     public boolean isSolid(BlockState state) {
         return false;
+    }
+
+    @Override
+    public boolean hasComparatorInputOverride(BlockState state) {
+        return true;
+    }
+
+    @Override
+    public int getComparatorInputOverride(BlockState state, World world, BlockPos pos) {
+        TileEntity tileEntity = world.getTileEntity(pos);
+        if (tileEntity instanceof EnergizingOrbTile) {
+            EnergizingOrbTile orb = (EnergizingOrbTile) tileEntity;
+            return orb.getInventory().getNonEmptyStacks().size();
+        }
+        return super.getComparatorInputOverride(state, world, pos);
     }
 
     @Override

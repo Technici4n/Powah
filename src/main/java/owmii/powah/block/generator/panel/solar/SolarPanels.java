@@ -5,9 +5,9 @@ import owmii.powah.block.IBlocks;
 
 public enum SolarPanels {
     BASIC(Material.ROCK, 3.0F, 1000, 24, 10),
-    HARDENED(Material.ROCK, 30.0F, 10000, 60, 40),
-    BLAZING(Material.IRON, 30.0F, 50000, 190, 140),
-    NIOTIC(Material.IRON, 100.0F, 80000, 500, 450),
+    HARDENED(Material.ROCK, 30.0F, 10000, 60, 35),
+    BLAZING(Material.IRON, 30.0F, 50000, 190, 120),
+    NIOTIC(Material.IRON, 100.0F, 80000, 500, 395),
     SPIRITED(Material.IRON, 100.0F, 200000, 1800, 1200);
 
     public final Material material;
