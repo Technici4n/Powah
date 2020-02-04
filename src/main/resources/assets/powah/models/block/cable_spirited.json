@@ -1,6 +1,0 @@
-{
-  "parent": "powah:block/cable",
-  "textures": {
-	"cable": "powah:block/cable_spirited"
-  }
-}

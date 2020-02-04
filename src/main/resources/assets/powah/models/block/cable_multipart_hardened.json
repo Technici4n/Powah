@@ -1,6 +1,0 @@
-{
-  "parent": "powah:block/cable_multipart",
-  "textures": {
-	"mp": "powah:block/cable_hardened"
-  }
-}

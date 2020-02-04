@@ -1,0 +1,6 @@
+{
+  "parent": "block/cube_all",
+  "textures": {
+	"all": "powah:block/energized_steel_block"
+  }
+}

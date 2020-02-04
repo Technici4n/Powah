@@ -7,6 +7,8 @@
 	"facing=north,lit=true": {"model": "powah:block/furnator_niotic_on"},
 	"facing=south,lit=true": {"model": "powah:block/furnator_niotic_on", "y": 180},
 	"facing=west,lit=true": {"model": "powah:block/furnator_niotic_on", "y": 270},
-	"facing=east,lit=true": {"model": "powah:block/furnator_niotic_on", "y": 90}
+	"facing=east,lit=true": {"model": "powah:block/furnator_niotic_on", "y": 90},
+	"facing=up": {"model": "lollipop:block/empty"},
+	"facing=down": {"model": "lollipop:block/empty"}
   }
 }

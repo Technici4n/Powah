@@ -1,0 +1,14 @@
+{
+  "variants": {
+	"facing=north,lit=false": {"model": "powah:block/magmator_basic"},
+	"facing=south,lit=false": {"model": "powah:block/magmator_basic", "y": 180},
+	"facing=west,lit=false": {"model": "powah:block/magmator_basic", "y": 270},
+	"facing=east,lit=false": {"model": "powah:block/magmator_basic", "y": 90},
+	"facing=north,lit=true": {"model": "powah:block/magmator_basic_on"},
+	"facing=south,lit=true": {"model": "powah:block/magmator_basic_on", "y": 180},
+	"facing=west,lit=true": {"model": "powah:block/magmator_basic_on", "y": 270},
+	"facing=east,lit=true": {"model": "powah:block/magmator_basic_on", "y": 90},
+	"facing=up": {"model": "lollipop:block/empty"},
+	"facing=down": {"model": "lollipop:block/empty"}
+  }
+}

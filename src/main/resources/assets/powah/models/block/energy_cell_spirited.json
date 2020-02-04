@@ -2,7 +2,6 @@
   "parent": "powah:block/energy_cell",
   "textures": {
 	"frame": "powah:block/energy_cell_spirited_frame",
-	"in_frame": "powah:block/energy_cell_in_frame",
-	"core": "powah:block/energy_cell_spirited_core"
+	"core": "powah:block/energy_cell_core"
   }
 }

@@ -1,6 +1,3 @@
 {
-  "parent": "item/generated",
-  "textures": {
-	"layer0": "powah:item/energizing_rod_hardened"
-  }
+  "parent": "powah:block/energizing_rod_hardened"
 }

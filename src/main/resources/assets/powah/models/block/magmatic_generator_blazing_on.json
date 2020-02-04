@@ -1,9 +1,0 @@
-{
-  "parent": "powah:block/magmatic_generator",
-  "textures": {
-	"top": "powah:block/magmatic_generator_top",
-	"side": "powah:block/magmatic_generator_blazing_side_lit",
-	"bottom": "powah:block/magmatic_generator_bottom",
-	"tank": "powah:block/magmatic_generator_tank"
-  }
-}

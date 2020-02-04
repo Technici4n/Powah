@@ -1,0 +1,6 @@
+{
+  "parent": "powah:block/cable",
+  "textures": {
+	"cable": "powah:block/energy_cable_hardened"
+  }
+}

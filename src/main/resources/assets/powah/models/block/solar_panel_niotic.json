@@ -1,7 +1,7 @@
 {
   "parent": "powah:block/solar_panel",
   "textures": {
-	"panel_top": "powah:block/panel_top",
-	"panel_frame": "powah:block/panel_frame_niotic"
+	"panel": "powah:block/solar_panel_top",
+	"frame": "powah:block/solar_panel_niotic_frame"
   }
 }

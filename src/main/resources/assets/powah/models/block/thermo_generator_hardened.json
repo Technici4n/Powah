@@ -1,8 +1,0 @@
-{
-  "parent": "powah:block/thermo_generator",
-  "textures": {
-	"core": "powah:block/thermo_generator_core",
-	"heater": "powah:block/thermo_generator_heater",
-	"connector": "powah:block/thermo_generator_connector_hardened"
-  }
-}

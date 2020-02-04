@@ -1,0 +1,7 @@
+{
+  "parent": "powah:block/energizing_rod",
+  "textures": {
+	"gem": "powah:block/energizing_rod_nitro_gem",
+	"rod": "powah:block/energizing_rod"
+  }
+}
