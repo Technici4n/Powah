@@ -24,6 +24,7 @@ import owmii.lib.energy.SideConfig;
 import owmii.lib.item.ItemBase;
 import owmii.powah.api.wrench.IWrench;
 import owmii.powah.api.wrench.WrenchMode;
+import owmii.powah.block.cable.EnergyCableBlock;
 import owmii.powah.block.cable.EnergyCableTile;
 
 import javax.annotation.Nullable;
@@ -40,16 +41,16 @@ public class WrenchItem extends ItemBase implements IHudItem, IWrench {
         if (player.isShiftKeyDown()) return ActionResultType.PASS;
 
         TileEntity te = world.getTileEntity(pos);
-        if (getWrenchMode(stack).config()) {
+        if (!world.isRemote && getWrenchMode(stack).config()) {
             if (te instanceof EnergyCableTile) {
                 EnergyCableTile cable = (EnergyCableTile) te;
                 if (stack.getItem() instanceof WrenchItem) {
-                    Optional<Direction> sides = getHitSide(hit, pos);
+                    Optional<Direction> sides = EnergyCableBlock.getHitSide(hit, pos);
                     boolean[] flag = {false};
                     sides.ifPresent(direction -> {
                         SideConfig config = cable.getSideConfig();
                         config.nextType(direction);
-                        cable.sync(1);
+                        cable.markDirtyAndSync();
                     });
                     return ActionResultType.SUCCESS;
                 }
@@ -58,7 +59,7 @@ public class WrenchItem extends ItemBase implements IHudItem, IWrench {
                 if (storage.isEnergyPresent(side)) {
                     SideConfig config = storage.getSideConfig();
                     config.nextType(side);
-                    storage.sync(1);
+                    storage.markDirtyAndSync();
                     return ActionResultType.SUCCESS;
                 }
             }
@@ -88,26 +89,6 @@ public class WrenchItem extends ItemBase implements IHudItem, IWrench {
             PlayerEntity player = (PlayerEntity) entityIn;
             oneTimeInfo(player, stack, new TranslationTextComponent("info.powah.wrench.mode." + getWrenchMode(stack).name().toLowerCase(), TextFormatting.YELLOW).applyTextStyle(TextFormatting.GRAY));
         }
-    }
-
-    public Optional<Direction> getHitSide(Vec3d hit, BlockPos pos) {
-        double x = hit.x - pos.getX();
-        double y = hit.y - pos.getY();
-        double z = hit.z - pos.getZ();
-        if (x > 0.0D && x < 0.4D) {
-            return Optional.of(Direction.WEST);
-        } else if (x > 0.6D && x < 1.0D) {
-            return Optional.of(Direction.EAST);
-        } else if (z > 0.0D && z < 0.4D) {
-            return Optional.of(Direction.NORTH);
-        } else if (z > 0.6D && z < 1.0D) {
-            return Optional.of(Direction.SOUTH);
-        } else if (y > 0.6D && y < 1.0D) {
-            return Optional.of(Direction.UP);
-        } else if (y > 0.0D && y < 0.4D) {
-            return Optional.of(Direction.DOWN);
-        }
-        return Optional.empty();
     }
 
     @Override

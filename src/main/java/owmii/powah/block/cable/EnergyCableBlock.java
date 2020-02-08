@@ -8,16 +8,23 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.particle.DiggingParticle;
 import net.minecraft.client.particle.ParticleManager;
 import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.fluid.Fluids;
 import net.minecraft.fluid.IFluidState;
 import net.minecraft.item.BlockItemUseContext;
 import net.minecraft.item.ItemStack;
+import net.minecraft.network.PacketBuffer;
 import net.minecraft.state.BooleanProperty;
 import net.minecraft.state.StateContainer;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.ActionResultType;
 import net.minecraft.util.Direction;
+import net.minecraft.util.Hand;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.BlockRayTraceResult;
 import net.minecraft.util.math.MathHelper;
+import net.minecraft.util.math.Vec3d;
 import net.minecraft.util.math.shapes.ISelectionContext;
 import net.minecraft.util.math.shapes.VoxelShape;
 import net.minecraft.util.math.shapes.VoxelShapes;
@@ -27,17 +34,17 @@ import net.minecraft.world.World;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import owmii.lib.block.AbstractEnergyBlock;
+import owmii.lib.block.TileBase;
 import owmii.lib.config.IEnergyConfig;
 import owmii.lib.energy.Energy;
-import owmii.lib.util.Side;
+import owmii.lib.inventory.ContainerBase;
 import owmii.powah.block.Tier;
 import owmii.powah.config.Configs;
+import owmii.powah.inventory.EnergyCableContainer;
+import owmii.powah.inventory.IContainers;
 
 import javax.annotation.Nullable;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 public class EnergyCableBlock extends AbstractEnergyBlock<Tier> implements IWaterLoggable {
     public static final BooleanProperty NORTH = SixWayBlock.NORTH;
@@ -47,8 +54,8 @@ public class EnergyCableBlock extends AbstractEnergyBlock<Tier> implements IWate
     public static final BooleanProperty UP = SixWayBlock.UP;
     public static final BooleanProperty DOWN = SixWayBlock.DOWN;
     public static final BooleanProperty TILE = BooleanProperty.create("tile");
-    private static final VoxelShape CABLE = makeCuboidShape(6.5, 6.5, 6.5, 9.5, 9.5, 9.5);
-    private static final VoxelShape[] MULTIPART = new VoxelShape[]{makeCuboidShape(7, 7, 0, 9, 9, 6.5), makeCuboidShape(9.5, 7, 7, 16, 9, 9), makeCuboidShape(7, 7, 9.5, 9, 9, 16), makeCuboidShape(0, 7, 7, 6.5, 9, 9), makeCuboidShape(7, 9.5, 7, 9, 16, 9), makeCuboidShape(7, 0, 7, 9, 6.5, 9)};
+    private static final VoxelShape CABLE = makeCuboidShape(6.25, 6.25, 6.25, 9.75, 9.75, 9.75);
+    private static final VoxelShape[] MULTIPART = new VoxelShape[]{makeCuboidShape(6.5, 6.5, 0, 9.5, 9.5, 7), makeCuboidShape(9.5, 6.5, 6.5, 16, 9.5, 9.5), makeCuboidShape(6.5, 6.5, 9.5, 9.5, 9.5, 16), makeCuboidShape(0, 6.5, 6.5, 6.5, 9.5, 9.5), makeCuboidShape(6.5, 9.5, 6.5, 9.5, 16, 9.5), makeCuboidShape(6.5, 0, 6.5, 9.5, 7, 9.5)};
 
     public EnergyCableBlock(Properties properties, Tier variant) {
         super(properties, variant);
@@ -62,17 +69,7 @@ public class EnergyCableBlock extends AbstractEnergyBlock<Tier> implements IWate
 
     @Override
     public VoxelShape getShape(BlockState state, IBlockReader world, BlockPos pos, ISelectionContext context) {
-        VoxelShape CABLE = makeCuboidShape(6.25, 6.25, 6.25, 9.75, 9.75, 9.75);
         VoxelShape voxelShape = CABLE;
-
-        VoxelShape[] MULTIPART = new VoxelShape[]{
-                makeCuboidShape(6.5, 6.5, 0, 9.5, 9.5, 7),
-                makeCuboidShape(9.5, 6.5, 6.5, 16, 9.5, 9.5),
-                makeCuboidShape(6.5, 6.5, 9.5, 9.5, 9.5, 16),
-                makeCuboidShape(0, 6.5, 6.5, 6.5, 9.5, 9.5),
-                makeCuboidShape(6.5, 9.5, 6.5, 9.5, 16, 9.5),
-                makeCuboidShape(6.5, 0, 6.5, 9.5, 7, 9.5)};
-
         if (state.get(NORTH) || canConnectEnergy(world, pos, Direction.NORTH))
             voxelShape = VoxelShapes.or(voxelShape, MULTIPART[0]);
         if (state.get(EAST) || canConnectEnergy(world, pos, Direction.EAST))
@@ -89,50 +86,27 @@ public class EnergyCableBlock extends AbstractEnergyBlock<Tier> implements IWate
     }
 
     @Override
-    @OnlyIn(Dist.CLIENT)
-    public boolean addDestroyEffects(BlockState state, World world, BlockPos pos, ParticleManager manager) {
-        VoxelShape voxelshape = CABLE;
-        voxelshape.forEachBox((x, y, z, xx, yy, zz) -> {
-            double d1 = Math.min(1.0D, xx - x);
-            double d2 = Math.min(1.0D, yy - y);
-            double d3 = Math.min(1.0D, zz - z);
-            int i = Math.max(2, MathHelper.ceil(d1 / 0.25D));
-            int j = Math.max(2, MathHelper.ceil(d2 / 0.25D));
-            int k = Math.max(2, MathHelper.ceil(d3 / 0.25D));
-            for (int l = 0; l < i; ++l) {
-                for (int i1 = 0; i1 < j; ++i1) {
-                    for (int j1 = 0; j1 < k; ++j1) {
-                        double d4 = ((double) l + 0.5D) / (double) i;
-                        double d5 = ((double) i1 + 0.5D) / (double) j;
-                        double d6 = ((double) j1 + 0.5D) / (double) k;
-                        double d7 = d4 * d1 + x;
-                        double d8 = d5 * d2 + y;
-                        double d9 = d6 * d3 + z;
-                        Minecraft.getInstance().particles.addEffect((new DiggingParticle(world, (double) pos.getX() + d7, (double) pos.getY() + d8, (double) pos.getZ() + d9, d4 - 0.5D, d5 - 0.5D, d6 - 0.5D, state)).setBlockPos(pos));
-                    }
-                }
-            }
-        });
-        return true;
+    public ActionResultType onBlockActivated(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockRayTraceResult result) {
+        Optional<Direction> hitSide = getHitSide(result.getHitVec(), pos);
+        if (hitSide.isPresent() && !canConnectEnergy(world, pos, hitSide.get())) {
+            return ActionResultType.FAIL;
+        }
+        return super.onBlockActivated(state, world, pos, player, hand, result);
+    }
+
+    @Nullable
+    @Override
+    public <T extends TileBase> ContainerBase getContainer(int id, PlayerInventory inventory, TileBase te) {
+        if (te instanceof EnergyCableTile) {
+            return new EnergyCableContainer(IContainers.ENERGY_CABLE, id, inventory, (EnergyCableTile) te);
+        }
+        return super.getContainer(id, inventory, te);
     }
 
     @Override
-    public void neighborChanged(BlockState state, World world, BlockPos pos, Block block, BlockPos fromPos, boolean isMoving) {
-        if (Energy.isPresent(world.getTileEntity(fromPos), Side.fromNeighbor(pos, fromPos))) {
-            findCables(world, pos, pos);
-            TileEntity tileEntity = world.getTileEntity(pos);
-            if (tileEntity instanceof EnergyCableTile) {
-                EnergyCableTile cable = (EnergyCableTile) tileEntity;
-                cable.energySides.clear();
-                for (Direction direction : Direction.values()) {
-                    if (canAttach(state, world, pos, direction)[1]) {
-                        cable.energySides.add(direction);
-                    }
-                }
-                cable.markDirtyAndSync();
-            }
-        }
-        super.neighborChanged(state, world, pos, block, fromPos, isMoving);
+    protected void additionalGuiData(PacketBuffer buffer, BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockRayTraceResult result) {
+        getHitSide(result.getHitVec(), pos).ifPresent(side -> buffer.writeInt(side.getIndex()));
+        super.additionalGuiData(buffer, state, world, pos, player, hand, result);
     }
 
     @Override
@@ -148,6 +122,18 @@ public class EnergyCableBlock extends AbstractEnergyBlock<Tier> implements IWate
 
     @Override
     public BlockState updatePostPlacement(BlockState state, Direction facing, BlockState facingState, IWorld world, BlockPos currentPos, BlockPos facingPos) {
+        TileEntity tileEntity = world.getTileEntity(currentPos);
+        if (tileEntity instanceof EnergyCableTile) {
+            EnergyCableTile cable = (EnergyCableTile) tileEntity;
+            cable.energySides.clear();
+            for (Direction direction : Direction.values()) {
+                if (canConnectEnergy(world, currentPos, direction)) {
+                    cable.energySides.add(direction);
+                }
+            }
+            cable.markDirtyAndSync();
+        }
+
         return createCableState(world, currentPos);
     }
 
@@ -219,7 +205,7 @@ public class EnergyCableBlock extends AbstractEnergyBlock<Tier> implements IWate
             EnergyCableTile cable = (EnergyCableTile) tileEntity;
             cable.energySides.clear();
             for (Direction direction : Direction.values()) {
-                if (canAttach(state, world, pos, direction)[1]) {
+                if (canConnectEnergy(world, pos, direction)) {
                     cable.energySides.add(direction);
                 }
             }
@@ -240,6 +226,7 @@ public class EnergyCableBlock extends AbstractEnergyBlock<Tier> implements IWate
         if (!first.proxyMap.get(side).searchCache.contains(pos)) {
             for (Direction direction : Direction.values()) {
                 BlockPos blockPos = pos.offset(direction);
+                if (blockPos.equals(first.getPos())) continue;
                 BlockState state = world.getBlockState(blockPos);
                 if (state.getBlock() == this) {
                     TileEntity tileEntity = world.getTileEntity(blockPos);
@@ -281,5 +268,53 @@ public class EnergyCableBlock extends AbstractEnergyBlock<Tier> implements IWate
             }
         }
         CACHE.clear();
+    }
+
+    public static Optional<Direction> getHitSide(Vec3d hit, BlockPos pos) {
+        double x = hit.x - pos.getX();
+        double y = hit.y - pos.getY();
+        double z = hit.z - pos.getZ();
+        if (x > 0.0D && x < 0.4D) {
+            return Optional.of(Direction.WEST);
+        } else if (x > 0.6D && x < 1.0D) {
+            return Optional.of(Direction.EAST);
+        } else if (z > 0.0D && z < 0.4D) {
+            return Optional.of(Direction.NORTH);
+        } else if (z > 0.6D && z < 1.0D) {
+            return Optional.of(Direction.SOUTH);
+        } else if (y > 0.6D && y < 1.0D) {
+            return Optional.of(Direction.UP);
+        } else if (y > 0.0D && y < 0.4D) {
+            return Optional.of(Direction.DOWN);
+        }
+        return Optional.empty();
+    }
+
+    @Override
+    @OnlyIn(Dist.CLIENT)
+    public boolean addDestroyEffects(BlockState state, World world, BlockPos pos, ParticleManager manager) {
+        VoxelShape voxelshape = CABLE;
+        voxelshape.forEachBox((x, y, z, xx, yy, zz) -> {
+            double d1 = Math.min(1.0D, xx - x);
+            double d2 = Math.min(1.0D, yy - y);
+            double d3 = Math.min(1.0D, zz - z);
+            int i = Math.max(2, MathHelper.ceil(d1 / 0.25D));
+            int j = Math.max(2, MathHelper.ceil(d2 / 0.25D));
+            int k = Math.max(2, MathHelper.ceil(d3 / 0.25D));
+            for (int l = 0; l < i; ++l) {
+                for (int i1 = 0; i1 < j; ++i1) {
+                    for (int j1 = 0; j1 < k; ++j1) {
+                        double d4 = ((double) l + 0.5D) / (double) i;
+                        double d5 = ((double) i1 + 0.5D) / (double) j;
+                        double d6 = ((double) j1 + 0.5D) / (double) k;
+                        double d7 = d4 * d1 + x;
+                        double d8 = d5 * d2 + y;
+                        double d9 = d6 * d3 + z;
+                        Minecraft.getInstance().particles.addEffect((new DiggingParticle(world, (double) pos.getX() + d7, (double) pos.getY() + d8, (double) pos.getZ() + d9, d4 - 0.5D, d5 - 0.5D, d6 - 0.5D, state)).setBlockPos(pos));
+                    }
+                }
+            }
+        });
+        return true;
     }
 }

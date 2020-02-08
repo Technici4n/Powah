@@ -15,7 +15,7 @@ import net.minecraftforge.fluids.capability.templates.FluidTank;
 import owmii.lib.Lollipop;
 import owmii.lib.client.screen.EnergyProviderScreenBase;
 import owmii.lib.client.screen.widget.Gauge;
-import owmii.lib.client.util.Draw2D;
+import owmii.lib.client.util.Draw;
 import owmii.lib.util.Empty;
 import owmii.lib.util.Safe;
 import owmii.powah.api.PowahAPI;
@@ -72,7 +72,7 @@ public class MagmatorScreen extends EnergyProviderScreenBase<MagmatorTile, Magma
                 RenderSystem.color3f(red, green, blue);
                 TextureAtlasSprite sprite = this.mc.getTextureGetter(PlayerContainer.LOCATION_BLOCKS_TEXTURE).apply(still);
                 bindTexture(PlayerContainer.LOCATION_BLOCKS_TEXTURE);
-                Draw2D.gaugeV(sprite, this.x + 165, this.y + 3, 8, 66, tank.getCapacity(), tank.getFluidAmount());
+                Draw.gaugeV(sprite, this.x + 165, this.y + 3, 8, 66, tank.getCapacity(), tank.getFluidAmount());
                 RenderSystem.color3f(1.0F, 1.0F, 1.0F);
             }
         }
@@ -87,13 +87,13 @@ public class MagmatorScreen extends EnergyProviderScreenBase<MagmatorTile, Magma
         if (isMouseOver(mouseX - 164, mouseY - 2, 10, 68)) {
             List<String> list = new ArrayList<>();
             if (!tank.isEmpty()) {
-                list.add(TextFormatting.GRAY + I18n.format("info.powah.fluid", "" + TextFormatting.GOLD + tank.getFluid().getDisplayName().getString()));
-                list.add(TextFormatting.GRAY + I18n.format("info.powah.stored.fluid", "" + TextFormatting.DARK_GRAY + tank.getFluidAmount(), tank.getCapacity()));
+                list.add(TextFormatting.GRAY + I18n.format("info.lollipop.fluid", TextFormatting.GOLD + tank.getFluid().getDisplayName().getString()));
+                list.add(TextFormatting.GRAY + I18n.format("info.lollipop.fluid.stored", "" + TextFormatting.DARK_GRAY + tank.getFluidAmount(), tank.getCapacity()));
                 int perSeq = PowahAPI.getMagmaticFluidHeat(tank.getFluid().getFluid());
-                list.add(TextFormatting.GRAY + I18n.format("info.powah.per.mb", "" + TextFormatting.DARK_GRAY + perSeq, 100));
+                list.add(TextFormatting.GRAY + I18n.format("info.lollipop.energy.per.mb", "" + TextFormatting.DARK_GRAY + perSeq, 100));
+            } else {
+                list.add(TextFormatting.GRAY + I18n.format("info.lollipop.fluid", TextFormatting.DARK_GRAY + "----"));
             }
-
-            list.add("empty");
             renderTooltip(list, mouseX, mouseY);
         }
     }

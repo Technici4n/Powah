@@ -25,10 +25,9 @@ import owmii.powah.config.Configs;
 import javax.annotation.Nullable;
 
 import static net.minecraft.util.math.shapes.VoxelShapes.combineAndSimplify;
-import static net.minecraft.util.math.shapes.VoxelShapes.fullCube;
 
 public class ThermoGenBlock extends AbstractEnergyProviderBlock<Tier> implements IWaterLoggable {
-    public static final VoxelShape SHAPE = combineAndSimplify(makeCuboidShape(2.0D, 1.0D, 2.0D, 14.0D, 14.0D, 14.0D), combineAndSimplify(makeCuboidShape(0.0D, 0.0D, 0.0D, 16.0D, 1.0D, 16.0D), combineAndSimplify(makeCuboidShape(0.5D, 1.5D, 0.5D, 15.5D, 2.5D, 15.5D), makeCuboidShape(0.5D, 3.25D, 0.5D, 15.5D, 4.25D, 15.5D), IBooleanFunction.OR), IBooleanFunction.OR), IBooleanFunction.OR);
+    public static final VoxelShape SHAPE = combineAndSimplify(makeCuboidShape(2.0D, 1.0D, 2.0D, 14.0D, 14.0D, 14.0D), makeCuboidShape(0.0D, 0.0D, 0.0D, 16.0D, 1.0D, 16.0D), IBooleanFunction.OR);
 
     public ThermoGenBlock(Properties properties, Tier variant) {
         super(properties, variant);
@@ -36,17 +35,12 @@ public class ThermoGenBlock extends AbstractEnergyProviderBlock<Tier> implements
 
     @Override
     public IEnergyProviderConfig<Tier> getEnergyConfig() {
-        return Configs.SOLAR_PANEL;
+        return Configs.THERMO;
     }
 
     @Override
     public VoxelShape getShape(BlockState state, IBlockReader worldIn, BlockPos pos, ISelectionContext context) {
         return SHAPE;
-    }
-
-    @Override
-    public VoxelShape getCollisionShape(BlockState state, IBlockReader worldIn, BlockPos pos, ISelectionContext context) {
-        return fullCube();
     }
 
     @Nullable

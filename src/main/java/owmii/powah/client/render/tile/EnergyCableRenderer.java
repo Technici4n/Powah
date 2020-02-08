@@ -22,7 +22,7 @@ public class EnergyCableRenderer extends AbstractTileRenderer<EnergyCableTile> {
         matrix.translate(0.5, 1.5, 0.5);
         matrix.translate(0.0, -0.125, 0.0);
         matrix.scale(1.0f, -1.0f, -1.0f);
-        EnergyCableRenderer.MODEL.render(te, this, matrix, rtb, light, ov);
+        MODEL.render(te, this, matrix, rtb, light, ov);
         matrix.pop();
     }
 }

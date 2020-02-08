@@ -12,6 +12,7 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.common.util.Constants;
 import owmii.lib.block.TileBase;
 import owmii.lib.energy.Energy;
+import owmii.lib.util.Debug;
 import owmii.powah.block.ITiles;
 import owmii.powah.block.Tier;
 
@@ -20,11 +21,11 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
+import java.util.stream.IntStream;
 
 public class EnergyCableTile extends TileBase.EnergyStorage<Tier, EnergyCableBlock> {
     public final Map<Direction, EnergyProxy> proxyMap = new HashMap<>();
     public final Set<Direction> energySides = new HashSet<>();
-    public boolean[] flags = new boolean[6];
 
     public EnergyCableTile(Tier variant) {
         super(ITiles.ENERGY_CABLE, variant);
@@ -41,18 +42,14 @@ public class EnergyCableTile extends TileBase.EnergyStorage<Tier, EnergyCableBlo
     public void readSync(CompoundNBT compound) {
         super.readSync(compound);
         ListNBT list = compound.getList("LinkedCables", Constants.NBT.TAG_COMPOUND);
-        for (int i = 0; i < list.size(); i++) {
-            CompoundNBT nbt = list.getCompound(i);
+        IntStream.range(0, list.size()).mapToObj(list::getCompound).forEach(nbt -> {
             Direction direction = Direction.values()[nbt.getInt("Direction")];
             this.proxyMap.put(direction, new EnergyProxy().read(nbt));
-
-        }
+        });
         ListNBT list1 = compound.getList("EnergyDirections", Constants.NBT.TAG_COMPOUND);
-        for (int i = 0; i < list1.size(); i++) {
-            CompoundNBT nbt = list1.getCompound(i);
-            Direction direction = Direction.values()[nbt.getInt("EnergyDirection")];
-            this.energySides.add(direction);
-        }
+        IntStream.range(0, list1.size()).mapToObj(list1::getCompound)
+                .map(nbt -> Direction.values()[nbt.getInt("EnergyDirection")])
+                .forEach(this.energySides::add);
     }
 
     @Override
@@ -77,51 +74,35 @@ public class EnergyCableTile extends TileBase.EnergyStorage<Tier, EnergyCableBlo
 
     @Override
     public long receiveEnergy(int maxReceive, boolean simulate, @Nullable Direction direction) {
-        if (this.world == null || direction == null || !canReceiveEnergy(direction)) return 0;
-        int received = 0;
-        for (Direction side : this.energySides) {
-            int amount = maxReceive - received;
-            if (amount > 0) {
-                long net = Math.min(amount, this.energy.getMaxExtract());
-                amount -= net;
-                if (canExtractEnergy(side)) {
-                    BlockPos pos1 = this.pos.offset(side);
-                    TileEntity tile = this.world.getTileEntity(pos1);
-                    if (Energy.canReceive(tile, side)) {
-                        if (tile instanceof EnergyCableTile)
-                            continue;
-                        received += Energy.receive(tile, side, net, simulate);
-                        if (maxReceive - received <= 0) {
-                            return received;
-                        }
-                    }
-                }
+        if (this.world == null || isRemote() || direction == null || !canReceiveEnergy(direction)) return 0;
+        long received = 0;
+        received += pushEnergy(maxReceive, simulate, direction, this);
+        for (BlockPos cablePos : this.proxyMap.get(direction).cables()) {
+            TileEntity cableTile = this.world.getTileEntity(cablePos);
+            if (cableTile instanceof EnergyCableTile) {
+                EnergyCableTile cable = (EnergyCableTile) cableTile;
+                received += cable.pushEnergy(maxReceive, simulate, direction, this);
             }
         }
+        return received;
+    }
 
-        EnergyProxy cables = this.proxyMap.get(direction);
-        for (BlockPos cablePos : cables.cables()) {
-            if (cablePos.equals(getPos())) continue;
-            TileEntity cableTile = this.world.getTileEntity(cablePos);
-            if (cableTile instanceof EnergyCableTile && cableTile != this) {
-                EnergyCableTile cable = (EnergyCableTile) cableTile;
-                for (Direction side : cable.energySides) {
-                    int amount = maxReceive - received;
-                    if (amount > 0) {
-                        long net = Math.min(amount, this.energy.getMaxExtract());
-                        amount -= net;
-                        if (cable.canExtractEnergy(side)) {
-                            BlockPos pos1 = cablePos.offset(side);
-                            TileEntity tile = this.world.getTileEntity(pos1);
-                            if (Energy.canReceive(tile, side)) {
-                                if (tile instanceof EnergyCableTile || pos1.equals(this.pos.offset(direction.getOpposite())))
-                                    continue;
-                                received += Energy.receive(tile, side, net, simulate);
-                                if (maxReceive - received <= 0) {
-                                    return received;
-                                }
-                            }
-                        }
+    private long pushEnergy(int maxReceive, boolean simulate, @Nullable Direction direction, EnergyCableTile cable) {
+        long received = 0;
+        for (Direction side : this.energySides) {
+            if (cable.equals(this) && side.equals(direction) || !canExtractEnergy(side)) continue;
+            BlockPos pos = this.pos.offset(side);
+            Debug.printDelayed(direction != null && cable.getPos().offset(direction).equals(pos));
+            if (direction != null && cable.getPos().offset(direction).equals(pos)) continue;
+            TileEntity tile = getTileEntity(pos);
+            long amount = maxReceive - received;
+            if (amount > 0) {
+                if (Energy.canReceive(tile, side)) {
+                    long net = Math.min(amount, this.energy.getMaxExtract());
+                    amount -= net;
+                    received += Energy.receive(tile, side, net, simulate);
+                    if (maxReceive - received <= 0) {
+                        return received;
                     }
                 }
             }

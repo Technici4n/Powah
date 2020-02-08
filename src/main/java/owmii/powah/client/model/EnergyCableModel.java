@@ -118,7 +118,6 @@ public class EnergyCableModel extends AbstractModel<EnergyCableTile, EnergyCable
         TEXTURES.put(SideConfig.Type.ALL, new ResourceLocation(Powah.MOD_ID, "textures/model/tile/energy_cable_all.png"));
         TEXTURES.put(SideConfig.Type.OUT, new ResourceLocation(Powah.MOD_ID, "textures/model/tile/energy_cable_out.png"));
         TEXTURES.put(SideConfig.Type.IN, new ResourceLocation(Powah.MOD_ID, "textures/model/tile/energy_cable_in.png"));
-        TEXTURES.put(SideConfig.Type.OFF, new ResourceLocation(Powah.MOD_ID, "textures/model/tile/energy_cable_off.png"));
     }
 
     @Override

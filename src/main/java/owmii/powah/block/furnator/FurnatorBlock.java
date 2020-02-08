@@ -31,7 +31,7 @@ public class FurnatorBlock extends AbstractEnergyProviderBlock<Tier> implements 
 
     @Override
     public IEnergyProviderConfig<Tier> getEnergyConfig() {
-        return Configs.SOLAR_PANEL;
+        return Configs.FURNATOR;
     }
 
     @Nullable

@@ -26,9 +26,7 @@ public class EnergyCableContainer extends EnergyContainerBase<EnergyCableTile> {
     }
 
     @Override
-    protected void addContainer(PlayerInventory playerInventory, EnergyCableTile tile) {
-        addPlayerInv(playerInventory, 8, 140, 82);
-    }
+    protected void addContainer(PlayerInventory playerInventory, EnergyCableTile tile) {}
 
     public Direction getSide() {
         return this.side;
