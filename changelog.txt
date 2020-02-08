@@ -1,3 +1,9 @@
+0.2.7
+- Added spanish localization thanks to ruchom4u.
+- Fixed reactor tooltip showing in the configuration screen.
+NOTE!: I'm working on porting powah! to 1.15.X (progress: 60%) so i will continue working on 1.14
+after the progress reach 100%.
+
 0.2.6
 - Added comparator output support for the energizing orb.
 - Tweaked passive generation a bit.

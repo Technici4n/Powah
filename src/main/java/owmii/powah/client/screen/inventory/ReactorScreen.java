@@ -101,6 +101,7 @@ public class ReactorScreen extends PowahScreen<ReactorContainer> {
     @Override
     protected void renderHoveredToolTip(int mouseX, int mouseY) {
         super.renderHoveredToolTip(mouseX, mouseY);
+        if (this.sideButtons[0].visible) return;
         ReactorTile reactor = this.container.getTile();
         FluidTank tank = reactor.getTank();
         if (isMouseOver(mouseX - 161, mouseY - 3, 12, 66)) {
