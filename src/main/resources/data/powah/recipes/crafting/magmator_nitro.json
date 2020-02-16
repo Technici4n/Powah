@@ -1,0 +1,25 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+	"ggg",
+	"cdc",
+	"gfg"
+  ],
+  "key": {
+	"c": {
+	  "item": "powah:capacitor_nitro"
+	},
+	"g": {
+	  "item": "powah:crystal_nitro"
+	},
+	"f": {
+	  "item": "powah:magmator_spirited"
+	},
+	"d": {
+	  "item": "powah:dielectric_casing"
+	}
+  },
+  "result": {
+	"item": "powah:magmator_nitro"
+  }
+}

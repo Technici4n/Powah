@@ -12,7 +12,6 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.common.util.Constants;
 import owmii.lib.block.TileBase;
 import owmii.lib.energy.Energy;
-import owmii.lib.util.Debug;
 import owmii.powah.block.ITiles;
 import owmii.powah.block.Tier;
 
@@ -92,7 +91,6 @@ public class EnergyCableTile extends TileBase.EnergyStorage<Tier, EnergyCableBlo
         for (Direction side : this.energySides) {
             if (cable.equals(this) && side.equals(direction) || !canExtractEnergy(side)) continue;
             BlockPos pos = this.pos.offset(side);
-            Debug.printDelayed(direction != null && cable.getPos().offset(direction).equals(pos));
             if (direction != null && cable.getPos().offset(direction).equals(pos)) continue;
             TileEntity tile = getTileEntity(pos);
             long amount = maxReceive - received;

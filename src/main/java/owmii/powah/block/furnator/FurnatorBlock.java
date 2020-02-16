@@ -34,6 +34,11 @@ public class FurnatorBlock extends AbstractEnergyProviderBlock<Tier> implements 
         return Configs.FURNATOR;
     }
 
+    @Override
+    public int stackSize() {
+        return 1;
+    }
+
     @Nullable
     @Override
     public TileEntity createTileEntity(BlockState state, IBlockReader world) {

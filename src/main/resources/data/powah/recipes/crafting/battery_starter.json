@@ -1,0 +1,22 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+	"oio",
+	"ici",
+	"oio"
+  ],
+  "key": {
+	"c": {
+	  "item": "minecraft:redstone_block"
+	},
+	"i": {
+	  "item": "powah:capacitor_basic"
+	},
+	"o": {
+	  "item": "powah:dielectric_paste"
+	}
+  },
+  "result": {
+	"item": "powah:battery_starter"
+  }
+}

@@ -117,6 +117,11 @@ public class EnergizingOrbTile extends TileBase.Tickable<IVariant.Single, Energi
     }
 
     @Override
+    public int getSlotLimit(int index) {
+        return index == 0 ? 64 : 1;
+    }
+
+    @Override
     public boolean canExtract(int slot, ItemStack stack) {
         return slot == 0;
     }

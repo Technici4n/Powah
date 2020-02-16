@@ -1,0 +1,25 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+	"ppp",
+	"cdc",
+	"ggg"
+  ],
+  "key": {
+	"c": {
+	  "item": "powah:capacitor_hardened"
+	},
+	"g": {
+	  "item": "powah:steel_energized"
+	},
+	"p": {
+	  "item": "powah:solar_panel_basic"
+	},
+	"d": {
+	  "item": "powah:dielectric_casing"
+	}
+  },
+  "result": {
+	"item": "powah:solar_panel_hardened"
+  }
+}

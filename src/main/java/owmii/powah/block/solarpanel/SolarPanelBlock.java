@@ -4,6 +4,7 @@ import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.IWaterLoggable;
 import net.minecraft.block.SixWayBlock;
+import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.fluid.Fluids;
 import net.minecraft.item.BlockItemUseContext;
 import net.minecraft.state.BooleanProperty;
@@ -16,10 +17,14 @@ import net.minecraft.util.math.shapes.VoxelShape;
 import net.minecraft.world.IBlockReader;
 import net.minecraft.world.IWorld;
 import owmii.lib.block.AbstractEnergyProviderBlock;
+import owmii.lib.block.TileBase;
 import owmii.lib.config.IEnergyProviderConfig;
 import owmii.lib.energy.Energy;
+import owmii.lib.inventory.ContainerBase;
 import owmii.powah.block.Tier;
 import owmii.powah.config.Configs;
+import owmii.powah.inventory.IContainers;
+import owmii.powah.inventory.SolarPanelContainer;
 
 import javax.annotation.Nullable;
 import java.util.ArrayList;
@@ -43,6 +48,11 @@ public class SolarPanelBlock extends AbstractEnergyProviderBlock<Tier> implement
         return Configs.SOLAR_PANEL;
     }
 
+    @Override
+    public int stackSize() {
+        return 1;
+    }
+
     @Nullable
     @Override
     public TileEntity createTileEntity(BlockState state, IBlockReader world) {
@@ -52,6 +62,15 @@ public class SolarPanelBlock extends AbstractEnergyProviderBlock<Tier> implement
     @Override
     public VoxelShape getShape(BlockState state, IBlockReader worldIn, BlockPos pos, ISelectionContext context) {
         return SHAPE;
+    }
+
+    @Nullable
+    @Override
+    public ContainerBase getContainer(int id, PlayerInventory playerInventory, TileBase inv) {
+        if (inv instanceof SolarPanelTile) {
+            return new SolarPanelContainer(IContainers.SOLAR_PANEL, id, playerInventory, (SolarPanelTile) inv);
+        }
+        return null;
     }
 
     @Override

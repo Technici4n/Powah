@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+	{"item": "powah:crystal_blazing"},
+	{"item": "powah:crystal_blazing"},
+	{"item": "powah:crystal_blazing"},
+	{"item": "powah:crystal_blazing"},
+	{"item": "powah:crystal_blazing"},
+	{"item": "powah:crystal_blazing"},
+	{"item": "powah:crystal_blazing"},
+	{"item": "powah:crystal_blazing"},
+	{"item": "powah:crystal_blazing"}
+  ],
+  "result": {
+	"item": "powah:blazing_crystal_block"
+  }
+}

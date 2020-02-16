@@ -21,6 +21,8 @@ import owmii.lib.config.IEnergyProviderConfig;
 import owmii.lib.inventory.ContainerBase;
 import owmii.powah.block.Tier;
 import owmii.powah.config.Configs;
+import owmii.powah.inventory.IContainers;
+import owmii.powah.inventory.ThermoGenContainer;
 
 import javax.annotation.Nullable;
 
@@ -36,6 +38,11 @@ public class ThermoGenBlock extends AbstractEnergyProviderBlock<Tier> implements
     @Override
     public IEnergyProviderConfig<Tier> getEnergyConfig() {
         return Configs.THERMO;
+    }
+
+    @Override
+    public int stackSize() {
+        return 1;
     }
 
     @Override
@@ -67,7 +74,7 @@ public class ThermoGenBlock extends AbstractEnergyProviderBlock<Tier> implements
     @Override
     public ContainerBase getContainer(int id, PlayerInventory playerInventory, TileBase inv) {
         if (inv instanceof ThermoGenTile) {
-            // return new ThermoGenContainer(IContainers.THERMO_GENERATOR, id, playerInventory, (ThermoGeneratorTile) inv);
+            return new ThermoGenContainer(IContainers.THERMO_GEN, id, playerInventory, (ThermoGenTile) inv);
         }
         return null;
     }

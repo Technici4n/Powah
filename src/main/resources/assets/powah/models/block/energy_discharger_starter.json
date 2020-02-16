@@ -1,0 +1,8 @@
+{
+  "parent": "powah:block/energy_discharger",
+  "textures": {
+	"side": "powah:block/energy_discharger_side",
+	"comps": "powah:block/energy_discharger_comps",
+	"ov": "powah:block/starter_ov"
+  }
+}

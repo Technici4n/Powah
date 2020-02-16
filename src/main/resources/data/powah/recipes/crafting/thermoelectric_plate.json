@@ -1,0 +1,22 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+	"brb",
+	"rtr",
+	"brb"
+  ],
+  "key": {
+	"b": {
+	  "item": "minecraft:blaze_powder"
+	},
+	"r": {
+	  "item": "minecraft:redstone"
+	},
+	"t": {
+	  "item": "powah:capacitor_basic_tiny"
+	}
+  },
+  "result": {
+	"item": "powah:thermoelectric_plate"
+  }
+}

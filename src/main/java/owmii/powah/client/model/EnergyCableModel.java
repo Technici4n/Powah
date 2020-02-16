@@ -34,7 +34,7 @@ public class EnergyCableModel extends AbstractModel<EnergyCableTile, EnergyCable
     private final ModelRenderer downPlate;
 
     public EnergyCableModel() {
-        super(RenderType::entitySolid);
+        super(RenderType::getEntitySolid);
         this.textureWidth = 64;
         this.textureHeight = 32;
 

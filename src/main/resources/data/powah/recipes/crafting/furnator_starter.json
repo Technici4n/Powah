@@ -1,0 +1,25 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+	"ggg",
+	"cdc",
+	"gfg"
+  ],
+  "key": {
+	"c": {
+	  "item": "powah:capacitor_basic_tiny"
+	},
+	"g": {
+	  "item": "powah:dielectric_paste"
+	},
+	"f": {
+	  "item": "minecraft:furnace"
+	},
+	"d": {
+	  "item": "powah:dielectric_casing"
+	}
+  },
+  "result": {
+	"item": "powah:furnator_starter"
+  }
+}

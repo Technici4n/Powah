@@ -1,0 +1,25 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+	"ggg",
+	"cdc",
+	"gfg"
+  ],
+  "key": {
+	"c": {
+	  "item": "powah:capacitor_hardened"
+	},
+	"g": {
+	  "item": "powah:steel_energized"
+	},
+	"f": {
+	  "item": "powah:magmator_basic"
+	},
+	"d": {
+	  "item": "powah:dielectric_casing"
+	}
+  },
+  "result": {
+	"item": "powah:magmator_hardened"
+  }
+}

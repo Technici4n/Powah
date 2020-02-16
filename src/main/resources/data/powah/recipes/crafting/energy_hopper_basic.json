@@ -1,0 +1,25 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+	"ppp",
+	"cdc",
+	"php"
+  ],
+  "key": {
+	"c": {
+	  "item": "powah:capacitor_basic"
+	},
+	"p": {
+	  "item": "powah:dielectric_paste"
+	},
+	"d": {
+	  "item": "powah:dielectric_casing"
+	},
+	"h": {
+	  "item": "powah:energy_hopper_starter"
+	}
+  },
+  "result": {
+	"item": "powah:energy_hopper_basic"
+  }
+}

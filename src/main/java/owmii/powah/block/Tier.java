@@ -26,4 +26,8 @@ public enum Tier implements IVariant<Tier> {
     public Tier[] getAll() {
         return values();
     }
+
+    public String getName() {
+        return name().toLowerCase();
+    }
 }

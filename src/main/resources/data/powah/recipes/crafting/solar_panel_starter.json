@@ -1,0 +1,25 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+	"ppp",
+	"cdc",
+	"eee"
+  ],
+  "key": {
+	"c": {
+	  "item": "powah:capacitor_basic_tiny"
+	},
+	"e": {
+	  "item": "powah:dielectric_paste"
+	},
+	"p": {
+	  "item": "powah:photoelectric_pane"
+	},
+	"d": {
+	  "item": "powah:dielectric_casing"
+	}
+  },
+  "result": {
+	"item": "powah:solar_panel_starter"
+  }
+}

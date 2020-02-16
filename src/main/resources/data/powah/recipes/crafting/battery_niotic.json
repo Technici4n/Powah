@@ -1,0 +1,28 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+	"oko",
+	"iri",
+	"oco"
+  ],
+  "key": {
+	"r": {
+	  "item": "minecraft:redstone_block"
+	},
+	"c": {
+	  "item": "powah:battery_blazing"
+	},
+	"i": {
+	  "item": "powah:capacitor_niotic"
+	},
+	"o": {
+	  "item": "powah:dielectric_paste"
+	},
+	"k": {
+	  "item": "powah:crystal_niotic"
+	}
+  },
+  "result": {
+	"item": "powah:battery_niotic"
+  }
+}

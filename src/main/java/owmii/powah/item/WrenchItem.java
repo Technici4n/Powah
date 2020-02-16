@@ -73,7 +73,7 @@ public class WrenchItem extends ItemBase implements IHudItem, IWrench {
         if (playerIn.isShiftKeyDown()) {
             nextWrenchMode(stack);
             playerIn.sendStatusMessage(new TranslationTextComponent("info.powah.wrench.mode." + getWrenchMode(stack).name().toLowerCase(), TextFormatting.YELLOW).applyTextStyle(TextFormatting.GRAY), true);
-            return ActionResult.func_226249_b_(stack);
+            return ActionResult.resultSuccess(stack);
         }
         return super.onItemRightClick(worldIn, playerIn, handIn);
     }

@@ -1,0 +1,22 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+	"pcp",
+	"pdp",
+	"pcp"
+  ],
+  "key": {
+	"c": {
+	  "item": "powah:capacitor_basic_tiny"
+	},
+	"p": {
+	  "item": "powah:dielectric_paste"
+	},
+	"d": {
+	  "item": "powah:dielectric_casing"
+	}
+  },
+  "result": {
+	"item": "powah:energy_discharger_starter"
+  }
+}

@@ -1,0 +1,11 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+	{
+	  "item": "powah:ender_gate_spirited"
+	}
+  ],
+  "result": {
+	"item": "powah:ender_gate_spirited"
+  }
+}

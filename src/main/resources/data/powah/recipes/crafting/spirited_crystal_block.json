@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+	{"item": "powah:crystal_spirited"},
+	{"item": "powah:crystal_spirited"},
+	{"item": "powah:crystal_spirited"},
+	{"item": "powah:crystal_spirited"},
+	{"item": "powah:crystal_spirited"},
+	{"item": "powah:crystal_spirited"},
+	{"item": "powah:crystal_spirited"},
+	{"item": "powah:crystal_spirited"},
+	{"item": "powah:crystal_spirited"}
+  ],
+  "result": {
+	"item": "powah:spirited_crystal_block"
+  }
+}

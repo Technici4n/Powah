@@ -1,0 +1,28 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+	"oko",
+	"iri",
+	"oco"
+  ],
+  "key": {
+	"r": {
+	  "item": "minecraft:redstone_block"
+	},
+	"c": {
+	  "item": "powah:battery_spirited"
+	},
+	"i": {
+	  "item": "powah:capacitor_nitro"
+	},
+	"o": {
+	  "item": "powah:dielectric_paste"
+	},
+	"k": {
+	  "item": "powah:crystal_nitro"
+	}
+  },
+  "result": {
+	"item": "powah:battery_nitro"
+  }
+}

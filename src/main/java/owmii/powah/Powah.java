@@ -1,6 +1,5 @@
 package owmii.powah;
 
-import net.minecraft.fluid.Fluids;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.fml.common.Mod;
@@ -14,8 +13,10 @@ import owmii.powah.api.PowahAPI;
 import owmii.powah.api.recipe.energizing.EnergizingRecipeSorter;
 import owmii.powah.block.energizing.EnergizingRecipes;
 import owmii.powah.client.render.BlockRenderTypes;
+import owmii.powah.client.render.entity.EntityRenderer;
 import owmii.powah.client.render.tile.TileRenderer;
 import owmii.powah.client.screen.Screens;
+import owmii.powah.config.ConfigHandler;
 import owmii.powah.config.Configs;
 import owmii.powah.network.Packets;
 
@@ -31,8 +32,6 @@ public class Powah {
         addModListener(this::clientSetup);
         addModListener(this::loadComplete);
         Configs.register();
-
-        PowahAPI.registerMagmaticFluid(Fluids.LAVA, 1000);
     }
 
     void commonSetup(final FMLCommonSetupEvent event) {
@@ -43,6 +42,7 @@ public class Powah {
     @OnlyIn(Dist.CLIENT)
     void clientSetup(final FMLClientSetupEvent event) {
         BlockRenderTypes.register();
+        EntityRenderer.register();
         TileRenderer.register();
         Screens.register();
     }
@@ -50,5 +50,6 @@ public class Powah {
     void loadComplete(final FMLLoadCompleteEvent event) {
         Configs.ENERGY.forEach(IConfig::reload);
         EnergizingRecipeSorter.sort();
+        ConfigHandler.post();
     }
 }

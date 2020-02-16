@@ -1,0 +1,14 @@
+{
+  "parent": "item/generated",
+  "textures": {
+	"layer0": "powah:item/binding_card"
+  },
+  "overrides": [
+	{
+	  "predicate": {
+		"bound": 1.00
+	  },
+	  "model": "powah:item/binding_card_bound"
+	}
+  ]
+}

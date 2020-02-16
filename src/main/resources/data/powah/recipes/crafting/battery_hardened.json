@@ -1,0 +1,28 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+	"oko",
+	"iri",
+	"oco"
+  ],
+  "key": {
+	"r": {
+	  "item": "minecraft:redstone_block"
+	},
+	"c": {
+	  "item": "powah:battery_basic"
+	},
+	"i": {
+	  "item": "powah:capacitor_hardened"
+	},
+	"o": {
+	  "item": "powah:dielectric_paste"
+	},
+	"k": {
+	  "item": "powah:steel_energized"
+	}
+  },
+  "result": {
+	"item": "powah:battery_hardened"
+  }
+}

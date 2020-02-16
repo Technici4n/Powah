@@ -1,0 +1,11 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+	{
+	  "item": "powah:dielectric_rod"
+	}
+  ],
+  "result": {
+	"item": "powah:dielectric_rod_horizontal"
+  }
+}

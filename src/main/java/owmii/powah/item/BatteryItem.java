@@ -10,10 +10,11 @@ import net.minecraftforge.energy.IEnergyStorage;
 import owmii.lib.config.IEnergyConfig;
 import owmii.lib.energy.Energy;
 import owmii.lib.item.EnergyItem;
+import owmii.powah.api.energy.endernetwork.IEnderExtender;
 import owmii.powah.block.Tier;
 import owmii.powah.config.Configs;
 
-public class BatteryItem extends EnergyItem<Tier> {
+public class BatteryItem extends EnergyItem<Tier> implements IEnderExtender {
     public BatteryItem(Properties properties, Tier variant) {
         super(properties, variant);
     }
@@ -39,7 +40,7 @@ public class BatteryItem extends EnergyItem<Tier> {
         ItemStack stack = player.getHeldItem(hand);
         if (player.isShiftKeyDown()) {
             switchCharging(stack);
-            return ActionResult.func_226249_b_(stack);
+            return ActionResult.resultSuccess(stack);
         }
         return super.onItemRightClick(world, player, hand);
     }
@@ -71,5 +72,15 @@ public class BatteryItem extends EnergyItem<Tier> {
 
     private void setCharging(ItemStack stack, boolean charging) {
         stack.getOrCreateTag().putBoolean("Charging", charging);
+    }
+
+    @Override
+    public long getExtendedCapacity(ItemStack stack) {
+        return getEnergyConfig().getCapacity(getVariant());
+    }
+
+    @Override
+    public long getExtendedEnergy(ItemStack stack) {
+        return Energy.getStored(stack);
     }
 }

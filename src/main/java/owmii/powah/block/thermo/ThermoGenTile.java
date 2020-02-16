@@ -25,7 +25,7 @@ public class ThermoGenTile extends TileBase.EnergyProvider<Tier, ThermoGenBlock>
     protected final FluidTank tank = new FluidTank(FluidAttributes.BUCKET_VOLUME * 4) {
         @Override
         public boolean isFluidValid(FluidStack stack) {
-            return PowahAPI.THERMO_COOLANTS.containsKey(stack.getFluid()) && super.isFluidValid(stack);
+            return PowahAPI.COOLANTS.containsKey(stack.getFluid()) && super.isFluidValid(stack);
         }
 
         @Override
@@ -62,13 +62,13 @@ public class ThermoGenTile extends TileBase.EnergyProvider<Tier, ThermoGenBlock>
     protected void generate(World world) {
         if (this.nextBuff <= 0 && !this.tank.isEmpty()) {
             FluidStack fluid = this.tank.getFluid();
-            if (PowahAPI.THERMO_COOLANTS.containsKey(fluid.getFluid())) {
-                int fluidCooling = PowahAPI.getThermoCoolant(fluid.getFluid());
+            if (PowahAPI.COOLANTS.containsKey(fluid.getFluid())) {
+                int fluidCooling = PowahAPI.getCoolant(fluid.getFluid());
                 BlockPos heatPos = this.pos.down();
                 BlockState state = world.getBlockState(heatPos);
                 Block block = state.getBlock();
-                if (PowahAPI.THERMO_HEAT_SOURCES.containsKey(block)) {
-                    int heat = PowahAPI.getThermoHeatSource(block);
+                if (PowahAPI.HEAT_SOURCES.containsKey(block)) {
+                    int heat = PowahAPI.getHeatSource(block);
                     if (block instanceof FlowingFluidBlock) {
                         FlowingFluidBlock fluidBlock = (FlowingFluidBlock) block;
                         if (!fluidBlock.getFluidState(state).isSource()) {
@@ -78,6 +78,7 @@ public class ThermoGenTile extends TileBase.EnergyProvider<Tier, ThermoGenBlock>
                     }
                     this.buffer = (int) (((heat * (fluidCooling == 1 ? 1 : Math.max(1.1D, (0.1D + Math.abs(fluidCooling)) * 1.1152D))) * defaultGeneration()) / 1000.0D);
                     this.nextBuff = this.buffer;
+
                     if (world.getGameTime() % 40 == 0L) {
                         this.tank.drain(1, IFluidHandler.FluidAction.EXECUTE);
                     }
@@ -85,11 +86,11 @@ public class ThermoGenTile extends TileBase.EnergyProvider<Tier, ThermoGenBlock>
             }
         }
     }
-//
-//    @Override
-//    public int perTick() {
-//        return this.nextGenCap > super.perTick() ? this.nextGenCap : super.perTick();
-//    }
+
+    @Override
+    public boolean hasEnergyBuffer() {
+        return true;
+    }
 
     @Override
     public int getChargingSlots() {

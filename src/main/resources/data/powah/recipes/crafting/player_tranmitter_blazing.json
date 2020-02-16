@@ -1,0 +1,25 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+	" p ",
+	"ici",
+	" r "
+  ],
+  "key": {
+	"p": {
+	  "item": "powah:player_transmitter_hardened"
+	},
+	"i": {
+	  "item": "powah:capacitor_blazing"
+	},
+	"c": {
+	  "item": "powah:dielectric_casing"
+	},
+	"r": {
+	  "item": "powah:dielectric_rod"
+	}
+  },
+  "result": {
+	"item": "powah:player_transmitter_blazing"
+  }
+}

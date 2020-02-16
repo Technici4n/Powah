@@ -6,6 +6,8 @@ import net.minecraft.util.Direction;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TextFormatting;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
 import owmii.lib.client.screen.EnergyScreenBase;
 import owmii.lib.client.screen.widget.IconButton;
 import owmii.lib.energy.SideConfig;
@@ -18,6 +20,7 @@ import owmii.powah.inventory.EnergyCableContainer;
 
 import java.util.List;
 
+@OnlyIn(Dist.CLIENT)
 public class EnergyCableScreen extends EnergyScreenBase<EnergyCableTile, EnergyCableContainer> {
     private static final ResourceLocation GUI_TEXTURE = new ResourceLocation(Powah.MOD_ID, "textures/gui/container/energy_cable.png");
     private IconButton configButton = Empty.ICON_BUTTON;
@@ -33,16 +36,14 @@ public class EnergyCableScreen extends EnergyScreenBase<EnergyCableTile, EnergyC
 
     @Override
     protected void mainButtons(int x, int y) {
-        if (this.mc.world == null) return;
         this.redStoneButton = addIconButton(x + this.xSize - 20, y + this.ySize - 20, 15, 15, 45, 0, 15, getWidgetTexture(), (button) -> {
             SNextRedstoneModePacket.send(this.mc.world, this.te.getPos());
             this.te.nextRedstoneMode();
-        }).tooltip(this.te.getRedstone().getDisplayName());
+        }).tooltip(this.te.getRedstoneMode().getDisplayName());
     }
 
     @Override
     protected void configButtons(int x, int y) {
-        if (this.mc.world == null) return;
         this.configButton = addIconButton(x + 131, y + 5, 17, 17, 0, 30, 17, getWidgetTexture(), (button) -> {
             SNextEnergyConfigPacket.send(this.side.getIndex(), this.mc.world, this.te.getPos());
             this.te.getSideConfig().nextType(this.side);
@@ -58,10 +59,10 @@ public class EnergyCableScreen extends EnergyScreenBase<EnergyCableTile, EnergyC
             list.add(config.getType(this.side).getDisplayName());
             list.remove(1);
         }
-        this.redStoneButton.setIconDiff(this.te.getRedstone().getXuv());
+        this.redStoneButton.setIconDiff(this.te.getRedstoneMode().getXuv());
         if (this.redStoneButton.isHovered()) {
             List<String> list = this.redStoneButton.getTooltip();
-            list.add(this.te.getRedstone().getDisplayName());
+            list.add(this.te.getRedstoneMode().getDisplayName());
             list.remove(0);
         }
     }

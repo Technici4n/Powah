@@ -1,0 +1,10 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+	{"item": "powah:blazing_crystal_block"}
+  ],
+  "result": {
+	"item": "powah:crystal_blazing",
+	"count": 9
+  }
+}

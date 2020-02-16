@@ -1,0 +1,10 @@
+{
+  "variants": {
+	"facing=north": {"model": "powah:block/energy_discharger_niotic"},
+	"facing=south": {"model": "powah:block/energy_discharger_niotic", "y": 180},
+	"facing=west": {"model": "powah:block/energy_discharger_niotic", "y": 270},
+	"facing=east": {"model": "powah:block/energy_discharger_niotic", "y": 90},
+	"facing=up": {"model": "lollipop:block/empty"},
+	"facing=down": {"model": "lollipop:block/empty"}
+  }
+}

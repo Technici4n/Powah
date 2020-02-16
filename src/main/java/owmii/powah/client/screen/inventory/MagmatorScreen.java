@@ -9,6 +9,8 @@ import net.minecraft.inventory.container.PlayerContainer;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TextFormatting;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.fluids.FluidAttributes;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.capability.templates.FluidTank;
@@ -25,6 +27,7 @@ import owmii.powah.inventory.MagmatorContainer;
 import java.util.ArrayList;
 import java.util.List;
 
+@OnlyIn(Dist.CLIENT)
 public class MagmatorScreen extends EnergyProviderScreenBase<MagmatorTile, MagmatorContainer> {
     private static final ResourceLocation GUI_MACHINE = new ResourceLocation(Lollipop.MOD_ID, "textures/gui/container/blank_right_gauge.png");
     private Gauge buffer = Empty.GAUGE;
@@ -42,7 +45,7 @@ public class MagmatorScreen extends EnergyProviderScreenBase<MagmatorTile, Magma
 
     @Override
     protected void configButtons(int x, int y) {
-        super.configButtons(x - 15, y);
+        super.configButtons(x - 19, y);
     }
 
     @Override
@@ -70,9 +73,9 @@ public class MagmatorScreen extends EnergyProviderScreenBase<MagmatorTile, Magma
                 float green = (color >> 8 & 0xFF) / 255.0F;
                 float blue = (color & 0xFF) / 255.0F;
                 RenderSystem.color3f(red, green, blue);
-                TextureAtlasSprite sprite = this.mc.getTextureGetter(PlayerContainer.LOCATION_BLOCKS_TEXTURE).apply(still);
+                TextureAtlasSprite sprite = this.mc.getAtlasSpriteGetter(PlayerContainer.LOCATION_BLOCKS_TEXTURE).apply(still);
                 bindTexture(PlayerContainer.LOCATION_BLOCKS_TEXTURE);
-                Draw.gaugeV(sprite, this.x + 165, this.y + 3, 8, 66, tank.getCapacity(), tank.getFluidAmount());
+                Draw.gaugeV(sprite, this.x + 162, this.y + 4, 10, 64, tank.getCapacity(), tank.getFluidAmount());
                 RenderSystem.color3f(1.0F, 1.0F, 1.0F);
             }
         }
@@ -84,13 +87,12 @@ public class MagmatorScreen extends EnergyProviderScreenBase<MagmatorTile, Magma
             super.renderHoveredToolTip(mouseX, mouseY);
         }
         FluidTank tank = this.te.getTank();
-        if (isMouseOver(mouseX - 164, mouseY - 2, 10, 68)) {
+        if (isMouseOver(mouseX - 161, mouseY - 3, 12, 66)) {
             List<String> list = new ArrayList<>();
             if (!tank.isEmpty()) {
                 list.add(TextFormatting.GRAY + I18n.format("info.lollipop.fluid", TextFormatting.GOLD + tank.getFluid().getDisplayName().getString()));
                 list.add(TextFormatting.GRAY + I18n.format("info.lollipop.fluid.stored", "" + TextFormatting.DARK_GRAY + tank.getFluidAmount(), tank.getCapacity()));
-                int perSeq = PowahAPI.getMagmaticFluidHeat(tank.getFluid().getFluid());
-                list.add(TextFormatting.GRAY + I18n.format("info.lollipop.energy.per.mb", "" + TextFormatting.DARK_GRAY + perSeq, 100));
+                list.add(TextFormatting.GRAY + I18n.format("info.lollipop.energy.per.mb", "" + TextFormatting.DARK_GRAY + PowahAPI.getMagmaticFluidHeat(tank.getFluid().getFluid()), 100));
             } else {
                 list.add(TextFormatting.GRAY + I18n.format("info.lollipop.fluid", TextFormatting.DARK_GRAY + "----"));
             }
@@ -100,6 +102,11 @@ public class MagmatorScreen extends EnergyProviderScreenBase<MagmatorTile, Magma
 
     @Override
     protected ResourceLocation getMachineBackGround() {
+        return GUI_MACHINE;
+    }
+
+    @Override
+    protected ResourceLocation getConfigBackGround() {
         return GUI_MACHINE;
     }
 }

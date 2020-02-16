@@ -1,0 +1,28 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+	"oko",
+	"iri",
+	"oco"
+  ],
+  "key": {
+	"r": {
+	  "item": "minecraft:redstone_block"
+	},
+	"c": {
+	  "item": "powah:battery_starter"
+	},
+	"i": {
+	  "item": "powah:capacitor_basic_large"
+	},
+	"o": {
+	  "item": "powah:dielectric_paste"
+	},
+	"k": {
+	  "item": "minecraft:iron_ingot"
+	}
+  },
+  "result": {
+	"item": "powah:battery_basic"
+  }
+}

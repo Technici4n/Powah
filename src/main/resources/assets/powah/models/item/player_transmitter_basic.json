@@ -1,0 +1,7 @@
+{
+  "parent": "powah:item/player_transmitter",
+  "textures": {
+	"transmitter": "powah:block/player_transmitter",
+	"ov": "powah:block/basic_ov"
+  }
+}

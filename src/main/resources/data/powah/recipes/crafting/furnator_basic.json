@@ -1,0 +1,25 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+	"iii",
+	"cdc",
+	"ifi"
+  ],
+  "key": {
+	"c": {
+	  "item": "powah:capacitor_basic"
+	},
+	"i": {
+	  "item": "minecraft:iron_ingot"
+	},
+	"f": {
+	  "item": "powah:furnator_starter"
+	},
+	"d": {
+	  "item": "powah:dielectric_casing"
+	}
+  },
+  "result": {
+	"item": "powah:furnator_basic"
+  }
+}

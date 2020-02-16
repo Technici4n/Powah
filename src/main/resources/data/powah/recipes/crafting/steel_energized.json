@@ -1,0 +1,10 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+	{"item": "powah:energized_steel_block"}
+  ],
+  "result": {
+	"item": "powah:steel_energized",
+	"count": 9
+  }
+}

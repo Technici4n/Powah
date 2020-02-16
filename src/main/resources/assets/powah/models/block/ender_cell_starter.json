@@ -1,0 +1,7 @@
+{
+  "parent": "powah:block/ender_cell",
+  "textures": {
+	"frame": "powah:block/ender_cell_starter_frame",
+	"core": "powah:block/ender_cell_core"
+  }
+}

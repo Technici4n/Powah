@@ -78,8 +78,8 @@ public class EnergizingRodRenderer extends AbstractTileRenderer<EnergizingRodTil
             float d23 = (float) (d0 * 5.05D + d22);
             IVertexBuilder builder = rtb.getBuffer(RENDER_TYPE);
             MatrixStack.Entry last = matrix.getLast();
-            Matrix4f matrix4f = last.getPositionMatrix();
-            Matrix3f matrix3f = last.getNormalMatrix();
+            Matrix4f matrix4f = last.getMatrix();
+            Matrix3f matrix3f = last.getNormal();
 
             pos(builder, matrix4f, matrix3f, d12, 0.0F, d13, 255, 255, 255, 1, d23);
             pos(builder, matrix4f, matrix3f, d12, (float) -d0, d13, 255, 255, 255, 1, d22);
@@ -96,6 +96,6 @@ public class EnergizingRodRenderer extends AbstractTileRenderer<EnergizingRodTil
     }
 
     private void pos(IVertexBuilder builder, Matrix4f matrix4f, Matrix3f matrix3f, float x, float y, float z, int r, int g, int b, float u, float v) {
-        builder.pos(matrix4f, x, y, z).color(r, g, b, 255).tex(u, v).overlay(OverlayTexture.DEFAULT_LIGHT).lightmap(15728880 / 2).normal(matrix3f, 0.0F, 1.0F, 0.0F).endVertex();
+        builder.pos(matrix4f, x, y, z).color(r, g, b, 255).tex(u, v).overlay(OverlayTexture.NO_OVERLAY).lightmap(15728880 / 2).normal(matrix3f, 0.0F, 1.0F, 0.0F).endVertex();
     }
 }

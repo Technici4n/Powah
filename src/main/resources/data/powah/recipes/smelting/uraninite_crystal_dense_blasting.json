@@ -1,0 +1,12 @@
+{
+  "type": "minecraft:blasting",
+  "ingredient": {
+	"item": "powah:uraninite_raw_dense"
+  },
+  "result": {
+	"item": "powah:uraninite",
+	"count": 4
+  },
+  "experience": 1.0,
+  "cookingtime": 75
+}

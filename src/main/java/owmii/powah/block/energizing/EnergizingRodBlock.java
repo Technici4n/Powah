@@ -41,6 +41,11 @@ public class EnergizingRodBlock extends AbstractEnergyBlock<Tier> implements IWa
     }
 
     @Override
+    public int stackSize() {
+        return 1;
+    }
+
+    @Override
     public VoxelShape getShape(BlockState state, IBlockReader worldIn, BlockPos pos, ISelectionContext context) {
         return VOXEL_SHAPES.get(state.get(FACING));
     }

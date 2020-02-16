@@ -38,13 +38,13 @@ public class MagmatorRenderer extends AbstractTileRenderer<MagmatorTile> {
                 float green = (color >> 8 & 0xFF) / 255.0F;
                 float blue = (color & 0xFF) / 255.0F;
                 RenderSystem.color3f(red, green, blue);
-                TextureAtlasSprite sprite = mc.getTextureGetter(PlayerContainer.LOCATION_BLOCKS_TEXTURE).apply(still);
-                IVertexBuilder buffer = rtb.getBuffer(RenderType.text(sprite.getAtlasTexture().getBasePath()));
+                TextureAtlasSprite sprite = mc.getAtlasSpriteGetter(PlayerContainer.LOCATION_BLOCKS_TEXTURE).apply(still);
+                IVertexBuilder buffer = rtb.getBuffer(RenderType.getText(sprite.getAtlasTexture().getTextureLocation()));
                 matrix.push();
                 float fill = (tank.getFluidAmount() * (0.45F)) / tank.getCapacity();
                 matrix.translate(0.1875f, 0.51D + fill, 0.1875f);
                 matrix.scale(0.625f, 1.0F, 0.625f);
-                Render.quad(matrix.getLast().getPositionMatrix(), buffer, sprite, 1.0F, 1.0F, red, green, blue);
+                Render.quad(matrix.getLast().getMatrix(), buffer, sprite, 1.0F, 1.0F, red, green, blue);
                 matrix.pop();
                 RenderSystem.color3f(1.0F, 1.0F, 1.0F);
             }

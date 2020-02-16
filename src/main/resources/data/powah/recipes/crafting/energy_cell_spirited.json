@@ -1,0 +1,25 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+	"bnb",
+	"cdc",
+	"bnb"
+  ],
+  "key": {
+	"c": {
+	  "item": "powah:energy_cell_niotic"
+	},
+	"n": {
+	  "item": "powah:capacitor_spirited"
+	},
+	"b": {
+	  "item": "powah:crystal_spirited"
+	},
+	"d": {
+	  "item": "powah:dielectric_casing"
+	}
+  },
+  "result": {
+	"item": "powah:energy_cell_spirited"
+  }
+}

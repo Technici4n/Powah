@@ -13,6 +13,7 @@ import javax.annotation.Nullable;
 
 public class SolarPanelTile extends TileBase.EnergyProvider<Tier, SolarPanelBlock> {
     private boolean canSeeSunLight;
+    private boolean hasLensOfEnder;
 
     public SolarPanelTile(Tier variant) {
         super(ITiles.SOLAR_PANEL, variant);
@@ -26,18 +27,21 @@ public class SolarPanelTile extends TileBase.EnergyProvider<Tier, SolarPanelBloc
     public void readSync(CompoundNBT compound) {
         super.readSync(compound);
         this.canSeeSunLight = compound.getBoolean("CanSeeSunLight");
+        this.hasLensOfEnder = compound.getBoolean("HasLensOfEnder");
     }
 
     @Override
     public CompoundNBT writeSync(CompoundNBT compound) {
         compound.putBoolean("CanSeeSunLight", this.canSeeSunLight);
+        compound.putBoolean("HasLensOfEnder", this.hasLensOfEnder);
         return super.writeSync(compound);
     }
 
     @Override
     protected boolean postTicks(World world) {
         if (isRemote()) return false;
-        if (!Time.isDay(world) && this.canSeeSunLight || this.ticks % 40L == 0L) {
+
+        if (!this.hasLensOfEnder && (!Time.isDay(world) && this.canSeeSunLight || this.ticks % 40L == 0L)) {
             this.canSeeSunLight = Time.isDay(world) && Misc.canBlockSeeSky(world, this.pos);
             markDirtyAndSync();
         }
@@ -45,12 +49,18 @@ public class SolarPanelTile extends TileBase.EnergyProvider<Tier, SolarPanelBloc
         boolean flag = false;
 
         if (!this.energy.isFull()) {
-            if (this.canSeeSunLight) {
+            if (this.hasLensOfEnder && Time.isDay(world) || this.canSeeSunLight) {
                 this.energy.produce(defaultGeneration());
                 flag = true;
             }
         }
+
         return super.postTicks(world) || flag;
+    }
+
+    @Override
+    public int getChargingSlots() {
+        return 1;
     }
 
     public boolean canSeeSunLight() {
@@ -65,5 +75,14 @@ public class SolarPanelTile extends TileBase.EnergyProvider<Tier, SolarPanelBloc
     @Override
     public boolean isEnergyPresent(@Nullable Direction side) {
         return Direction.DOWN.equals(side);
+    }
+
+    public boolean hasLensOfEnder() {
+        return this.hasLensOfEnder;
+    }
+
+    public void setHasLensOfEnder(boolean hasLensOfEnder) {
+        this.hasLensOfEnder = hasLensOfEnder;
+        markDirtyAndSync();
     }
 }

@@ -4,6 +4,8 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TextFormatting;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
 import owmii.lib.client.screen.EnergyProviderScreenBase;
 import owmii.lib.client.screen.widget.Gauge;
 import owmii.lib.util.Empty;
@@ -11,6 +13,7 @@ import owmii.lib.util.Safe;
 import owmii.powah.block.furnator.FurnatorTile;
 import owmii.powah.inventory.FurnatorContainer;
 
+@OnlyIn(Dist.CLIENT)
 public class FurnatorScreen extends EnergyProviderScreenBase<FurnatorTile, FurnatorContainer> {
     private Gauge buffer = Empty.GAUGE;
 
