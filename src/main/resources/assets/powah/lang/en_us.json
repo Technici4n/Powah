@@ -1,4 +1,5 @@
 {
+  "itemGroup.powah": "Powah",
   "block.powah.energy_cell_starter": "Energy Cell (Starter)",
   "block.powah.energy_cell_basic": "Energy Cell (Basic)",
   "block.powah.energy_cell_hardened": "Energy Cell (Hardened)",
@@ -152,5 +153,16 @@
   "info.powah.new.energy": "New Energy: %s FE",
   "info.powah.shift.to.apply": "[SHIFT + CLICK] to apply.",
   "info.powah.new.capacity": "New Capacity: %s FE",
-  "info.powah.click.to.bind": "Right click to bind."
+  "info.powah.click.to.bind": "Right click to bind.",
+  "gui.powah.jei.category.magmatic": "Magmatic Fluids",
+  "gui.powah.jei.category.heat.sources": "Heat Sources",
+  "gui.powah.jei.category.coolant": "Coolants",
+  "gui.powah.jei.category.solid.coolant": "Solid Coolants",
+  "gui.powah.jei.category.energizing": "Energizing",
+  "wiki.powah.player_aerial_pearl": "Use an Aerial Pearl on a Zombie or Husk.",
+  "chat.powah.not.enough.blocks": "Not enough Blocks! you need %s more!",
+  "chat.powah.no.binding": "This Card is already bound to %s!",
+  "chat.powah.wrench.link.start": "Started linking ...",
+  "chat.powah.wrench.link.done": "Linking done!",
+  "chat.powah.wrench.link.fail": "Out of range!!"
 }
