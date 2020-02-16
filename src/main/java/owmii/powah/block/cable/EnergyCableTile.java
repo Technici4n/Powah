@@ -16,10 +16,7 @@ import owmii.powah.block.ITiles;
 import owmii.powah.block.Tier;
 
 import javax.annotation.Nullable;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.IntStream;
 
 public class EnergyCableTile extends TileBase.EnergyStorage<Tier, EnergyCableBlock> {
@@ -121,5 +118,9 @@ public class EnergyCableTile extends TileBase.EnergyStorage<Tier, EnergyCableBlo
     @OnlyIn(Dist.CLIENT)
     public AxisAlignedBB getRenderBoundingBox() {
         return new AxisAlignedBB(this.pos, this.pos.add(1, 1, 1));
+    }
+
+    @Override
+    public void getListedEnergyInfo(List<String> list) {
     }
 }

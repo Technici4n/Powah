@@ -16,13 +16,13 @@ Various ways to generate, store and transmit FE power.
 [[dependencies.powah]]
     modId="lollipop"
     mandatory=true
-    versionRange="[0.1.0,)"
+    versionRange="[1.0.0,)"
     ordering="NONE"
     side="BOTH"
 
 [[dependencies.powah]]
     modId="forge"
     mandatory=true
-    versionRange="[30.0.38,)"
+    versionRange="[31.1.12,)"
     ordering="NONE"
     side="BOTH"

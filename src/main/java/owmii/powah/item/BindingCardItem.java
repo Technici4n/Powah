@@ -14,7 +14,6 @@ import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.World;
-import net.minecraftforge.items.ItemHandlerHelper;
 import owmii.lib.item.ItemBase;
 import owmii.lib.util.Player;
 import owmii.lib.util.Stack;
@@ -50,12 +49,16 @@ public class BindingCardItem extends ItemBase {
                 if (target.getClass() == EndermanEntity.class || target.getClass() == EndermiteEntity.class) {
                     if (!playerIn.world.isRemote) {
                         ItemStack stack1 = playerIn.getHeldItem(hand);
-                        ItemHandlerHelper.giveItemToPlayer(playerIn, new ItemStack(IItems.BINDING_CARD_DIM));
+                        ItemStack stack2 = new ItemStack(IItems.BINDING_CARD_DIM);
+                        CompoundNBT nbt = Stack.getTagOrEmpty(stack1);
+                        if (nbt.hasUniqueId("BoundPlayerId")) {
+                            CompoundNBT nbt1 = stack2.getOrCreateTag();
+                            nbt1.putUniqueId("BoundPlayerId", nbt.getUniqueId("BoundPlayerId"));
+                            nbt1.putString("BoundPlayerName", nbt.getString("BoundPlayerName"));
+                        }
+                        playerIn.setHeldItem(hand, stack2);
                         target.playSound(SoundEvents.ENTITY_ENDERMAN_DEATH, 0.5F, 1.0F);
                         target.remove();
-                        if (!playerIn.isCreative()) {
-                            stack1.shrink(1);
-                        }
                     }
                     return true;
                 }

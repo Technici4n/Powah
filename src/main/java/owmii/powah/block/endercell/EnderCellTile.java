@@ -158,8 +158,9 @@ public class EnderCellTile extends TileBase.EnergyStorage<Tier, EnderCellBlock> 
 
     @Override
     public void getListedEnergyInfo(List<String> list) {
-        list.add(TextFormatting.DARK_GRAY + I18n.format("info.lollipop.channel", "" + TextFormatting.DARK_AQUA + (this.activeChannel + 1)));
         super.getListedEnergyInfo(list);
+        list.add("");
+        list.add(TextFormatting.DARK_GRAY + I18n.format("info.lollipop.channel", "" + TextFormatting.DARK_AQUA + (this.activeChannel + 1)));
     }
 
     @Override

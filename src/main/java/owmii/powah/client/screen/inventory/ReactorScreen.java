@@ -5,7 +5,6 @@ import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.container.PlayerContainer;
-import net.minecraft.item.Items;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TextFormatting;
@@ -140,7 +139,7 @@ public class ReactorScreen extends EnergyScreenBase<ReactorTile, ReactorContaine
         if (isMouseOver(mouseX - 42, mouseY - 50, 7, 18)) {
             List<String> list = new ArrayList<>();
             boolean b = redstone.isEmpty();
-            list.add(TextFormatting.RED + Items.REDSTONE.getName().getString());
+            list.add(TextFormatting.RED + I18n.format("info.powah.redstone"));
             list.add(TextFormatting.GRAY + I18n.format("info.lollipop.fluid.stored", TextFormatting.DARK_GRAY + String.format("%.1f", redstone.getTicks()), String.format("%.1f", redstone.getMax())));
             list.add("");
             list.add(TextFormatting.DARK_GRAY + "+" + I18n.format("info.powah.production"));

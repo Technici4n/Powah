@@ -97,6 +97,11 @@ public class EnderCellScreen extends EnergyScreenBase<EnderCellTile, EnderCellCo
     }
 
     @Override
+    protected void drawEnergyGauge(int x, int y, Energy energy) {
+        super.drawEnergyGauge(x, y, this.te.getSyncEnergy());
+    }
+
+    @Override
     public void drawSlot(Slot slot) {
         if (slot instanceof SlotBase && ((SlotBase) slot).isHidden()) return;
         ItemStack stack = slot.getStack();
