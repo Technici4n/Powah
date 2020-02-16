@@ -4,22 +4,33 @@ import net.minecraft.block.BlockState;
 import net.minecraft.block.IWaterLoggable;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.nbt.NBTUtil;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ActionResultType;
+import net.minecraft.util.Direction;
 import net.minecraft.util.Hand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.BlockRayTraceResult;
+import net.minecraft.util.math.Vec3d;
 import net.minecraft.util.math.shapes.IBooleanFunction;
 import net.minecraft.util.math.shapes.ISelectionContext;
 import net.minecraft.util.math.shapes.VoxelShape;
+import net.minecraft.util.text.TextFormatting;
+import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.IBlockReader;
 import net.minecraft.world.World;
+import net.minecraftforge.common.util.Constants;
 import net.minecraftforge.items.ItemHandlerHelper;
 import owmii.lib.block.AbstractBlock;
 import owmii.lib.inventory.Inventory;
 import owmii.lib.util.IVariant;
+import owmii.lib.util.math.V3d;
 import owmii.powah.api.wrench.IWrench;
+import owmii.powah.api.wrench.IWrenchable;
+import owmii.powah.api.wrench.WrenchMode;
 import owmii.powah.config.Configs;
+import owmii.powah.item.WrenchItem;
 
 import javax.annotation.Nullable;
 import java.util.List;
@@ -27,7 +38,7 @@ import java.util.stream.Collectors;
 
 import static net.minecraft.util.math.shapes.VoxelShapes.combineAndSimplify;
 
-public class EnergizingOrbBlock extends AbstractBlock<IVariant.Single> implements IWaterLoggable {
+public class EnergizingOrbBlock extends AbstractBlock<IVariant.Single> implements IWaterLoggable, IWrenchable {
     private static final VoxelShape SHAPE = combineAndSimplify(makeCuboidShape(3.5D, 5.0D, 3.5D, 12.5D, 14.23D, 12.5D), makeCuboidShape(2.5D, 0.0D, 2.5D, 13.5D, 1.0D, 13.5D), IBooleanFunction.OR);
 
     public EnergizingOrbBlock(Properties properties) {
@@ -134,5 +145,40 @@ public class EnergizingOrbBlock extends AbstractBlock<IVariant.Single> implement
                 }
             }
         });
+    }
+
+    @Override
+    public boolean onWrench(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, Direction side, WrenchMode mode, Vec3d hit) {
+        if (mode.link()) {
+            ItemStack stack = player.getHeldItem(hand);
+            if (stack.getItem() instanceof WrenchItem) {
+                WrenchItem wrench = (WrenchItem) stack.getItem();
+                TileEntity tileEntity = world.getTileEntity(pos);
+                if (tileEntity instanceof EnergizingOrbTile) {
+                    EnergizingOrbTile orb = (EnergizingOrbTile) tileEntity;
+                    CompoundNBT nbt = wrench.getWrenchNBT(stack);
+                    if (nbt.contains("RodPos", Constants.NBT.TAG_COMPOUND)) {
+                        BlockPos rodPos = NBTUtil.readBlockPos(nbt.getCompound("RodPos"));
+                        TileEntity tileEntity1 = world.getTileEntity(rodPos);
+                        if (tileEntity1 instanceof EnergizingRodTile) {
+                            EnergizingRodTile rod = (EnergizingRodTile) tileEntity1;
+                            V3d v3d = V3d.from(rodPos);
+                            if ((int) v3d.distance(pos) <= Configs.ENERGIZING.range.get()) {
+                                rod.setOrbPos(pos);
+                                player.sendStatusMessage(new TranslationTextComponent("chat.powah.wrench.link.done").applyTextStyle(TextFormatting.GOLD), true);
+                            } else {
+                                player.sendStatusMessage(new TranslationTextComponent("chat.powah.wrench.link.fail").applyTextStyle(TextFormatting.RED), true);
+                            }
+                        }
+                        nbt.remove("RodPos");
+                    } else {
+                        nbt.put("OrbPos", NBTUtil.writeBlockPos(pos));
+                        player.sendStatusMessage(new TranslationTextComponent("chat.powah.wrench.link.start").applyTextStyle(TextFormatting.YELLOW), true);
+                    }
+                    return true;
+                }
+            }
+        }
+        return false;
     }
 }

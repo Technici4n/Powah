@@ -2,18 +2,31 @@ package owmii.powah.block.energizing;
 
 import net.minecraft.block.BlockState;
 import net.minecraft.block.IWaterLoggable;
+import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.nbt.NBTUtil;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.Direction;
+import net.minecraft.util.Hand;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.Vec3d;
 import net.minecraft.util.math.shapes.IBooleanFunction;
 import net.minecraft.util.math.shapes.ISelectionContext;
 import net.minecraft.util.math.shapes.VoxelShape;
+import net.minecraft.util.text.TextFormatting;
+import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.IBlockReader;
 import net.minecraft.world.World;
+import net.minecraftforge.common.util.Constants;
 import owmii.lib.block.AbstractEnergyBlock;
 import owmii.lib.config.IEnergyConfig;
+import owmii.lib.util.math.V3d;
+import owmii.powah.api.wrench.IWrenchable;
+import owmii.powah.api.wrench.WrenchMode;
 import owmii.powah.block.Tier;
 import owmii.powah.config.Configs;
+import owmii.powah.item.WrenchItem;
 
 import javax.annotation.Nullable;
 import java.util.HashMap;
@@ -23,7 +36,7 @@ import java.util.stream.Collectors;
 
 import static net.minecraft.util.math.shapes.VoxelShapes.combineAndSimplify;
 
-public class EnergizingRodBlock extends AbstractEnergyBlock<Tier> implements IWaterLoggable {
+public class EnergizingRodBlock extends AbstractEnergyBlock<Tier> implements IWaterLoggable, IWrenchable {
     private static final Map<Direction, VoxelShape> VOXEL_SHAPES = new HashMap<>();
 
     public EnergizingRodBlock(Properties properties, Tier variant) {
@@ -91,5 +104,40 @@ public class EnergizingRodBlock extends AbstractEnergyBlock<Tier> implements IWa
     @Override
     protected Facing getFacing() {
         return Facing.ALL;
+    }
+
+    @Override
+    public boolean onWrench(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, Direction side, WrenchMode mode, Vec3d hit) {
+        if (mode.link()) {
+            ItemStack stack = player.getHeldItem(hand);
+            if (stack.getItem() instanceof WrenchItem) {
+                WrenchItem wrench = (WrenchItem) stack.getItem();
+                TileEntity tileEntity = world.getTileEntity(pos);
+                if (tileEntity instanceof EnergizingRodTile) {
+                    EnergizingRodTile rod = (EnergizingRodTile) tileEntity;
+                    CompoundNBT nbt = wrench.getWrenchNBT(stack);
+                    if (nbt.contains("OrbPos", Constants.NBT.TAG_COMPOUND)) {
+                        BlockPos orbPos = NBTUtil.readBlockPos(nbt.getCompound("OrbPos"));
+                        TileEntity tileEntity1 = world.getTileEntity(orbPos);
+                        if (tileEntity1 instanceof EnergizingOrbTile) {
+                            EnergizingOrbTile orb = (EnergizingOrbTile) tileEntity1;
+                            V3d v3d = V3d.from(orbPos);
+                            if ((int) v3d.distance(pos) <= Configs.ENERGIZING.range.get()) {
+                                rod.setOrbPos(orbPos);
+                                player.sendStatusMessage(new TranslationTextComponent("chat.powah.wrench.link.done").applyTextStyle(TextFormatting.GOLD), true);
+                            } else {
+                                player.sendStatusMessage(new TranslationTextComponent("chat.powah.wrench.link.fail").applyTextStyle(TextFormatting.RED), true);
+                            }
+                        }
+                        nbt.remove("OrbPos");
+                    } else {
+                        nbt.put("RodPos", NBTUtil.writeBlockPos(pos));
+                        player.sendStatusMessage(new TranslationTextComponent("chat.powah.wrench.link.start").applyTextStyle(TextFormatting.YELLOW), true);
+                    }
+                    return true;
+                }
+            }
+        }
+        return false;
     }
 }

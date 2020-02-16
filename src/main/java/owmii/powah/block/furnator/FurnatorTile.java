@@ -6,6 +6,7 @@ import net.minecraftforge.common.ForgeHooks;
 import owmii.lib.block.TileBase;
 import owmii.powah.block.ITiles;
 import owmii.powah.block.Tier;
+import owmii.powah.config.Configs;
 
 public class FurnatorTile extends TileBase.EnergyProvider<Tier, FurnatorBlock> {
     public FurnatorTile(Tier variant) {
@@ -21,7 +22,7 @@ public class FurnatorTile extends TileBase.EnergyProvider<Tier, FurnatorBlock> {
     protected void generate(World world) {
         final ItemStack fuelStack = this.inv.getStackInSlot(builtInSlots());
         if (this.nextBuff <= 0 && !fuelStack.isEmpty()) {
-            this.buffer = ForgeHooks.getBurnTime(fuelStack) * 30; // TODO config
+            this.buffer = ForgeHooks.getBurnTime(fuelStack) * Configs.GENERAL.fuelTicks.get();
             if (this.buffer <= 0) return;
             this.nextBuff = this.buffer;
             if (fuelStack.hasContainerItem())

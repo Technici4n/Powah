@@ -1,5 +1,6 @@
 package owmii.powah.item;
 
+import net.minecraft.block.BlockState;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.PlayerEntity;
@@ -23,6 +24,7 @@ import owmii.lib.client.handler.IHudItem;
 import owmii.lib.energy.SideConfig;
 import owmii.lib.item.ItemBase;
 import owmii.powah.api.wrench.IWrench;
+import owmii.powah.api.wrench.IWrenchable;
 import owmii.powah.api.wrench.WrenchMode;
 import owmii.powah.block.cable.EnergyCableBlock;
 import owmii.powah.block.cable.EnergyCableTile;
@@ -39,28 +41,34 @@ public class WrenchItem extends ItemBase implements IHudItem, IWrench {
     @Override
     public ActionResultType onItemUseFirst(ItemStack stack, World world, BlockPos pos, PlayerEntity player, Hand hand, Direction side, Vec3d hit) {
         if (player.isShiftKeyDown()) return ActionResultType.PASS;
-
         TileEntity te = world.getTileEntity(pos);
-        if (!world.isRemote && getWrenchMode(stack).config()) {
-            if (te instanceof EnergyCableTile) {
-                EnergyCableTile cable = (EnergyCableTile) te;
-                if (stack.getItem() instanceof WrenchItem) {
-                    Optional<Direction> sides = EnergyCableBlock.getHitSide(hit, pos);
-                    boolean[] flag = {false};
-                    sides.ifPresent(direction -> {
-                        SideConfig config = cable.getSideConfig();
-                        config.nextType(direction);
-                        cable.markDirtyAndSync();
-                    });
-                    return ActionResultType.SUCCESS;
-                }
-            } else if (te instanceof TileBase.EnergyStorage) {
-                TileBase.EnergyStorage storage = (TileBase.EnergyStorage) te;
-                if (storage.isEnergyPresent(side)) {
-                    SideConfig config = storage.getSideConfig();
-                    config.nextType(side);
-                    storage.markDirtyAndSync();
-                    return ActionResultType.SUCCESS;
+        BlockState state = world.getBlockState(pos);
+        if (state.getBlock() instanceof IWrenchable) {
+            if (((IWrenchable) state.getBlock()).onWrench(state, world, pos, player, hand, side, getWrenchMode(stack), hit)) {
+                return ActionResultType.SUCCESS;
+            }
+        } else {
+            if (!world.isRemote && getWrenchMode(stack).config()) {
+                if (te instanceof EnergyCableTile) {
+                    EnergyCableTile cable = (EnergyCableTile) te;
+                    if (stack.getItem() instanceof WrenchItem) {
+                        Optional<Direction> sides = EnergyCableBlock.getHitSide(hit, pos);
+                        boolean[] flag = {false};
+                        sides.ifPresent(direction -> {
+                            SideConfig config = cable.getSideConfig();
+                            config.nextType(direction);
+                            cable.markDirtyAndSync();
+                        });
+                        return ActionResultType.SUCCESS;
+                    }
+                } else if (te instanceof TileBase.EnergyStorage) {
+                    TileBase.EnergyStorage storage = (TileBase.EnergyStorage) te;
+                    if (storage.isEnergyPresent(side)) {
+                        SideConfig config = storage.getSideConfig();
+                        config.nextType(side);
+                        storage.markDirtyAndSync();
+                        return ActionResultType.SUCCESS;
+                    }
                 }
             }
         }
@@ -93,7 +101,7 @@ public class WrenchItem extends ItemBase implements IHudItem, IWrench {
 
     @Override
     @OnlyIn(Dist.CLIENT)
-    public boolean renderHud(World world, BlockPos pos, PlayerEntity player, Hand hand, Direction direction, Vec3d hit) {
+    public boolean renderHud(World world, BlockPos pos, PlayerEntity player, Hand hand, Direction side, Vec3d hit) {
         return false;
     }
 
@@ -128,7 +136,7 @@ public class WrenchItem extends ItemBase implements IHudItem, IWrench {
         return WrenchMode.values()[getWrenchNBT(stack).getInt("WrenchMode")];
     }
 
-    private CompoundNBT getWrenchNBT(ItemStack stack) {
+    public CompoundNBT getWrenchNBT(ItemStack stack) {
         return stack.getOrCreateChildTag("PowahWrenchNBT");
     }
 }

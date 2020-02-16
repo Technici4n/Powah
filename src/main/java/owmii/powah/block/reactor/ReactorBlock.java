@@ -50,7 +50,7 @@ public class ReactorBlock extends AbstractEnergyProviderBlock<Tier> {
 
     @Override
     public IEnergyProviderConfig<Tier> getEnergyConfig() {
-        return Configs.SOLAR_PANEL;
+        return Configs.REACTOR;
     }
 
     @Nullable

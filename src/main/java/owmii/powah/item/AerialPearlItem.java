@@ -9,6 +9,7 @@ import net.minecraft.util.Hand;
 import net.minecraft.util.SoundEvents;
 import net.minecraftforge.items.ItemHandlerHelper;
 import owmii.lib.item.ItemBase;
+import owmii.powah.config.Configs;
 
 public class AerialPearlItem extends ItemBase {
     public AerialPearlItem(Properties properties) {
@@ -17,22 +18,22 @@ public class AerialPearlItem extends ItemBase {
 
     @Override
     public boolean itemInteractionForEntity(ItemStack stack, PlayerEntity playerIn, LivingEntity target, Hand hand) {
-        //  if (Config.GENERAL.player_aerial_pearl.get()) {
-        if (this == IItems.AERIAL_PEARL) {
-            if (target.getClass() == ZombieEntity.class || target.getClass() == HuskEntity.class) {
-                if (!playerIn.world.isRemote) {
-                    ItemStack stack1 = playerIn.getHeldItem(hand);
-                    ItemHandlerHelper.giveItemToPlayer(playerIn, new ItemStack(IItems.PLAYER_AERIAL_PEARL));
-                    target.playSound(SoundEvents.ENTITY_ZOMBIE_DEATH, 0.5F, 1.0F);
-                    target.remove();
-                    if (!playerIn.isCreative()) {
-                        stack1.shrink(1);
+        if (Configs.GENERAL.player_aerial_pearl.get()) {
+            if (this == IItems.AERIAL_PEARL) {
+                if (target.getClass() == ZombieEntity.class || target.getClass() == HuskEntity.class) {
+                    if (!playerIn.world.isRemote) {
+                        ItemStack stack1 = playerIn.getHeldItem(hand);
+                        ItemHandlerHelper.giveItemToPlayer(playerIn, new ItemStack(IItems.PLAYER_AERIAL_PEARL));
+                        target.playSound(SoundEvents.ENTITY_ZOMBIE_DEATH, 0.5F, 1.0F);
+                        target.remove();
+                        if (!playerIn.isCreative()) {
+                            stack1.shrink(1);
+                        }
                     }
+                    return true;
                 }
-                return true;
             }
         }
-        // }
         return super.itemInteractionForEntity(stack, playerIn, target, hand);
     }
 }

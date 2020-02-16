@@ -15,6 +15,7 @@ import owmii.powah.api.recipe.energizing.EnergizingRecipeSorter;
 import owmii.powah.block.IBlocks;
 import owmii.powah.compat.jei.energizing.EnergizingCategory;
 import owmii.powah.compat.jei.magmator.MagmatorCategory;
+import owmii.powah.config.Configs;
 import owmii.powah.item.IItems;
 
 @JeiPlugin
@@ -90,8 +91,10 @@ public class PowahJEIPlugin implements IModPlugin {
         registration.addRecipes(HeatSourceCategory.Maker.getBucketRecipes(registration.getIngredientManager()), HeatSourceCategory.ID);
         registration.addRecipes(EnergizingRecipeSorter.RECIPES, EnergizingCategory.ID);
 
-        // if (Config.GENERAL.player_aerial_pearl.get())
-        registration.addIngredientInfo(new ItemStack(IItems.PLAYER_AERIAL_PEARL), VanillaTypes.ITEM, I18n.format("wiki.powah.player_aerial_pearl"));
+        if (Configs.GENERAL.player_aerial_pearl.get())
+            registration.addIngredientInfo(new ItemStack(IItems.PLAYER_AERIAL_PEARL), VanillaTypes.ITEM, I18n.format("wiki.powah.player_aerial_pearl"));
+        if (Configs.GENERAL.binding_card_dim.get())
+            registration.addIngredientInfo(new ItemStack(IItems.BINDING_CARD_DIM), VanillaTypes.ITEM, I18n.format("wiki.powah.binding_card_dim"));
 
     }
 

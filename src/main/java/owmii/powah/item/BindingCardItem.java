@@ -1,22 +1,24 @@
 package owmii.powah.item;
 
 import net.minecraft.client.util.ITooltipFlag;
+import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.monster.EndermanEntity;
+import net.minecraft.entity.monster.EndermiteEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.util.ActionResult;
-import net.minecraft.util.ActionResultType;
-import net.minecraft.util.Hand;
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.*;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.World;
+import net.minecraftforge.items.ItemHandlerHelper;
 import owmii.lib.item.ItemBase;
 import owmii.lib.util.Player;
 import owmii.lib.util.Stack;
+import owmii.powah.config.Configs;
 
 import javax.annotation.Nullable;
 import java.util.List;
@@ -39,6 +41,27 @@ public class BindingCardItem extends ItemBase {
             }
             return f;
         });
+    }
+
+    @Override
+    public boolean itemInteractionForEntity(ItemStack stack, PlayerEntity playerIn, LivingEntity target, Hand hand) {
+        if (Configs.GENERAL.binding_card_dim.get()) {
+            if (this == IItems.BINDING_CARD) {
+                if (target.getClass() == EndermanEntity.class || target.getClass() == EndermiteEntity.class) {
+                    if (!playerIn.world.isRemote) {
+                        ItemStack stack1 = playerIn.getHeldItem(hand);
+                        ItemHandlerHelper.giveItemToPlayer(playerIn, new ItemStack(IItems.BINDING_CARD_DIM));
+                        target.playSound(SoundEvents.ENTITY_ENDERMAN_DEATH, 0.5F, 1.0F);
+                        target.remove();
+                        if (!playerIn.isCreative()) {
+                            stack1.shrink(1);
+                        }
+                    }
+                    return true;
+                }
+            }
+        }
+        return super.itemInteractionForEntity(stack, playerIn, target, hand);
     }
 
     @Override

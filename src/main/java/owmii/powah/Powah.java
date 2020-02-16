@@ -21,6 +21,7 @@ import owmii.powah.client.screen.Screens;
 import owmii.powah.config.ConfigHandler;
 import owmii.powah.config.Configs;
 import owmii.powah.network.Packets;
+import owmii.powah.world.gen.IFeatures;
 
 import static owmii.lib.Lollipop.addModListener;
 
@@ -39,6 +40,7 @@ public class Powah {
     void commonSetup(final FMLCommonSetupEvent event) {
         PowahAPI.register(EnergizingRecipes.all());
         Packets.register();
+        IFeatures.register();
 
         // TODO: add to config
         PowahAPI.registerSolidCoolant(Blocks.SNOW_BLOCK, 48, -3);

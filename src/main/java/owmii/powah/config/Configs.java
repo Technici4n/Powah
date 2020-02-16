@@ -5,10 +5,7 @@ import org.apache.commons.lang3.tuple.Pair;
 import owmii.lib.config.Config;
 import owmii.lib.config.IConfig;
 import owmii.lib.config.IEnergyConfig;
-import owmii.powah.config.generator.FurnatorConfig;
-import owmii.powah.config.generator.MagmatorConfig;
-import owmii.powah.config.generator.SolarPanelConfig;
-import owmii.powah.config.generator.ThermoConfig;
+import owmii.powah.config.generator.*;
 import owmii.powah.config.item.BatteryConfig;
 
 import java.util.HashSet;
@@ -41,11 +38,13 @@ public class Configs {
     public static final MagmatorConfig MAGMATOR;
     public static final ThermoConfig THERMO;
     public static final SolarPanelConfig SOLAR_PANEL;
+    public static final ReactorConfig REACTOR;
 
     private static final ForgeConfigSpec FURNATOR_SPEC;
     private static final ForgeConfigSpec MAGMATOR_SPEC;
     private static final ForgeConfigSpec THERMO_SPEC;
     private static final ForgeConfigSpec SOLAR_PANEL_SPEC;
+    private static final ForgeConfigSpec REACTOR_SPEC;
 
     public static final BatteryConfig BATTERY;
 
@@ -68,6 +67,7 @@ public class Configs {
         Config.registerCommon(MAGMATOR_SPEC, genPath + "/magmator.toml");
         Config.registerCommon(THERMO_SPEC, genPath + "/thermo_gen.toml");
         Config.registerCommon(SOLAR_PANEL_SPEC, genPath + "/solar_panel.toml");
+        Config.registerCommon(REACTOR_SPEC, genPath + "/reactor.toml");
 
         final String itemPath = Config.createConfigDir("powah/energy/items");
         Config.registerCommon(BATTERY_SPEC, itemPath + "/battery.toml");
@@ -124,6 +124,9 @@ public class Configs {
         final Pair<SolarPanelConfig, ForgeConfigSpec> solarPair = Config.get(SolarPanelConfig::new);
         SOLAR_PANEL = registerEnergy(solarPair.getLeft());
         SOLAR_PANEL_SPEC = solarPair.getRight();
+        final Pair<ReactorConfig, ForgeConfigSpec> reactorPair = Config.get(ReactorConfig::new);
+        REACTOR = registerEnergy(reactorPair.getLeft());
+        REACTOR_SPEC = reactorPair.getRight();
 
         final Pair<BatteryConfig, ForgeConfigSpec> batteryPair = Config.get(BatteryConfig::new);
         BATTERY = registerEnergy(batteryPair.getLeft());

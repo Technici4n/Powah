@@ -33,6 +33,7 @@ import net.minecraft.world.IWorld;
 import net.minecraft.world.World;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
+import owmii.lib.api.energy.INoTileEnergy;
 import owmii.lib.block.AbstractEnergyBlock;
 import owmii.lib.block.TileBase;
 import owmii.lib.config.IEnergyConfig;
@@ -46,7 +47,7 @@ import owmii.powah.inventory.IContainers;
 import javax.annotation.Nullable;
 import java.util.*;
 
-public class EnergyCableBlock extends AbstractEnergyBlock<Tier> implements IWaterLoggable {
+public class EnergyCableBlock extends AbstractEnergyBlock<Tier> implements IWaterLoggable, INoTileEnergy {
     public static final BooleanProperty NORTH = SixWayBlock.NORTH;
     public static final BooleanProperty EAST = SixWayBlock.EAST;
     public static final BooleanProperty SOUTH = SixWayBlock.SOUTH;

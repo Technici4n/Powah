@@ -81,7 +81,7 @@ public class ReactorScreen extends EnergyScreenBase<ReactorTile, ReactorContaine
 
             Ticker solidCoolant = reactor.getSolidCoolant();
             if (!solidCoolant.isEmpty()) {
-                Draw.gaugeV(this.x + 147, this.y + 51, 5, 16, 163, 0, solidCoolant.getMax(), solidCoolant.getTicks());
+                Draw.gaugeV(this.x + 147, this.y + 51, 5, 16, 186, 0, solidCoolant.getMax(), solidCoolant.getTicks());
             }
 
             Ticker temp = reactor.getTemp();
