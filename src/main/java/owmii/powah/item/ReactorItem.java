@@ -1,9 +1,10 @@
 package owmii.powah.item;
 
 import com.mojang.blaze3d.matrix.MatrixStack;
+import com.mojang.blaze3d.platform.GlStateManager;
+import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.IVertexBuilder;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.renderer.ActiveRenderInfo;
 import net.minecraft.client.renderer.IRenderTypeBuffer;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.entity.LivingEntity;
@@ -15,10 +16,7 @@ import net.minecraft.util.ActionResultType;
 import net.minecraft.util.Direction;
 import net.minecraft.util.Hand;
 import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.math.AxisAlignedBB;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.BlockRayTraceResult;
-import net.minecraft.util.math.RayTraceResult;
+import net.minecraft.util.math.*;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraftforge.api.distmarker.Dist;
@@ -27,9 +25,9 @@ import net.minecraftforge.client.event.RenderWorldLastEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import owmii.lib.client.util.Render;
+import owmii.lib.client.util.RenderTypes;
 import owmii.lib.item.EnergyBlockItem;
 import owmii.lib.util.Player;
-import owmii.lib.util.math.V3d;
 import owmii.powah.Powah;
 import owmii.powah.block.Tier;
 import owmii.powah.block.reactor.ReactorBlock;
@@ -71,6 +69,9 @@ public class ReactorItem extends EnergyBlockItem<Tier, ReactorBlock> {
     }
 
     static final ResourceLocation OV_TEXTURE = new ResourceLocation(Powah.MOD_ID, "textures/misc/reactor_ov.png");
+
+    @OnlyIn(Dist.CLIENT)
+    static final RenderType OV_RENDER = RenderTypes.getTextBlended(OV_TEXTURE);
 
     @SubscribeEvent
     @OnlyIn(Dist.CLIENT)
@@ -115,21 +116,29 @@ public class ReactorItem extends EnergyBlockItem<Tier, ReactorBlock> {
                     color = 0xcf040e;
                 }
             }
-            V3d v3d = V3d.from(pos).centerD().down().down(0.6D);
             matrix.push();
-            ActiveRenderInfo info = Minecraft.getInstance().gameRenderer.getActiveRenderInfo();
-            double renderPosX = info.getProjectedView().x;
-            double renderPosY = info.getProjectedView().y;
-            double renderPosZ = info.getProjectedView().z;
-            matrix.translate(-renderPosX, -renderPosY, -renderPosZ);
-            matrix.translate(v3d.x - 1.5D, v3d.y - 1.5D, v3d.z - 1.5D);
-            matrix.scale(3.0F, 3.0F, 3.0F);
-            IVertexBuilder buffer = mc.getRenderTypeBuffers().getBufferSource().getBuffer(RenderType.getText(OV_TEXTURE));
-            Render.quad(matrix.getLast().getMatrix(), buffer, 1.0F, 1.0F, (color >> 16 & 0xFF) / 255.0F, (color >> 8 & 0xFF) / 255.0F, (color & 0xFF) / 255.0F);
+            Vec3d projectedView = Minecraft.getInstance().gameRenderer.getActiveRenderInfo().getProjectedView();
+            matrix.translate(-projectedView.x, -projectedView.y, -projectedView.z);
+            matrix.translate(-1.0D, 0.001D, -1.0D);
+            float r = (color >> 16 & 0xFF) / 255.0F;
+            float g = (color >> 8 & 0xFF) / 255.0F;
+            float b = (color & 0xFF) / 255.0F;
+            IRenderTypeBuffer.Impl rtb = mc.getRenderTypeBuffers().getBufferSource();
+            RenderSystem.pushMatrix();
+            IVertexBuilder buffer = rtb.getBuffer(OV_RENDER);
+            RenderSystem.blendFunc(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE);
+            buffer.pos(matrix.getLast().getMatrix(), pos.getX(), pos.getY(), pos.getZ() + 3).color(r, g, b, 1.0F).tex(0.0F, 1.0F).lightmap(Render.MAX_LIGHT).endVertex();
+            buffer.pos(matrix.getLast().getMatrix(), pos.getX() + 3, pos.getY(), pos.getZ() + 3).color(r, g, b, 1.0F).tex(1.0F, 1.0F).lightmap(Render.MAX_LIGHT).endVertex();
+            buffer.pos(matrix.getLast().getMatrix(), pos.getX() + 3, pos.getY(), pos.getZ()).color(r, g, b, 1.0F).tex(1.0F, 0.0F).lightmap(Render.MAX_LIGHT).endVertex();
+            buffer.pos(matrix.getLast().getMatrix(), pos.getX(), pos.getY(), pos.getZ()).color(r, g, b, 1.0F).tex(0.0F, 0.0F).lightmap(Render.MAX_LIGHT).endVertex();
+            rtb.finish(OV_RENDER);
+            RenderSystem.blendFunc(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA);
+            RenderSystem.popMatrix();
             matrix.pop();
 
         }
     }
+
 
     @Override
     @OnlyIn(Dist.CLIENT)
