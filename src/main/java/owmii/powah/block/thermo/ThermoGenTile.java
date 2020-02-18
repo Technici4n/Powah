@@ -93,6 +93,11 @@ public class ThermoGenTile extends TileBase.EnergyProvider<Tier, ThermoGenBlock>
     }
 
     @Override
+    public boolean keepEnergy() {
+        return true;
+    }
+
+    @Override
     public int getChargingSlots() {
         return 1;
     }

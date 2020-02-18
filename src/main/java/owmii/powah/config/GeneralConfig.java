@@ -8,6 +8,7 @@ import java.util.List;
 public class GeneralConfig {
     public final ForgeConfigSpec.BooleanValue player_aerial_pearl;
     public final ForgeConfigSpec.BooleanValue binding_card_dim;
+    public final ForgeConfigSpec.BooleanValue lens_of_ender;
 
 
     public final ForgeConfigSpec.ConfigValue<List<String>> heatBlocks;
@@ -27,8 +28,10 @@ public class GeneralConfig {
     public GeneralConfig(ForgeConfigSpec.Builder builder) {
         this.player_aerial_pearl = builder.comment("", "Enable this to get Player Aerial Pearl by right clicking a Zombie or Husk with a Aerial Pearl. [default:true]")
                 .define("player_aerial_pearl", true);
-        this.binding_card_dim = builder.comment("", "Enable this to get Dimensional Binding card by right clicking a Enderman or Endermite with a Binding card. [default:true]")
+        this.binding_card_dim = builder.comment("", "Enable this to get Dimensional Binding card by right clicking an Enderman or Endermite with a Binding card. [default:true]")
                 .define("binding_card_dim", true);
+        this.lens_of_ender = builder.comment("", "Enable this to get Lens Of Ender by right clicking an Enderman or Endermite with a Photoelectric Pane. [default:true]")
+                .define("lens_of_ender", true);
 
         builder.push("World Gen");
         this.oreGen = builder.comment("Enable/Disable ore generation. [default:true]").define("oreGen", true);

@@ -41,4 +41,9 @@ public class EnergyDischargerTile extends TileBase.EnergyStorage<Tier, EnergyDis
         });
         return b[0];
     }
+
+    @Override
+    public boolean keepEnergy() {
+        return true;
+    }
 }

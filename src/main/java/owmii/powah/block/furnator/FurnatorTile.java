@@ -39,6 +39,11 @@ public class FurnatorTile extends TileBase.EnergyProvider<Tier, FurnatorBlock> {
     }
 
     @Override
+    public boolean keepEnergy() {
+        return true;
+    }
+
+    @Override
     public int getChargingSlots() {
         return 1;
     }

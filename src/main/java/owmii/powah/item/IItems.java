@@ -14,6 +14,7 @@ import java.util.List;
 @Mod.EventBusSubscriber(bus = Mod.EventBusSubscriber.Bus.MOD)
 public class IItems {
     public static final List<Item> ITEMS = new ArrayList<>(IBlocks.BLOCK_ITEMS);
+    public static final Item BOOK = register("book", new PowahBookItem(new Item.Properties().group(ItemGroups.MAIN).maxStackSize(1)));
     public static final Item WRENCH = register("wrench", new WrenchItem(new Item.Properties().group(ItemGroups.MAIN).maxStackSize(1)));
     public static final Item CAPACITOR_BASIC_TINY = register("capacitor_basic_tiny", new CapacitorItem(new Item.Properties().group(ItemGroups.MAIN)));
     public static final Item CAPACITOR_BASIC = register("capacitor_basic", new CapacitorItem(new Item.Properties().group(ItemGroups.MAIN)));
@@ -36,7 +37,7 @@ public class IItems {
     public static final Item BINDING_CARD = register("binding_card", new BindingCardItem(new Item.Properties().group(ItemGroups.MAIN).maxStackSize(1), false));
     public static final Item BINDING_CARD_DIM = register("binding_card_dim", new BindingCardItem(new Item.Properties().group(ItemGroups.MAIN).maxStackSize(1), true));
     public static final Item LENS_OF_ENDER = register("lens_of_ender", new LensOfEnderItem(new Item.Properties().group(ItemGroups.MAIN)));
-    public static final Item PHOTOELECTRIC_PANE = register("photoelectric_pane", new ItemBase(new Item.Properties().group(ItemGroups.MAIN)));
+    public static final Item PHOTOELECTRIC_PANE = register("photoelectric_pane", new PhotoelectricPaneItem(new Item.Properties().group(ItemGroups.MAIN)));
     public static final Item THERMOELECTRIC_PLATE = register("thermoelectric_plate", new ItemBase(new Item.Properties().group(ItemGroups.MAIN)));
     public static final Item DIELECTRIC_PASTE = register("dielectric_paste", new ItemBase(new Item.Properties().group(ItemGroups.MAIN)));
     public static final Item DIELECTRIC_ROD = register("dielectric_rod", new ItemBase(new Item.Properties().group(ItemGroups.MAIN)));

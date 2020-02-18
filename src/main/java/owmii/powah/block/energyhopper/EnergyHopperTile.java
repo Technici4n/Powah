@@ -52,6 +52,11 @@ public class EnergyHopperTile extends TileBase.EnergyStorage<Tier, EnergyHopperB
     }
 
     @Override
+    public boolean keepEnergy() {
+        return true;
+    }
+
+    @Override
     public void getListedEnergyInfo(List<String> list) {
         super.getListedEnergyInfo(list);
         list.add(TextFormatting.GRAY + I18n.format("info.powah.charging.speed", TextFormatting.DARK_GRAY + Text.numFormat(getBlock().getChargingSpeed())));

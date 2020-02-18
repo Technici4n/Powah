@@ -6,7 +6,6 @@ import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.IVertexBuilder;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.IRenderTypeBuffer;
-import net.minecraft.client.renderer.RenderType;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.BlockItemUseContext;
@@ -70,9 +69,6 @@ public class ReactorItem extends EnergyBlockItem<Tier, ReactorBlock> {
 
     static final ResourceLocation OV_TEXTURE = new ResourceLocation(Powah.MOD_ID, "textures/misc/reactor_ov.png");
 
-    @OnlyIn(Dist.CLIENT)
-    static final RenderType OV_RENDER = RenderTypes.getTextBlended(OV_TEXTURE);
-
     @SubscribeEvent
     @OnlyIn(Dist.CLIENT)
     public static void renderOv(RenderWorldLastEvent event) {
@@ -125,13 +121,13 @@ public class ReactorItem extends EnergyBlockItem<Tier, ReactorBlock> {
             float b = (color & 0xFF) / 255.0F;
             IRenderTypeBuffer.Impl rtb = mc.getRenderTypeBuffers().getBufferSource();
             RenderSystem.pushMatrix();
-            IVertexBuilder buffer = rtb.getBuffer(OV_RENDER);
+            IVertexBuilder buffer = rtb.getBuffer(RenderTypes.getTextBlended(OV_TEXTURE));
             RenderSystem.blendFunc(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE);
             buffer.pos(matrix.getLast().getMatrix(), pos.getX(), pos.getY(), pos.getZ() + 3).color(r, g, b, 1.0F).tex(0.0F, 1.0F).lightmap(Render.MAX_LIGHT).endVertex();
             buffer.pos(matrix.getLast().getMatrix(), pos.getX() + 3, pos.getY(), pos.getZ() + 3).color(r, g, b, 1.0F).tex(1.0F, 1.0F).lightmap(Render.MAX_LIGHT).endVertex();
             buffer.pos(matrix.getLast().getMatrix(), pos.getX() + 3, pos.getY(), pos.getZ()).color(r, g, b, 1.0F).tex(1.0F, 0.0F).lightmap(Render.MAX_LIGHT).endVertex();
             buffer.pos(matrix.getLast().getMatrix(), pos.getX(), pos.getY(), pos.getZ()).color(r, g, b, 1.0F).tex(0.0F, 0.0F).lightmap(Render.MAX_LIGHT).endVertex();
-            rtb.finish(OV_RENDER);
+            rtb.finish(RenderTypes.getTextBlended(OV_TEXTURE));
             RenderSystem.blendFunc(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA);
             RenderSystem.popMatrix();
             matrix.pop();

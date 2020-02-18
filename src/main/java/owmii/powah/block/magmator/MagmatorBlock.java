@@ -45,6 +45,11 @@ public class MagmatorBlock extends AbstractEnergyProviderBlock<Tier> implements 
         return new MagmatorTile(this.variant);
     }
 
+    @Override
+    protected boolean semiFullShape() {
+        return true;
+    }
+
     @Nullable
     @Override
     public ContainerBase getContainer(int id, PlayerInventory playerInventory, TileBase inv) {

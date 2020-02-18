@@ -95,6 +95,8 @@ public class PowahJEIPlugin implements IModPlugin {
             registration.addIngredientInfo(new ItemStack(IItems.PLAYER_AERIAL_PEARL), VanillaTypes.ITEM, I18n.format("wiki.powah.player_aerial_pearl"));
         if (Configs.GENERAL.binding_card_dim.get())
             registration.addIngredientInfo(new ItemStack(IItems.BINDING_CARD_DIM), VanillaTypes.ITEM, I18n.format("wiki.powah.binding_card_dim"));
+        if (Configs.GENERAL.lens_of_ender.get())
+            registration.addIngredientInfo(new ItemStack(IItems.LENS_OF_ENDER), VanillaTypes.ITEM, I18n.format("wiki.powah.lens_of_ender"));
 
     }
 

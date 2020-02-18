@@ -65,7 +65,7 @@ public class EnergyCableBlock extends AbstractEnergyBlock<Tier> implements IWate
 
     @Override
     public IEnergyConfig<Tier> getEnergyConfig() {
-        return Configs.ENERGY_CELL;
+        return Configs.ENERGY_CABLE;
     }
 
     @Override

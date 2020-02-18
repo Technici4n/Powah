@@ -38,6 +38,10 @@ public class MagmatorTile extends TileBase.EnergyProvider<Tier, MagmatorBlock> {
         this.holder = LazyOptional.of(() -> this.tank);
     }
 
+    public MagmatorTile() {
+        this(Tier.STARTER);
+    }
+
     @Override
     public void readStorable(CompoundNBT compound) {
         this.tank.readFromNBT(compound);
@@ -50,13 +54,8 @@ public class MagmatorTile extends TileBase.EnergyProvider<Tier, MagmatorBlock> {
         return super.writeStorable(compound);
     }
 
-    public MagmatorTile() {
-        this(Tier.STARTER);
-    }
-
     @Override
     public void generate(World world) {
-
         if (this.nextBuff <= 0 && !this.tank.isEmpty()) {
             FluidStack fluid = this.tank.getFluid();
             if (PowahAPI.MAGMATIC_FLUIDS.containsKey(fluid.getFluid())) {
@@ -83,6 +82,11 @@ public class MagmatorTile extends TileBase.EnergyProvider<Tier, MagmatorBlock> {
     @Override
     public int getChargingSlots() {
         return 1;
+    }
+
+    @Override
+    public boolean keepEnergy() {
+        return true;
     }
 
     @Override

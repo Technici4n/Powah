@@ -45,6 +45,11 @@ public class FurnatorBlock extends AbstractEnergyProviderBlock<Tier> implements 
         return new FurnatorTile(this.variant);
     }
 
+    @Override
+    protected boolean semiFullShape() {
+        return true;
+    }
+
     @Nullable
     @Override
     public ContainerBase getContainer(int id, PlayerInventory playerInventory, TileBase inv) {

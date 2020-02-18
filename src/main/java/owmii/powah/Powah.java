@@ -14,10 +14,12 @@ import owmii.powah.api.PowahAPI;
 import owmii.powah.api.recipe.energizing.EnergizingRecipeSorter;
 import owmii.powah.block.IBlocks;
 import owmii.powah.block.energizing.EnergizingRecipes;
+import owmii.powah.book.PowahBook;
 import owmii.powah.client.render.BlockRenderTypes;
 import owmii.powah.client.render.entity.EntityRenderer;
 import owmii.powah.client.render.tile.TileRenderer;
 import owmii.powah.client.screen.Screens;
+import owmii.powah.compat.crafttweaker.CrafttweakerCompat;
 import owmii.powah.config.ConfigHandler;
 import owmii.powah.config.Configs;
 import owmii.powah.network.Packets;
@@ -35,6 +37,8 @@ public class Powah {
         addModListener(this::clientSetup);
         addModListener(this::loadComplete);
         Configs.register();
+
+        CrafttweakerCompat.setup();
     }
 
     void commonSetup(final FMLCommonSetupEvent event) {
@@ -58,6 +62,7 @@ public class Powah {
             EntityRenderer.register();
             TileRenderer.register();
             Screens.register();
+            PowahBook.register();
         }
     }
 

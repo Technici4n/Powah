@@ -33,6 +33,11 @@ public class EnergyDischargerBlock extends AbstractEnergyBlock<Tier> {
         return new EnergyDischargerTile(this.variant);
     }
 
+    @Override
+    protected boolean semiFullShape() {
+        return true;
+    }
+
     @Nullable
     @Override
     public ContainerBase getContainer(int id, PlayerInventory playerInventory, TileBase inv) {

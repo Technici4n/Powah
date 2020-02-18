@@ -1,3 +1,18 @@
+1.0.3
+- Re-Implemented crafttweaker for energizing recipes.
+- Added recipe for the manual (forgot to add it in last version).
+- Fixed some blocks not keeping their energy when broken.
+- Updated Lollipop to 1.0.2
+
+1.0.2
+- Re-added the manual with new entries for batteries and lens of ender and updated some screenshots.
+- Fixed cables has wrong config.
+- Fixed reactor tooltip.
+
+1.0.1
+- Fixed reactor placing overlay not rendering correctly.
+- Updated Lollipop to 1.0.1.
+
 1.0.0
 - Added Two new tiers "Starter" and "Nitro".
 - Added Batteries charge items when is in player inventory.

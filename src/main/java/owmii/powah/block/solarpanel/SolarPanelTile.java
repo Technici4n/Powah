@@ -1,5 +1,8 @@
 package owmii.powah.block.solarpanel;
 
+import net.minecraft.block.Block;
+import net.minecraft.block.BlockState;
+import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.util.Direction;
 import net.minecraft.world.World;
@@ -8,6 +11,7 @@ import owmii.lib.util.Misc;
 import owmii.lib.util.Time;
 import owmii.powah.block.ITiles;
 import owmii.powah.block.Tier;
+import owmii.powah.item.IItems;
 
 import javax.annotation.Nullable;
 
@@ -56,6 +60,16 @@ public class SolarPanelTile extends TileBase.EnergyProvider<Tier, SolarPanelBloc
         }
 
         return super.postTicks(world) || flag;
+    }
+
+    @Override
+    public void onRemoved(World world, BlockState state, BlockState newState, boolean isMoving) {
+        super.onRemoved(world, state, newState, isMoving);
+        if (state.getBlock() != newState.getBlock()) {
+            if (this.hasLensOfEnder) {
+                Block.spawnAsEntity(world, this.pos, new ItemStack(IItems.LENS_OF_ENDER));
+            }
+        }
     }
 
     @Override

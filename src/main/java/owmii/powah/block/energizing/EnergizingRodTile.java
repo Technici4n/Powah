@@ -91,6 +91,11 @@ public class EnergizingRodTile extends TileBase.EnergyStorage<Tier, EnergizingRo
     }
 
     @Override
+    public boolean keepEnergy() {
+        return true;
+    }
+
+    @Override
     public boolean isEnergyPresent(@Nullable Direction side) {
         return side != null && side.equals(getBlockState().get(AbstractBlock.FACING));
     }
