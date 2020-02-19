@@ -59,7 +59,7 @@ public class PowahBook {
             .add(BookPage.create().item(IItems.BINDING_CARD).text("binding_card"))
             .add(BookPage.create().item(IItems.BINDING_CARD_DIM).text("binding_card_dim")));
     public static final BookEntry CHARGED_SNOWBALL = register(BookEntry.create("charged_snowball").icon(IItems.CHARGED_SNOWBALL)
-            .add(BookPage.create().item(IItems.CHARGED_SNOWBALL).text("lens_of_ender")));
+            .add(BookPage.create().item(IItems.CHARGED_SNOWBALL).text("charged_snowball")));
     public static final BookEntry LENS_OF_ENDER = register(BookEntry.create("lens_of_ender").icon(IItems.LENS_OF_ENDER)
             .add(BookPage.create().item(IItems.LENS_OF_ENDER).text("lens_of_ender")));
     public static final BookEntry ITEMS = registerMain(BookEntry.create("items").icon(IItems.WRENCH)

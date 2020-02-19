@@ -10,7 +10,6 @@ import net.minecraft.client.resources.I18n;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.StringTextComponent;
-import net.minecraft.util.text.TextFormatting;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.fml.client.gui.GuiUtils;
@@ -155,10 +154,10 @@ public class BookScreen extends ScreenBase {
             FontRenderer font = this.hoveredStack.getItem().getFontRenderer(this.hoveredStack);
             GuiUtils.preItemToolTip(this.hoveredStack);
             List<String> tooltip = this.getTooltipFromItem(this.hoveredStack);
-
-            tooltip.add("");
-            tooltip.add(TextFormatting.YELLOW + "Click " + TextFormatting.GRAY + "or press" + TextFormatting.YELLOW + " R " + TextFormatting.GRAY + "for recipes.");
-            tooltip.add(TextFormatting.YELLOW + "Shift + Click " + TextFormatting.GRAY + "or press" + TextFormatting.YELLOW + " U " + TextFormatting.GRAY + "for usages.");
+//
+//            tooltip.add("");
+//            tooltip.add(TextFormatting.YELLOW + "Click " + TextFormatting.GRAY + "or press" + TextFormatting.YELLOW + " R " + TextFormatting.GRAY + "for recipes.");
+//            tooltip.add(TextFormatting.YELLOW + "Shift + Click " + TextFormatting.GRAY + "or press" + TextFormatting.YELLOW + " U " + TextFormatting.GRAY + "for usages.");
 
             renderTooltip(tooltip, mouseX, mouseY, (font == null ? this.font : font));
             GuiUtils.postItemToolTip();

@@ -1,3 +1,6 @@
+1.1.2
+- Fixed Manual 2 items pages has the same text Closes #40.
+
 1.1.1
 - Fixed some slots not rendering in to the GUI.
 - Added missing GUI's screen titles.
