@@ -1,12 +1,12 @@
 package owmii.powah.client.screen;
 
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.ScreenManager;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
+import net.minecraft.item.ItemStack;
+import owmii.powah.client.screen.book.BookScreen;
 import owmii.powah.client.screen.inventory.*;
 import owmii.powah.inventory.IContainers;
 
-@OnlyIn(Dist.CLIENT)
 public class Screens {
     public static void register() {
         ScreenManager.registerFactory(IContainers.ENERGY_CELL, EnergyCellScreen::new);
@@ -20,5 +20,13 @@ public class Screens {
         ScreenManager.registerFactory(IContainers.ENERGY_HOPPER, EnergyHopperScreen::new);
         ScreenManager.registerFactory(IContainers.ENERGY_DISCHARGER, EnergyDischargerScreen::new);
         ScreenManager.registerFactory(IContainers.REACTOR, ReactorScreen::new);
+    }
+
+    public static void openManualScreen() {
+        Minecraft.getInstance().displayGuiScreen(BookScreen.instance);
+    }
+
+    public static void openEnderNetScreen(ItemStack stack, int totalChannels) {
+        Minecraft.getInstance().displayGuiScreen(new EnderNetScreen(stack, totalChannels));
     }
 }

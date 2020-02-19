@@ -20,7 +20,7 @@ import owmii.lib.util.Player;
 import owmii.lib.util.Stack;
 import owmii.powah.block.Tier;
 import owmii.powah.block.endercell.EnderCellBlock;
-import owmii.powah.client.screen.EnderNetScreen;
+import owmii.powah.client.screen.Screens;
 import owmii.powah.config.EnderCellConfig;
 
 import javax.annotation.Nullable;
@@ -49,7 +49,7 @@ public class EnderCellItem extends EnergyBlockItem<Tier, EnderCellBlock> {
             ItemStack stack = player.getHeldItem(hand);
             setEnderNBT(stack, player);
             if (worldIn.isRemote) {
-                EnderNetScreen.open(stack, ((EnderCellConfig) getEnergyConfig()).getChannels(getVariant()));
+                Screens.openEnderNetScreen(stack, ((EnderCellConfig) getEnergyConfig()).getChannels(getVariant()));
             }
         }
         return super.onItemRightClick(worldIn, player, hand);

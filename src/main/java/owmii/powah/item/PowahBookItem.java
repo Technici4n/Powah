@@ -7,7 +7,7 @@ import net.minecraft.util.ActionResult;
 import net.minecraft.util.Hand;
 import net.minecraft.world.World;
 import owmii.lib.item.ItemBase;
-import owmii.powah.client.screen.book.BookScreen;
+import owmii.powah.client.screen.Screens;
 
 public class PowahBookItem extends ItemBase {
     public PowahBookItem(Properties properties) {
@@ -18,7 +18,7 @@ public class PowahBookItem extends ItemBase {
     public ActionResult<ItemStack> onItemRightClick(World worldIn, PlayerEntity playerIn, Hand handIn) {
         ItemStack stack = playerIn.getHeldItem(handIn);
         if (worldIn.isRemote) {
-            BookScreen.open();
+            Screens.openManualScreen();
         }
         return ActionResult.resultSuccess(stack);
     }

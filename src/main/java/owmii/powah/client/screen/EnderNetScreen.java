@@ -33,10 +33,6 @@ public class EnderNetScreen extends Screen {
         this.channelButtons = new IconButton[this.channels];
     }
 
-    public static void open(ItemStack stack, int totalChannels) {
-        Minecraft.getInstance().displayGuiScreen(new EnderNetScreen(stack, totalChannels));
-    }
-
     @Override
     protected void init() {
         super.init();

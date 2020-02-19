@@ -1,3 +1,8 @@
+1.1.1
+- Fixed some slots not rendering in to the GUI.
+- Added missing GUI's screen titles.
+- Updated Lollipop to 1.0.4
+
 1.1.0
 - Fixed Magmator fluid wrong rendering.
 - Added Blazing Crystal block as a heat source for the Thermo gen with heat of 2800c.
