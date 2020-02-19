@@ -1,3 +1,9 @@
+1.1.0
+- Fixed Magmator fluid wrong rendering.
+- Added Blazing Crystal block as a heat source for the Thermo gen with heat of 2800c.
+- Changed Nitro crystal recipe output from 24 to 16.
+- Updated Lollipop to 1.0.3
+
 1.0.3
 - Re-Implemented crafttweaker for energizing recipes.
 - Added recipe for the manual (forgot to add it in last version).

@@ -46,7 +46,7 @@ public class GeneralConfig {
                 .comment("", "List of heat source blocks used under Thermo Generator.",
                         "Block registry name = heat, eg: [\"minecraft:lava=1000\", \"minecraft:magma_block=800\"]",
                         "Min = 1, max = 900000000")
-                .define("heatSources", Lists.newArrayList("minecraft:lava=1000", "minecraft:magma_block=800"));
+                .define("heatSources", Lists.newArrayList("minecraft:lava=1000", "minecraft:magma_block=800", "powah:blazing_crystal_block=2800"));
         this.heatBlocksAPI = builder.comment("Enable this to allow other mods to add their heat source blocks. [default:true]").define("heatBlocksAPI", true);
 
         this.coolantFluids = builder

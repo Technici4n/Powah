@@ -10,7 +10,6 @@ import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.client.renderer.tileentity.TileEntityRendererDispatcher;
 import net.minecraft.client.world.ClientWorld;
-import net.minecraft.fluid.Fluids;
 import net.minecraft.inventory.container.PlayerContainer;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fluids.FluidAttributes;
@@ -29,7 +28,7 @@ public class MagmatorRenderer extends AbstractTileRenderer<MagmatorTile> {
     public void render(MagmatorTile te, float pt, MatrixStack matrix, IRenderTypeBuffer rtb, Minecraft mc, ClientWorld world, ClientPlayerEntity player, int light, int ov) {
         FluidTank tank = te.getTank();
         if (!tank.isEmpty()) {
-            FluidStack fluidStack = new FluidStack(Fluids.LAVA, 1);
+            FluidStack fluidStack = tank.getFluid();
             FluidAttributes fa = fluidStack.getFluid().getAttributes();
             ResourceLocation still = fa.getStillTexture(fluidStack);
             if (still != null) {
