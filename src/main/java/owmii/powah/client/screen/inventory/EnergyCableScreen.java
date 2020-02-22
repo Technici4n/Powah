@@ -13,7 +13,6 @@ import owmii.lib.client.screen.widget.IconButton;
 import owmii.lib.energy.SideConfig;
 import owmii.lib.network.packets.SNextEnergyConfigPacket;
 import owmii.lib.network.packets.SNextRedstoneModePacket;
-import owmii.lib.util.Empty;
 import owmii.powah.Powah;
 import owmii.powah.block.cable.EnergyCableTile;
 import owmii.powah.inventory.EnergyCableContainer;
@@ -23,7 +22,7 @@ import java.util.List;
 @OnlyIn(Dist.CLIENT)
 public class EnergyCableScreen extends EnergyScreenBase<EnergyCableTile, EnergyCableContainer> {
     private static final ResourceLocation GUI_TEXTURE = new ResourceLocation(Powah.MOD_ID, "textures/gui/container/energy_cable.png");
-    private IconButton configButton = Empty.ICON_BUTTON;
+    private IconButton configButton = ICON_BUTTON;
 
     private Direction side;
 

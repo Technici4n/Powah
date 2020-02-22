@@ -18,7 +18,6 @@ import owmii.lib.Lollipop;
 import owmii.lib.client.screen.EnergyProviderScreenBase;
 import owmii.lib.client.screen.widget.Gauge;
 import owmii.lib.client.util.Draw;
-import owmii.lib.util.Empty;
 import owmii.lib.util.Safe;
 import owmii.powah.api.PowahAPI;
 import owmii.powah.block.magmator.MagmatorTile;
@@ -30,7 +29,7 @@ import java.util.List;
 @OnlyIn(Dist.CLIENT)
 public class MagmatorScreen extends EnergyProviderScreenBase<MagmatorTile, MagmatorContainer> {
     private static final ResourceLocation GUI_MACHINE = new ResourceLocation(Lollipop.MOD_ID, "textures/gui/container/blank_right_gauge.png");
-    private Gauge buffer = Empty.GAUGE;
+    private Gauge buffer = GAUGE;
 
     public MagmatorScreen(MagmatorContainer container, PlayerInventory playerInventory, ITextComponent name) {
         super(container, playerInventory, name);

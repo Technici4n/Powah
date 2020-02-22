@@ -121,6 +121,5 @@ public class EnergyCableTile extends TileBase.EnergyStorage<Tier, EnergyCableBlo
     }
 
     @Override
-    public void getListedEnergyInfo(List<String> list) {
-    }
+    public void getListedEnergyInfo(List<String> list) {}
 }

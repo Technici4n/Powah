@@ -22,7 +22,7 @@ sourceCompatibility = targetCompatibility = compileJava.sourceCompatibility = co
 
 minecraft {
     mappings channel: lib.mappings_channel, version: lib.mappings_version
-    accessTransformer = file('../Lollipop/src/main/resources/META-INF/at.cfg')
+    accessTransformer = file('../Lollipop/src/main/resources/META-INF/accesstransformer.cfg')
 }
 
 repositories {
@@ -40,19 +40,23 @@ dependencies {
     compileOnly fg.deobf("mcjty.theoneprobe:TheOneProbe-1.15:${lib.top_version}:api")
     runtimeOnly fg.deobf("mcjty.theoneprobe:TheOneProbe-1.15:${lib.top_version}")
 
-    compile fg.deobf("com.blamejared.crafttweaker:CraftTweaker-1.15.1:${lib.crafttweaker_version}")
+    compileOnly fg.deobf("com.blamejared.crafttweaker:CraftTweaker-1.15.1:${lib.crafttweaker_version}")
     compile fg.deobf("top.theillusivec4.curios:curios:FORGE-${lib.minecraft_version}-${lib.curios_version}")
+
     compile lib
 }
 
 jar {
     manifest {
-        attributes(["Specification-Title"     : mod_name,
-                    "Specification-Vendor"    : lib.mod_group,
-                    "Specification-Version"   : mod_version,
-                    "Implementation-Title"    : project.name,
-                    "Implementation-Version"  : mod_version,
-                    "Implementation-Vendor"   : lib.mod_group,
-                    "Implementation-Timestamp": new Date().format("yyyy-MM-dd'T'HH:mm:ssZ")],)
+        attributes([
+                'FMLAT'                   : 'accesstransformer.cfg',
+                "Specification-Title"     : mod_name,
+                "Specification-Vendor"    : lib.mod_group,
+                "Specification-Version"   : mod_version,
+                "Implementation-Title"    : project.name,
+                "Implementation-Version"  : mod_version,
+                "Implementation-Vendor"   : lib.mod_group,
+                "Implementation-Timestamp": new Date().format("yyyy-MM-dd'T'HH:mm:ssZ")
+        ],)
     }
 }

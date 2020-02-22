@@ -275,19 +275,12 @@ public class EnergyCableBlock extends AbstractEnergyBlock<Tier> implements IWate
         double x = hit.x - pos.getX();
         double y = hit.y - pos.getY();
         double z = hit.z - pos.getZ();
-        if (x > 0.0D && x < 0.4D) {
-            return Optional.of(Direction.WEST);
-        } else if (x > 0.6D && x < 1.0D) {
-            return Optional.of(Direction.EAST);
-        } else if (z > 0.0D && z < 0.4D) {
-            return Optional.of(Direction.NORTH);
-        } else if (z > 0.6D && z < 1.0D) {
-            return Optional.of(Direction.SOUTH);
-        } else if (y > 0.6D && y < 1.0D) {
-            return Optional.of(Direction.UP);
-        } else if (y > 0.0D && y < 0.4D) {
-            return Optional.of(Direction.DOWN);
-        }
+        if (x > 0.0D && x < 0.4D) return Optional.of(Direction.WEST);
+        else if (x > 0.6D && x < 1.0D) return Optional.of(Direction.EAST);
+        else if (z > 0.0D && z < 0.4D) return Optional.of(Direction.NORTH);
+        else if (z > 0.6D && z < 1.0D) return Optional.of(Direction.SOUTH);
+        else if (y > 0.6D && y < 1.0D) return Optional.of(Direction.UP);
+        else if (y > 0.0D && y < 0.4D) return Optional.of(Direction.DOWN);
         return Optional.empty();
     }
 
