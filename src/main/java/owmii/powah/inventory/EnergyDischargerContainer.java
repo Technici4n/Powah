@@ -5,6 +5,7 @@ import net.minecraft.inventory.container.ContainerType;
 import net.minecraft.network.PacketBuffer;
 import owmii.lib.inventory.EnergyContainerBase;
 import owmii.lib.inventory.slot.SlotBase;
+import owmii.lib.inventory.slot.SlotOverlay;
 import owmii.powah.block.energydischarger.EnergyDischargerTile;
 
 import javax.annotation.Nullable;
@@ -26,7 +27,7 @@ public class EnergyDischargerContainer extends EnergyContainerBase<EnergyDischar
     protected void addContainer(PlayerInventory playerInventory, EnergyDischargerTile te) {
         int size = te.getInventory().getSlots();
         for (int i = size - 1; i >= 0; i--) {
-            addSlot(new SlotBase(te.getInventory(), i, 79 + size * 20 / 2 - i * 20, 32).bg(0, 0).ov(18, 18));
+            addSlot(new SlotBase(te.getInventory(), i, 79 + size * 20 / 2 - i * 20, 32).bg(SlotOverlay.SLOT).ov(SlotOverlay.DISCHARGING));
         }
         super.addContainer(playerInventory, te);
     }

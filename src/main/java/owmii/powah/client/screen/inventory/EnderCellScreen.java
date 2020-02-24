@@ -32,7 +32,7 @@ import java.util.List;
 public class EnderCellScreen extends EnergyScreenBase<EnderCellTile, EnderCellContainer> {
     public static final ResourceLocation GUI_TEXTURE = new ResourceLocation(Powah.MOD_ID, "textures/gui/container/ender_cell.png");
     public static final ResourceLocation GUI_CONFIG_TEXTURE = new ResourceLocation(Lollipop.MOD_ID, "textures/gui/container/ender_blank.png");
-    public static final ResourceLocation GUI_WIDGETS_TEXTURE = new ResourceLocation(Lollipop.MOD_ID, "textures/gui/container/ender_energy_widget.png");
+    public static final ResourceLocation GUI_WIDGETS_TEXTURE = new ResourceLocation(Lollipop.MOD_ID, "textures/gui/container/ender_widget.png");
     protected IconButton[] channelButtons;
 
     public EnderCellScreen(EnderCellContainer container, PlayerInventory playerInventory, ITextComponent name) {

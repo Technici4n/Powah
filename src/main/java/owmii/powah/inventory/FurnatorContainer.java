@@ -5,6 +5,7 @@ import net.minecraft.inventory.container.ContainerType;
 import net.minecraft.network.PacketBuffer;
 import owmii.lib.inventory.EnergyContainerBase;
 import owmii.lib.inventory.slot.SlotBase;
+import owmii.lib.inventory.slot.SlotOverlay;
 import owmii.powah.block.furnator.FurnatorTile;
 
 import javax.annotation.Nullable;
@@ -24,7 +25,7 @@ public class FurnatorContainer extends EnergyContainerBase<FurnatorTile> {
 
     @Override
     protected void addContainer(PlayerInventory playerInventory, FurnatorTile te) {
-        addSlot(new SlotBase(te.getInventory(), te.builtInSlots(), 85, 17).bg(0, 0));
+        addSlot(new SlotBase(te.getInventory(), te.builtInSlots(), 85, 17).bg(SlotOverlay.SLOT));
         super.addContainer(playerInventory, te);
     }
 }

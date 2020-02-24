@@ -1,3 +1,8 @@
+1.1.5
+- Fixed Binding card causing a client crash, Closes #47.
+- Fixed dry ice not dropping because of missing loot table.
+- Updated Lollipop to 1.0.7
+
 1.1.4
 - Fixed a dummy dump server crash
 - Updated Lollipop to 1.0.6

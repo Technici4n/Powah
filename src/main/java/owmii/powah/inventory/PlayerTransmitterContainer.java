@@ -5,6 +5,7 @@ import net.minecraft.inventory.container.ContainerType;
 import net.minecraft.network.PacketBuffer;
 import owmii.lib.inventory.EnergyContainerBase;
 import owmii.lib.inventory.slot.SlotBase;
+import owmii.lib.inventory.slot.SlotOverlay;
 import owmii.powah.block.playertransmitter.PlayerTransmitterTile;
 
 import javax.annotation.Nullable;
@@ -24,7 +25,7 @@ public class PlayerTransmitterContainer extends EnergyContainerBase<PlayerTransm
 
     @Override
     protected void addContainer(PlayerInventory playerInventory, PlayerTransmitterTile te) {
-        addSlot(new SlotBase(te.getInventory(), 0, 85, 32).bg(0, 0).ov(0, 18));
+        addSlot(new SlotBase(te.getInventory(), 0, 85, 32).bg(SlotOverlay.SLOT).ov(SlotOverlay.BINDING_CARD));
         super.addContainer(playerInventory, te);
     }
 }

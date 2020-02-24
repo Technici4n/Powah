@@ -33,6 +33,7 @@ public class PlayerTransmitterTile extends TileBase.EnergyStorage<Tier, PlayerTr
 
     @Override
     protected boolean postTicks(World world) {
+        if (isRemote()) return false;
         if (!this.energy.hasEnergy()) return false;
         long extracted = 0;
         for (ItemStack stack : this.inv.getStacks()) {
@@ -44,11 +45,13 @@ public class PlayerTransmitterTile extends TileBase.EnergyStorage<Tier, PlayerTr
                     if (bindingCard.isMultiDim(stack) || player.dimension.equals(world.dimension.getType())) {
                         long charging = getBlock().getChargingSpeed();
                         for (ItemStack stack1 : Player.invStacks(player)) {
+                            if (stack1.isEmpty()) continue;
                             long amount = Math.min(charging, getEnergyStored());
                             int received = Energy.receive(stack1, amount, false);
                             extracted += extractEnergy(received, false, null);
                         }
                         for (ItemStack stack1 : CuriosCompat.getAllStacks(player)) {
+                            if (stack1.isEmpty()) continue;
                             long amount = Math.min(charging, getEnergyStored());
                             int received = Energy.receive(stack1, amount, false);
                             extracted += extractEnergy(received, false, null);
