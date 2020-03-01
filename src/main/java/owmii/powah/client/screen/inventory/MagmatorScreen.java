@@ -15,7 +15,7 @@ import net.minecraftforge.fluids.FluidAttributes;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.capability.templates.FluidTank;
 import owmii.lib.Lollipop;
-import owmii.lib.client.screen.EnergyProviderScreenBase;
+import owmii.lib.client.screen.EnergyProviderScreen;
 import owmii.lib.client.screen.widget.Gauge;
 import owmii.lib.client.util.Draw;
 import owmii.lib.util.Safe;
@@ -27,7 +27,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @OnlyIn(Dist.CLIENT)
-public class MagmatorScreen extends EnergyProviderScreenBase<MagmatorTile, MagmatorContainer> {
+public class MagmatorScreen extends EnergyProviderScreen<MagmatorTile, MagmatorContainer> {
     private static final ResourceLocation GUI_MACHINE = new ResourceLocation(Lollipop.MOD_ID, "textures/gui/container/blank_right_gauge.png");
     private Gauge buffer = GAUGE;
 

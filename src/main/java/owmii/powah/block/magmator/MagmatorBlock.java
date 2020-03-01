@@ -52,9 +52,9 @@ public class MagmatorBlock extends AbstractEnergyProviderBlock<Tier> implements 
 
     @Nullable
     @Override
-    public ContainerBase getContainer(int id, PlayerInventory playerInventory, TileBase inv) {
-        if (inv instanceof MagmatorTile) {
-            return new MagmatorContainer(IContainers.MAGMATOR, id, playerInventory, (MagmatorTile) inv);
+    public ContainerBase getContainer(int id, PlayerInventory playerInventory, TileBase te, BlockRayTraceResult result) {
+        if (te instanceof MagmatorTile) {
+            return new MagmatorContainer(IContainers.MAGMATOR, id, playerInventory, (MagmatorTile) te);
         }
         return null;
     }

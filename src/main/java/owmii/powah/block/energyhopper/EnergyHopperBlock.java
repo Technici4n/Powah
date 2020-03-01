@@ -7,6 +7,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.Direction;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.BlockRayTraceResult;
 import net.minecraft.util.math.shapes.ISelectionContext;
 import net.minecraft.util.math.shapes.VoxelShape;
 import net.minecraft.util.text.ITextComponent;
@@ -76,9 +77,9 @@ public class EnergyHopperBlock extends AbstractEnergyBlock<Tier> {
 
     @Nullable
     @Override
-    public ContainerBase getContainer(int id, PlayerInventory playerInventory, TileBase inv) {
-        if (inv instanceof EnergyHopperTile) {
-            return new EnergyHopperContainer(IContainers.ENERGY_HOPPER, id, playerInventory, (EnergyHopperTile) inv);
+    public ContainerBase getContainer(int id, PlayerInventory playerInventory, TileBase te, BlockRayTraceResult result) {
+        if (te instanceof EnergyHopperTile) {
+            return new EnergyHopperContainer(IContainers.ENERGY_HOPPER, id, playerInventory, (EnergyHopperTile) te);
         }
         return null;
     }

@@ -10,6 +10,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.BlockRayTraceResult;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.util.text.TextFormatting;
@@ -57,9 +58,9 @@ public class EnderCellBlock extends AbstractEnergyBlock<Tier> {
 
     @Nullable
     @Override
-    public ContainerBase getContainer(int id, PlayerInventory playerInventory, TileBase inv) {
-        if (inv instanceof EnderCellTile) {
-            return new EnderCellContainer(IContainers.ENDER_CELL, id, playerInventory, (EnderCellTile) inv);
+    public ContainerBase getContainer(int id, PlayerInventory playerInventory, TileBase te, BlockRayTraceResult result) {
+        if (te instanceof EnderCellTile) {
+            return new EnderCellContainer(IContainers.ENDER_CELL, id, playerInventory, (EnderCellTile) te);
         }
         return null;
     }

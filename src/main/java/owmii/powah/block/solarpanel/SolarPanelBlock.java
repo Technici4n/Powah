@@ -12,6 +12,7 @@ import net.minecraft.state.StateContainer;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.Direction;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.BlockRayTraceResult;
 import net.minecraft.util.math.shapes.ISelectionContext;
 import net.minecraft.util.math.shapes.VoxelShape;
 import net.minecraft.world.IBlockReader;
@@ -66,9 +67,9 @@ public class SolarPanelBlock extends AbstractEnergyProviderBlock<Tier> implement
 
     @Nullable
     @Override
-    public ContainerBase getContainer(int id, PlayerInventory playerInventory, TileBase inv) {
-        if (inv instanceof SolarPanelTile) {
-            return new SolarPanelContainer(IContainers.SOLAR_PANEL, id, playerInventory, (SolarPanelTile) inv);
+    public ContainerBase getContainer(int id, PlayerInventory playerInventory, TileBase te, BlockRayTraceResult result) {
+        if (te instanceof SolarPanelTile) {
+            return new SolarPanelContainer(IContainers.SOLAR_PANEL, id, playerInventory, (SolarPanelTile) te);
         }
         return null;
     }

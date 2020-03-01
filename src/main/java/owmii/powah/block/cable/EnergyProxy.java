@@ -15,8 +15,8 @@ import java.util.*;
 
 public class EnergyProxy {
     public final Map<Direction, EnergyProxy> proxies = new HashMap<>();
-    public final Set<BlockPos> searchCache = new HashSet<>();
-    public final Set<BlockPos> cables = new HashSet<>();
+    public final List<BlockPos> searchCache = new ArrayList<>();
+    public final List<BlockPos> cables = new ArrayList<>();
 
     public void init() {
         for (Direction side : Direction.values()) {
@@ -59,7 +59,7 @@ public class EnergyProxy {
         return cableTiles;
     }
 
-    public Set<BlockPos> search(Block block, EnergyCableTile tile, Direction side) {
+    public List<BlockPos> search(Block block, EnergyCableTile tile, Direction side) {
         World world = tile.getWorld();
         if (world != null) {
             BlockPos pos = tile.getPos();
@@ -85,10 +85,13 @@ public class EnergyProxy {
     }
 
     public boolean add(BlockPos pos) {
-        return this.cables.add(pos);
+        if (!this.cables.contains(pos)) {
+            return this.cables.add(pos);
+        }
+        return false;
     }
 
-    public Set<BlockPos> cables() {
+    public List<BlockPos> cables() {
         return this.cables;
     }
 }

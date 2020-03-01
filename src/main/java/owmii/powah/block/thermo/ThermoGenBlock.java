@@ -72,9 +72,9 @@ public class ThermoGenBlock extends AbstractEnergyProviderBlock<Tier> implements
 
     @Nullable
     @Override
-    public ContainerBase getContainer(int id, PlayerInventory playerInventory, TileBase inv) {
-        if (inv instanceof ThermoGenTile) {
-            return new ThermoGenContainer(IContainers.THERMO_GEN, id, playerInventory, (ThermoGenTile) inv);
+    public ContainerBase getContainer(int id, PlayerInventory playerInventory, TileBase te, BlockRayTraceResult result) {
+        if (te instanceof ThermoGenTile) {
+            return new ThermoGenContainer(IContainers.THERMO_GEN, id, playerInventory, (ThermoGenTile) te);
         }
         return null;
     }

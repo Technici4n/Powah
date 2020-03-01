@@ -97,11 +97,11 @@ public class EnergyCableBlock extends AbstractEnergyBlock<Tier> implements IWate
 
     @Nullable
     @Override
-    public <T extends TileBase> ContainerBase getContainer(int id, PlayerInventory inventory, TileBase te) {
+    public <T extends TileBase> ContainerBase getContainer(int id, PlayerInventory inventory, TileBase te, BlockRayTraceResult result) {
         if (te instanceof EnergyCableTile) {
             return new EnergyCableContainer(IContainers.ENERGY_CABLE, id, inventory, (EnergyCableTile) te);
         }
-        return super.getContainer(id, inventory, te);
+        return null;
     }
 
     @Override

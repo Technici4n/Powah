@@ -119,8 +119,8 @@ public class ReactorItem extends EnergyBlockItem<Tier, ReactorBlock> {
             float r = (color >> 16 & 0xFF) / 255.0F;
             float g = (color >> 8 & 0xFF) / 255.0F;
             float b = (color & 0xFF) / 255.0F;
-            IRenderTypeBuffer.Impl rtb = mc.getRenderTypeBuffers().getBufferSource();
             RenderSystem.pushMatrix();
+            IRenderTypeBuffer.Impl rtb = mc.getRenderTypeBuffers().getBufferSource();
             IVertexBuilder buffer = rtb.getBuffer(RenderTypes.getTextBlended(OV_TEXTURE));
             RenderSystem.blendFunc(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE);
             buffer.pos(matrix.getLast().getMatrix(), pos.getX(), pos.getY(), pos.getZ() + 3).color(r, g, b, 1.0F).tex(0.0F, 1.0F).lightmap(Render.MAX_LIGHT).endVertex();

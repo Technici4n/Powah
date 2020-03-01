@@ -9,6 +9,7 @@ import net.minecraft.util.Direction;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.SoundEvents;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.BlockRayTraceResult;
 import net.minecraft.world.IBlockReader;
 import net.minecraft.world.World;
 import owmii.lib.block.AbstractEnergyProviderBlock;
@@ -52,9 +53,9 @@ public class FurnatorBlock extends AbstractEnergyProviderBlock<Tier> implements 
 
     @Nullable
     @Override
-    public ContainerBase getContainer(int id, PlayerInventory playerInventory, TileBase inv) {
-        if (inv instanceof FurnatorTile) {
-            return new FurnatorContainer(IContainers.FURNATOR, id, playerInventory, (FurnatorTile) inv);
+    public ContainerBase getContainer(int id, PlayerInventory playerInventory, TileBase te, BlockRayTraceResult result) {
+        if (te instanceof FurnatorTile) {
+            return new FurnatorContainer(IContainers.FURNATOR, id, playerInventory, (FurnatorTile) te);
         }
         return null;
     }

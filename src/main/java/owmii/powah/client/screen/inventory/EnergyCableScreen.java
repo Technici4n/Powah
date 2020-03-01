@@ -8,7 +8,7 @@ import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
-import owmii.lib.client.screen.EnergyScreenBase;
+import owmii.lib.client.screen.EnergyScreen;
 import owmii.lib.client.screen.widget.IconButton;
 import owmii.lib.energy.SideConfig;
 import owmii.lib.network.packets.SNextEnergyConfigPacket;
@@ -20,7 +20,7 @@ import owmii.powah.inventory.EnergyCableContainer;
 import java.util.List;
 
 @OnlyIn(Dist.CLIENT)
-public class EnergyCableScreen extends EnergyScreenBase<EnergyCableTile, EnergyCableContainer> {
+public class EnergyCableScreen extends EnergyScreen<EnergyCableTile, EnergyCableContainer> {
     private static final ResourceLocation GUI_TEXTURE = new ResourceLocation(Powah.MOD_ID, "textures/gui/container/energy_cable.png");
     private IconButton configButton = ICON_BUTTON;
 

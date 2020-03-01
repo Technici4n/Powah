@@ -6,14 +6,14 @@ import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
-import owmii.lib.client.screen.EnergyProviderScreenBase;
+import owmii.lib.client.screen.EnergyProviderScreen;
 import owmii.lib.client.screen.widget.Gauge;
 import owmii.lib.util.Safe;
 import owmii.powah.block.furnator.FurnatorTile;
 import owmii.powah.inventory.FurnatorContainer;
 
 @OnlyIn(Dist.CLIENT)
-public class FurnatorScreen extends EnergyProviderScreenBase<FurnatorTile, FurnatorContainer> {
+public class FurnatorScreen extends EnergyProviderScreen<FurnatorTile, FurnatorContainer> {
     private Gauge buffer = GAUGE;
 
     public FurnatorScreen(FurnatorContainer container, PlayerInventory playerInventory, ITextComponent name) {

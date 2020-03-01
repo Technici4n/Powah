@@ -14,7 +14,7 @@ import net.minecraftforge.fluids.FluidAttributes;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.capability.templates.FluidTank;
 import owmii.lib.Lollipop;
-import owmii.lib.client.screen.EnergyScreenBase;
+import owmii.lib.client.screen.EnergyScreen;
 import owmii.lib.client.util.Draw;
 import owmii.powah.api.PowahAPI;
 import owmii.powah.block.thermo.ThermoGenTile;
@@ -24,7 +24,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @OnlyIn(Dist.CLIENT)
-public class ThermoGenScreen extends EnergyScreenBase<ThermoGenTile, ThermoGenContainer> {
+public class ThermoGenScreen extends EnergyScreen<ThermoGenTile, ThermoGenContainer> {
     private static final ResourceLocation GUI_MACHINE = new ResourceLocation(Lollipop.MOD_ID, "textures/gui/container/blank_right_gauge.png");
 
     public ThermoGenScreen(ThermoGenContainer container, PlayerInventory playerInventory, ITextComponent name) {

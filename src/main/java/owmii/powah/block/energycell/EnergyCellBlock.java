@@ -7,6 +7,7 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.math.BlockRayTraceResult;
 import net.minecraft.world.IBlockReader;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
@@ -51,7 +52,7 @@ public class EnergyCellBlock extends AbstractEnergyBlock<Tier> implements IWater
 
     @Nullable
     @Override
-    public ContainerBase getContainer(int id, PlayerInventory inventory, TileBase te) {
+    public ContainerBase getContainer(int id, PlayerInventory inventory, TileBase te, BlockRayTraceResult result) {
         if (te instanceof EnergyCellTile) {
             return new EnergyCellContainer(IContainers.ENERGY_CELL, id, inventory, (EnergyCellTile) te);
         }

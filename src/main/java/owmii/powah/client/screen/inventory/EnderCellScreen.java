@@ -13,7 +13,7 @@ import net.minecraft.util.text.TextFormatting;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import owmii.lib.Lollipop;
-import owmii.lib.client.screen.EnergyScreenBase;
+import owmii.lib.client.screen.EnergyScreen;
 import owmii.lib.client.screen.widget.IconButton;
 import owmii.lib.energy.Energy;
 import owmii.lib.inventory.slot.SlotBase;
@@ -29,7 +29,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @OnlyIn(Dist.CLIENT)
-public class EnderCellScreen extends EnergyScreenBase<EnderCellTile, EnderCellContainer> {
+public class EnderCellScreen extends EnergyScreen<EnderCellTile, EnderCellContainer> {
     public static final ResourceLocation GUI_TEXTURE = new ResourceLocation(Powah.MOD_ID, "textures/gui/container/ender_cell.png");
     public static final ResourceLocation GUI_CONFIG_TEXTURE = new ResourceLocation(Lollipop.MOD_ID, "textures/gui/container/ender_blank.png");
     public static final ResourceLocation GUI_WIDGETS_TEXTURE = new ResourceLocation(Lollipop.MOD_ID, "textures/gui/container/ender_widget.png");

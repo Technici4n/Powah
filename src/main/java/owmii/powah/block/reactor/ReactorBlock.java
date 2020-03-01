@@ -102,9 +102,9 @@ public class ReactorBlock extends AbstractEnergyProviderBlock<Tier> {
 
     @Nullable
     @Override
-    public ContainerBase getContainer(int id, PlayerInventory playerInventory, TileBase inv) {
-        if (inv instanceof ReactorTile) {
-            return new ReactorContainer(IContainers.REACTOR, id, playerInventory, (ReactorTile) inv);
+    public ContainerBase getContainer(int id, PlayerInventory playerInventory, TileBase te, BlockRayTraceResult result) {
+        if (te instanceof ReactorTile) {
+            return new ReactorContainer(IContainers.REACTOR, id, playerInventory, (ReactorTile) te);
         }
         return null;
     }

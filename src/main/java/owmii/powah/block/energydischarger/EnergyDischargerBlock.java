@@ -3,6 +3,7 @@ package owmii.powah.block.energydischarger;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.math.BlockRayTraceResult;
 import net.minecraft.world.IBlockReader;
 import owmii.lib.block.AbstractEnergyBlock;
 import owmii.lib.block.TileBase;
@@ -40,9 +41,9 @@ public class EnergyDischargerBlock extends AbstractEnergyBlock<Tier> {
 
     @Nullable
     @Override
-    public ContainerBase getContainer(int id, PlayerInventory playerInventory, TileBase inv) {
-        if (inv instanceof EnergyDischargerTile) {
-            return new EnergyDischargerContainer(IContainers.ENERGY_DISCHARGER, id, playerInventory, (EnergyDischargerTile) inv);
+    public ContainerBase getContainer(int id, PlayerInventory playerInventory, TileBase te, BlockRayTraceResult result) {
+        if (te instanceof EnergyDischargerTile) {
+            return new EnergyDischargerContainer(IContainers.ENERGY_DISCHARGER, id, playerInventory, (EnergyDischargerTile) te);
         }
         return null;
     }

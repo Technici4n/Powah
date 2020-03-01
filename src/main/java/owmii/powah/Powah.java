@@ -41,7 +41,7 @@ public class Powah {
         CrafttweakerCompat.setup();
     }
 
-    void commonSetup(final FMLCommonSetupEvent event) {
+    void commonSetup(FMLCommonSetupEvent event) {
         PowahAPI.register(EnergizingRecipes.all());
         Packets.register();
         IFeatures.register();
@@ -56,7 +56,7 @@ public class Powah {
 
     }
 
-    void clientSetup(final FMLClientSetupEvent event) {
+    void clientSetup(FMLClientSetupEvent event) {
         if (FML.isClient()) {
             BlockRenderTypes.register();
             EntityRenderer.register();
@@ -66,7 +66,7 @@ public class Powah {
         }
     }
 
-    void loadComplete(final FMLLoadCompleteEvent event) {
+    void loadComplete(FMLLoadCompleteEvent event) {
         Configs.ENERGY.forEach(IConfig::reload);
         EnergizingRecipeSorter.sort();
         ConfigHandler.post();
