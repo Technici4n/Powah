@@ -1,3 +1,17 @@
+1.1.8
+- Fixed Energy data not appearing in TOP/Waila.
+- Fixed redstone stop magmator from receiving fluids.
+- Replaced some recipe tags with actual item stacks until empty tags bux got fixed.
+- Added new command to generate CraftTweaker example zs script instead of generating on startup.
+Important NOTE!!: There is two bugs still can't fix them: (empty forge tags) and (some times button not functioning in multiPlayer world)
+hoping i can fix theme in the next release, also i'm experiencing some health issues and that's why im slowly working on this mod and 3 other
+projects two of theme are not released yet.
+
+1.1.7
+- Added hovering hud to energizing rods to see the energy stored.
+- Separated redstone on/off for generators from the energy transfer.
+- Updated Lollipop to 1.0.9
+
 1.1.6
 - Fixed Uraninite ores not generating in some biomes/dimensions, Closes  #49.
 - Fixed cables power delivery sorting.

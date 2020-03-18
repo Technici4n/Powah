@@ -6,12 +6,12 @@ import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLLoadCompleteEvent;
+import net.minecraftforge.fml.event.server.FMLServerStartingEvent;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import owmii.lib.config.IConfig;
 import owmii.lib.util.FML;
 import owmii.powah.api.PowahAPI;
-import owmii.powah.api.recipe.energizing.EnergizingRecipeSorter;
 import owmii.powah.block.IBlocks;
 import owmii.powah.block.energizing.EnergizingRecipes;
 import owmii.powah.book.PowahBook;
@@ -19,12 +19,13 @@ import owmii.powah.client.render.BlockRenderTypes;
 import owmii.powah.client.render.entity.EntityRenderer;
 import owmii.powah.client.render.tile.TileRenderer;
 import owmii.powah.client.screen.Screens;
-import owmii.powah.compat.crafttweaker.CrafttweakerCompat;
+import owmii.powah.command.PowahCommand;
 import owmii.powah.config.ConfigHandler;
 import owmii.powah.config.Configs;
 import owmii.powah.network.Packets;
 import owmii.powah.world.gen.IFeatures;
 
+import static owmii.lib.Lollipop.addEventListener;
 import static owmii.lib.Lollipop.addModListener;
 
 @Mod(Powah.MOD_ID)
@@ -36,13 +37,12 @@ public class Powah {
         addModListener(this::commonSetup);
         addModListener(this::clientSetup);
         addModListener(this::loadComplete);
+        addEventListener(this::serverStarting);
         Configs.register();
-
-        CrafttweakerCompat.setup();
     }
 
     void commonSetup(FMLCommonSetupEvent event) {
-        PowahAPI.register(EnergizingRecipes.all());
+        PowahAPI.register(new EnergizingRecipes());
         Packets.register();
         IFeatures.register();
 
@@ -53,7 +53,6 @@ public class Powah {
         PowahAPI.registerSolidCoolant(Blocks.PACKED_ICE, 192, -8);
         PowahAPI.registerSolidCoolant(Blocks.BLUE_ICE, 568, -17);
         PowahAPI.registerSolidCoolant(IBlocks.DRY_ICE, 712, -32);
-
     }
 
     void clientSetup(FMLClientSetupEvent event) {
@@ -68,7 +67,10 @@ public class Powah {
 
     void loadComplete(FMLLoadCompleteEvent event) {
         Configs.ENERGY.forEach(IConfig::reload);
-        EnergizingRecipeSorter.sort();
         ConfigHandler.post();
+    }
+
+    void serverStarting(FMLServerStartingEvent evt) {
+        PowahCommand.register(evt.getCommandDispatcher());
     }
 }

@@ -27,26 +27,28 @@ public class EnergyHopperTile extends TileBase.EnergyStorage<Tier, EnergyHopperB
     @Override
     protected boolean postTicks(World world) {
         final int[] extracted = {0};
-        Direction side = getBlockState().get(EnergyHopperBlock.FACING);
-        TileEntity tile = getTileEntity(this.pos.offset(side));
-        long charging = getBlock().getChargingSpeed();
-        if (tile instanceof IInventory) {
-            IInventory inventory = (IInventory) tile;
-            for (int i = 0; i < inventory.getSizeInventory(); i++) {
-                ItemStack stack = inventory.getStackInSlot(i);
-                if (stack.getCount() == 1) {
-                    extracted[0] += chargeItem(stack, charging);
-                }
-            }
-        } else if (tile != null) {
-            tile.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY).ifPresent(iItemHandler -> {
-                for (int i = 0; i < iItemHandler.getSlots(); i++) {
-                    ItemStack stack = iItemHandler.getStackInSlot(i);
+        if (doWorkingTicks(world)) {
+            Direction side = getBlockState().get(EnergyHopperBlock.FACING);
+            TileEntity tile = getTileEntity(this.pos.offset(side));
+            long charging = getBlock().getChargingSpeed();
+            if (tile instanceof IInventory) {
+                IInventory inventory = (IInventory) tile;
+                for (int i = 0; i < inventory.getSizeInventory(); i++) {
+                    ItemStack stack = inventory.getStackInSlot(i);
                     if (stack.getCount() == 1) {
                         extracted[0] += chargeItem(stack, charging);
                     }
                 }
-            });
+            } else if (tile != null) {
+                tile.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY).ifPresent(iItemHandler -> {
+                    for (int i = 0; i < iItemHandler.getSlots(); i++) {
+                        ItemStack stack = iItemHandler.getStackInSlot(i);
+                        if (stack.getCount() == 1) {
+                            extracted[0] += chargeItem(stack, charging);
+                        }
+                    }
+                });
+            }
         }
         return extracted[0] > 0;
     }

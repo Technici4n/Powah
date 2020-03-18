@@ -135,23 +135,26 @@ public class ReactorTile extends TileBase.EnergyProvider<Tier, ReactorBlock> {
                     extracted += extractEnergy(received, false, direction);
                 }
             }
-            boolean generating = !this.energy.isFull() && !this.fuel.isEmpty();
-            boolean b0 = processFuel(world);
-            boolean b1 = processCarbon(world, generating);
-            boolean b2 = processRedstone(world, generating);
-            boolean b3 = processTemperature(world, generating);
-            if (b0 || b1 || b2 || b3) {
-                flag = true;
-            }
 
-            if (generating) {
-                this.fuel.back(calcConsumption());
-                this.energy.produce(getGeneration());
-                flag = true;
-            }
+            if (doWorkingTicks(world)) {
+                boolean generating = !this.energy.isFull() && !this.fuel.isEmpty();
+                boolean b0 = processFuel(world);
+                boolean b1 = processCarbon(world, generating);
+                boolean b2 = processRedstone(world, generating);
+                boolean b3 = processTemperature(world, generating);
+                if (b0 || b1 || b2 || b3) {
+                    flag = true;
+                }
 
-            if (flag && this.isContainerOpen) {
-                sync(3);
+                if (generating) {
+                    this.fuel.back(calcConsumption());
+                    this.energy.produce(getGeneration());
+                    flag = true;
+                }
+
+                if (flag && this.isContainerOpen) {
+                    sync(3);
+                }
             }
         } else if (!build(world)) {
             return false;

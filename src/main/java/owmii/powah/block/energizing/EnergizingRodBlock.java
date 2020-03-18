@@ -1,7 +1,11 @@
 package owmii.powah.block.energizing;
 
+import com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.IWaterLoggable;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.FontRenderer;
+import net.minecraft.client.resources.I18n;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
@@ -9,7 +13,9 @@ import net.minecraft.nbt.NBTUtil;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.Direction;
 import net.minecraft.util.Hand;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.BlockRayTraceResult;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.util.math.shapes.IBooleanFunction;
 import net.minecraft.util.math.shapes.ISelectionContext;
@@ -18,9 +24,16 @@ import net.minecraft.util.text.TextFormatting;
 import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.IBlockReader;
 import net.minecraft.world.World;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.common.util.Constants;
+import net.minecraftforge.fml.client.gui.GuiUtils;
+import owmii.lib.Lollipop;
 import owmii.lib.block.AbstractEnergyBlock;
+import owmii.lib.client.handler.IHud;
+import owmii.lib.client.util.Draw;
 import owmii.lib.config.IEnergyConfig;
+import owmii.lib.util.Text;
 import owmii.lib.util.math.V3d;
 import owmii.powah.api.wrench.IWrenchable;
 import owmii.powah.api.wrench.WrenchMode;
@@ -36,7 +49,7 @@ import java.util.stream.Collectors;
 
 import static net.minecraft.util.math.shapes.VoxelShapes.combineAndSimplify;
 
-public class EnergizingRodBlock extends AbstractEnergyBlock<Tier> implements IWaterLoggable, IWrenchable {
+public class EnergizingRodBlock extends AbstractEnergyBlock<Tier> implements IWaterLoggable, IWrenchable, IHud {
     private static final Map<Direction, VoxelShape> VOXEL_SHAPES = new HashMap<>();
 
     public EnergizingRodBlock(Properties properties, Tier variant) {
@@ -139,5 +152,27 @@ public class EnergizingRodBlock extends AbstractEnergyBlock<Tier> implements IWa
             }
         }
         return false;
+    }
+
+    @Override
+    @OnlyIn(Dist.CLIENT)
+    public boolean renderHud(BlockState state, World world, BlockPos pos, PlayerEntity player, BlockRayTraceResult result, @Nullable TileEntity te) {
+        if (te instanceof EnergizingRodTile) {
+            EnergizingRodTile rod = (EnergizingRodTile) te;
+            RenderSystem.pushMatrix();
+            RenderSystem.enableBlend();
+            Minecraft mc = Minecraft.getInstance();
+            FontRenderer font = mc.fontRenderer;
+            int x = mc.getMainWindow().getScaledWidth() / 2;
+            int y = mc.getMainWindow().getScaledHeight();
+            String s = TextFormatting.GRAY + I18n.format("info.lollipop.stored.energy.fe", Text.addCommas(rod.getEnergyStored()), Text.numFormat(rod.getEnergyCapacity()));
+            mc.getTextureManager().bindTexture(new ResourceLocation(Lollipop.MOD_ID, "textures/gui/ov_energy.png"));
+            GuiUtils.drawTexturedModalRect(x - 37 - 1, y - 80, 0, 0, 74, 9, 0);
+            Draw.gaugeH(x - 37, y - 79, 72, 16, 0, 9, ((EnergizingRodTile) te).getEnergyStorage());
+            font.drawStringWithShadow(s, x - (font.getStringWidth(s) / 2.0f), y - 67, 0xffffff);
+            RenderSystem.disableBlend();
+            RenderSystem.popMatrix();
+        }
+        return true;
     }
 }

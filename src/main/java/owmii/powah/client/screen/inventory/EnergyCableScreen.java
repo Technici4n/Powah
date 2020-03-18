@@ -36,7 +36,7 @@ public class EnergyCableScreen extends EnergyScreen<EnergyCableTile, EnergyCable
     @Override
     protected void mainButtons(int x, int y) {
         this.redStoneButton = addIconButton(x + this.xSize - 20, y + this.ySize - 20, 15, 15, 45, 0, 15, getWidgetTexture(), (button) -> {
-            SNextRedstoneModePacket.send(this.mc.world, this.te.getPos());
+            SNextRedstoneModePacket.send(this.te.getPos());
             this.te.nextRedstoneMode();
         }).tooltip(this.te.getRedstoneMode().getDisplayName());
     }
@@ -44,7 +44,7 @@ public class EnergyCableScreen extends EnergyScreen<EnergyCableTile, EnergyCable
     @Override
     protected void configButtons(int x, int y) {
         this.configButton = addIconButton(x + 131, y + 5, 17, 17, 0, 30, 17, getWidgetTexture(), (button) -> {
-            SNextEnergyConfigPacket.send(this.side.getIndex(), this.mc.world, this.te.getPos());
+            SNextEnergyConfigPacket.send(this.side.getIndex(), this.te.getPos());
             this.te.getSideConfig().nextType(this.side);
         }).tooltip("info.lollipop.side." + this.side.getName(), TextFormatting.GRAY, TextFormatting.DARK_GRAY).tooltip(this.te.getSideConfig().getType(this.side).getDisplayName());
     }

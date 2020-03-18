@@ -20,15 +20,17 @@ public class EnergyDischargerTile extends TileBase.EnergyStorage<Tier, EnergyDis
     @Override
     protected boolean postTicks(World world) {
         final int[] extracted = {0};
-        for (int i = 0; i < this.inv.getSlots(); i++) {
-            final ItemStack stack = this.inv.getStackInSlot(i);
-            long amount = Math.min(getMaxEnergyExtract(), Energy.getStored(stack));
-            long received = Math.min(getEnergyCapacity() - getEnergyStored(), amount);
-            int j = Energy.extract(stack, received, false);
-            produceEnergy(j);
-            extracted[0] += j;
+        if (doWorkingTicks(world)) {
+            for (int i = 0; i < this.inv.getSlots(); i++) {
+                final ItemStack stack = this.inv.getStackInSlot(i);
+                long amount = Math.min(getMaxEnergyExtract(), Energy.getStored(stack));
+                long received = Math.min(getEnergyCapacity() - getEnergyStored(), amount);
+                int j = Energy.extract(stack, received, false);
+                produceEnergy(j);
+                extracted[0] += j;
+            }
         }
-        return extracted[0] > 0;
+        return extracted[0] > 0 && super.postTicks(world);
     }
 
     @Override

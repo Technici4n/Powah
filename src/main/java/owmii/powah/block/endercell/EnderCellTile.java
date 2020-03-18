@@ -164,6 +164,11 @@ public class EnderCellTile extends TileBase.EnergyStorage<Tier, EnderCellBlock> 
     }
 
     @Override
+    protected boolean doEnergyTransfer() {
+        return checkRedstone();
+    }
+
+    @Override
     public long getMaxEnergyReceive() {
         return defaultTransfer();
     }

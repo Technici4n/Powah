@@ -33,7 +33,7 @@ public class PlayerTransmitterTile extends TileBase.EnergyStorage<Tier, PlayerTr
 
     @Override
     protected boolean postTicks(World world) {
-        if (isRemote()) return false;
+        if (isRemote() || !doWorkingTicks(world)) return false;
         if (!this.energy.hasEnergy()) return false;
         long extracted = 0;
         for (ItemStack stack : this.inv.getStacks()) {

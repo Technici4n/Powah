@@ -49,7 +49,7 @@ public class EnderCellScreen extends EnergyScreen<EnderCellTile, EnderCellContai
                 final int fi = k + l * 8;
                 if (fi >= this.channelButtons.length) break label;
                 this.channelButtons[fi] = new IconButton(this.x + 34 + k * 13, this.y + 32 + l * 13, 12, 12, 0, 64, 12, GUI_WIDGETS_TEXTURE, (button) -> {
-                    SSetActiveChannel.send(fi, this.mc.world, this.te.getPos());
+                    SSetActiveChannel.send(fi, this.te.getPos());
                     this.te.setActiveChannel(fi);
                 }, this).tooltip("info.powah.channel", TextFormatting.GRAY, "" + TextFormatting.DARK_AQUA + (fi + 1));
                 this.channelButtons[fi].setIconDiff(fi == this.te.getActiveChannel() ? 12 : 0);

@@ -1,5 +1,5 @@
 modLoader="javafml" 
-loaderVersion="[30,)"
+loaderVersion="[31,)"
 issueTrackerURL="https://github.com/owmii/powah/issues"
 
 [[mods]]
@@ -15,7 +15,7 @@ Various ways to generate, store and transmit FE power.
 [[dependencies.powah]]
     modId="lollipop"
     mandatory=true
-    versionRange="[1.0.8,)"
+    versionRange="[1.0.10,)"
     ordering="NONE"
     side="BOTH"
 

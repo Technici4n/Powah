@@ -44,21 +44,19 @@ public class SolarPanelTile extends TileBase.EnergyProvider<Tier, SolarPanelBloc
     @Override
     protected boolean postTicks(World world) {
         if (isRemote()) return false;
-
-        if (!this.hasLensOfEnder && (!Time.isDay(world) && this.canSeeSunLight || this.ticks % 40L == 0L)) {
-            this.canSeeSunLight = Time.isDay(world) && Misc.canBlockSeeSky(world, this.pos);
-            markDirtyAndSync();
-        }
-
         boolean flag = false;
-
-        if (!this.energy.isFull()) {
-            if (this.hasLensOfEnder && Time.isDay(world) || this.canSeeSunLight) {
-                this.energy.produce(defaultGeneration());
-                flag = true;
+        if (doWorkingTicks(world)) {
+            if (!this.hasLensOfEnder && (!Time.isDay(world) && this.canSeeSunLight || this.ticks % 40L == 0L)) {
+                this.canSeeSunLight = Time.isDay(world) && Misc.canBlockSeeSky(world, this.pos);
+                markDirtyAndSync();
+            }
+            if (!this.energy.isFull()) {
+                if (this.hasLensOfEnder && Time.isDay(world) || this.canSeeSunLight) {
+                    this.energy.produce(defaultGeneration());
+                    flag = true;
+                }
             }
         }
-
         return super.postTicks(world) || flag;
     }
 

@@ -67,7 +67,7 @@ public class EnergizingRodTile extends TileBase.EnergyStorage<Tier, EnergizingRo
                 }
             }
         }
-        return super.postTicks(world) || flag;
+        return flag;
     }
 
     public boolean hasOrb() {

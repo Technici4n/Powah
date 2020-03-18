@@ -18,6 +18,7 @@ public class EnergyCellTile extends TileBase.EnergyStorage<Tier, EnergyCellBlock
         this(Tier.BASIC);
     }
 
+    @Override
     protected void onFirstTick(final World world) {
         super.onFirstTick(world);
         if (this.isCreative()) {
@@ -25,20 +26,29 @@ public class EnergyCellTile extends TileBase.EnergyStorage<Tier, EnergyCellBlock
         }
     }
 
+    @Override
     public long extractEnergy(final int maxExtract, final boolean simulate, @Nullable final Direction side) {
-        return super.extractEnergy(maxExtract, this.isCreative(), side);
+        return super.extractEnergy(maxExtract, isCreative(), side);
     }
 
+    @Override
+    protected boolean doEnergyTransfer() {
+        return checkRedstone();
+    }
+
+    @Override
     public int getChargingSlots() {
         return 2;
     }
 
+    @Override
     public boolean keepEnergy() {
-        return !this.isCreative();
+        return !isCreative();
     }
 
+    @Override
     public SideConfig.Type getTransferType() {
-        return this.isCreative() ? SideConfig.Type.OUT : super.getTransferType();
+        return isCreative() ? SideConfig.Type.OUT : super.getTransferType();
     }
 
     public boolean isCreative() {
