@@ -7,7 +7,6 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraftforge.fml.network.NetworkEvent;
 import owmii.lib.Lollipop;
 import owmii.lib.network.IPacket;
-import owmii.lib.util.Packet;
 import owmii.powah.block.endercell.EnderCellTile;
 
 import java.util.function.Supplier;
@@ -32,12 +31,12 @@ public class SSetActiveChannel implements IPacket<SSetActiveChannel> {
     @Override
     public void encode(SSetActiveChannel msg, PacketBuffer buffer) {
         buffer.writeInt(msg.activeChannel);
-        Packet.writePos(msg.pos, buffer);
+        buffer.writeBlockPos(this.pos);
     }
 
     @Override
     public SSetActiveChannel decode(PacketBuffer buffer) {
-        return new SSetActiveChannel(buffer.readInt(), Packet.readPos(buffer));
+        return new SSetActiveChannel(buffer.readInt(), buffer.readBlockPos());
     }
 
     @Override
