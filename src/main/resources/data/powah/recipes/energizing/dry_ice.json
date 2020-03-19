@@ -1,0 +1,11 @@
+{
+  "type": "powah:energizing",
+  "ingredients": [
+	{"item": "minecraft:blue_ice"},
+	{"item": "minecraft:blue_ice"}
+  ],
+  "energy": 10000,
+  "result": {
+	"item": "powah:dry_ice"
+  }
+}

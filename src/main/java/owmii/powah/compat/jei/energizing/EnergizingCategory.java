@@ -13,11 +13,10 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import owmii.lib.util.Text;
 import owmii.powah.Powah;
-import owmii.powah.api.recipe.energizing.EnergizingRecipe;
-import owmii.powah.api.recipe.energizing.IEnergizingRecipe;
 import owmii.powah.block.IBlocks;
+import owmii.powah.block.energizing.EnergizingRecipe;
 
-public class EnergizingCategory implements IRecipeCategory<IEnergizingRecipe> {
+public class EnergizingCategory implements IRecipeCategory<EnergizingRecipe> {
     public static final ResourceLocation GUI_BACK = new ResourceLocation(Powah.MOD_ID, "textures/gui/jei/energizing.png");
     public static final ResourceLocation ID = new ResourceLocation(Powah.MOD_ID, "energizing");
     private final IDrawable background;
@@ -36,7 +35,7 @@ public class EnergizingCategory implements IRecipeCategory<IEnergizingRecipe> {
     }
 
     @Override
-    public Class<? extends IEnergizingRecipe> getRecipeClass() {
+    public Class<? extends EnergizingRecipe> getRecipeClass() {
         return EnergizingRecipe.class;
     }
 
@@ -56,24 +55,24 @@ public class EnergizingCategory implements IRecipeCategory<IEnergizingRecipe> {
     }
 
     @Override
-    public void setIngredients(IEnergizingRecipe recipe, IIngredients ingredients) {
+    public void setIngredients(EnergizingRecipe recipe, IIngredients ingredients) {
         ingredients.setInputIngredients(recipe.getIngredients());
-        ingredients.setOutput(VanillaTypes.ITEM, recipe.getOutput());
+        ingredients.setOutput(VanillaTypes.ITEM, recipe.getRecipeOutput());
     }
 
     @Override
-    public void setRecipe(IRecipeLayout recipeLayout, IEnergizingRecipe recipe, IIngredients ingredients) {
-        IGuiItemStackGroup itemStackGroup = recipeLayout.getItemStacks();
+    public void setRecipe(IRecipeLayout recipeLayout, EnergizingRecipe recipe, IIngredients ingredients) {
+        IGuiItemStackGroup stackGroup = recipeLayout.getItemStacks();
         int size = recipe.getIngredients().size();
         for (int i = 0; i < size; i++) {
-            itemStackGroup.init(i, true, (i * 20) + 3, 4);
+            stackGroup.init(i, true, (i * 20) + 3, 4);
         }
-        itemStackGroup.init(size, false, 136, 4);
-        itemStackGroup.set(ingredients);
+        stackGroup.init(size, false, 136, 4);
+        stackGroup.set(ingredients);
     }
 
     @Override
-    public void draw(IEnergizingRecipe recipe, double mouseX, double mouseY) {
+    public void draw(EnergizingRecipe recipe, double mouseX, double mouseY) {
         Minecraft minecraft = Minecraft.getInstance();
         minecraft.fontRenderer.drawString(I18n.format("info.lollipop.energy.fe.2", Text.addCommas(recipe.getEnergy())), 2.0F, 29.0F, 0x484241);
     }

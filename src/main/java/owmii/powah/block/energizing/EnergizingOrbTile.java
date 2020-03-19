@@ -3,13 +3,14 @@ package owmii.powah.block.energizing;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.world.World;
+import net.minecraftforge.items.wrapper.RecipeWrapper;
 import owmii.lib.block.TileBase;
 import owmii.lib.util.IVariant;
-import owmii.powah.api.recipe.energizing.EnergizingRecipeSorter;
-import owmii.powah.api.recipe.energizing.IEnergizingRecipe;
 import owmii.powah.block.ITiles;
+import owmii.powah.recipe.Recipes;
 
 import javax.annotation.Nullable;
+import java.util.Optional;
 
 public class EnergizingOrbTile extends TileBase.Tickable<IVariant.Single, EnergizingOrbBlock> {
     private boolean containRecipe;
@@ -17,7 +18,7 @@ public class EnergizingOrbTile extends TileBase.Tickable<IVariant.Single, Energi
     private long energy;
 
     @Nullable
-    private IEnergizingRecipe recipe;
+    private EnergizingRecipe recipe;
 
     public EnergizingOrbTile() {
         super(ITiles.ENERGIZING_ORB);
@@ -41,7 +42,7 @@ public class EnergizingOrbTile extends TileBase.Tickable<IVariant.Single, Energi
     }
 
     @Nullable
-    public IEnergizingRecipe currRecipe() {
+    public EnergizingRecipe currRecipe() {
         return this.recipe;
     }
 
@@ -61,15 +62,16 @@ public class EnergizingOrbTile extends TileBase.Tickable<IVariant.Single, Energi
 
     private void checkRecipe() {
         if (this.world != null && !this.world.isRemote) {
-            this.recipe = EnergizingRecipeSorter.get(this.inv, this.world, this.pos);
-            if (this.recipe != null) {
+            Optional<EnergizingRecipe> recipe = this.world.getRecipeManager().getRecipe(Recipes.ENERGIZING, new RecipeWrapper(getInventory()), this.world);
+            if (recipe.isPresent()) {
+                this.recipe = recipe.get();
                 this.requiredEnergy = this.recipe.getEnergy();
             } else {
                 this.requiredEnergy = 0;
             }
-            setContainRecipe(this.recipe != null);
+            setContainRecipe(recipe.isPresent());
+            sync(1);
         }
-        sync(1);
     }
 
     public long fillEnergy(long amount) {
@@ -78,7 +80,7 @@ public class EnergizingOrbTile extends TileBase.Tickable<IVariant.Single, Energi
             if (this.recipe != null) {
                 this.energy += filled;
                 if (this.energy >= this.requiredEnergy) {
-                    ItemStack stack = this.recipe.getOutput();
+                    ItemStack stack = this.recipe.getRecipeOutput();
                     this.inv.clear();
                     this.inv.setStack(0, stack.copy());
                     this.requiredEnergy = 0;

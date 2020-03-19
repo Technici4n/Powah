@@ -5,50 +5,35 @@ import com.blamejared.crafttweaker.api.actions.IRuntimeAction;
 import com.blamejared.crafttweaker.api.annotations.ZenRegister;
 import com.blamejared.crafttweaker.api.item.IIngredient;
 import com.blamejared.crafttweaker.api.item.IItemStack;
+import com.blamejared.crafttweaker.api.managers.IRecipeManager;
+import net.minecraft.item.crafting.IRecipeType;
 import net.minecraft.item.crafting.Ingredient;
 import org.openzen.zencode.java.ZenCodeType;
-import owmii.powah.api.recipe.energizing.EnergizingRecipe;
-import owmii.powah.api.recipe.energizing.EnergizingRecipeSorter;
-import owmii.powah.api.recipe.energizing.IEnergizingRecipe;
+import owmii.powah.block.energizing.EnergizingRecipe;
+import owmii.powah.recipe.Recipes;
 
 import java.util.ArrayList;
 import java.util.List;
 
 @ZenRegister
 @ZenCodeType.Name("mods.powah.Energizing")
-public class Energizing {
+public class Energizing implements IRecipeManager {
     @ZenCodeType.Method
-    public static void addRecipe(IItemStack output, int energy, IIngredient[] ingredients) {
-        CraftTweakerAPI.apply(new Add(output, energy, ingredients));
+    public void addRecipe(IItemStack output, int energy, IIngredient[] ingredients) {
+        CraftTweakerAPI.apply(new Add(this, output, energy, ingredients));
     }
 
-    @ZenCodeType.Method
-    public static void removeRecipe(IItemStack output) {
-        CraftTweakerAPI.apply(new Remove(output));
-    }
-
-    @ZenCodeType.Method
-    public static void clearAll() {
-        CraftTweakerAPI.apply(new Clear());
-    }
-
-    static class Clear implements IRuntimeAction {
-
-        @Override
-        public void apply() {
-            EnergizingRecipeSorter.RECIPES.clear();
-        }
-
-        @Override
-        public String describe() {
-            return "[Powah] Cleared all recipes.";
-        }
+    @Override
+    public IRecipeType getRecipeType() {
+        return Recipes.ENERGIZING;
     }
 
     static class Add implements IRuntimeAction {
-        private final IEnergizingRecipe recipe;
+        private final EnergizingRecipe recipe;
+        private final IRecipeManager manager;
 
-        public Add(IItemStack output, int energy, IIngredient[] ingredients) {
+        public Add(IRecipeManager manager, IItemStack output, int energy, IIngredient[] ingredients) {
+            this.manager = manager;
             List<Ingredient> ing = new ArrayList<>();
             for (IIngredient iIngredient : ingredients) {
                 ing.add(iIngredient.asVanillaIngredient());
@@ -58,30 +43,12 @@ public class Energizing {
 
         @Override
         public void apply() {
-            EnergizingRecipeSorter.RECIPES.add(this.recipe);
+            this.manager.getRecipes().put(this.recipe.getId(), this.recipe);
         }
 
         @Override
         public String describe() {
-            return "[Powah] Created new Energizing recipe for: " + this.recipe.getOutput().getDisplayName();
-        }
-    }
-
-    static class Remove implements IRuntimeAction {
-        private final IItemStack output;
-
-        public Remove(IItemStack output) {
-            this.output = output;
-        }
-
-        @Override
-        public void apply() {
-            EnergizingRecipeSorter.RECIPES.removeIf(recipe -> recipe.getOutput().isItemEqual(this.output.getInternal()));
-        }
-
-        @Override
-        public String describe() {
-            return "[Powah] Removed Energizing recipes for: " + this.output.getInternal().getDisplayName();
+            return "[Powah] Added new Energizing recipe for: " + this.recipe.getRecipeOutput().getDisplayName();
         }
     }
 }

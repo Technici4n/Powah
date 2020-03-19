@@ -1,4 +1,4 @@
 @NonnullDefault
-package owmii.powah.api.recipe.energizing;
+package owmii.powah.recipe;
 
 import org.lwjgl.system.NonnullDefault;

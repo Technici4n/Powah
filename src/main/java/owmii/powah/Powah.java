@@ -13,16 +13,15 @@ import owmii.lib.config.IConfig;
 import owmii.lib.util.FML;
 import owmii.powah.api.PowahAPI;
 import owmii.powah.block.IBlocks;
-import owmii.powah.block.energizing.EnergizingRecipes;
 import owmii.powah.book.PowahBook;
 import owmii.powah.client.render.BlockRenderTypes;
 import owmii.powah.client.render.entity.EntityRenderer;
 import owmii.powah.client.render.tile.TileRenderer;
 import owmii.powah.client.screen.Screens;
-import owmii.powah.command.PowahCommand;
 import owmii.powah.config.ConfigHandler;
 import owmii.powah.config.Configs;
 import owmii.powah.network.Packets;
+import owmii.powah.recipe.Recipes;
 import owmii.powah.world.gen.IFeatures;
 
 import static owmii.lib.Lollipop.addEventListener;
@@ -39,10 +38,10 @@ public class Powah {
         addModListener(this::loadComplete);
         addEventListener(this::serverStarting);
         Configs.register();
+        Recipes.init();
     }
 
     void commonSetup(FMLCommonSetupEvent event) {
-        PowahAPI.register(new EnergizingRecipes());
         Packets.register();
         IFeatures.register();
 
@@ -71,6 +70,7 @@ public class Powah {
     }
 
     void serverStarting(FMLServerStartingEvent evt) {
-        PowahCommand.register(evt.getCommandDispatcher());
+        // TODO: re-add
+        // PowahCommand.register(evt.getCommandDispatcher());
     }
 }

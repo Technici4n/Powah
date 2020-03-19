@@ -7,16 +7,18 @@ import mezz.jei.api.helpers.IGuiHelper;
 import mezz.jei.api.registration.IRecipeCatalystRegistration;
 import mezz.jei.api.registration.IRecipeCategoryRegistration;
 import mezz.jei.api.registration.IRecipeRegistration;
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
+import owmii.lib.util.Recipe;
 import owmii.powah.Powah;
-import owmii.powah.api.recipe.energizing.EnergizingRecipeSorter;
 import owmii.powah.block.IBlocks;
 import owmii.powah.compat.jei.energizing.EnergizingCategory;
 import owmii.powah.compat.jei.magmator.MagmatorCategory;
 import owmii.powah.config.Configs;
 import owmii.powah.item.IItems;
+import owmii.powah.recipe.Recipes;
 
 @JeiPlugin
 public class PowahJEIPlugin implements IModPlugin {
@@ -85,11 +87,11 @@ public class PowahJEIPlugin implements IModPlugin {
 
     @Override
     public void registerRecipes(IRecipeRegistration registration) {
+        registration.addRecipes(Recipe.getAll(Minecraft.getInstance().world, Recipes.ENERGIZING), EnergizingCategory.ID);
         registration.addRecipes(MagmatorCategory.Maker.getBucketRecipes(registration.getIngredientManager()), MagmatorCategory.ID);
         registration.addRecipes(CoolantCategory.Maker.getBucketRecipes(registration.getIngredientManager()), CoolantCategory.ID);
         registration.addRecipes(SolidCoolantCategory.Maker.getBucketRecipes(registration.getIngredientManager()), SolidCoolantCategory.ID);
         registration.addRecipes(HeatSourceCategory.Maker.getBucketRecipes(registration.getIngredientManager()), HeatSourceCategory.ID);
-        registration.addRecipes(EnergizingRecipeSorter.RECIPES, EnergizingCategory.ID);
 
         if (Configs.GENERAL.player_aerial_pearl.get())
             registration.addIngredientInfo(new ItemStack(IItems.PLAYER_AERIAL_PEARL), VanillaTypes.ITEM, I18n.format("wiki.powah.player_aerial_pearl"));
@@ -97,8 +99,8 @@ public class PowahJEIPlugin implements IModPlugin {
             registration.addIngredientInfo(new ItemStack(IItems.BINDING_CARD_DIM), VanillaTypes.ITEM, I18n.format("wiki.powah.binding_card_dim"));
         if (Configs.GENERAL.lens_of_ender.get())
             registration.addIngredientInfo(new ItemStack(IItems.LENS_OF_ENDER), VanillaTypes.ITEM, I18n.format("wiki.powah.lens_of_ender"));
-
     }
+
 
     @Override
     public ResourceLocation getPluginUid() {

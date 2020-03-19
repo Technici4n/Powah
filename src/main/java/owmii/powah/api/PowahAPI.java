@@ -5,16 +5,11 @@ import net.minecraft.fluid.Fluid;
 import net.minecraft.util.IItemProvider;
 import net.minecraft.util.ResourceLocation;
 import org.apache.commons.lang3.tuple.Pair;
-import owmii.powah.api.recipe.energizing.IEnergizingRegistry;
 
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.Map;
-import java.util.Set;
 
 public class PowahAPI {
-    // Energizing recipe registries
-    public static final Set<IEnergizingRegistry> ENERGIZING_REGISTRIES = new HashSet<>();
 
     // Magmatic gen fluids
     public static final Map<Fluid, Integer> MAGMATIC_FLUIDS = new HashMap<>();
@@ -23,13 +18,6 @@ public class PowahAPI {
     public static final Map<Fluid, Integer> COOLANTS = new HashMap<>();
     public static final Map<ResourceLocation, Pair<Integer, Integer>> SOLID_COOLANTS = new HashMap<>();
     public static final Map<Block, Integer> HEAT_SOURCES = new HashMap<>();
-
-    /**
-     * Register an Energizing recipes registry
-     **/
-    public static void register(IEnergizingRegistry registry) {
-        ENERGIZING_REGISTRIES.add(registry);
-    }
 
     /**
      * Register fluid that used to fuel the Magmatic generator.
