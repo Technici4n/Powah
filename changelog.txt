@@ -1,5 +1,5 @@
 1.1.9
-- Added support for energizing recipes from json like vanilla, examples: .
+- Added support for energizing recipes from json like vanilla, examples: http://bit.ly/3baHdLr.
 - Fixed buttons not functioning in multiPlayer world (would not change channels or Redstone settings).
 - Fixed empty tags.
 - Updated Lollipop to 1.0.11
