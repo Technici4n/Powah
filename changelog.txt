@@ -1,6 +1,11 @@
+1.1.10
+- Re-Fixed bug when can not change channels, Redstone settings and side config.
+- Added Chinese localization zh_cn.json, Thanks to EnterFor.
+- Updated Lollipop to 1.0.12
+
 1.1.9
 - Added support for energizing recipes from json like vanilla, examples: http://bit.ly/3baHdLr.
-- Fixed buttons not functioning in multiPlayer world (would not change channels or Redstone settings).
+- Fixed buttons not functioning in multiPlayer world.
 - Fixed empty tags.
 - Updated Lollipop to 1.0.11
 

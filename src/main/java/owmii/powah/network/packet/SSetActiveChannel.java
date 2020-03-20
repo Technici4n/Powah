@@ -31,7 +31,7 @@ public class SSetActiveChannel implements IPacket<SSetActiveChannel> {
     @Override
     public void encode(SSetActiveChannel msg, PacketBuffer buffer) {
         buffer.writeInt(msg.activeChannel);
-        buffer.writeBlockPos(this.pos);
+        buffer.writeBlockPos(msg.pos);
     }
 
     @Override
