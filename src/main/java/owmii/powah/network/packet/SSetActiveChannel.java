@@ -5,8 +5,8 @@ import net.minecraft.network.PacketBuffer;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.math.BlockPos;
 import net.minecraftforge.fml.network.NetworkEvent;
-import owmii.lib.Lollipop;
 import owmii.lib.network.IPacket;
+import owmii.powah.Powah;
 import owmii.powah.block.endercell.EnderCellTile;
 
 import java.util.function.Supplier;
@@ -25,7 +25,7 @@ public class SSetActiveChannel implements IPacket<SSetActiveChannel> {
     }
 
     public static void send(int activeChannel, BlockPos pos) {
-        Lollipop.NET.toServer(new SSetActiveChannel(activeChannel, pos));
+        Powah.NET.toServer(new SSetActiveChannel(activeChannel, pos));
     }
 
     @Override

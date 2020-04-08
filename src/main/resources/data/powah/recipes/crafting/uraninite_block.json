@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+	{"item": "powah:uraninite"},
+	{"item": "powah:uraninite"},
+	{"item": "powah:uraninite"},
+	{"item": "powah:uraninite"},
+	{"item": "powah:uraninite"},
+	{"item": "powah:uraninite"},
+	{"item": "powah:uraninite"},
+	{"item": "powah:uraninite"},
+	{"item": "powah:uraninite"}
+  ],
+  "result": {
+	"item": "powah:uraninite_block"
+  }
+}

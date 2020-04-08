@@ -110,6 +110,10 @@ public class EnergizingOrbTile extends TileBase.Tickable<IVariant.Single, Energi
         this.containRecipe = containRecipe;
     }
 
+    public long getRequiredEnergy() {
+        return this.requiredEnergy;
+    }
+
     public long getEnergy() {
         return this.energy;
     }

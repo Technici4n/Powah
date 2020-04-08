@@ -7,9 +7,9 @@ import net.minecraft.network.PacketBuffer;
 import net.minecraft.util.Hand;
 import net.minecraftforge.common.util.Constants;
 import net.minecraftforge.fml.network.NetworkEvent;
-import owmii.lib.Lollipop;
 import owmii.lib.network.IPacket;
 import owmii.lib.util.Data;
+import owmii.powah.Powah;
 
 import java.util.function.Supplier;
 
@@ -25,7 +25,7 @@ public class SSetActiveChannelItem implements IPacket<SSetActiveChannelItem> {
     }
 
     public static void send(int activeChannel) {
-        Lollipop.NET.toServer(new SSetActiveChannelItem(activeChannel));
+        Powah.NET.toServer(new SSetActiveChannelItem(activeChannel));
     }
 
     @Override

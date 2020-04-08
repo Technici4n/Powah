@@ -144,6 +144,7 @@ public class IBlocks {
     public static final Block NIOTIC_CRYSTAL = register("niotic_crystal_block", new OreBlockBase(Properties.metal(2.0f, 20.0f)));
     public static final Block SPIRITED_CRYSTAL = register("spirited_crystal_block", new OreBlockBase(Properties.metal(2.0f, 20.0f)));
     public static final Block NITRO_CRYSTAL = register("nitro_crystal_block", new OreBlockBase(Properties.metal(2.0f, 20.0f)));
+    public static final Block URANINITE = register("uraninite_block", new OreBlockBase(Properties.metal(2.0f, 20.0f)));
     public static final Block URANINITE_ORE_POOR = register("uraninite_ore_poor", new OreBlockBase(Properties.rock(1.0f, 8.0f)));
     public static final Block URANINITE_ORE = register("uraninite_ore", new OreBlockBase(Properties.rock(1.0f, 8.0f)));
     public static final Block URANINITE_ORE_DENSE = register("uraninite_ore_dense", new OreBlockBase(Properties.rock(1.0f, 8.0f)));

@@ -1,3 +1,16 @@
+1.1.12
+- Now you can see the progress of the Energizing orb when using the one probe.
+- Added comparator support for forge energy.
+- Added Storage block for uraninite.
+- Added recipe for smelting uraninite ore directly, Closes #62.
+- Fixed Thermo generators behaving weird, Closes  #64.
+- Updated Lollipop to 1.0.14.
+
+1.1.11
+- Did full rewrite for the network system, this should fix all problem in the multi player world.
+- Updated Lollipop to 1.0.13
+This release tested multiple times in dedicated server, thanks to all testers in our discord.
+
 1.1.10
 - Re-Fixed bug when can not change channels, Redstone settings and side config.
 - Added Chinese localization zh_cn.json, Thanks to EnterFor.

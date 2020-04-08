@@ -1,5 +1,8 @@
 package owmii.powah.block.energizing;
 
+import mcjty.theoneprobe.api.IProbeHitData;
+import mcjty.theoneprobe.api.IProbeInfo;
+import mcjty.theoneprobe.api.ProbeMode;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.IWaterLoggable;
 import net.minecraft.entity.player.PlayerEntity;
@@ -23,6 +26,7 @@ import net.minecraft.world.World;
 import net.minecraftforge.common.util.Constants;
 import net.minecraftforge.items.ItemHandlerHelper;
 import owmii.lib.block.AbstractBlock;
+import owmii.lib.compat.top.ITOPInfoProvider;
 import owmii.lib.inventory.Inventory;
 import owmii.lib.util.IVariant;
 import owmii.lib.util.math.V3d;
@@ -38,7 +42,7 @@ import java.util.stream.Collectors;
 
 import static net.minecraft.util.math.shapes.VoxelShapes.combineAndSimplify;
 
-public class EnergizingOrbBlock extends AbstractBlock<IVariant.Single> implements IWaterLoggable, IWrenchable {
+public class EnergizingOrbBlock extends AbstractBlock<IVariant.Single> implements IWaterLoggable, IWrenchable, ITOPInfoProvider {
     private static final VoxelShape SHAPE = combineAndSimplify(makeCuboidShape(3.5D, 5.0D, 3.5D, 12.5D, 14.23D, 12.5D), makeCuboidShape(2.5D, 0.0D, 2.5D, 13.5D, 1.0D, 13.5D), IBooleanFunction.OR);
 
     public EnergizingOrbBlock(Properties properties) {
@@ -180,5 +184,20 @@ public class EnergizingOrbBlock extends AbstractBlock<IVariant.Single> implement
             }
         }
         return false;
+    }
+
+    @Override
+    public void addProbeInfo(ProbeMode mode, IProbeInfo info, PlayerEntity player, World world, BlockPos pos, BlockState state, IProbeHitData hitData) {
+        TileEntity te = world.getTileEntity(pos);
+        if (te instanceof EnergizingOrbTile) {
+            EnergizingOrbTile orb = (EnergizingOrbTile) te;
+            if (orb.getRequiredEnergy() > 0) {
+                info.progress(orb.getEnergy(), orb.getRequiredEnergy());
+                EnergizingRecipe recipe = orb.currRecipe();
+                if (recipe != null) {
+                    info.item(recipe.getRecipeOutput());
+                }
+            }
+        }
     }
 }

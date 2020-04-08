@@ -10,6 +10,7 @@ import net.minecraftforge.fml.event.server.FMLServerStartingEvent;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import owmii.lib.config.IConfig;
+import owmii.lib.network.Network;
 import owmii.lib.util.FML;
 import owmii.powah.api.PowahAPI;
 import owmii.powah.block.IBlocks;
@@ -30,6 +31,7 @@ import static owmii.lib.Lollipop.addModListener;
 @Mod(Powah.MOD_ID)
 public class Powah {
     public static final String MOD_ID = "powah";
+    public static final Network NET = new Network(MOD_ID);
     public static final Logger LOGGER = LogManager.getLogger(MOD_ID);
 
     public Powah() {
