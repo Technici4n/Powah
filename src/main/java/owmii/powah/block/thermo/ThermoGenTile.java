@@ -59,8 +59,10 @@ public class ThermoGenTile extends TileBase.EnergyProvider<Tier, ThermoGenBlock>
     }
 
     @Override
-    protected void generate(World world) {
-        if (this.nextBuff <= 0 && !this.tank.isEmpty()) {
+    protected boolean postTicks(World world) {
+        boolean flag = extractFromSides() + chargeItems() > 0;
+        this.nextBuff = 0;
+        if (!this.tank.isEmpty()) {
             FluidStack fluid = this.tank.getFluid();
             if (PowahAPI.COOLANTS.containsKey(fluid.getFluid())) {
                 int fluidCooling = PowahAPI.getCoolant(fluid.getFluid());
@@ -76,15 +78,19 @@ public class ThermoGenTile extends TileBase.EnergyProvider<Tier, ThermoGenBlock>
                             heat = (int) (heat / ((float) level + 1));
                         }
                     }
-                    this.buffer = (int) (((heat * (fluidCooling == 1 ? 1 : Math.max(1.1D, (0.1D + Math.abs(fluidCooling)) * 1.1152D))) * defaultGeneration()) / 1000.0D);
-                    this.nextBuff = this.buffer;
-
+                    this.nextBuff = (int) (((heat * (fluidCooling == 1 ? 1 : Math.max(1.1D, (0.1D + Math.abs(fluidCooling)) * 1.1152D))) * defaultGeneration()) / 1000.0D);
+                    this.energy.produce(this.nextBuff);
+                    if (this.nextBuff > 0) {
+                        flag = true;
+                    }
                     if (world.getGameTime() % 40 == 0L) {
                         this.tank.drain(1, IFluidHandler.FluidAction.EXECUTE);
                     }
                 }
             }
         }
+
+        return flag;
     }
 
     @Override
