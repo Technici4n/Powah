@@ -200,6 +200,8 @@
   "book.powah.text.reactors_cooling": "When Generating energy the reactor heats up causing it to consume fuel faster and generating less FE/t, so you need to cool it down using a coolant like water, also you can use a solid coolant like snow or ice for extra coldness, solid coolant require liquid coolant to work.",
   "book.powah.title.reactors_m": "Production",
   "book.powah.text.reactors_m": "Keep the reactor buffer full of fuel for better production.\nCarbon materials like coal, wood..., will improve the fuel efficiency and will add +180 C of heat.\nRedstone will speed up the production and the fuel consumption and will add +120 C of heat.",
+  "book.powah.title.reactors_redstone": "External Control with redstone",
+  "book.powah.text.reactors_redtone": "It is possible to turn the reactor on and off with a redstone signal going into one of the I/O ports. (It has to be a straight line into the block.) Adjust the Redstone setting in the reactor GUI",
   "book.powah.title.energy_cells": "Energy Cells",
   "book.powah.text.energy_cells": "Used to store energy (FE), input an output energy from 6 configurable sides, high tiers store more energy and has a better energy transfer rate, each Energy Cell can charge up to 2 chargeable items.\nEnergy cells can Also be used to upgrade the capacity of a Ender Network channel by Shift clicking an Energy Cell to an Ender Cell GUI, if the Energy Cell contain energy then will also be applied to the ender network channel.",
   "book.powah.title.ender_cells": "Ender Cells",
