@@ -33,7 +33,8 @@ public class PowahBook {
     public static final BookEntry REACTOR = register(BookEntry.create("reactors").icon(IBlocks.REACTOR_BASIC)
             .add(BookPage.create().image("images/reactor", 180, 63).paragraph("reactors"))
             .add(BookPage.create().image("images/reactor_gui", 180, 74).paragraph("reactors_cooling"))
-            .add(BookPage.create().image("images/reactor_gui", 180, 74).paragraph("reactors_m")));
+            .add(BookPage.create().image("images/reactor_gui", 180, 74).paragraph("reactors_m"))
+            .add(BookPage.create().image("images/reactor_gui", 180, 74).paragraph("reactors_redtone")));
     public static final BookEntry CABLE = register(BookEntry.create("cables").icon(IBlocks.ENERGY_CABLE_BASIC))
             .add(BookPage.create().item(IBlocks.ENERGY_CABLE_BASIC).paragraph("cables"));
     public static final BookEntry ENDER_GATE = register(BookEntry.create("ender_gates").icon(IBlocks.ENDER_GATE_BASIC))
