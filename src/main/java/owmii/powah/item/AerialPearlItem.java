@@ -3,6 +3,7 @@ package owmii.powah.item;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.monster.HuskEntity;
 import net.minecraft.entity.monster.ZombieEntity;
+import net.minecraft.entity.monster.ZombieVillagerEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.Hand;
@@ -20,7 +21,9 @@ public class AerialPearlItem extends ItemBase {
     public boolean itemInteractionForEntity(ItemStack stack, PlayerEntity playerIn, LivingEntity target, Hand hand) {
         if (Configs.GENERAL.player_aerial_pearl.get()) {
             if (this == IItems.AERIAL_PEARL) {
-                if (target.getClass() == ZombieEntity.class || target.getClass() == HuskEntity.class) {
+                if (target.getClass() == ZombieEntity.class
+                        || target.getClass() == ZombieVillagerEntity.class
+                        || target.getClass() == HuskEntity.class) {
                     if (!playerIn.world.isRemote) {
                         ItemStack stack1 = playerIn.getHeldItem(hand);
                         ItemHandlerHelper.giveItemToPlayer(playerIn, new ItemStack(IItems.PLAYER_AERIAL_PEARL));

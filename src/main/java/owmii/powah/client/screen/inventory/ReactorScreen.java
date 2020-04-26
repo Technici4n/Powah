@@ -105,56 +105,58 @@ public class ReactorScreen extends EnergyScreen<ReactorTile, ReactorContainer> {
             }
             renderTooltip(list, mouseX, mouseY);
         }
+        if (!this.configVisible) {
 
-        Ticker temp = this.te.getTemp();
-        if (isMouseOver(mouseX - 106, mouseY - 26, 6, 20)) {
-            List<String> list = new ArrayList<>();
-            list.add((TextFormatting.GRAY + String.format("%.1f", temp.getTicks()) + " C"));
-            renderTooltip(list, mouseX, mouseY);
-        }
+            Ticker temp = this.te.getTemp();
+            if (isMouseOver(mouseX - 106, mouseY - 26, 6, 20)) {
+                List<String> list = new ArrayList<>();
+                list.add((TextFormatting.GRAY + String.format("%.1f", temp.getTicks()) + " C"));
+                renderTooltip(list, mouseX, mouseY);
+            }
 
-        Ticker fuel = this.te.getFuel();
-        if (isMouseOver(mouseX - 95, mouseY - 11, 7, 50)) {
-            boolean b = fuel.isEmpty();
-            List<String> list = new ArrayList<>();
-            list.add(TextFormatting.GREEN + I18n.format("item.powah.uraninite"));
-            list.add(TextFormatting.GRAY + I18n.format("info.lollipop.fluid.stored", TextFormatting.DARK_GRAY + String.format("%.0f", fuel.getTicks()), String.format("%.0f", fuel.getMax())));
-            list.add(TextFormatting.GRAY + I18n.format("info.lollipop.fluid.using.per.tick", TextFormatting.GREEN + String.format("%.4f", this.te.calcConsumption())));
-            renderTooltip(list, mouseX, mouseY);
-        }
+            Ticker fuel = this.te.getFuel();
+            if (isMouseOver(mouseX - 95, mouseY - 11, 7, 50)) {
+                boolean b = fuel.isEmpty();
+                List<String> list = new ArrayList<>();
+                list.add(TextFormatting.GREEN + I18n.format("item.powah.uraninite"));
+                list.add(TextFormatting.GRAY + I18n.format("info.lollipop.fluid.stored", TextFormatting.DARK_GRAY + String.format("%.0f", fuel.getTicks()), String.format("%.0f", fuel.getMax())));
+                list.add(TextFormatting.GRAY + I18n.format("info.lollipop.fluid.using.per.tick", TextFormatting.GREEN + String.format("%.4f", this.te.calcConsumption())));
+                renderTooltip(list, mouseX, mouseY);
+            }
 
-        Ticker carbon = this.te.getCarbon();
-        if (isMouseOver(mouseX - 42, mouseY - 4, 7, 18)) {
-            List<String> list = new ArrayList<>();
-            boolean b = carbon.isEmpty();
-            list.add((TextFormatting.GRAY + I18n.format("info.powah.carbon")));
-            list.add(TextFormatting.GRAY + I18n.format("info.lollipop.fluid.stored", TextFormatting.DARK_GRAY + String.format("%.1f", carbon.getTicks()), String.format("%.1f", carbon.getMax())));
-            list.add("");
-            list.add(TextFormatting.DARK_GRAY + "+" + I18n.format("enchantment.minecraft.efficiency"));
-            list.add(TextFormatting.DARK_RED + (b ? "+0 C" : "+180 C"));
-            renderTooltip(list, mouseX, mouseY);
-        }
+            Ticker carbon = this.te.getCarbon();
+            if (isMouseOver(mouseX - 42, mouseY - 4, 7, 18)) {
+                List<String> list = new ArrayList<>();
+                boolean b = carbon.isEmpty();
+                list.add((TextFormatting.GRAY + I18n.format("info.powah.carbon")));
+                list.add(TextFormatting.GRAY + I18n.format("info.lollipop.fluid.stored", TextFormatting.DARK_GRAY + String.format("%.1f", carbon.getTicks()), String.format("%.1f", carbon.getMax())));
+                list.add("");
+                list.add(TextFormatting.DARK_GRAY + "+" + I18n.format("enchantment.minecraft.efficiency"));
+                list.add(TextFormatting.DARK_RED + (b ? "+0 C" : "+180 C"));
+                renderTooltip(list, mouseX, mouseY);
+            }
 
-        Ticker redstone = this.te.getRedstone();
-        if (isMouseOver(mouseX - 42, mouseY - 50, 7, 18)) {
-            List<String> list = new ArrayList<>();
-            boolean b = redstone.isEmpty();
-            list.add(TextFormatting.RED + I18n.format("info.powah.redstone"));
-            list.add(TextFormatting.GRAY + I18n.format("info.lollipop.fluid.stored", TextFormatting.DARK_GRAY + String.format("%.1f", redstone.getTicks()), String.format("%.1f", redstone.getMax())));
-            list.add("");
-            list.add(TextFormatting.DARK_GRAY + "+" + I18n.format("info.powah.production"));
-            list.add(TextFormatting.DARK_GRAY + "+" + I18n.format("info.powah.fuel.consumption"));
-            list.add(TextFormatting.DARK_RED + (b ? "+0 C" : "+120 C"));
-            renderTooltip(list, mouseX, mouseY);
-        }
+            Ticker redstone = this.te.getRedstone();
+            if (isMouseOver(mouseX - 42, mouseY - 50, 7, 18)) {
+                List<String> list = new ArrayList<>();
+                boolean b = redstone.isEmpty();
+                list.add(TextFormatting.RED + I18n.format("info.powah.redstone"));
+                list.add(TextFormatting.GRAY + I18n.format("info.lollipop.fluid.stored", TextFormatting.DARK_GRAY + String.format("%.1f", redstone.getTicks()), String.format("%.1f", redstone.getMax())));
+                list.add("");
+                list.add(TextFormatting.DARK_GRAY + "+" + I18n.format("info.powah.production"));
+                list.add(TextFormatting.DARK_GRAY + "+" + I18n.format("info.powah.fuel.consumption"));
+                list.add(TextFormatting.DARK_RED + (b ? "+0 C" : "+120 C"));
+                renderTooltip(list, mouseX, mouseY);
+            }
 
-        Ticker solidCoolant = this.te.getSolidCoolant();
-        if (isMouseOver(mouseX - 146, mouseY - 50, 7, 18)) {
-            List<String> list = new ArrayList<>();
-            list.add(TextFormatting.GRAY + I18n.format("info.powah.solid.coolant"));
-            list.add(TextFormatting.GRAY + I18n.format("info.lollipop.fluid.stored", TextFormatting.DARK_GRAY + String.format("%.1f", solidCoolant.getTicks()), String.format("%.1f", solidCoolant.getMax())));
-            list.add("" + TextFormatting.AQUA + this.te.getSolidCoolantTemp() + " C");
-            renderTooltip(list, mouseX, mouseY);
+            Ticker solidCoolant = this.te.getSolidCoolant();
+            if (isMouseOver(mouseX - 146, mouseY - 50, 7, 18)) {
+                List<String> list = new ArrayList<>();
+                list.add(TextFormatting.GRAY + I18n.format("info.powah.solid.coolant"));
+                list.add(TextFormatting.GRAY + I18n.format("info.lollipop.fluid.stored", TextFormatting.DARK_GRAY + String.format("%.1f", solidCoolant.getTicks()), String.format("%.1f", solidCoolant.getMax())));
+                list.add("" + TextFormatting.AQUA + this.te.getSolidCoolantTemp() + " C");
+                renderTooltip(list, mouseX, mouseY);
+            }
         }
     }
 

@@ -1,3 +1,13 @@
+1.1.13
+- Fixed Reactor Rendering Crash, Closes #74.
+- Fixed Energizing orb deleting extra input, Closes #75.
+- Fixed reactor tooltip showing in the configuration screen.
+- Fixed lens of ender not dropping when using a Photoelectric Pane on enderman/endermite.
+- Now, reactor fuel consumption is based on ties.
+- Updated localization for uraninite_block, Thanks to WadeMason.
+- Changed recipe recipe for Hardened Energy Cell, Closes #71.
+- Updated Lollipop to 1.0.15.
+
 1.1.12
 - Now you can see the progress of the Energizing orb when using the one probe.
 - Added comparator support for forge energy.
@@ -38,7 +48,7 @@ projects two of theme are not released yet.
 - Updated Lollipop to 1.0.9
 
 1.1.6
-- Fixed Uraninite ores not generating in some biomes/dimensions, Closes  #49.
+- Fixed Uraninite ores not generating in some biomes/dimensions, Closes #49.
 - Fixed cables power delivery sorting.
 - Updated Lollipop to 1.0.8
 

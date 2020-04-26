@@ -80,8 +80,7 @@ public class EnergizingOrbBlock extends AbstractBlock<IVariant.Single> implement
                     if (!world.isRemote) {
                         ItemStack copy = held.copy();
                         copy.setCount(1);
-                        inv.addNext(copy);
-                        if (!player.isCreative()) {
+                        if (!inv.addNext(copy).isEmpty() && !player.isCreative()) {
                             held.shrink(1);
                         }
                     }

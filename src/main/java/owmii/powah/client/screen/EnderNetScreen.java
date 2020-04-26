@@ -27,7 +27,7 @@ public class EnderNetScreen extends Screen {
 
     public EnderNetScreen(ItemStack stack, int totalChannels) {
         super(new StringTextComponent(""));
-        this.nbt = stack.getOrCreateChildTag(Data.TAG_TE_STORABLE);
+        this.nbt = stack.getOrCreateChildTag(Data.TAG_STORABLE);
         this.channels = totalChannels;
         this.activeChannel = this.nbt.getInt("ActiveChannel");
         this.channelButtons = new IconButton[this.channels];

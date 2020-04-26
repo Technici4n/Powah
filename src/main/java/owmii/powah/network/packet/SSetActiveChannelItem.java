@@ -46,11 +46,11 @@ public class SSetActiveChannelItem implements IPacket<SSetActiveChannelItem> {
                 for (Hand hand : Hand.values()) {
                     ItemStack stack = player.getHeldItem(hand);
                     CompoundNBT tag = stack.getTag() != null ? stack.getTag() : new CompoundNBT();
-                    if (tag.contains(Data.TAG_TE_STORABLE, Constants.NBT.TAG_COMPOUND)) {
-                        CompoundNBT stackTag = tag.getCompound(Data.TAG_TE_STORABLE);
+                    if (tag.contains(Data.TAG_STORABLE, Constants.NBT.TAG_COMPOUND)) {
+                        CompoundNBT stackTag = tag.getCompound(Data.TAG_STORABLE);
                         if (stackTag.contains("ActiveChannel", Constants.NBT.TAG_INT)) {
                             stackTag.putInt("ActiveChannel", msg.activeChannel);
-                            tag.put(Data.TAG_TE_STORABLE, stackTag);
+                            tag.put(Data.TAG_STORABLE, stackTag);
                             break;
                         }
                     }

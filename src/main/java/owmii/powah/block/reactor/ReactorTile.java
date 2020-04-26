@@ -170,12 +170,17 @@ public class ReactorTile extends TileBase.EnergyProvider<Tier, ReactorBlock> {
     public double calcProduction() {
         double d = this.carbon.isEmpty() ? 1 : 1.2D;
         double d1 = this.redstone.isEmpty() ? 1 : 1.4D;
-        return (1.0D - calcConsumption()) * (this.fuel.getTicks() / 100) * defaultGeneration() * d * d1;
+        return (1.0D - calc()) * (this.fuel.getTicks() / 100) * defaultGeneration() * d * d1;
     }
 
     public double calcConsumption() {
-        double d = this.redstone.isEmpty() ? 1 : 1.4D;
-        return (this.temp.getTicks() / 1000.0D * 0.98D / 2.0D) * d;
+        double d1 = 1.0D + (this.variant.ordinal() * 0.25D);
+        return (1.0D + this.variant.ordinal() * 0.25D) * calc();
+    }
+
+    public double calc() {
+        double d0 = this.redstone.isEmpty() ? 1.0D : 1.4D;
+        return (this.temp.getTicks() / 1000.0D * 0.98D / 2.0D) * d0;
     }
 
     private boolean processTemperature(World world, boolean generating) {

@@ -2,6 +2,8 @@ package owmii.powah.block;
 
 import owmii.lib.util.IVariant;
 
+import java.util.Locale;
+
 public enum Tier implements IVariant<Tier> {
     STARTER(0),
     BASIC(0),
@@ -28,6 +30,6 @@ public enum Tier implements IVariant<Tier> {
     }
 
     public String getName() {
-        return name().toLowerCase();
+        return name().toLowerCase(Locale.ENGLISH);
     }
 }

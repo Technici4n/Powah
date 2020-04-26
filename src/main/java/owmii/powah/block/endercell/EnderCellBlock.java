@@ -81,7 +81,7 @@ public class EnderCellBlock extends AbstractEnergyBlock<Tier> {
     public void additionalEnergyInfo(ItemStack stack, Energy.Item energy, List<ITextComponent> tooltip) {
         tooltip.add(new TranslationTextComponent("info.lollipop.max.channels", "" + TextFormatting.DARK_GRAY + getTotalChannels()).applyTextStyle(TextFormatting.GRAY));
         tooltip.add(new StringTextComponent(""));
-        CompoundNBT nbt = Stack.getTagOrEmpty(stack).getCompound(Data.TAG_TE_STORABLE);
+        CompoundNBT nbt = Stack.getTagOrEmpty(stack).getCompound(Data.TAG_STORABLE);
         tooltip.add(new TranslationTextComponent("info.powah.channel", "" + TextFormatting.DARK_AQUA + (nbt.getInt("ActiveChannel") + 1)).applyTextStyle(TextFormatting.DARK_GRAY));
     }
 

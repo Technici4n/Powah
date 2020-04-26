@@ -7,6 +7,7 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.Hand;
 import net.minecraft.util.SoundEvents;
+import net.minecraftforge.items.ItemHandlerHelper;
 import owmii.lib.item.ItemBase;
 import owmii.powah.config.Configs;
 
@@ -21,12 +22,12 @@ public class PhotoelectricPaneItem extends ItemBase {
             if (target.getClass() == EndermanEntity.class || target.getClass() == EndermiteEntity.class) {
                 if (!playerIn.world.isRemote) {
                     ItemStack stack1 = playerIn.getHeldItem(hand);
-                    playerIn.setHeldItem(hand, new ItemStack(IItems.LENS_OF_ENDER));
-                    target.playSound(SoundEvents.ENTITY_ENDERMAN_DEATH, 0.5F, 1.0F);
-                    target.remove();
                     if (!playerIn.isCreative()) {
                         stack1.shrink(1);
                     }
+                    ItemHandlerHelper.giveItemToPlayer(playerIn, new ItemStack(IItems.LENS_OF_ENDER));
+                    target.playSound(SoundEvents.ENTITY_ENDERMAN_DEATH, 0.5F, 1.0F);
+                    target.remove();
                 }
                 return true;
             }

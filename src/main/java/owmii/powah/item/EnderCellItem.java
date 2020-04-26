@@ -57,12 +57,12 @@ public class EnderCellItem extends EnergyBlockItem<Tier, EnderCellBlock> {
 
     private void setEnderNBT(ItemStack stack, PlayerEntity player) {
         CompoundNBT tag = stack.getOrCreateTag();
-        if (!tag.contains(Data.TAG_TE_STORABLE, Constants.NBT.TAG_COMPOUND)) {
+        if (!tag.contains(Data.TAG_STORABLE, Constants.NBT.TAG_COMPOUND)) {
             CompoundNBT nbt = new CompoundNBT();
             nbt.putUniqueId("OwnerId", player.getGameProfile().getId());
             nbt.putString("OwnerName", player.getGameProfile().getName());
             nbt.putInt("ActiveChannel", 0);
-            tag.put(Data.TAG_TE_STORABLE, nbt);
+            tag.put(Data.TAG_STORABLE, nbt);
         }
     }
 
@@ -71,8 +71,8 @@ public class EnderCellItem extends EnergyBlockItem<Tier, EnderCellBlock> {
         if (entityIn instanceof PlayerEntity) {
             PlayerEntity player = (PlayerEntity) entityIn;
             CompoundNBT tag = Stack.getTagOrEmpty(stack);
-            if (tag.contains(Data.TAG_TE_STORABLE, Constants.NBT.TAG_COMPOUND)) {
-                CompoundNBT stackTag = tag.getCompound(Data.TAG_TE_STORABLE);
+            if (tag.contains(Data.TAG_STORABLE, Constants.NBT.TAG_COMPOUND)) {
+                CompoundNBT stackTag = tag.getCompound(Data.TAG_STORABLE);
                 if (stackTag.contains("ActiveChannel", Constants.NBT.TAG_INT)) {
                     oneTimeInfo(player, stack, new TranslationTextComponent("info.powah.channel", "" + TextFormatting.DARK_AQUA + (stackTag.getInt("ActiveChannel") + 1)).applyTextStyle(TextFormatting.GRAY));
                 }
