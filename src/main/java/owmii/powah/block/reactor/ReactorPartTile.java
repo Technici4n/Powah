@@ -8,15 +8,15 @@ import net.minecraft.world.World;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.energy.CapabilityEnergy;
-import owmii.lib.block.TileBase;
-import owmii.lib.util.Data;
+import owmii.lib.block.AbstractTileEntity;
+import owmii.lib.util.NBT;
 import owmii.powah.block.ITiles;
 import owmii.powah.block.Tier;
 
 import javax.annotation.Nullable;
 import java.util.Optional;
 
-public class ReactorPartTile extends TileBase<Tier, ReactorBlock> {
+public class ReactorPartTile extends AbstractTileEntity<Tier, ReactorBlock> {
     private BlockPos corePos = BlockPos.ZERO;
     private boolean extractor;
     private boolean built;
@@ -32,16 +32,16 @@ public class ReactorPartTile extends TileBase<Tier, ReactorBlock> {
     @Override
     public void readSync(CompoundNBT compound) {
         super.readSync(compound);
-        this.built = compound.getBoolean("Built");
-        this.extractor = compound.getBoolean("Extractor");
-        this.corePos = Data.readPos(compound, "CorePos");
+        this.built = compound.getBoolean("built");
+        this.extractor = compound.getBoolean("extractor");
+        this.corePos = NBT.readPos(compound, "core_pos");
     }
 
     @Override
     public CompoundNBT writeSync(CompoundNBT compound) {
-        compound.putBoolean("Built", this.built);
-        compound.putBoolean("Extractor", this.extractor);
-        Data.writePos(compound, this.corePos, "CorePos");
+        compound.putBoolean("built", this.built);
+        compound.putBoolean("extractor", this.extractor);
+        NBT.writePos(compound, this.corePos, "core_pos");
         return super.writeSync(compound);
     }
 
@@ -54,11 +54,12 @@ public class ReactorPartTile extends TileBase<Tier, ReactorBlock> {
     }
 
     public Optional<ReactorTile> core() {
-        TileEntity tile = getTileEntity(this.corePos);
-        if (tile instanceof ReactorTile) {
-            return Optional.of((ReactorTile) tile);
+        if (this.world != null) {
+            TileEntity tile = this.world.getTileEntity(this.corePos);
+            if (tile instanceof ReactorTile) {
+                return Optional.of((ReactorTile) tile);
+            }
         }
-
         return Optional.empty();
     }
 

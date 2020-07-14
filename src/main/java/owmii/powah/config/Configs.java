@@ -4,7 +4,6 @@ import net.minecraftforge.common.ForgeConfigSpec;
 import org.apache.commons.lang3.tuple.Pair;
 import owmii.lib.config.Config;
 import owmii.lib.config.IConfig;
-import owmii.lib.config.IEnergyConfig;
 import owmii.powah.config.generator.*;
 import owmii.powah.config.item.BatteryConfig;
 
@@ -18,7 +17,7 @@ public class Configs {
 
     public static final EnergyCellConfig ENERGY_CELL;
     public static final EnderCellConfig ENDER_CELL;
-    public static final EnergyCableConfig ENERGY_CABLE;
+    public static final CableConfig CABLE;
     public static final EnderGateConfig ENDER_GATE;
     public static final EnergizingConfig ENERGIZING;
     public static final PlayerTransmitterConfig PLAYER_TRANSMITTER;
@@ -37,7 +36,7 @@ public class Configs {
     public static final FurnatorConfig FURNATOR;
     public static final MagmatorConfig MAGMATOR;
     public static final ThermoConfig THERMO;
-    public static final SolarPanelConfig SOLAR_PANEL;
+    public static final SolarConfig SOLAR_PANEL;
     public static final ReactorConfig REACTOR;
 
     private static final ForgeConfigSpec FURNATOR_SPEC;
@@ -73,7 +72,7 @@ public class Configs {
         Config.registerCommon(BATTERY_SPEC, itemPath + "/battery.toml");
     }
 
-    static <T extends IEnergyConfig> T registerEnergy(final T config) {
+    static <T extends IConfig> T registerEnergy(final T config) {
         ENERGY.add(config);
         return config;
     }
@@ -93,8 +92,8 @@ public class Configs {
         final Pair<EnderCellConfig, ForgeConfigSpec> enderCellPair = Config.get(EnderCellConfig::new);
         ENDER_CELL = registerEnergy(enderCellPair.getLeft());
         ENDER_CELL_SPEC = enderCellPair.getRight();
-        final Pair<EnergyCableConfig, ForgeConfigSpec> energyCablePair = Config.get(EnergyCableConfig::new);
-        ENERGY_CABLE = registerEnergy(energyCablePair.getLeft());
+        final Pair<CableConfig, ForgeConfigSpec> energyCablePair = Config.get(CableConfig::new);
+        CABLE = registerEnergy(energyCablePair.getLeft());
         ENERGY_CABLE_SPEC = energyCablePair.getRight();
         final Pair<EnderGateConfig, ForgeConfigSpec> enderGatePair = Config.get(EnderGateConfig::new);
         ENDER_GATE = registerEnergy(enderGatePair.getLeft());
@@ -121,7 +120,7 @@ public class Configs {
         final Pair<ThermoConfig, ForgeConfigSpec> thermoPair = Config.get(ThermoConfig::new);
         THERMO = registerEnergy(thermoPair.getLeft());
         THERMO_SPEC = magmatorPair.getRight();
-        final Pair<SolarPanelConfig, ForgeConfigSpec> solarPair = Config.get(SolarPanelConfig::new);
+        final Pair<SolarConfig, ForgeConfigSpec> solarPair = Config.get(SolarConfig::new);
         SOLAR_PANEL = registerEnergy(solarPair.getLeft());
         SOLAR_PANEL_SPEC = solarPair.getRight();
         final Pair<ReactorConfig, ForgeConfigSpec> reactorPair = Config.get(ReactorConfig::new);

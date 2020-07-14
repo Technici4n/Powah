@@ -2,11 +2,10 @@ package owmii.powah.block.reactor;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
-import net.minecraft.block.Blocks;
+import net.minecraft.entity.LivingEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.Direction;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
@@ -14,63 +13,48 @@ import net.minecraft.world.World;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.common.ForgeHooks;
-import net.minecraftforge.common.capabilities.Capability;
-import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.fluids.FluidAttributes;
-import net.minecraftforge.fluids.FluidStack;
-import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
-import net.minecraftforge.fluids.capability.IFluidHandler;
-import net.minecraftforge.fluids.capability.templates.FluidTank;
 import org.apache.commons.lang3.tuple.Pair;
-import owmii.lib.block.TileBase;
-import owmii.lib.energy.Energy;
-import owmii.lib.util.Data;
+import owmii.lib.block.AbstractEnergyProvider;
+import owmii.lib.block.IInventoryHolder;
+import owmii.lib.block.ITankHolder;
+import owmii.lib.logistics.energy.Energy;
+import owmii.lib.logistics.fluid.Tank;
 import owmii.lib.util.Ticker;
 import owmii.powah.api.PowahAPI;
 import owmii.powah.block.ITiles;
 import owmii.powah.block.Tier;
+import owmii.powah.config.generator.ReactorConfig;
 import owmii.powah.item.IItems;
 
 import javax.annotation.Nullable;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Iterator;
-import java.util.List;
-import java.util.stream.Collectors;
 
-public class ReactorTile extends TileBase.EnergyProvider<Tier, ReactorBlock> {
-    protected final FluidTank tank = new FluidTank(FluidAttributes.BUCKET_VOLUME) {
-        @Override
-        public boolean isFluidValid(FluidStack stack) {
-            return PowahAPI.COOLANTS.containsKey(stack.getFluid()) && super.isFluidValid(stack);
-        }
+public class ReactorTile extends AbstractEnergyProvider<Tier, ReactorConfig, ReactorBlock> implements IInventoryHolder, ITankHolder {
+    private final Builder builder = new Builder(this);
 
-        @Override
-        protected void onContentsChanged() {
-            super.onContentsChanged();
-            ReactorTile.this.sync(5);
-        }
-    };
-    private final LazyOptional<IFluidHandler> holder;
-    private List<BlockPos> posList = new ArrayList<>();
-    private boolean built;
+    public final Ticker fuel = new Ticker(1000);
+    public final Ticker carbon = Ticker.empty();
+    public final Ticker redstone = Ticker.empty();
 
-    private final Ticker fuel = new Ticker(1000);
-    private final Ticker carbon = Ticker.empty();
-    private final Ticker redstone = Ticker.empty();
+    public final Ticker solidCoolant = Ticker.empty();
+    public int solidCoolantTemp;
 
-    private final Ticker solidCoolant = Ticker.empty();
-    private int solidCoolantTemp;
-
-    private final Ticker temp = new Ticker(1000);
-    private int baseTemp;
-    private int carbonTemp;
+    public final Ticker temp = new Ticker(1000);
     private int redstoneTemp;
+    private int carbonTemp;
+    private int baseTemp;
+
+    @OnlyIn(Dist.CLIENT)
+    public final Ticker bright = new Ticker(20);
+
+    private boolean running;
 
     public ReactorTile(Tier variant) {
         super(ITiles.REACTOR, variant);
-        this.holder = LazyOptional.of(() -> this.tank);
-        this.inv.add(4);
+        this.tank.setCapacity(FluidAttributes.BUCKET_VOLUME)
+                .validate(stack -> PowahAPI.COOLANTS.containsKey(stack.getFluid()))
+                .setChange(() -> ReactorTile.this.sync(10));
+        this.inv.add(5);
     }
 
     public ReactorTile() {
@@ -78,104 +62,113 @@ public class ReactorTile extends TileBase.EnergyProvider<Tier, ReactorBlock> {
     }
 
     @Override
-    public void read(CompoundNBT compound) {
-        super.read(compound);
-        this.posList = Data.readPosList(compound, "QueuedPos", new ArrayList<>());
-        this.baseTemp = compound.getInt("BaseTemp");
-        this.carbonTemp = compound.getInt("CarbonTemp");
-        this.redstoneTemp = compound.getInt("RedstoneTemp");
+    public void func_230337_a_(BlockState state, CompoundNBT nbt) {
+        super.func_230337_a_(state, nbt);
+        this.baseTemp = nbt.getInt("base_temp");
+        this.carbonTemp = nbt.getInt("carbon_temp");
+        this.redstoneTemp = nbt.getInt("redstone_temp");
     }
 
     @Override
-    public CompoundNBT write(CompoundNBT compound) {
-        Data.writePosList(compound, this.posList, "QueuedPos");
-        compound.putInt("BaseTemp", this.baseTemp);
-        compound.putInt("CarbonTemp", this.carbonTemp);
-        compound.putInt("RedstoneTemp", this.redstoneTemp);
-        return super.write(compound);
+    public CompoundNBT write(CompoundNBT nbt) {
+        nbt.putInt("base_temp", this.baseTemp);
+        nbt.putInt("carbon_temp", this.carbonTemp);
+        nbt.putInt("redstone_temp", this.redstoneTemp);
+        return super.write(nbt);
     }
 
     @Override
-    public void readSync(CompoundNBT compound) {
-        super.readSync(compound);
-        this.tank.readFromNBT(compound);
-        this.built = compound.getBoolean("Built");
-        this.fuel.read(compound, "Fuel");
-        this.carbon.read(compound, "Carbon");
-        this.redstone.read(compound, "Redstone");
-        this.solidCoolant.read(compound, "SolidCoolant");
-        this.solidCoolantTemp = compound.getInt("SolidCoolantTemp");
-        this.temp.read(compound, "Temperature");
+    public void readSync(CompoundNBT nbt) {
+        super.readSync(nbt);
+        this.builder.read(nbt);
+        this.fuel.read(nbt, "fuel");
+        this.carbon.read(nbt, "carbon");
+        this.redstone.read(nbt, "redstone");
+        this.solidCoolant.read(nbt, "solid_coolant");
+        this.solidCoolantTemp = nbt.getInt("solid_coolant_temp");
+        this.running = nbt.getBoolean("running");
+        this.temp.read(nbt, "temperature");
     }
 
     @Override
-    public CompoundNBT writeSync(CompoundNBT compound) {
-        this.tank.writeToNBT(compound);
-        compound.putBoolean("Built", this.built);
-        this.fuel.write(compound, "Fuel");
-        this.carbon.write(compound, "Carbon");
-        this.redstone.write(compound, "Redstone");
-        this.solidCoolant.write(compound, "SolidCoolant");
-        compound.putInt("SolidCoolantTemp", this.solidCoolantTemp);
-        this.temp.write(compound, "Temperature");
-        return super.writeSync(compound);
+    public CompoundNBT writeSync(CompoundNBT nbt) {
+        this.builder.write(nbt);
+        this.fuel.write(nbt, "fuel");
+        this.carbon.write(nbt, "carbon");
+        this.redstone.write(nbt, "redstone");
+        this.solidCoolant.write(nbt, "solid_coolant");
+        nbt.putInt("solid_coolant_temp", this.solidCoolantTemp);
+        nbt.putBoolean("running", this.running);
+        this.temp.write(nbt, "temperature");
+        return super.writeSync(nbt);
     }
 
     @Override
-    protected boolean postTicks(World world) {
-        if (isRemote()) return false;
+    protected int postTick(World world) {
+        if (isRemote() || !this.builder.isDone(world)) return -1;
+        long extracted = chargeItems(1);
         boolean flag = false;
-        int extracted = 0;
-        if (this.built) {
-            for (Direction direction : Direction.values()) {
-                if (canExtractEnergy(direction)) {
-                    long amount = Math.min(getMaxEnergyExtract(), getEnergyStored());
-                    BlockPos pos = this.pos.offset(direction, direction.getAxis().isHorizontal() ? 2 : direction.equals(Direction.UP) ? 4 : 1);
-                    int received = Energy.receive(getTileEntity(pos), direction, amount, false);
-                    extracted += extractEnergy(received, false, direction);
-                }
+        boolean flag2 = false;
+
+        if (checkRedstone()) {
+            boolean generating = !this.energy.isFull() && !this.fuel.isEmpty();
+            boolean b0 = processFuel(world);
+            boolean b1 = processCarbon(world, generating);
+            boolean b2 = processRedstone(world, generating);
+            boolean b3 = processTemperature(world, generating);
+            if (b0 || b1 || b2 || b3) {
+                flag = true;
             }
 
-            if (doWorkingTicks(world)) {
-                boolean generating = !this.energy.isFull() && !this.fuel.isEmpty();
-                boolean b0 = processFuel(world);
-                boolean b1 = processCarbon(world, generating);
-                boolean b2 = processRedstone(world, generating);
-                boolean b3 = processTemperature(world, generating);
-                if (b0 || b1 || b2 || b3) {
-                    flag = true;
-                }
-
-                if (generating) {
-                    this.fuel.back(calcConsumption());
-                    this.energy.produce(getGeneration());
-                    flag = true;
-                }
-
-                if (flag && this.isContainerOpen) {
-                    sync(3);
-                }
+            if (generating) {
+                this.fuel.back(calcConsumption());
+                this.energy.produce((long) calcProduction());
+                flag = true;
+                flag2 = true;
             }
-        } else if (!build(world)) {
-            return false;
+
+            if (flag && this.isContainerOpen) {
+                sync(3);
+            }
         }
-        return extracted > 0;
+
+        for (Direction direction : Direction.values()) {
+            if (canExtractEnergy(direction)) {
+                long amount = Math.min(getEnergyTransfer(), getEnergy().getStored());
+                BlockPos pos = this.pos.offset(direction, direction.getAxis().isHorizontal() ? 2 : direction.equals(Direction.UP) ? 4 : 1);
+                int received = Energy.receive(world.getTileEntity(pos), direction, amount, false);
+                extracted += extractEnergy(received, false, direction);
+            }
+        }
+
+        if (this.running != flag2) {
+            this.running = flag2;
+            sync(5);
+        }
+
+        return extracted > 0 ? 5 : -1;
     }
 
     @Override
-    public long getGeneration() {
-        return (long) calcProduction();
+    protected void clientTick(World world) {
+        if (this.running) {
+            this.bright.onward();
+        } else {
+            this.bright.back();
+        }
     }
 
     public double calcProduction() {
         double d = this.carbon.isEmpty() ? 1 : 1.2D;
         double d1 = this.redstone.isEmpty() ? 1 : 1.4D;
-        return (1.0D - calc()) * (this.fuel.getTicks() / 100) * defaultGeneration() * d * d1;
+        return (1.0D - calc()) * (this.fuel.getTicks() / 100) * getGeneration() * d * d1;
     }
 
     public double calcConsumption() {
-        double d1 = 1.0D + (this.variant.ordinal() * 0.25D);
-        return (1.0D + this.variant.ordinal() * 0.25D) * calc();
+        if (this.running) {
+            double d1 = 1.0D + (this.variant.ordinal() * 0.25D);
+            return (1.0D + this.variant.ordinal() * 0.25D) * calc();
+        } else return 0.0D;
     }
 
     public double calc() {
@@ -186,7 +179,7 @@ public class ReactorTile extends TileBase.EnergyProvider<Tier, ReactorBlock> {
     private boolean processTemperature(World world, boolean generating) {
         boolean flag = false;
         if (this.solidCoolant.isEmpty()) {
-            ItemStack stack = this.inv.getStackInSlot(3);
+            ItemStack stack = this.inv.getStackInSlot(4);
             if (!stack.isEmpty()) {
                 Pair<Integer, Integer> coolant = PowahAPI.getSolidCoolant(stack.getItem());
                 int size = coolant.getLeft();
@@ -237,7 +230,7 @@ public class ReactorTile extends TileBase.EnergyProvider<Tier, ReactorBlock> {
     private boolean processRedstone(World world, boolean generating) {
         boolean flag = false;
         if (this.redstone.isEmpty()) {
-            ItemStack stack = this.inv.getStackInSlot(2);
+            ItemStack stack = this.inv.getStackInSlot(3);
             if (stack.getItem() == Items.REDSTONE) {
                 this.redstone.setAll(18);
             } else if (stack.getItem() == Items.REDSTONE_BLOCK) {
@@ -264,7 +257,7 @@ public class ReactorTile extends TileBase.EnergyProvider<Tier, ReactorBlock> {
     private boolean processCarbon(World world, boolean generating) {
         boolean flag = false;
         if (this.carbon.isEmpty()) {
-            ItemStack stack = this.inv.getStackInSlot(1);
+            ItemStack stack = this.inv.getStackInSlot(2);
             if (!stack.isEmpty()) {
                 int carbon = ForgeHooks.getBurnTime(stack);
                 if (carbon > 0) {
@@ -290,7 +283,7 @@ public class ReactorTile extends TileBase.EnergyProvider<Tier, ReactorBlock> {
     private boolean processFuel(World world) {
         boolean flag = false;
         if (this.fuel.getTicks() <= 900) {
-            ItemStack stack = this.inv.getStackInSlot(0);
+            ItemStack stack = this.inv.getStackInSlot(1);
             if (stack.getItem() == IItems.URANINITE) {
                 this.fuel.add(100);
                 this.baseTemp = 700;
@@ -305,145 +298,61 @@ public class ReactorTile extends TileBase.EnergyProvider<Tier, ReactorBlock> {
         return flag;
     }
 
-    private boolean build(World world) {
-        if (!this.posList.isEmpty()) {
-            boolean flag = true;
-            for (BlockPos pos : this.posList) {
-                if (!world.getBlockState(pos).getMaterial().isReplaceable()) {
-                    flag = false;
-                    break;
-                }
-            }
-            if (flag && this.ticks > 4 && this.ticks % 5 == 0) {
-                Iterator<BlockPos> itr = this.posList.iterator();
-                while (itr.hasNext()) {
-                    BlockPos pos = itr.next();
-                    BlockState state = getBlock().getDefaultState();
-                    world.setBlockState(pos, state.with(ReactorBlock.CORE, false), 3);
-                    TileEntity tileEntity = getTileEntity(pos);
-                    if (tileEntity instanceof ReactorPartTile) {
-                        ReactorPartTile part = (ReactorPartTile) tileEntity;
-                        part.setCorePos(this.pos);
-                        world.playEvent(2001, pos, Block.getStateId(getBlockState()));
-                        itr.remove();
-                        return false;
-                    }
-                }
-            }
-        } else {
-            for (Direction side : Direction.values()) {
-                if (side.equals(Direction.DOWN)) continue;
-                BlockPos pos = this.pos.offset(side).up(side.equals(Direction.UP) ? 2 : 0);
-                TileEntity tileEntity = getTileEntity(pos);
-                if (tileEntity instanceof ReactorPartTile) {
-                    ReactorPartTile part = (ReactorPartTile) tileEntity;
-                    part.setExtractor(true);
-                }
-            }
-            for (BlockPos pos : getPosList()) {
-                TileEntity tileEntity = getTileEntity(pos);
-                if (tileEntity instanceof ReactorPartTile) {
-                    ReactorPartTile part = (ReactorPartTile) tileEntity;
-                    part.setBuilt(true);
-                    part.markDirtyAndSync();
-                }
-            }
-            this.built = true;
-            markDirtyAndSync();
-        }
-        return true;
+    @Override
+    public void onPlaced(World world, BlockState state, @Nullable LivingEntity placer, ItemStack stack) {
+        super.onPlaced(world, state, placer, stack);
+        this.builder.shuffle();
     }
 
     public void demolish(World world) {
-        List<BlockPos> list = getPosList();
-        list.add(this.pos);
-        for (int i = 0; i < list.size(); i++) {
-            BlockPos blockPos = list.get(i);
-            if (world.getBlockState(blockPos).getBlock().equals(getBlock())) {
-                Block.spawnAsEntity(world, this.pos, new ItemStack(getBlock()));
-                world.setBlockState(blockPos, Blocks.AIR.getDefaultState(), 3);
-            }
-        }
-
-        this.posList.forEach(pos -> Block.spawnAsEntity(world, this.pos, new ItemStack(getBlock())));
-
+        this.builder.demolish(world);
         while (this.fuel.getTicks() >= 100) {
             Block.spawnAsEntity(world, this.pos, new ItemStack(IItems.URANINITE));
             this.fuel.back(100);
         }
-
-        this.posList.clear();
-        world.setBlockState(this.pos, Blocks.AIR.getDefaultState(), 3);
     }
 
-    public FluidTank getTank() {
+
+    public boolean isBuilt() {
+        return this.builder.built;
+    }
+
+    @Override
+    public int getSlotLimit(int slot) {
+        return 64;
+    }
+
+    @Override
+    public boolean canInsert(int slot, ItemStack stack) {
+        if (slot == 1) {
+            return stack.getItem() == IItems.URANINITE;
+        } else if (slot == 2) {
+            return ForgeHooks.getBurnTime(stack) > 0 && !stack.hasContainerItem();
+        } else if (slot == 3) {
+            return stack.getItem() == Items.REDSTONE || stack.getItem() == Items.REDSTONE_BLOCK;
+        } else if (slot == 4) {
+            Pair<Integer, Integer> coolant = PowahAPI.getSolidCoolant(stack.getItem());
+            return coolant.getLeft() > 0 && coolant.getRight() < 2;
+        } else return Energy.isPresent(stack);
+    }
+
+    @Override
+    public boolean canExtract(int slot, ItemStack stack) {
+        return true;
+    }
+
+    @Override
+    public Tank getTank() {
         return this.tank;
     }
 
-    public void shuffle() {
-        this.posList.addAll(getPosList());
-        Collections.shuffle(this.posList);
-    }
-
-    public boolean isBuilt() {
-        return this.built;
-    }
-
-    public Ticker getFuel() {
-        return this.fuel;
-    }
-
-    public Ticker getCarbon() {
-        return this.carbon;
-    }
-
-    public Ticker getRedstone() {
-        return this.redstone;
-    }
-
-    public Ticker getSolidCoolant() {
-        return this.solidCoolant;
-    }
-
-    public int getSolidCoolantTemp() {
-        return this.solidCoolantTemp;
-    }
-
-    public Ticker getTemp() {
-        return this.temp;
-    }
-
-    public List<BlockPos> getPosList() {
-        return BlockPos.getAllInBox(this.pos.add(-1, 0, -1), this.pos.add(1, 3, 1))
-                .map(BlockPos::toImmutable)
-                .filter(pos1 -> !pos1.equals(this.pos)).collect(Collectors.toList());
+    public boolean isRunning() {
+        return this.running;
     }
 
     @Override
     @OnlyIn(Dist.CLIENT)
     public AxisAlignedBB getRenderBoundingBox() {
         return new AxisAlignedBB(this.pos).grow(1.0D, 3.0D, 1.0D);
-    }
-
-    @Override
-    public boolean canInsert(int index, ItemStack stack) {
-        if (index == 0) {
-            return stack.getItem() == IItems.URANINITE;
-        } else if (index == 1) {
-            return ForgeHooks.getBurnTime(stack) > 0 && !stack.hasContainerItem();
-        } else if (index == 2) {
-            return stack.getItem() == Items.REDSTONE || stack.getItem() == Items.REDSTONE_BLOCK;
-        } else if (index == 3) {
-            Pair<Integer, Integer> coolant = PowahAPI.getSolidCoolant(stack.getItem());
-            return coolant.getLeft() > 0 && coolant.getRight() < 2;
-        } else return super.canInsert(index, stack);
-    }
-
-    @Override
-    public <T> LazyOptional<T> getCapability(Capability<T> cap, @Nullable Direction side) {
-        if (cap == CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY) {
-            return this.holder.cast();
-        }
-        return super.getCapability(cap, side);
     }
 }

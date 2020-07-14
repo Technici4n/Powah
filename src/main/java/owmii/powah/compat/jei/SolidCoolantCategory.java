@@ -1,5 +1,6 @@
 package owmii.powah.compat.jei;
 
+import com.mojang.blaze3d.matrix.MatrixStack;
 import mezz.jei.api.constants.VanillaTypes;
 import mezz.jei.api.gui.IRecipeLayout;
 import mezz.jei.api.gui.drawable.IDrawable;
@@ -74,10 +75,10 @@ public class SolidCoolantCategory implements IRecipeCategory<SolidCoolantCategor
     }
 
     @Override
-    public void draw(Recipe recipe, double mouseX, double mouseY) {
+    public void draw(Recipe recipe, MatrixStack matrix, double mouseX, double mouseY) {
         Minecraft minecraft = Minecraft.getInstance();
-        minecraft.fontRenderer.drawString(TextFormatting.DARK_GRAY + I18n.format("info.lollipop.amount", "" + TextFormatting.RESET + recipe.amount), 30.0F, 3.0F, 0x555555);
-        minecraft.fontRenderer.drawString(TextFormatting.DARK_GRAY + I18n.format("info.lollipop.temperature", "" + TextFormatting.RESET + recipe.coldness), 30.0F, 15.0F, 43690);
+        minecraft.fontRenderer.func_238405_a_(matrix, TextFormatting.DARK_GRAY + I18n.format("info.lollipop.amount", "" + TextFormatting.RESET + recipe.amount), 30.0F, 3.0F, 0x555555);
+        minecraft.fontRenderer.func_238405_a_(matrix, TextFormatting.DARK_GRAY + I18n.format("info.lollipop.temperature", "" + TextFormatting.RESET + recipe.coldness), 30.0F, 15.0F, 43690);
     }
 
     public static class Maker {

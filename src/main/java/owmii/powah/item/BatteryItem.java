@@ -2,25 +2,27 @@ package owmii.powah.item;
 
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.Hand;
 import net.minecraft.world.World;
 import net.minecraftforge.energy.IEnergyStorage;
 import owmii.lib.config.IEnergyConfig;
-import owmii.lib.energy.Energy;
 import owmii.lib.item.EnergyItem;
+import owmii.lib.logistics.energy.Energy;
 import owmii.powah.api.energy.endernetwork.IEnderExtender;
 import owmii.powah.block.Tier;
 import owmii.powah.config.Configs;
+import owmii.powah.config.item.BatteryConfig;
 
-public class BatteryItem extends EnergyItem<Tier> implements IEnderExtender {
-    public BatteryItem(Properties properties, Tier variant) {
+public class BatteryItem extends EnergyItem<Tier, BatteryConfig> implements IEnderExtender {
+    public BatteryItem(Item.Properties properties, Tier variant) {
         super(properties, variant);
     }
 
     @Override
-    public IEnergyConfig<Tier> getEnergyConfig() {
+    public IEnergyConfig<Tier> getConfig() {
         return Configs.BATTERY;
     }
 
@@ -38,7 +40,7 @@ public class BatteryItem extends EnergyItem<Tier> implements IEnderExtender {
     @Override
     public ActionResult<ItemStack> onItemRightClick(World world, PlayerEntity player, Hand hand) {
         ItemStack stack = player.getHeldItem(hand);
-        if (player.isShiftKeyDown()) {
+        if (player.isSneaking()) {
             switchCharging(stack);
             return ActionResult.resultSuccess(stack);
         }
@@ -67,16 +69,16 @@ public class BatteryItem extends EnergyItem<Tier> implements IEnderExtender {
     }
 
     private boolean isCharging(ItemStack stack) {
-        return stack.getOrCreateTag().getBoolean("Charging");
+        return stack.getOrCreateTag().getBoolean("charging");
     }
 
     private void setCharging(ItemStack stack, boolean charging) {
-        stack.getOrCreateTag().putBoolean("Charging", charging);
+        stack.getOrCreateTag().putBoolean("charging", charging);
     }
 
     @Override
     public long getExtendedCapacity(ItemStack stack) {
-        return getEnergyConfig().getCapacity(getVariant());
+        return getConfig().getCapacity(getVariant());
     }
 
     @Override

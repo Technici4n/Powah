@@ -1,5 +1,6 @@
 package owmii.powah.compat.jei.energizing;
 
+import com.mojang.blaze3d.matrix.MatrixStack;
 import mezz.jei.api.constants.VanillaTypes;
 import mezz.jei.api.gui.IRecipeLayout;
 import mezz.jei.api.gui.drawable.IDrawable;
@@ -11,7 +12,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
-import owmii.lib.util.Text;
+import owmii.lib.util.Util;
 import owmii.powah.Powah;
 import owmii.powah.block.IBlocks;
 import owmii.powah.block.energizing.EnergizingRecipe;
@@ -72,8 +73,8 @@ public class EnergizingCategory implements IRecipeCategory<EnergizingRecipe> {
     }
 
     @Override
-    public void draw(EnergizingRecipe recipe, double mouseX, double mouseY) {
+    public void draw(EnergizingRecipe recipe, MatrixStack matrix, double mouseX, double mouseY) {
         Minecraft minecraft = Minecraft.getInstance();
-        minecraft.fontRenderer.drawString(I18n.format("info.lollipop.energy.fe.2", Text.addCommas(recipe.getEnergy())), 2.0F, 29.0F, 0x484241);
+        minecraft.fontRenderer.func_238405_a_(matrix, I18n.format("info.lollipop.energy.fe.2", Util.addCommas(recipe.getEnergy())), 2.0F, 29.0F, 0x484241);
     }
 }

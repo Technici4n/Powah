@@ -24,7 +24,7 @@ public class ChargedSnowballItem extends ItemBase {
         if (!worldIn.isRemote) {
             ChargedSnowballEntity entity = new ChargedSnowballEntity(worldIn, playerIn);
             entity.setItem(itemstack);
-            entity.shoot(playerIn, playerIn.rotationPitch, playerIn.rotationYaw, 0.0F, 1.5F, 1.0F);
+            entity.func_234612_a_(playerIn, playerIn.rotationPitch, playerIn.rotationYaw, 0.0F, 1.5F, 1.0F);
             worldIn.addEntity(entity);
         }
 

@@ -1,5 +1,6 @@
 package owmii.powah.block.energizing;
 
+import com.mojang.blaze3d.matrix.MatrixStack;
 import com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.IWaterLoggable;
@@ -7,19 +8,22 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.item.Item;
+import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.nbt.NBTUtil;
+import net.minecraft.state.properties.BlockStateProperties;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.Direction;
 import net.minecraft.util.Hand;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.BlockRayTraceResult;
-import net.minecraft.util.math.Vec3d;
 import net.minecraft.util.math.shapes.IBooleanFunction;
 import net.minecraft.util.math.shapes.ISelectionContext;
 import net.minecraft.util.math.shapes.VoxelShape;
+import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.IBlockReader;
@@ -32,13 +36,14 @@ import owmii.lib.Lollipop;
 import owmii.lib.block.AbstractEnergyBlock;
 import owmii.lib.client.handler.IHud;
 import owmii.lib.client.util.Draw;
-import owmii.lib.config.IEnergyConfig;
-import owmii.lib.util.Text;
+import owmii.lib.item.EnergyBlockItem;
+import owmii.lib.util.Util;
 import owmii.lib.util.math.V3d;
 import owmii.powah.api.wrench.IWrenchable;
 import owmii.powah.api.wrench.WrenchMode;
 import owmii.powah.block.Tier;
 import owmii.powah.config.Configs;
+import owmii.powah.config.EnergizingConfig;
 import owmii.powah.item.WrenchItem;
 
 import javax.annotation.Nullable;
@@ -49,12 +54,17 @@ import java.util.stream.Collectors;
 
 import static net.minecraft.util.math.shapes.VoxelShapes.combineAndSimplify;
 
-public class EnergizingRodBlock extends AbstractEnergyBlock<Tier> implements IWaterLoggable, IWrenchable, IHud {
+public class EnergizingRodBlock extends AbstractEnergyBlock<Tier, EnergizingConfig> implements IWaterLoggable, IWrenchable, IHud {
     private static final Map<Direction, VoxelShape> VOXEL_SHAPES = new HashMap<>();
 
     public EnergizingRodBlock(Properties properties, Tier variant) {
         super(properties, variant);
-        setStateProps(state -> state.with(FACING, Direction.DOWN));
+        setStateProps(state -> state.with(BlockStateProperties.FACING, Direction.DOWN));
+    }
+
+    @Override
+    public EnergyBlockItem getBlockItem(Item.Properties properties, @Nullable ItemGroup group) {
+        return super.getBlockItem(properties.maxStackSize(1), group);
     }
 
     static {
@@ -67,17 +77,12 @@ public class EnergizingRodBlock extends AbstractEnergyBlock<Tier> implements IWa
     }
 
     @Override
-    public int stackSize() {
-        return 1;
-    }
-
-    @Override
     public VoxelShape getShape(BlockState state, IBlockReader worldIn, BlockPos pos, ISelectionContext context) {
-        return VOXEL_SHAPES.get(state.get(FACING));
+        return VOXEL_SHAPES.get(state.get(BlockStateProperties.FACING));
     }
 
     @Override
-    public IEnergyConfig<Tier> getEnergyConfig() {
+    public EnergizingConfig getConfig() {
         return Configs.ENERGIZING;
     }
 
@@ -119,8 +124,9 @@ public class EnergizingRodBlock extends AbstractEnergyBlock<Tier> implements IWa
         return Facing.ALL;
     }
 
+
     @Override
-    public boolean onWrench(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, Direction side, WrenchMode mode, Vec3d hit) {
+    public boolean onWrench(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, Direction side, WrenchMode mode, Vector3d hit) {
         if (mode.link()) {
             ItemStack stack = player.getHeldItem(hand);
             if (stack.getItem() instanceof WrenchItem) {
@@ -137,15 +143,15 @@ public class EnergizingRodBlock extends AbstractEnergyBlock<Tier> implements IWa
                             V3d v3d = V3d.from(orbPos);
                             if ((int) v3d.distance(pos) <= Configs.ENERGIZING.range.get()) {
                                 rod.setOrbPos(orbPos);
-                                player.sendStatusMessage(new TranslationTextComponent("chat.powah.wrench.link.done").applyTextStyle(TextFormatting.GOLD), true);
+                                player.sendStatusMessage(new TranslationTextComponent("chat.powah.wrench.link.done").func_240701_a_(TextFormatting.GOLD), true);
                             } else {
-                                player.sendStatusMessage(new TranslationTextComponent("chat.powah.wrench.link.fail").applyTextStyle(TextFormatting.RED), true);
+                                player.sendStatusMessage(new TranslationTextComponent("chat.powah.wrench.link.fail").func_240701_a_(TextFormatting.RED), true);
                             }
                         }
                         nbt.remove("OrbPos");
                     } else {
                         nbt.put("RodPos", NBTUtil.writeBlockPos(pos));
-                        player.sendStatusMessage(new TranslationTextComponent("chat.powah.wrench.link.start").applyTextStyle(TextFormatting.YELLOW), true);
+                        player.sendStatusMessage(new TranslationTextComponent("chat.powah.wrench.link.start").func_240701_a_(TextFormatting.YELLOW), true);
                     }
                     return true;
                 }
@@ -156,7 +162,7 @@ public class EnergizingRodBlock extends AbstractEnergyBlock<Tier> implements IWa
 
     @Override
     @OnlyIn(Dist.CLIENT)
-    public boolean renderHud(BlockState state, World world, BlockPos pos, PlayerEntity player, BlockRayTraceResult result, @Nullable TileEntity te) {
+    public boolean renderHud(MatrixStack matrix, BlockState state, World world, BlockPos pos, PlayerEntity player, BlockRayTraceResult result, @Nullable TileEntity te) {
         if (te instanceof EnergizingRodTile) {
             EnergizingRodTile rod = (EnergizingRodTile) te;
             RenderSystem.pushMatrix();
@@ -165,11 +171,11 @@ public class EnergizingRodBlock extends AbstractEnergyBlock<Tier> implements IWa
             FontRenderer font = mc.fontRenderer;
             int x = mc.getMainWindow().getScaledWidth() / 2;
             int y = mc.getMainWindow().getScaledHeight();
-            String s = TextFormatting.GRAY + I18n.format("info.lollipop.stored.energy.fe", Text.addCommas(rod.getEnergyStored()), Text.numFormat(rod.getEnergyCapacity()));
+            String s = TextFormatting.GRAY + I18n.format("info.lollipop.stored.energy.fe", Util.addCommas(rod.getEnergy().getEnergyStored()), Util.numFormat(rod.getEnergy().getCapacity()));
             mc.getTextureManager().bindTexture(new ResourceLocation(Lollipop.MOD_ID, "textures/gui/ov_energy.png"));
             GuiUtils.drawTexturedModalRect(x - 37 - 1, y - 80, 0, 0, 74, 9, 0);
-            Draw.gaugeH(x - 37, y - 79, 72, 16, 0, 9, ((EnergizingRodTile) te).getEnergyStorage());
-            font.drawStringWithShadow(s, x - (font.getStringWidth(s) / 2.0f), y - 67, 0xffffff);
+            Draw.gaugeH(x - 37, y - 79, 72, 16, 0, 9, ((EnergizingRodTile) te).getEnergy());
+            font.func_238421_b_(matrix, s, x - (font.getStringWidth(s) / 2.0f), y - 67, 0xffffff);
             RenderSystem.disableBlend();
             RenderSystem.popMatrix();
         }

@@ -1,11 +1,14 @@
 {
   "type": "minecraft:crafting_shaped",
   "pattern": [
-	"gcg",
+	"ghg",
 	"cdc",
-	"gcg"
+	"ghg"
   ],
   "key": {
+	"h": {
+	  "item": "powah:capacitor_hardened"
+	},
 	"c": {
 	  "item": "powah:energy_cell_basic"
 	},

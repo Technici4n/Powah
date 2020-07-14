@@ -5,42 +5,33 @@ import net.minecraft.block.IWaterLoggable;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemGroup;
-import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.math.BlockRayTraceResult;
 import net.minecraft.world.IBlockReader;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
 import owmii.lib.block.AbstractEnergyBlock;
-import owmii.lib.block.TileBase;
-import owmii.lib.config.IEnergyConfig;
-import owmii.lib.inventory.ContainerBase;
-import owmii.lib.item.BlockItemBase;
+import owmii.lib.block.AbstractTileEntity;
+import owmii.lib.item.EnergyBlockItem;
+import owmii.lib.logistics.inventory.AbstractContainer;
 import owmii.powah.block.Tier;
 import owmii.powah.config.Configs;
+import owmii.powah.config.EnergyCellConfig;
 import owmii.powah.inventory.EnergyCellContainer;
-import owmii.powah.inventory.IContainers;
 import owmii.powah.item.EnergyCellItem;
 
 import javax.annotation.Nullable;
 
-public class EnergyCellBlock extends AbstractEnergyBlock<Tier> implements IWaterLoggable {
+public class EnergyCellBlock extends AbstractEnergyBlock<Tier, EnergyCellConfig> implements IWaterLoggable {
     public EnergyCellBlock(Properties properties, Tier tier) {
         super(properties, tier);
     }
 
     @Override
-    public BlockItemBase getBlockItem(Item.Properties properties, @Nullable ItemGroup group) {
-        return new EnergyCellItem(this, properties, group);
+    public EnergyBlockItem getBlockItem(Item.Properties properties, @Nullable ItemGroup group) {
+        return new EnergyCellItem(this, properties.maxStackSize(1), group);
     }
 
     @Override
-    public int stackSize() {
-        return 1;
-    }
-
-    @Override
-    public IEnergyConfig<Tier> getEnergyConfig() {
+    public EnergyCellConfig getConfig() {
         return Configs.ENERGY_CELL;
     }
 
@@ -52,16 +43,10 @@ public class EnergyCellBlock extends AbstractEnergyBlock<Tier> implements IWater
 
     @Nullable
     @Override
-    public ContainerBase getContainer(int id, PlayerInventory inventory, TileBase te, BlockRayTraceResult result) {
+    public AbstractContainer getContainer(int id, PlayerInventory inventory, AbstractTileEntity te, BlockRayTraceResult result) {
         if (te instanceof EnergyCellTile) {
-            return new EnergyCellContainer(IContainers.ENERGY_CELL, id, inventory, (EnergyCellTile) te);
+            return new EnergyCellContainer(id, inventory, (EnergyCellTile) te);
         }
         return null;
-    }
-
-    @Override
-    @OnlyIn(Dist.CLIENT)
-    public boolean hasEffect(ItemStack stack) {
-        return this.variant.equals(Tier.CREATIVE);
     }
 }

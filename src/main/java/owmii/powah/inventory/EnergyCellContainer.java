@@ -1,23 +1,29 @@
 package owmii.powah.inventory;
 
 import net.minecraft.entity.player.PlayerInventory;
-import net.minecraft.inventory.container.ContainerType;
 import net.minecraft.network.PacketBuffer;
-import owmii.lib.inventory.EnergyContainerBase;
+import owmii.lib.logistics.inventory.AbstractEnergyContainer;
+import owmii.lib.logistics.inventory.slot.SlotBase;
 import owmii.powah.block.energycell.EnergyCellTile;
 
-import javax.annotation.Nullable;
-
-public class EnergyCellContainer extends EnergyContainerBase<EnergyCellTile> {
-    public EnergyCellContainer(@Nullable final ContainerType<?> containerType, final int id, final PlayerInventory playerInventory, final EnergyCellTile te) {
-        super(containerType, id, playerInventory, te);
+public class EnergyCellContainer extends AbstractEnergyContainer<EnergyCellTile> {
+    public EnergyCellContainer(int id, PlayerInventory inventory, PacketBuffer buffer) {
+        super(Containers.ENERGY_CELL, id, inventory, buffer);
     }
 
-    protected EnergyCellContainer(@Nullable final ContainerType<?> containerType, final int id, final PlayerInventory playerInventory, final PacketBuffer buffer) {
-        super(containerType, id, playerInventory, buffer);
+    public EnergyCellContainer(int id, PlayerInventory inventory, EnergyCellTile te) {
+        super(Containers.ENERGY_CELL, id, inventory, te);
     }
 
-    public static EnergyCellContainer create(final int i, final PlayerInventory playerInventory, final PacketBuffer buffer) {
-        return new EnergyCellContainer(IContainers.ENERGY_CELL, i, playerInventory, buffer);
+    public static EnergyCellContainer create(int id, PlayerInventory inventory, PacketBuffer buffer) {
+        return new EnergyCellContainer(id, inventory, buffer);
+    }
+
+    @Override
+    protected void init(PlayerInventory inventory, EnergyCellTile te) {
+        super.init(inventory);
+        addSlot(new SlotBase(te.getInventory(), 0, 4, 4));
+        addSlot(new SlotBase(te.getInventory(), 1, 4, 29));
+        addPlayerInventory(inventory, 8, 59, 4);
     }
 }

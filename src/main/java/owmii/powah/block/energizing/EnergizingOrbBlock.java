@@ -1,8 +1,5 @@
 package owmii.powah.block.energizing;
 
-import mcjty.theoneprobe.api.IProbeHitData;
-import mcjty.theoneprobe.api.IProbeInfo;
-import mcjty.theoneprobe.api.ProbeMode;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.IWaterLoggable;
 import net.minecraft.entity.player.PlayerEntity;
@@ -15,10 +12,10 @@ import net.minecraft.util.Direction;
 import net.minecraft.util.Hand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.BlockRayTraceResult;
-import net.minecraft.util.math.Vec3d;
 import net.minecraft.util.math.shapes.IBooleanFunction;
 import net.minecraft.util.math.shapes.ISelectionContext;
 import net.minecraft.util.math.shapes.VoxelShape;
+import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.IBlockReader;
@@ -26,11 +23,9 @@ import net.minecraft.world.World;
 import net.minecraftforge.common.util.Constants;
 import net.minecraftforge.items.ItemHandlerHelper;
 import owmii.lib.block.AbstractBlock;
-import owmii.lib.compat.top.ITOPInfoProvider;
-import owmii.lib.inventory.Inventory;
-import owmii.lib.util.IVariant;
+import owmii.lib.block.IVariant;
+import owmii.lib.logistics.inventory.Inventory;
 import owmii.lib.util.math.V3d;
-import owmii.powah.api.wrench.IWrench;
 import owmii.powah.api.wrench.IWrenchable;
 import owmii.powah.api.wrench.WrenchMode;
 import owmii.powah.config.Configs;
@@ -42,7 +37,7 @@ import java.util.stream.Collectors;
 
 import static net.minecraft.util.math.shapes.VoxelShapes.combineAndSimplify;
 
-public class EnergizingOrbBlock extends AbstractBlock<IVariant.Single> implements IWaterLoggable, IWrenchable, ITOPInfoProvider {
+public class EnergizingOrbBlock extends AbstractBlock<IVariant.Single> implements IWaterLoggable, IWrenchable/*, ITOPInfoProvider*/ {
     private static final VoxelShape SHAPE = combineAndSimplify(makeCuboidShape(3.5D, 5.0D, 3.5D, 12.5D, 14.23D, 12.5D), makeCuboidShape(2.5D, 0.0D, 2.5D, 13.5D, 1.0D, 13.5D), IBooleanFunction.OR);
 
     public EnergizingOrbBlock(Properties properties) {
@@ -70,23 +65,23 @@ public class EnergizingOrbBlock extends AbstractBlock<IVariant.Single> implement
             Inventory inv = orb.getInventory();
             ItemStack output = inv.getStackInSlot(0);
             ItemStack off = player.getHeldItemOffhand();
-            if (!(off.getItem() instanceof IWrench && ((IWrench) off.getItem()).getWrenchMode(off).link())) {
-                if (held.isEmpty() || !output.isEmpty()) {
-                    if (!world.isRemote) {
-                        ItemHandlerHelper.giveItemToPlayer(player, inv.removeNext());
-                    }
-                    return ActionResultType.SUCCESS;
-                } else {
-                    if (!world.isRemote) {
-                        ItemStack copy = held.copy();
-                        copy.setCount(1);
-                        if (!inv.addNext(copy).isEmpty() && !player.isCreative()) {
-                            held.shrink(1);
-                        }
-                    }
-                    return ActionResultType.SUCCESS;
+            //  if (!(off.getItem() instanceof IWrench && ((IWrench) off.getItem()).getWrenchMode(off).link())) {
+            if (held.isEmpty() || !output.isEmpty()) {
+                if (!world.isRemote) {
+                    ItemHandlerHelper.giveItemToPlayer(player, inv.removeNext());
                 }
+                return ActionResultType.SUCCESS;
+            } else {
+                if (!world.isRemote) {
+                    ItemStack copy = held.copy();
+                    copy.setCount(1);
+                    if (!inv.addNext(copy).isEmpty() && !player.isCreative()) {
+                        held.shrink(1);
+                    }
+                }
+                return ActionResultType.SUCCESS;
             }
+            // }
         }
         return super.onBlockActivated(state, world, pos, player, hand, result);
     }
@@ -151,7 +146,7 @@ public class EnergizingOrbBlock extends AbstractBlock<IVariant.Single> implement
     }
 
     @Override
-    public boolean onWrench(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, Direction side, WrenchMode mode, Vec3d hit) {
+    public boolean onWrench(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, Direction side, WrenchMode mode, Vector3d hit) {
         if (mode.link()) {
             ItemStack stack = player.getHeldItem(hand);
             if (stack.getItem() instanceof WrenchItem) {
@@ -168,15 +163,15 @@ public class EnergizingOrbBlock extends AbstractBlock<IVariant.Single> implement
                             V3d v3d = V3d.from(rodPos);
                             if ((int) v3d.distance(pos) <= Configs.ENERGIZING.range.get()) {
                                 rod.setOrbPos(pos);
-                                player.sendStatusMessage(new TranslationTextComponent("chat.powah.wrench.link.done").applyTextStyle(TextFormatting.GOLD), true);
+                                player.sendStatusMessage(new TranslationTextComponent("chat.powah.wrench.link.done").func_240701_a_(TextFormatting.GOLD), true);
                             } else {
-                                player.sendStatusMessage(new TranslationTextComponent("chat.powah.wrench.link.fail").applyTextStyle(TextFormatting.RED), true);
+                                player.sendStatusMessage(new TranslationTextComponent("chat.powah.wrench.link.fail").func_240701_a_(TextFormatting.RED), true);
                             }
                         }
                         nbt.remove("RodPos");
                     } else {
                         nbt.put("OrbPos", NBTUtil.writeBlockPos(pos));
-                        player.sendStatusMessage(new TranslationTextComponent("chat.powah.wrench.link.start").applyTextStyle(TextFormatting.YELLOW), true);
+                        player.sendStatusMessage(new TranslationTextComponent("chat.powah.wrench.link.start").func_240701_a_(TextFormatting.YELLOW), true);
                     }
                     return true;
                 }
@@ -185,18 +180,18 @@ public class EnergizingOrbBlock extends AbstractBlock<IVariant.Single> implement
         return false;
     }
 
-    @Override
-    public void addProbeInfo(ProbeMode mode, IProbeInfo info, PlayerEntity player, World world, BlockPos pos, BlockState state, IProbeHitData hitData) {
-        TileEntity te = world.getTileEntity(pos);
-        if (te instanceof EnergizingOrbTile) {
-            EnergizingOrbTile orb = (EnergizingOrbTile) te;
-            if (orb.getRequiredEnergy() > 0) {
-                info.progress(orb.getEnergy(), orb.getRequiredEnergy());
-                EnergizingRecipe recipe = orb.currRecipe();
-                if (recipe != null) {
-                    info.item(recipe.getRecipeOutput());
-                }
-            }
-        }
-    }
+//    @Override
+//    public void addProbeInfo(ProbeMode mode, IProbeInfo info, PlayerEntity player, World world, BlockPos pos, BlockState state, IProbeHitData hitData) {
+//        TileEntity te = world.getTileEntity(pos);
+//        if (te instanceof EnergizingOrbTile) {
+//            EnergizingOrbTile orb = (EnergizingOrbTile) te;
+//            if (orb.getRequiredEnergy() > 0) {
+//                info.progress(orb.getEnergy(), orb.getRequiredEnergy());
+//                EnergizingRecipe recipe = orb.currRecipe();
+//                if (recipe != null) {
+//                    info.item(recipe.getRecipeOutput());
+//                }
+//            }
+//        }
+//    }
 }

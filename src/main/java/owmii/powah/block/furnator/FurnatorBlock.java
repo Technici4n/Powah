@@ -3,7 +3,10 @@ package owmii.powah.block.furnator;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.IWaterLoggable;
 import net.minecraft.entity.player.PlayerInventory;
+import net.minecraft.item.Item;
+import net.minecraft.item.ItemGroup;
 import net.minecraft.particles.ParticleTypes;
+import net.minecraft.state.properties.BlockStateProperties;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.Direction;
 import net.minecraft.util.SoundCategory;
@@ -12,32 +15,32 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.BlockRayTraceResult;
 import net.minecraft.world.IBlockReader;
 import net.minecraft.world.World;
-import owmii.lib.block.AbstractEnergyProviderBlock;
-import owmii.lib.block.TileBase;
-import owmii.lib.config.IEnergyProviderConfig;
-import owmii.lib.inventory.ContainerBase;
+import owmii.lib.block.AbstractGeneratorBlock;
+import owmii.lib.block.AbstractTileEntity;
+import owmii.lib.item.EnergyBlockItem;
+import owmii.lib.logistics.inventory.AbstractContainer;
 import owmii.powah.block.Tier;
 import owmii.powah.config.Configs;
+import owmii.powah.config.generator.FurnatorConfig;
 import owmii.powah.inventory.FurnatorContainer;
-import owmii.powah.inventory.IContainers;
 
 import javax.annotation.Nullable;
 import java.util.Random;
 
-public class FurnatorBlock extends AbstractEnergyProviderBlock<Tier> implements IWaterLoggable {
+public class FurnatorBlock extends AbstractGeneratorBlock<Tier, FurnatorConfig> implements IWaterLoggable {
     public FurnatorBlock(Properties properties, Tier variant) {
         super(properties, variant);
         setDefaultState();
     }
 
     @Override
-    public IEnergyProviderConfig<Tier> getEnergyConfig() {
+    public FurnatorConfig getConfig() {
         return Configs.FURNATOR;
     }
 
     @Override
-    public int stackSize() {
-        return 1;
+    public EnergyBlockItem getBlockItem(Item.Properties properties, @Nullable ItemGroup group) {
+        return super.getBlockItem(properties.maxStackSize(1), group);
     }
 
     @Nullable
@@ -46,23 +49,18 @@ public class FurnatorBlock extends AbstractEnergyProviderBlock<Tier> implements 
         return new FurnatorTile(this.variant);
     }
 
-    @Override
-    protected boolean semiFullShape() {
-        return true;
-    }
+//    @Override
+//    protected boolean semiFullShape() {
+//        return true;
+//    }
 
     @Nullable
     @Override
-    public ContainerBase getContainer(int id, PlayerInventory playerInventory, TileBase te, BlockRayTraceResult result) {
+    public AbstractContainer getContainer(int id, PlayerInventory playerInventory, AbstractTileEntity te, BlockRayTraceResult result) {
         if (te instanceof FurnatorTile) {
-            return new FurnatorContainer(IContainers.FURNATOR, id, playerInventory, (FurnatorTile) te);
+            return new FurnatorContainer(id, playerInventory, (FurnatorTile) te);
         }
         return null;
-    }
-
-    @Override
-    protected boolean hasLitProp() {
-        return true;
     }
 
     @Override
@@ -77,7 +75,8 @@ public class FurnatorBlock extends AbstractEnergyProviderBlock<Tier> implements 
 
     @Override
     public void animateTick(BlockState state, World world, BlockPos pos, Random rand) {
-        if (state.get(LIT)) {
+        TileEntity te = world.getTileEntity(pos);
+        if (te instanceof FurnatorTile && ((FurnatorTile) te).isBurning()) {
             double d0 = (double) pos.getX() + 0.5D;
             double d1 = (double) pos.getY() + 0.5D;
             double d2 = (double) pos.getZ() + 0.5D;
@@ -85,7 +84,7 @@ public class FurnatorBlock extends AbstractEnergyProviderBlock<Tier> implements 
                 world.playSound(d0, d1, d2, SoundEvents.BLOCK_FURNACE_FIRE_CRACKLE, SoundCategory.BLOCKS, 1.0F, 1.0F, false);
             }
 
-            Direction direction = state.get(FACING);
+            Direction direction = state.get(BlockStateProperties.FACING);
             Direction.Axis direction$axis = direction.getAxis();
             double d3 = 0.52D;
             double d4 = rand.nextDouble() * 0.6D - 0.3D;

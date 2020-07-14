@@ -1,7 +1,6 @@
 {
-  "parent": "powah:block/energy_cell",
+  "parent": "block/cube_all",
   "textures": {
-	"frame": "powah:block/energy_cell_creative_frame",
-	"core": "powah:block/energy_cell_core"
+	"all": "powah:block/energy_cell_creative"
   }
 }

@@ -1,31 +1,28 @@
 package owmii.powah.inventory;
 
 import net.minecraft.entity.player.PlayerInventory;
-import net.minecraft.inventory.container.ContainerType;
 import net.minecraft.network.PacketBuffer;
-import owmii.lib.inventory.EnergyContainerBase;
-import owmii.lib.inventory.slot.SlotBase;
-import owmii.lib.inventory.slot.SlotOverlay;
-import owmii.powah.block.playertransmitter.PlayerTransmitterTile;
+import owmii.lib.logistics.inventory.AbstractEnergyContainer;
+import owmii.lib.logistics.inventory.slot.SlotBase;
+import owmii.powah.block.transmitter.PlayerTransmitterTile;
 
-import javax.annotation.Nullable;
-
-public class PlayerTransmitterContainer extends EnergyContainerBase<PlayerTransmitterTile> {
-    public PlayerTransmitterContainer(@Nullable ContainerType<?> containerType, int id, PlayerInventory playerInventory, PlayerTransmitterTile te) {
-        super(containerType, id, playerInventory, te);
+public class PlayerTransmitterContainer extends AbstractEnergyContainer<PlayerTransmitterTile> {
+    public PlayerTransmitterContainer(int id, PlayerInventory inventory, PacketBuffer buffer) {
+        super(Containers.PLAYER_TRANSMITTER, id, inventory, buffer);
     }
 
-    public PlayerTransmitterContainer(@Nullable ContainerType<?> containerType, int id, PlayerInventory playerInventory, PacketBuffer buffer) {
-        super(containerType, id, playerInventory, buffer);
+    public PlayerTransmitterContainer(int id, PlayerInventory inventory, PlayerTransmitterTile te) {
+        super(Containers.PLAYER_TRANSMITTER, id, inventory, te);
     }
 
-    public static PlayerTransmitterContainer create(final int i, final PlayerInventory playerInventory, final PacketBuffer buffer) {
-        return new PlayerTransmitterContainer(IContainers.ENERGY_CELL, i, playerInventory, buffer);
+    public static PlayerTransmitterContainer create(int id, PlayerInventory inventory, PacketBuffer buffer) {
+        return new PlayerTransmitterContainer(id, inventory, buffer);
     }
 
     @Override
-    protected void addContainer(PlayerInventory playerInventory, PlayerTransmitterTile te) {
-        addSlot(new SlotBase(te.getInventory(), 0, 85, 32).bg(SlotOverlay.SLOT).ov(SlotOverlay.BINDING_CARD));
-        super.addContainer(playerInventory, te);
+    protected void init(PlayerInventory inventory, PlayerTransmitterTile te) {
+        super.init(inventory);
+        addSlot(new SlotBase(te.getInventory(), 0, 4, 29));
+        addPlayerInventory(inventory, 8, 59, 4);
     }
 }

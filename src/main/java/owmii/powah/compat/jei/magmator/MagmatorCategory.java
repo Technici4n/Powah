@@ -1,5 +1,6 @@
 package owmii.powah.compat.jei.magmator;
 
+import com.mojang.blaze3d.matrix.MatrixStack;
 import mezz.jei.api.constants.VanillaTypes;
 import mezz.jei.api.gui.IRecipeLayout;
 import mezz.jei.api.gui.drawable.IDrawable;
@@ -79,9 +80,9 @@ public class MagmatorCategory implements IRecipeCategory<MagmatorCategory.Recipe
     }
 
     @Override
-    public void draw(Recipe recipe, double mouseX, double mouseY) {
+    public void draw(Recipe recipe, MatrixStack matrix, double mouseX, double mouseY) {
         Minecraft minecraft = Minecraft.getInstance();
-        minecraft.fontRenderer.drawString(recipe.heat + " FE/100 mb", 27.0F, 9.0F, 0x444444);
+        minecraft.fontRenderer.func_238405_a_(matrix, recipe.heat + " FE/100 mb", 27.0F, 9.0F, 0x444444);
     }
 
     public static class Maker {

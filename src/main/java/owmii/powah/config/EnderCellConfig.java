@@ -21,20 +21,20 @@ public class EnderCellConfig extends EnergyConfig {
         this(builder,
                 new long[]{0, 0, 0, 0, 0, 0, 0},
                 new long[]{200L, 2500L, 8000L, 20_000L, 50_000L, 100_000L, 400_000L},
-                new int[]{1, 2, 4, 6, 9, 12, 16}
+                new int[]{1, 2, 3, 5, 7, 9, 12}
         );
     }
 
     public EnderCellConfig(ForgeConfigSpec.Builder builder, long[] caps, long[] trs, int[] channels) {
         super(builder, caps, trs);
         builder.push("Channels");
-        this.starterChannels = builder.defineInRange("starterChannels", channels[0], 1, 16);
-        this.basicChannels = builder.defineInRange("basicChannels", channels[1], 1, 16);
-        this.hardenedChannels = builder.defineInRange("hardenedChannels", channels[2], 1, 16);
-        this.blazingChannels = builder.defineInRange("blazingChannels", channels[3], 1, 16);
-        this.nioticChannels = builder.defineInRange("nioticChannels", channels[4], 1, 16);
-        this.spiritedChannels = builder.defineInRange("spiritedChannels", channels[5], 1, 16);
-        this.nitroChannels = builder.defineInRange("nitroChannels", channels[6], 1, 16);
+        this.starterChannels = builder.defineInRange("starterChannels", channels[0], 1, 12);
+        this.basicChannels = builder.defineInRange("basicChannels", channels[1], 1, 12);
+        this.hardenedChannels = builder.defineInRange("hardenedChannels", channels[2], 1, 12);
+        this.blazingChannels = builder.defineInRange("blazingChannels", channels[3], 1, 12);
+        this.nioticChannels = builder.defineInRange("nioticChannels", channels[4], 1, 12);
+        this.spiritedChannels = builder.defineInRange("spiritedChannels", channels[5], 1, 12);
+        this.nitroChannels = builder.defineInRange("nitroChannels", channels[6], 1, 12);
         builder.pop();
     }
 

@@ -5,12 +5,14 @@ import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.effect.LightningBoltEntity;
 import net.minecraft.entity.monster.BlazeEntity;
+import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.entity.projectile.ProjectileItemEntity;
 import net.minecraft.item.Item;
 import net.minecraft.network.IPacket;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.math.EntityRayTraceResult;
 import net.minecraft.util.math.RayTraceResult;
+import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.world.World;
 import net.minecraft.world.server.ServerWorld;
 import net.minecraftforge.fml.network.NetworkHooks;
@@ -29,7 +31,6 @@ public class ChargedSnowballEntity extends ProjectileItemEntity {
         super(snowballEntityEntityType, world);
     }
 
-
     @Override
     protected Item getDefaultItem() {
         return IItems.CHARGED_SNOWBALL;
@@ -40,12 +41,17 @@ public class ChargedSnowballEntity extends ProjectileItemEntity {
         if (result.getType() == RayTraceResult.Type.ENTITY) {
             Entity entity = ((EntityRayTraceResult) result).getEntity();
             int i = entity instanceof BlazeEntity ? 3 : 0;
-            entity.attackEntityFrom(DamageSource.causeThrownDamage(this, getThrower()), (float) i);
+            entity.attackEntityFrom(DamageSource.causeThrownDamage(this, func_234616_v_()), (float) i);
+
         }
 
         if (this.world instanceof ServerWorld) {
-            LightningBoltEntity entity = new LightningBoltEntity(this.world, getPosX(), getPosY(), getPosZ(), false);
-            ((ServerWorld) this.world).addLightningBolt(entity);
+            LightningBoltEntity lightningboltentity = EntityType.LIGHTNING_BOLT.create(this.world);
+            if (lightningboltentity != null) {
+                lightningboltentity.func_233576_c_(Vector3d.func_237492_c_(func_233580_cy_()));
+                lightningboltentity.setCaster(func_234616_v_() instanceof ServerPlayerEntity ? (ServerPlayerEntity) func_234616_v_() : null);
+                this.world.addEntity(lightningboltentity);
+            }
         }
 
         if (!this.world.isRemote) {

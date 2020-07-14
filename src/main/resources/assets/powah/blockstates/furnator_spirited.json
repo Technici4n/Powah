@@ -1,13 +1,9 @@
 {
   "variants": {
-	"facing=north,lit=false": {"model": "powah:block/furnator_spirited"},
-	"facing=south,lit=false": {"model": "powah:block/furnator_spirited", "y": 180},
-	"facing=west,lit=false": {"model": "powah:block/furnator_spirited", "y": 270},
-	"facing=east,lit=false": {"model": "powah:block/furnator_spirited", "y": 90},
-	"facing=north,lit=true": {"model": "powah:block/furnator_spirited_on"},
-	"facing=south,lit=true": {"model": "powah:block/furnator_spirited_on", "y": 180},
-	"facing=west,lit=true": {"model": "powah:block/furnator_spirited_on", "y": 270},
-	"facing=east,lit=true": {"model": "powah:block/furnator_spirited_on", "y": 90},
+	"facing=north": {"model": "powah:block/furnator_spirited"},
+	"facing=south": {"model": "powah:block/furnator_spirited", "y": 180},
+	"facing=west": {"model": "powah:block/furnator_spirited", "y": 270},
+	"facing=east": {"model": "powah:block/furnator_spirited", "y": 90},
 	"facing=up": {"model": "lollipop:block/empty"},
 	"facing=down": {"model": "lollipop:block/empty"}
   }

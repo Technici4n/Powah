@@ -4,14 +4,14 @@ import com.mojang.blaze3d.matrix.MatrixStack;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.player.ClientPlayerEntity;
 import net.minecraft.client.renderer.IRenderTypeBuffer;
-import net.minecraft.client.renderer.Vector3f;
 import net.minecraft.client.renderer.model.ItemCameraTransforms;
 import net.minecraft.client.renderer.tileentity.TileEntityRendererDispatcher;
 import net.minecraft.client.world.ClientWorld;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.vector.Vector3d;
+import net.minecraft.util.math.vector.Vector3f;
 import owmii.lib.client.renderer.tile.AbstractTileRenderer;
-import owmii.lib.inventory.Inventory;
+import owmii.lib.logistics.inventory.Inventory;
 import owmii.lib.util.math.V3d;
 import owmii.powah.block.energizing.EnergizingOrbTile;
 import owmii.powah.client.model.OrbModel;
@@ -41,7 +41,7 @@ public class EnergizingOrbRenderer extends AbstractTileRenderer<EnergizingOrbTil
                 matrix.pop();
             } else {
                 List<ItemStack> stacks = new ArrayList<>(inv.getNonEmptyStacks());
-                List<V3d> circled = V3d.from(BlockPos.ZERO).circled(stacks.size(), 0.1D);
+                List<V3d> circled = V3d.from(Vector3d.ZERO).circled(stacks.size(), 0.1D);
                 for (int i = 0; i < circled.size(); i++) {
                     V3d v3d1 = circled.get(i);
                     ItemStack stack = stacks.get(i);

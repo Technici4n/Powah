@@ -1,30 +1,30 @@
 package owmii.powah.inventory;
 
 import net.minecraft.entity.player.PlayerInventory;
-import net.minecraft.inventory.container.ContainerType;
 import net.minecraft.network.PacketBuffer;
-import owmii.lib.inventory.EnergyContainerBase;
-import owmii.lib.inventory.slot.SlotBase;
-import owmii.powah.block.endercell.EnderCellTile;
+import owmii.lib.logistics.inventory.AbstractEnergyContainer;
+import owmii.lib.logistics.inventory.slot.SlotBase;
+import owmii.powah.block.ender.AbstractEnderTile;
 
-import javax.annotation.Nullable;
-
-public class EnderCellContainer extends EnergyContainerBase<EnderCellTile> {
-    public EnderCellContainer(@Nullable final ContainerType<?> containerType, final int id, final PlayerInventory playerInventory, final EnderCellTile te) {
-        super(containerType, id, playerInventory, te);
+public class EnderCellContainer extends AbstractEnergyContainer<AbstractEnderTile<?, ?, ?>> {
+    public EnderCellContainer(int id, PlayerInventory inventory, PacketBuffer buffer) {
+        super(Containers.ENDER_CELL, id, inventory, buffer);
     }
 
-    protected EnderCellContainer(@Nullable final ContainerType<?> containerType, final int id, final PlayerInventory playerInventory, final PacketBuffer buffer) {
-        super(containerType, id, playerInventory, buffer);
+    public EnderCellContainer(int id, PlayerInventory inventory, AbstractEnderTile te) {
+        super(Containers.ENDER_CELL, id, inventory, te);
     }
 
-    public static EnderCellContainer create(final int i, final PlayerInventory playerInventory, final PacketBuffer buffer) {
-        return new EnderCellContainer(IContainers.ENDER_CELL, i, playerInventory, buffer);
+    public static EnderCellContainer create(int id, PlayerInventory inventory, PacketBuffer buffer) {
+        return new EnderCellContainer(id, inventory, buffer);
     }
 
     @Override
-    protected void addContainer(PlayerInventory playerInventory, EnderCellTile te) {
-        addSlot(new SlotBase(te.getInventory(), 0, 148, 37).hide());
-        super.addContainer(playerInventory, te);
+    protected void init(PlayerInventory inventory, AbstractEnderTile te) {
+        super.init(inventory);
+        addSlot(new SlotBase(te.getInventory(), 0, 0, 1000));
+        addSlot(new SlotBase(te.getInventory(), 1, 4, 4));
+        addSlot(new SlotBase(te.getInventory(), 2, 4, 29));
+        addPlayerInventory(inventory, 8, 82, 4);
     }
 }

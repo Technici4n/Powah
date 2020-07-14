@@ -55,7 +55,7 @@ public class IItems {
     public static final Item URANINITE_RAW_DENSE = register("uraninite_raw_dense", new UraniniteItem(new Item.Properties().group(ItemGroups.MAIN)));
     public static final Item URANINITE = register("uraninite", new UraniniteItem(new Item.Properties().group(ItemGroups.MAIN)));
 
-    static <T extends net.minecraft.item.Item> T register(final String name, final T item) {
+    static <T extends Item> T register(final String name, final T item) {
         item.setRegistryName(name);
         IItems.ITEMS.add(item);
         return item;

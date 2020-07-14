@@ -5,15 +5,16 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.item.Rarity;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraftforge.common.capabilities.ICapabilityProvider;
-import owmii.lib.energy.Energy;
 import owmii.lib.item.EnergyBlockItem;
+import owmii.lib.logistics.energy.Energy;
 import owmii.powah.api.energy.endernetwork.IEnderExtender;
 import owmii.powah.block.Tier;
 import owmii.powah.block.energycell.EnergyCellBlock;
+import owmii.powah.config.EnergyCellConfig;
 
 import javax.annotation.Nullable;
 
-public class EnergyCellItem extends EnergyBlockItem<Tier, EnergyCellBlock> implements IEnderExtender {
+public class EnergyCellItem extends EnergyBlockItem<Tier, EnergyCellConfig, EnergyCellBlock> implements IEnderExtender {
     public EnergyCellItem(EnergyCellBlock block, Properties properties, @Nullable ItemGroup group) {
         super(block, properties, group);
     }
@@ -36,8 +37,13 @@ public class EnergyCellItem extends EnergyBlockItem<Tier, EnergyCellBlock> imple
     }
 
     @Override
+    public boolean hasEffect(ItemStack stack) {
+        return getVariant().equals(Tier.CREATIVE) || super.hasEffect(stack);
+    }
+
+    @Override
     public long getExtendedCapacity(ItemStack stack) {
-        return getEnergyConfig().getCapacity(getVariant());
+        return getConfig().getCapacity(getVariant());
     }
 
     @Override

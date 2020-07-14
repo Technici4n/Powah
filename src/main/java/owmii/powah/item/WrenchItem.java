@@ -12,22 +12,21 @@ import net.minecraft.util.ActionResultType;
 import net.minecraft.util.Direction;
 import net.minecraft.util.Hand;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.Vec3d;
+import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.World;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
-import owmii.lib.block.TileBase;
 import owmii.lib.client.handler.IHudItem;
-import owmii.lib.energy.SideConfig;
 import owmii.lib.item.ItemBase;
+import owmii.lib.logistics.SideConfig;
 import owmii.powah.api.wrench.IWrench;
 import owmii.powah.api.wrench.IWrenchable;
 import owmii.powah.api.wrench.WrenchMode;
-import owmii.powah.block.cable.EnergyCableBlock;
-import owmii.powah.block.cable.EnergyCableTile;
+import owmii.powah.block.cable.CableBlock;
+import owmii.powah.block.cable.CableTile;
 
 import javax.annotation.Nullable;
 import java.util.List;
@@ -39,8 +38,8 @@ public class WrenchItem extends ItemBase implements IHudItem, IWrench {
     }
 
     @Override
-    public ActionResultType onItemUseFirst(ItemStack stack, World world, BlockPos pos, PlayerEntity player, Hand hand, Direction side, Vec3d hit) {
-        if (player.isShiftKeyDown()) return ActionResultType.PASS;
+    public ActionResultType onItemUseFirst(ItemStack stack, World world, BlockPos pos, PlayerEntity player, Hand hand, Direction side, Vector3d hit) {
+        if (player.isSneaking()) return ActionResultType.PASS;
         TileEntity te = world.getTileEntity(pos);
         BlockState state = world.getBlockState(pos);
         if (state.getBlock() instanceof IWrenchable) {
@@ -49,27 +48,28 @@ public class WrenchItem extends ItemBase implements IHudItem, IWrench {
             }
         } else {
             if (!world.isRemote && getWrenchMode(stack).config()) {
-                if (te instanceof EnergyCableTile) {
-                    EnergyCableTile cable = (EnergyCableTile) te;
+                if (te instanceof CableTile) {
+                    CableTile cable = (CableTile) te;
                     if (stack.getItem() instanceof WrenchItem) {
-                        Optional<Direction> sides = EnergyCableBlock.getHitSide(hit, pos);
+                        Optional<Direction> sides = CableBlock.getHitSide(hit, pos);
                         boolean[] flag = {false};
                         sides.ifPresent(direction -> {
                             SideConfig config = cable.getSideConfig();
                             config.nextType(direction);
-                            cable.markDirtyAndSync();
+                            cable.sync();
                         });
                         return ActionResultType.SUCCESS;
                     }
-                } else if (te instanceof TileBase.EnergyStorage) {
-                    TileBase.EnergyStorage storage = (TileBase.EnergyStorage) te;
-                    if (storage.isEnergyPresent(side)) {
-                        SideConfig config = storage.getSideConfig();
-                        config.nextType(side);
-                        storage.markDirtyAndSync();
-                        return ActionResultType.SUCCESS;
-                    }
                 }
+//                else if (te instanceof TileBase.EnergyStorage) {
+//                    TileBase.EnergyStorage storage = (TileBase.EnergyStorage) te;
+//                    if (storage.isEnergyPresent(side)) {
+//                        SideConfig config = storage.getSideConfig();
+//                        config.nextType(side);
+//                        storage.markDirtyAndSync();
+//                        return ActionResultType.SUCCESS;
+//                    }
+//                }
             }
         }
         return super.onItemUseFirst(stack, world, pos, player, hand, side, hit);
@@ -78,9 +78,9 @@ public class WrenchItem extends ItemBase implements IHudItem, IWrench {
     @Override
     public ActionResult<ItemStack> onItemRightClick(World worldIn, PlayerEntity playerIn, Hand handIn) {
         ItemStack stack = playerIn.getHeldItem(handIn);
-        if (playerIn.isShiftKeyDown()) {
+        if (playerIn.isSneaking()) {
             nextWrenchMode(stack);
-            playerIn.sendStatusMessage(new TranslationTextComponent("info.powah.wrench.mode." + getWrenchMode(stack).name().toLowerCase(), TextFormatting.YELLOW).applyTextStyle(TextFormatting.GRAY), true);
+            playerIn.sendStatusMessage(new TranslationTextComponent("info.powah.wrench.mode." + getWrenchMode(stack).name().toLowerCase(), TextFormatting.YELLOW).func_240701_a_(TextFormatting.GRAY), true);
             return ActionResult.resultSuccess(stack);
         }
         return super.onItemRightClick(worldIn, playerIn, handIn);
@@ -88,20 +88,20 @@ public class WrenchItem extends ItemBase implements IHudItem, IWrench {
 
     @Override
     public void addInformation(ItemStack stack, @Nullable World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
-        tooltip.add(new TranslationTextComponent("info.powah.wrench.mode." + getWrenchMode(stack).name().toLowerCase(), TextFormatting.YELLOW).applyTextStyle(TextFormatting.GRAY));
+        tooltip.add(new TranslationTextComponent("info.powah.wrench.mode." + getWrenchMode(stack).name().toLowerCase(), TextFormatting.YELLOW).func_240699_a_(TextFormatting.GRAY));
     }
 
     @Override
     public void inventoryTick(ItemStack stack, World worldIn, Entity entityIn, int itemSlot, boolean isSelected) {
         if (entityIn instanceof PlayerEntity) {
             PlayerEntity player = (PlayerEntity) entityIn;
-            oneTimeInfo(player, stack, new TranslationTextComponent("info.powah.wrench.mode." + getWrenchMode(stack).name().toLowerCase(), TextFormatting.YELLOW).applyTextStyle(TextFormatting.GRAY));
+            oneTimeInfo(player, stack, new TranslationTextComponent("info.powah.wrench.mode." + getWrenchMode(stack).name().toLowerCase(), TextFormatting.YELLOW).func_240699_a_(TextFormatting.GRAY));
         }
     }
 
     @Override
     @OnlyIn(Dist.CLIENT)
-    public boolean renderHud(World world, BlockPos pos, PlayerEntity player, Hand hand, Direction side, Vec3d hit) {
+    public boolean renderHud(World world, BlockPos pos, PlayerEntity player, Hand hand, Direction side, Vector3d hit) {
         return false;
     }
 

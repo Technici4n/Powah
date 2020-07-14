@@ -32,8 +32,8 @@ tasks.withType(Jar) {
 
 repositories {
     maven { url = "http://dvs1.progwml6.com/files/maven" } //JEI
-    maven { url = "http://maven.tterrag.com" } //TOP
-    maven { url = "https://maven.blamejared.com" } //Craft Tweaker
+  //  maven { url = "http://maven.tterrag.com" } //TOP
+  //  maven { url = "https://maven.blamejared.com" } //Craft Tweaker
     maven { url = "https://maven.theillusivec4.top" } //Curios
 }
 
@@ -42,10 +42,10 @@ dependencies {
     compileOnly fg.deobf("mezz.jei:jei-${lib.minecraft_version}:${lib.jei_version}:api")
     runtimeOnly fg.deobf("mezz.jei:jei-${lib.minecraft_version}:${lib.jei_version}")
 
-    compileOnly fg.deobf("mcjty.theoneprobe:TheOneProbe-1.15:${lib.top_version}:api")
-    runtimeOnly fg.deobf("mcjty.theoneprobe:TheOneProbe-1.15:${lib.top_version}")
-
-    compileOnly fg.deobf("com.blamejared.crafttweaker:CraftTweaker-1.15.1:${lib.crafttweaker_version}")
+//    compileOnly fg.deobf("mcjty.theoneprobe:TheOneProbe-1.15:${lib.top_version}:api")
+//    runtimeOnly fg.deobf("mcjty.theoneprobe:TheOneProbe-1.15:${lib.top_version}")
+//
+//    compileOnly fg.deobf("com.blamejared.crafttweaker:CraftTweaker-1.15.1:${lib.crafttweaker_version}")
     compile fg.deobf("top.theillusivec4.curios:curios:FORGE-${lib.minecraft_version}-${lib.curios_version}")
 
     compile lib

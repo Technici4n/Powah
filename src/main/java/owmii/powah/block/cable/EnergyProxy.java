@@ -25,10 +25,10 @@ public class EnergyProxy {
     }
 
     public EnergyProxy read(CompoundNBT compound) {
-        ListNBT listNBT = compound.getList("CablesPos", Constants.NBT.TAG_COMPOUND);
+        ListNBT listNBT = compound.getList("cables_pos", Constants.NBT.TAG_COMPOUND);
         for (int j = 0; j < listNBT.size(); j++) {
             CompoundNBT nbt = listNBT.getCompound(j);
-            add(NBTUtil.readBlockPos(nbt.getCompound("CablePos")));
+            add(NBTUtil.readBlockPos(nbt.getCompound("cable_pos")));
         }
         return this;
     }
@@ -37,21 +37,21 @@ public class EnergyProxy {
         ListNBT listNBT = new ListNBT();
         this.cables.forEach(pos -> {
             CompoundNBT nbt = new CompoundNBT();
-            nbt.put("CablePos", NBTUtil.writeBlockPos(pos));
+            nbt.put("cable_pos", NBTUtil.writeBlockPos(pos));
             listNBT.add(nbt);
         });
-        compound.put("CablesPos", listNBT);
+        compound.put("cables_pos", listNBT);
         return compound;
     }
 
-    public Set<EnergyCableTile> all(World world) {
-        final Set<EnergyCableTile> cableTiles = new HashSet<>();
+    public Set<CableTile> all(World world) {
+        final Set<CableTile> cableTiles = new HashSet<>();
         Iterator<BlockPos> iterator = this.cables.iterator();
         while (iterator.hasNext()) {
             BlockPos pos = iterator.next();
             TileEntity tileEntity = world.getTileEntity(pos);
-            if (tileEntity instanceof EnergyCableTile) {
-                cableTiles.add((EnergyCableTile) tileEntity);
+            if (tileEntity instanceof CableTile) {
+                cableTiles.add((CableTile) tileEntity);
             } else {
                 iterator.remove();
             }
@@ -59,7 +59,7 @@ public class EnergyProxy {
         return cableTiles;
     }
 
-    public List<BlockPos> search(Block block, EnergyCableTile tile, Direction side) {
+    public List<BlockPos> search(Block block, CableTile tile, Direction side) {
         World world = tile.getWorld();
         if (world != null) {
             BlockPos pos = tile.getPos();
@@ -69,10 +69,10 @@ public class EnergyProxy {
                 BlockState state = world.getBlockState(blockPos);
                 if (state.getBlock() == block) {
                     TileEntity tile1 = world.getTileEntity(blockPos);
-                    if (tile1 instanceof EnergyCableTile) {
+                    if (tile1 instanceof CableTile) {
                         add(blockPos);
                     }
-                    EnergyCableBlock cableBlock = (EnergyCableBlock) state.getBlock();
+                    CableBlock cableBlock = (CableBlock) state.getBlock();
                     cableBlock.searchCables(world, blockPos, tile, side);
                 }
             }

@@ -1,10 +1,6 @@
 {
   "variants": {
-	"facing=up": {"model": "powah:block/player_transmitter_starter", "x": 180},
-	"facing=down": {"model": "powah:block/player_transmitter_starter"},
-	"facing=south": {"model": "powah:block/player_transmitter_starter_wall", "y": 180},
-	"facing=north": {"model": "powah:block/player_transmitter_starter_wall"},
-	"facing=east": {"model": "powah:block/player_transmitter_starter_wall", "y": 90},
-	"facing=west": {"model": "powah:block/player_transmitter_starter_wall", "y": 270}
+	"top=false": {"model": "powah:block/player_transmitter_starter"},
+	"top=true": {"model": "powah:block/player_transmitter_starter_top"}
   }
 }

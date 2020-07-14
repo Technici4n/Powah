@@ -7,9 +7,10 @@ import owmii.powah.block.ITiles;
 
 public class TileRenderer {
     public static void register() {
-        ClientRegistry.bindTileEntityRenderer(ITiles.ENERGY_CABLE, EnergyCableRenderer::new);
+        ClientRegistry.bindTileEntityRenderer(ITiles.CABLE, CableRenderer::new);
         ClientRegistry.bindTileEntityRenderer(ITiles.ENERGIZING_ORB, EnergizingOrbRenderer::new);
         ClientRegistry.bindTileEntityRenderer(ITiles.ENERGIZING_ROD, EnergizingRodRenderer::new);
+        ClientRegistry.bindTileEntityRenderer(ITiles.FURNATOR, FurnatorRenderer::new);
         ClientRegistry.bindTileEntityRenderer(ITiles.MAGMATOR, MagmatorRenderer::new);
         ClientRegistry.bindTileEntityRenderer(ITiles.REACTOR, ReactorRenderer::new);
         ClientRegistry.bindTileEntityRenderer(ITiles.REACTOR_PART, ReactorPartRenderer::new);

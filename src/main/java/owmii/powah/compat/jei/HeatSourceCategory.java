@@ -1,5 +1,6 @@
 package owmii.powah.compat.jei;
 
+import com.mojang.blaze3d.matrix.MatrixStack;
 import mezz.jei.api.constants.VanillaTypes;
 import mezz.jei.api.gui.IRecipeLayout;
 import mezz.jei.api.gui.drawable.IDrawable;
@@ -90,9 +91,9 @@ public class HeatSourceCategory implements IRecipeCategory<HeatSourceCategory.Re
     }
 
     @Override
-    public void draw(Recipe recipe, double mouseX, double mouseY) {
+    public void draw(Recipe recipe, MatrixStack matrix, double mouseX, double mouseY) {
         Minecraft minecraft = Minecraft.getInstance();
-        minecraft.fontRenderer.drawString(TextFormatting.DARK_GRAY + I18n.format("info.lollipop.temperature", "" + TextFormatting.RESET + recipe.heat), 30.0F, 9.0F, 0xc43400);
+        minecraft.fontRenderer.func_238405_a_(matrix, TextFormatting.DARK_GRAY + I18n.format("info.lollipop.temperature", "" + TextFormatting.RESET + recipe.heat), 30.0F, 9.0F, 0xc43400);
     }
 
     public static class Maker {

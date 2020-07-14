@@ -1,7 +1,6 @@
 {
-  "parent": "powah:block/ender_cell",
+  "parent": "block/cube_all",
   "textures": {
-	"frame": "powah:block/ender_cell_spirited_frame",
-	"core": "powah:block/ender_cell_core"
+	"all": "powah:block/ender_cell_spirited"
   }
 }

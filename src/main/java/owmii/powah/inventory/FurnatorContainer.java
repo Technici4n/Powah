@@ -1,31 +1,29 @@
 package owmii.powah.inventory;
 
 import net.minecraft.entity.player.PlayerInventory;
-import net.minecraft.inventory.container.ContainerType;
 import net.minecraft.network.PacketBuffer;
-import owmii.lib.inventory.EnergyContainerBase;
-import owmii.lib.inventory.slot.SlotBase;
-import owmii.lib.inventory.slot.SlotOverlay;
+import owmii.lib.logistics.inventory.AbstractEnergyContainer;
+import owmii.lib.logistics.inventory.slot.SlotBase;
 import owmii.powah.block.furnator.FurnatorTile;
 
-import javax.annotation.Nullable;
-
-public class FurnatorContainer extends EnergyContainerBase<FurnatorTile> {
-    public FurnatorContainer(@Nullable ContainerType<?> containerType, int id, PlayerInventory playerInventory, PacketBuffer buffer) {
-        super(containerType, id, playerInventory, buffer);
+public class FurnatorContainer extends AbstractEnergyContainer<FurnatorTile> {
+    public FurnatorContainer(int id, PlayerInventory inventory, PacketBuffer buffer) {
+        super(Containers.FURNATOR, id, inventory, buffer);
     }
 
-    public FurnatorContainer(@Nullable ContainerType<?> containerType, int id, PlayerInventory playerInventory, FurnatorTile tile) {
-        super(containerType, id, playerInventory, tile);
+    public FurnatorContainer(int id, PlayerInventory inventory, FurnatorTile te) {
+        super(Containers.FURNATOR, id, inventory, te);
     }
 
-    public static FurnatorContainer create(int i, PlayerInventory playerInventory, PacketBuffer buffer) {
-        return new FurnatorContainer(IContainers.FURNATOR, i, playerInventory, buffer);
+    public static FurnatorContainer create(int id, PlayerInventory inventory, PacketBuffer buffer) {
+        return new FurnatorContainer(id, inventory, buffer);
     }
 
     @Override
-    protected void addContainer(PlayerInventory playerInventory, FurnatorTile te) {
-        addSlot(new SlotBase(te.getInventory(), te.builtInSlots(), 85, 17).bg(SlotOverlay.SLOT));
-        super.addContainer(playerInventory, te);
+    protected void init(PlayerInventory inventory, FurnatorTile te) {
+        super.init(inventory, te);
+        addSlot(new SlotBase(te.getInventory(), 0, 4, 54));
+        addSlot(new SlotBase(te.getInventory(), 1, 87, 18));
+        addPlayerInventory(inventory, 8, 84, 4);
     }
 }

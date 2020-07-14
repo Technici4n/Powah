@@ -6,6 +6,7 @@ import net.minecraft.entity.monster.ZombieEntity;
 import net.minecraft.entity.monster.ZombieVillagerEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.ActionResultType;
 import net.minecraft.util.Hand;
 import net.minecraft.util.SoundEvents;
 import net.minecraftforge.items.ItemHandlerHelper;
@@ -18,7 +19,7 @@ public class AerialPearlItem extends ItemBase {
     }
 
     @Override
-    public boolean itemInteractionForEntity(ItemStack stack, PlayerEntity playerIn, LivingEntity target, Hand hand) {
+    public ActionResultType itemInteractionForEntity(ItemStack stack, PlayerEntity playerIn, LivingEntity target, Hand hand) {
         if (Configs.GENERAL.player_aerial_pearl.get()) {
             if (this == IItems.AERIAL_PEARL) {
                 if (target.getClass() == ZombieEntity.class
@@ -33,7 +34,7 @@ public class AerialPearlItem extends ItemBase {
                             stack1.shrink(1);
                         }
                     }
-                    return true;
+                    return ActionResultType.SUCCESS;
                 }
             }
         }

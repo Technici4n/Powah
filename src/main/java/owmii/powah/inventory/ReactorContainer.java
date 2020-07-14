@@ -1,33 +1,32 @@
 package owmii.powah.inventory;
 
 import net.minecraft.entity.player.PlayerInventory;
-import net.minecraft.inventory.container.ContainerType;
 import net.minecraft.network.PacketBuffer;
-import owmii.lib.inventory.EnergyContainerBase;
-import owmii.lib.inventory.slot.SlotBase;
+import owmii.lib.logistics.inventory.AbstractEnergyContainer;
+import owmii.lib.logistics.inventory.slot.SlotBase;
 import owmii.powah.block.reactor.ReactorTile;
 
-import javax.annotation.Nullable;
-
-public class ReactorContainer extends EnergyContainerBase<ReactorTile> {
-    public ReactorContainer(@Nullable ContainerType<?> containerType, int id, PlayerInventory playerInventory, ReactorTile te) {
-        super(containerType, id, playerInventory, te);
+public class ReactorContainer extends AbstractEnergyContainer<ReactorTile> {
+    public ReactorContainer(int id, PlayerInventory inventory, PacketBuffer buffer) {
+        super(Containers.REACTOR, id, inventory, buffer);
     }
 
-    public ReactorContainer(@Nullable ContainerType<?> containerType, int id, PlayerInventory playerInventory, PacketBuffer buffer) {
-        super(containerType, id, playerInventory, buffer);
+    public ReactorContainer(int id, PlayerInventory inventory, ReactorTile te) {
+        super(Containers.REACTOR, id, inventory, te);
     }
 
-    public static ReactorContainer create(int i, PlayerInventory playerInventory, PacketBuffer buffer) {
-        return new ReactorContainer(IContainers.REACTOR, i, playerInventory, buffer);
+    public static ReactorContainer create(int id, PlayerInventory inventory, PacketBuffer buffer) {
+        return new ReactorContainer(id, inventory, buffer);
     }
 
     @Override
-    protected void addContainer(PlayerInventory playerInventory, ReactorTile te) {
-        addSlot(new SlotBase(te.getInventory(), 0, 66, 28));
-        addSlot(new SlotBase(te.getInventory(), 1, 23, 5));
-        addSlot(new SlotBase(te.getInventory(), 2, 23, 51));
-        addSlot(new SlotBase(te.getInventory(), 3, 127, 51));
-        super.addContainer(playerInventory, te);
+    protected void init(PlayerInventory inventory, ReactorTile te) {
+        super.init(inventory, te);
+        addSlot(new SlotBase(te.getInventory(), 0, 4, 54));
+        addSlot(new SlotBase(te.getInventory(), 1, 73, 29));
+        addSlot(new SlotBase(te.getInventory(), 2, 31, 6));
+        addSlot(new SlotBase(te.getInventory(), 3, 31, 52));
+        addSlot(new SlotBase(te.getInventory(), 4, 120, 52));
+        addPlayerInventory(inventory, 8, 84, 4);
     }
 }

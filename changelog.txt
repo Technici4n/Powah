@@ -1,4 +1,4 @@
-1.1.13
+1.1.13 & 1.1.14
 - Fixed Reactor Rendering Crash, Closes #74.
 - Fixed Energizing orb deleting extra input, Closes #75.
 - Fixed reactor tooltip showing in the configuration screen.

@@ -15,7 +15,11 @@ import net.minecraft.util.ActionResultType;
 import net.minecraft.util.Direction;
 import net.minecraft.util.Hand;
 import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.math.*;
+import net.minecraft.util.math.AxisAlignedBB;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.BlockRayTraceResult;
+import net.minecraft.util.math.RayTraceResult;
+import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraftforge.api.distmarker.Dist;
@@ -31,13 +35,14 @@ import owmii.powah.Powah;
 import owmii.powah.block.Tier;
 import owmii.powah.block.reactor.ReactorBlock;
 import owmii.powah.client.render.tile.ReactorRenderer;
+import owmii.powah.config.generator.ReactorConfig;
 
 import javax.annotation.Nullable;
 import java.util.List;
 import java.util.stream.Collectors;
 
 @Mod.EventBusSubscriber(Dist.CLIENT)
-public class ReactorItem extends EnergyBlockItem<Tier, ReactorBlock> {
+public class ReactorItem extends EnergyBlockItem<Tier, ReactorConfig, ReactorBlock> {
     public ReactorItem(ReactorBlock block, Properties properties, @Nullable ItemGroup group) {
         super(block, properties, group);
     }
@@ -49,7 +54,7 @@ public class ReactorItem extends EnergyBlockItem<Tier, ReactorBlock> {
         if (player == null || Player.isFake(player)) return ActionResultType.FAIL;
         ItemStack stack = context.getItem();
         if (stack.getCount() < 36 && !player.isCreative()) {
-            player.sendStatusMessage(new TranslationTextComponent("chat.powah.not.enough.blocks", "" + TextFormatting.YELLOW + (36 - stack.getCount()) + TextFormatting.RED).applyTextStyle(TextFormatting.RED), true);
+            player.sendStatusMessage(new TranslationTextComponent("chat.powah.not.enough.blocks", "" + TextFormatting.YELLOW + (36 - stack.getCount()) + TextFormatting.RED).func_240701_a_(TextFormatting.RED), true);
             return ActionResultType.FAIL;
         }
         BlockPos pos = context.getPos();
@@ -113,7 +118,7 @@ public class ReactorItem extends EnergyBlockItem<Tier, ReactorBlock> {
                 }
             }
             matrix.push();
-            Vec3d projectedView = Minecraft.getInstance().gameRenderer.getActiveRenderInfo().getProjectedView();
+            Vector3d projectedView = Minecraft.getInstance().gameRenderer.getActiveRenderInfo().getProjectedView();
             matrix.translate(-projectedView.x, -projectedView.y, -projectedView.z);
             matrix.translate(-1.0D, 0.001D, -1.0D);
             float r = (color >> 16 & 0xFF) / 255.0F;

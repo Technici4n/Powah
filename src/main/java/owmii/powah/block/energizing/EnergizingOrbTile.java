@@ -4,18 +4,19 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.world.World;
 import net.minecraftforge.items.wrapper.RecipeWrapper;
-import owmii.lib.block.TileBase;
-import owmii.lib.util.IVariant;
+import owmii.lib.block.AbstractTickableTile;
+import owmii.lib.block.IInventoryHolder;
+import owmii.lib.block.IVariant;
+import owmii.lib.logistics.energy.Energy;
 import owmii.powah.block.ITiles;
 import owmii.powah.recipe.Recipes;
 
 import javax.annotation.Nullable;
 import java.util.Optional;
 
-public class EnergizingOrbTile extends TileBase.Tickable<IVariant.Single, EnergizingOrbBlock> {
+public class EnergizingOrbTile extends AbstractTickableTile<IVariant.Single, EnergizingOrbBlock> implements IInventoryHolder {
+    private final Energy buffer = Energy.create(0);
     private boolean containRecipe;
-    private long requiredEnergy;
-    private long energy;
 
     @Nullable
     private EnergizingRecipe recipe;
@@ -26,19 +27,18 @@ public class EnergizingOrbTile extends TileBase.Tickable<IVariant.Single, Energi
     }
 
     @Override
-    public void readSync(CompoundNBT compound) {
-        super.readSync(compound);
-        this.containRecipe = compound.getBoolean("ContainRecipe");
-        this.requiredEnergy = compound.getLong("RequiredEnergy");
-        this.energy = compound.getLong("EnergyBuffer");
+    public void readSync(CompoundNBT nbt) {
+        super.readSync(nbt);
+        this.buffer.read(nbt, "buffer", true, false);
+        this.buffer.setTransfer(this.buffer.getCapacity());
+        this.containRecipe = nbt.getBoolean("contain_recipe");
     }
 
     @Override
-    public CompoundNBT writeSync(CompoundNBT compound) {
-        compound.putBoolean("ContainRecipe", this.containRecipe);
-        compound.putLong("RequiredEnergy", this.requiredEnergy);
-        compound.putLong("EnergyBuffer", this.energy);
-        return super.writeSync(compound);
+    public CompoundNBT writeSync(CompoundNBT nbt) {
+        this.buffer.write(nbt, "buffer", true, false);
+        nbt.putBoolean("contain_recipe", this.containRecipe);
+        return super.writeSync(nbt);
     }
 
     @Nullable
@@ -55,19 +55,24 @@ public class EnergizingOrbTile extends TileBase.Tickable<IVariant.Single, Energi
     @Override
     public void onSlotChanged(int index) {
         if (!isRemote()) {
-            this.energy = 0;
+            this.buffer.setCapacity(0);
+            this.buffer.setStored(0);
+            this.buffer.setTransfer(0);
             checkRecipe();
         }
     }
 
     private void checkRecipe() {
-        if (this.world != null && !this.world.isRemote) {
+        if (this.world != null && !isRemote()) {
             Optional<EnergizingRecipe> recipe = this.world.getRecipeManager().getRecipe(Recipes.ENERGIZING, new RecipeWrapper(getInventory()), this.world);
             if (recipe.isPresent()) {
                 this.recipe = recipe.get();
-                this.requiredEnergy = this.recipe.getEnergy();
+                this.buffer.setCapacity(this.recipe.getEnergy());
+                this.buffer.setTransfer(this.recipe.getEnergy());
             } else {
-                this.requiredEnergy = 0;
+                this.buffer.setCapacity(0);
+                this.buffer.setStored(0);
+                this.buffer.setTransfer(0);
             }
             setContainRecipe(recipe.isPresent());
             sync(1);
@@ -75,29 +80,20 @@ public class EnergizingOrbTile extends TileBase.Tickable<IVariant.Single, Energi
     }
 
     public long fillEnergy(long amount) {
-        long filled = Math.min(this.requiredEnergy - this.energy, amount);
+        long filled = Math.min(this.buffer.getEmpty(), amount);
         if (this.world != null) {
             if (this.recipe != null) {
-                this.energy += filled;
-                if (this.energy >= this.requiredEnergy) {
+                this.buffer.produce(filled);
+                if (this.buffer.isFull()) {
                     ItemStack stack = this.recipe.getRecipeOutput();
                     this.inv.clear();
                     this.inv.setStack(0, stack.copy());
-                    this.requiredEnergy = 0;
-                    this.energy = 0;
+                    this.buffer.setCapacity(0);
+                    this.buffer.setStored(0);
+                    this.buffer.setTransfer(0);
                     markDirty();
                 }
             }
-//            if (this.containRecipe && this.world.isRemote) { TODO : energizing particles
-//                if (Math.random() < 0.2D) {
-//                    Effects.create(Effect.GLOW_SMALL, this.world, new V3d(this.pos)
-//                            .east(0.5D + Math.random() * 0.3D - Math.random() * 0.3D)
-//                            .south(0.5D + Math.random() * 0.3D - Math.random() * 0.3D)
-//                            .up(0.5D + Math.random() * 0.3D - Math.random() * 0.3D))
-//                            .scale(0, 3, 0).alpha(0.7F, 2).color(0xac7fbd)
-//                            .maxAge(20).blend().spawn();
-//                }
-//            }
         }
         return filled;
     }
@@ -110,16 +106,8 @@ public class EnergizingOrbTile extends TileBase.Tickable<IVariant.Single, Energi
         this.containRecipe = containRecipe;
     }
 
-    public long getRequiredEnergy() {
-        return this.requiredEnergy;
-    }
-
-    public long getEnergy() {
-        return this.energy;
-    }
-
-    public void setEnergy(int energy) {
-        this.energy = energy;
+    public Energy getBuffer() {
+        return this.buffer;
     }
 
     @Override
