@@ -5,6 +5,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
 import owmii.lib.block.AbstractEnergyStorage;
 import owmii.lib.block.IInventoryHolder;
+import owmii.lib.compat.curios.CuriosCompat;
 import owmii.lib.logistics.energy.Energy;
 import owmii.lib.util.Player;
 import owmii.lib.util.Stack;
@@ -43,12 +44,12 @@ public class PlayerTransmitterTile extends AbstractEnergyStorage<Tier, PlayerTra
                         int received = Energy.receive(chargeable, amount, false);
                         extracted += extractEnergy(received, false, null);
                     }
-//                        for (ItemStack stack1 : CuriosCompat.getAllStacks(player)) {
-//                            if (stack1.isEmpty()) continue;
-//                            long amount = Math.min(charging, getEnergyStored());
-//                            int received = Energy.receive(stack1, amount, false);
-//                            extracted += extractEnergy(received, false, null);
-//                        }
+                    for (ItemStack stack1 : CuriosCompat.getAllStacks(player)) {
+                        if (stack1.isEmpty()) continue;
+                        long amount = Math.min(charging, getEnergy().getStored());
+                        int received = Energy.receive(stack1, amount, false);
+                        extracted += extractEnergy(received, false, null);
+                    }
                 }
             }
         }
