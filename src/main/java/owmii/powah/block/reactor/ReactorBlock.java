@@ -10,6 +10,8 @@ import net.minecraft.entity.EntityType;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.item.BlockItemUseContext;
+import net.minecraft.item.Item;
+import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemStack;
 import net.minecraft.state.BooleanProperty;
 import net.minecraft.state.StateContainer;
@@ -26,6 +28,7 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.fluids.FluidUtil;
 import owmii.lib.block.AbstractGeneratorBlock;
 import owmii.lib.block.AbstractTileEntity;
+import owmii.lib.item.EnergyBlockItem;
 import owmii.lib.logistics.inventory.AbstractContainer;
 import owmii.powah.Powah;
 import owmii.powah.block.Tier;
@@ -33,6 +36,7 @@ import owmii.powah.client.render.tile.ReactorRenderer;
 import owmii.powah.config.Configs;
 import owmii.powah.config.generator.ReactorConfig;
 import owmii.powah.inventory.ReactorContainer;
+import owmii.powah.item.ReactorItem;
 
 import javax.annotation.Nullable;
 
@@ -42,6 +46,11 @@ public class ReactorBlock extends AbstractGeneratorBlock<Tier, ReactorConfig> {
     public ReactorBlock(Properties properties, Tier variant) {
         super(properties, variant);
         setStateProps(state -> state.with(CORE, false));
+    }
+
+    @Override
+    public EnergyBlockItem getBlockItem(Item.Properties properties, @Nullable ItemGroup group) {
+        return new ReactorItem(this, properties, group);
     }
 
     @Override

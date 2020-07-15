@@ -26,6 +26,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ReactorScreen extends AbstractEnergyScreen<ReactorTile, ReactorContainer> {
+    private double arrowY;
+    private double elasticity;
+    private boolean clicked;
+
     public ReactorScreen(ReactorContainer container, PlayerInventory inv, ITextComponent title) {
         super(container, inv, title, Textures.REACTOR);
     }
@@ -39,6 +43,8 @@ public class ReactorScreen extends AbstractEnergyScreen<ReactorTile, ReactorCont
         Textures.REACTOR_GAUGE_REDSTONE.drawScalableH(matrix, this.te.redstone.subSized(), this.guiLeft + 51, this.guiTop + 52);
         Textures.REACTOR_GAUGE_COOLANT.drawScalableH(matrix, this.te.solidCoolant.subSized(), this.guiLeft + 140, this.guiTop + 52);
         Textures.REACTOR_GAUGE_TEMP.drawScalableH(matrix, this.te.temp.subSized(), this.guiLeft + 114, this.guiTop + 28);
+
+        // Textures.REACTOR_ARROW.draw(matrix, this.guiLeft - 10, (int) (this.guiTop - 2 + this.arrowY));
 
         FluidTank tank = this.te.getTank();
         if (!tank.isEmpty()) {
@@ -57,6 +63,36 @@ public class ReactorScreen extends AbstractEnergyScreen<ReactorTile, ReactorCont
                 RenderSystem.color3f(1.0F, 1.0F, 1.0F);
             }
         }
+    }
+
+    @Override
+    public boolean func_231045_a_(double p_231045_1_, double p_231045_3_, int p_231045_5_, double p_231045_6_, double p_231045_8_) {
+        if (this.clicked) {
+            this.arrowY += p_231045_8_;
+            if (this.arrowY < 0) {
+                this.arrowY = 0;
+                this.clicked = false;
+            } else if (this.arrowY > 32) {
+                this.arrowY = 32;
+                this.clicked = false;
+            }
+        }
+        return super.func_231045_a_(p_231045_1_, p_231045_3_, p_231045_5_, p_231045_6_, p_231045_8_);
+    }
+
+    @Override
+    public boolean func_231044_a_(double p_231044_1_, double p_231044_3_, int p_231044_5_) {
+        if (Textures.REACTOR_ARROW.isMouseOver(this.guiLeft - 10, (int) (this.guiTop - 2 + this.arrowY), p_231044_1_, p_231044_3_)) {
+            this.clicked = true;
+        }
+        return super.func_231044_a_(p_231044_1_, p_231044_3_, p_231044_5_);
+    }
+
+    @Override
+    public boolean func_231048_c_(double p_231048_1_, double p_231048_3_, int p_231048_5_) {
+        this.clicked = false;
+        this.elasticity = 0;
+        return super.func_231048_c_(p_231048_1_, p_231048_3_, p_231048_5_);
     }
 
     @Override

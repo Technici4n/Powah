@@ -42,6 +42,7 @@ public class Textures {
     public static final Texture REACTOR_GAUGE_REDSTONE = register("container/reactor", 5, 16, 195, 0);
     public static final Texture REACTOR_GAUGE_COOLANT = register("container/reactor", 5, 16, 200, 0);
     public static final Texture REACTOR_GAUGE_TEMP = register("container/reactor", 4, 18, 205, 0);
+    public static final Texture REACTOR_ARROW = register("container/reactor", 10, 13, 209, 0);
 
     public static final Map<TransferType, Texture> CABLE_CONFIG = new HashMap<>();
     public static final Texture CABLE = register("container/cable", 153, 29, 0, 0);

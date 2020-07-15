@@ -44,7 +44,6 @@ public class ReactorTile extends AbstractEnergyProvider<Tier, ReactorConfig, Rea
     private int carbonTemp;
     private int baseTemp;
 
-    @OnlyIn(Dist.CLIENT)
     public final Ticker bright = new Ticker(20);
 
     private boolean running;
