@@ -1,6 +1,7 @@
 package owmii.powah.client.screen;
 
 import net.minecraft.client.gui.ScreenManager;
+import owmii.powah.client.screen.book.BookScreen;
 import owmii.powah.client.screen.container.*;
 import owmii.powah.inventory.Containers;
 
@@ -16,5 +17,10 @@ public class Screens {
         ScreenManager.registerFactory(Containers.REACTOR, ReactorScreen::new);
         ScreenManager.registerFactory(Containers.SOLAR, SolarScreen::new);
         ScreenManager.registerFactory(Containers.THERMO, ThermoScreen::new);
+        ScreenManager.registerFactory(Containers.DISCHARGER, DischargerScreen::new);
+    }
+
+    public static void openManualScreen() {
+        BookScreen.open();
     }
 }
