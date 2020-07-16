@@ -1,3 +1,9 @@
+2.0.4
+- Re-implemented Powah! manual.
+- Re-implemented missing discharger functions.
+- Fixed redstone configuration for all blocks.
+- Fixed reactor not accepting solid coolant.
+
 2.0.3
 - Fixed crash when adding a binding card to the player transmitter, Closes #90.
 - Fixed binding card not rendering correctly.

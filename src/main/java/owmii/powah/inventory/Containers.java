@@ -24,6 +24,7 @@ public class Containers {
     public static final ContainerType<ReactorContainer> REACTOR = register("reactor", ReactorContainer::create);
     public static final ContainerType<SolarContainer> SOLAR = register("solar", SolarContainer::create);
     public static final ContainerType<ThermoContainer> THERMO = register("thermo", ThermoContainer::create);
+    public static final ContainerType<DischargerContainer> DISCHARGER = register("discharger", DischargerContainer::create);
 
     static <T extends Container> ContainerType<T> register(final String name, final IContainerFactory<T> factory) {
         final ContainerType<T> containerType = IForgeContainerType.create(factory);
