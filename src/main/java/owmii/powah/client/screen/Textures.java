@@ -9,6 +9,14 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class Textures {
+    public static final Texture BOOK = register("book/background", 196, 230, 0, 0);
+    public static final Texture BOOK_NAV_R = register("book/background", 12, 23, 208, 58);
+    public static final Texture BOOK_NAV_L = register("book/background", 12, 23, 196, 58);
+    public static final Texture BOOK_HOME = register("book/background", 15, 15, 196, 81);
+    public static final Texture BOOK_BACK = register("book/background", 10, 13, 196, 96);
+    public static final Texture BOOK_ITEM_BG = register("book/background", 24, 24, 196, 0);
+    public static final Texture BOOK_CAT = register("book/background", 30, 24, 220, 0);
+
     public static final Texture WIDE_ENERGY = register("container/wide_energy", 176, 141, 0, 0);
     public static final Texture WIDE_ENERGY_GAUGE = register("container/wide_energy", 164, 37, 0, 141);
 
@@ -43,6 +51,9 @@ public class Textures {
     public static final Texture REACTOR_GAUGE_COOLANT = register("container/reactor", 5, 16, 200, 0);
     public static final Texture REACTOR_GAUGE_TEMP = register("container/reactor", 4, 18, 205, 0);
     public static final Texture REACTOR_ARROW = register("container/reactor", 10, 13, 209, 0);
+
+    public static final Texture DISCHARGER = register("container/discharger", 176, 166, 0, 0);
+    public static final Texture DISCHARGER_GAUGE = register("container/discharger", 164, 37, 0, 166);
 
     public static final Map<TransferType, Texture> CABLE_CONFIG = new HashMap<>();
     public static final Texture CABLE = register("container/cable", 153, 29, 0, 0);
