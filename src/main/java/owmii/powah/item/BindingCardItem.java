@@ -32,17 +32,6 @@ public class BindingCardItem extends ItemBase {
     public BindingCardItem(Properties properties, boolean isMultiDim) {
         super(properties);
         this.isMultiDim = isMultiDim;
-//        addPropertyOverride(new ResourceLocation("bound"), (stack, world, livingEntity) -> {
-//            float f = 0.0F;
-//            CompoundNBT nbt = stack.getTag();
-//            if (nbt != null) {
-//
-//                if (nbt.hasUniqueId("bound_player_id")) {
-//                    f = 1.0F;
-//                }
-//            }
-//            return f;
-//        });
     }
 
     @Override

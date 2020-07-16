@@ -10,6 +10,7 @@ import owmii.lib.api.IMod;
 import owmii.lib.config.IConfig;
 import owmii.lib.network.Network;
 import owmii.lib.util.FML;
+import owmii.powah.client.ItemModelProperties;
 import owmii.powah.client.render.entity.EntityRenderer;
 import owmii.powah.client.render.tile.TileRenderer;
 import owmii.powah.client.screen.Screens;
@@ -43,6 +44,7 @@ public class Powah implements IMod {
             TileRenderer.register();
             EntityRenderer.register();
             Screens.register();
+            ItemModelProperties.register();
         }
     }
 
