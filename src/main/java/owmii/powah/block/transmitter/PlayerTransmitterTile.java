@@ -30,30 +30,32 @@ public class PlayerTransmitterTile extends AbstractEnergyStorage<Tier, PlayerTra
     @Override
     protected int postTick(World world) {
         long extracted = 0;
-        ItemStack stack = this.inv.getFirst();
-        if (stack.getItem() instanceof BindingCardItem) {
-            BindingCardItem card = (BindingCardItem) stack.getItem();
-            Optional<ServerPlayerEntity> op = card.getPlayer(stack);
-            if (op.isPresent()) {
-                ServerPlayerEntity player = op.get();
-                if (card.isMultiDim(stack) || player.world.func_230315_m_().equals(world.func_230315_m_())) {
-                    long charging = getConfig().getChargingSpeed(this.variant);
-                    for (ItemStack chargeable : Player.invStacks(player)) {
-                        if (chargeable.isEmpty()) continue;
-                        long amount = Math.min(charging, getEnergy().getStored());
-                        int received = Energy.receive(chargeable, amount, false);
-                        extracted += extractEnergy(received, false, null);
-                    }
-                    for (ItemStack stack1 : CuriosCompat.getAllStacks(player)) {
-                        if (stack1.isEmpty()) continue;
-                        long amount = Math.min(charging, getEnergy().getStored());
-                        int received = Energy.receive(stack1, amount, false);
-                        extracted += extractEnergy(received, false, null);
+        if (!isRemote()) {
+            ItemStack stack = this.inv.getFirst();
+            if (stack.getItem() instanceof BindingCardItem) {
+                BindingCardItem card = (BindingCardItem) stack.getItem();
+                Optional<ServerPlayerEntity> op = card.getPlayer(stack);
+                if (op.isPresent()) {
+                    ServerPlayerEntity player = op.get();
+                    if (card.isMultiDim(stack) || player.world.func_230315_m_().equals(world.func_230315_m_())) {
+                        long charging = getConfig().getChargingSpeed(this.variant);
+                        for (ItemStack chargeable : Player.invStacks(player)) {
+                            if (chargeable.isEmpty()) continue;
+                            long amount = Math.min(charging, getEnergy().getStored());
+                            int received = Energy.receive(chargeable, amount, false);
+                            extracted += extractEnergy(received, false, null);
+                        }
+                        for (ItemStack stack1 : CuriosCompat.getAllStacks(player)) {
+                            if (stack1.isEmpty()) continue;
+                            long amount = Math.min(charging, getEnergy().getStored());
+                            int received = Energy.receive(stack1, amount, false);
+                            extracted += extractEnergy(received, false, null);
+                        }
                     }
                 }
             }
         }
-        return super.postTick(world);
+        return extracted > 0 ? 5 : -1;
     }
 
     @Override
