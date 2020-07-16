@@ -1,3 +1,7 @@
+2.0.3
+- Fixed crash when adding a binding card to the player transmitter, Closes #90.
+- Fixed binding card not rendering correctly.
+
 2.0.2
 - Fixed Energizing rods cannot be placed on cables.
 - Re-Added curios support for the player transmitter.
