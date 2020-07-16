@@ -25,7 +25,7 @@ public class EnergyHopperTile extends AbstractEnergyStorage<Tier, EnergyHopperCo
     @Override
     protected int postTick(World world) {
         final int[] extracted = {0};
-        if (doPostTicks(world)) {
+        if (!isRemote() && checkRedstone()) {
             Direction side = getBlockState().get(BlockStateProperties.FACING);
             TileEntity tile = world.getTileEntity(this.pos.offset(side));
             long charging = getConfig().getChargingSpeed(this.variant);

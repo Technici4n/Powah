@@ -52,7 +52,7 @@ public class FurnatorTile extends AbstractEnergyProvider<Tier, FurnatorConfig, F
 
     @Override
     protected int postTick(World world) {
-        if (!isRemote()) {
+        if (!isRemote() && checkRedstone()) {
             boolean flag = false;
             if (this.carbon.isEmpty()) {
                 ItemStack stack = this.inv.getStackInSlot(1);

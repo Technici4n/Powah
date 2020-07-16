@@ -48,7 +48,7 @@ public class MagmatorTile extends AbstractEnergyProvider<Tier, MagmatorConfig, M
 
     @Override
     protected int postTick(World world) {
-        if (!isRemote()) {
+        if (!isRemote() && checkRedstone()) {
             boolean flag = false;
             if (this.buffer.isEmpty() && !this.tank.isEmpty()) {
                 FluidStack fluid = this.tank.getFluid();

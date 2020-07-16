@@ -79,7 +79,8 @@ public class CableTile extends AbstractEnergyStorage<Tier, CableConfig, CableBlo
 
     @Override
     public long receiveEnergy(int maxReceive, boolean simulate, @Nullable Direction direction) {
-        if (this.world == null || isRemote() || direction == null || !canReceiveEnergy(direction)) return 0;
+        if (this.world == null || isRemote() || direction == null || !checkRedstone() || !canReceiveEnergy(direction))
+            return 0;
         long received = 0;
         received += pushEnergy(this.world, maxReceive, simulate, direction, this);
         for (BlockPos cablePos : this.proxyMap.get(direction).cables()) {

@@ -30,7 +30,7 @@ public class PlayerTransmitterTile extends AbstractEnergyStorage<Tier, PlayerTra
     @Override
     protected int postTick(World world) {
         long extracted = 0;
-        if (!isRemote()) {
+        if (!isRemote() && checkRedstone()) {
             ItemStack stack = this.inv.getFirst();
             if (stack.getItem() instanceof BindingCardItem) {
                 BindingCardItem card = (BindingCardItem) stack.getItem();
