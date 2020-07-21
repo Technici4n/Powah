@@ -70,7 +70,6 @@ public class MagmatorTile extends AbstractEnergyProvider<Tier, MagmatorConfig, M
                 flag = true;
                 sync(4);
             }
-            if (world.getGameTime() % 20 == 0) System.out.println(flag);
 
             if (this.burning != flag) {
                 this.burning = flag;
