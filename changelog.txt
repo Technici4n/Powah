@@ -1,8 +1,24 @@
+2.1.2
+- Fixed magmator creates ungodly amount of pings in server, Closes #97.
+- Added all uraninite ores to the forge:ores and forge:ores/uraninite tags, Closes #96.
+- Updated lollipop to v2.1.2.
+
+2.1.1
+- Ignored breaking change from newer forge to fix the crash (now should work with all forge versions without crashing).
+- Changed min forge version to 32.0.14.
+- Updated lollipop to v2.1.1.
+
+2.1.0
+- Fixed crash caused by the breaking change from forge 32.0.67.
+- Changed min forge version to 32.0.67.
+- Updated lollipop to v2.1.0.
+
 2.0.4
 - Re-implemented Powah! manual.
 - Re-implemented missing discharger functions.
-- Fixed redstone configuration for all blocks.
-- Fixed reactor not accepting solid coolant.
+- Fixed Redstone configuration for all blocks.
+- The fixed reactor not accepting solid coolant.
+- Updated lollipop to v2.0.2.
 
 2.0.3
 - Fixed crash when adding a binding card to the player transmitter, Closes #90.

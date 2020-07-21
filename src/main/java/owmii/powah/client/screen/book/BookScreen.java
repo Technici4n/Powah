@@ -145,7 +145,7 @@ public class BookScreen extends ScreenBase {
 //            tooltip.add(TextFormatting.YELLOW + "Click " + TextFormatting.GRAY + "or press" + TextFormatting.YELLOW + " R " + TextFormatting.GRAY + "for recipes.");
 //            tooltip.add(TextFormatting.YELLOW + "Shift + Click " + TextFormatting.GRAY + "or press" + TextFormatting.YELLOW + " U " + TextFormatting.GRAY + "for usages.");
 
-            func_238654_b_(matrix, tooltip, p_230430_2_, p_230430_3_, (font == null ? this.field_230712_o_ : font));
+            renderToolTip(matrix, tooltip, p_230430_2_, p_230430_3_, (font == null ? this.field_230712_o_ : font));
             GuiUtils.postItemToolTip();
         }
 
