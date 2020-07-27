@@ -18,6 +18,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.BlockRayTraceResult;
 import net.minecraft.world.IBlockReader;
 import net.minecraft.world.IWorld;
+import net.minecraft.world.IWorldReader;
 import net.minecraft.world.World;
 import owmii.lib.block.AbstractEnergyBlock;
 import owmii.lib.block.AbstractTileEntity;
@@ -82,12 +83,17 @@ public class PlayerTransmitterBlock extends AbstractEnergyBlock<Tier, PlayerTran
     @Override
     public BlockState updatePostPlacement(BlockState state, Direction facing, BlockState facingState, IWorld world, BlockPos currentPos, BlockPos facingPos) {
         BlockState bottomState = world.getBlockState(currentPos.down());
-        if (state.get(TOP) && (!(bottomState.getBlock() instanceof PlayerTransmitterBlock) || bottomState.get(TOP))) {
+        BlockState topState = world.getBlockState(currentPos.up());
+        if (!state.get(TOP) && !(topState.getBlock() instanceof PlayerTransmitterBlock) || state.get(TOP) && !(bottomState.getBlock() instanceof PlayerTransmitterBlock)) {
             world.setBlockState(currentPos, Blocks.AIR.getDefaultState(), 3);
             return Blocks.AIR.getDefaultState();
         } else {
             return super.updatePostPlacement(state, facing, facingState, world, currentPos, facingPos);
         }
+    }
+
+    @Override
+    public void onNeighborChange(BlockState state, IWorldReader world, BlockPos pos, BlockPos neighbor) {
     }
 
     @Override
@@ -99,17 +105,23 @@ public class PlayerTransmitterBlock extends AbstractEnergyBlock<Tier, PlayerTran
     }
 
     @Override
-    public void harvestBlock(World world, PlayerEntity player, BlockPos pos, BlockState state, @Nullable TileEntity te, ItemStack stack) {
-        if (state.get(TOP)) {
-            BlockState bottomState = world.getBlockState(pos.down());
-            if (bottomState.getBlock() instanceof PlayerTransmitterBlock) {
-                bottomState.getBlock().harvestBlock(world, player, pos.down(), bottomState, world.getTileEntity(pos.down()), stack);
-                world.setBlockState(pos.down(), Blocks.AIR.getDefaultState(), 3);
-            }
-        } else {
-            super.harvestBlock(world, player, pos, state, te, stack);
-            world.setBlockState(pos.up(), Blocks.AIR.getDefaultState(), 3);
+    public void onBlockHarvested(World world, BlockPos pos, BlockState state, PlayerEntity player) {
+        if (player.isCreative()) {
+            world.playEvent(2001, pos, Block.getStateId(state));
+            return;
         }
+        TileEntity tileEntity = world.getTileEntity(state.get(TOP) ? pos.down() : pos);
+        if (!world.isRemote() && tileEntity instanceof PlayerTransmitterTile) {
+            PlayerTransmitterTile tile = (PlayerTransmitterTile) tileEntity;
+            ItemStack stack = tile.storeToStack(new ItemStack(this));
+            spawnAsEntity(world, pos, stack);
+            world.playEvent(2001, pos, Block.getStateId(state));
+        }
+    }
+
+    @Override
+    public void harvestBlock(World world, PlayerEntity player, BlockPos pos, BlockState state, @Nullable TileEntity te, ItemStack stack) {
+
     }
 
     @Override
