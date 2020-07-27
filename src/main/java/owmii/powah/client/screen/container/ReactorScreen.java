@@ -14,24 +14,43 @@ import net.minecraftforge.fluids.FluidAttributes;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.capability.templates.FluidTank;
 import owmii.lib.client.screen.AbstractEnergyScreen;
+import owmii.lib.client.screen.widget.IconButton;
 import owmii.lib.client.util.Draw;
 import owmii.lib.logistics.energy.Energy;
 import owmii.lib.util.Util;
+import owmii.powah.Powah;
 import owmii.powah.api.PowahAPI;
 import owmii.powah.block.reactor.ReactorTile;
 import owmii.powah.client.screen.Textures;
 import owmii.powah.inventory.ReactorContainer;
+import owmii.powah.network.packet.SwitchGenModePacket;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class ReactorScreen extends AbstractEnergyScreen<ReactorTile, ReactorContainer> {
-    private double arrowY;
-    private double elasticity;
-    private boolean clicked;
+    private IconButton modeButton = IconButton.EMPTY;
 
     public ReactorScreen(ReactorContainer container, PlayerInventory inv, ITextComponent title) {
         super(container, inv, title, Textures.REACTOR);
+    }
+
+    @Override
+    protected void func_231160_c_() {
+        super.func_231160_c_();
+        this.modeButton = func_230480_a_(new IconButton(this.guiLeft - 11, this.guiTop + 10, Textures.REACTOR_GEN_MODE.get(this.te.isGenModeOn()), b -> {
+            Powah.NET.toServer(new SwitchGenModePacket(this.te.getPos()));
+            this.te.setGenModeOn(!this.te.isGenModeOn());
+        }, this).setTooltip(tooltip -> {
+            tooltip.add(new TranslationTextComponent("info.powah.gen.mode." + this.te.isGenModeOn(), this.te.isGenModeOn() ? TextFormatting.DARK_GRAY : TextFormatting.DARK_RED).func_240701_a_(TextFormatting.GRAY));
+            tooltip.add(new TranslationTextComponent("info.powah.gen.mode").func_240699_a_(TextFormatting.DARK_GRAY));
+        }));
+    }
+
+    @Override
+    public void func_231023_e_() {
+        super.func_231023_e_();
+        this.modeButton.setTexture(Textures.REACTOR_GEN_MODE.get(this.te.isGenModeOn()));
     }
 
     @Override
@@ -43,6 +62,8 @@ public class ReactorScreen extends AbstractEnergyScreen<ReactorTile, ReactorCont
         Textures.REACTOR_GAUGE_REDSTONE.drawScalableH(matrix, this.te.redstone.subSized(), this.guiLeft + 51, this.guiTop + 52);
         Textures.REACTOR_GAUGE_COOLANT.drawScalableH(matrix, this.te.solidCoolant.subSized(), this.guiLeft + 140, this.guiTop + 52);
         Textures.REACTOR_GAUGE_TEMP.drawScalableH(matrix, this.te.temp.subSized(), this.guiLeft + 114, this.guiTop + 28);
+
+        Textures.REACTOR_GEN_MODE_BG.draw(matrix, this.modeButton.field_230690_l_ - 4, this.modeButton.field_230691_m_ - 4);
 
         // Textures.REACTOR_ARROW.draw(matrix, this.guiLeft - 10, (int) (this.guiTop - 2 + this.arrowY));
 
@@ -63,36 +84,6 @@ public class ReactorScreen extends AbstractEnergyScreen<ReactorTile, ReactorCont
                 RenderSystem.color3f(1.0F, 1.0F, 1.0F);
             }
         }
-    }
-
-    @Override
-    public boolean func_231045_a_(double p_231045_1_, double p_231045_3_, int p_231045_5_, double p_231045_6_, double p_231045_8_) {
-        if (this.clicked) {
-            this.arrowY += p_231045_8_;
-            if (this.arrowY < 0) {
-                this.arrowY = 0;
-                this.clicked = false;
-            } else if (this.arrowY > 32) {
-                this.arrowY = 32;
-                this.clicked = false;
-            }
-        }
-        return super.func_231045_a_(p_231045_1_, p_231045_3_, p_231045_5_, p_231045_6_, p_231045_8_);
-    }
-
-    @Override
-    public boolean func_231044_a_(double p_231044_1_, double p_231044_3_, int p_231044_5_) {
-        if (Textures.REACTOR_ARROW.isMouseOver(this.guiLeft - 10, (int) (this.guiTop - 2 + this.arrowY), p_231044_1_, p_231044_3_)) {
-            this.clicked = true;
-        }
-        return super.func_231044_a_(p_231044_1_, p_231044_3_, p_231044_5_);
-    }
-
-    @Override
-    public boolean func_231048_c_(double p_231048_1_, double p_231048_3_, int p_231048_5_) {
-        this.clicked = false;
-        this.elasticity = 0;
-        return super.func_231048_c_(p_231048_1_, p_231048_3_, p_231048_5_);
     }
 
     @Override

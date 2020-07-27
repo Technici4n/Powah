@@ -50,7 +50,10 @@ public class Textures {
     public static final Texture REACTOR_GAUGE_REDSTONE = register("container/reactor", 5, 16, 195, 0);
     public static final Texture REACTOR_GAUGE_COOLANT = register("container/reactor", 5, 16, 200, 0);
     public static final Texture REACTOR_GAUGE_TEMP = register("container/reactor", 4, 18, 205, 0);
-    public static final Texture REACTOR_ARROW = register("container/reactor", 10, 13, 209, 0);
+    public static final Texture REACTOR_GEN_MODE_BG = register("container/reactor", 15, 16, 209, 0);
+    public static final Map<Boolean, Texture> REACTOR_GEN_MODE = new HashMap<>();
+    public static final Texture REACTOR_GEN_MODE_OFF = register("container/reactor", 8, 8, 224, 0);
+    public static final Texture REACTOR_GEN_MODE_ON = register("container/reactor", 8, 8, 224, 8);
 
     public static final Texture DISCHARGER = register("container/discharger", 176, 166, 0, 0);
     public static final Texture DISCHARGER_GAUGE = register("container/discharger", 164, 37, 0, 166);
@@ -71,5 +74,7 @@ public class Textures {
         CABLE_CONFIG.put(TransferType.EXTRACT, CABLE_OUT);
         CABLE_CONFIG.put(TransferType.RECEIVE, CABLE_IN);
         CABLE_CONFIG.put(TransferType.NONE, CABLE_OFF);
+        REACTOR_GEN_MODE.put(true, REACTOR_GEN_MODE_ON);
+        REACTOR_GEN_MODE.put(false, REACTOR_GEN_MODE_OFF);
     }
 }

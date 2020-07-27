@@ -47,6 +47,8 @@ public class ReactorTile extends AbstractEnergyProvider<Tier, ReactorConfig, Rea
     public final Ticker bright = new Ticker(20);
 
     private boolean running;
+    private boolean genModeOn;
+    private boolean generate = true;
 
     public ReactorTile(Tier variant) {
         super(ITiles.REACTOR, variant);
@@ -86,6 +88,8 @@ public class ReactorTile extends AbstractEnergyProvider<Tier, ReactorConfig, Rea
         this.solidCoolant.read(nbt, "solid_coolant");
         this.solidCoolantTemp = nbt.getInt("solid_coolant_temp");
         this.running = nbt.getBoolean("running");
+        this.genModeOn = nbt.getBoolean("gen_mode");
+        this.generate = nbt.getBoolean("generate");
         this.temp.read(nbt, "temperature");
     }
 
@@ -98,6 +102,8 @@ public class ReactorTile extends AbstractEnergyProvider<Tier, ReactorConfig, Rea
         this.solidCoolant.write(nbt, "solid_coolant");
         nbt.putInt("solid_coolant_temp", this.solidCoolantTemp);
         nbt.putBoolean("running", this.running);
+        nbt.putBoolean("gen_mode", this.genModeOn);
+        nbt.putBoolean("generate", this.generate);
         this.temp.write(nbt, "temperature");
         return super.writeSync(nbt);
     }
@@ -109,7 +115,7 @@ public class ReactorTile extends AbstractEnergyProvider<Tier, ReactorConfig, Rea
         boolean flag = false;
         boolean flag2 = false;
 
-        if (checkRedstone()) {
+        if (checkRedstone() && checkGenMode()) {
             boolean generating = !this.energy.isFull() && !this.fuel.isEmpty();
             boolean b0 = processFuel(world);
             boolean b1 = processCarbon(world, generating);
@@ -155,6 +161,18 @@ public class ReactorTile extends AbstractEnergyProvider<Tier, ReactorConfig, Rea
         } else {
             this.bright.back();
         }
+    }
+
+    private boolean checkGenMode() {
+        if (this.genModeOn) {
+            if (this.energy.isFull()) {
+                this.generate = false;
+            } else if (this.energy.getPercent() <= 70) {
+                this.generate = true;
+            }
+            return this.generate;
+        }
+        return true;
     }
 
     public double calcProduction() {
@@ -347,6 +365,15 @@ public class ReactorTile extends AbstractEnergyProvider<Tier, ReactorConfig, Rea
 
     public boolean isRunning() {
         return this.running;
+    }
+
+    public boolean isGenModeOn() {
+        return this.genModeOn;
+    }
+
+    public void setGenModeOn(boolean genModeOn) {
+        this.genModeOn = genModeOn;
+        sync();
     }
 
     @Override
