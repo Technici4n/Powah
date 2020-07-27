@@ -92,7 +92,6 @@ public class AbstractEnderTile<V extends IVariant<?>, C extends IEnergyConfig<V>
 
     @Override
     protected long receiveEnergy(int maxReceive, boolean simulate, @Nullable Direction side) {
-        if (!checkRedstone()) return 0;
         final long l = super.receiveEnergy(maxReceive, simulate, side);
         setEnergy(getEnergy());
         return l;
@@ -100,10 +99,19 @@ public class AbstractEnderTile<V extends IVariant<?>, C extends IEnergyConfig<V>
 
     @Override
     protected long extractEnergy(int maxExtract, boolean simulate, @Nullable Direction side) {
-        if (!checkRedstone()) return 0;
         final long l = super.extractEnergy(maxExtract, simulate, side);
         setEnergy(getEnergy());
         return l;
+    }
+
+    @Override
+    public boolean canExtractEnergy(@Nullable Direction side) {
+        return checkRedstone() && super.canExtractEnergy(side);
+    }
+
+    @Override
+    public boolean canReceiveEnergy(@Nullable Direction side) {
+        return checkRedstone() && super.canReceiveEnergy(side);
     }
 
     @Override

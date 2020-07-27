@@ -38,14 +38,22 @@ public class EnergyCellTile extends AbstractEnergyStorage<Tier, EnergyCellConfig
 
     @Override
     public long extractEnergy(int maxExtract, boolean simulate, @Nullable Direction side) {
-        if (!checkRedstone()) return 0;
         return super.extractEnergy(maxExtract, isCreative(), side);
     }
 
     @Override
     protected long receiveEnergy(int maxReceive, boolean simulate, @Nullable Direction side) {
-        if (!checkRedstone()) return 0;
         return super.receiveEnergy(maxReceive, simulate, side);
+    }
+
+    @Override
+    public boolean canExtractEnergy(@Nullable Direction side) {
+        return checkRedstone() && super.canExtractEnergy(side);
+    }
+
+    @Override
+    public boolean canReceiveEnergy(@Nullable Direction side) {
+        return checkRedstone() && super.canReceiveEnergy(side);
     }
 
     @Override
