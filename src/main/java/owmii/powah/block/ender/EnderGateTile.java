@@ -3,15 +3,15 @@ package owmii.powah.block.ender;
 import net.minecraft.item.ItemStack;
 import net.minecraft.state.properties.BlockStateProperties;
 import net.minecraft.util.Direction;
-import owmii.powah.block.ITiles;
 import owmii.powah.block.Tier;
+import owmii.powah.block.Tiles;
 import owmii.powah.config.EnderGateConfig;
 
 import javax.annotation.Nullable;
 
 public class EnderGateTile extends AbstractEnderTile<Tier, EnderGateConfig, EnderGateBlock> {
     public EnderGateTile(Tier variant) {
-        super(ITiles.ENDER_GATE, variant);
+        super(Tiles.ENDER_GATE, variant);
         this.inv.add(3);
     }
 

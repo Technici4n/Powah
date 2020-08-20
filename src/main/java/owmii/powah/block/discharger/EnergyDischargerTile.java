@@ -6,13 +6,13 @@ import owmii.lib.block.AbstractEnergyStorage;
 import owmii.lib.block.IInventoryHolder;
 import owmii.lib.logistics.TransferType;
 import owmii.lib.logistics.energy.Energy;
-import owmii.powah.block.ITiles;
 import owmii.powah.block.Tier;
+import owmii.powah.block.Tiles;
 import owmii.powah.config.EnergyDischargerConfig;
 
 public class EnergyDischargerTile extends AbstractEnergyStorage<Tier, EnergyDischargerConfig, EnergyDischargerBlock> implements IInventoryHolder {
     public EnergyDischargerTile(Tier variant) {
-        super(ITiles.ENERGY_DISCHARGER, variant);
+        super(Tiles.ENERGY_DISCHARGER, variant);
         this.inv.add(7);
     }
 

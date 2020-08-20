@@ -12,7 +12,7 @@ import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.registries.ForgeRegistries;
-import owmii.powah.block.IBlocks;
+import owmii.powah.block.Blcks;
 import owmii.powah.config.Configs;
 
 import java.util.ArrayList;
@@ -25,11 +25,11 @@ public class Features {
     public static void register() {
         if (Configs.GENERAL.oreGen.get()) {
             ForgeRegistries.BIOMES.forEach(biome -> {
-                biome.addFeature(GenerationStage.Decoration.UNDERGROUND_ORES, Feature.ORE.withConfiguration(new OreFeatureConfig(OreFeatureConfig.FillerBlockType.NATURAL_STONE, IBlocks.URANINITE_ORE_POOR.getDefaultState(), 5)).withPlacement(Placement.COUNT_RANGE.configure(new CountRangeConfig(Configs.GENERAL.uraniniteGenChance.get(), 0, 0, 64))));
-                biome.addFeature(GenerationStage.Decoration.UNDERGROUND_ORES, Feature.ORE.withConfiguration(new OreFeatureConfig(OreFeatureConfig.FillerBlockType.NATURAL_STONE, IBlocks.URANINITE_ORE.getDefaultState(), 4)).withPlacement(Placement.COUNT_RANGE.configure(new CountRangeConfig(Configs.GENERAL.uraniniteGenChance.get(), 0, 0, 32))));
-                biome.addFeature(GenerationStage.Decoration.UNDERGROUND_ORES, Feature.ORE.withConfiguration(new OreFeatureConfig(OreFeatureConfig.FillerBlockType.NATURAL_STONE, IBlocks.URANINITE_ORE_DENSE.getDefaultState(), 3)).withPlacement(Placement.COUNT_RANGE.configure(new CountRangeConfig(Configs.GENERAL.denseUraniniteGenChance.get(), 0, 0, 16))));
+                biome.addFeature(GenerationStage.Decoration.UNDERGROUND_ORES, Feature.ORE.withConfiguration(new OreFeatureConfig(OreFeatureConfig.FillerBlockType.NATURAL_STONE, Blcks.URANINITE_ORE_POOR.getDefaultState(), 5)).withPlacement(Placement.COUNT_RANGE.configure(new CountRangeConfig(Configs.GENERAL.uraniniteGenChance.get(), 0, 0, 64))));
+                biome.addFeature(GenerationStage.Decoration.UNDERGROUND_ORES, Feature.ORE.withConfiguration(new OreFeatureConfig(OreFeatureConfig.FillerBlockType.NATURAL_STONE, Blcks.URANINITE_ORE.getDefaultState(), 4)).withPlacement(Placement.COUNT_RANGE.configure(new CountRangeConfig(Configs.GENERAL.uraniniteGenChance.get(), 0, 0, 32))));
+                biome.addFeature(GenerationStage.Decoration.UNDERGROUND_ORES, Feature.ORE.withConfiguration(new OreFeatureConfig(OreFeatureConfig.FillerBlockType.NATURAL_STONE, Blcks.URANINITE_ORE_DENSE.getDefaultState(), 3)).withPlacement(Placement.COUNT_RANGE.configure(new CountRangeConfig(Configs.GENERAL.denseUraniniteGenChance.get(), 0, 0, 16))));
                 if (biome.getTempCategory().equals(Biome.TempCategory.COLD) || BiomeDictionary.hasType(biome, BiomeDictionary.Type.COLD) || BiomeDictionary.hasType(biome, BiomeDictionary.Type.SNOWY)) {
-                    biome.addFeature(GenerationStage.Decoration.UNDERGROUND_ORES, Feature.ORE.withConfiguration(new OreFeatureConfig(OreFeatureConfig.FillerBlockType.NATURAL_STONE, IBlocks.DRY_ICE.getDefaultState(), 15)).withPlacement(Placement.COUNT_RANGE.configure(new CountRangeConfig(Configs.GENERAL.dryIceGenChance.get(), 0, 0, 64))));
+                    biome.addFeature(GenerationStage.Decoration.UNDERGROUND_ORES, Feature.ORE.withConfiguration(new OreFeatureConfig(OreFeatureConfig.FillerBlockType.NATURAL_STONE, Blcks.DRY_ICE.getDefaultState(), 15)).withPlacement(Placement.COUNT_RANGE.configure(new CountRangeConfig(Configs.GENERAL.dryIceGenChance.get(), 0, 0, 64))));
                 }
             });
         }

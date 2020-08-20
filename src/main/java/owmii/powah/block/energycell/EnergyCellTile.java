@@ -7,15 +7,15 @@ import owmii.lib.block.AbstractEnergyStorage;
 import owmii.lib.block.IInventoryHolder;
 import owmii.lib.logistics.TransferType;
 import owmii.lib.logistics.energy.Energy;
-import owmii.powah.block.ITiles;
 import owmii.powah.block.Tier;
+import owmii.powah.block.Tiles;
 import owmii.powah.config.EnergyCellConfig;
 
 import javax.annotation.Nullable;
 
 public class EnergyCellTile extends AbstractEnergyStorage<Tier, EnergyCellConfig, EnergyCellBlock> implements IInventoryHolder {
     public EnergyCellTile(Tier tier) {
-        super(ITiles.ENERGY_CELL, tier);
+        super(Tiles.ENERGY_CELL, tier);
         this.inv.add(2);
     }
 

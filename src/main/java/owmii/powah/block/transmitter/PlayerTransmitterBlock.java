@@ -99,9 +99,15 @@ public class PlayerTransmitterBlock extends AbstractEnergyBlock<Tier, PlayerTran
     @Override
     public void onBlockAdded(BlockState state, World world, BlockPos pos, BlockState oldState, boolean isMoving) {
         super.onBlockAdded(state, world, pos, oldState, isMoving);
-        if (!state.get(TOP)) {
+        if (!state.get(TOP) && world.isAirBlock(pos.up())) {
             world.setBlockState(pos.up(), getDefaultState().with(TOP, true), 3);
         }
+    }
+
+    @Override
+    public boolean isValidPosition(BlockState state, IWorldReader world, BlockPos pos) {
+        return state.get(TOP) ? super.isValidPosition(state, world, pos) :
+                (world.isAirBlock(pos.up()) || world.getBlockState(pos.up()).getBlock() == this);
     }
 
     @Override

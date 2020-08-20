@@ -21,13 +21,13 @@ public class AerialPearlItem extends ItemBase {
     @Override
     public ActionResultType itemInteractionForEntity(ItemStack stack, PlayerEntity playerIn, LivingEntity target, Hand hand) {
         if (Configs.GENERAL.player_aerial_pearl.get()) {
-            if (this == IItems.AERIAL_PEARL) {
+            if (this == Itms.AERIAL_PEARL) {
                 if (target.getClass() == ZombieEntity.class
                         || target.getClass() == ZombieVillagerEntity.class
                         || target.getClass() == HuskEntity.class) {
                     if (!playerIn.world.isRemote) {
                         ItemStack stack1 = playerIn.getHeldItem(hand);
-                        ItemHandlerHelper.giveItemToPlayer(playerIn, new ItemStack(IItems.PLAYER_AERIAL_PEARL));
+                        ItemHandlerHelper.giveItemToPlayer(playerIn, new ItemStack(Itms.PLAYER_AERIAL_PEARL));
                         target.playSound(SoundEvents.ENTITY_ZOMBIE_DEATH, 0.5F, 1.0F);
                         target.remove();
                         if (!playerIn.isCreative()) {

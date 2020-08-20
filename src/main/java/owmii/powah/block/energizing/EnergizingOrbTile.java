@@ -8,7 +8,7 @@ import owmii.lib.block.AbstractTickableTile;
 import owmii.lib.block.IInventoryHolder;
 import owmii.lib.block.IVariant;
 import owmii.lib.logistics.energy.Energy;
-import owmii.powah.block.ITiles;
+import owmii.powah.block.Tiles;
 import owmii.powah.recipe.Recipes;
 
 import javax.annotation.Nullable;
@@ -22,7 +22,7 @@ public class EnergizingOrbTile extends AbstractTickableTile<IVariant.Single, Ene
     private EnergizingRecipe recipe;
 
     public EnergizingOrbTile() {
-        super(ITiles.ENERGIZING_ORB);
+        super(Tiles.ENERGIZING_ORB);
         this.inv.set(7);
     }
 

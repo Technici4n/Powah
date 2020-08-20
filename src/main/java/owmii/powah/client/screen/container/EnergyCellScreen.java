@@ -31,8 +31,8 @@ public class EnergyCellScreen extends AbstractEnergyScreen<EnergyCellTile, Energ
         int a = (int) (255.0D * 1.0D * 0.4D) << 24;
         Energy e = this.te.getEnergy();
         String s = Util.addCommas(e.getStored()) + "/" + Util.numFormat(e.getCapacity()) + " FE";
-        this.field_230712_o_.func_238421_b_(matrix, this.te.isCreative() ? I18n.format("info.powah.unlimited") : s, 38, 13.0F, a);
-        this.field_230712_o_.func_238421_b_(matrix, Util.numFormat(e.getMaxExtract()) + " FE/t", 38, 27.0F, a);
+        this.font.drawString(matrix, this.te.isCreative() ? I18n.format("info.powah.unlimited") : s, 38, 13.0F, a);
+        this.font.drawString(matrix, Util.numFormat(e.getMaxExtract()) + " FE/t", 38, 27.0F, a);
         RenderSystem.disableBlend();
         RenderSystem.popMatrix();
     }

@@ -37,11 +37,11 @@ public class BindingCardItem extends ItemBase {
     @Override
     public ActionResultType itemInteractionForEntity(ItemStack stack, PlayerEntity playerIn, LivingEntity target, Hand hand) {
         if (Configs.GENERAL.binding_card_dim.get()) {
-            if (this == IItems.BINDING_CARD) {
+            if (this == Itms.BINDING_CARD) {
                 if (target.getClass() == EndermanEntity.class || target.getClass() == EndermiteEntity.class) {
                     if (!playerIn.world.isRemote) {
                         ItemStack stack1 = playerIn.getHeldItem(hand);
-                        ItemStack stack2 = new ItemStack(IItems.BINDING_CARD_DIM);
+                        ItemStack stack2 = new ItemStack(Itms.BINDING_CARD_DIM);
                         CompoundNBT nbt = Stack.getTagOrEmpty(stack1);
                         if (nbt.hasUniqueId("bound_player_id")) {
                             CompoundNBT nbt1 = stack2.getOrCreateTag();
@@ -68,7 +68,7 @@ public class BindingCardItem extends ItemBase {
             nbt.putString("bound_player_name", playerIn.getDisplayName().getString());
             return new ActionResult<>(ActionResultType.SUCCESS, stack);
         } else if (!playerIn.getUniqueID().equals(nbt.getUniqueId("bound_player_id"))) {
-            playerIn.sendStatusMessage(new TranslationTextComponent("chat.powah.no.binding", nbt.getString("bound_player_name")).func_240701_a_(TextFormatting.DARK_RED), true);
+            playerIn.sendStatusMessage(new TranslationTextComponent("chat.powah.no.binding", nbt.getString("bound_player_name")).mergeStyle(TextFormatting.DARK_RED), true);
             return new ActionResult<>(ActionResultType.FAIL, stack);
         }
         return new ActionResult<>(ActionResultType.PASS, stack);
@@ -82,10 +82,10 @@ public class BindingCardItem extends ItemBase {
     public void addInformation(ItemStack stack, @Nullable World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
         CompoundNBT nbt = stack.getTag();
         if (nbt == null) {
-            tooltip.add(new TranslationTextComponent("info.powah.click.to.bind").func_240701_a_(TextFormatting.DARK_GRAY));
+            tooltip.add(new TranslationTextComponent("info.powah.click.to.bind").mergeStyle(TextFormatting.DARK_GRAY));
             tooltip.add(new StringTextComponent(""));
         } else if (nbt.hasUniqueId("bound_player_id")) {
-            tooltip.add(new TranslationTextComponent("info.lollipop.owner", TextFormatting.YELLOW + nbt.getString("bound_player_name")).func_240699_a_(TextFormatting.GRAY));
+            tooltip.add(new TranslationTextComponent("info.lollipop.owner", TextFormatting.YELLOW + nbt.getString("bound_player_name")).mergeStyle(TextFormatting.GRAY));
             tooltip.add(new StringTextComponent(""));
         }
     }

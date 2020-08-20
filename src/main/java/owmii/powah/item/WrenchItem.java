@@ -80,7 +80,7 @@ public class WrenchItem extends ItemBase implements IHudItem, IWrench {
         ItemStack stack = playerIn.getHeldItem(handIn);
         if (playerIn.isSneaking()) {
             nextWrenchMode(stack);
-            playerIn.sendStatusMessage(new TranslationTextComponent("info.powah.wrench.mode." + getWrenchMode(stack).name().toLowerCase(), TextFormatting.YELLOW).func_240701_a_(TextFormatting.GRAY), true);
+            playerIn.sendStatusMessage(new TranslationTextComponent("info.powah.wrench.mode." + getWrenchMode(stack).name().toLowerCase(), TextFormatting.YELLOW).mergeStyle(TextFormatting.GRAY), true);
             return ActionResult.resultSuccess(stack);
         }
         return super.onItemRightClick(worldIn, playerIn, handIn);
@@ -88,14 +88,14 @@ public class WrenchItem extends ItemBase implements IHudItem, IWrench {
 
     @Override
     public void addInformation(ItemStack stack, @Nullable World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
-        tooltip.add(new TranslationTextComponent("info.powah.wrench.mode." + getWrenchMode(stack).name().toLowerCase(), TextFormatting.YELLOW).func_240699_a_(TextFormatting.GRAY));
+        tooltip.add(new TranslationTextComponent("info.powah.wrench.mode." + getWrenchMode(stack).name().toLowerCase(), TextFormatting.YELLOW).mergeStyle(TextFormatting.GRAY));
     }
 
     @Override
     public void inventoryTick(ItemStack stack, World worldIn, Entity entityIn, int itemSlot, boolean isSelected) {
         if (entityIn instanceof PlayerEntity) {
             PlayerEntity player = (PlayerEntity) entityIn;
-            oneTimeInfo(player, stack, new TranslationTextComponent("info.powah.wrench.mode." + getWrenchMode(stack).name().toLowerCase(), TextFormatting.YELLOW).func_240699_a_(TextFormatting.GRAY));
+            oneTimeInfo(player, stack, new TranslationTextComponent("info.powah.wrench.mode." + getWrenchMode(stack).name().toLowerCase(), TextFormatting.YELLOW).mergeStyle(TextFormatting.GRAY));
         }
     }
 

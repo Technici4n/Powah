@@ -163,15 +163,15 @@ public class EnergizingOrbBlock extends AbstractBlock<IVariant.Single> implement
                             V3d v3d = V3d.from(rodPos);
                             if ((int) v3d.distance(pos) <= Configs.ENERGIZING.range.get()) {
                                 rod.setOrbPos(pos);
-                                player.sendStatusMessage(new TranslationTextComponent("chat.powah.wrench.link.done").func_240701_a_(TextFormatting.GOLD), true);
+                                player.sendStatusMessage(new TranslationTextComponent("chat.powah.wrench.link.done").mergeStyle(TextFormatting.GOLD), true);
                             } else {
-                                player.sendStatusMessage(new TranslationTextComponent("chat.powah.wrench.link.fail").func_240701_a_(TextFormatting.RED), true);
+                                player.sendStatusMessage(new TranslationTextComponent("chat.powah.wrench.link.fail").mergeStyle(TextFormatting.RED), true);
                             }
                         }
                         nbt.remove("RodPos");
                     } else {
                         nbt.put("OrbPos", NBTUtil.writeBlockPos(pos));
-                        player.sendStatusMessage(new TranslationTextComponent("chat.powah.wrench.link.start").func_240701_a_(TextFormatting.YELLOW), true);
+                        player.sendStatusMessage(new TranslationTextComponent("chat.powah.wrench.link.start").mergeStyle(TextFormatting.YELLOW), true);
                     }
                     return true;
                 }

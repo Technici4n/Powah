@@ -143,15 +143,15 @@ public class EnergizingRodBlock extends AbstractEnergyBlock<Tier, EnergizingConf
                             V3d v3d = V3d.from(orbPos);
                             if ((int) v3d.distance(pos) <= Configs.ENERGIZING.range.get()) {
                                 rod.setOrbPos(orbPos);
-                                player.sendStatusMessage(new TranslationTextComponent("chat.powah.wrench.link.done").func_240701_a_(TextFormatting.GOLD), true);
+                                player.sendStatusMessage(new TranslationTextComponent("chat.powah.wrench.link.done").mergeStyle(TextFormatting.GOLD), true);
                             } else {
-                                player.sendStatusMessage(new TranslationTextComponent("chat.powah.wrench.link.fail").func_240701_a_(TextFormatting.RED), true);
+                                player.sendStatusMessage(new TranslationTextComponent("chat.powah.wrench.link.fail").mergeStyle(TextFormatting.RED), true);
                             }
                         }
                         nbt.remove("OrbPos");
                     } else {
                         nbt.put("RodPos", NBTUtil.writeBlockPos(pos));
-                        player.sendStatusMessage(new TranslationTextComponent("chat.powah.wrench.link.start").func_240701_a_(TextFormatting.YELLOW), true);
+                        player.sendStatusMessage(new TranslationTextComponent("chat.powah.wrench.link.start").mergeStyle(TextFormatting.YELLOW), true);
                     }
                     return true;
                 }
@@ -175,7 +175,7 @@ public class EnergizingRodBlock extends AbstractEnergyBlock<Tier, EnergizingConf
             mc.getTextureManager().bindTexture(new ResourceLocation(Lollipop.MOD_ID, "textures/gui/ov_energy.png"));
             GuiUtils.drawTexturedModalRect(x - 37 - 1, y - 80, 0, 0, 74, 9, 0);
             Draw.gaugeH(x - 37, y - 79, 72, 16, 0, 9, ((EnergizingRodTile) te).getEnergy());
-            font.func_238421_b_(matrix, s, x - (font.getStringWidth(s) / 2.0f), y - 67, 0xffffff);
+            font.drawStringWithShadow(matrix, s, x - (font.getStringWidth(s) / 2.0f), y - 67, 0xffffff);
             RenderSystem.disableBlend();
             RenderSystem.popMatrix();
         }

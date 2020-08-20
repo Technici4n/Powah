@@ -9,8 +9,8 @@ import owmii.lib.compat.curios.CuriosCompat;
 import owmii.lib.logistics.energy.Energy;
 import owmii.lib.util.Player;
 import owmii.lib.util.Stack;
-import owmii.powah.block.ITiles;
 import owmii.powah.block.Tier;
+import owmii.powah.block.Tiles;
 import owmii.powah.config.PlayerTransmitterConfig;
 import owmii.powah.item.BindingCardItem;
 
@@ -19,7 +19,7 @@ import java.util.Optional;
 public class PlayerTransmitterTile extends AbstractEnergyStorage<Tier, PlayerTransmitterConfig, PlayerTransmitterBlock> implements IInventoryHolder {
 
     public PlayerTransmitterTile(Tier variant) {
-        super(ITiles.PLAYER_TRANSMITTER, variant);
+        super(Tiles.PLAYER_TRANSMITTER, variant);
         this.inv.add(1);
     }
 

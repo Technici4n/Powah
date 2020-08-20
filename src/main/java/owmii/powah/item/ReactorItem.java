@@ -54,7 +54,7 @@ public class ReactorItem extends EnergyBlockItem<Tier, ReactorConfig, ReactorBlo
         if (player == null || Player.isFake(player)) return ActionResultType.FAIL;
         ItemStack stack = context.getItem();
         if (stack.getCount() < 36 && !player.isCreative()) {
-            player.sendStatusMessage(new TranslationTextComponent("chat.powah.not.enough.blocks", "" + TextFormatting.YELLOW + (36 - stack.getCount()) + TextFormatting.RED).func_240701_a_(TextFormatting.RED), true);
+            player.sendStatusMessage(new TranslationTextComponent("chat.powah.not.enough.blocks", "" + TextFormatting.YELLOW + (36 - stack.getCount()) + TextFormatting.RED).mergeStyle(TextFormatting.RED), true);
             return ActionResultType.FAIL;
         }
         BlockPos pos = context.getPos();

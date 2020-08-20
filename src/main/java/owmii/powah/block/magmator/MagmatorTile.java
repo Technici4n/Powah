@@ -12,8 +12,8 @@ import owmii.lib.block.ITankHolder;
 import owmii.lib.logistics.energy.Energy;
 import owmii.lib.logistics.fluid.Tank;
 import owmii.powah.api.PowahAPI;
-import owmii.powah.block.ITiles;
 import owmii.powah.block.Tier;
+import owmii.powah.block.Tiles;
 import owmii.powah.config.generator.MagmatorConfig;
 
 public class MagmatorTile extends AbstractEnergyProvider<Tier, MagmatorConfig, MagmatorBlock> implements IInventoryHolder, ITankHolder {
@@ -21,7 +21,7 @@ public class MagmatorTile extends AbstractEnergyProvider<Tier, MagmatorConfig, M
     protected boolean burning;
 
     public MagmatorTile(Tier variant) {
-        super(ITiles.MAGMATOR, variant);
+        super(Tiles.MAGMATOR, variant);
         this.tank.setCapacity(FluidAttributes.BUCKET_VOLUME * 4)
                 .validate(stack -> PowahAPI.MAGMATIC_FLUIDS.containsKey(stack.getFluid()))
                 .setChange(() -> MagmatorTile.this.sync(10));

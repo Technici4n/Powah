@@ -8,8 +8,8 @@ import owmii.lib.block.AbstractEnergyProvider;
 import owmii.lib.block.IInventoryHolder;
 import owmii.lib.logistics.energy.Energy;
 import owmii.lib.util.Ticker;
-import owmii.powah.block.ITiles;
 import owmii.powah.block.Tier;
+import owmii.powah.block.Tiles;
 import owmii.powah.config.Configs;
 import owmii.powah.config.generator.FurnatorConfig;
 
@@ -18,7 +18,7 @@ public class FurnatorTile extends AbstractEnergyProvider<Tier, FurnatorConfig, F
     protected boolean burning;
 
     public FurnatorTile(Tier variant) {
-        super(ITiles.FURNATOR, variant);
+        super(Tiles.FURNATOR, variant);
         this.inv.set(2);
     }
 

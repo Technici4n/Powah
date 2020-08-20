@@ -1,40 +1,21 @@
 package owmii.powah.inventory;
 
-import net.minecraft.inventory.container.Container;
 import net.minecraft.inventory.container.ContainerType;
 import net.minecraftforge.common.extensions.IForgeContainerType;
-import net.minecraftforge.event.RegistryEvent;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.common.Mod;
-import net.minecraftforge.fml.network.IContainerFactory;
+import owmii.lib.registry.Registry;
+import owmii.powah.Powah;
 
-import java.util.ArrayList;
-import java.util.List;
-
-@Mod.EventBusSubscriber(bus = Mod.EventBusSubscriber.Bus.MOD)
 public class Containers {
-    private static final List<ContainerType<?>> CONTAINER_TYPES = new ArrayList<>();
-    public static final ContainerType<EnergyCellContainer> ENERGY_CELL = register("energy_cell", EnergyCellContainer::create);
-    public static final ContainerType<EnderCellContainer> ENDER_CELL = register("ender_cell", EnderCellContainer::create);
-    public static final ContainerType<FurnatorContainer> FURNATOR = register("furnator", FurnatorContainer::create);
-    public static final ContainerType<MagmatorContainer> MAGMATOR = register("magmator", MagmatorContainer::create);
-    public static final ContainerType<PlayerTransmitterContainer> PLAYER_TRANSMITTER = register("player_transmitter", PlayerTransmitterContainer::create);
-    public static final ContainerType<EnergyHopperContainer> ENERGY_HOPPER = register("energy_hopper", EnergyHopperContainer::create);
-    public static final ContainerType<CableContainer> CABLE = register("cable", CableContainer::create);
-    public static final ContainerType<ReactorContainer> REACTOR = register("reactor", ReactorContainer::create);
-    public static final ContainerType<SolarContainer> SOLAR = register("solar", SolarContainer::create);
-    public static final ContainerType<ThermoContainer> THERMO = register("thermo", ThermoContainer::create);
-    public static final ContainerType<DischargerContainer> DISCHARGER = register("discharger", DischargerContainer::create);
-
-    static <T extends Container> ContainerType<T> register(final String name, final IContainerFactory<T> factory) {
-        final ContainerType<T> containerType = IForgeContainerType.create(factory);
-        containerType.setRegistryName(name);
-        CONTAINER_TYPES.add(containerType);
-        return containerType;
-    }
-
-    @SubscribeEvent
-    public static void onRegistry(final RegistryEvent.Register<ContainerType<?>> event) {
-        CONTAINER_TYPES.forEach(block -> event.getRegistry().register(block));
-    }
+    public static final Registry<ContainerType<?>> REG = new Registry<>(Powah.MOD_ID);
+    public static final ContainerType<EnergyCellContainer> ENERGY_CELL = REG.register("energy_cell", IForgeContainerType.create(EnergyCellContainer::create));
+    public static final ContainerType<EnderCellContainer> ENDER_CELL = REG.register("ender_cell", IForgeContainerType.create(EnderCellContainer::create));
+    public static final ContainerType<FurnatorContainer> FURNATOR = REG.register("furnator", IForgeContainerType.create(FurnatorContainer::create));
+    public static final ContainerType<MagmatorContainer> MAGMATOR = REG.register("magmator", IForgeContainerType.create(MagmatorContainer::create));
+    public static final ContainerType<PlayerTransmitterContainer> PLAYER_TRANSMITTER = REG.register("player_transmitter", IForgeContainerType.create(PlayerTransmitterContainer::create));
+    public static final ContainerType<EnergyHopperContainer> ENERGY_HOPPER = REG.register("energy_hopper", IForgeContainerType.create(EnergyHopperContainer::create));
+    public static final ContainerType<CableContainer> CABLE = REG.register("cable", IForgeContainerType.create(CableContainer::create));
+    public static final ContainerType<ReactorContainer> REACTOR = REG.register("reactor", IForgeContainerType.create(ReactorContainer::create));
+    public static final ContainerType<SolarContainer> SOLAR = REG.register("solar", IForgeContainerType.create(SolarContainer::create));
+    public static final ContainerType<ThermoContainer> THERMO = REG.register("thermo", IForgeContainerType.create(ThermoContainer::create));
+    public static final ContainerType<DischargerContainer> DISCHARGER = REG.register("discharger", IForgeContainerType.create(DischargerContainer::create));
 }

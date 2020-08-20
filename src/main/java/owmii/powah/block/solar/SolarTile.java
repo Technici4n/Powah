@@ -10,10 +10,10 @@ import owmii.lib.block.AbstractEnergyProvider;
 import owmii.lib.block.IInventoryHolder;
 import owmii.lib.util.Misc;
 import owmii.lib.util.Time;
-import owmii.powah.block.ITiles;
 import owmii.powah.block.Tier;
+import owmii.powah.block.Tiles;
 import owmii.powah.config.generator.SolarConfig;
-import owmii.powah.item.IItems;
+import owmii.powah.item.Itms;
 
 import javax.annotation.Nullable;
 
@@ -22,7 +22,7 @@ public class SolarTile extends AbstractEnergyProvider<Tier, SolarConfig, SolarBl
     private boolean hasLensOfEnder;
 
     public SolarTile(Tier variant) {
-        super(ITiles.SOLAR_PANEL, variant);
+        super(Tiles.SOLAR_PANEL, variant);
         this.inv.add(1);
     }
 
@@ -68,7 +68,7 @@ public class SolarTile extends AbstractEnergyProvider<Tier, SolarConfig, SolarBl
         super.onRemoved(world, state, newState, isMoving);
         if (state.getBlock() != newState.getBlock()) {
             if (this.hasLensOfEnder) {
-                Block.spawnAsEntity(world, this.pos, new ItemStack(IItems.LENS_OF_ENDER));
+                Block.spawnAsEntity(world, this.pos, new ItemStack(Itms.LENS_OF_ENDER));
             }
         }
     }

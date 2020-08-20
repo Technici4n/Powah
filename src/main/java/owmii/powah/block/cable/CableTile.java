@@ -15,8 +15,8 @@ import net.minecraftforge.common.util.Constants;
 import owmii.lib.block.AbstractEnergyStorage;
 import owmii.lib.block.IInventoryHolder;
 import owmii.lib.logistics.energy.Energy;
-import owmii.powah.block.ITiles;
 import owmii.powah.block.Tier;
+import owmii.powah.block.Tiles;
 import owmii.powah.config.CableConfig;
 
 import javax.annotation.Nullable;
@@ -33,7 +33,7 @@ public class CableTile extends AbstractEnergyStorage<Tier, CableConfig, CableBlo
     public final Set<Direction> energySides = new HashSet<>();
 
     public CableTile(Tier variant) {
-        super(ITiles.CABLE, variant);
+        super(Tiles.CABLE, variant);
         for (Direction side : Direction.values()) {
             this.proxyMap.put(side, new EnergyProxy());
         }

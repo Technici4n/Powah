@@ -25,21 +25,21 @@ public class CableScreen extends AbstractEnergyScreen<CableTile, CableContainer>
     }
 
     @Override
-    protected void func_231160_c_() {
-        super.func_231160_c_();
+    protected void init() {
+        super.init();
 
-        this.configButton = func_230480_a_(new IconButton(this.guiLeft + 5, this.guiTop + 5, Textures.CABLE_CONFIG.get(this.te.getSideConfig().getType(this.side)), button -> {
+        this.configButton = addButton(new IconButton(this.guiLeft + 5, this.guiTop + 5, Textures.CABLE_CONFIG.get(this.te.getSideConfig().getType(this.side)), button -> {
             Lollipop.NET.toServer(new NextEnergyConfigPacket(this.side.getIndex(), this.te.getPos()));
             this.te.getSideConfig().nextType(this.side);
         }, this).setTooltip(tooltip -> {
-            tooltip.add(new TranslationTextComponent("info.lollipop.side." + this.side.func_176610_l(), TextFormatting.DARK_GRAY).func_240699_a_(TextFormatting.GRAY));
+            tooltip.add(new TranslationTextComponent("info.lollipop.side." + this.side.getString(), TextFormatting.DARK_GRAY).mergeStyle(TextFormatting.GRAY));
             tooltip.add(this.te.getSideConfig().getType(this.side).getDisplayName());
         }));
     }
 
     @Override
-    public void func_231023_e_() {
-        super.func_231023_e_();
+    public void tick() {
+        super.tick();
         this.configButton.setTexture(Textures.CABLE_CONFIG.get(this.te.getSideConfig().getType(this.side)));
     }
 
@@ -52,8 +52,8 @@ public class CableScreen extends AbstractEnergyScreen<CableTile, CableContainer>
     protected void drawForeground(MatrixStack matrix, int mouseX, int mouseY) {
         super.drawForeground(matrix, mouseX, mouseY);
         String title = I18n.format("info.lollipop.side." + this.side.getName2(), TextFormatting.DARK_GRAY);
-        int width = this.field_230712_o_.getStringWidth(title);
-        this.field_230712_o_.func_238421_b_(matrix, title, this.xSize / 2 - width / 2, 10.0F, 0x555555);
+        int width = this.font.getStringWidth(title);
+        this.font.drawString(matrix, title, this.xSize / 2 - width / 2, 10.0F, 0x555555);
     }
 
     @Override

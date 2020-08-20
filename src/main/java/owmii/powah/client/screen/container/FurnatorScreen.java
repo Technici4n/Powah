@@ -28,8 +28,8 @@ public class FurnatorScreen extends AbstractEnergyScreen<FurnatorTile, FurnatorC
     }
 
     @Override
-    public void func_231023_e_() {
-        super.func_231023_e_();
+    public void tick() {
+        super.tick();
         if (this.te.isBurning()) {
             this.heat.onward();
         } else {
@@ -53,15 +53,15 @@ public class FurnatorScreen extends AbstractEnergyScreen<FurnatorTile, FurnatorC
         if (Textures.FURNATOR_GAUGE.isMouseOver(this.guiLeft + 5, this.guiTop + 5, mouseX, mouseY)) {
             List<ITextComponent> list = new ArrayList<>();
             Energy energy = this.te.getEnergy();
-            list.add(new TranslationTextComponent("info.lollipop.stored.energy.fe", TextFormatting.GRAY + Util.addCommas(energy.getStored()), TextFormatting.GRAY + Util.numFormat(energy.getCapacity())).func_240699_a_(TextFormatting.DARK_GRAY));
-            list.add(new TranslationTextComponent("info.lollipop.generates", TextFormatting.GRAY + Util.numFormat(this.te.getGeneration())).func_240699_a_(TextFormatting.DARK_GRAY));
-            list.add(new TranslationTextComponent("info.lollipop.max.transfer.fe", TextFormatting.GRAY + Util.numFormat(energy.getMaxExtract())).func_240699_a_(TextFormatting.DARK_GRAY));
-            func_238654_b_(matrix, list, mouseX, mouseY);
+            list.add(new TranslationTextComponent("info.lollipop.stored.energy.fe", TextFormatting.GRAY + Util.addCommas(energy.getStored()), TextFormatting.GRAY + Util.numFormat(energy.getCapacity())).mergeStyle(TextFormatting.DARK_GRAY));
+            list.add(new TranslationTextComponent("info.lollipop.generates", TextFormatting.GRAY + Util.numFormat(this.te.getGeneration())).mergeStyle(TextFormatting.DARK_GRAY));
+            list.add(new TranslationTextComponent("info.lollipop.max.transfer.fe", TextFormatting.GRAY + Util.numFormat(energy.getMaxExtract())).mergeStyle(TextFormatting.DARK_GRAY));
+            renderTooltip(matrix, list, mouseX, mouseY);
         }
         if (Textures.FURNATOR_CARBON_GAUGE.isMouseOver(this.guiLeft + 110, this.guiTop + 18, mouseX, mouseY)) {
             List<ITextComponent> list = new ArrayList<>();
-            list.add(new TranslationTextComponent("info.powah.carbon").func_240699_a_(TextFormatting.DARK_GRAY));
-            func_238654_b_(matrix, list, mouseX, mouseY);
+            list.add(new TranslationTextComponent("info.powah.carbon").mergeStyle(TextFormatting.DARK_GRAY));
+            renderTooltip(matrix, list, mouseX, mouseY);
         }
     }
 }

@@ -29,11 +29,6 @@ public class ThermoScreen extends AbstractEnergyScreen<ThermoTile, ThermoContain
     }
 
     @Override
-    public void func_231023_e_() {
-        super.func_231023_e_();
-    }
-
-    @Override
     protected void drawBackground(MatrixStack matrix, float partialTicks, int mouseX, int mouseY) {
         super.drawBackground(matrix, partialTicks, mouseX, mouseY);
         Textures.THERMO_GAUGE.drawScalableH(matrix, this.te.getEnergy().subSized(), this.guiLeft + 5, this.guiTop + 5);
@@ -57,7 +52,7 @@ public class ThermoScreen extends AbstractEnergyScreen<ThermoTile, ThermoContain
         }
 
         long percent = this.te.getGeneration() > 0 ? (100 * this.te.generating) / this.te.getGeneration() : 0;
-        this.field_230712_o_.func_238421_b_(matrix, percent + "%" + " (" + this.te.generating + " EF/t)", this.guiLeft + 34, this.guiTop + 10, 5592405);
+        this.font.drawString(matrix, percent + "%" + " (" + this.te.generating + " EF/t)", this.guiLeft + 34, this.guiTop + 10, 5592405);
     }
 
     @Override
@@ -66,22 +61,22 @@ public class ThermoScreen extends AbstractEnergyScreen<ThermoTile, ThermoContain
         if (Textures.FURNATOR_GAUGE.isMouseOver(this.guiLeft + 5, this.guiTop + 5, mouseX, mouseY)) {
             List<ITextComponent> list = new ArrayList<>();
             Energy energy = this.te.getEnergy();
-            list.add(new TranslationTextComponent("info.lollipop.stored.energy.fe", TextFormatting.GRAY + Util.addCommas(energy.getStored()), TextFormatting.GRAY + Util.numFormat(energy.getCapacity())).func_240699_a_(TextFormatting.DARK_GRAY));
-            list.add(new TranslationTextComponent("info.lollipop.generates", TextFormatting.GRAY + Util.numFormat(this.te.getGeneration())).func_240699_a_(TextFormatting.DARK_GRAY));
-            list.add(new TranslationTextComponent("info.lollipop.max.transfer.fe", TextFormatting.GRAY + Util.numFormat(energy.getMaxExtract())).func_240699_a_(TextFormatting.DARK_GRAY));
-            func_238654_b_(matrix, list, mouseX, mouseY);
+            list.add(new TranslationTextComponent("info.lollipop.stored.energy.fe", TextFormatting.GRAY + Util.addCommas(energy.getStored()), TextFormatting.GRAY + Util.numFormat(energy.getCapacity())).mergeStyle(TextFormatting.DARK_GRAY));
+            list.add(new TranslationTextComponent("info.lollipop.generates", TextFormatting.GRAY + Util.numFormat(this.te.getGeneration())).mergeStyle(TextFormatting.DARK_GRAY));
+            list.add(new TranslationTextComponent("info.lollipop.max.transfer.fe", TextFormatting.GRAY + Util.numFormat(energy.getMaxExtract())).mergeStyle(TextFormatting.DARK_GRAY));
+            renderTooltip(matrix, list, mouseX, mouseY);
         }
 
         FluidTank tank = this.te.getTank();
         if (isMouseOver(mouseX - 157, mouseY - 5, 14, 65)) {
             List<ITextComponent> list = new ArrayList<>();
             if (!tank.isEmpty()) {
-                list.add(new TranslationTextComponent("info.lollipop.fluid", TextFormatting.AQUA + tank.getFluid().getDisplayName().getString()).func_240699_a_(TextFormatting.GRAY));
-                list.add(new TranslationTextComponent("info.lollipop.fluid.stored", "" + tank.getFluidAmount(), tank.getCapacity()).func_240699_a_(TextFormatting.DARK_GRAY));
+                list.add(new TranslationTextComponent("info.lollipop.fluid", TextFormatting.AQUA + tank.getFluid().getDisplayName().getString()).mergeStyle(TextFormatting.GRAY));
+                list.add(new TranslationTextComponent("info.lollipop.fluid.stored", "" + tank.getFluidAmount(), tank.getCapacity()).mergeStyle(TextFormatting.DARK_GRAY));
             } else {
-                list.add(new TranslationTextComponent("info.lollipop.fluid", TextFormatting.DARK_GRAY + "----").func_240699_a_(TextFormatting.DARK_GRAY));
+                list.add(new TranslationTextComponent("info.lollipop.fluid", TextFormatting.DARK_GRAY + "----").mergeStyle(TextFormatting.DARK_GRAY));
             }
-            func_238654_b_(matrix, list, mouseX, mouseY);
+            renderTooltip(matrix, list, mouseX, mouseY);
         }
     }
 }

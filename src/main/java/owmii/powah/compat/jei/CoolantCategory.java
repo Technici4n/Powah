@@ -82,7 +82,7 @@ public class CoolantCategory implements IRecipeCategory<CoolantCategory.Recipe> 
     @Override
     public void draw(Recipe recipe, MatrixStack matrix, double mouseX, double mouseY) {
         Minecraft minecraft = Minecraft.getInstance();
-        minecraft.fontRenderer.func_238405_a_(matrix, I18n.format("info.lollipop.temperature", "" + TextFormatting.DARK_AQUA + recipe.coldness), 30.0F, 9.0F, 0x444444);
+        minecraft.fontRenderer.drawString(matrix, I18n.format("info.lollipop.temperature", "" + TextFormatting.DARK_AQUA + recipe.coldness), 30.0F, 9.0F, 0x444444);
     }
 
     public static class Maker {

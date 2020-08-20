@@ -99,7 +99,7 @@ public class BookPage {
                 if (index < this.entries.size()) {
                     BookEntry entry = this.entries.get(index);
                     ItemStack stack = entry.getIcon().getStack();
-                    screen.func_230480_a_(new IconButton(screen.x + 13 + j * 29, screen.y + 13 + i * 29, Textures.BOOK_ITEM_BG, b -> {
+                    screen.addButton2(new IconButton(screen.x + 13 + j * 29, screen.y + 13 + i * 29, Textures.BOOK_ITEM_BG, b -> {
                         screen.mc.displayGuiScreen(new BookScreen(entry.setMain(screen.entry.getMain()), 0).setPrevScreen(screen));
                     }, screen).setTooltip(tooltip -> tooltip.add(new TranslationTextComponent(entry.getTitle()))));
                 } else break;
@@ -120,13 +120,13 @@ public class BookPage {
                 RenderSystem.translatef(-(screen.w / 2.0F), -50.0F, 0.0F);
                 RenderSystem.scalef(2.0F, 2.0F, 1.0F);
                 String s = info.getDisplayName() + "!";
-                fr.func_238421_b_(matrix, s, screen.w / 2.0F - fr.getStringWidth(s) / 2.0F, 50, 0x444444);
+                fr.drawString(matrix, s, screen.w / 2.0F - fr.getStringWidth(s) / 2.0F, 50, 0x444444);
                 RenderSystem.popMatrix();
 
 
                 RenderSystem.pushMatrix();
                 String s2 = "v" + MavenVersionStringHelper.artifactVersionToString(info.getVersion());
-                fr.func_238421_b_(matrix, s2, screen.w / 2.0F - fr.getStringWidth(s2) / 2.0F, 72, 0x777777);
+                fr.drawString(matrix, s2, screen.w / 2.0F - fr.getStringWidth(s2) / 2.0F, 72, 0x777777);
 
 //                VersionChecker.CheckResult result = VersionChecker.getResult(info);
 //                if (result.target != null && result.url != null) {
@@ -137,7 +137,7 @@ public class BookPage {
 
                 if (screen.mc.player != null) {
                     String s3 = I18n.format("book.powah.title.welcome.back", screen.mc.player.getName().getString());
-                    fr.func_238421_b_(matrix, s3, screen.w / 2.0F - fr.getStringWidth(s3) / 2.0F, 140, 0x99495d);
+                    fr.drawString(matrix, s3, screen.w / 2.0F - fr.getStringWidth(s3) / 2.0F, 140, 0x99495d);
                 }
 
 
@@ -152,7 +152,7 @@ public class BookPage {
             mc.textureManager.bindTexture(image.getLocation());
             int w = image.getWidth();
             int h = image.getHeight();
-            AbstractGui.func_238463_a_(matrix, 8, 8, 0, 0, w, h, w, h);
+            AbstractGui.blit(matrix, 8, 8, 0, 0, w, h, w, h);
             i += h + 2;
         }
 
@@ -166,7 +166,7 @@ public class BookPage {
 
             RenderSystem.scalef(scale, scale, 1.0F);
             mc.textureManager.bindTexture(new ResourceLocation(Powah.MOD_ID, "textures/gui/book/background.png"));
-            screen.func_238474_b_(matrix, (int) (x / scale) - 4, y - 4, 196, 0, 24, 24);
+            screen.blit(matrix, (int) (x / scale) - 4, y - 4, 196, 0, 24, 24);
             RenderHelper.setupGui3DDiffuseLighting();
             mc.getItemRenderer().renderItemAndEffectIntoGUI(this.stack, (int) (x / scale), y);
             if (GUI.isMouseOver(mouseX, mouseY, screen.x + x, (int) (screen.y + y * 1.5F), 16 * 1.5F, 16 * 1.5F)) {
@@ -177,14 +177,14 @@ public class BookPage {
 
             RenderSystem.popMatrix();
             String s = this.stack.getDisplayName().getString();
-            fr.func_238421_b_(matrix, s, screen.w / 2.0F - fr.getStringWidth(s) / 2.0F, 56, 0x1e5b9c);
+            fr.drawString(matrix, s, screen.w / 2.0F - fr.getStringWidth(s) / 2.0F, 56, 0x1e5b9c);
             i += 64;
 
         }
 
         boolean flag = false;
         for (Map.Entry<String, Object[]> entry : this.infoBox.entrySet()) {
-            fr.func_238421_b_(matrix, I18n.format(entry.getKey(), entry.getValue()), 10, 10 + i, 0x38453c);
+            fr.drawString(matrix, I18n.format(entry.getKey(), entry.getValue()), 10, 10 + i, 0x38453c);
             i += 14;
             flag = true;
         }
@@ -198,7 +198,7 @@ public class BookPage {
             String text = paragraph.getText();
             Object[] args = paragraph.getArgs();
             if (!title.isEmpty()) {
-                fr.func_238421_b_(matrix, I18n.format(title), 9, 12 + i, 0x1e5b9c);
+                fr.drawString(matrix, I18n.format(title), 9, 12 + i, 0x1e5b9c);
                 i += 15;
             }
             if (!text.isEmpty()) {
@@ -224,7 +224,7 @@ public class BookPage {
                         RenderHelper.disableStandardItemLighting();
                     } else {
                         mc.textureManager.bindTexture(icon.getLocation());
-                        AbstractGui.func_238463_a_(matrix, 12 + j * 29 + 5, 17 + ii * 29, 0, 0, 16, 16, 16, 16);
+                        AbstractGui.blit(matrix, 12 + j * 29 + 5, 17 + ii * 29, 0, 0, 16, 16, 16, 16);
                     }
                 }
             }

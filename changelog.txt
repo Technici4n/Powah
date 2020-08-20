@@ -1,7 +1,13 @@
+2.2.0
+- Fix player transmitter not checking top part position, Closes #100.
+- Fix Uraninite ores breaking hardness.
+- Fixed random bugs.
+- Updated lollipop to v3.0.0
+
 2.1.3
 - Added Reactor generation mode (if set to on the reactor will stop if is full and start when has less than 70% of energy).
 - Fixed losing side config when chunk load/unload.
-- Fixed Player transmitter not breaking problem.
+- Fixed Player transmitter not breaking properly.
 - Updated lollipop to v2.1.3.
 
 2.1.2

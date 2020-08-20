@@ -10,8 +10,8 @@ import net.minecraft.world.World;
 import owmii.lib.block.AbstractEnergyStorage;
 import owmii.lib.util.NBT;
 import owmii.lib.util.Ticker;
-import owmii.powah.block.ITiles;
 import owmii.powah.block.Tier;
+import owmii.powah.block.Tiles;
 import owmii.powah.config.Configs;
 import owmii.powah.config.EnergizingConfig;
 
@@ -22,7 +22,7 @@ public class EnergizingRodTile extends AbstractEnergyStorage<Tier, EnergizingCon
     public final Ticker coolDown = new Ticker(20);
 
     public EnergizingRodTile(Tier variant) {
-        super(ITiles.ENERGIZING_ROD, variant);
+        super(Tiles.ENERGIZING_ROD, variant);
     }
 
     public EnergizingRodTile() {

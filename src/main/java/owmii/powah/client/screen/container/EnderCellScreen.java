@@ -23,11 +23,11 @@ public class EnderCellScreen extends AbstractEnergyScreen<AbstractEnderTile<?, ?
     }
 
     @Override
-    protected void func_231160_c_() {
-        super.func_231160_c_();
+    protected void init() {
+        super.init();
         for (int i = 0; i < this.iconButtons.length; i++) {
             int channel = i;
-            this.iconButtons[i] = func_230480_a_(new IconButton(this.guiLeft + 5 + i * 14, this.guiTop + 55, i == this.te.getChannel().get() ? Textures.ENDER_CELL_BTN_0 : Textures.ENDER_CELL_BTN_1, button -> {
+            this.iconButtons[i] = addButton(new IconButton(this.guiLeft + 5 + i * 14, this.guiTop + 55, i == this.te.getChannel().get() ? Textures.ENDER_CELL_BTN_0 : Textures.ENDER_CELL_BTN_1, button -> {
                 Powah.NET.toServer(new SetChannelPacket(this.te.getPos(), channel));
                 this.te.getChannel().set(channel);
             }, this));
@@ -35,8 +35,8 @@ public class EnderCellScreen extends AbstractEnergyScreen<AbstractEnderTile<?, ?
     }
 
     @Override
-    public void func_231023_e_() {
-        super.func_231023_e_();
+    public void tick() {
+        super.tick();
         for (int i = 0; i < this.iconButtons.length; i++) {
             this.iconButtons[i].setTexture(i == this.te.getChannel().get() ? Textures.ENDER_CELL_BTN_0 : Textures.ENDER_CELL_BTN_1);
         }
@@ -56,15 +56,15 @@ public class EnderCellScreen extends AbstractEnergyScreen<AbstractEnderTile<?, ?
         int a = (int) (255.0D * 0.45D) << 24;
         Energy e = this.te.getEnergy();
         String s = Util.addCommas(e.getStored()) + "/" + Util.numFormat(e.getCapacity()) + " FE";
-        this.field_230712_o_.func_238405_a_(matrix, s, 38, 13.0F, a + 0x4affde);
-        this.field_230712_o_.func_238405_a_(matrix, Util.numFormat(e.getMaxExtract()) + " FE/t", 38, 27.0F, a + 0x4affde);
+        this.font.drawString(matrix, s, 38, 13.0F, a + 0x4affde);
+        this.font.drawString(matrix, Util.numFormat(e.getMaxExtract()) + " FE/t", 38, 27.0F, a + 0x4affde);
 
         RenderSystem.scalef(0.5F, 0.5F, 1.0F);
         for (int i = 1; i < 13; i++) {
             float f = i > 9 ? -2 : 0;
             if (i > 1)
                 RenderSystem.translatef(14F, 0.0F, 0.0F);
-            this.field_230712_o_.func_238405_a_(matrix, "" + i, 19F + (i * 14) - 14 + f, 119F, i <= this.te.getMaxChannels() ? 0x3e8087 : a + 0x3e8087);
+            this.font.drawString(matrix, "" + i, 19F + (i * 14) - 14 + f, 119F, i <= this.te.getMaxChannels() ? 0x3e8087 : a + 0x3e8087);
         }
 
         RenderSystem.disableBlend();

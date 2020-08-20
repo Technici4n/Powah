@@ -17,7 +17,7 @@ import net.minecraft.util.text.TextFormatting;
 import org.apache.commons.lang3.tuple.Pair;
 import owmii.powah.Powah;
 import owmii.powah.api.PowahAPI;
-import owmii.powah.block.IBlocks;
+import owmii.powah.block.Blcks;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -32,7 +32,7 @@ public class SolidCoolantCategory implements IRecipeCategory<SolidCoolantCategor
 
     public SolidCoolantCategory(IGuiHelper guiHelper) {
         this.background = guiHelper.drawableBuilder(GUI_BACK, 0, 0, 160, 24).addPadding(1, 0, 0, 0).build();
-        this.icon = guiHelper.createDrawableIngredient(new ItemStack(IBlocks.DRY_ICE));
+        this.icon = guiHelper.createDrawableIngredient(new ItemStack(Blcks.DRY_ICE));
         this.localizedName = I18n.format("gui.powah.jei.category.solid.coolant");
     }
 
@@ -77,8 +77,8 @@ public class SolidCoolantCategory implements IRecipeCategory<SolidCoolantCategor
     @Override
     public void draw(Recipe recipe, MatrixStack matrix, double mouseX, double mouseY) {
         Minecraft minecraft = Minecraft.getInstance();
-        minecraft.fontRenderer.func_238405_a_(matrix, TextFormatting.DARK_GRAY + I18n.format("info.lollipop.amount", "" + TextFormatting.RESET + recipe.amount), 30.0F, 3.0F, 0x555555);
-        minecraft.fontRenderer.func_238405_a_(matrix, TextFormatting.DARK_GRAY + I18n.format("info.lollipop.temperature", "" + TextFormatting.RESET + recipe.coldness), 30.0F, 15.0F, 43690);
+        minecraft.fontRenderer.drawString(matrix, TextFormatting.DARK_GRAY + I18n.format("info.lollipop.amount", "" + TextFormatting.RESET + recipe.amount), 30.0F, 3.0F, 0x555555);
+        minecraft.fontRenderer.drawString(matrix, TextFormatting.DARK_GRAY + I18n.format("info.lollipop.temperature", "" + TextFormatting.RESET + recipe.coldness), 30.0F, 15.0F, 43690);
     }
 
     public static class Maker {

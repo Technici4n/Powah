@@ -15,15 +15,15 @@ import owmii.lib.block.IInventoryHolder;
 import owmii.lib.block.ITankHolder;
 import owmii.lib.logistics.energy.Energy;
 import owmii.powah.api.PowahAPI;
-import owmii.powah.block.ITiles;
 import owmii.powah.block.Tier;
+import owmii.powah.block.Tiles;
 import owmii.powah.config.generator.ThermoConfig;
 
 public class ThermoTile extends AbstractEnergyProvider<Tier, ThermoConfig, ThermoBlock> implements IInventoryHolder, ITankHolder {
     public long generating;
 
     public ThermoTile(Tier variant) {
-        super(ITiles.THERMO_GEN, variant);
+        super(Tiles.THERMO_GEN, variant);
         this.tank.setCapacity(FluidAttributes.BUCKET_VOLUME * 4)
                 .validate(stack -> PowahAPI.COOLANTS.containsKey(stack.getFluid()))
                 .setChange(() -> ThermoTile.this.sync(10));

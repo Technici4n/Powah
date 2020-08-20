@@ -10,8 +10,8 @@ import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.energy.CapabilityEnergy;
 import owmii.lib.block.AbstractTileEntity;
 import owmii.lib.util.NBT;
-import owmii.powah.block.ITiles;
 import owmii.powah.block.Tier;
+import owmii.powah.block.Tiles;
 
 import javax.annotation.Nullable;
 import java.util.Optional;
@@ -22,7 +22,7 @@ public class ReactorPartTile extends AbstractTileEntity<Tier, ReactorBlock> {
     private boolean built;
 
     public ReactorPartTile(Tier variant) {
-        super(ITiles.REACTOR_PART, variant);
+        super(Tiles.REACTOR_PART, variant);
     }
 
     public ReactorPartTile() {

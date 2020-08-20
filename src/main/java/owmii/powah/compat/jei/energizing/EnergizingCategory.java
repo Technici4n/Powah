@@ -14,7 +14,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import owmii.lib.util.Util;
 import owmii.powah.Powah;
-import owmii.powah.block.IBlocks;
+import owmii.powah.block.Blcks;
 import owmii.powah.block.energizing.EnergizingRecipe;
 
 public class EnergizingCategory implements IRecipeCategory<EnergizingRecipe> {
@@ -26,7 +26,7 @@ public class EnergizingCategory implements IRecipeCategory<EnergizingRecipe> {
 
     public EnergizingCategory(IGuiHelper guiHelper) {
         this.background = guiHelper.drawableBuilder(GUI_BACK, 0, 0, 160, 38).addPadding(1, 0, 0, 0).build();
-        this.icon = guiHelper.createDrawableIngredient(new ItemStack(IBlocks.ENERGIZING_ORB));
+        this.icon = guiHelper.createDrawableIngredient(new ItemStack(Blcks.ENERGIZING_ORB));
         this.localizedName = I18n.format("gui.powah.jei.category.energizing");
     }
 
@@ -75,6 +75,6 @@ public class EnergizingCategory implements IRecipeCategory<EnergizingRecipe> {
     @Override
     public void draw(EnergizingRecipe recipe, MatrixStack matrix, double mouseX, double mouseY) {
         Minecraft minecraft = Minecraft.getInstance();
-        minecraft.fontRenderer.func_238405_a_(matrix, I18n.format("info.lollipop.energy.fe.2", Util.addCommas(recipe.getEnergy())), 2.0F, 29.0F, 0x484241);
+        minecraft.fontRenderer.drawString(matrix, I18n.format("info.lollipop.energy.fe.2", Util.addCommas(recipe.getEnergy())), 2.0F, 29.0F, 0x484241);
     }
 }

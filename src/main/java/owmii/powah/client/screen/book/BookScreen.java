@@ -58,29 +58,29 @@ public class BookScreen extends ScreenBase {
     }
 
     @Override
-    protected void func_231160_c_() {
-        super.func_231160_c_();
-        this.x = (this.field_230708_k_ - this.w) / 2;
-        this.y = (this.field_230709_l_ - this.h) / 2;
+    protected void init() {
+        super.init();
+        this.x = (this.width - this.w) / 2;
+        this.y = (this.height - this.h) / 2;
 
         List<BookEntry> mainEntries = PowahBook.getMainEntries();
         for (int i = 0; i < mainEntries.size(); i++) {
             BookEntry entry = mainEntries.get(i);
             final int main = i;
-            this.catButtons[i] = func_230480_a_(new IconButton(this.x - 24, this.y + 20 + (i * 25), Textures.BOOK_CAT, button -> {
+            this.catButtons[i] = addButton(new IconButton(this.x - 24, this.y + 20 + (i * 25), Textures.BOOK_CAT, button -> {
                 this.mc.displayGuiScreen(new BookScreen(entry.setMain(main), 0));
             }, this).setTooltip(tooltip -> tooltip.add(new TranslationTextComponent(entry.getTitle()))));
         }
-        this.mainButtons[0] = func_230480_a_(new IconButton(this.x + this.w + 2, this.y + 32 + 18, Textures.BOOK_BACK, button -> {
+        this.mainButtons[0] = addButton(new IconButton(this.x + this.w + 2, this.y + 32 + 18, Textures.BOOK_BACK, button -> {
             if (this.prevScreen != null) {
                 this.mc.displayGuiScreen(this.prevScreen);
             }
         }, this));
-        this.mainButtons[1] = func_230480_a_(new IconButton(this.x + this.w + 2, this.y + this.h - 32, Textures.BOOK_NAV_R, button -> {
+        this.mainButtons[1] = addButton(new IconButton(this.x + this.w + 2, this.y + this.h - 32, Textures.BOOK_NAV_R, button -> {
             this.curPage = Math.min(this.entry.size() - 1, this.curPage + 1);
             this.mc.displayGuiScreen(new BookScreen(this.entry, this.curPage).setPrevScreen(this.prevScreen));
         }, this));
-        this.mainButtons[2] = func_230480_a_(new IconButton(this.x - 14, this.y + this.h - 32, Textures.BOOK_NAV_L, button -> {
+        this.mainButtons[2] = addButton(new IconButton(this.x - 14, this.y + this.h - 32, Textures.BOOK_NAV_L, button -> {
             this.curPage = Math.max(0, this.curPage - 1);
             this.mc.displayGuiScreen(new BookScreen(this.entry, this.curPage).setPrevScreen(this.prevScreen));
         }, this));
@@ -90,8 +90,8 @@ public class BookScreen extends ScreenBase {
     }
 
     @Override
-    public void func_230430_a_(MatrixStack matrix, int p_230430_2_, int p_230430_3_, float p_230430_4_) {
-        func_230446_a_(matrix);
+    public void render(MatrixStack matrix, int p_230430_2_, int p_230430_3_, float p_230430_4_) {
+        renderBackground(matrix);
         Textures.BOOK.draw(matrix, this.x, this.y);
 
 
@@ -101,11 +101,11 @@ public class BookScreen extends ScreenBase {
 
         if (this.entry.size() > 1) {
             String s = "" + (this.curPage + 1) + "/" + this.entry.size();
-            this.field_230712_o_.func_238421_b_(matrix, s, (this.w - this.field_230712_o_.getStringWidth(s)) / 2, this.h - 16, 0x323b37);
+            this.font.drawString(matrix, s, (this.w - this.font.getStringWidth(s)) / 2, this.h - 16, 0x323b37);
         }
         RenderSystem.popMatrix();
 
-        super.func_230430_a_(matrix, p_230430_2_, p_230430_3_, p_230430_4_);
+        super.render(matrix, p_230430_2_, p_230430_3_, p_230430_4_);
 
         RenderSystem.pushMatrix();
         RenderSystem.translated(this.x, this.y, 0.0D);
@@ -125,13 +125,13 @@ public class BookScreen extends ScreenBase {
                 RenderSystem.popMatrix();
             } else {
                 this.mc.textureManager.bindTexture(icon.getLocation());
-                AbstractGui.func_238463_a_(matrix, this.x - 24 + 5, this.y + 24 + (i * 25), 0, 0, 16, 16, 16, 16);
+                AbstractGui.blit(matrix, this.x - 24 + 5, this.y + 24 + (i * 25), 0, 0, 16, 16, 16, 16);
             }
         }
 
-        for (Widget widget : this.field_230710_m_) {
-            if (widget.func_230449_g_()) {
-                widget.func_230443_a_(matrix, p_230430_2_, p_230430_3_);
+        for (Widget widget : this.buttons) {
+            if (widget.isHovered()) {
+                widget.renderToolTip(matrix, p_230430_2_, p_230430_3_);
                 return;
             }
         }
@@ -139,13 +139,13 @@ public class BookScreen extends ScreenBase {
         if (!this.hoveredStack.isEmpty()) {
             FontRenderer font = this.hoveredStack.getItem().getFontRenderer(this.hoveredStack);
             GuiUtils.preItemToolTip(this.hoveredStack);
-            List<ITextComponent> tooltip = func_231151_a_(this.hoveredStack);
+            List<ITextComponent> tooltip = getTooltipFromItem(this.hoveredStack);
 //
 //            tooltip.add("");
 //            tooltip.add(TextFormatting.YELLOW + "Click " + TextFormatting.GRAY + "or press" + TextFormatting.YELLOW + " R " + TextFormatting.GRAY + "for recipes.");
 //            tooltip.add(TextFormatting.YELLOW + "Shift + Click " + TextFormatting.GRAY + "or press" + TextFormatting.YELLOW + " U " + TextFormatting.GRAY + "for usages.");
 
-            renderToolTip(matrix, tooltip, p_230430_2_, p_230430_3_, (font == null ? this.field_230712_o_ : font));
+            renderToolTip(matrix, tooltip, p_230430_2_, p_230430_3_, (font == null ? this.font : font));
             GuiUtils.postItemToolTip();
         }
 

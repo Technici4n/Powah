@@ -6,12 +6,12 @@ import net.minecraft.item.ItemModelsProperties;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.util.ResourceLocation;
-import owmii.powah.item.IItems;
+import owmii.powah.item.Itms;
 
 public class ItemModelProperties {
     public static void register() {
-        ItemModelsProperties.func_239418_a_(IItems.BINDING_CARD, new ResourceLocation("bound"), ItemModelProperties::renderBindingCard);
-        ItemModelsProperties.func_239418_a_(IItems.BINDING_CARD_DIM, new ResourceLocation("bound"), ItemModelProperties::renderBindingCard);
+        ItemModelsProperties.func_239418_a_(Itms.BINDING_CARD, new ResourceLocation("bound"), ItemModelProperties::renderBindingCard);
+        ItemModelsProperties.func_239418_a_(Itms.BINDING_CARD_DIM, new ResourceLocation("bound"), ItemModelProperties::renderBindingCard);
     }
 
     static float renderBindingCard(ItemStack stack, ClientWorld world, LivingEntity livingEntity) {

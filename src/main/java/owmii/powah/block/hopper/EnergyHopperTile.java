@@ -9,13 +9,13 @@ import net.minecraft.world.World;
 import net.minecraftforge.items.CapabilityItemHandler;
 import owmii.lib.block.AbstractEnergyStorage;
 import owmii.lib.block.IInventoryHolder;
-import owmii.powah.block.ITiles;
 import owmii.powah.block.Tier;
+import owmii.powah.block.Tiles;
 import owmii.powah.config.EnergyHopperConfig;
 
 public class EnergyHopperTile extends AbstractEnergyStorage<Tier, EnergyHopperConfig, EnergyHopperBlock> implements IInventoryHolder {
     public EnergyHopperTile(Tier variant) {
-        super(ITiles.ENERGY_HOPPER, variant);
+        super(Tiles.ENERGY_HOPPER, variant);
     }
 
     public EnergyHopperTile() {

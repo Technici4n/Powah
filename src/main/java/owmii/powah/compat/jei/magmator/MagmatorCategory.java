@@ -19,7 +19,7 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fluids.FluidStack;
 import owmii.powah.Powah;
 import owmii.powah.api.PowahAPI;
-import owmii.powah.block.IBlocks;
+import owmii.powah.block.Blcks;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -34,7 +34,7 @@ public class MagmatorCategory implements IRecipeCategory<MagmatorCategory.Recipe
 
     public MagmatorCategory(IGuiHelper guiHelper) {
         this.background = guiHelper.drawableBuilder(GUI_BACK, 0, 0, 160, 24).addPadding(1, 0, 0, 0).build();
-        this.icon = guiHelper.createDrawableIngredient(new ItemStack(IBlocks.MAGMATOR_BASIC));
+        this.icon = guiHelper.createDrawableIngredient(new ItemStack(Blcks.MAGMATOR_BASIC));
         this.localizedName = I18n.format("gui.powah.jei.category.magmatic");
 
     }
@@ -82,7 +82,7 @@ public class MagmatorCategory implements IRecipeCategory<MagmatorCategory.Recipe
     @Override
     public void draw(Recipe recipe, MatrixStack matrix, double mouseX, double mouseY) {
         Minecraft minecraft = Minecraft.getInstance();
-        minecraft.fontRenderer.func_238405_a_(matrix, recipe.heat + " FE/100 mb", 27.0F, 9.0F, 0x444444);
+        minecraft.fontRenderer.drawString(matrix, recipe.heat + " FE/100 mb", 27.0F, 9.0F, 0x444444);
     }
 
     public static class Maker {

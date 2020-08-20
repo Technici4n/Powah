@@ -16,15 +16,15 @@ import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.world.World;
 import net.minecraft.world.server.ServerWorld;
 import net.minecraftforge.fml.network.NetworkHooks;
-import owmii.powah.item.IItems;
+import owmii.powah.item.Itms;
 
 public class ChargedSnowballEntity extends ProjectileItemEntity {
     public ChargedSnowballEntity(World p_i50159_2_) {
-        super(IEntities.CHARGED_SNOWBALL, p_i50159_2_);
+        super(Entities.CHARGED_SNOWBALL, p_i50159_2_);
     }
 
     public ChargedSnowballEntity(World worldIn, LivingEntity livingEntityIn) {
-        super(IEntities.CHARGED_SNOWBALL, livingEntityIn, worldIn);
+        super(Entities.CHARGED_SNOWBALL, livingEntityIn, worldIn);
     }
 
     public ChargedSnowballEntity(EntityType<ChargedSnowballEntity> snowballEntityEntityType, World world) {
@@ -33,7 +33,7 @@ public class ChargedSnowballEntity extends ProjectileItemEntity {
 
     @Override
     protected Item getDefaultItem() {
-        return IItems.CHARGED_SNOWBALL;
+        return Itms.CHARGED_SNOWBALL;
     }
 
     @Override
@@ -48,7 +48,7 @@ public class ChargedSnowballEntity extends ProjectileItemEntity {
         if (this.world instanceof ServerWorld) {
             LightningBoltEntity lightningboltentity = EntityType.LIGHTNING_BOLT.create(this.world);
             if (lightningboltentity != null) {
-                lightningboltentity.func_233576_c_(Vector3d.func_237492_c_(func_233580_cy_()));
+                lightningboltentity.moveForced(Vector3d.copyCenteredHorizontally(getPosition()));
                 lightningboltentity.setCaster(func_234616_v_() instanceof ServerPlayerEntity ? (ServerPlayerEntity) func_234616_v_() : null);
                 this.world.addEntity(lightningboltentity);
             }
