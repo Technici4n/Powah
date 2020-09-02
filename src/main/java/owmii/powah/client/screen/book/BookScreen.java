@@ -1,5 +1,6 @@
 package owmii.powah.client.screen.book;
 
+import com.google.common.collect.Lists;
 import com.mojang.blaze3d.matrix.MatrixStack;
 import com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraft.client.Minecraft;
@@ -8,7 +9,6 @@ import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.gui.widget.Widget;
 import net.minecraft.client.renderer.RenderHelper;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.util.text.TranslationTextComponent;
@@ -17,7 +17,6 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.fml.client.gui.GuiUtils;
 import owmii.lib.client.screen.ScreenBase;
 import owmii.lib.client.screen.widget.IconButton;
-import owmii.powah.Powah;
 import owmii.powah.book.PowahBook;
 import owmii.powah.book.content.BookEntry;
 import owmii.powah.book.content.BookIcon;
@@ -29,7 +28,6 @@ import java.util.List;
 
 @OnlyIn(Dist.CLIENT)
 public class BookScreen extends ScreenBase {
-    public static final ResourceLocation GUI_TEXTURE = new ResourceLocation(Powah.MOD_ID, "textures/gui/book/background.png");
     public static BookScreen instance = new BookScreen();
 
     public int x, y, w = 196, h = 230;
@@ -145,7 +143,7 @@ public class BookScreen extends ScreenBase {
 //            tooltip.add(TextFormatting.YELLOW + "Click " + TextFormatting.GRAY + "or press" + TextFormatting.YELLOW + " R " + TextFormatting.GRAY + "for recipes.");
 //            tooltip.add(TextFormatting.YELLOW + "Shift + Click " + TextFormatting.GRAY + "or press" + TextFormatting.YELLOW + " U " + TextFormatting.GRAY + "for usages.");
 
-            renderToolTip(matrix, tooltip, p_230430_2_, p_230430_3_, (font == null ? this.font : font));
+            renderToolTip(matrix, Lists.transform(tooltip, ITextComponent::func_241878_f), p_230430_2_, p_230430_3_, (font == null ? this.font : font));
             GuiUtils.postItemToolTip();
         }
 

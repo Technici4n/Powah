@@ -93,13 +93,13 @@ public class ReactorScreen extends AbstractEnergyScreen<ReactorTile, ReactorCont
             list.add(new TranslationTextComponent("info.lollipop.stored.energy.fe", TextFormatting.GRAY + Util.addCommas(energy.getStored()), TextFormatting.GRAY + Util.numFormat(energy.getCapacity())).mergeStyle(TextFormatting.DARK_GRAY));
             list.add(new TranslationTextComponent("info.lollipop.generates", TextFormatting.GRAY + Util.numFormat((long) this.te.calcProduction())).mergeStyle(TextFormatting.DARK_GRAY));
             list.add(new TranslationTextComponent("info.lollipop.max.transfer.fe", TextFormatting.GRAY + Util.numFormat(energy.getMaxExtract())).mergeStyle(TextFormatting.DARK_GRAY));
-            renderTooltip(matrix, list, mouseX, mouseY);
+            func_243308_b(matrix, list, mouseX, mouseY);
         }
 
         if (Textures.REACTOR_GAUGE_TEMP.isMouseOver(this.guiLeft + 114, this.guiTop + 28, mouseX, mouseY)) {
             List<ITextComponent> list = new ArrayList<>();
             list.add(new StringTextComponent(TextFormatting.GRAY + String.format("%.1f", this.te.temp.getTicks()) + " C"));
-            renderTooltip(matrix, list, mouseX, mouseY);
+            func_243308_b(matrix, list, mouseX, mouseY);
         }
 
         if (Textures.REACTOR_GAUGE_URN.isMouseOver(this.guiLeft + 103, this.guiTop + 13, mouseX, mouseY)) {
@@ -107,7 +107,7 @@ public class ReactorScreen extends AbstractEnergyScreen<ReactorTile, ReactorCont
             list.add(new TranslationTextComponent("item.powah.uraninite").mergeStyle(TextFormatting.GREEN));
             list.add(new TranslationTextComponent("info.lollipop.fluid.stored", TextFormatting.DARK_GRAY + String.format("%.0f", this.te.fuel.getTicks()), String.format("%.0f", this.te.fuel.getMax())).mergeStyle(TextFormatting.DARK_GRAY));
             list.add(new TranslationTextComponent("info.lollipop.fluid.using.per.tick", TextFormatting.GREEN + String.format("%.4f", this.te.calcConsumption())).mergeStyle(TextFormatting.DARK_GRAY));
-            renderTooltip(matrix, list, mouseX, mouseY);
+            func_243308_b(matrix, list, mouseX, mouseY);
         }
 
         if (Textures.REACTOR_GAUGE_CARBON.isMouseOver(this.guiLeft + 51, this.guiTop + 6, mouseX, mouseY)) {
@@ -118,7 +118,7 @@ public class ReactorScreen extends AbstractEnergyScreen<ReactorTile, ReactorCont
             list.add(new StringTextComponent(""));
             list.add(new TranslationTextComponent("enchantment.minecraft.efficiency").mergeStyle(TextFormatting.DARK_AQUA));
             list.add(new StringTextComponent(TextFormatting.DARK_RED + (b ? "+0 C" : "+180 C")));
-            renderTooltip(matrix, list, mouseX, mouseY);
+            func_243308_b(matrix, list, mouseX, mouseY);
         }
 
         if (Textures.REACTOR_GAUGE_REDSTONE.isMouseOver(this.guiLeft + 51, this.guiTop + 52, mouseX, mouseY)) {
@@ -130,7 +130,7 @@ public class ReactorScreen extends AbstractEnergyScreen<ReactorTile, ReactorCont
             list.add(new TranslationTextComponent("info.powah.production").mergeStyle(TextFormatting.DARK_AQUA));
             list.add(new TranslationTextComponent("info.powah.fuel.consumption").mergeStyle(TextFormatting.DARK_RED));
             list.add(new StringTextComponent(TextFormatting.DARK_RED + (b ? "+0 C" : "+120 C")));
-            renderTooltip(matrix, list, mouseX, mouseY);
+            func_243308_b(matrix, list, mouseX, mouseY);
         }
 
         if (Textures.REACTOR_GAUGE_COOLANT.isMouseOver(this.guiLeft + 140, this.guiTop + 52, mouseX, mouseY)) {
@@ -138,7 +138,7 @@ public class ReactorScreen extends AbstractEnergyScreen<ReactorTile, ReactorCont
             list.add(new TranslationTextComponent("info.powah.solid.coolant").mergeStyle(TextFormatting.GRAY));
             list.add(new TranslationTextComponent("info.lollipop.fluid.stored", TextFormatting.DARK_GRAY + String.format("%.1f", this.te.solidCoolant.getTicks()), String.format("%.1f", this.te.solidCoolant.getMax())).mergeStyle(TextFormatting.DARK_GRAY));
             list.add(new StringTextComponent("" + TextFormatting.AQUA + this.te.solidCoolantTemp + " C"));
-            renderTooltip(matrix, list, mouseX, mouseY);
+            func_243308_b(matrix, list, mouseX, mouseY);
         }
 
         FluidTank tank = this.te.getTank();
@@ -151,7 +151,7 @@ public class ReactorScreen extends AbstractEnergyScreen<ReactorTile, ReactorCont
             } else {
                 list.add(new TranslationTextComponent("info.lollipop.fluid", TextFormatting.DARK_GRAY + "----").mergeStyle(TextFormatting.DARK_GRAY));
             }
-            renderTooltip(matrix, list, mouseX, mouseY);
+            func_243308_b(matrix, list, mouseX, mouseY);
         }
     }
 }

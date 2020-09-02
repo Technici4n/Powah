@@ -3,23 +3,18 @@ package owmii.powah;
 import net.minecraft.block.Blocks;
 import net.minecraft.item.Items;
 import net.minecraftforge.fml.common.Mod;
-import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLLoadCompleteEvent;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import owmii.lib.api.IClient;
 import owmii.lib.api.IMod;
 import owmii.lib.config.IConfig;
 import owmii.lib.network.Network;
-import owmii.lib.util.FML;
 import owmii.powah.api.PowahAPI;
 import owmii.powah.block.Blcks;
 import owmii.powah.block.Tiles;
-import owmii.powah.book.PowahBook;
-import owmii.powah.client.ItemModelProperties;
-import owmii.powah.client.render.entity.EntityRenderer;
-import owmii.powah.client.render.tile.TileRenderer;
-import owmii.powah.client.screen.Screens;
+import owmii.powah.client.Client;
 import owmii.powah.config.ConfigHandler;
 import owmii.powah.config.Configs;
 import owmii.powah.entity.Entities;
@@ -28,6 +23,8 @@ import owmii.powah.item.Itms;
 import owmii.powah.network.Packets;
 import owmii.powah.recipe.Recipes;
 import owmii.powah.world.gen.Features;
+
+import javax.annotation.Nullable;
 
 @Mod(Powah.MOD_ID)
 public class Powah implements IMod {
@@ -61,19 +58,14 @@ public class Powah implements IMod {
     }
 
     @Override
-    public void client(FMLClientSetupEvent event) {
-        if (FML.isClient()) {
-            TileRenderer.register();
-            EntityRenderer.register();
-            Screens.register();
-            ItemModelProperties.register();
-            PowahBook.register();
-        }
-    }
-
-    @Override
     public void loadComplete(FMLLoadCompleteEvent event) {
         Configs.ENERGY.forEach(IConfig::reload);
         ConfigHandler.post();
+    }
+
+    @Nullable
+    @Override
+    public IClient getClient() {
+        return Client.INSTANCE;
     }
 }

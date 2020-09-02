@@ -81,7 +81,7 @@ public class MagmatorScreen extends AbstractEnergyScreen<MagmatorTile, MagmatorC
             list.add(new TranslationTextComponent("info.lollipop.stored.energy.fe", TextFormatting.GRAY + Util.addCommas(energy.getStored()), TextFormatting.GRAY + Util.numFormat(energy.getCapacity())).mergeStyle(TextFormatting.DARK_GRAY));
             list.add(new TranslationTextComponent("info.lollipop.generates", TextFormatting.GRAY + Util.numFormat(this.te.getGeneration())).mergeStyle(TextFormatting.DARK_GRAY));
             list.add(new TranslationTextComponent("info.lollipop.max.transfer.fe", TextFormatting.GRAY + Util.numFormat(energy.getMaxExtract())).mergeStyle(TextFormatting.DARK_GRAY));
-            renderTooltip(matrix, list, mouseX, mouseY);
+            func_243308_b(matrix, list, mouseX, mouseY);
         }
 
         FluidTank tank = this.te.getTank();
@@ -94,7 +94,7 @@ public class MagmatorScreen extends AbstractEnergyScreen<MagmatorTile, MagmatorC
             } else {
                 list.add(new TranslationTextComponent("info.lollipop.fluid", TextFormatting.DARK_GRAY + "----").mergeStyle(TextFormatting.DARK_GRAY));
             }
-            renderTooltip(matrix, list, mouseX, mouseY);
+            func_243308_b(matrix, list, mouseX, mouseY);
         }
     }
 }

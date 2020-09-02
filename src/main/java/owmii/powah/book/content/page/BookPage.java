@@ -15,6 +15,7 @@ import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.fml.MavenVersionStringHelper;
 import net.minecraftforge.fml.ModList;
+import net.minecraftforge.fml.VersionChecker;
 import net.minecraftforge.forgespi.language.IModInfo;
 import owmii.lib.client.screen.widget.IconButton;
 import owmii.lib.client.util.GUI;
@@ -128,7 +129,7 @@ public class BookPage {
                 String s2 = "v" + MavenVersionStringHelper.artifactVersionToString(info.getVersion());
                 fr.drawString(matrix, s2, screen.w / 2.0F - fr.getStringWidth(s2) / 2.0F, 72, 0x777777);
 
-//                VersionChecker.CheckResult result = VersionChecker.getResult(info);
+                VersionChecker.CheckResult result = VersionChecker.getResult(info);
 //                if (result.target != null && result.url != null) {
 //                    String s3 = "New version: " + result.target;
 //                    fr.func_238421_b_( matrix,s3, screen.w / 2.0F - fr.getStringWidth(s3) / 2.0F, 88, 0xc20020);

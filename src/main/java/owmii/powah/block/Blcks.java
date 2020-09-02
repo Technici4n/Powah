@@ -21,7 +21,7 @@ import owmii.powah.block.thermo.ThermoBlock;
 import owmii.powah.block.transmitter.PlayerTransmitterBlock;
 
 public class Blcks {
-    public static final Registry<Block> REG = new Registry<>(Powah.MOD_ID);
+    public static final Registry<Block> REG = new Registry<>(Block.class, Powah.MOD_ID);
     public static final Block ENERGY_CELL_STARTER = REG.register("energy_cell_starter", new EnergyCellBlock(Properties.rockNoSolid(1.0f, 8.0f), Tier.STARTER));
     public static final Block ENERGY_CELL_BASIC = REG.register("energy_cell_basic", new EnergyCellBlock(Properties.metalNoSolid(2.0f, 20.0f), Tier.BASIC));
     public static final Block ENERGY_CELL_HARDENED = REG.register("energy_cell_hardened", new EnergyCellBlock(Properties.metalNoSolid(2.0f, 20.0f), Tier.HARDENED));

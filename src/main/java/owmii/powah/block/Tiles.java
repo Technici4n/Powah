@@ -20,7 +20,8 @@ import owmii.powah.block.thermo.ThermoTile;
 import owmii.powah.block.transmitter.PlayerTransmitterTile;
 
 public class Tiles {
-    public static final Registry<TileEntityType<?>> REG = new Registry<>(Powah.MOD_ID);
+    @SuppressWarnings("unchecked")
+    public static final Registry<TileEntityType<?>> REG = new Registry(TileEntityType.class, Powah.MOD_ID);
     public static final TileEntityType<EnergyCellTile> ENERGY_CELL = REG.register("energy_cell", EnergyCellTile::new, Blcks.ENERGY_CELL_STARTER, Blcks.ENERGY_CELL_BASIC, Blcks.ENERGY_CELL_HARDENED, Blcks.ENERGY_CELL_BLAZING, Blcks.ENERGY_CELL_NIOTIC, Blcks.ENERGY_CELL_SPIRITED, Blcks.ENERGY_CELL_NITRO, Blcks.ENERGY_CELL_CREATIVE);
     public static final TileEntityType<EnderCellTile> ENDER_CELL = REG.register("ender_cell", EnderCellTile::new, Blcks.ENDER_CELL_STARTER, Blcks.ENDER_CELL_BASIC, Blcks.ENDER_CELL_HARDENED, Blcks.ENDER_CELL_BLAZING, Blcks.ENDER_CELL_NIOTIC, Blcks.ENDER_CELL_SPIRITED, Blcks.ENDER_CELL_NITRO);
     public static final TileEntityType<EnderGateTile> ENDER_GATE = REG.register("ender_gate", EnderGateTile::new, Blcks.ENDER_GATE_STARTER, Blcks.ENDER_GATE_BASIC, Blcks.ENDER_GATE_HARDENED, Blcks.ENDER_GATE_BLAZING, Blcks.ENDER_GATE_NIOTIC, Blcks.ENDER_GATE_SPIRITED, Blcks.ENDER_GATE_NITRO);

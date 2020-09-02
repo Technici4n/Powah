@@ -8,7 +8,7 @@ import owmii.powah.block.Blcks;
 import owmii.powah.block.Tier;
 
 public class Itms {
-    public static final Registry<Item> REG = new Registry<>(Powah.MOD_ID, Blcks.REG.getBlockItems(ItemGroups.MAIN));
+    public static final Registry<Item> REG = new Registry<>(Item.class, Blcks.REG.getBlockItems(ItemGroups.MAIN), Powah.MOD_ID);
     public static final Item BOOK = REG.register("book", new PowahBookItem(new Item.Properties().group(ItemGroups.MAIN).maxStackSize(1)));
     public static final Item WRENCH = REG.register("wrench", new WrenchItem(new Item.Properties().group(ItemGroups.MAIN).maxStackSize(1)));
     public static final Item CAPACITOR_BASIC_TINY = REG.register("capacitor_basic_tiny", new CapacitorItem(new Item.Properties().group(ItemGroups.MAIN)));

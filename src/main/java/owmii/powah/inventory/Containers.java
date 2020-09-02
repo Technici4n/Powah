@@ -6,7 +6,8 @@ import owmii.lib.registry.Registry;
 import owmii.powah.Powah;
 
 public class Containers {
-    public static final Registry<ContainerType<?>> REG = new Registry<>(Powah.MOD_ID);
+    @SuppressWarnings("unchecked")
+    public static final Registry<ContainerType<?>> REG = new Registry(ContainerType.class, Powah.MOD_ID);
     public static final ContainerType<EnergyCellContainer> ENERGY_CELL = REG.register("energy_cell", IForgeContainerType.create(EnergyCellContainer::create));
     public static final ContainerType<EnderCellContainer> ENDER_CELL = REG.register("ender_cell", IForgeContainerType.create(EnderCellContainer::create));
     public static final ContainerType<FurnatorContainer> FURNATOR = REG.register("furnator", IForgeContainerType.create(FurnatorContainer::create));
