@@ -59,7 +59,7 @@ public class Powah implements IMod {
 
     @Override
     public void loadComplete(FMLLoadCompleteEvent event) {
-        Configs.ENERGY.forEach(IConfig::reload);
+        Configs.ALL.forEach(IConfig::reload);
         ConfigHandler.post();
     }
 

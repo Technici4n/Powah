@@ -11,7 +11,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 public class Configs {
-    public static final Set<IConfig> ENERGY = new HashSet<>();
+    public static final Set<IConfig> ALL = new HashSet<>();
     public static final GeneralConfig GENERAL;
     private static final ForgeConfigSpec GENERAL_SPEC;
 
@@ -50,7 +50,7 @@ public class Configs {
     private static final ForgeConfigSpec BATTERY_SPEC;
 
     public static void register() {
-        final String path = Config.createConfigDir("powah/energy");
+        String path = Config.createConfigDir("powah/energy");
         Config.registerCommon(GENERAL_SPEC, "powah/general_common.toml");
         Config.registerCommon(ENERGY_CELL_SPEC, path + "/energy_cell.toml");
         Config.registerCommon(ENDER_CELL_SPEC, path + "/ender_cell.toml");
@@ -61,74 +61,70 @@ public class Configs {
         Config.registerCommon(ENERGY_HOPPER_SPEC, path + "/energy_hopper.toml");
         Config.registerCommon(ENERGY_DISCHARGER_SPEC, path + "/energy_discharger.toml");
 
-        final String genPath = Config.createConfigDir("powah/energy/generators");
+        String genPath = Config.createConfigDir("powah/energy/generators");
         Config.registerCommon(FURNATOR_SPEC, genPath + "/furnator.toml");
         Config.registerCommon(MAGMATOR_SPEC, genPath + "/magmator.toml");
         Config.registerCommon(THERMO_SPEC, genPath + "/thermo_gen.toml");
         Config.registerCommon(SOLAR_PANEL_SPEC, genPath + "/solar_panel.toml");
         Config.registerCommon(REACTOR_SPEC, genPath + "/reactor.toml");
 
-        final String itemPath = Config.createConfigDir("powah/energy/items");
+        String itemPath = Config.createConfigDir("powah/energy/items");
         Config.registerCommon(BATTERY_SPEC, itemPath + "/battery.toml");
     }
 
-    static <T extends IConfig> T registerEnergy(final T config) {
-        ENERGY.add(config);
-        return config;
-    }
-
-    static <T extends IConfig> T register(final T config) {
+    static <T extends IConfig> T register(T config) {
+        ALL.add(config);
         return config;
     }
 
     static {
-        final Pair<GeneralConfig, ForgeConfigSpec> generalPair = Config.get(GeneralConfig::new);
+        Pair<GeneralConfig, ForgeConfigSpec> generalPair = Config.get(GeneralConfig::new);
         GENERAL = generalPair.getLeft();
         GENERAL_SPEC = generalPair.getRight();
 
-        final Pair<EnergyCellConfig, ForgeConfigSpec> energyCellPair = Config.get(EnergyCellConfig::new);
-        ENERGY_CELL = registerEnergy(energyCellPair.getLeft());
+        Pair<EnergyCellConfig, ForgeConfigSpec> energyCellPair = Config.get(EnergyCellConfig::new);
+        ENERGY_CELL = register(energyCellPair.getLeft());
         ENERGY_CELL_SPEC = energyCellPair.getRight();
-        final Pair<EnderCellConfig, ForgeConfigSpec> enderCellPair = Config.get(EnderCellConfig::new);
-        ENDER_CELL = registerEnergy(enderCellPair.getLeft());
+        Pair<EnderCellConfig, ForgeConfigSpec> enderCellPair = Config.get(EnderCellConfig::new);
+        ENDER_CELL = register(enderCellPair.getLeft());
         ENDER_CELL_SPEC = enderCellPair.getRight();
-        final Pair<CableConfig, ForgeConfigSpec> energyCablePair = Config.get(CableConfig::new);
-        CABLE = registerEnergy(energyCablePair.getLeft());
+        Pair<CableConfig, ForgeConfigSpec> energyCablePair = Config.get(CableConfig::new);
+        CABLE = register(energyCablePair.getLeft());
         ENERGY_CABLE_SPEC = energyCablePair.getRight();
-        final Pair<EnderGateConfig, ForgeConfigSpec> enderGatePair = Config.get(EnderGateConfig::new);
-        ENDER_GATE = registerEnergy(enderGatePair.getLeft());
+        Pair<EnderGateConfig, ForgeConfigSpec> enderGatePair = Config.get(EnderGateConfig::new);
+        ENDER_GATE = register(enderGatePair.getLeft());
         ENDER_GATE_SPEC = enderGatePair.getRight();
-        final Pair<EnergizingConfig, ForgeConfigSpec> energizingPair = Config.get(EnergizingConfig::new);
-        ENERGIZING = registerEnergy(energizingPair.getLeft());
+        Pair<EnergizingConfig, ForgeConfigSpec> energizingPair = Config.get(EnergizingConfig::new);
+        ENERGIZING = register(energizingPair.getLeft());
         ENERGIZING_SPEC = energizingPair.getRight();
-        final Pair<PlayerTransmitterConfig, ForgeConfigSpec> playerTransmitterPair = Config.get(PlayerTransmitterConfig::new);
-        PLAYER_TRANSMITTER = registerEnergy(playerTransmitterPair.getLeft());
+        Pair<PlayerTransmitterConfig, ForgeConfigSpec> playerTransmitterPair = Config.get(PlayerTransmitterConfig::new);
+        PLAYER_TRANSMITTER = register(playerTransmitterPair.getLeft());
         PLAYER_TRANSMITTER_SPEC = playerTransmitterPair.getRight();
-        final Pair<EnergyHopperConfig, ForgeConfigSpec> energyHopperPair = Config.get(EnergyHopperConfig::new);
-        ENERGY_HOPPER = registerEnergy(energyHopperPair.getLeft());
+        Pair<EnergyHopperConfig, ForgeConfigSpec> energyHopperPair = Config.get(EnergyHopperConfig::new);
+        ENERGY_HOPPER = register(energyHopperPair.getLeft());
         ENERGY_HOPPER_SPEC = energyHopperPair.getRight();
-        final Pair<EnergyDischargerConfig, ForgeConfigSpec> energyDischargerPair = Config.get(EnergyDischargerConfig::new);
-        ENERGY_DISCHARGER = registerEnergy(energyDischargerPair.getLeft());
+        Pair<EnergyDischargerConfig, ForgeConfigSpec> energyDischargerPair = Config.get(EnergyDischargerConfig::new);
+        ENERGY_DISCHARGER = register(energyDischargerPair.getLeft());
         ENERGY_DISCHARGER_SPEC = energyDischargerPair.getRight();
 
-        final Pair<FurnatorConfig, ForgeConfigSpec> furnatorPair = Config.get(FurnatorConfig::new);
-        FURNATOR = registerEnergy(furnatorPair.getLeft());
+        Pair<FurnatorConfig, ForgeConfigSpec> furnatorPair = Config.get(FurnatorConfig::new);
+        FURNATOR = register(furnatorPair.getLeft());
         FURNATOR_SPEC = furnatorPair.getRight();
-        final Pair<MagmatorConfig, ForgeConfigSpec> magmatorPair = Config.get(MagmatorConfig::new);
-        MAGMATOR = registerEnergy(magmatorPair.getLeft());
+        Pair<MagmatorConfig, ForgeConfigSpec> magmatorPair = Config.get(MagmatorConfig::new);
+        MAGMATOR = register(magmatorPair.getLeft());
         MAGMATOR_SPEC = magmatorPair.getRight();
-        final Pair<ThermoConfig, ForgeConfigSpec> thermoPair = Config.get(ThermoConfig::new);
-        THERMO = registerEnergy(thermoPair.getLeft());
+        Pair<ThermoConfig, ForgeConfigSpec> thermoPair = Config.get(ThermoConfig::new);
+        THERMO = register(thermoPair.getLeft());
         THERMO_SPEC = magmatorPair.getRight();
-        final Pair<SolarConfig, ForgeConfigSpec> solarPair = Config.get(SolarConfig::new);
-        SOLAR_PANEL = registerEnergy(solarPair.getLeft());
+        Pair<SolarConfig, ForgeConfigSpec> solarPair = Config.get(SolarConfig::new);
+        SOLAR_PANEL = register(solarPair.getLeft());
         SOLAR_PANEL_SPEC = solarPair.getRight();
-        final Pair<ReactorConfig, ForgeConfigSpec> reactorPair = Config.get(ReactorConfig::new);
-        REACTOR = registerEnergy(reactorPair.getLeft());
+        Pair<ReactorConfig, ForgeConfigSpec> reactorPair = Config.get(ReactorConfig::new);
+        REACTOR = register(reactorPair.getLeft());
         REACTOR_SPEC = reactorPair.getRight();
 
-        final Pair<BatteryConfig, ForgeConfigSpec> batteryPair = Config.get(BatteryConfig::new);
-        BATTERY = registerEnergy(batteryPair.getLeft());
+        Pair<BatteryConfig, ForgeConfigSpec> batteryPair = Config.get(BatteryConfig::new);
+        BATTERY = register(batteryPair.getLeft());
         BATTERY_SPEC = batteryPair.getRight();
     }
 }
