@@ -144,4 +144,9 @@ public class CableTile extends AbstractEnergyStorage<Tier, CableConfig, CableBlo
     public boolean canExtract(int slot, ItemStack stack) {
         return false;
     }
+
+    @Override
+    public boolean keepStorable() {
+        return false;
+    }
 }

@@ -3,7 +3,7 @@ package owmii.powah.network.packet;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.network.PacketBuffer;
 import net.minecraftforge.fml.network.NetworkEvent;
-import owmii.lib.client.util.Client;
+import owmii.lib.client.util.MC;
 import owmii.lib.network.IPacket;
 import owmii.powah.block.ender.EnderNetwork;
 
@@ -37,7 +37,7 @@ public class SyncEnderNetworkPacket implements IPacket<SyncEnderNetworkPacket> {
     @Override
     public void handle(SyncEnderNetworkPacket msg, Supplier<NetworkEvent.Context> ctx) {
         ctx.get().enqueueWork(() -> {
-            Client.world().ifPresent(world -> {
+            MC.world().ifPresent(world -> {
                 EnderNetwork.INSTANCE.deserialize(msg.id, msg.nbt);
             });
         });

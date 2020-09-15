@@ -350,7 +350,7 @@ public class ReactorTile extends AbstractEnergyProvider<Tier, ReactorConfig, Rea
         } else if (slot == 4) {
             Pair<Integer, Integer> coolant = PowahAPI.getSolidCoolant(stack.getItem());
             return coolant.getLeft() > 0 && coolant.getRight() < 2;
-        } else return Energy.isPresent(stack);
+        } else return Energy.chargeable(stack);
     }
 
     @Override

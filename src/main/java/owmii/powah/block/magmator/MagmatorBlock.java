@@ -24,7 +24,7 @@ import owmii.powah.inventory.MagmatorContainer;
 
 import javax.annotation.Nullable;
 
-public class MagmatorBlock extends AbstractGeneratorBlock<Tier, MagmatorConfig> {
+public class MagmatorBlock extends AbstractGeneratorBlock<Tier, MagmatorConfig, MagmatorBlock> {
     public MagmatorBlock(Properties properties, Tier variant) {
         super(properties, variant);
         setDefaultState();

@@ -40,7 +40,7 @@ import owmii.powah.item.ReactorItem;
 
 import javax.annotation.Nullable;
 
-public class ReactorBlock extends AbstractGeneratorBlock<Tier, ReactorConfig> {
+public class ReactorBlock extends AbstractGeneratorBlock<Tier, ReactorConfig, ReactorBlock> {
     public static final BooleanProperty CORE = BooleanProperty.create("core");
 
     public ReactorBlock(Properties properties, Tier variant) {

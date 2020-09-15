@@ -16,7 +16,7 @@ import owmii.powah.block.Tier;
 import owmii.powah.config.Configs;
 import owmii.powah.config.item.BatteryConfig;
 
-public class BatteryItem extends EnergyItem<Tier, BatteryConfig> implements IEnderExtender {
+public class BatteryItem extends EnergyItem<Tier, BatteryConfig, BatteryItem> implements IEnderExtender {
     public BatteryItem(Item.Properties properties, Tier variant) {
         super(properties, variant);
     }

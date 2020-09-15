@@ -39,14 +39,14 @@ public class PlayerTransmitterTile extends AbstractEnergyStorage<Tier, PlayerTra
                     ServerPlayerEntity player = op.get();
                     if (card.isMultiDim(stack) || player.world.func_230315_m_().equals(world.func_230315_m_())) {
                         long charging = getConfig().getChargingSpeed(this.variant);
-                        for (ItemStack chargeable : Player.invStacks(player)) {
-                            if (chargeable.isEmpty()) continue;
+                        for (ItemStack stack1 : Player.invStacks(player)) {
+                            if (stack1.isEmpty() || !Energy.chargeable(stack1)) continue;
                             long amount = Math.min(charging, getEnergy().getStored());
-                            int received = Energy.receive(chargeable, amount, false);
+                            int received = Energy.receive(stack1, amount, false);
                             extracted += extractEnergy(received, false, null);
                         }
                         for (ItemStack stack1 : CuriosCompat.getAllStacks(player)) {
-                            if (stack1.isEmpty()) continue;
+                            if (stack1.isEmpty() || !Energy.chargeable(stack1)) continue;
                             long amount = Math.min(charging, getEnergy().getStored());
                             int received = Energy.receive(stack1, amount, false);
                             extracted += extractEnergy(received, false, null);

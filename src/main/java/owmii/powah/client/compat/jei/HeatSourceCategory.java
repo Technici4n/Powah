@@ -93,7 +93,7 @@ public class HeatSourceCategory implements IRecipeCategory<HeatSourceCategory.Re
     @Override
     public void draw(Recipe recipe, MatrixStack matrix, double mouseX, double mouseY) {
         Minecraft minecraft = Minecraft.getInstance();
-        minecraft.fontRenderer.drawString(matrix, TextFormatting.DARK_GRAY + I18n.format("info.lollipop.temperature", "" + TextFormatting.RESET + recipe.heat), 30.0F, 9.0F, 0xc43400);
+        minecraft.fontRenderer.drawString(matrix, TextFormatting.DARK_GRAY + I18n.format("info.lollipop.temperature") + ": " + TextFormatting.RESET + I18n.format("info.lollipop.temperature.c", recipe.heat), 30.0F, 9.0F, 0xc43400);
     }
 
     public static class Maker {

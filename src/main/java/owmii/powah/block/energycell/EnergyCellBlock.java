@@ -20,7 +20,7 @@ import owmii.powah.item.EnergyCellItem;
 
 import javax.annotation.Nullable;
 
-public class EnergyCellBlock extends AbstractEnergyBlock<Tier, EnergyCellConfig> implements IWaterLoggable {
+public class EnergyCellBlock extends AbstractEnergyBlock<Tier, EnergyCellConfig, EnergyCellBlock> implements IWaterLoggable {
     public EnergyCellBlock(Properties properties, Tier tier) {
         super(properties, tier);
     }

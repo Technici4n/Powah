@@ -77,7 +77,7 @@ public class EnergyCellTile extends AbstractEnergyStorage<Tier, EnergyCellConfig
 
     @Override
     public boolean canInsert(int slot, ItemStack stack) {
-        return Energy.get(stack).isPresent();
+        return Energy.chargeable(stack);
     }
 
     @Override

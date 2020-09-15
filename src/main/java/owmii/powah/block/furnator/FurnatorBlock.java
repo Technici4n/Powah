@@ -27,7 +27,7 @@ import owmii.powah.inventory.FurnatorContainer;
 import javax.annotation.Nullable;
 import java.util.Random;
 
-public class FurnatorBlock extends AbstractGeneratorBlock<Tier, FurnatorConfig> implements IWaterLoggable {
+public class FurnatorBlock extends AbstractGeneratorBlock<Tier, FurnatorConfig, FurnatorBlock> implements IWaterLoggable {
     public FurnatorBlock(Properties properties, Tier variant) {
         super(properties, variant);
         setDefaultState();

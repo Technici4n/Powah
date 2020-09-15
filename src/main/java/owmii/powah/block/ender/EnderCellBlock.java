@@ -19,7 +19,7 @@ import owmii.powah.inventory.EnderCellContainer;
 
 import javax.annotation.Nullable;
 
-public class EnderCellBlock extends AbstractEnergyBlock<Tier, EnderCellConfig> {
+public class EnderCellBlock extends AbstractEnergyBlock<Tier, EnderCellConfig, EnderCellBlock> {
     public EnderCellBlock(Properties properties, Tier variant) {
         super(properties, variant);
     }

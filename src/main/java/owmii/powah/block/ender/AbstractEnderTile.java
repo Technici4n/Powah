@@ -12,9 +12,13 @@ import net.minecraft.util.Direction;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.SoundEvents;
 import net.minecraft.world.World;
-import owmii.lib.block.*;
+import owmii.lib.block.AbstractEnergyBlock;
+import owmii.lib.block.AbstractEnergyStorage;
+import owmii.lib.block.IInventoryHolder;
+import owmii.lib.block.IOwnable;
 import owmii.lib.config.IEnergyConfig;
 import owmii.lib.logistics.energy.Energy;
+import owmii.lib.registry.IVariant;
 import owmii.lib.util.Player;
 import owmii.lib.util.Server;
 import owmii.lib.util.math.RangedInt;
@@ -22,7 +26,7 @@ import owmii.powah.api.energy.endernetwork.IEnderExtender;
 
 import javax.annotation.Nullable;
 
-public class AbstractEnderTile<V extends IVariant<?>, C extends IEnergyConfig<V>, B extends AbstractEnergyBlock<V, C>> extends AbstractEnergyStorage<V, C, B> implements IOwnable, IInventoryHolder {
+public class AbstractEnderTile<V extends IVariant<?>, C extends IEnergyConfig<V>, B extends AbstractEnergyBlock<V, C, B>> extends AbstractEnergyStorage<V, C, B> implements IOwnable, IInventoryHolder {
     private final RangedInt channel = new RangedInt(12);
 
     @Nullable
@@ -172,10 +176,11 @@ public class AbstractEnderTile<V extends IVariant<?>, C extends IEnergyConfig<V>
         if (slot == 0) {
             if (stack.getItem() instanceof IEnderExtender) {
                 IEnderExtender extender = (IEnderExtender) stack.getItem();
-                return extender.getExtendedCapacity(stack) + getEnergy().getCapacity() <= Energy.MAX;
+                long l = extender.getExtendedCapacity(stack);
+                return l > 0 && l + getEnergy().getCapacity() <= Energy.MAX;
             } else return false;
         }
-        return Energy.isPresent(stack);
+        return Energy.chargeable(stack);
     }
 
     @Override

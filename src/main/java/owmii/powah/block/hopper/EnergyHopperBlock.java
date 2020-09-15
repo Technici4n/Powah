@@ -10,7 +10,6 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.Direction;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.BlockRayTraceResult;
-import net.minecraft.util.math.shapes.VoxelShape;
 import net.minecraft.world.IBlockReader;
 import net.minecraft.world.IWorldReader;
 import net.minecraftforge.items.CapabilityItemHandler;
@@ -25,29 +24,22 @@ import owmii.powah.config.EnergyHopperConfig;
 import owmii.powah.inventory.EnergyHopperContainer;
 
 import javax.annotation.Nullable;
-import java.util.HashMap;
-import java.util.Map;
 
-public class EnergyHopperBlock extends AbstractEnergyBlock<Tier, EnergyHopperConfig> {
-    public static final Map<Direction, VoxelShape> SHAPES = new HashMap<>();
-
+public class EnergyHopperBlock extends AbstractEnergyBlock<Tier, EnergyHopperConfig, EnergyHopperBlock> {
     public EnergyHopperBlock(Properties properties, Tier variant) {
         super(properties, variant);
         setDefaultState();
+        this.shapes.put(Direction.UP, makeCuboidShape(0, 0, 0, 16, 12, 16));
+        this.shapes.put(Direction.DOWN, makeCuboidShape(0, 4, 0, 16, 16, 16));
+        this.shapes.put(Direction.NORTH, makeCuboidShape(0, 0, 4, 16, 16, 16));
+        this.shapes.put(Direction.SOUTH, makeCuboidShape(0, 0, 0, 16, 16, 12));
+        this.shapes.put(Direction.EAST, makeCuboidShape(0, 0, 0, 12, 16, 16));
+        this.shapes.put(Direction.WEST, makeCuboidShape(4, 0, 0, 16, 16, 16));
     }
 
     @Override
     public EnergyBlockItem getBlockItem(Item.Properties properties, @Nullable ItemGroup group) {
         return super.getBlockItem(properties.maxStackSize(1), group);
-    }
-
-    static {
-        SHAPES.put(Direction.UP, makeCuboidShape(0, 0, 0, 16, 12, 16));
-        SHAPES.put(Direction.DOWN, makeCuboidShape(0, 4, 0, 16, 16, 16));
-        SHAPES.put(Direction.NORTH, makeCuboidShape(0, 0, 4, 16, 16, 16));
-        SHAPES.put(Direction.SOUTH, makeCuboidShape(0, 0, 0, 16, 16, 12));
-        SHAPES.put(Direction.EAST, makeCuboidShape(0, 0, 0, 12, 16, 16));
-        SHAPES.put(Direction.WEST, makeCuboidShape(4, 0, 0, 16, 16, 16));
     }
 
     @Override

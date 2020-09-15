@@ -95,7 +95,7 @@ public class ThermoTile extends AbstractEnergyProvider<Tier, ThermoConfig, Therm
 
     @Override
     public boolean canInsert(int slot, ItemStack stack) {
-        return Energy.isPresent(stack);
+        return Energy.chargeable(stack);
     }
 
     @Override

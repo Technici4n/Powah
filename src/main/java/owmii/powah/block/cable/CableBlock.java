@@ -48,7 +48,7 @@ import owmii.powah.inventory.CableContainer;
 import javax.annotation.Nullable;
 import java.util.*;
 
-public class CableBlock extends AbstractEnergyBlock<Tier, CableConfig> implements IWaterLoggable, IEnergyConnector {
+public class CableBlock extends AbstractEnergyBlock<Tier, CableConfig, CableBlock> implements IWaterLoggable, IEnergyConnector {
     public static final BooleanProperty NORTH = SixWayBlock.NORTH;
     public static final BooleanProperty EAST = SixWayBlock.EAST;
     public static final BooleanProperty SOUTH = SixWayBlock.SOUTH;
@@ -78,6 +78,11 @@ public class CableBlock extends AbstractEnergyBlock<Tier, CableConfig> implement
     @Override
     public boolean hasTileEntity(BlockState state) {
         return state.get(TILE);
+    }
+
+    @Override
+    public boolean isChargeable(ItemStack stack) {
+        return false;
     }
 
     @Override
@@ -140,8 +145,8 @@ public class CableBlock extends AbstractEnergyBlock<Tier, CableConfig> implement
                 cable.remove();
             }
         }
-        FluidState ifluidstate = world.getFluidState(pos);
-        return state.with(NORTH, north[0] && !north[1]).with(SOUTH, south[0] && !south[1]).with(WEST, west[0] && !west[1]).with(EAST, east[0] && !east[1]).with(UP, up[0] && !up[1]).with(DOWN, down[0] && !down[1]).with(TILE, tile).with(BlockStateProperties.WATERLOGGED, ifluidstate.getFluid() == Fluids.WATER);
+        FluidState fluidState = world.getFluidState(pos);
+        return state.with(NORTH, north[0] && !north[1]).with(SOUTH, south[0] && !south[1]).with(WEST, west[0] && !west[1]).with(EAST, east[0] && !east[1]).with(UP, up[0] && !up[1]).with(DOWN, down[0] && !down[1]).with(TILE, tile).with(BlockStateProperties.WATERLOGGED, fluidState.getFluid() == Fluids.WATER);
     }
 
     @Override

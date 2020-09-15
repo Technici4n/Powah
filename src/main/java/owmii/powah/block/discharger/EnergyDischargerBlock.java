@@ -10,6 +10,7 @@ import net.minecraft.world.IBlockReader;
 import owmii.lib.block.AbstractEnergyBlock;
 import owmii.lib.block.AbstractTileEntity;
 import owmii.lib.item.EnergyBlockItem;
+import owmii.lib.logistics.TransferType;
 import owmii.lib.logistics.inventory.AbstractContainer;
 import owmii.powah.block.Tier;
 import owmii.powah.config.Configs;
@@ -18,7 +19,7 @@ import owmii.powah.inventory.DischargerContainer;
 
 import javax.annotation.Nullable;
 
-public class EnergyDischargerBlock extends AbstractEnergyBlock<Tier, EnergyDischargerConfig> {
+public class EnergyDischargerBlock extends AbstractEnergyBlock<Tier, EnergyDischargerConfig, EnergyDischargerBlock> {
     public EnergyDischargerBlock(Properties properties, Tier variant) {
         super(properties, variant);
     }
@@ -45,8 +46,12 @@ public class EnergyDischargerBlock extends AbstractEnergyBlock<Tier, EnergyDisch
         if (te instanceof EnergyDischargerTile) {
             return new DischargerContainer(id, inventory, (EnergyDischargerTile) te);
         }
-
         return null;
+    }
+
+    @Override
+    public TransferType getTransferType() {
+        return TransferType.EXTRACT;
     }
 
     @Override

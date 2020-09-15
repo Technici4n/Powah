@@ -1,4 +1,4 @@
 @NonnullDefault
-package owmii.powah.book.content.page;
+package owmii.powah.client.book.centent;
 
 import org.lwjgl.system.NonnullDefault;

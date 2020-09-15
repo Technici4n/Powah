@@ -9,6 +9,7 @@ import owmii.lib.client.screen.widget.IconButton;
 import owmii.lib.logistics.energy.Energy;
 import owmii.lib.util.Util;
 import owmii.powah.Powah;
+import owmii.powah.api.energy.endernetwork.IEnderExtender;
 import owmii.powah.block.ender.AbstractEnderTile;
 import owmii.powah.client.screen.Textures;
 import owmii.powah.inventory.EnderCellContainer;
@@ -71,21 +72,20 @@ public class EnderCellScreen extends AbstractEnergyScreen<AbstractEnderTile<?, ?
         RenderSystem.popMatrix();
     }
 
-//    @Override
-//    public void drawSlot(Slot slot) { TODO
-//        if (slot instanceof SlotBase && ((SlotBase) slot).isHidden()) return;
-//        ItemStack stack = slot.getStack();
-//        if (this.te.isExtender() && stack.getItem() instanceof IEnderExtender && hasShiftDown()) {
-//            Energy energy = this.te.getEnergy();
-//            IEnderExtender e = (IEnderExtender) stack.getItem();
-//            long cap = e.getExtendedCapacity(stack);
-//            long newCap = energy.getCapacity() + cap;
-//            if (cap <= Energy.MAX && newCap > 0 && newCap <= Energy.MAX) {
-//                RenderHelper.disableStandardItemLighting();
-//                Texture.SLOT_HIGHLIGHT_BG.draw(slot.xPos, slot.yPos);
-//                RenderHelper.setupGui3DDiffuseLighting();
-//            }
-//        }
-//        super.drawSlot(slot);
-//    }
+    @Override
+    public void moveItems(MatrixStack matrix, Slot slot) {
+        ItemStack stack = slot.getStack();
+        if (this.te.isExtender() && stack.getItem() instanceof IEnderExtender && hasShiftDown()) {
+            Energy energy = this.te.getEnergy();
+            IEnderExtender e = (IEnderExtender) stack.getItem();
+            long cap = e.getExtendedCapacity(stack);
+            long newCap = energy.getCapacity() + cap;
+            if (cap > 0 && cap <= Energy.MAX && newCap > 0 && newCap <= Energy.MAX) {
+                RenderHelper.disableStandardItemLighting();
+                Texture.SLOT_HIGHLIGHT_BG.draw(matrix, slot.xPos, slot.yPos);
+                RenderHelper.setupGui3DDiffuseLighting();
+            }
+        }
+        super.moveItems(matrix, slot);
+    }
 }

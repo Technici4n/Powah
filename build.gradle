@@ -38,8 +38,8 @@ repositories {
 
 dependencies {
     minecraft 'net.minecraftforge:forge:' + lib.minecraft_version + '-' + lib.forge_version
-    compileOnly fg.deobf("mezz.jei:jei-${lib.minecraft_version}:${lib.jei_version}:api")
-    runtimeOnly fg.deobf("mezz.jei:jei-${lib.minecraft_version}:${lib.jei_version}")
+    compileOnly fg.deobf("mezz.jei:jei-1.16.2:${lib.jei_version}:api")
+    runtimeOnly fg.deobf("mezz.jei:jei-1.16.2:${lib.jei_version}")
 
 //    compileOnly fg.deobf("mcjty.theoneprobe:TheOneProbe-1.15:${lib.top_version}:api")
 //    runtimeOnly fg.deobf("mcjty.theoneprobe:TheOneProbe-1.15:${lib.top_version}")

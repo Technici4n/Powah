@@ -6,8 +6,8 @@ import net.minecraft.world.World;
 import net.minecraftforge.items.wrapper.RecipeWrapper;
 import owmii.lib.block.AbstractTickableTile;
 import owmii.lib.block.IInventoryHolder;
-import owmii.lib.block.IVariant;
 import owmii.lib.logistics.energy.Energy;
+import owmii.lib.registry.IVariant;
 import owmii.powah.block.Tiles;
 import owmii.powah.recipe.Recipes;
 

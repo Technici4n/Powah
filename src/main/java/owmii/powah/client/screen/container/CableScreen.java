@@ -33,7 +33,7 @@ public class CableScreen extends AbstractEnergyScreen<CableTile, CableContainer>
             this.te.getSideConfig().nextType(this.side);
         }, this).setTooltip(tooltip -> {
             tooltip.add(new TranslationTextComponent("info.lollipop.side." + this.side.getString(), TextFormatting.DARK_GRAY).mergeStyle(TextFormatting.GRAY));
-            tooltip.add(this.te.getSideConfig().getType(this.side).getDisplayName());
+            tooltip.add(this.te.getSideConfig().getType(this.side).getDisplayName2());
         }));
     }
 

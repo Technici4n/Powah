@@ -24,7 +24,7 @@ import owmii.powah.inventory.ThermoContainer;
 
 import javax.annotation.Nullable;
 
-public class ThermoBlock extends AbstractGeneratorBlock<Tier, ThermoConfig> {
+public class ThermoBlock extends AbstractGeneratorBlock<Tier, ThermoConfig, ThermoBlock> {
     public ThermoBlock(Properties properties, Tier variant) {
         super(properties, variant);
     }

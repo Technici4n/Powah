@@ -43,11 +43,17 @@ public class EnergyCellItem extends EnergyBlockItem<Tier, EnergyCellConfig, Ener
 
     @Override
     public long getExtendedCapacity(ItemStack stack) {
+        if (getVariant().equals(Tier.CREATIVE)) {
+            return 0;
+        }
         return getConfig().getCapacity(getVariant());
     }
 
     @Override
     public long getExtendedEnergy(ItemStack stack) {
+        if (getVariant().equals(Tier.CREATIVE)) {
+            return 0;
+        }
         return Energy.getStored(stack);
     }
 }

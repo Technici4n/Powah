@@ -74,7 +74,7 @@ public class MagmatorTile extends AbstractEnergyProvider<Tier, MagmatorConfig, M
             if (this.burning != flag) {
                 this.burning = flag;
                 sync(4);
-            }
+            }//TODO
         }
         return chargeItems(1) + extractFromSides(world) > 0 ? 10 : -1;
     }
@@ -100,7 +100,7 @@ public class MagmatorTile extends AbstractEnergyProvider<Tier, MagmatorConfig, M
 
     @Override
     public boolean canInsert(int slot, ItemStack stack) {
-        return Energy.isPresent(stack);
+        return Energy.chargeable(stack);
     }
 
     @Override

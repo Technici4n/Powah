@@ -16,6 +16,9 @@ import net.minecraft.util.Direction;
 import net.minecraft.util.Hand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.BlockRayTraceResult;
+import net.minecraft.util.math.shapes.ISelectionContext;
+import net.minecraft.util.math.shapes.VoxelShape;
+import net.minecraft.util.math.shapes.VoxelShapes;
 import net.minecraft.world.IBlockReader;
 import net.minecraft.world.IWorld;
 import net.minecraft.world.IWorldReader;
@@ -31,12 +34,19 @@ import owmii.powah.inventory.PlayerTransmitterContainer;
 
 import javax.annotation.Nullable;
 
-public class PlayerTransmitterBlock extends AbstractEnergyBlock<Tier, PlayerTransmitterConfig> {
+public class PlayerTransmitterBlock extends AbstractEnergyBlock<Tier, PlayerTransmitterConfig, PlayerTransmitterBlock> {
     public static final BooleanProperty TOP = BooleanProperty.create("top");
+    public static final VoxelShape TOP_SHAPE = VoxelShapes.or(makeCuboidShape(6, 8, 6, 10, 12, 10), makeCuboidShape(7, 4.5D, 7, 9, 8, 9), makeCuboidShape(4, 0.5D, 4, 12, 1.5D, 12), makeCuboidShape(4, 2D, 4, 12, 3D, 12), makeCuboidShape(4, 3.5D, 4, 12, 4.5D, 12), makeCuboidShape(1, -15, 1, 15, -1, 15), makeCuboidShape(4, -1, 4, 12, 0, 12));
+    public static final VoxelShape BOTTOM_SHAPE = VoxelShapes.or(makeCuboidShape(6, 24, 6, 10, 28, 10), makeCuboidShape(7, 20.5, 7, 9, 24, 9), makeCuboidShape(4, 16.5, 4, 12, 17.5, 12), makeCuboidShape(4, 18.0, 4, 12, 19.0, 12), makeCuboidShape(4, 3.5D + 16, 4, 12, 20.5, 12), makeCuboidShape(1, 1, 1, 15, 15, 15), makeCuboidShape(4, 15, 4, 12, 16, 12));
 
     public PlayerTransmitterBlock(Properties properties, Tier variant) {
         super(properties, variant);
         setStateProps(state -> state.with(TOP, false));
+    }
+
+    @Override
+    public VoxelShape getShape(BlockState state, IBlockReader worldIn, BlockPos pos, ISelectionContext context) {
+        return state.get(TOP) ? TOP_SHAPE : BOTTOM_SHAPE;
     }
 
     @Override

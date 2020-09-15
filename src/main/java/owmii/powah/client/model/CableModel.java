@@ -116,8 +116,8 @@ public class CableModel extends AbstractModel<CableTile, CableRenderer> {
 
     static {
         TEXTURES.put(TransferType.ALL, new ResourceLocation(Powah.MOD_ID, "textures/model/tile/energy_cable_all.png"));
-        TEXTURES.put(TransferType.EXTRACT, new ResourceLocation(Powah.MOD_ID, "textures/model/tile/energy_cable_out.png"));
-        TEXTURES.put(TransferType.RECEIVE, new ResourceLocation(Powah.MOD_ID, "textures/model/tile/energy_cable_in.png"));
+        TEXTURES.put(TransferType.RECEIVE, new ResourceLocation(Powah.MOD_ID, "textures/model/tile/energy_cable_out.png"));
+        TEXTURES.put(TransferType.EXTRACT, new ResourceLocation(Powah.MOD_ID, "textures/model/tile/energy_cable_in.png"));
     }
 
     @Override

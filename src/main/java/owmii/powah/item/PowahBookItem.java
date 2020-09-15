@@ -19,6 +19,10 @@ public class PowahBookItem extends ItemBase {
         ItemStack stack = playerIn.getHeldItem(handIn);
         if (worldIn.isRemote) {
             Screens.openManualScreen();
+//            RecipeManager manager = Minecraft.getInstance().world.getRecipeManager();
+//            System.out.println(manager.getRecipes(IRecipeType.CRAFTING).values().stream().filter(recipe -> recipe.getRecipeOutput().getItem() == Itms.DIELECTRIC_PASTE)
+//                    .collect(Collectors.toList()));
+
         }
         return ActionResult.resultSuccess(stack);
     }

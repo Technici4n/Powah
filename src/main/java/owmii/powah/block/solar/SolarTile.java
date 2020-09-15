@@ -8,6 +8,7 @@ import net.minecraft.util.Direction;
 import net.minecraft.world.World;
 import owmii.lib.block.AbstractEnergyProvider;
 import owmii.lib.block.IInventoryHolder;
+import owmii.lib.logistics.energy.Energy;
 import owmii.lib.util.Misc;
 import owmii.lib.util.Time;
 import owmii.powah.block.Tier;
@@ -103,7 +104,7 @@ public class SolarTile extends AbstractEnergyProvider<Tier, SolarConfig, SolarBl
 
     @Override
     public boolean canInsert(int slot, ItemStack stack) {
-        return true;
+        return Energy.chargeable(stack);
     }
 
     @Override

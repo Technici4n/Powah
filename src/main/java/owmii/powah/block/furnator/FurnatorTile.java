@@ -103,7 +103,7 @@ public class FurnatorTile extends AbstractEnergyProvider<Tier, FurnatorConfig, F
     @Override
     public boolean canInsert(int index, ItemStack stack) {
         return index == 1 && ForgeHooks.getBurnTime(stack) > 0
-                || index == 0 && Energy.isPresent(stack);
+                || index == 0 && Energy.chargeable(stack);
     }
 
     @Override

@@ -34,7 +34,7 @@ import javax.annotation.Nullable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class SolarBlock extends AbstractGeneratorBlock<Tier, SolarConfig> implements IWaterLoggable {
+public class SolarBlock extends AbstractGeneratorBlock<Tier, SolarConfig, SolarBlock> implements IWaterLoggable {
     protected static final VoxelShape SHAPE = makeCuboidShape(0.0D, 0.0D, 0.0D, 16.0D, 1.0D, 16.0D);
     public static final BooleanProperty NORTH = SixWayBlock.NORTH;
     public static final BooleanProperty EAST = SixWayBlock.EAST;

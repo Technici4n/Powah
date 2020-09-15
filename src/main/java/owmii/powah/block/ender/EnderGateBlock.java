@@ -25,7 +25,7 @@ import javax.annotation.Nullable;
 import java.util.HashMap;
 import java.util.Map;
 
-public class EnderGateBlock extends AbstractEnergyBlock<Tier, EnderGateConfig> {
+public class EnderGateBlock extends AbstractEnergyBlock<Tier, EnderGateConfig, EnderGateBlock> {
     private static final Map<Direction, VoxelShape> SHAPES = new HashMap<>();
 
     public EnderGateBlock(Properties properties, Tier variant) {
