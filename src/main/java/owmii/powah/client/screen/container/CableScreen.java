@@ -8,7 +8,7 @@ import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.util.text.TranslationTextComponent;
 import owmii.lib.Lollipop;
-import owmii.lib.client.screen.AbstractEnergyScreen;
+import owmii.lib.client.screen.container.AbstractEnergyScreen;
 import owmii.lib.client.screen.widget.IconButton;
 import owmii.lib.network.packets.NextEnergyConfigPacket;
 import owmii.powah.block.cable.CableTile;

@@ -1,4 +1,4 @@
-package owmii.powah.compat.jei.magmator;
+package owmii.powah.client.compat.jei;
 
 import com.mojang.blaze3d.matrix.MatrixStack;
 import mezz.jei.api.constants.VanillaTypes;
@@ -13,30 +13,30 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.fluid.Fluid;
 import net.minecraft.item.BucketItem;
+import net.minecraft.item.FishBucketItem;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.text.TextFormatting;
 import net.minecraftforge.fluids.FluidStack;
 import owmii.powah.Powah;
 import owmii.powah.api.PowahAPI;
-import owmii.powah.block.Blcks;
 
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
-public class MagmatorCategory implements IRecipeCategory<MagmatorCategory.Recipe> {
+public class CoolantCategory implements IRecipeCategory<CoolantCategory.Recipe> {
     public static final ResourceLocation GUI_BACK = new ResourceLocation(Powah.MOD_ID, "textures/gui/jei/misc.png");
-    public static final ResourceLocation ID = new ResourceLocation(Powah.MOD_ID, "magmatic");
+    public static final ResourceLocation ID = new ResourceLocation(Powah.MOD_ID, ".coolant");
     private final IDrawable background;
     private final IDrawable icon;
     private final String localizedName;
 
-    public MagmatorCategory(IGuiHelper guiHelper) {
+    public CoolantCategory(IGuiHelper guiHelper) {
         this.background = guiHelper.drawableBuilder(GUI_BACK, 0, 0, 160, 24).addPadding(1, 0, 0, 0).build();
-        this.icon = guiHelper.createDrawableIngredient(new ItemStack(Blcks.MAGMATOR_BASIC));
-        this.localizedName = I18n.format("gui.powah.jei.category.magmatic");
-
+        this.icon = guiHelper.createDrawableIngredient(new ItemStack(Items.WATER_BUCKET));
+        this.localizedName = I18n.format("gui.powah.jei.category.coolant");
     }
 
     @Override
@@ -82,7 +82,7 @@ public class MagmatorCategory implements IRecipeCategory<MagmatorCategory.Recipe
     @Override
     public void draw(Recipe recipe, MatrixStack matrix, double mouseX, double mouseY) {
         Minecraft minecraft = Minecraft.getInstance();
-        minecraft.fontRenderer.drawString(matrix, recipe.heat + " FE/100 mb", 27.0F, 9.0F, 0x444444);
+        minecraft.fontRenderer.drawString(matrix, I18n.format("info.lollipop.temperature") + ": " + I18n.format("info.lollipop.temperature.c", "" + TextFormatting.DARK_AQUA + recipe.coldness), 30.0F, 9.0F, 0x444444);
     }
 
     public static class Maker {
@@ -91,22 +91,18 @@ public class MagmatorCategory implements IRecipeCategory<MagmatorCategory.Recipe
             List<Recipe> recipes = new ArrayList<>();
 
             allItemStacks.forEach(stack -> {
-                if (stack.getItem() instanceof BucketItem) {
+                if (stack.getItem() instanceof BucketItem && !(stack.getItem() instanceof FishBucketItem)) {
                     BucketItem bucket = (BucketItem) stack.getItem();
                     Fluid fluid = bucket.getFluid();
-                    if (PowahAPI.MAGMATIC_FLUIDS.containsKey(fluid)) {
-                        recipes.add(new Recipe(bucket, PowahAPI.getMagmaticFluidHeat(fluid)));
+                    if (PowahAPI.COOLANTS.containsKey(fluid)) {
+                        recipes.add(new Recipe(bucket, PowahAPI.getCoolant(fluid)));
                     }
                 }
             });
 
-            List<Fluid> fluids = new ArrayList<>(PowahAPI.MAGMATIC_FLUIDS.keySet());
+            List<Fluid> fluids = new ArrayList<>(PowahAPI.COOLANTS.keySet());
             recipes.forEach(recipe -> {
                 fluids.remove(recipe.fluid);
-            });
-
-            fluids.forEach(fluid -> {
-                recipes.add(new Recipe(fluid, PowahAPI.getMagmaticFluidHeat(fluid)));
             });
 
             return recipes;
@@ -116,18 +112,18 @@ public class MagmatorCategory implements IRecipeCategory<MagmatorCategory.Recipe
     public static class Recipe {
         private final Fluid fluid;
         private final BucketItem bucket;
-        private final int heat;
+        private final int coldness;
 
-        public Recipe(BucketItem bucket, int heat) {
+        public Recipe(BucketItem bucket, int coldness) {
             this.bucket = bucket;
             this.fluid = bucket.getFluid();
-            this.heat = heat;
+            this.coldness = coldness;
         }
 
-        public Recipe(Fluid fluid, int heat) {
+        public Recipe(Fluid fluid, int coldness) {
             this.bucket = (BucketItem) Items.BUCKET;
             this.fluid = fluid;
-            this.heat = heat;
+            this.coldness = coldness;
         }
 
         public BucketItem getBucket() {
@@ -138,8 +134,8 @@ public class MagmatorCategory implements IRecipeCategory<MagmatorCategory.Recipe
             return this.fluid;
         }
 
-        public int getHeat() {
-            return this.heat;
+        public int getColdness() {
+            return this.coldness;
         }
     }
 }

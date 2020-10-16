@@ -22,6 +22,6 @@ public class Screens {
     }
 
     public static void openManualScreen() {
-        BookScreen.open();
+        WikiScreen.open(PowahBook.WIKI.getCategories().get(0));
     }
 }

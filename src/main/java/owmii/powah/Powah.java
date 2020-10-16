@@ -39,13 +39,6 @@ public class Powah implements IMod {
         Containers.REG.init();
         Entities.REG.init();
 
-        PowahAPI.registerSolidCoolant(Blocks.SNOW_BLOCK, 48, -3);
-        PowahAPI.registerSolidCoolant(Items.SNOWBALL, 12, -3);
-        PowahAPI.registerSolidCoolant(Blocks.ICE, 48, -5);
-        PowahAPI.registerSolidCoolant(Blocks.PACKED_ICE, 192, -8);
-        PowahAPI.registerSolidCoolant(Blocks.BLUE_ICE, 568, -17);
-        PowahAPI.registerSolidCoolant(Blcks.DRY_ICE, 712, -32);
-
         loadListeners();
         Configs.register();
         Recipes.init();
@@ -53,6 +46,13 @@ public class Powah implements IMod {
 
     @Override
     public void setup(FMLCommonSetupEvent event) {
+        PowahAPI.registerSolidCoolant(Blocks.SNOW_BLOCK, 48, -3);
+        PowahAPI.registerSolidCoolant(Items.SNOWBALL, 12, -3);
+        PowahAPI.registerSolidCoolant(Blocks.ICE, 48, -5);
+        PowahAPI.registerSolidCoolant(Blocks.PACKED_ICE, 192, -8);
+        PowahAPI.registerSolidCoolant(Blocks.BLUE_ICE, 568, -17);
+        PowahAPI.registerSolidCoolant(Blcks.DRY_ICE, 712, -32);
+
         Packets.register();
         Features.register();
     }

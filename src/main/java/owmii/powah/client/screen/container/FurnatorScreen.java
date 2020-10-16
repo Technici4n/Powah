@@ -4,9 +4,11 @@ import com.mojang.blaze3d.matrix.MatrixStack;
 import com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.util.text.ITextComponent;
+import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.util.text.TranslationTextComponent;
-import owmii.lib.client.screen.AbstractEnergyScreen;
+import owmii.lib.client.screen.container.AbstractEnergyScreen;
+import owmii.lib.client.util.Text;
 import owmii.lib.logistics.energy.Energy;
 import owmii.lib.util.Ticker;
 import owmii.lib.util.Util;
@@ -53,9 +55,9 @@ public class FurnatorScreen extends AbstractEnergyScreen<FurnatorTile, FurnatorC
         if (Textures.FURNATOR_GAUGE.isMouseOver(this.guiLeft + 5, this.guiTop + 5, mouseX, mouseY)) {
             List<ITextComponent> list = new ArrayList<>();
             Energy energy = this.te.getEnergy();
-            list.add(new TranslationTextComponent("info.lollipop.stored.energy.fe", TextFormatting.GRAY + Util.addCommas(energy.getStored()), TextFormatting.GRAY + Util.numFormat(energy.getCapacity())).mergeStyle(TextFormatting.DARK_GRAY));
-            list.add(new TranslationTextComponent("info.lollipop.generates", TextFormatting.GRAY + Util.numFormat(this.te.getGeneration())).mergeStyle(TextFormatting.DARK_GRAY));
-            list.add(new TranslationTextComponent("info.lollipop.max.transfer.fe", TextFormatting.GRAY + Util.numFormat(energy.getMaxExtract())).mergeStyle(TextFormatting.DARK_GRAY));
+            list.add(new TranslationTextComponent("info.lollipop.stored").mergeStyle(TextFormatting.GRAY).append(Text.COLON).append(new TranslationTextComponent("info.lollipop.fe.stored", Util.addCommas(energy.getStored()), Util.numFormat(energy.getCapacity())).mergeStyle(TextFormatting.DARK_GRAY)));
+            list.add(new TranslationTextComponent("info.lollipop.generates").mergeStyle(TextFormatting.GRAY).append(Text.COLON).append(new StringTextComponent(Util.numFormat(this.te.getGeneration())).append(new TranslationTextComponent("info.lollipop.fe.pet.tick")).mergeStyle(TextFormatting.DARK_GRAY)));
+            list.add(new TranslationTextComponent("info.lollipop.max.extract").mergeStyle(TextFormatting.GRAY).append(Text.COLON).append(new StringTextComponent(Util.numFormat(energy.getMaxExtract())).append(new TranslationTextComponent("info.lollipop.fe.pet.tick")).mergeStyle(TextFormatting.DARK_GRAY)));
             func_243308_b(matrix, list, mouseX, mouseY);
         }
         if (Textures.FURNATOR_CARBON_GAUGE.isMouseOver(this.guiLeft + 110, this.guiTop + 18, mouseX, mouseY)) {

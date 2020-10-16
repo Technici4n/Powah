@@ -2,6 +2,7 @@ package owmii.powah.block.energizing;
 
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.items.wrapper.RecipeWrapper;
 import owmii.lib.block.AbstractTickableTile;
@@ -9,6 +10,7 @@ import owmii.lib.block.IInventoryHolder;
 import owmii.lib.logistics.energy.Energy;
 import owmii.lib.registry.IVariant;
 import owmii.powah.block.Tiles;
+import owmii.powah.client.particle.Particles;
 import owmii.powah.recipe.Recipes;
 
 import javax.annotation.Nullable;
@@ -87,11 +89,22 @@ public class EnergizingOrbTile extends AbstractTickableTile<IVariant.Single, Ene
                 if (this.buffer.isFull()) {
                     ItemStack stack = this.recipe.getRecipeOutput();
                     this.inv.clear();
-                    this.inv.setStack(0, stack.copy());
+                    this.inv.setStackInSlot(0, stack.copy());
                     this.buffer.setCapacity(0);
                     this.buffer.setStored(0);
                     this.buffer.setTransfer(0);
                     markDirty();
+                }
+                sync(5);
+            }
+
+            if (this.containRecipe && this.world.isRemote) {
+                if (Math.random() < 0.2D) {
+                    BlockPos pos = getPos();
+                    double x = pos.getX() + 0.5D + Math.random() * 0.3D - Math.random() * 0.3D;
+                    double y = pos.getY() + 0.1D + 0.5D + Math.random() * 0.3D - Math.random() * 0.3D;
+                    double z = pos.getZ() + 0.5D + Math.random() * 0.3D - Math.random() * 0.3D;
+                    this.world.addParticle(Particles.ENERGIZING, x, y, z, 0.0D, 0.0D, 0.0D);
                 }
             }
         }

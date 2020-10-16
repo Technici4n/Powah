@@ -4,7 +4,7 @@ import com.mojang.blaze3d.matrix.MatrixStack;
 import com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.util.text.ITextComponent;
-import owmii.lib.client.screen.AbstractEnergyScreen;
+import owmii.lib.client.screen.container.AbstractEnergyScreen;
 import owmii.lib.logistics.energy.Energy;
 import owmii.lib.util.Util;
 import owmii.powah.block.transmitter.PlayerTransmitterTile;

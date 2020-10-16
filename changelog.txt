@@ -1,3 +1,22 @@
+2.3.1
+- Fixed reactor gen mode not stopping reactor when is full.
+- Fixed JEI not showing info.
+- Random bug fixes.
+- Updated lollipop to v3.2.1
+
+2.3.0
+- Did a full rewrite to the Powah: manual.
+- Improved all tooltips.
+- Added Energizing orb particles.
+- Added Energizing orb progress overlay.
+- Fixed player transmitter and energy hopper bounding boxes (voxel shapes).
+- Fixed reactor and some other non chargeable blocks getting charged.
+- Fixed graphics on Energy Cable are counter intuitive, Closes #107.
+- Fixed cables not stacking, Closes #104.
+- Moved to 1.16.3
+- Clean-up.
+- Updated lollipop to v3.2.0
+
 2.2.0
 - Fix player transmitter not checking top part position, Closes #100.
 - Fix Uraninite ores breaking hardness.

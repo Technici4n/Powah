@@ -21,6 +21,10 @@ import net.minecraft.util.Hand;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.BlockRayTraceResult;
+import net.minecraft.util.text.ITextComponent;
+import net.minecraft.util.text.StringTextComponent;
+import net.minecraft.util.text.TextFormatting;
+import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.IBlockReader;
 import net.minecraft.world.World;
 import net.minecraftforge.api.distmarker.Dist;
@@ -28,8 +32,12 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.fluids.FluidUtil;
 import owmii.lib.block.AbstractGeneratorBlock;
 import owmii.lib.block.AbstractTileEntity;
+import owmii.lib.client.util.Text;
+import owmii.lib.client.wiki.page.panel.InfoBox;
 import owmii.lib.item.EnergyBlockItem;
+import owmii.lib.logistics.energy.Energy;
 import owmii.lib.logistics.inventory.AbstractContainer;
+import owmii.lib.util.Util;
 import owmii.powah.Powah;
 import owmii.powah.block.Tier;
 import owmii.powah.client.render.tile.ReactorRenderer;
@@ -39,6 +47,7 @@ import owmii.powah.inventory.ReactorContainer;
 import owmii.powah.item.ReactorItem;
 
 import javax.annotation.Nullable;
+import java.util.List;
 
 public class ReactorBlock extends AbstractGeneratorBlock<Tier, ReactorConfig, ReactorBlock> {
     public static final BooleanProperty CORE = BooleanProperty.create("core");
@@ -137,5 +146,23 @@ public class ReactorBlock extends AbstractGeneratorBlock<Tier, ReactorConfig, Re
         IVertexBuilder buffer = rtb.getBuffer(ReactorRenderer.CUBE_MODEL.getRenderType(new ResourceLocation(Powah.MOD_ID, "textures/model/tile/reactor_block_" + getVariant().getName() + ".png")));
         ReactorRenderer.CUBE_MODEL.render(matrix, buffer, light, ov, 1.0F, 1.0F, 1.0F, 1.0F);
         matrix.pop();
+    }
+
+    @Override
+    public void additionalEnergyInfo(ItemStack stack, Energy.Item energy, List<ITextComponent> tooltip) {
+        tooltip.add(new TranslationTextComponent("info.powah.generation.factor").mergeStyle(TextFormatting.GRAY).append(Text.COLON).append(new StringTextComponent(Util.numFormat(getConfig().getGeneration(this.variant))).append(new TranslationTextComponent("info.lollipop.fe.pet.tick")).mergeStyle(TextFormatting.DARK_GRAY)));
+    }
+
+    @Override
+    public InfoBox getInfoBox(ItemStack stack, InfoBox box) {
+        Energy.ifPresent(stack, storage -> {
+            if (storage instanceof Energy.Item) {
+                Energy.Item energy = (Energy.Item) storage;
+                box.set(new TranslationTextComponent("info.lollipop.capacity"), new TranslationTextComponent("info.lollipop.fe", Util.addCommas(energy.getCapacity())));
+                box.set(new TranslationTextComponent("info.powah.generation.factor"), new TranslationTextComponent("info.lollipop.fe.pet.tick", Util.addCommas(getConfig().getGeneration(this.variant))));
+                box.set(new TranslationTextComponent("info.lollipop.max.extract"), new TranslationTextComponent("info.lollipop.fe.pet.tick", Util.addCommas(energy.getMaxExtract())));
+            }
+        });
+        return box;
     }
 }

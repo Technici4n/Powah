@@ -1,7 +1,12 @@
 package owmii.powah.block.energizing;
 
+import com.mojang.blaze3d.matrix.MatrixStack;
+import com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.IWaterLoggable;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.FontRenderer;
+import net.minecraft.client.resources.I18n;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
@@ -20,6 +25,8 @@ import net.minecraft.util.text.TextFormatting;
 import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.IBlockReader;
 import net.minecraft.world.World;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.common.util.Constants;
 import net.minecraftforge.items.ItemHandlerHelper;
 import owmii.lib.block.AbstractBlock;
@@ -39,7 +46,7 @@ import java.util.stream.Collectors;
 
 import static net.minecraft.util.math.shapes.VoxelShapes.combineAndSimplify;
 
-public class EnergizingOrbBlock extends AbstractBlock<IVariant.Single> implements IWaterLoggable, IWrenchable/*, ITOPInfoProvider*/ {
+public class EnergizingOrbBlock extends AbstractBlock<IVariant.Single, EnergizingOrbBlock> implements IWaterLoggable, IWrenchable, IHud {
     private static final VoxelShape SHAPE = combineAndSimplify(makeCuboidShape(3.5D, 5.0D, 3.5D, 12.5D, 14.23D, 12.5D), makeCuboidShape(2.5D, 0.0D, 2.5D, 13.5D, 1.0D, 13.5D), IBooleanFunction.OR);
 
     public EnergizingOrbBlock(Properties properties) {
@@ -74,13 +81,13 @@ public class EnergizingOrbBlock extends AbstractBlock<IVariant.Single> implement
                 }
                 return ActionResultType.SUCCESS;
             } else {
-                if (!world.isRemote) {
-                    ItemStack copy = held.copy();
-                    copy.setCount(1);
-                    if (!inv.addNext(copy).isEmpty() && !player.isCreative()) {
-                        held.shrink(1);
-                    }
+                // if (!world.isRemote) {
+                ItemStack copy = held.copy();
+                copy.setCount(1);
+                if (!inv.addNext(copy).isEmpty() && !player.isCreative()) {
+                    held.shrink(1);
                 }
+                // }
                 return ActionResultType.SUCCESS;
             }
             // }
@@ -182,18 +189,26 @@ public class EnergizingOrbBlock extends AbstractBlock<IVariant.Single> implement
         return false;
     }
 
-//    @Override
-//    public void addProbeInfo(ProbeMode mode, IProbeInfo info, PlayerEntity player, World world, BlockPos pos, BlockState state, IProbeHitData hitData) {
-//        TileEntity te = world.getTileEntity(pos);
-//        if (te instanceof EnergizingOrbTile) {
-//            EnergizingOrbTile orb = (EnergizingOrbTile) te;
-//            if (orb.getRequiredEnergy() > 0) {
-//                info.progress(orb.getEnergy(), orb.getRequiredEnergy());
-//                EnergizingRecipe recipe = orb.currRecipe();
-//                if (recipe != null) {
-//                    info.item(recipe.getRecipeOutput());
-//                }
-//            }
-//        }
-//    }
+    @Override
+    @OnlyIn(Dist.CLIENT)
+    public boolean renderHud(MatrixStack matrix, BlockState state, World world, BlockPos pos, PlayerEntity player, BlockRayTraceResult result, @Nullable TileEntity te) {
+        if (te instanceof EnergizingOrbTile) {
+            EnergizingOrbTile orb = (EnergizingOrbTile) te;
+            if (orb.getBuffer().getCapacity() > 0) {
+                RenderSystem.pushMatrix();
+                RenderSystem.enableBlend();
+                Minecraft mc = Minecraft.getInstance();
+                FontRenderer font = mc.fontRenderer;
+                int x = mc.getMainWindow().getScaledWidth() / 2;
+                int y = mc.getMainWindow().getScaledHeight();
+                String s = "" + TextFormatting.GREEN + orb.getBuffer().getPercent() + "%";
+                String s1 = TextFormatting.GRAY + I18n.format("info.lollipop.fe.stored", Util.addCommas(orb.getBuffer().getEnergyStored()), Util.numFormat(orb.getBuffer().getCapacity()));
+                font.drawStringWithShadow(matrix, s, x - (font.getStringWidth(s) / 2.0f), y - 90, 0xffffff);
+                font.drawStringWithShadow(matrix, s1, x - (font.getStringWidth(s1) / 2.0f), y - 75, 0xffffff);
+                RenderSystem.disableBlend();
+                RenderSystem.popMatrix();
+            }
+        }
+        return true;
+    }
 }

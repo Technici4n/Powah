@@ -1,4 +1,4 @@
-package owmii.powah.compat.jei;
+package owmii.powah.client.compat.jei;
 
 import com.mojang.blaze3d.matrix.MatrixStack;
 import mezz.jei.api.constants.VanillaTypes;

@@ -1,4 +1,4 @@
-package owmii.powah.compat.jei;
+package owmii.powah.client.compat.jei;
 
 import com.mojang.blaze3d.matrix.MatrixStack;
 import mezz.jei.api.constants.VanillaTypes;
@@ -77,8 +77,8 @@ public class SolidCoolantCategory implements IRecipeCategory<SolidCoolantCategor
     @Override
     public void draw(Recipe recipe, MatrixStack matrix, double mouseX, double mouseY) {
         Minecraft minecraft = Minecraft.getInstance();
-        minecraft.fontRenderer.drawString(matrix, TextFormatting.DARK_GRAY + I18n.format("info.lollipop.amount", "" + TextFormatting.RESET + recipe.amount), 30.0F, 3.0F, 0x555555);
-        minecraft.fontRenderer.drawString(matrix, TextFormatting.DARK_GRAY + I18n.format("info.lollipop.temperature", "" + TextFormatting.RESET + recipe.coldness), 30.0F, 15.0F, 43690);
+        minecraft.fontRenderer.drawString(matrix, I18n.format("info.lollipop.amount") + ": " + I18n.format("info.lollipop.mb", recipe.amount), 30.0F, 3.0F, 0x444444);
+        minecraft.fontRenderer.drawString(matrix, I18n.format("info.lollipop.temperature") + ": " + I18n.format("info.lollipop.temperature.c", "" + TextFormatting.DARK_AQUA + recipe.coldness), 30.0F, 15.0F, 0x444444);
     }
 
     public static class Maker {

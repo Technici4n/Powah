@@ -1,4 +1,4 @@
-package owmii.powah.compat.jei.energizing;
+package owmii.powah.client.compat.jei.energizing;
 
 import com.mojang.blaze3d.matrix.MatrixStack;
 import mezz.jei.api.constants.VanillaTypes;
@@ -75,6 +75,6 @@ public class EnergizingCategory implements IRecipeCategory<EnergizingRecipe> {
     @Override
     public void draw(EnergizingRecipe recipe, MatrixStack matrix, double mouseX, double mouseY) {
         Minecraft minecraft = Minecraft.getInstance();
-        minecraft.fontRenderer.drawString(matrix, I18n.format("info.lollipop.energy.fe.2", Util.addCommas(recipe.getEnergy())), 2.0F, 29.0F, 0x484241);
+        minecraft.fontRenderer.drawString(matrix, I18n.format("info.lollipop.fe", Util.addCommas(recipe.getEnergy())), 2.0F, 29.0F, 0x444444);
     }
 }
