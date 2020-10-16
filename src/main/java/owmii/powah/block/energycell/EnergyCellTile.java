@@ -5,7 +5,7 @@ import net.minecraft.util.Direction;
 import net.minecraft.world.World;
 import owmii.lib.block.AbstractEnergyStorage;
 import owmii.lib.block.IInventoryHolder;
-import owmii.lib.logistics.TransferType;
+import owmii.lib.logistics.Transfer;
 import owmii.lib.logistics.energy.Energy;
 import owmii.powah.block.Tier;
 import owmii.powah.block.Tiles;
@@ -62,8 +62,8 @@ public class EnergyCellTile extends AbstractEnergyStorage<Tier, EnergyCellConfig
     }
 
     @Override
-    public TransferType getTransferType() {
-        return isCreative() ? TransferType.EXTRACT : super.getTransferType();
+    public Transfer getTransferType() {
+        return isCreative() ? Transfer.EXTRACT : super.getTransferType();
     }
 
     public boolean isCreative() {

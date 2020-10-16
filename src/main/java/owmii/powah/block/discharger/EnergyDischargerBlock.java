@@ -10,7 +10,7 @@ import net.minecraft.world.IBlockReader;
 import owmii.lib.block.AbstractEnergyBlock;
 import owmii.lib.block.AbstractTileEntity;
 import owmii.lib.item.EnergyBlockItem;
-import owmii.lib.logistics.TransferType;
+import owmii.lib.logistics.Transfer;
 import owmii.lib.logistics.inventory.AbstractContainer;
 import owmii.powah.block.Tier;
 import owmii.powah.config.Configs;
@@ -50,8 +50,8 @@ public class EnergyDischargerBlock extends AbstractEnergyBlock<Tier, EnergyDisch
     }
 
     @Override
-    public TransferType getTransferType() {
-        return TransferType.EXTRACT;
+    public Transfer getTransferType() {
+        return Transfer.EXTRACT;
     }
 
     @Override

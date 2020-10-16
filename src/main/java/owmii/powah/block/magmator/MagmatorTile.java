@@ -89,7 +89,7 @@ public class MagmatorTile extends AbstractEnergyProvider<Tier, MagmatorConfig, M
     }
 
     @Override
-    protected boolean keepFluid() {
+    public boolean keepFluid() {
         return true;
     }
 

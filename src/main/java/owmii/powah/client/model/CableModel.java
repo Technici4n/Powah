@@ -10,7 +10,7 @@ import net.minecraft.util.Direction;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import owmii.lib.client.model.AbstractModel;
-import owmii.lib.logistics.TransferType;
+import owmii.lib.logistics.Transfer;
 import owmii.lib.logistics.energy.Energy;
 import owmii.powah.Powah;
 import owmii.powah.block.cable.CableTile;
@@ -112,12 +112,12 @@ public class CableModel extends AbstractModel<CableTile, CableRenderer> {
         setRotation(this.downPlate, 0F, 0F, 0F);
     }
 
-    private static final Map<TransferType, ResourceLocation> TEXTURES = new HashMap<>();
+    private static final Map<Transfer, ResourceLocation> TEXTURES = new HashMap<>();
 
     static {
-        TEXTURES.put(TransferType.ALL, new ResourceLocation(Powah.MOD_ID, "textures/model/tile/energy_cable_all.png"));
-        TEXTURES.put(TransferType.RECEIVE, new ResourceLocation(Powah.MOD_ID, "textures/model/tile/energy_cable_out.png"));
-        TEXTURES.put(TransferType.EXTRACT, new ResourceLocation(Powah.MOD_ID, "textures/model/tile/energy_cable_in.png"));
+        TEXTURES.put(Transfer.ALL, new ResourceLocation(Powah.MOD_ID, "textures/model/tile/energy_cable_all.png"));
+        TEXTURES.put(Transfer.RECEIVE, new ResourceLocation(Powah.MOD_ID, "textures/model/tile/energy_cable_out.png"));
+        TEXTURES.put(Transfer.EXTRACT, new ResourceLocation(Powah.MOD_ID, "textures/model/tile/energy_cable_in.png"));
     }
 
     @Override
@@ -127,15 +127,15 @@ public class CableModel extends AbstractModel<CableTile, CableRenderer> {
         for (Direction side : te.energySides) {
             final BlockPos pos = te.getPos().offset(side);
             final TileEntity tile = te.getWorld().getTileEntity(pos);
-            final TransferType config = te.getSideConfig().getType(side);
+            final Transfer config = te.getSideConfig().getType(side);
             if (!(tile instanceof CableTile) && Energy.isPresent(tile, side) && (config.canExtract || config.canReceive)) {
                 flags[side.getIndex()] = side;
             }
         }
 
         if (flags[0] != null) {
-            TransferType type = te.getSideConfig().getType(flags[0]);
-            if (!type.equals(TransferType.NONE)) {
+            Transfer type = te.getSideConfig().getType(flags[0]);
+            if (!type.equals(Transfer.NONE)) {
                 IVertexBuilder buffer = rtb.getBuffer(getRenderType(TEXTURES.get(type)));
                 this.up.render(matrix, buffer, light, ov);
                 this.upPlate.render(matrix, buffer, light, ov);
@@ -143,8 +143,8 @@ public class CableModel extends AbstractModel<CableTile, CableRenderer> {
         }
 
         if (flags[1] != null) {
-            TransferType type = te.getSideConfig().getType(flags[1]);
-            if (!type.equals(TransferType.NONE)) {
+            Transfer type = te.getSideConfig().getType(flags[1]);
+            if (!type.equals(Transfer.NONE)) {
                 IVertexBuilder buffer = rtb.getBuffer(getRenderType(TEXTURES.get(type)));
                 this.down.render(matrix, buffer, light, ov);
                 this.downPlate.render(matrix, buffer, light, ov);
@@ -152,16 +152,16 @@ public class CableModel extends AbstractModel<CableTile, CableRenderer> {
         }
 
         if (flags[2] != null) {
-            TransferType type = te.getSideConfig().getType(flags[2]);
-            if (!type.equals(TransferType.NONE)) {
+            Transfer type = te.getSideConfig().getType(flags[2]);
+            if (!type.equals(Transfer.NONE)) {
                 IVertexBuilder buffer = rtb.getBuffer(getRenderType(TEXTURES.get(type)));
                 this.south.render(matrix, buffer, light, ov);
                 this.southPlate.render(matrix, buffer, light, ov);
             }
         }
         if (flags[3] != null) {
-            TransferType type = te.getSideConfig().getType(flags[3]);
-            if (!type.equals(TransferType.NONE)) {
+            Transfer type = te.getSideConfig().getType(flags[3]);
+            if (!type.equals(Transfer.NONE)) {
                 IVertexBuilder buffer = rtb.getBuffer(getRenderType(TEXTURES.get(type)));
                 this.north.render(matrix, buffer, light, ov);
                 this.northPlate.render(matrix, buffer, light, ov);
@@ -169,8 +169,8 @@ public class CableModel extends AbstractModel<CableTile, CableRenderer> {
         }
 
         if (flags[4] != null) {
-            TransferType type = te.getSideConfig().getType(flags[4]);
-            if (!type.equals(TransferType.NONE)) {
+            Transfer type = te.getSideConfig().getType(flags[4]);
+            if (!type.equals(Transfer.NONE)) {
                 IVertexBuilder buffer = rtb.getBuffer(getRenderType(TEXTURES.get(type)));
                 this.west.render(matrix, buffer, light, ov);
                 this.westPlate.render(matrix, buffer, light, ov);
@@ -178,8 +178,8 @@ public class CableModel extends AbstractModel<CableTile, CableRenderer> {
         }
 
         if (flags[5] != null) {
-            TransferType type = te.getSideConfig().getType(flags[5]);
-            if (!type.equals(TransferType.NONE)) {
+            Transfer type = te.getSideConfig().getType(flags[5]);
+            if (!type.equals(Transfer.NONE)) {
                 IVertexBuilder buffer = rtb.getBuffer(getRenderType(TEXTURES.get(type)));
                 this.east.render(matrix, buffer, light, ov);
                 this.eastPlate.render(matrix, buffer, light, ov);

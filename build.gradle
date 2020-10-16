@@ -25,6 +25,8 @@ minecraft {
     accessTransformer = file('../Lollipop/src/main/resources/META-INF/accesstransformer.cfg')
 }
 
+sourceSets.main.resources { srcDirs = ["src/main/resources", "src/generated/resources"] }
+
 tasks.withType(Jar) {
     def out = file("../_JARS")
     destinationDir = out
@@ -32,20 +34,14 @@ tasks.withType(Jar) {
 
 repositories {
     maven { url = "http://dvs1.progwml6.com/files/maven" } //JEI
-//    maven { url = "http://maven.tterrag.com" } //TOP
     maven { url = "https://maven.theillusivec4.top" } //Curios
 }
 
 dependencies {
     minecraft 'net.minecraftforge:forge:' + lib.minecraft_version + '-' + lib.forge_version
-    compileOnly fg.deobf("mezz.jei:jei-1.16.2:${lib.jei_version}:api")
-    runtimeOnly fg.deobf("mezz.jei:jei-1.16.2:${lib.jei_version}")
-
-//    compileOnly fg.deobf("mcjty.theoneprobe:TheOneProbe-1.15:${lib.top_version}:api")
-//    runtimeOnly fg.deobf("mcjty.theoneprobe:TheOneProbe-1.15:${lib.top_version}")
-
-    compile fg.deobf("top.theillusivec4.curios:curios-forge:${lib.minecraft_version}-${lib.curios_version}")
-
+    compileOnly fg.deobf("mezz.jei:jei-${lib.jei_version}:api")
+    runtimeOnly fg.deobf("mezz.jei:jei-${lib.jei_version}")
+    compile fg.deobf("top.theillusivec4.curios:curios-forge:${lib.curios_version}")
     compile lib
 }
 

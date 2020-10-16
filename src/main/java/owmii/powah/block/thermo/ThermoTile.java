@@ -84,7 +84,7 @@ public class ThermoTile extends AbstractEnergyProvider<Tier, ThermoConfig, Therm
     }
 
     @Override
-    protected boolean keepFluid() {
+    public boolean keepFluid() {
         return true;
     }
 

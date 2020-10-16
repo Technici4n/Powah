@@ -1,5 +1,6 @@
 package owmii.powah.client.render.tile;
 
+import net.minecraft.block.Block;
 import net.minecraftforge.fml.client.registry.ClientRegistry;
 import owmii.lib.client.renderer.item.TEItemRenderer;
 import owmii.powah.block.Blcks;
@@ -15,14 +16,6 @@ public class TileRenderer {
         ClientRegistry.bindTileEntityRenderer(Tiles.REACTOR, ReactorRenderer::new);
         ClientRegistry.bindTileEntityRenderer(Tiles.REACTOR_PART, ReactorPartRenderer::new);
 
-        TEItemRenderer.register(
-                Blcks.REACTOR_STARTER,
-                Blcks.REACTOR_BASIC,
-                Blcks.REACTOR_HARDENED,
-                Blcks.REACTOR_BLAZING,
-                Blcks.REACTOR_NIOTIC,
-                Blcks.REACTOR_SPIRITED,
-                Blcks.REACTOR_NITRO
-        );
+        TEItemRenderer.register(Blcks.REACTOR.getArr(Block[]::new));
     }
 }

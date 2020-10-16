@@ -96,8 +96,7 @@ public class Builder {
         List<BlockPos> list = getPosList();
         list.add(this.reactor.getPos());
         int count = 0;
-        for (int i = 0; i < list.size(); i++) {
-            BlockPos blockPos = list.get(i);
+        for (BlockPos blockPos : list) {
             if (world.getBlockState(blockPos).getBlock().equals(this.reactor.getBlock())) {
                 count++;
                 world.setBlockState(blockPos, Blocks.AIR.getDefaultState(), 3);

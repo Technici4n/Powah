@@ -4,7 +4,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
 import owmii.lib.block.AbstractEnergyStorage;
 import owmii.lib.block.IInventoryHolder;
-import owmii.lib.logistics.TransferType;
+import owmii.lib.logistics.Transfer;
 import owmii.lib.logistics.energy.Energy;
 import owmii.powah.block.Tier;
 import owmii.powah.block.Tiles;
@@ -66,7 +66,7 @@ public class EnergyDischargerTile extends AbstractEnergyStorage<Tier, EnergyDisc
     }
 
     @Override
-    public TransferType getTransferType() {
-        return TransferType.EXTRACT;
+    public Transfer getTransferType() {
+        return Transfer.EXTRACT;
     }
 }

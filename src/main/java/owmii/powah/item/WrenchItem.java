@@ -21,7 +21,7 @@ import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import owmii.lib.client.handler.IHudItem;
 import owmii.lib.item.ItemBase;
-import owmii.lib.logistics.SideConfig;
+import owmii.lib.logistics.energy.SideConfig;
 import owmii.powah.api.wrench.IWrench;
 import owmii.powah.api.wrench.IWrenchable;
 import owmii.powah.api.wrench.WrenchMode;

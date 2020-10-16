@@ -62,7 +62,7 @@ public class FurnatorTile extends AbstractEnergyProvider<Tier, FurnatorConfig, F
                         long perFuelTick = Configs.GENERAL.fuelTicks.get();
                         this.carbon.setAll(burnTime * perFuelTick);
                         if (stack.hasContainerItem()) {
-                            this.inv.setStack(1, stack.getContainerItem());
+                            this.inv.setStackInSlot(1, stack.getContainerItem());
                         } else {
                             stack.shrink(1);
                         }

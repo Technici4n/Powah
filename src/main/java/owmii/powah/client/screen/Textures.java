@@ -1,7 +1,7 @@
 package owmii.powah.client.screen;
 
 import owmii.lib.client.screen.Texture;
-import owmii.lib.logistics.TransferType;
+import owmii.lib.logistics.Transfer;
 import owmii.powah.Powah;
 
 import java.util.HashMap;
@@ -58,7 +58,7 @@ public class Textures {
     public static final Texture DISCHARGER = BUILDER.make("container/discharger", 176, 166, 0, 0);
     public static final Texture DISCHARGER_GAUGE = BUILDER.make("container/discharger", 164, 37, 0, 166);
 
-    public static final Map<TransferType, Texture> CABLE_CONFIG = new HashMap<>();
+    public static final Map<Transfer, Texture> CABLE_CONFIG = new HashMap<>();
     public static final Texture CABLE = BUILDER.make("container/cable", 153, 29, 0, 0);
     public static final Texture CABLE_ALL = BUILDER.make("container/cable", 18, 19, 153, 0);
     public static final Texture CABLE_OUT = BUILDER.make("container/cable", 18, 19, 171, 0);
@@ -66,10 +66,10 @@ public class Textures {
     public static final Texture CABLE_OFF = BUILDER.make("container/cable", 18, 19, 207, 0);
 
     static {
-        CABLE_CONFIG.put(TransferType.ALL, CABLE_ALL);
-        CABLE_CONFIG.put(TransferType.EXTRACT, CABLE_OUT);
-        CABLE_CONFIG.put(TransferType.RECEIVE, CABLE_IN);
-        CABLE_CONFIG.put(TransferType.NONE, CABLE_OFF);
+        CABLE_CONFIG.put(Transfer.ALL, CABLE_ALL);
+        CABLE_CONFIG.put(Transfer.EXTRACT, CABLE_OUT);
+        CABLE_CONFIG.put(Transfer.RECEIVE, CABLE_IN);
+        CABLE_CONFIG.put(Transfer.NONE, CABLE_OFF);
         REACTOR_GEN_MODE.put(true, REACTOR_GEN_MODE_ON);
         REACTOR_GEN_MODE.put(false, REACTOR_GEN_MODE_OFF);
     }

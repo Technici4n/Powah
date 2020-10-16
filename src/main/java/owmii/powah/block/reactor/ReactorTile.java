@@ -115,7 +115,7 @@ public class ReactorTile extends AbstractEnergyProvider<Tier, ReactorConfig, Rea
         boolean flag = false;
         boolean flag2 = false;
 
-        if (checkRedstone() && checkGenMode()) {
+        if (checkRedstone() && this.generate) {
             boolean generating = !this.energy.isFull() && !this.fuel.isEmpty();
             boolean b0 = processFuel(world);
             boolean b1 = processCarbon(world, generating);
@@ -136,6 +136,8 @@ public class ReactorTile extends AbstractEnergyProvider<Tier, ReactorConfig, Rea
                 sync(3);
             }
         }
+
+        checkGenMode();
 
         for (Direction direction : Direction.values()) {
             if (canExtractEnergy(direction)) {
@@ -163,16 +165,14 @@ public class ReactorTile extends AbstractEnergyProvider<Tier, ReactorConfig, Rea
         }
     }
 
-    private boolean checkGenMode() {
+    private void checkGenMode() {
         if (this.genModeOn) {
             if (this.energy.isFull()) {
                 this.generate = false;
             } else if (this.energy.getPercent() <= 70) {
                 this.generate = true;
             }
-            return this.generate;
         }
-        return true;
     }
 
     public double calcProduction() {
@@ -361,6 +361,11 @@ public class ReactorTile extends AbstractEnergyProvider<Tier, ReactorConfig, Rea
     @Override
     public Tank getTank() {
         return this.tank;
+    }
+
+    @Override
+    public boolean keepFluid() {
+        return false;
     }
 
     public boolean isRunning() {

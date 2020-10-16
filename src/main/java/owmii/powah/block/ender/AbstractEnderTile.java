@@ -26,7 +26,7 @@ import owmii.powah.api.energy.endernetwork.IEnderExtender;
 
 import javax.annotation.Nullable;
 
-public class AbstractEnderTile<V extends IVariant<?>, C extends IEnergyConfig<V>, B extends AbstractEnergyBlock<V, C, B>> extends AbstractEnergyStorage<V, C, B> implements IOwnable, IInventoryHolder {
+public class AbstractEnderTile<V extends Enum<V> & IVariant<V>, C extends IEnergyConfig<V>, B extends AbstractEnergyBlock<V, C, B>> extends AbstractEnergyStorage<V, C, B> implements IOwnable, IInventoryHolder {
     private final RangedInt channel = new RangedInt(12);
 
     @Nullable
