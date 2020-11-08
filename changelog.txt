@@ -1,3 +1,16 @@
+2.3.4 (1.16.4)
+- Initial port to 1.16.4
+
+2.3.4
+- Disabled energizing particle temporary to fix a crash.
+
+2.3.3
+- Fix Client Crash Using Powah and Forge 34.1.27+, Closes #119
+
+2.3.2
+- Fixed opening GUI instantly crashes Forge server, Closes #115.
+- Updated lollipop to v3.2.2
+
 2.3.1
 - Fixed reactor gen mode not stopping reactor when is full.
 - Fixed JEI not showing info.

@@ -38,10 +38,10 @@ public class Powah implements IMod {
         Itms.REG.init();
         Containers.REG.init();
         Entities.REG.init();
+        Recipes.REG.init();
 
         loadListeners();
         Configs.register();
-        Recipes.init();
     }
 
     @Override
