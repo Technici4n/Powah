@@ -21,6 +21,9 @@ public class TagsProvider {
             getOrCreateBuilder(ITags.Blocks.URANINITE_ORE).add(Blcks.URANINITE_ORE);
             getOrCreateBuilder(ITags.Blocks.URANINITE_ORE_POOR).add(Blcks.URANINITE_ORE_POOR);
             getOrCreateBuilder(ITags.Blocks.URANINITE_ORE_DENSE).add(Blcks.URANINITE_ORE_DENSE);
+
+            getOrCreateBuilder(STORAGE_BLOCKS).add(Blcks.URANINITE);
+            getOrCreateBuilder(ITags.Blocks.URANINITE_BLOCK).add(Blcks.URANINITE);
         }
     }
 
@@ -35,6 +38,9 @@ public class TagsProvider {
             getOrCreateBuilder(ITags.Items.URANINITE_ORE).add(Blcks.URANINITE_ORE.asItem());
             getOrCreateBuilder(ITags.Items.URANINITE_ORE_POOR).add(Blcks.URANINITE_ORE_POOR.asItem());
             getOrCreateBuilder(ITags.Items.URANINITE_ORE_DENSE).add(Blcks.URANINITE_ORE_DENSE.asItem());
+
+            getOrCreateBuilder(Tags.Items.STORAGE_BLOCKS).add(Blcks.URANINITE.asItem());
+            getOrCreateBuilder(ITags.Items.URANINITE_BLOCK).add(Blcks.URANINITE.asItem());
         }
     }
 }
