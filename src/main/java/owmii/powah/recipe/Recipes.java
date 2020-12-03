@@ -10,7 +10,7 @@ import owmii.powah.block.energizing.EnergizingRecipe;
 public class Recipes {
     public static final owmii.lib.registry.Registry<IRecipeSerializer<?>> REG = new owmii.lib.registry.Registry(IRecipeSerializer.class, Powah.MOD_ID);
     public static final EnergizingRecipe.Serializer ENERGIZING_SERIALIZER = REG.register("energizing", new EnergizingRecipe.Serializer());
-    public static final IRecipeType<EnergizingRecipe> ENERGIZING = Registry.register(Registry.RECIPE_TYPE, EnergizingRecipe.ID.toString(), new IRecipeType<>() {
+    public static final IRecipeType<EnergizingRecipe> ENERGIZING = Registry.register(Registry.RECIPE_TYPE, EnergizingRecipe.ID.toString(), new IRecipeType<EnergizingRecipe>() {
         public String toString() {
             return EnergizingRecipe.ID.toString();
         }
