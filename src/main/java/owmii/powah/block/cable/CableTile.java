@@ -1,6 +1,7 @@
 package owmii.powah.block.cable;
 
 import net.minecraft.block.Block;
+import net.minecraft.block.BlockState;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.nbt.ListNBT;
@@ -44,21 +45,7 @@ public class CableTile extends AbstractEnergyStorage<Tier, CableConfig, CableBlo
     }
 
     @Override
-    public void readSync(CompoundNBT compound) {
-        super.readSync(compound);
-        ListNBT list = compound.getList("linked_cables", Constants.NBT.TAG_COMPOUND);
-        IntStream.range(0, list.size()).mapToObj(list::getCompound).forEach(nbt -> {
-            Direction direction = Direction.values()[nbt.getInt("direction")];
-            this.proxyMap.put(direction, new EnergyProxy().read(nbt));
-        });
-        ListNBT list1 = compound.getList("energy_directions", Constants.NBT.TAG_COMPOUND);
-        IntStream.range(0, list1.size()).mapToObj(list1::getCompound)
-                .map(nbt -> Direction.values()[nbt.getInt("energy_direction")])
-                .forEach(this.energySides::add);
-    }
-
-    @Override
-    public CompoundNBT writeSync(CompoundNBT compound) {
+    public CompoundNBT write(CompoundNBT compound) {
         ListNBT list = new ListNBT();
         this.proxyMap.forEach((direction, linkedCables) -> {
             CompoundNBT nbt = new CompoundNBT();
@@ -67,6 +54,30 @@ public class CableTile extends AbstractEnergyStorage<Tier, CableConfig, CableBlo
             list.add(nbt);
         });
         compound.put("linked_cables", list);
+        return super.write(compound);
+    }
+
+    @Override
+    public void read(BlockState state, CompoundNBT compound) {
+        super.read(state, compound);
+        ListNBT list = compound.getList("linked_cables", Constants.NBT.TAG_COMPOUND);
+        IntStream.range(0, list.size()).mapToObj(list::getCompound).forEach(nbt -> {
+            Direction direction = Direction.values()[nbt.getInt("direction")];
+            this.proxyMap.put(direction, new EnergyProxy().read(nbt));
+        });
+    }
+
+    @Override
+    public void readSync(CompoundNBT compound) {
+        super.readSync(compound);
+        ListNBT list1 = compound.getList("energy_directions", Constants.NBT.TAG_COMPOUND);
+        IntStream.range(0, list1.size()).mapToObj(list1::getCompound)
+                .map(nbt -> Direction.values()[nbt.getInt("energy_direction")])
+                .forEach(this.energySides::add);
+    }
+
+    @Override
+    public CompoundNBT writeSync(CompoundNBT compound) {
         ListNBT list1 = new ListNBT();
         this.energySides.forEach((direction) -> {
             CompoundNBT nbt = new CompoundNBT();
