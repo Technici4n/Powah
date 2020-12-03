@@ -115,7 +115,7 @@ public class Configs {
         MAGMATOR_SPEC = magmatorPair.getRight();
         Pair<ThermoConfig, ForgeConfigSpec> thermoPair = Config.get(ThermoConfig::new);
         THERMO = register(thermoPair.getLeft());
-        THERMO_SPEC = magmatorPair.getRight();
+        THERMO_SPEC = thermoPair.getRight();
         Pair<SolarConfig, ForgeConfigSpec> solarPair = Config.get(SolarConfig::new);
         SOLAR_PANEL = register(solarPair.getLeft());
         SOLAR_PANEL_SPEC = solarPair.getRight();
