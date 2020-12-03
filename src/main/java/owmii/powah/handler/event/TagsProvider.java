@@ -8,6 +8,7 @@ import owmii.powah.block.Blcks;
 import owmii.powah.handler.ITags;
 
 import static net.minecraftforge.common.Tags.Blocks.ORES;
+import static net.minecraftforge.common.Tags.Blocks.STORAGE_BLOCKS;
 
 public class TagsProvider {
     public static class Blocks extends BlockTagsProvider {

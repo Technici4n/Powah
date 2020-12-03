@@ -2,7 +2,11 @@ b4e6b41cf342f3dbf231004061383d6fcc1ee750 data/forge/tags/blocks/ores.json
 9e511ddddb0113fb55ee590cf6f0ac1705115a57 data/forge/tags/blocks/ores/uraninite.json
 33ef65c699253ca4656d527b2f7564e59e2b7b33 data/forge/tags/blocks/ores/uraninite_dense.json
 18538d798cd69806340f17dde642ec1ef3ce83f7 data/forge/tags/blocks/ores/uraninite_poor.json
+cae74e812fe8a7bf99474fbb7e6e02715e2e483e data/forge/tags/blocks/storage_blocks.json
+cae74e812fe8a7bf99474fbb7e6e02715e2e483e data/forge/tags/blocks/storage_blocks/uraninite.json
 b4e6b41cf342f3dbf231004061383d6fcc1ee750 data/forge/tags/items/ores.json
 9e511ddddb0113fb55ee590cf6f0ac1705115a57 data/forge/tags/items/ores/uraninite.json
 33ef65c699253ca4656d527b2f7564e59e2b7b33 data/forge/tags/items/ores/uraninite_dense.json
 18538d798cd69806340f17dde642ec1ef3ce83f7 data/forge/tags/items/ores/uraninite_poor.json
+cae74e812fe8a7bf99474fbb7e6e02715e2e483e data/forge/tags/items/storage_blocks.json
+cae74e812fe8a7bf99474fbb7e6e02715e2e483e data/forge/tags/items/storage_blocks/uraninite.json
