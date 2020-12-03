@@ -1,3 +1,9 @@
+2.3.6
+- Fixed Configs for thermo_gen and magmator are mixed up, Closes #126.
+- Fixed Excessive cable network size issues, Closes #128.
+- Added uraninite storage blocks tags.
+- Updated lollipop to v3.2.3.
+
 2.3.5
 - Fixed Impossible to disable worldgen, Closes #124.
 
