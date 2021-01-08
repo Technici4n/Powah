@@ -163,7 +163,7 @@
   "info.powah.production": "Produção",
   "info.powah.fuel.consumption": "Consumo de Combustível",
   "info.powah.generation.factor": "Fator de Geração",
-  "info.powah.gen.mode.mode": "Modo Automático",
+  "info.powah.gen.mode": "Modo Automático",
   "info.powah.gen.mode.desc": "O 'Reator' irá parar quando estiver cheio e \niniciar quando tiver menos de 70% de energia.",
   "gui.powah.jei.category.magmatic": "Fluidos Magmáticos",
   "gui.powah.jei.category.heat.sources": "Fontes de Calor",
