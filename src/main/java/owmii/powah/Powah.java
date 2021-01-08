@@ -22,7 +22,6 @@ import owmii.powah.inventory.Containers;
 import owmii.powah.item.Itms;
 import owmii.powah.network.Packets;
 import owmii.powah.recipe.Recipes;
-import owmii.powah.world.gen.Features;
 
 import javax.annotation.Nullable;
 
@@ -54,7 +53,6 @@ public class Powah implements IMod {
         PowahAPI.registerSolidCoolant(Blcks.DRY_ICE, 712, -32);
 
         Packets.register();
-        Features.register();
     }
 
     @Override
