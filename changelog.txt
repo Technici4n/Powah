@@ -1,7 +1,7 @@
 2.3.7
 - Fixed Powah's dry ice and uraninite ores ConfiguredFeatures should be registered, closes #129.
 - Fixed Solar Panel has wrong time, closes #132.
-- Fixed Ender Cell/Ender Gate channel missmatch, closes #131.
+- Fixed Ender Cell/Ender Gate channel mismatch, closes #131.
 
 2.3.6
 - Fixed Configs for thermo_gen and magmator are mixed up, Closes #126.
