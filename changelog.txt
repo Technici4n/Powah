@@ -1,5 +1,6 @@
 2.3.7
 - Fixed Powah's dry ice and uraninite ores ConfiguredFeatures should be registered, closes #129.
+- Fixed Solar Panel has wrong time, closes #132.
 
 2.3.6
 - Fixed Configs for thermo_gen and magmator are mixed up, Closes #126.

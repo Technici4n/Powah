@@ -10,7 +10,6 @@ import owmii.lib.block.AbstractEnergyProvider;
 import owmii.lib.block.IInventoryHolder;
 import owmii.lib.logistics.energy.Energy;
 import owmii.lib.util.Misc;
-import owmii.lib.util.Time;
 import owmii.powah.block.Tier;
 import owmii.powah.block.Tiles;
 import owmii.powah.config.generator.SolarConfig;
@@ -50,12 +49,12 @@ public class SolarTile extends AbstractEnergyProvider<Tier, SolarConfig, SolarBl
         if (isRemote()) return -1;
         boolean flag = chargeItems(1) + extractFromSides(world) > 0;
         if (checkRedstone()) {
-            if (!this.hasLensOfEnder && (!Time.isDay(world) && this.canSeeSunLight || this.ticks % 40L == 0L)) {
-                this.canSeeSunLight = Time.isDay(world) && Misc.canBlockSeeSky(world, this.pos);
+            if (!this.hasLensOfEnder && (!world.isDaytime() && this.canSeeSunLight || this.ticks % 40L == 0L)) {
+                this.canSeeSunLight = world.isDaytime() && Misc.canBlockSeeSky(world, this.pos);
                 sync();
             }
             if (!this.energy.isFull()) {
-                if (this.hasLensOfEnder && Time.isDay(world) || this.canSeeSunLight) {
+                if (this.canSeeSunLight || this.hasLensOfEnder && world.isDaytime()) {
                     this.energy.produce(getGeneration());
                     flag = true;
                 }
