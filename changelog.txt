@@ -1,3 +1,7 @@
+2.3.8
+- Added brazilian translation pt_br.json - Thanks to Mikeliro
+- Added french translation fr_fr.json - Thanks to jordanamr
+
 2.3.7
 - Fixed Powah's dry ice and uraninite ores ConfiguredFeatures should be registered, closes #129.
 - Fixed Solar Panel has wrong time, closes #132.
