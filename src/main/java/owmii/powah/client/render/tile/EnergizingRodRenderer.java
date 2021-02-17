@@ -60,7 +60,8 @@ public class EnergizingRodRenderer extends AbstractTileRenderer<EnergizingRodTil
             Vector3d vec3d2 = pos.subtract(orbPos);
             double d0 = vec3d2.length();
             vec3d2 = vec3d2.normalize();
-            float f5 = (float) Math.acos(vec3d2.y);
+            // Normalize sometimes gives vector with length > 1, which breaks acos if the y component is < -1 or > 1
+            float f5 = (float) Math.acos(MathHelper.clamp(vec3d2.y, -1.0, 1.0));
             float f6 = (float) MathHelper.atan2(vec3d2.z, vec3d2.x);
 
             matrix.rotate(Vector3f.YP.rotationDegrees((((float) Math.PI / 2F) - f6) * (180F / (float) Math.PI)));
