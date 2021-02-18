@@ -18,7 +18,9 @@ import owmii.powah.item.Itms;
 import javax.annotation.Nullable;
 
 public class SolarTile extends AbstractEnergyProvider<Tier, SolarConfig, SolarBlock> implements IInventoryHolder {
-    private boolean canSeeSunLight;
+    public static final String CAN_SEE_SKY = "can_see_sky";
+    public static final String HAS_LENS_OF_ENDER = "has_lens_of_ender";
+    private boolean canSeeSky;
     private boolean hasLensOfEnder;
 
     public SolarTile(Tier variant) {
@@ -33,14 +35,14 @@ public class SolarTile extends AbstractEnergyProvider<Tier, SolarConfig, SolarBl
     @Override
     public void readSync(CompoundNBT compound) {
         super.readSync(compound);
-        this.canSeeSunLight = compound.getBoolean("can_see_sun_light");
-        this.hasLensOfEnder = compound.getBoolean("has_lens_of_ender");
+        this.canSeeSky = compound.getBoolean(CAN_SEE_SKY);
+        this.hasLensOfEnder = compound.getBoolean(HAS_LENS_OF_ENDER);
     }
 
     @Override
     public CompoundNBT writeSync(CompoundNBT compound) {
-        compound.putBoolean("can_see_sun_light", this.canSeeSunLight);
-        compound.putBoolean("has_lens_of_ender", this.hasLensOfEnder);
+        compound.putBoolean(CAN_SEE_SKY, this.canSeeSky);
+        compound.putBoolean(HAS_LENS_OF_ENDER, this.hasLensOfEnder);
         return super.writeSync(compound);
     }
 
@@ -49,12 +51,15 @@ public class SolarTile extends AbstractEnergyProvider<Tier, SolarConfig, SolarBl
         if (isRemote()) return -1;
         boolean flag = chargeItems(1) + extractFromSides(world) > 0;
         if (checkRedstone()) {
-            if (!this.hasLensOfEnder && (!world.isDaytime() && this.canSeeSunLight || this.ticks % 40L == 0L)) {
-                this.canSeeSunLight = world.isDaytime() && Misc.canBlockSeeSky(world, this.pos);
-                sync();
+            if (!this.hasLensOfEnder && this.ticks % 40L == 0L) {
+                boolean canSeeSkyNow = Misc.canBlockSeeSky(world, this.pos.up());
+                if (this.canSeeSky != canSeeSkyNow) {
+                    this.canSeeSky = canSeeSkyNow;
+                    sync();
+                }
             }
             if (!this.energy.isFull()) {
-                if (this.canSeeSunLight || this.hasLensOfEnder && world.isDaytime()) {
+                if ((this.canSeeSky || this.hasLensOfEnder) && world.isDaytime()) {
                     this.energy.produce(getGeneration());
                     flag = true;
                 }
@@ -73,8 +78,8 @@ public class SolarTile extends AbstractEnergyProvider<Tier, SolarConfig, SolarBl
         }
     }
 
-    public boolean canSeeSunLight() {
-        return this.canSeeSunLight;
+    public boolean canSeeSky() {
+        return this.canSeeSky;
     }
 
     @Override

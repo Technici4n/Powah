@@ -82,6 +82,11 @@ public class SolarBlock extends AbstractGeneratorBlock<Tier, SolarConfig, SolarB
         return createState(world, currentPos);
     }
 
+    @Override
+    public boolean propagatesSkylightDown(BlockState state, IBlockReader reader, BlockPos pos) {
+        return false;
+    }
+
     @Nullable
     @Override
     public BlockState getStateForPlacement(BlockItemUseContext context) {
