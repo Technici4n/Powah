@@ -95,32 +95,28 @@ public class CableTile extends AbstractEnergyStorage<Tier, CableConfig, CableBlo
         long received = 0;
         received += pushEnergy(this.world, maxReceive, simulate, direction, this);
         for (BlockPos cablePos : this.proxyMap.get(direction).cables()) {
+            long amount = maxReceive - received;
+            if (amount <= 0) break;
             TileEntity cableTile = this.world.getTileEntity(cablePos);
             if (cableTile instanceof CableTile) {
                 CableTile cable = (CableTile) cableTile;
-                received += cable.pushEnergy(this.world, maxReceive, simulate, direction, this);
+                received += cable.pushEnergy(this.world, amount, simulate, direction, this);
             }
         }
         return received;
     }
 
-    private long pushEnergy(World world, int maxReceive, boolean simulate, @Nullable Direction direction, CableTile cable) {
+    private long pushEnergy(World world, long maxReceive, boolean simulate, @Nullable Direction direction, CableTile cable) {
         long received = 0;
         for (Direction side : this.energySides) {
+            long amount = Math.min(maxReceive - received, this.energy.getMaxExtract());
+            if (amount <= 0) break;
             if (cable.equals(this) && side.equals(direction) || !canExtractEnergy(side)) continue;
             BlockPos pos = this.pos.offset(side);
             if (direction != null && cable.getPos().offset(direction).equals(pos)) continue;
             TileEntity tile = world.getTileEntity(pos);
-            long amount = maxReceive - received;
-            if (amount > 0) {
-                if (Energy.canReceive(tile, side)) {
-                    long net = Math.min(amount, this.energy.getMaxExtract());
-                    amount -= net;
-                    received += Energy.receive(tile, side, net, simulate);
-                    if (maxReceive - received <= 0) {
-                        return received;
-                    }
-                }
+            if (Energy.canReceive(tile, side)) {
+                received += Energy.receive(tile, side, amount, simulate);
             }
         }
         return received;

@@ -38,7 +38,7 @@ public class EnergyCellTile extends AbstractEnergyStorage<Tier, EnergyCellConfig
 
     @Override
     public long extractEnergy(int maxExtract, boolean simulate, @Nullable Direction side) {
-        return super.extractEnergy(maxExtract, isCreative(), side);
+        return super.extractEnergy(maxExtract, simulate || isCreative(), side);
     }
 
     @Override
