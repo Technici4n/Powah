@@ -1,3 +1,14 @@
+2.3.12
+- Fixed Energising rod beam doesn't appear when directly over orb, closes #136 - Thanks to BlueAgent
+- Fixed Solar Panel allowing sky light to pass through - Thanks to BlueAgent.
+- Fixed Solar Panel working under blocks without Lens of Ender - Thanks to BlueAgent.
+- Fixed Mod loading error has occurred message on game launch, closes #150 - Thanks to BlueAgent
+- Added Russian translation ru_ru.json - Thanks to Fr0stmatic
+- Updated lollipop to v3.2.6
+
+2.3.11
+- Added dry ice tags - Thanks to BlueAgent
+
 2.3.10
 - Added Simplified Chinese translation zh_cn.json - Thanks to WuzgXY
 - Updated lollipop to v3.2.5
