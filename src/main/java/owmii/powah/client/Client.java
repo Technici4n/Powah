@@ -12,8 +12,12 @@ public enum Client implements IClient {
 
     @Override
     public void client(FMLClientSetupEvent event) {
-        TileRenderer.register();
         EntityRenderer.register();
+    }
+
+    @Override
+    public void syncClient(FMLClientSetupEvent event) {
+        TileRenderer.register();
         Screens.register();
         ItemModelProperties.register();
         PowahBook.register();
