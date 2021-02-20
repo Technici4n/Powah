@@ -154,7 +154,7 @@ public class AbstractEnderTile<V extends Enum<V> & IVariant<V>, C extends IEnerg
             return this.energy;
         } else {
             return Server.getData(EnderNetwork::new)
-                    .getChannels(this).get(this.channel.get()).setTransfer(getEnergyTransfer());
+                    .getEnergy(this, this.channel.get()).setTransfer(getEnergyTransfer());
         }
     }
 
