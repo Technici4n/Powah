@@ -1,8 +1,8 @@
 package owmii.powah.block.ender;
 
+import com.google.common.collect.ImmutableList;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.nbt.ListNBT;
-import net.minecraft.util.NonNullList;
 import net.minecraft.world.storage.WorldSavedData;
 import owmii.lib.block.IOwnable;
 import owmii.lib.logistics.energy.Energy;
@@ -15,7 +15,8 @@ import java.util.stream.IntStream;
 
 public class EnderNetwork extends WorldSavedData {
     public static final EnderNetwork INSTANCE = new EnderNetwork();
-    private final Map<UUID, NonNullList<Energy>> map = new HashMap<>();
+    public static final int MAX_CHANNELS = 12;
+    private final Map<UUID, ImmutableList<Energy>> map = new HashMap<>();
 
     public EnderNetwork() {
         super("powah_network");
@@ -24,18 +25,15 @@ public class EnderNetwork extends WorldSavedData {
     @Override
     public void read(CompoundNBT nbt) {
         ListNBT listNBT = nbt.getList("network", 10);
+        this.map.clear();
         for (int i = 0; i < listNBT.size(); i++) {
             CompoundNBT nbt1 = listNBT.getCompound(i);
             UUID uuid = nbt1.getUniqueId("owner_id");
-            NonNullList<Energy> list = empty();
             ListNBT listNBT1 = nbt1.getList("channels", 10);
             for (int j = 0; j < listNBT1.size(); j++) {
                 CompoundNBT nbt2 = listNBT1.getCompound(j);
-                Energy energy = Energy.create(0);
-                energy.read(nbt2, true, false);
-                list.set(j, energy);
+                getEnergy(uuid, j).read(nbt2, true, false);
             }
-            this.map.put(uuid, list);
         }
     }
 
@@ -59,9 +57,8 @@ public class EnderNetwork extends WorldSavedData {
     }
 
     public CompoundNBT serialize(UUID uuid) {
-        NonNullList<Energy> list = getChannels(uuid);
         CompoundNBT nbt = new CompoundNBT();
-        nbt.put("channels", list.stream()
+        nbt.put("channels", getChannels(uuid).stream()
                 .map(energy -> energy.write(true, false))
                 .collect(Collectors.toCollection(ListNBT::new)));
         return nbt;
@@ -69,43 +66,43 @@ public class EnderNetwork extends WorldSavedData {
 
     public void deserialize(UUID uuid, CompoundNBT nbt) {
         ListNBT listNBT = nbt.getList("channels", 10);
-        NonNullList<Energy> list = empty();
-        IntStream.range(0, listNBT.size()).mapToObj(listNBT::getCompound).forEachOrdered(nbt1 -> {
-            list.add(Energy.create(0).read(nbt1, true, false));
-        });
-        this.map.put(uuid, list);
+        for (int i = 0; i < listNBT.size(); i++) {
+            getEnergy(uuid, i).read(listNBT.getCompound(i), true, false);
+        }
+    }
+
+    public Energy getEnergy(IOwnable ownable, int channel) {
+        if (ownable.getOwner() != null) {
+            return getEnergy(ownable.getOwner().getId(), channel);
+        }
+        return Energy.create(0);
     }
 
     public Energy getEnergy(UUID uuid, int channel) {
-        return getChannels(uuid).get(channel);
+        if (channel < MAX_CHANNELS) {
+            return getChannels(uuid).get(channel);
+        }
+        return Energy.create(0);
     }
 
     public void setEnergy(UUID uuid, int channel, Energy energy) {
-        NonNullList<Energy> list = getChannels(uuid);
-        list.set(channel, energy);
-        this.map.put(uuid, list);
-        markDirty();
+        if (getEnergy(uuid, channel).clone(energy)) {
+            markDirty();
+        }
     }
 
-    public NonNullList<Energy> getChannels(IOwnable ownable) {
+    public ImmutableList<Energy> getChannels(IOwnable ownable) {
         if (ownable.getOwner() != null) {
             return getChannels(ownable.getOwner().getId());
         }
         return empty();
     }
 
-    public NonNullList<Energy> getChannels(UUID uuid) {
-        if (this.map.containsKey(uuid)) {
-            return this.map.get(uuid);
-        }
-        return empty();
+    public ImmutableList<Energy> getChannels(UUID uuid) {
+        return this.map.computeIfAbsent(uuid, (k) -> empty());
     }
 
-    public static NonNullList<Energy> empty() {
-        return NonNullList.withSize(12, Energy.create(0));
-    }
-
-    public Map<UUID, NonNullList<Energy>> getMap() {
-        return this.map;
+    public static ImmutableList<Energy> empty() {
+        return IntStream.range(0, MAX_CHANNELS).mapToObj(i -> Energy.create(0)).collect(ImmutableList.toImmutableList());
     }
 }
