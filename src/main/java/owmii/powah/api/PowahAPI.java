@@ -1,9 +1,11 @@
 package owmii.powah.api;
 
 import net.minecraft.block.Block;
+import net.minecraft.block.Blocks;
 import net.minecraft.fluid.Fluid;
 import net.minecraft.util.IItemProvider;
 import net.minecraft.util.ResourceLocation;
+import net.minecraftforge.registries.ForgeRegistries;
 import org.apache.commons.lang3.tuple.Pair;
 
 import java.util.HashMap;
@@ -72,6 +74,9 @@ public class PowahAPI {
      * @param heat:  the heat of the block.
      **/
     public static void registerHeatSource(Block block, int heat) {
+        if (block == Blocks.AIR || !ForgeRegistries.BLOCKS.containsKey(block.getRegistryName())) {
+            throw new IllegalArgumentException(block + " is air or unregistered");
+        }
         HEAT_SOURCES.put(block, heat);
     }
 
