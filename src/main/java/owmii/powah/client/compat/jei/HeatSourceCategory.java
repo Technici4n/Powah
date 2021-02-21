@@ -28,6 +28,7 @@ import javax.annotation.Nullable;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class HeatSourceCategory implements IRecipeCategory<HeatSourceCategory.Recipe> {
     public static final ResourceLocation GUI_BACK = new ResourceLocation(Powah.MOD_ID, "textures/gui/jei/misc.png");
@@ -100,6 +101,9 @@ public class HeatSourceCategory implements IRecipeCategory<HeatSourceCategory.Re
         public static List<Recipe> getBucketRecipes(IIngredientManager ingredientManager) {
             Collection<ItemStack> allItemStacks = ingredientManager.getAllIngredients(VanillaTypes.ITEM);
             List<Recipe> recipes = new ArrayList<>();
+            Powah.LOGGER.debug("HEAT SOURCE RECIPE ALL: [" + PowahAPI.HEAT_SOURCES.entrySet().stream()
+                    .map(e -> e.getKey() + " -> " + e.getValue())
+                    .collect(Collectors.joining(", ")) + "]");
             allItemStacks.forEach(stack -> {
                 if (stack.getItem() instanceof BlockItem) {
                     BlockItem item = (BlockItem) stack.getItem();
@@ -140,6 +144,7 @@ public class HeatSourceCategory implements IRecipeCategory<HeatSourceCategory.Re
             }
             this.block = block;
             this.heat = heat;
+            Powah.LOGGER.debug("HEAT SOURCE RECIPE INIT: " + this);
         }
 
         @Nullable
@@ -153,6 +158,11 @@ public class HeatSourceCategory implements IRecipeCategory<HeatSourceCategory.Re
 
         public int getHeat() {
             return this.heat;
+        }
+
+        @Override
+        public String toString() {
+            return "HeatSourceRecipe{" + block.getRegistryName() + (fluid != null ? " (fluid " + fluid.getRegistryName() + ")" : "") + " -> " + heat + "}";
         }
     }
 }

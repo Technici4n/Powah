@@ -1,6 +1,7 @@
 package owmii.powah.config;
 
 import net.minecraft.block.Block;
+import net.minecraft.block.Blocks;
 import net.minecraft.fluid.Fluid;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.ModList;
@@ -71,7 +72,7 @@ public class ConfigHandler {
                     if (ModList.get().isLoaded(rl.getNamespace().toLowerCase())) {
                         try {
                             Block block = ForgeRegistries.BLOCKS.getValue(rl);
-                            if (block != null) {
+                            if (block != null && block != Blocks.AIR && ForgeRegistries.BLOCKS.containsKey(rl)) {
                                 try {
                                     int heat = Integer.parseInt(args[1]);
                                     if (heat > 0 && heat < 900000000) {
@@ -83,7 +84,7 @@ public class ConfigHandler {
                                     LOGGER.fatal(MARKER, "Ignored block: {}, for incorrect args: {}", regName, args[1]);
                                     e.printStackTrace();
                                 }
-                            } else LOGGER.fatal(MARKER, "Ignored Wrong block registry name {}.", regName);
+                            } else LOGGER.fatal(MARKER, "Ignored air or unregistered block registry name {}.", regName);
                         } catch (Exception e) {
                             LOGGER.fatal(MARKER, "Ignored Wrong block registry name {}.", regName);
                             e.printStackTrace();
