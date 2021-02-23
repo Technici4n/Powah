@@ -17,13 +17,13 @@ public class WorldGen {
     public static void gen(BiomeLoadingEvent event) {
         if (Configs.GENERAL.oreGen.get()) {
             BiomeGenerationSettingsBuilder generation = event.getGeneration();
-            generation.func_242513_a(GenerationStage.Decoration.UNDERGROUND_ORES, ORE_POOR);
-            generation.func_242513_a(GenerationStage.Decoration.UNDERGROUND_ORES, ORE);
-            generation.func_242513_a(GenerationStage.Decoration.UNDERGROUND_ORES, ORE_DENSE);
+            generation.withFeature(GenerationStage.Decoration.UNDERGROUND_ORES, ORE_POOR);
+            generation.withFeature(GenerationStage.Decoration.UNDERGROUND_ORES, ORE);
+            generation.withFeature(GenerationStage.Decoration.UNDERGROUND_ORES, ORE_DENSE);
             if (event.getCategory().equals(Biome.Category.TAIGA)
                     || event.getCategory().equals(Biome.Category.ICY)
                     || event.getCategory().equals(Biome.Category.EXTREME_HILLS)) {
-                generation.func_242513_a(GenerationStage.Decoration.UNDERGROUND_ORES, DRY_ICE);
+                generation.withFeature(GenerationStage.Decoration.UNDERGROUND_ORES, DRY_ICE);
             }
         }
     }
