@@ -86,9 +86,8 @@ public class EnderNetwork extends WorldSavedData {
     }
 
     public void setEnergy(UUID uuid, int channel, Energy energy) {
-        if (getEnergy(uuid, channel).clone(energy)) {
-            markDirty();
-        }
+        getEnergy(uuid, channel).clone(energy);
+        markDirty();
     }
 
     public ImmutableList<Energy> getChannels(IOwnable ownable) {
