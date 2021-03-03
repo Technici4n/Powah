@@ -1,3 +1,14 @@
+2.3.14
+- Fixed Ender Cells Void inserted cells on Server Restart - Thanks to BlueAgent
+- Updated lollipop to v3.2.8
+
+2.3.13
+- Fixed Ender Channels 2-12 being the same - Thanks to BlueAgent
+- Fixed powah manual Crafting Panel crash and recipe arrows - Thanks to BlueAgent.
+- Fixed energy Capability Implementation - Thanks to BlueAgent.
+- Fixed Broken Heatsource Recipe - Thanks to BlueAgent
+- Updated lollipop to v3.2.7
+
 2.3.12
 - Fixed Energising rod beam doesn't appear when directly over orb, closes #136 - Thanks to BlueAgent
 - Fixed Solar Panel allowing sky light to pass through - Thanks to BlueAgent.
