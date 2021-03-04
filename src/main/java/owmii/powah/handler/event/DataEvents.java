@@ -5,6 +5,7 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.GatherDataEvent;
 import owmii.powah.Powah;
+import owmii.powah.compat.curios.CurioTagsProvider;
 
 @Mod.EventBusSubscriber(bus = Mod.EventBusSubscriber.Bus.MOD)
 public class DataEvents {
@@ -14,5 +15,6 @@ public class DataEvents {
         TagsProvider.Blocks bp = new TagsProvider.Blocks(generator, Powah.MOD_ID, event.getExistingFileHelper());
         generator.addProvider(bp);
         generator.addProvider(new TagsProvider.Items(generator, bp, Powah.MOD_ID, event.getExistingFileHelper()));
+        generator.addProvider(new CurioTagsProvider(generator, bp, Powah.MOD_ID, event.getExistingFileHelper()));
     }
 }
