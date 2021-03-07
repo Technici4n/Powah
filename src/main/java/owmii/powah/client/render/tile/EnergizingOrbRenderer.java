@@ -62,7 +62,9 @@ public class EnergizingOrbRenderer extends AbstractTileRenderer<EnergizingOrbTil
         }
 
         matrix.push();
-        matrix.translate(0.5D, 0.6D, 0.5D);
+        matrix.translate(0.5D, 0.5D, 0.5D);
+        matrix.rotate(te.getOrbUp().getRotation());
+        matrix.translate(0.0D, 0.1D, 0.0D);
         matrix.scale(1.8F, 1.8F, 1.8F);
         MODEL.render(te, this, matrix, rtb, light, ov);
         matrix.pop();

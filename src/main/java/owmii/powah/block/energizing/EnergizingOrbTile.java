@@ -1,7 +1,11 @@
 package owmii.powah.block.energizing;
 
+import net.minecraft.block.BlockState;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.state.properties.BlockStateProperties;
+import net.minecraft.util.Direction;
+import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.world.World;
 import net.minecraftforge.items.wrapper.RecipeWrapper;
 import owmii.lib.block.AbstractTickableTile;
@@ -39,6 +43,22 @@ public class EnergizingOrbTile extends AbstractTickableTile<IVariant.Single, Ene
         this.buffer.write(nbt, "buffer", true, false);
         nbt.putBoolean("contain_recipe", this.containRecipe);
         return super.writeSync(nbt);
+    }
+
+    public Direction getOrbUp() {
+        if (this.world != null) {
+            BlockState state = this.getBlockState();
+            if (state.hasProperty(BlockStateProperties.FACING)) {
+                return state.get(BlockStateProperties.FACING).getOpposite();
+            }
+        }
+        return Direction.UP;
+    }
+
+    public Vector3d getOrbCenter() {
+        Direction up = getOrbUp();
+        double scale = 0.1;
+        return Vector3d.copyCentered(this.pos).add(up.getXOffset() * scale, up.getYOffset() * scale, up.getZOffset() * scale);
     }
 
     @Nullable

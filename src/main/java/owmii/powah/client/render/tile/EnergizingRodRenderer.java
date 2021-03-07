@@ -22,6 +22,7 @@ import owmii.lib.client.util.RenderTypes;
 import owmii.lib.util.math.V3d;
 import owmii.powah.Powah;
 import owmii.powah.api.wrench.IWrench;
+import owmii.powah.block.energizing.EnergizingOrbTile;
 import owmii.powah.block.energizing.EnergizingRodTile;
 
 public class EnergizingRodRenderer extends AbstractTileRenderer<EnergizingRodTile> {
@@ -48,13 +49,14 @@ public class EnergizingRodRenderer extends AbstractTileRenderer<EnergizingRodTil
             }
         }
 
-        if (te.hasOrb() && te.coolDown.ended() || te.hasOrb() && flag) {
+        EnergizingOrbTile orb = te.getOrbTile();
+        if (orb != null && (te.coolDown.ended() || flag)) {
 
             matrix.push();
             matrix.translate(0.5D, 0.5D, 0.5D);
 
-            V3d pos = V3d.from(te.getPos());
-            V3d orbPos = V3d.from(te.getOrbPos()).up(0.1D);
+            V3d pos = V3d.from(te.getPos()).center();
+            V3d orbPos = V3d.from(orb.getOrbCenter());
             float f2 = 1.0F;
             float f3 = f2 * 0.5F % 1.0F;
             Vector3d vec3d2 = pos.subtract(orbPos);
@@ -86,15 +88,20 @@ public class EnergizingRodRenderer extends AbstractTileRenderer<EnergizingRodTil
             Matrix4f matrix4f = last.getMatrix();
             Matrix3f matrix3f = last.getNormal();
 
-            pos(builder, matrix4f, matrix3f, d12, 0.0F, d13, 255, 255, 255, 1, d23);
-            pos(builder, matrix4f, matrix3f, d12, (float) -d0, d13, 255, 255, 255, 1, d22);
-            pos(builder, matrix4f, matrix3f, d14, (float) -d0, d15, 255, 255, 255, 0.0F, d22);
-            pos(builder, matrix4f, matrix3f, d14, 0.0F, d15, 255, 255, 255, 0.0F, d23);
+            int color = te.getVariant().getColor();
+            int r = 0xFF & (color >> 16);
+            int g = 0xFF & (color >> 8);
+            int b = 0xFF & color;
 
-            pos(builder, matrix4f, matrix3f, d16, 0.0F, d17, 255, 255, 255, 1, d23);
-            pos(builder, matrix4f, matrix3f, d16, (float) -d0, d17, 255, 255, 255, 1, d22);
-            pos(builder, matrix4f, matrix3f, d18, (float) -d0, d19, 255, 255, 255, 0.0F, d22);
-            pos(builder, matrix4f, matrix3f, d18, 0.0F, d19, 255, 255, 255, 0.0F, d23);
+            pos(builder, matrix4f, matrix3f, d12, 0.0F, d13, r, g, b, 1, d23);
+            pos(builder, matrix4f, matrix3f, d12, (float) -d0, d13, r, g, b, 1, d22);
+            pos(builder, matrix4f, matrix3f, d14, (float) -d0, d15, r, g, b, 0.0F, d22);
+            pos(builder, matrix4f, matrix3f, d14, 0.0F, d15, r, g, b, 0.0F, d23);
+
+            pos(builder, matrix4f, matrix3f, d16, 0.0F, d17, r, g, b, 1, d23);
+            pos(builder, matrix4f, matrix3f, d16, (float) -d0, d17, r, g, b, 1, d22);
+            pos(builder, matrix4f, matrix3f, d18, (float) -d0, d19, r, g, b, 0.0F, d22);
+            pos(builder, matrix4f, matrix3f, d18, 0.0F, d19, r, g, b, 0.0F, d23);
 
             matrix.pop();
         }

@@ -11,6 +11,7 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.nbt.NBTUtil;
+import net.minecraft.state.properties.BlockStateProperties;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ActionResultType;
 import net.minecraft.util.Direction;
@@ -18,8 +19,6 @@ import net.minecraft.util.Hand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.BlockRayTraceResult;
 import net.minecraft.util.math.shapes.IBooleanFunction;
-import net.minecraft.util.math.shapes.ISelectionContext;
-import net.minecraft.util.math.shapes.VoxelShape;
 import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.util.text.TranslationTextComponent;
@@ -47,22 +46,22 @@ import java.util.stream.Collectors;
 import static net.minecraft.util.math.shapes.VoxelShapes.combineAndSimplify;
 
 public class EnergizingOrbBlock extends AbstractBlock<IVariant.Single, EnergizingOrbBlock> implements IWaterLoggable, IWrenchable, IHud {
-    private static final VoxelShape SHAPE = combineAndSimplify(makeCuboidShape(3.5D, 5.0D, 3.5D, 12.5D, 14.23D, 12.5D), makeCuboidShape(2.5D, 0.0D, 2.5D, 13.5D, 1.0D, 13.5D), IBooleanFunction.OR);
 
     public EnergizingOrbBlock(Properties properties) {
         super(properties);
-        setDefaultState();
+        setStateProps(state -> state.with(BlockStateProperties.FACING, Direction.DOWN));
+        this.shapes.put(Direction.UP, combineAndSimplify(makeCuboidShape(3.5D, 11.0D, 3.5D, 12.5D, 1.77D, 12.5D), makeCuboidShape(2.5D, 15.0D, 2.5D, 13.5D, 16.0D, 13.5D), IBooleanFunction.OR));
+        this.shapes.put(Direction.DOWN, combineAndSimplify(makeCuboidShape(3.5D, 14.23D, 3.5D, 12.5D, 5.0D, 12.5D), makeCuboidShape(2.5D, 0.0D, 2.5D, 13.5D, 1.0D, 13.5D), IBooleanFunction.OR));
+        this.shapes.put(Direction.NORTH, combineAndSimplify(makeCuboidShape(3.5D, 3.5D, 14.23D, 12.5D, 12.5D, 5.0D), makeCuboidShape(2.5D, 2.5D, 0.0D, 13.5D, 13.5D, 1.0D), IBooleanFunction.OR));
+        this.shapes.put(Direction.SOUTH, combineAndSimplify(makeCuboidShape(3.5D, 3.5D, 11.0D, 12.5D, 12.5D, 1.77D), makeCuboidShape(2.5D, 2.5D, 15.0D, 13.5D, 13.5D, 16.0D), IBooleanFunction.OR));
+        this.shapes.put(Direction.WEST, combineAndSimplify(makeCuboidShape(14.23D, 3.5D, 3.5D, 5.0D, 12.5D, 12.5D), makeCuboidShape(0.0D, 2.5D, 2.5D, 1.0D, 13.5D, 13.5D), IBooleanFunction.OR));
+        this.shapes.put(Direction.EAST, combineAndSimplify(makeCuboidShape(11.0D, 3.5D, 3.5D, 1.77D, 12.5D, 12.5D), makeCuboidShape(15.0D, 2.5D, 2.5D, 16.0D, 13.5D, 13.5D), IBooleanFunction.OR));
     }
 
     @Nullable
     @Override
     public TileEntity createTileEntity(BlockState state, IBlockReader world) {
         return new EnergizingOrbTile();
-    }
-
-    @Override
-    public VoxelShape getShape(BlockState state, IBlockReader worldIn, BlockPos pos, ISelectionContext context) {
-        return SHAPE;
     }
 
     @Override
@@ -98,6 +97,11 @@ public class EnergizingOrbBlock extends AbstractBlock<IVariant.Single, Energizin
     @Override
     public void onBlockAdded(BlockState state, World worldIn, BlockPos pos, BlockState oldState, boolean isMoving) {
         search(worldIn, pos);
+    }
+
+    @Override
+    protected Facing getFacing() {
+        return Facing.ALL;
     }
 
     @Override
@@ -144,7 +148,7 @@ public class EnergizingOrbBlock extends AbstractBlock<IVariant.Single, Energizin
     public void search(World worldIn, BlockPos pos) {
         int range = Configs.ENERGIZING.range.get();
         List<BlockPos> list = BlockPos.getAllInBox(pos.add(-range, -range, -range), pos.add(range, range, range)).map(BlockPos::toImmutable).filter(pos1 -> !pos.equals(pos1)).collect(Collectors.toList());
-        list.forEach(pos1 -> {
+        list.stream().filter(p -> worldIn.isBlockPresent(pos)).forEach(pos1 -> {
             TileEntity tileEntity1 = worldIn.getTileEntity(pos1);
             if (tileEntity1 instanceof EnergizingRodTile) {
                 if (!((EnergizingRodTile) tileEntity1).hasOrb()) {
