@@ -22,6 +22,7 @@ import owmii.lib.client.util.RenderTypes;
 import owmii.lib.util.math.V3d;
 import owmii.powah.Powah;
 import owmii.powah.api.wrench.IWrench;
+import owmii.powah.block.energizing.EnergizingOrbTile;
 import owmii.powah.block.energizing.EnergizingRodTile;
 
 public class EnergizingRodRenderer extends AbstractTileRenderer<EnergizingRodTile> {
@@ -48,13 +49,14 @@ public class EnergizingRodRenderer extends AbstractTileRenderer<EnergizingRodTil
             }
         }
 
-        if (te.hasOrb() && te.coolDown.ended() || te.hasOrb() && flag) {
+        EnergizingOrbTile orb = te.getOrbTile();
+        if (orb != null && (te.coolDown.ended() || flag)) {
 
             matrix.push();
             matrix.translate(0.5D, 0.5D, 0.5D);
 
-            V3d pos = V3d.from(te.getPos());
-            V3d orbPos = V3d.from(te.getOrbPos()).up(0.1D);
+            V3d pos = V3d.from(te.getPos()).center();
+            V3d orbPos = V3d.from(orb.getOrbCenter());
             float f2 = 1.0F;
             float f3 = f2 * 0.5F % 1.0F;
             Vector3d vec3d2 = pos.subtract(orbPos);

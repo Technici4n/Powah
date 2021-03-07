@@ -44,32 +44,38 @@ public class EnergizingRodTile extends AbstractEnergyStorage<Tier, EnergizingCon
     @Override
     protected int postTick(World world) {
         boolean flag = false;
-        if (!this.orbPos.equals(BlockPos.ZERO)) {
-            TileEntity tileEntity = world.getTileEntity(this.orbPos);
-            if (tileEntity instanceof EnergizingOrbTile) {
-                EnergizingOrbTile orb = (EnergizingOrbTile) tileEntity;
+        EnergizingOrbTile orb = getOrbTile();
+        if (orb != null) {
+            if (orb.containRecipe() && this.energy.hasEnergy()) {
+                this.coolDown.onward();
+                flag = true;
+            } else if (this.coolDown.getTicks() > 0) {
+                this.coolDown.back();
+                flag = true;
+            }
 
-                if (orb.containRecipe() && this.energy.hasEnergy()) {
-                    this.coolDown.onward();
-                    flag = true;
-                } else if (this.coolDown.getTicks() > 0) {
-                    this.coolDown.back();
-                    flag = true;
-                }
-
-                if (this.coolDown.ended()) {
-                    long fill = Math.min(this.energy.getEnergyStored(), getBlock().getConfig().getTransfer(getVariant()));
-                    this.energy.consume(orb.fillEnergy(fill));
-                    flag = true;
-                }
+            if (this.coolDown.ended()) {
+                long fill = Math.min(this.energy.getEnergyStored(), getBlock().getConfig().getTransfer(getVariant()));
+                this.energy.consume(orb.fillEnergy(fill));
+                flag = true;
             }
         }
         return flag ? 10 : -1;
     }
 
+    @Nullable
+    public EnergizingOrbTile getOrbTile() {
+        if (this.world != null && this.orbPos != BlockPos.ZERO && world.isBlockPresent(this.orbPos)) {
+            TileEntity tile = this.world.getTileEntity(this.orbPos);
+            if (tile instanceof EnergizingOrbTile) {
+                return (EnergizingOrbTile) tile;
+            }
+        }
+        return null;
+    }
+
     public boolean hasOrb() {
-        if (this.world == null) return false;
-        return this.orbPos != BlockPos.ZERO && this.world.getTileEntity(this.orbPos) instanceof EnergizingOrbTile;
+        return getOrbTile() != null;
     }
 
     public BlockPos getOrbPos() {

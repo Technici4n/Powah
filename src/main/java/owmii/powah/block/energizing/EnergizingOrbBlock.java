@@ -148,7 +148,7 @@ public class EnergizingOrbBlock extends AbstractBlock<IVariant.Single, Energizin
     public void search(World worldIn, BlockPos pos) {
         int range = Configs.ENERGIZING.range.get();
         List<BlockPos> list = BlockPos.getAllInBox(pos.add(-range, -range, -range), pos.add(range, range, range)).map(BlockPos::toImmutable).filter(pos1 -> !pos.equals(pos1)).collect(Collectors.toList());
-        list.forEach(pos1 -> {
+        list.stream().filter(p -> worldIn.isBlockPresent(pos)).forEach(pos1 -> {
             TileEntity tileEntity1 = worldIn.getTileEntity(pos1);
             if (tileEntity1 instanceof EnergizingRodTile) {
                 if (!((EnergizingRodTile) tileEntity1).hasOrb()) {
