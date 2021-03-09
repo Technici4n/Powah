@@ -1,3 +1,12 @@
+2.3.16
+- Added the ability to Let Energizing Orb be placed on any direction - Thanks to BlueAgent
+- Added colors to Energizing Rod Beams based on tier color - Thanks to BlueAgent
+- Bump MC version to 1.16.5
+- Updated lollipop to v3.2.9
+
+2.3.15
+- Added curio support for batteries - Thanks to BlueAgent
+
 2.3.14
 - Fixed Ender Cells Void inserted cells on Server Restart - Thanks to BlueAgent
 - Updated lollipop to v3.2.8

@@ -87,8 +87,8 @@ public class ReactorScreen extends AbstractEnergyScreen<ReactorTile, ReactorCont
     }
 
     @Override
-    protected void func_230459_a_(MatrixStack matrix, int mouseX, int mouseY) {
-        super.func_230459_a_(matrix, mouseX, mouseY);
+    protected void renderHoveredTooltip(MatrixStack matrix, int mouseX, int mouseY) {
+        super.renderHoveredTooltip(matrix, mouseX, mouseY);
         if (Textures.REACTOR_GAUGE.isMouseOver(this.guiLeft + 5, this.guiTop + 5, mouseX, mouseY)) {
             List<ITextComponent> list = new ArrayList<>();
             Energy energy = this.te.getEnergy();
