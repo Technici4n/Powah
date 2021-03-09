@@ -10,8 +10,8 @@ import owmii.powah.item.Itms;
 
 public class ItemModelProperties {
     public static void register() {
-        ItemModelsProperties.func_239418_a_(Itms.BINDING_CARD, new ResourceLocation("bound"), ItemModelProperties::renderBindingCard);
-        ItemModelsProperties.func_239418_a_(Itms.BINDING_CARD_DIM, new ResourceLocation("bound"), ItemModelProperties::renderBindingCard);
+        ItemModelsProperties.registerProperty(Itms.BINDING_CARD, new ResourceLocation("bound"), ItemModelProperties::renderBindingCard);
+        ItemModelsProperties.registerProperty(Itms.BINDING_CARD_DIM, new ResourceLocation("bound"), ItemModelProperties::renderBindingCard);
     }
 
     static float renderBindingCard(ItemStack stack, ClientWorld world, LivingEntity livingEntity) {

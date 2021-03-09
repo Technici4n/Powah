@@ -37,7 +37,7 @@ public class PlayerTransmitterTile extends AbstractEnergyStorage<Tier, PlayerTra
                 Optional<ServerPlayerEntity> op = card.getPlayer(stack);
                 if (op.isPresent()) {
                     ServerPlayerEntity player = op.get();
-                    if (card.isMultiDim(stack) || player.world.func_230315_m_().equals(world.func_230315_m_())) {
+                    if (card.isMultiDim(stack) || player.world.getDimensionType().equals(world.getDimensionType())) {
                         long charging = getConfig().getChargingSpeed(this.variant);
                         for (ItemStack stack1 : Player.invStacks(player)) {
                             if (stack1.isEmpty() || !Energy.chargeable(stack1)) continue;
