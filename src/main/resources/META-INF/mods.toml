@@ -1,5 +1,5 @@
-modLoader="javafml" 
-loaderVersion="[35,)"
+modLoader="javafml"
+loaderVersion="[36,)"
 issueTrackerURL="https://github.com/owmii/powah/issues"
 license="LGPLv3"
 
@@ -23,6 +23,6 @@ Various ways to generate, store and transmit FE power.
 [[dependencies.powah]]
     modId="forge"
     mandatory=true
-    versionRange="[35.0.2,)"
+    versionRange="[36.0.0,)"
     ordering="NONE"
     side="BOTH"
