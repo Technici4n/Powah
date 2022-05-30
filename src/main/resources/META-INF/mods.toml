@@ -5,20 +5,13 @@ license="LGPLv3"
 
 [[mods]]
 modId="powah"
-version="${file.jarVersion}"
+version="${version}"
 displayName="Powah"
 displayURL="https://www.curseforge.com/minecraft/mc-mods/powah"
 authors="owmii"
 description='''
 Various ways to generate, store and transmit FE power.
 '''
-
-[[dependencies.powah]]
-    modId="lollipop"
-    mandatory=true
-    versionRange="[3.2.9,)"
-    ordering="NONE"
-    side="BOTH"
 
 [[dependencies.powah]]
     modId="forge"

@@ -1,61 +1,80 @@
-buildscript {
-    repositories {
-        maven { url = 'https://files.minecraftforge.net/maven' }
-        jcenter()
-        mavenCentral()
-    }
-    dependencies {
-        classpath group: 'net.minecraftforge.gradle', name: 'ForgeGradle', version: '4.1.+', changing: true
-    }
+plugins {
+    id 'dev.architectury.loom' version '0.12.0-SNAPSHOT'
+    id 'maven-publish'
 }
 
-apply plugin: 'net.minecraftforge.gradle'
-apply plugin: 'idea'
+sourceCompatibility = JavaVersion.VERSION_17
+targetCompatibility = JavaVersion.VERSION_17
 
-final def lib = project(':_Lollipop')
-
-version = lib.minecraft_version + '-' + mod_version
-group = lib.mod_group
-archivesBaseName = mod_name
-
-sourceCompatibility = targetCompatibility = compileJava.sourceCompatibility = compileJava.targetCompatibility = '1.8'
-
-minecraft {
-    mappings channel: lib.mappings_channel, version: lib.mappings_version
-    accessTransformer = file('../Lollipop/src/main/resources/META-INF/accesstransformer.cfg')
-}
-
-sourceSets.main.resources { srcDirs = ["src/main/resources", "src/generated/resources"] }
-
-tasks.withType(Jar) {
-    def out = file("../_JARS")
-    destinationDir = out
-}
+archivesBaseName = "dev.technici4n"
+// TODO: figure out publishing later
+//version = project.mod_version
+//group = project.maven_group
 
 repositories {
-    maven { url = "http://dvs1.progwml6.com/files/maven" } //JEI
+    maven { url = "https://dvs1.progwml6.com/files/maven" } //JEI
     maven { url = "https://maven.theillusivec4.top" } //Curios
 }
 
 dependencies {
-    minecraft 'net.minecraftforge:forge:' + lib.minecraft_version + '-' + lib.forge_version
-    compileOnly fg.deobf("mezz.jei:jei-${lib.jei_version}:api")
-    runtimeOnly fg.deobf("mezz.jei:jei-${lib.jei_version}")
-    compile fg.deobf("top.theillusivec4.curios:curios-forge:${lib.curios_version}")
-    compile lib
+    // To change the versions see the gradle.properties file
+    minecraft "com.mojang:minecraft:${project.mc_version}"
+    mappings "de.oceanlabs.mcp:mcp_snapshot:20210309-1.16.5"
+
+    forge "net.minecraftforge:forge:${mc_version}-${forge_version}"
+
+    //modCompileOnly "mezz.jei:jei-${project.jei_version}:api"
+    //modRuntimeOnly "mezz.jei:jei-${project.jei_version}"
+}
+
+sourceSets {
+    main {
+        resources {
+            srcDir "src/generated/resources"
+        }
+    }
+}
+
+processResources {
+    inputs.property "version", project.version
+
+    filesMatching("META-INF/mods.toml") {
+        expand "version": project.version
+    }
+}
+
+tasks.withType(JavaCompile).configureEach {
+    it.options.release = 17
+}
+
+java {
+    // Loom will automatically attach sourcesJar to a RemapSourcesJar task and to the "build" task
+    // if it is present.
+    // If you remove this line, sources will not be generated.
+    withSourcesJar()
 }
 
 jar {
-    manifest {
-        attributes([
-                'FMLAT'                   : 'accesstransformer.cfg',
-                "Specification-Title"     : mod_name,
-                "Specification-Vendor"    : lib.mod_group,
-                "Specification-Version"   : mod_version,
-                "Implementation-Title"    : project.name,
-                "Implementation-Version"  : mod_version,
-                "Implementation-Vendor"   : lib.mod_group,
-                "Implementation-Timestamp": new Date().format("yyyy-MM-dd'T'HH:mm:ssZ")
-        ],)
+    from("LICENSE") {
+        rename { "${it}_${project.archivesBaseName}"}
+    }
+}
+
+// configure the maven publication
+publishing {
+    publications {
+        mavenJava(MavenPublication) {
+            mavenJava(MavenPublication) {
+                from components.java
+            }
+        }
+    }
+
+    // See https://docs.gradle.org/current/userguide/publishing_maven.html for information on how to set up publishing.
+    repositories {
+        // Add repositories to publish to here.
+        // Notice: This block does NOT have the same function as the block in the top level.
+        // The repositories here will be used for publishing your artifact, not for
+        // retrieving dependencies.
     }
 }
