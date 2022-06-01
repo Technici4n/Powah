@@ -1,16 +1,16 @@
 package owmii.lib.registry;
 
 import com.google.common.collect.Lists;
-import net.minecraft.block.Block;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityClassification;
-import net.minecraft.entity.EntityType;
-import net.minecraft.item.BlockItem;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemGroup;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.tileentity.TileEntityType;
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.MobCategory;
+import net.minecraft.world.item.BlockItem;
+import net.minecraft.world.item.CreativeModeTab;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import net.minecraftforge.registries.IForgeRegistryEntry;
@@ -44,14 +44,14 @@ public class Registry<T extends IForgeRegistryEntry<T>> {
         this.objects = new LinkedHashMap<>(objects);
     }
 
-    public <E extends Entity> EntityType<E> register(String name, EntityType.IFactory<E> factory, EntityClassification classification, float width, float height, int updateInterval, int range, boolean sendVelocity) {
-        EntityType<E> entityType = EntityType.Builder.create(factory, classification).size(width, height).setUpdateInterval(updateInterval).setTrackingRange(range).setShouldReceiveVelocityUpdates(sendVelocity).build(name);
+    public <E extends Entity> EntityType<E> register(String name, EntityType.EntityFactory<E> factory, MobCategory classification, float width, float height, int updateInterval, int range, boolean sendVelocity) {
+        EntityType<E> entityType = EntityType.Builder.of(factory, classification).sized(width, height).setUpdateInterval(updateInterval).setTrackingRange(range).setShouldReceiveVelocityUpdates(sendVelocity).build(name);
         register(name, (T) entityType);
         return entityType;
     }
 
-    public <E extends TileEntity> TileEntityType<E> register(String name, Supplier<? extends E> factory, Block... blocks) {
-        TileEntityType<E> type = TileEntityType.Builder.create((Supplier) factory, blocks).build(null);
+    public <E extends BlockEntity> BlockEntityType<E> registerTile(String name, BlockEntityType.BlockEntitySupplier<E> factory, Block... blocks) {
+        BlockEntityType<E> type = BlockEntityType.Builder.of(factory, blocks).build(null);
         register(name, (T) type);
         return type;
     }
@@ -98,7 +98,7 @@ public class Registry<T extends IForgeRegistryEntry<T>> {
         forEach(t -> event.getRegistry().register(t));
     }
 
-    public Registry<Item> getBlockItems(@Nullable ItemGroup group) {
+    public Registry<Item> getBlockItems(@Nullable CreativeModeTab group) {
         Registry<Item> reg = new Registry<>(Item.class, this.id);
         forEach(object -> {
             if (object instanceof Block) {
@@ -122,7 +122,7 @@ public class Registry<T extends IForgeRegistryEntry<T>> {
                         reg.register(rl.getPath(), im, true);
                 } else {
                     Item.Properties properties = new Item.Properties();
-                    if (group != null) properties.group(group);
+                    if (group != null) properties.tab(group);
                     reg.register(rl.getPath(), new BlockItem((Block) object, properties));
                 }
             }

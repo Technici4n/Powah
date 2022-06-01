@@ -1,8 +1,7 @@
 package owmii.lib.logistics;
 
-import net.minecraft.util.Direction;
-
 import javax.annotation.Nullable;
+import net.minecraft.core.Direction;
 import java.util.Arrays;
 import java.util.EnumMap;
 import java.util.stream.Collectors;

@@ -1,8 +1,7 @@
 package owmii.powah.block.energycell;
 
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.Direction;
-import net.minecraft.world.World;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.level.block.state.BlockState;
 import owmii.lib.block.AbstractEnergyStorage;
 import owmii.lib.block.IInventoryHolder;
 import owmii.lib.logistics.Transfer;
@@ -12,19 +11,22 @@ import owmii.powah.block.Tiles;
 import owmii.powah.config.EnergyCellConfig;
 
 import javax.annotation.Nullable;
+import net.minecraft.core.Direction;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.Level;
 
 public class EnergyCellTile extends AbstractEnergyStorage<Tier, EnergyCellConfig, EnergyCellBlock> implements IInventoryHolder {
-    public EnergyCellTile(Tier tier) {
-        super(Tiles.ENERGY_CELL, tier);
+    public EnergyCellTile(BlockPos pos, BlockState state, Tier tier) {
+        super(Tiles.ENERGY_CELL, pos, state, tier);
         this.inv.add(2);
     }
 
-    public EnergyCellTile() {
-        this(Tier.STARTER);
+    public EnergyCellTile(BlockPos pos, BlockState state) {
+        this(pos, state, Tier.STARTER);
     }
 
     @Override
-    protected void onFirstTick(World world) {
+    protected void onFirstTick(Level world) {
         super.onFirstTick(world);
         if (isCreative()) {
             this.energy.setStored(getEnergyCapacity());
@@ -32,7 +34,7 @@ public class EnergyCellTile extends AbstractEnergyStorage<Tier, EnergyCellConfig
     }
 
     @Override
-    protected int postTick(World world) {
+    protected int postTick(Level world) {
         return chargeItems(2) + extractFromSides(world) > 0 ? 10 : -1;
     }
 

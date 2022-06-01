@@ -1,7 +1,7 @@
 package owmii.lib.compat.curios;
 
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.ItemStack;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.fml.ModList;
 import top.theillusivec4.curios.api.CuriosApi;
 
@@ -17,7 +17,7 @@ public class CuriosCompat {
         return loaded == 1;
     }
 
-    public static List<ItemStack> getAllStacks(PlayerEntity player) {
+    public static List<ItemStack> getAllStacks(Player player) {
         final List<ItemStack> list = new ArrayList<>();
         if (isLoaded()) {
             CuriosApi.getCuriosHelper().getCuriosHandler(player).ifPresent(itemHandler -> {

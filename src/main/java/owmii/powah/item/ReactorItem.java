@@ -1,30 +1,29 @@
 package owmii.powah.item;
 
-import com.mojang.blaze3d.matrix.MatrixStack;
 import com.mojang.blaze3d.platform.GlStateManager;
 import com.mojang.blaze3d.systems.RenderSystem;
-import com.mojang.blaze3d.vertex.IVertexBuilder;
+import com.mojang.blaze3d.vertex.PoseStack;
+import com.mojang.blaze3d.vertex.VertexConsumer;
+import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.renderer.IRenderTypeBuffer;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.BlockItemUseContext;
-import net.minecraft.item.ItemGroup;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.ActionResultType;
-import net.minecraft.util.Direction;
-import net.minecraft.util.Hand;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.math.AxisAlignedBB;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.BlockRayTraceResult;
-import net.minecraft.util.math.RayTraceResult;
-import net.minecraft.util.math.vector.Vector3d;
-import net.minecraft.util.text.TextFormatting;
-import net.minecraft.util.text.TranslationTextComponent;
+import net.minecraft.client.renderer.MultiBufferSource;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
+import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.InteractionResult;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.item.CreativeModeTab;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.context.BlockPlaceContext;
+import net.minecraft.world.phys.AABB;
+import net.minecraft.world.phys.BlockHitResult;
+import net.minecraft.world.phys.HitResult;
+import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
-import net.minecraftforge.client.event.RenderWorldLastEvent;
+import net.minecraftforge.client.event.RenderLevelLastEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import owmii.lib.client.util.Render;
@@ -43,48 +42,48 @@ import java.util.stream.Collectors;
 
 @Mod.EventBusSubscriber(Dist.CLIENT)
 public class ReactorItem extends EnergyBlockItem<Tier, ReactorConfig, ReactorBlock> {
-    public ReactorItem(ReactorBlock block, Properties properties, @Nullable ItemGroup group) {
+    public ReactorItem(ReactorBlock block, Properties properties, @Nullable CreativeModeTab group) {
         super(block, properties, group);
     }
 
     @Override
-    public ActionResultType tryPlace(BlockItemUseContext context) {
-        if (!context.canPlace()) return ActionResultType.FAIL;
-        PlayerEntity player = context.getPlayer();
-        if (player == null || Player.isFake(player)) return ActionResultType.FAIL;
-        ItemStack stack = context.getItem();
+    public InteractionResult place(BlockPlaceContext context) {
+        if (!context.canPlace()) return InteractionResult.FAIL;
+        net.minecraft.world.entity.player.Player player = context.getPlayer();
+        if (player == null || Player.isFake(player)) return InteractionResult.FAIL;
+        ItemStack stack = context.getItemInHand();
         if (stack.getCount() < 36 && !player.isCreative()) {
-            player.sendStatusMessage(new TranslationTextComponent("chat.powah.not.enough.blocks", "" + TextFormatting.YELLOW + (36 - stack.getCount()) + TextFormatting.RED).mergeStyle(TextFormatting.RED), true);
-            return ActionResultType.FAIL;
+            player.displayClientMessage(new TranslatableComponent("chat.powah.not.enough.blocks", "" + ChatFormatting.YELLOW + (36 - stack.getCount()) + ChatFormatting.RED).withStyle(ChatFormatting.RED), true);
+            return InteractionResult.FAIL;
         }
-        BlockPos pos = context.getPos();
-        List<BlockPos> list = BlockPos.getAllInBox(pos.add(-1, 0, -1), pos.add(1, 3, 1))
-                .map(BlockPos::toImmutable)
+        BlockPos pos = context.getClickedPos();
+        List<BlockPos> list = BlockPos.betweenClosedStream(pos.offset(-1, 0, -1), pos.offset(1, 3, 1))
+                .map(BlockPos::immutable)
                 .collect(Collectors.toList());
 
         for (BlockPos blockPos : list) {
-            if (!context.getWorld().getBlockState(blockPos).getMaterial().isReplaceable()) return ActionResultType.FAIL;
+            if (!context.getLevel().getBlockState(blockPos).getMaterial().isReplaceable()) return InteractionResult.FAIL;
         }
-        List<LivingEntity> entities = context.getWorld().getEntitiesWithinAABB(LivingEntity.class, new AxisAlignedBB(pos).grow(1.0D, 3.0D, 1.0D));
-        if (!entities.isEmpty()) return ActionResultType.FAIL;
+        List<LivingEntity> entities = context.getLevel().getEntitiesOfClass(LivingEntity.class, new AABB(pos).inflate(1.0D, 3.0D, 1.0D));
+        if (!entities.isEmpty()) return InteractionResult.FAIL;
 
         stack.shrink(35);
-        return super.tryPlace(context);
+        return super.place(context);
     }
 
     static final ResourceLocation OV_TEXTURE = new ResourceLocation(Powah.MOD_ID, "textures/misc/reactor_ov.png");
 
     @SubscribeEvent
     @OnlyIn(Dist.CLIENT)
-    public static void renderOv(RenderWorldLastEvent event) {
+    public static void renderOv(RenderLevelLastEvent event) {
         Minecraft mc = Minecraft.getInstance();
-        PlayerEntity player = mc.player;
-        if (player == null || mc.world == null) return;
-        MatrixStack matrix = event.getMatrixStack();
+        net.minecraft.world.entity.player.Player player = mc.player;
+        if (player == null || mc.level == null) return;
+        PoseStack matrix = event.getPoseStack();
         boolean flag = false;
         boolean flag1 = false;
-        for (Hand hand : Hand.values()) {
-            ItemStack stack = player.getHeldItem(hand);
+        for (InteractionHand hand : InteractionHand.values()) {
+            ItemStack stack = player.getItemInHand(hand);
             if (stack.getItem() instanceof ReactorItem) {
                 flag = true;
                 if (stack.getCount() >= 36) {
@@ -96,46 +95,48 @@ public class ReactorItem extends EnergyBlockItem<Tier, ReactorConfig, ReactorBlo
         }
 
         if (!flag) return;
-        RayTraceResult result = mc.objectMouseOver;
-        if (result instanceof BlockRayTraceResult) {
-            BlockRayTraceResult br = (BlockRayTraceResult) result;
-            boolean isReplaceable = mc.world.getBlockState(br.getPos()).getMaterial().isReplaceable() && !mc.world.isAirBlock(br.getPos());
-            if (mc.world.isAirBlock(br.getPos()) || !isReplaceable && !br.getFace().equals(Direction.UP)) return;
-            BlockPos pos = isReplaceable ? br.getPos() : br.getPos().offset(br.getFace());
-            List<BlockPos> list = BlockPos.getAllInBox(pos.add(-1, 0, -1), pos.add(1, 3, 1)).map(BlockPos::toImmutable).collect(Collectors.toList());
+        HitResult result = mc.hitResult;
+        if (result instanceof BlockHitResult) {
+            BlockHitResult br = (BlockHitResult) result;
+            boolean isReplaceable = mc.level.getBlockState(br.getBlockPos()).getMaterial().isReplaceable() && !mc.level.isEmptyBlock(br.getBlockPos());
+            if (mc.level.isEmptyBlock(br.getBlockPos()) || !isReplaceable && !br.getDirection().equals(Direction.UP)) return;
+            BlockPos pos = isReplaceable ? br.getBlockPos() : br.getBlockPos().relative(br.getDirection());
+            List<BlockPos> list = BlockPos.betweenClosedStream(pos.offset(-1, 0, -1), pos.offset(1, 3, 1)).map(BlockPos::immutable).collect(Collectors.toList());
             int color = 0x75e096;
             if (!flag1 && !player.isCreative()) color = 0xcf040e;
             if (color != 0xcf040e) {
                 for (BlockPos blockPos : list) {
-                    if (!mc.world.getBlockState(blockPos).getMaterial().isReplaceable()) {
+                    if (!mc.level.getBlockState(blockPos).getMaterial().isReplaceable()) {
                         color = 0xcf040e;
                         break;
                     }
                 }
-                List<LivingEntity> entities = mc.world.getEntitiesWithinAABB(LivingEntity.class, new AxisAlignedBB(pos).grow(1.0D, 3.0D, 1.0D));
+                List<LivingEntity> entities = mc.level.getEntitiesOfClass(LivingEntity.class, new AABB(pos).inflate(1.0D, 3.0D, 1.0D));
                 if (!entities.isEmpty()) {
                     color = 0xcf040e;
                 }
             }
-            matrix.push();
-            Vector3d projectedView = Minecraft.getInstance().gameRenderer.getActiveRenderInfo().getProjectedView();
+            matrix.pushPose();
+            Vec3 projectedView = Minecraft.getInstance().gameRenderer.getMainCamera().getPosition();
             matrix.translate(-projectedView.x, -projectedView.y, -projectedView.z);
             matrix.translate(-1.0D, 0.001D, -1.0D);
             float r = (color >> 16 & 0xFF) / 255.0F;
             float g = (color >> 8 & 0xFF) / 255.0F;
             float b = (color & 0xFF) / 255.0F;
-            RenderSystem.pushMatrix();
-            IRenderTypeBuffer.Impl rtb = mc.getRenderTypeBuffers().getBufferSource();
-            IVertexBuilder buffer = rtb.getBuffer(RenderTypes.getTextBlended(OV_TEXTURE));
+            // TODO PORT
+            //RenderSystem.pushMatrix();
+            MultiBufferSource.BufferSource rtb = mc.renderBuffers().bufferSource();
+            VertexConsumer buffer = rtb.getBuffer(RenderTypes.getTextBlended(OV_TEXTURE));
             RenderSystem.blendFunc(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE);
-            buffer.pos(matrix.getLast().getMatrix(), pos.getX(), pos.getY(), pos.getZ() + 3).color(r, g, b, 1.0F).tex(0.0F, 1.0F).lightmap(Render.MAX_LIGHT).endVertex();
-            buffer.pos(matrix.getLast().getMatrix(), pos.getX() + 3, pos.getY(), pos.getZ() + 3).color(r, g, b, 1.0F).tex(1.0F, 1.0F).lightmap(Render.MAX_LIGHT).endVertex();
-            buffer.pos(matrix.getLast().getMatrix(), pos.getX() + 3, pos.getY(), pos.getZ()).color(r, g, b, 1.0F).tex(1.0F, 0.0F).lightmap(Render.MAX_LIGHT).endVertex();
-            buffer.pos(matrix.getLast().getMatrix(), pos.getX(), pos.getY(), pos.getZ()).color(r, g, b, 1.0F).tex(0.0F, 0.0F).lightmap(Render.MAX_LIGHT).endVertex();
-            rtb.finish(RenderTypes.getTextBlended(OV_TEXTURE));
+            buffer.vertex(matrix.last().pose(), pos.getX(), pos.getY(), pos.getZ() + 3).color(r, g, b, 1.0F).uv(0.0F, 1.0F).uv2(Render.MAX_LIGHT).endVertex();
+            buffer.vertex(matrix.last().pose(), pos.getX() + 3, pos.getY(), pos.getZ() + 3).color(r, g, b, 1.0F).uv(1.0F, 1.0F).uv2(Render.MAX_LIGHT).endVertex();
+            buffer.vertex(matrix.last().pose(), pos.getX() + 3, pos.getY(), pos.getZ()).color(r, g, b, 1.0F).uv(1.0F, 0.0F).uv2(Render.MAX_LIGHT).endVertex();
+            buffer.vertex(matrix.last().pose(), pos.getX(), pos.getY(), pos.getZ()).color(r, g, b, 1.0F).uv(0.0F, 0.0F).uv2(Render.MAX_LIGHT).endVertex();
+            rtb.endBatch(RenderTypes.getTextBlended(OV_TEXTURE));
             RenderSystem.blendFunc(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA);
-            RenderSystem.popMatrix();
-            matrix.pop();
+            // TODO PORT
+            //RenderSystem.popMatrix();
+            matrix.popPose();
 
         }
     }
@@ -143,12 +144,12 @@ public class ReactorItem extends EnergyBlockItem<Tier, ReactorConfig, ReactorBlo
 
     @Override
     @OnlyIn(Dist.CLIENT)
-    public void renderByItem(ItemStack stack, MatrixStack matrix, IRenderTypeBuffer rtb, int light, int ov) {
-        matrix.push();
+    public void renderByItem(ItemStack stack, PoseStack matrix, MultiBufferSource rtb, int light, int ov) {
+        matrix.pushPose();
         matrix.translate(0.5D, 0.5D, 0.5D);
         matrix.scale(1.0F, -1.0F, -1.0F);
-        IVertexBuilder buffer = rtb.getBuffer(ReactorRenderer.CUBE_MODEL.getRenderType(new ResourceLocation(Powah.MOD_ID, "textures/model/tile/reactor_block_" + getVariant().getName() + ".png")));
-        ReactorRenderer.CUBE_MODEL.render(matrix, buffer, light, ov, 1.0F, 1.0F, 1.0F, 1.0F);
-        matrix.pop();
+        VertexConsumer buffer = rtb.getBuffer(ReactorRenderer.CUBE_MODEL.renderType(new ResourceLocation(Powah.MOD_ID, "textures/model/tile/reactor_block_" + getVariant().getName() + ".png")));
+        ReactorRenderer.CUBE_MODEL.renderToBuffer(matrix, buffer, light, ov, 1.0F, 1.0F, 1.0F, 1.0F);
+        matrix.popPose();
     }
 }

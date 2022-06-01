@@ -1,11 +1,12 @@
 package owmii.powah.compat.curios;
 
-import net.minecraft.data.BlockTagsProvider;
 import net.minecraft.data.DataGenerator;
-import net.minecraft.data.ItemTagsProvider;
-import net.minecraft.item.Item;
+import net.minecraft.data.tags.BlockTagsProvider;
+import net.minecraft.data.tags.ItemTagsProvider;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.ItemTags;
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.tags.TagKey;
+import net.minecraft.world.item.Item;
 import net.minecraftforge.common.Tags;
 import net.minecraftforge.common.data.ExistingFileHelper;
 import owmii.powah.item.Itms;
@@ -19,20 +20,20 @@ public class CurioTagsProvider extends ItemTagsProvider {
     }
 
     @Override
-    protected void registerTags() {
-        getOrCreateBuilder(CurioTags.CURIO).add(Itms.BATTERY.getAll().toArray(new Item[0]));
+    protected void addTags() {
+        tag(CurioTags.CURIO).add(Itms.BATTERY.getAll().toArray(new Item[0]));
     }
 
     public static class CurioTags {
-        public static final Tags.IOptionalNamedTag<Item> CURIO = tag("curio");
+        public static final TagKey<Item> CURIO = tag("curio");
 
         /**
          * We have to use the curios namespace.
          *
          * @see <a href="https://github.com/TheIllusiveC4/Curios/wiki/How-to-Use:-Developers#marking-items-with-curio-types">Marking Items with Curio Types</a>
          */
-        private static Tags.IOptionalNamedTag<Item> tag(String name) {
-            return ItemTags.createOptional(new ResourceLocation(CuriosApi.MODID, name));
+        private static TagKey<Item> tag(String name) {
+            return ItemTags.create(new ResourceLocation(CuriosApi.MODID, name));
         }
     }
 }

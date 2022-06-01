@@ -1,14 +1,14 @@
 package owmii.powah.item;
 
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.monster.HuskEntity;
-import net.minecraft.entity.monster.ZombieEntity;
-import net.minecraft.entity.monster.ZombieVillagerEntity;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.ActionResultType;
-import net.minecraft.util.Hand;
-import net.minecraft.util.SoundEvents;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.InteractionResult;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.monster.Husk;
+import net.minecraft.world.entity.monster.Zombie;
+import net.minecraft.world.entity.monster.ZombieVillager;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.items.ItemHandlerHelper;
 import owmii.lib.item.ItemBase;
 import owmii.powah.config.Configs;
@@ -19,25 +19,25 @@ public class AerialPearlItem extends ItemBase {
     }
 
     @Override
-    public ActionResultType itemInteractionForEntity(ItemStack stack, PlayerEntity playerIn, LivingEntity target, Hand hand) {
+    public InteractionResult interactLivingEntity(ItemStack stack, Player playerIn, LivingEntity target, InteractionHand hand) {
         if (Configs.GENERAL.player_aerial_pearl.get()) {
             if (this == Itms.AERIAL_PEARL) {
-                if (target.getClass() == ZombieEntity.class
-                        || target.getClass() == ZombieVillagerEntity.class
-                        || target.getClass() == HuskEntity.class) {
-                    if (!playerIn.world.isRemote) {
-                        ItemStack stack1 = playerIn.getHeldItem(hand);
+                if (target.getClass() == Zombie.class
+                        || target.getClass() == ZombieVillager.class
+                        || target.getClass() == Husk.class) {
+                    if (!playerIn.level.isClientSide) {
+                        ItemStack stack1 = playerIn.getItemInHand(hand);
                         ItemHandlerHelper.giveItemToPlayer(playerIn, new ItemStack(Itms.PLAYER_AERIAL_PEARL));
-                        target.playSound(SoundEvents.ENTITY_ZOMBIE_DEATH, 0.5F, 1.0F);
+                        target.playSound(SoundEvents.ZOMBIE_DEATH, 0.5F, 1.0F);
                         target.remove();
                         if (!playerIn.isCreative()) {
                             stack1.shrink(1);
                         }
                     }
-                    return ActionResultType.SUCCESS;
+                    return InteractionResult.SUCCESS;
                 }
             }
         }
-        return super.itemInteractionForEntity(stack, playerIn, target, hand);
+        return super.interactLivingEntity(stack, playerIn, target, hand);
     }
 }

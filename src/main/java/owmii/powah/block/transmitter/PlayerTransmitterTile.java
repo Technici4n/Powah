@@ -1,8 +1,8 @@
 package owmii.powah.block.transmitter;
 
-import net.minecraft.entity.player.ServerPlayerEntity;
-import net.minecraft.item.ItemStack;
-import net.minecraft.world.World;
+import net.minecraft.core.BlockPos;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.world.level.block.state.BlockState;
 import owmii.lib.block.AbstractEnergyStorage;
 import owmii.lib.block.IInventoryHolder;
 import owmii.lib.compat.curios.CuriosCompat;
@@ -15,29 +15,32 @@ import owmii.powah.config.PlayerTransmitterConfig;
 import owmii.powah.item.BindingCardItem;
 
 import java.util.Optional;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.Level;
 
 public class PlayerTransmitterTile extends AbstractEnergyStorage<Tier, PlayerTransmitterConfig, PlayerTransmitterBlock> implements IInventoryHolder {
 
-    public PlayerTransmitterTile(Tier variant) {
-        super(Tiles.PLAYER_TRANSMITTER, variant);
+    public PlayerTransmitterTile(BlockPos pos, BlockState state, Tier variant) {
+        super(Tiles.PLAYER_TRANSMITTER, pos, state, variant);
         this.inv.add(1);
     }
 
-    public PlayerTransmitterTile() {
-        this(Tier.STARTER);
+    public PlayerTransmitterTile(BlockPos pos, BlockState state) {
+        this(pos, state, Tier.STARTER);
     }
 
     @Override
-    protected int postTick(World world) {
+    protected int postTick(Level world) {
         long extracted = 0;
-        if (!isRemote() && checkRedstone()) {
+        if (world instanceof ServerLevel serverLevel && checkRedstone()) {
             ItemStack stack = this.inv.getFirst();
             if (stack.getItem() instanceof BindingCardItem) {
                 BindingCardItem card = (BindingCardItem) stack.getItem();
-                Optional<ServerPlayerEntity> op = card.getPlayer(stack);
+                Optional<ServerPlayer> op = card.getPlayer(serverLevel, stack);
                 if (op.isPresent()) {
-                    ServerPlayerEntity player = op.get();
-                    if (card.isMultiDim(stack) || player.world.getDimensionType().equals(world.getDimensionType())) {
+                    ServerPlayer player = op.get();
+                    if (card.isMultiDim(stack) || player.level.dimensionType().equals(world.dimensionType())) {
                         long charging = getConfig().getChargingSpeed(this.variant);
                         for (ItemStack stack1 : Player.invStacks(player)) {
                             if (stack1.isEmpty() || !Energy.chargeable(stack1)) continue;
@@ -65,7 +68,7 @@ public class PlayerTransmitterTile extends AbstractEnergyStorage<Tier, PlayerTra
 
     @Override
     public boolean canInsert(int slot, ItemStack stack) {
-        return Stack.getTagOrEmpty(stack).hasUniqueId("bound_player_id");
+        return Stack.getTagOrEmpty(stack).hasUUID("bound_player_id");
     }
 
     @Override

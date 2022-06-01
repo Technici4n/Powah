@@ -1,11 +1,11 @@
 package owmii.lib.network.packets;
 
-import net.minecraft.entity.player.ServerPlayerEntity;
-import net.minecraft.network.PacketBuffer;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.Direction;
-import net.minecraft.util.math.BlockPos;
-import net.minecraftforge.fml.network.NetworkEvent;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
+import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraftforge.network.NetworkEvent;
 import owmii.lib.block.AbstractEnergyStorage;
 import owmii.lib.network.IPacket;
 
@@ -25,26 +25,26 @@ public class NextEnergyConfigPacket implements IPacket<NextEnergyConfigPacket> {
     }
 
     @Override
-    public void encode(NextEnergyConfigPacket msg, PacketBuffer buffer) {
+    public void encode(NextEnergyConfigPacket msg, FriendlyByteBuf buffer) {
         buffer.writeInt(msg.mode);
         buffer.writeBlockPos(msg.pos);
     }
 
     @Override
-    public NextEnergyConfigPacket decode(PacketBuffer buffer) {
+    public NextEnergyConfigPacket decode(FriendlyByteBuf buffer) {
         return new NextEnergyConfigPacket(buffer.readInt(), buffer.readBlockPos());
     }
 
     @Override
     public void handle(NextEnergyConfigPacket msg, Supplier<NetworkEvent.Context> ctx) {
         ctx.get().enqueueWork(() -> {
-            ServerPlayerEntity player = ctx.get().getSender();
+            ServerPlayer player = ctx.get().getSender();
             if (player != null) {
-                TileEntity tileEntity = player.world.getTileEntity(msg.pos);
+                BlockEntity tileEntity = player.level.getBlockEntity(msg.pos);
                 if (tileEntity instanceof AbstractEnergyStorage) {
                     AbstractEnergyStorage storage = ((AbstractEnergyStorage) tileEntity);
                     if (msg.mode > 5) storage.getSideConfig().nextTypeAll();
-                    else storage.getSideConfig().nextType(Direction.byIndex(msg.mode));
+                    else storage.getSideConfig().nextType(Direction.from3DDataValue(msg.mode));
                     storage.sync();
                 }
             }

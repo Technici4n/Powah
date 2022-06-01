@@ -1,15 +1,15 @@
 package owmii.lib.client.handler;
 
-import net.minecraft.block.BlockState;
 import net.minecraft.client.Minecraft;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.Hand;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.BlockRayTraceResult;
-import net.minecraft.util.math.RayTraceResult;
-import net.minecraft.util.math.vector.Vector3d;
-import net.minecraft.world.World;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.phys.BlockHitResult;
+import net.minecraft.world.phys.HitResult;
+import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.client.event.RenderGameOverlayEvent;
@@ -22,23 +22,23 @@ public class HudHandler {
     @SubscribeEvent
     public static void renderHud(RenderGameOverlayEvent.Post event) {
         Minecraft mc = Minecraft.getInstance();
-        if (event.getType() == RenderGameOverlayEvent.ElementType.ALL && mc.currentScreen == null) {
-            PlayerEntity player = mc.player;
-            World world = mc.world;
+        if (event.getType() == RenderGameOverlayEvent.ElementType.ALL && mc.screen == null) {
+            Player player = mc.player;
+            Level world = mc.level;
             if (world != null && player != null) {
-                RayTraceResult hit = mc.objectMouseOver;
-                if (hit instanceof BlockRayTraceResult) {
-                    BlockRayTraceResult result = (BlockRayTraceResult) hit;
-                    BlockPos pos = result.getPos();
-                    Vector3d sHit = result.getHitVec();
+                HitResult hit = mc.hitResult;
+                if (hit instanceof BlockHitResult) {
+                    BlockHitResult result = (BlockHitResult) hit;
+                    BlockPos pos = result.getBlockPos();
+                    Vec3 sHit = result.getLocation();
                     BlockState state = world.getBlockState(pos);
                     if (state.getBlock() instanceof IHud) {
-                        ((IHud) state.getBlock()).renderHud(event.getMatrixStack(), state, world, pos, player, result, world.getTileEntity(pos));
+                        ((IHud) state.getBlock()).renderHud(event.getMatrixStack(), state, world, pos, player, result, world.getBlockEntity(pos));
                     }
-                    for (Hand hand : Hand.values()) {
-                        ItemStack stack = player.getHeldItem(hand);
+                    for (InteractionHand hand : InteractionHand.values()) {
+                        ItemStack stack = player.getItemInHand(hand);
                         if (stack.getItem() instanceof IHudItem) {
-                            if (((IHudItem) stack.getItem()).renderHud(world, pos, player, hand, result.getFace(), result.getHitVec())) {
+                            if (((IHudItem) stack.getItem()).renderHud(world, pos, player, hand, result.getDirection(), result.getLocation())) {
                                 break;
                             }
                         }

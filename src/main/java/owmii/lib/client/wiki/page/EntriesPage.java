@@ -1,6 +1,5 @@
 package owmii.lib.client.wiki.page;
 
-import net.minecraft.util.IItemProvider;
 import owmii.lib.client.screen.Texture;
 import owmii.lib.client.wiki.Entry;
 import owmii.lib.client.wiki.Icon;
@@ -8,6 +7,7 @@ import owmii.lib.client.wiki.Page;
 import owmii.lib.client.wiki.Section;
 
 import javax.annotation.Nullable;
+import net.minecraft.world.level.ItemLike;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Consumer;
@@ -19,11 +19,11 @@ public class EntriesPage extends Page {
         super(name, parent);
     }
 
-    public EntriesPage e(IItemProvider provider, Consumer<Entry> consumer) {
+    public EntriesPage e(ItemLike provider, Consumer<Entry> consumer) {
         return e("", provider, consumer);
     }
 
-    public EntriesPage e(String name, IItemProvider icon, Consumer<Entry> consumer) {
+    public EntriesPage e(String name, ItemLike icon, Consumer<Entry> consumer) {
         return e(name, new Icon(icon), consumer);
     }
 

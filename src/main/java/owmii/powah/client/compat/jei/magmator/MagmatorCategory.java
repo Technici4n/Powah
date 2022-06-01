@@ -1,6 +1,5 @@
 package owmii.powah.client.compat.jei.magmator;
 
-import com.mojang.blaze3d.matrix.MatrixStack;
 import mezz.jei.api.constants.VanillaTypes;
 import mezz.jei.api.gui.IRecipeLayout;
 import mezz.jei.api.gui.drawable.IDrawable;
@@ -10,18 +9,20 @@ import mezz.jei.api.ingredients.IIngredients;
 import mezz.jei.api.recipe.category.IRecipeCategory;
 import mezz.jei.api.runtime.IIngredientManager;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.resources.I18n;
-import net.minecraft.fluid.Fluid;
-import net.minecraft.item.BucketItem;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.Items;
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.client.resources.language.I18n;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.item.BucketItem;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
+import net.minecraft.world.level.material.Fluid;
 import net.minecraftforge.fluids.FluidStack;
 import owmii.powah.Powah;
 import owmii.powah.api.PowahAPI;
 import owmii.powah.block.Blcks;
 import owmii.powah.block.Tier;
-
+import com.mojang.blaze3d.vertex.PoseStack;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -31,12 +32,10 @@ public class MagmatorCategory implements IRecipeCategory<MagmatorCategory.Recipe
     public static final ResourceLocation ID = new ResourceLocation(Powah.MOD_ID, "magmatic");
     private final IDrawable background;
     private final IDrawable icon;
-    private final String localizedName;
 
     public MagmatorCategory(IGuiHelper guiHelper) {
         this.background = guiHelper.drawableBuilder(GUI_BACK, 0, 0, 160, 24).addPadding(1, 0, 0, 0).build();
         this.icon = guiHelper.createDrawableIngredient(new ItemStack(Blcks.MAGMATOR.get(Tier.BASIC)));
-        this.localizedName = I18n.format("gui.powah.jei.category.magmatic");
 
     }
 
@@ -51,8 +50,8 @@ public class MagmatorCategory implements IRecipeCategory<MagmatorCategory.Recipe
     }
 
     @Override
-    public String getTitle() {
-        return this.localizedName;
+    public Component getTitle() {
+        return new TranslatableComponent("gui.powah.jei.category.magmatic");
     }
 
     @Override
@@ -81,9 +80,9 @@ public class MagmatorCategory implements IRecipeCategory<MagmatorCategory.Recipe
     }
 
     @Override
-    public void draw(Recipe recipe, MatrixStack matrix, double mouseX, double mouseY) {
+    public void draw(Recipe recipe, PoseStack matrix, double mouseX, double mouseY) {
         Minecraft minecraft = Minecraft.getInstance();
-        minecraft.fontRenderer.drawString(matrix, recipe.heat + " FE/100 mb", 27.0F, 9.0F, 0x444444);
+        minecraft.font.draw(matrix, recipe.heat + " FE/100 mb", 27.0F, 9.0F, 0x444444);
     }
 
     public static class Maker {

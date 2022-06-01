@@ -1,8 +1,8 @@
 package owmii.lib.logistics.energy;
 
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.util.Direction;
-import net.minecraftforge.common.util.Constants;
+import net.minecraft.core.Direction;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.Tag;
 import owmii.lib.block.AbstractEnergyStorage;
 import owmii.lib.logistics.Transfer;
 
@@ -32,8 +32,8 @@ public class SideConfig {
         }
     }
 
-    public void read(CompoundNBT nbt) {
-        if (nbt.contains("side_transfer_type", Constants.NBT.TAG_INT_ARRAY)) {
+    public void read(CompoundTag nbt) {
+        if (nbt.contains("side_transfer_type", Tag.TAG_INT_ARRAY)) {
             int[] arr = nbt.getIntArray("side_transfer_type");
             for (int i = 0; i < arr.length; i++) {
                 this.transfers[i] = Transfer.values()[arr[i]];
@@ -42,7 +42,7 @@ public class SideConfig {
         }
     }
 
-    public CompoundNBT write(CompoundNBT nbt) {
+    public CompoundTag write(CompoundTag nbt) {
         List<Integer> list = new ArrayList<>();
         for (int i = 0, valuesLength = this.transfers.length; i < valuesLength; i++) {
             list.add(i, this.transfers[i].ordinal());
@@ -67,7 +67,7 @@ public class SideConfig {
         boolean flag = true;
         int first = -1;
         for (int i = 1; i < 6; i++) {
-            if (this.storage.isEnergyPresent(Direction.byIndex(i))) {
+            if (this.storage.isEnergyPresent(Direction.from3DDataValue(i))) {
                 if (first < 0) {
                     first = this.transfers[i].ordinal();
                 } else if (this.transfers[i].ordinal() != first) {
@@ -84,7 +84,7 @@ public class SideConfig {
 
     public Transfer getType(@Nullable Direction side) {
         if (side != null) {
-            return this.transfers[side.getIndex()];
+            return this.transfers[side.get3DDataValue()];
         }
         return NONE;
     }
@@ -94,6 +94,6 @@ public class SideConfig {
             return;
         if (!this.storage.isEnergyPresent(side))
             return;
-        this.transfers[side.getIndex()] = type;
+        this.transfers[side.get3DDataValue()] = type;
     }
 }

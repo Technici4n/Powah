@@ -1,18 +1,18 @@
 package owmii.lib.logistics;
 
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.TextFormatting;
-import net.minecraft.util.text.TranslationTextComponent;
+import net.minecraft.ChatFormatting;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.TranslatableComponent;
 import owmii.lib.client.util.Text;
 
 public enum Redstone {
-    IGNORE(TextFormatting.DARK_GRAY),
-    ON(TextFormatting.RED),
-    OFF(TextFormatting.DARK_RED);
+    IGNORE(ChatFormatting.DARK_GRAY),
+    ON(ChatFormatting.RED),
+    OFF(ChatFormatting.DARK_RED);
 
-    private final TextFormatting color;
+    private final ChatFormatting color;
 
-    Redstone(TextFormatting color) {
+    Redstone(ChatFormatting color) {
         this.color = color;
     }
 
@@ -21,8 +21,8 @@ public enum Redstone {
         return values()[i > 2 ? 0 : i];
     }
 
-    public ITextComponent getDisplayName() {
-        return new TranslationTextComponent("info.lollipop.redstone").append(Text.COLON).mergeStyle(TextFormatting.GRAY)
-                .append(new TranslationTextComponent("info.lollipop." + name().toLowerCase()).mergeStyle(this.color));
+    public Component getDisplayName() {
+        return new TranslatableComponent("info.lollipop.redstone").append(Text.COLON).withStyle(ChatFormatting.GRAY)
+                .append(new TranslatableComponent("info.lollipop." + name().toLowerCase()).withStyle(this.color));
     }
 }

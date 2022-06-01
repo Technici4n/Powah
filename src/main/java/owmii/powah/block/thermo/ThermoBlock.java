@@ -1,17 +1,16 @@
 package owmii.powah.block.thermo;
 
-import net.minecraft.block.BlockState;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.player.PlayerInventory;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemGroup;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.ActionResultType;
-import net.minecraft.util.Hand;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.BlockRayTraceResult;
-import net.minecraft.world.IBlockReader;
-import net.minecraft.world.World;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.InteractionResult;
+import net.minecraft.world.entity.player.Inventory;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.CreativeModeTab;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.phys.BlockHitResult;
 import net.minecraftforge.fluids.FluidUtil;
 import owmii.lib.block.AbstractGeneratorBlock;
 import owmii.lib.block.AbstractTileEntity;
@@ -35,33 +34,33 @@ public class ThermoBlock extends AbstractGeneratorBlock<Tier, ThermoConfig, Ther
     }
 
     @Override
-    public EnergyBlockItem getBlockItem(Item.Properties properties, @Nullable ItemGroup group) {
-        return super.getBlockItem(properties.maxStackSize(1), group);
+    public EnergyBlockItem getBlockItem(Item.Properties properties, @Nullable CreativeModeTab group) {
+        return super.getBlockItem(properties.stacksTo(1), group);
     }
 
     @Nullable
     @Override
-    public TileEntity createTileEntity(BlockState state, IBlockReader world) {
-        return new ThermoTile(this.variant);
+    public BlockEntity newBlockEntity(BlockPos pos, BlockState state) {
+        return new ThermoTile(pos, state, this.variant);
     }
 
     @Override
-    public ActionResultType onBlockActivated(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockRayTraceResult blockRayTraceResult) {
-        TileEntity tile = world.getTileEntity(pos);
+    public InteractionResult use(BlockState state, Level world, BlockPos pos, Player player, InteractionHand hand, BlockHitResult blockRayTraceResult) {
+        BlockEntity tile = world.getBlockEntity(pos);
         if (tile instanceof ThermoTile) {
             ThermoTile genTile = (ThermoTile) tile;
             boolean result = FluidUtil.interactWithFluidHandler(player, hand, genTile.getTank());
             if (result) {
                 genTile.sync();
-                return ActionResultType.SUCCESS;
+                return InteractionResult.SUCCESS;
             }
         }
-        return super.onBlockActivated(state, world, pos, player, hand, blockRayTraceResult);
+        return super.use(state, world, pos, player, hand, blockRayTraceResult);
     }
 
     @Nullable
     @Override
-    public AbstractContainer getContainer(int id, PlayerInventory inventory, AbstractTileEntity te, BlockRayTraceResult result) {
+    public AbstractContainer getContainer(int id, Inventory inventory, AbstractTileEntity te, BlockHitResult result) {
         if (te instanceof ThermoTile) {
             return new ThermoContainer(id, inventory, (ThermoTile) te);
         }

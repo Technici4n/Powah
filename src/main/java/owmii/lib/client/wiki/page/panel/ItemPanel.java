@@ -1,13 +1,13 @@
 package owmii.lib.client.wiki.page.panel;
 
 import com.google.common.collect.Lists;
-import com.mojang.blaze3d.matrix.MatrixStack;
 import com.mojang.blaze3d.systems.RenderSystem;
+import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.FontRenderer;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.Items;
-import net.minecraft.util.IItemProvider;
+import net.minecraft.client.gui.Font;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
+import net.minecraft.world.level.ItemLike;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import owmii.lib.client.screen.Texture;
@@ -19,8 +19,8 @@ import owmii.lib.registry.IRegistryObject;
 
 import java.util.List;
 
-public class ItemPanel<T extends IItemProvider> extends Panel {
-    private final IItemProvider[] items;
+public class ItemPanel<T extends ItemLike> extends Panel {
+    private final ItemLike[] items;
     private int currItem;
 
     @OnlyIn(Dist.CLIENT)
@@ -38,26 +38,26 @@ public class ItemPanel<T extends IItemProvider> extends Panel {
     }
 
     public ItemPanel(List<T> items, Section parent) {
-        this(items.toArray(new IItemProvider[0]), parent);
+        this(items.toArray(new ItemLike[0]), parent);
     }
 
-    public ItemPanel(IItemProvider[] items, Section parent) {
+    public ItemPanel(ItemLike[] items, Section parent) {
         super("", parent);
         this.items = items;
     }
 
     @SuppressWarnings("unchecked")
-    protected static IItemProvider[] getSiblings(IItemProvider item) {
+    protected static ItemLike[] getSiblings(ItemLike item) {
         if (item.equals(Items.AIR)) {
-            return new IItemProvider[0];
+            return new ItemLike[0];
         } else {
             if (item instanceof IRegistryObject) {
                 IRegistryObject object = (IRegistryObject) item;
-                List<IItemProvider> list = Lists.newArrayList(object.getSiblings());
-                return list.toArray(new IItemProvider[0]);
+                List<ItemLike> list = Lists.newArrayList(object.getSiblings());
+                return list.toArray(new ItemLike[0]);
             }
         }
-        return new IItemProvider[]{item};
+        return new ItemLike[]{item};
     }
 
     @Override
@@ -91,19 +91,20 @@ public class ItemPanel<T extends IItemProvider> extends Panel {
 
     @Override
     @OnlyIn(Dist.CLIENT)
-    public void render(MatrixStack matrix, int x, int y, int mx, int my, float pt, FontRenderer font, WikiScreen screen) {
+    public void render(PoseStack matrix, int x, int y, int mx, int my, float pt, Font font, WikiScreen screen) {
         ItemStack stack = new ItemStack(getItem());
         if (Texture.WIKI_BIG_FRM.isMouseOver(x + 161 / 2 - 42 / 2, y + 10, mx, my)) {
             screen.hoveredStack = stack;
         }
-        RenderSystem.pushMatrix();
-        RenderSystem.translatef(x + 4 + 161 / 2.0F - 42 / 2.0F, y + 4 + 10, 0);
+        var globalStack = RenderSystem.getModelViewStack();
+        globalStack.pushPose();
+        globalStack.translate(x + 4 + 161 / 2.0F - 42 / 2.0F, y + 4 + 10, 0);
         Texture.WIKI_BIG_FRM.draw(matrix, -4, -4);
-        RenderSystem.scaled(2.1, 2.1, 1);
-        Minecraft.getInstance().getItemRenderer().renderItemAndEffectIntoGUI(stack, 0, 0);
-        RenderSystem.popMatrix();
-        String s = stack.getDisplayName().getString();
-        font.drawString(matrix, s, x + 161 / 2.0F - font.getStringWidth(s) / 2.0F, y + 61, 0x2D3F48);
+        globalStack.scale(2.1f, 2.1f, 1);
+        Minecraft.getInstance().getItemRenderer().renderAndDecorateItem(stack, 0, 0);
+        globalStack.popPose();
+        String s = stack.getHoverName().getString();
+        font.draw(matrix, s, x + 161 / 2.0F - font.width(s) / 2.0F, y + 61, 0x2D3F48);
     }
 
     @Override
@@ -125,7 +126,7 @@ public class ItemPanel<T extends IItemProvider> extends Panel {
         this.currItem = 0;
     }
 
-    public IItemProvider getItem() {
+    public ItemLike getItem() {
         return this.items[this.currItem].asItem();
     }
 }

@@ -1,34 +1,33 @@
 package owmii.lib.logistics.inventory;
 
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.player.PlayerInventory;
-import net.minecraft.inventory.container.Container;
-import net.minecraft.inventory.container.ContainerType;
-import net.minecraft.inventory.container.Slot;
-import net.minecraft.network.PacketBuffer;
-import net.minecraft.world.World;
-
 import javax.annotation.Nullable;
+import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.world.entity.player.Inventory;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.inventory.AbstractContainerMenu;
+import net.minecraft.world.inventory.MenuType;
+import net.minecraft.world.inventory.Slot;
+import net.minecraft.world.level.Level;
 
-public class AbstractContainer extends Container {
-    public final PlayerEntity player;
-    public final World world;
+public class AbstractContainer extends AbstractContainerMenu {
+    public final Player player;
+    public final Level world;
 
-    public AbstractContainer(@Nullable ContainerType<?> type, int id, PlayerInventory inventory, PacketBuffer buffer) {
+    public AbstractContainer(@Nullable MenuType<?> type, int id, Inventory inventory, FriendlyByteBuf buffer) {
         this(type, id, inventory);
     }
 
-    public AbstractContainer(@Nullable ContainerType<?> type, int id, PlayerInventory inventory) {
+    public AbstractContainer(@Nullable MenuType<?> type, int id, Inventory inventory) {
         super(type, id);
         this.player = inventory.player;
-        this.world = this.player.world;
+        this.world = this.player.level;
         init(inventory);
     }
 
-    protected void init(PlayerInventory inventory) {
+    protected void init(Inventory inventory) {
     }
 
-    protected void addPlayerInventory(PlayerInventory playerInventory, int x, int y, int yDif) {
+    protected void addPlayerInventory(Inventory playerInventory, int x, int y, int yDif) {
         for (int l = 0; l < 3; ++l) {
             for (int k = 0; k < 9; ++k) {
                 addSlot(new Slot(playerInventory, k + l * 9 + 9, x + k * 18, l * 18 + y));
@@ -40,13 +39,13 @@ public class AbstractContainer extends Container {
     }
 
     @Override
-    public boolean canInteractWith(PlayerEntity playerIn) {
+    public boolean stillValid(Player playerIn) {
         return true;
     }
 
-    public static final Container DUMMY = new Container(null, 0) {
+    public static final AbstractContainerMenu DUMMY = new AbstractContainerMenu(null, 0) {
         @Override
-        public boolean canInteractWith(PlayerEntity playerIn) {
+        public boolean stillValid(Player playerIn) {
             return true;
         }
     };

@@ -1,8 +1,8 @@
 package owmii.lib.client.renderer.item;
 
-import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.renderer.color.IBlockColor;
+import net.minecraft.client.color.block.BlockColor;
+import net.minecraft.world.level.block.Block;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
@@ -11,7 +11,7 @@ import java.util.Collection;
 
 public interface IBlockColorHolder {
     @OnlyIn(Dist.CLIENT)
-    IBlockColor getBlockColor();
+    BlockColor getBlockColor();
 
     static void registerAll(Block... blocks) {
         registerAll(Arrays.asList(blocks));

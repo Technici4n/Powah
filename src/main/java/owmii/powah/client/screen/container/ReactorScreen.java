@@ -1,15 +1,15 @@
 package owmii.powah.client.screen.container;
 
-import com.mojang.blaze3d.matrix.MatrixStack;
 import com.mojang.blaze3d.systems.RenderSystem;
+import com.mojang.blaze3d.vertex.PoseStack;
+import net.minecraft.ChatFormatting;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
-import net.minecraft.entity.player.PlayerInventory;
-import net.minecraft.inventory.container.PlayerContainer;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.StringTextComponent;
-import net.minecraft.util.text.TextFormatting;
-import net.minecraft.util.text.TranslationTextComponent;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.TextComponent;
+import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.entity.player.Inventory;
+import net.minecraft.world.inventory.InventoryMenu;
 import net.minecraftforge.fluids.FluidAttributes;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.capability.templates.FluidTank;
@@ -32,38 +32,38 @@ import java.util.List;
 public class ReactorScreen extends AbstractEnergyScreen<ReactorTile, ReactorContainer> {
     private IconButton modeButton = IconButton.EMPTY;
 
-    public ReactorScreen(ReactorContainer container, PlayerInventory inv, ITextComponent title) {
+    public ReactorScreen(ReactorContainer container, Inventory inv, Component title) {
         super(container, inv, title, Textures.REACTOR);
     }
 
     @Override
     protected void init() {
         super.init();
-        this.modeButton = addButton(new IconButton(this.guiLeft - 11, this.guiTop + 10, Textures.REACTOR_GEN_MODE.get(this.te.isGenModeOn()), b -> {
-            Powah.NET.toServer(new SwitchGenModePacket(this.te.getPos()));
+        this.modeButton = addButton(new IconButton(this.leftPos - 11, this.topPos + 10, Textures.REACTOR_GEN_MODE.get(this.te.isGenModeOn()), b -> {
+            Powah.NET.toServer(new SwitchGenModePacket(this.te.getBlockPos()));
             this.te.setGenModeOn(!this.te.isGenModeOn());
         }, this).setTooltip(tooltip -> {
-            tooltip.add(new TranslationTextComponent("info.powah.gen.mode").mergeStyle(TextFormatting.GRAY).append(Text.COLON)
-                    .append(new TranslationTextComponent("info.lollipop." + (this.te.isGenModeOn() ? "on" : "off")).mergeStyle(this.te.isGenModeOn() ? TextFormatting.GREEN : TextFormatting.RED)));
-            tooltip.add(new TranslationTextComponent("info.powah.gen.mode.desc").mergeStyle(TextFormatting.DARK_GRAY));
+            tooltip.add(new TranslatableComponent("info.powah.gen.mode").withStyle(ChatFormatting.GRAY).append(Text.COLON)
+                    .append(new TranslatableComponent("info.lollipop." + (this.te.isGenModeOn() ? "on" : "off")).withStyle(this.te.isGenModeOn() ? ChatFormatting.GREEN : ChatFormatting.RED)));
+            tooltip.add(new TranslatableComponent("info.powah.gen.mode.desc").withStyle(ChatFormatting.DARK_GRAY));
         }));
     }
 
     @Override
-    public void tick() {
-        super.tick();
+    public void containerTick() {
+        super.containerTick();
         this.modeButton.setTexture(Textures.REACTOR_GEN_MODE.get(this.te.isGenModeOn()));
     }
 
     @Override
-    protected void drawBackground(MatrixStack matrix, float partialTicks, int mouseX, int mouseY) {
+    protected void drawBackground(PoseStack matrix, float partialTicks, int mouseX, int mouseY) {
         super.drawBackground(matrix, partialTicks, mouseX, mouseY);
-        Textures.REACTOR_GAUGE.drawScalableH(matrix, this.te.getEnergy().subSized(), this.guiLeft + 5, this.guiTop + 5);
-        Textures.REACTOR_GAUGE_URN.drawScalableH(matrix, this.te.fuel.subSized(), this.guiLeft + 103, this.guiTop + 13);
-        Textures.REACTOR_GAUGE_CARBON.drawScalableH(matrix, this.te.carbon.subSized(), this.guiLeft + 51, this.guiTop + 6);
-        Textures.REACTOR_GAUGE_REDSTONE.drawScalableH(matrix, this.te.redstone.subSized(), this.guiLeft + 51, this.guiTop + 52);
-        Textures.REACTOR_GAUGE_COOLANT.drawScalableH(matrix, this.te.solidCoolant.subSized(), this.guiLeft + 140, this.guiTop + 52);
-        Textures.REACTOR_GAUGE_TEMP.drawScalableH(matrix, this.te.temp.subSized(), this.guiLeft + 114, this.guiTop + 28);
+        Textures.REACTOR_GAUGE.drawScalableH(matrix, this.te.getEnergy().subSized(), this.leftPos + 5, this.topPos + 5);
+        Textures.REACTOR_GAUGE_URN.drawScalableH(matrix, this.te.fuel.subSized(), this.leftPos + 103, this.topPos + 13);
+        Textures.REACTOR_GAUGE_CARBON.drawScalableH(matrix, this.te.carbon.subSized(), this.leftPos + 51, this.topPos + 6);
+        Textures.REACTOR_GAUGE_REDSTONE.drawScalableH(matrix, this.te.redstone.subSized(), this.leftPos + 51, this.topPos + 52);
+        Textures.REACTOR_GAUGE_COOLANT.drawScalableH(matrix, this.te.solidCoolant.subSized(), this.leftPos + 140, this.topPos + 52);
+        Textures.REACTOR_GAUGE_TEMP.drawScalableH(matrix, this.te.temp.subSized(), this.leftPos + 114, this.topPos + 28);
 
         Textures.REACTOR_GEN_MODE_BG.draw(matrix, this.modeButton.x - 4, this.modeButton.y - 4);
 
@@ -78,85 +78,85 @@ public class ReactorScreen extends AbstractEnergyScreen<ReactorTile, ReactorCont
                 float green = (color >> 8 & 0xFF) / 255.0F;
                 float blue = (color & 0xFF) / 255.0F;
                 RenderSystem.color3f(red, green, blue);
-                TextureAtlasSprite sprite = this.mc.getAtlasSpriteGetter(PlayerContainer.LOCATION_BLOCKS_TEXTURE).apply(still);
-                bindTexture(PlayerContainer.LOCATION_BLOCKS_TEXTURE);
-                Draw.gaugeV(sprite, this.guiLeft + 157, this.guiTop + 5, 14, 65, tank.getCapacity(), tank.getFluidAmount());
+                TextureAtlasSprite sprite = this.mc.getTextureAtlas(InventoryMenu.BLOCK_ATLAS).apply(still);
+                bindTexture(InventoryMenu.BLOCK_ATLAS);
+                Draw.gaugeV(sprite, this.leftPos + 157, this.topPos + 5, 14, 65, tank.getCapacity(), tank.getFluidAmount());
                 RenderSystem.color3f(1.0F, 1.0F, 1.0F);
             }
         }
     }
 
     @Override
-    protected void renderHoveredTooltip(MatrixStack matrix, int mouseX, int mouseY) {
-        super.renderHoveredTooltip(matrix, mouseX, mouseY);
-        if (Textures.REACTOR_GAUGE.isMouseOver(this.guiLeft + 5, this.guiTop + 5, mouseX, mouseY)) {
-            List<ITextComponent> list = new ArrayList<>();
+    protected void renderTooltip(PoseStack matrix, int mouseX, int mouseY) {
+        super.renderTooltip(matrix, mouseX, mouseY);
+        if (Textures.REACTOR_GAUGE.isMouseOver(this.leftPos + 5, this.topPos + 5, mouseX, mouseY)) {
+            List<Component> list = new ArrayList<>();
             Energy energy = this.te.getEnergy();
-            list.add(new TranslationTextComponent("info.powah.gen.mode").mergeStyle(TextFormatting.GRAY).append(Text.COLON).append(new TranslationTextComponent("info.lollipop." + (this.te.isGenModeOn() ? "on" : "off")).mergeStyle(this.te.isGenModeOn() ? TextFormatting.GREEN : TextFormatting.RED)));
-            list.add(new TranslationTextComponent("info.lollipop.stored").mergeStyle(TextFormatting.GRAY).append(Text.COLON).append(new TranslationTextComponent("info.lollipop.fe.stored", Util.addCommas(energy.getStored()), Util.numFormat(energy.getCapacity())).mergeStyle(TextFormatting.DARK_GRAY)));
-            list.add(new TranslationTextComponent("info.powah.generation.factor").mergeStyle(TextFormatting.GRAY).append(Text.COLON).append(new StringTextComponent(Util.numFormat(this.te.getGeneration())).append(new TranslationTextComponent("info.lollipop.fe.pet.tick")).mergeStyle(TextFormatting.DARK_GRAY)));
-            list.add(new TranslationTextComponent("info.lollipop.generating").mergeStyle(TextFormatting.GRAY).append(Text.COLON).append(new StringTextComponent(Util.numFormat((long) this.te.calcProduction())).append(new TranslationTextComponent("info.lollipop.fe.pet.tick")).mergeStyle(TextFormatting.DARK_GRAY)));
-            list.add(new TranslationTextComponent("info.lollipop.max.extract").mergeStyle(TextFormatting.GRAY).append(Text.COLON).append(new StringTextComponent(Util.numFormat(energy.getMaxExtract())).append(new TranslationTextComponent("info.lollipop.fe.pet.tick")).mergeStyle(TextFormatting.DARK_GRAY)));
+            list.add(new TranslatableComponent("info.powah.gen.mode").withStyle(ChatFormatting.GRAY).append(Text.COLON).append(new TranslatableComponent("info.lollipop." + (this.te.isGenModeOn() ? "on" : "off")).withStyle(this.te.isGenModeOn() ? ChatFormatting.GREEN : ChatFormatting.RED)));
+            list.add(new TranslatableComponent("info.lollipop.stored").withStyle(ChatFormatting.GRAY).append(Text.COLON).append(new TranslatableComponent("info.lollipop.fe.stored", Util.addCommas(energy.getStored()), Util.numFormat(energy.getCapacity())).withStyle(ChatFormatting.DARK_GRAY)));
+            list.add(new TranslatableComponent("info.powah.generation.factor").withStyle(ChatFormatting.GRAY).append(Text.COLON).append(new TextComponent(Util.numFormat(this.te.getGeneration())).append(new TranslatableComponent("info.lollipop.fe.pet.tick")).withStyle(ChatFormatting.DARK_GRAY)));
+            list.add(new TranslatableComponent("info.lollipop.generating").withStyle(ChatFormatting.GRAY).append(Text.COLON).append(new TextComponent(Util.numFormat((long) this.te.calcProduction())).append(new TranslatableComponent("info.lollipop.fe.pet.tick")).withStyle(ChatFormatting.DARK_GRAY)));
+            list.add(new TranslatableComponent("info.lollipop.max.extract").withStyle(ChatFormatting.GRAY).append(Text.COLON).append(new TextComponent(Util.numFormat(energy.getMaxExtract())).append(new TranslatableComponent("info.lollipop.fe.pet.tick")).withStyle(ChatFormatting.DARK_GRAY)));
 
-            func_243308_b(matrix, list, mouseX, mouseY);
+            renderComponentTooltip(matrix, list, mouseX, mouseY);
         }
 
-        if (Textures.REACTOR_GAUGE_TEMP.isMouseOver(this.guiLeft + 114, this.guiTop + 28, mouseX, mouseY)) {
-            List<ITextComponent> list = new ArrayList<>();
-            list.add(new StringTextComponent(TextFormatting.GRAY + String.format("%.1f", this.te.temp.getTicks()) + " C"));
-            func_243308_b(matrix, list, mouseX, mouseY);
+        if (Textures.REACTOR_GAUGE_TEMP.isMouseOver(this.leftPos + 114, this.topPos + 28, mouseX, mouseY)) {
+            List<Component> list = new ArrayList<>();
+            list.add(new TextComponent(ChatFormatting.GRAY + String.format("%.1f", this.te.temp.getTicks()) + " C"));
+            renderComponentTooltip(matrix, list, mouseX, mouseY);
         }
 
-        if (Textures.REACTOR_GAUGE_URN.isMouseOver(this.guiLeft + 103, this.guiTop + 13, mouseX, mouseY)) {
-            List<ITextComponent> list = new ArrayList<>();
-            list.add(new TranslationTextComponent("item.powah.uraninite").mergeStyle(TextFormatting.GREEN));
-            list.add(new TranslationTextComponent("info.lollipop.stored").mergeStyle(TextFormatting.GRAY).append(Text.COLON).append(new TranslationTextComponent("info.lollipop.mb.stored", String.format("%.0f", this.te.fuel.getTicks()), String.format("%.0f", this.te.fuel.getMax())).mergeStyle(TextFormatting.DARK_GRAY)));
-            list.add(new TranslationTextComponent("info.lollipop.using").mergeStyle(TextFormatting.GRAY).append(Text.COLON).append(new StringTextComponent(TextFormatting.GREEN + String.format("%.4f", this.te.calcConsumption())).append(new TranslationTextComponent("info.lollipop.mb.pet.tick")).mergeStyle(TextFormatting.DARK_GRAY)));
-            func_243308_b(matrix, list, mouseX, mouseY);
+        if (Textures.REACTOR_GAUGE_URN.isMouseOver(this.leftPos + 103, this.topPos + 13, mouseX, mouseY)) {
+            List<Component> list = new ArrayList<>();
+            list.add(new TranslatableComponent("item.powah.uraninite").withStyle(ChatFormatting.GREEN));
+            list.add(new TranslatableComponent("info.lollipop.stored").withStyle(ChatFormatting.GRAY).append(Text.COLON).append(new TranslatableComponent("info.lollipop.mb.stored", String.format("%.0f", this.te.fuel.getTicks()), String.format("%.0f", this.te.fuel.getMax())).withStyle(ChatFormatting.DARK_GRAY)));
+            list.add(new TranslatableComponent("info.lollipop.using").withStyle(ChatFormatting.GRAY).append(Text.COLON).append(new TextComponent(ChatFormatting.GREEN + String.format("%.4f", this.te.calcConsumption())).append(new TranslatableComponent("info.lollipop.mb.pet.tick")).withStyle(ChatFormatting.DARK_GRAY)));
+            renderComponentTooltip(matrix, list, mouseX, mouseY);
         }
 
-        if (Textures.REACTOR_GAUGE_CARBON.isMouseOver(this.guiLeft + 51, this.guiTop + 6, mouseX, mouseY)) {
-            List<ITextComponent> list = new ArrayList<>();
+        if (Textures.REACTOR_GAUGE_CARBON.isMouseOver(this.leftPos + 51, this.topPos + 6, mouseX, mouseY)) {
+            List<Component> list = new ArrayList<>();
             boolean b = this.te.carbon.isEmpty();
-            list.add((new TranslationTextComponent("info.powah.carbon")).mergeStyle(TextFormatting.GRAY));
-            list.add(new TranslationTextComponent("info.lollipop.stored").mergeStyle(TextFormatting.DARK_GRAY).append(Text.COLON).append(new TranslationTextComponent("info.lollipop.mb.stored", String.format("%.1f", this.te.carbon.getTicks()), String.format("%.1f", this.te.carbon.getMax())).mergeStyle(TextFormatting.DARK_GRAY)));
-            list.add(new StringTextComponent(""));
-            list.add(new TranslationTextComponent("enchantment.minecraft.efficiency").mergeStyle(TextFormatting.DARK_AQUA));
-            list.add(new StringTextComponent(TextFormatting.DARK_RED + (b ? "+0 C" : "+180 C")));
-            func_243308_b(matrix, list, mouseX, mouseY);
+            list.add((new TranslatableComponent("info.powah.carbon")).withStyle(ChatFormatting.GRAY));
+            list.add(new TranslatableComponent("info.lollipop.stored").withStyle(ChatFormatting.DARK_GRAY).append(Text.COLON).append(new TranslatableComponent("info.lollipop.mb.stored", String.format("%.1f", this.te.carbon.getTicks()), String.format("%.1f", this.te.carbon.getMax())).withStyle(ChatFormatting.DARK_GRAY)));
+            list.add(new TextComponent(""));
+            list.add(new TranslatableComponent("enchantment.minecraft.efficiency").withStyle(ChatFormatting.DARK_AQUA));
+            list.add(new TextComponent(ChatFormatting.DARK_RED + (b ? "+0 C" : "+180 C")));
+            renderComponentTooltip(matrix, list, mouseX, mouseY);
         }
 
-        if (Textures.REACTOR_GAUGE_REDSTONE.isMouseOver(this.guiLeft + 51, this.guiTop + 52, mouseX, mouseY)) {
-            List<ITextComponent> list = new ArrayList<>();
+        if (Textures.REACTOR_GAUGE_REDSTONE.isMouseOver(this.leftPos + 51, this.topPos + 52, mouseX, mouseY)) {
+            List<Component> list = new ArrayList<>();
             boolean b = this.te.redstone.isEmpty();
-            list.add(new TranslationTextComponent("info.powah.redstone").mergeStyle(TextFormatting.GRAY));
-            list.add(new TranslationTextComponent("info.lollipop.stored").mergeStyle(TextFormatting.DARK_GRAY).append(Text.COLON).append(new TranslationTextComponent("info.lollipop.mb.stored", String.format("%.1f", this.te.redstone.getTicks()), String.format("%.1f", this.te.redstone.getMax())).mergeStyle(TextFormatting.DARK_GRAY)));
-            list.add(new StringTextComponent(""));
-            list.add(new TranslationTextComponent("info.powah.production").mergeStyle(TextFormatting.DARK_AQUA));
-            list.add(new TranslationTextComponent("info.powah.fuel.consumption").mergeStyle(TextFormatting.DARK_RED));
-            list.add(new StringTextComponent(TextFormatting.DARK_RED + (b ? "+0 C" : "+120 C")));
-            func_243308_b(matrix, list, mouseX, mouseY);
+            list.add(new TranslatableComponent("info.powah.redstone").withStyle(ChatFormatting.GRAY));
+            list.add(new TranslatableComponent("info.lollipop.stored").withStyle(ChatFormatting.DARK_GRAY).append(Text.COLON).append(new TranslatableComponent("info.lollipop.mb.stored", String.format("%.1f", this.te.redstone.getTicks()), String.format("%.1f", this.te.redstone.getMax())).withStyle(ChatFormatting.DARK_GRAY)));
+            list.add(new TextComponent(""));
+            list.add(new TranslatableComponent("info.powah.production").withStyle(ChatFormatting.DARK_AQUA));
+            list.add(new TranslatableComponent("info.powah.fuel.consumption").withStyle(ChatFormatting.DARK_RED));
+            list.add(new TextComponent(ChatFormatting.DARK_RED + (b ? "+0 C" : "+120 C")));
+            renderComponentTooltip(matrix, list, mouseX, mouseY);
         }
 
-        if (Textures.REACTOR_GAUGE_COOLANT.isMouseOver(this.guiLeft + 140, this.guiTop + 52, mouseX, mouseY)) {
-            List<ITextComponent> list = new ArrayList<>();
-            list.add(new TranslationTextComponent("info.powah.solid.coolant").mergeStyle(TextFormatting.GRAY));
-            list.add(new TranslationTextComponent("info.lollipop.stored").mergeStyle(TextFormatting.DARK_GRAY).append(Text.COLON).append(new TranslationTextComponent("info.lollipop.mb.stored", String.format("%.1f", this.te.solidCoolant.getTicks()), String.format("%.1f", this.te.solidCoolant.getMax())).mergeStyle(TextFormatting.DARK_GRAY)));
-            list.add(new StringTextComponent("" + TextFormatting.AQUA + this.te.solidCoolantTemp + " C"));
-            func_243308_b(matrix, list, mouseX, mouseY);
+        if (Textures.REACTOR_GAUGE_COOLANT.isMouseOver(this.leftPos + 140, this.topPos + 52, mouseX, mouseY)) {
+            List<Component> list = new ArrayList<>();
+            list.add(new TranslatableComponent("info.powah.solid.coolant").withStyle(ChatFormatting.GRAY));
+            list.add(new TranslatableComponent("info.lollipop.stored").withStyle(ChatFormatting.DARK_GRAY).append(Text.COLON).append(new TranslatableComponent("info.lollipop.mb.stored", String.format("%.1f", this.te.solidCoolant.getTicks()), String.format("%.1f", this.te.solidCoolant.getMax())).withStyle(ChatFormatting.DARK_GRAY)));
+            list.add(new TextComponent("" + ChatFormatting.AQUA + this.te.solidCoolantTemp + " C"));
+            renderComponentTooltip(matrix, list, mouseX, mouseY);
         }
 
         FluidTank tank = this.te.getTank();
         if (isMouseOver(mouseX - 157, mouseY - 5, 14, 65)) {
-            List<ITextComponent> list = new ArrayList<>();
+            List<Component> list = new ArrayList<>();
             if (!tank.isEmpty()) {
-                list.add(new TranslationTextComponent("info.lollipop.coolant").mergeStyle(TextFormatting.GRAY).append(Text.COLON).append(tank.getFluid().getDisplayName().copyRaw().mergeStyle(TextFormatting.AQUA)));
-                list.add(new TranslationTextComponent("info.lollipop.stored").mergeStyle(TextFormatting.GRAY).append(Text.COLON).append(new TranslationTextComponent("info.lollipop.mb.stored", Util.addCommas(tank.getFluidAmount()), Util.numFormat(tank.getCapacity())).mergeStyle(TextFormatting.DARK_GRAY)));
-                list.add(new TranslationTextComponent("info.lollipop.temperature").mergeStyle(TextFormatting.GRAY).append(Text.COLON).append(new TranslationTextComponent("info.lollipop.temperature.c", "" + TextFormatting.AQUA + PowahAPI.getCoolant(tank.getFluid().getFluid())).mergeStyle(TextFormatting.DARK_GRAY)));
+                list.add(new TranslatableComponent("info.lollipop.coolant").withStyle(ChatFormatting.GRAY).append(Text.COLON).append(tank.getFluid().getDisplayName().plainCopy().withStyle(ChatFormatting.AQUA)));
+                list.add(new TranslatableComponent("info.lollipop.stored").withStyle(ChatFormatting.GRAY).append(Text.COLON).append(new TranslatableComponent("info.lollipop.mb.stored", Util.addCommas(tank.getFluidAmount()), Util.numFormat(tank.getCapacity())).withStyle(ChatFormatting.DARK_GRAY)));
+                list.add(new TranslatableComponent("info.lollipop.temperature").withStyle(ChatFormatting.GRAY).append(Text.COLON).append(new TranslatableComponent("info.lollipop.temperature.c", "" + ChatFormatting.AQUA + PowahAPI.getCoolant(tank.getFluid().getFluid())).withStyle(ChatFormatting.DARK_GRAY)));
             } else {
-                list.add(new TranslationTextComponent("info.lollipop.fluid").mergeStyle(TextFormatting.GRAY).append(Text.COLON).append(new StringTextComponent("---").mergeStyle(TextFormatting.DARK_GRAY)));
+                list.add(new TranslatableComponent("info.lollipop.fluid").withStyle(ChatFormatting.GRAY).append(Text.COLON).append(new TextComponent("---").withStyle(ChatFormatting.DARK_GRAY)));
             }
-            func_243308_b(matrix, list, mouseX, mouseY);
+            renderComponentTooltip(matrix, list, mouseX, mouseY);
         }
     }
 }

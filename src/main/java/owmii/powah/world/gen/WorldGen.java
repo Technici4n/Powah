@@ -1,7 +1,7 @@
 package owmii.powah.world.gen;
 
-import net.minecraft.world.biome.Biome;
-import net.minecraft.world.gen.GenerationStage;
+import net.minecraft.world.level.biome.Biome;
+import net.minecraft.world.level.levelgen.GenerationStep;
 import net.minecraftforge.common.world.BiomeGenerationSettingsBuilder;
 import net.minecraftforge.event.world.BiomeLoadingEvent;
 import net.minecraftforge.eventbus.api.EventPriority;
@@ -17,13 +17,13 @@ public class WorldGen {
     public static void gen(BiomeLoadingEvent event) {
         if (Configs.GENERAL.oreGen.get()) {
             BiomeGenerationSettingsBuilder generation = event.getGeneration();
-            generation.withFeature(GenerationStage.Decoration.UNDERGROUND_ORES, ORE_POOR);
-            generation.withFeature(GenerationStage.Decoration.UNDERGROUND_ORES, ORE);
-            generation.withFeature(GenerationStage.Decoration.UNDERGROUND_ORES, ORE_DENSE);
-            if (event.getCategory().equals(Biome.Category.TAIGA)
-                    || event.getCategory().equals(Biome.Category.ICY)
-                    || event.getCategory().equals(Biome.Category.EXTREME_HILLS)) {
-                generation.withFeature(GenerationStage.Decoration.UNDERGROUND_ORES, DRY_ICE);
+            generation.addFeature(GenerationStep.Decoration.UNDERGROUND_ORES, ORE_POOR);
+            generation.addFeature(GenerationStep.Decoration.UNDERGROUND_ORES, ORE);
+            generation.addFeature(GenerationStep.Decoration.UNDERGROUND_ORES, ORE_DENSE);
+            if (event.getCategory().equals(Biome.BiomeCategory.TAIGA)
+                    || event.getCategory().equals(Biome.BiomeCategory.ICY)
+                    || event.getCategory().equals(Biome.BiomeCategory.EXTREME_HILLS)) {
+                generation.addFeature(GenerationStep.Decoration.UNDERGROUND_ORES, DRY_ICE);
             }
         }
     }

@@ -1,7 +1,7 @@
 package owmii.lib.logistics.inventory.slot;
 
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.ItemStack;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.items.IItemHandler;
@@ -18,23 +18,23 @@ public class SlotBase extends SlotItemHandler {
     }
 
     @Override
-    public boolean canTakeStack(PlayerEntity player) {
+    public boolean mayPickup(Player player) {
         if (this.getItemHandler() instanceof Inventory) {
             return !((Inventory) getItemHandler()).extractItemFromSlot(getSlotIndex(), 1, true).isEmpty();
-        } else return super.canTakeStack(player);
+        } else return super.mayPickup(player);
     }
 
     @Nonnull
     @Override
-    public ItemStack decrStackSize(int amount) {
+    public ItemStack remove(int amount) {
         if (this.getItemHandler() instanceof Inventory) {
             return ((Inventory) getItemHandler()).extractItemFromSlot(getSlotIndex(), amount, false);
-        } else return super.decrStackSize(amount);
+        } else return super.remove(amount);
     }
 
     @Override
     @OnlyIn(Dist.CLIENT)
-    public boolean isEnabled() {
+    public boolean isActive() {
         return this.enabled;
     }
 

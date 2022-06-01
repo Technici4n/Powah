@@ -1,11 +1,11 @@
 package owmii.lib.logistics.inventory;
 
-import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.nbt.CompoundTag;
 
 public class NBTInventory extends Inventory {
-    private CompoundNBT nbt;
+    private CompoundTag nbt;
 
-    public NBTInventory(int size, CompoundNBT nbt) {
+    public NBTInventory(int size, CompoundTag nbt) {
         super(size);
         this.nbt = nbt;
         deserializeNBT(nbt.getCompound(("inventory_stacks")));
@@ -17,7 +17,7 @@ public class NBTInventory extends Inventory {
         deserializeNBT(this.nbt.getCompound(("inventory_stacks")));
     }
 
-    public CompoundNBT getNbt() {
+    public CompoundTag getNbt() {
         return this.nbt;
     }
 }

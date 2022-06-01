@@ -1,9 +1,8 @@
 package owmii.lib.client.wiki;
 
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-
 import javax.annotation.Nullable;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Consumer;
@@ -35,7 +34,7 @@ public class Entry {
             this.icon = icon;
             ItemStack stack = icon.getStack();
             if (name.isEmpty() && !stack.isEmpty()) {
-                this.name = stack.getTranslationKey();
+                this.name = stack.getDescriptionId();
                 this.stackName = true;
             } else this.name = name;
         }

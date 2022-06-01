@@ -1,10 +1,11 @@
 package owmii.powah.block.reactor;
 
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.Direction;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.World;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.energy.CapabilityEnergy;
@@ -21,16 +22,16 @@ public class ReactorPartTile extends AbstractTileEntity<Tier, ReactorBlock> {
     private boolean extractor;
     private boolean built;
 
-    public ReactorPartTile(Tier variant) {
-        super(Tiles.REACTOR_PART, variant);
+    public ReactorPartTile(BlockPos pos, BlockState state, Tier variant) {
+        super(Tiles.REACTOR_PART, pos, state, variant);
     }
 
-    public ReactorPartTile() {
-        this(Tier.STARTER);
+    public ReactorPartTile(BlockPos pos, BlockState state) {
+        this(pos, state, Tier.STARTER);
     }
 
     @Override
-    public void readSync(CompoundNBT compound) {
+    public void readSync(CompoundTag compound) {
         super.readSync(compound);
         this.built = compound.getBoolean("built");
         this.extractor = compound.getBoolean("extractor");
@@ -38,15 +39,15 @@ public class ReactorPartTile extends AbstractTileEntity<Tier, ReactorBlock> {
     }
 
     @Override
-    public CompoundNBT writeSync(CompoundNBT compound) {
+    public CompoundTag writeSync(CompoundTag compound) {
         compound.putBoolean("built", this.built);
         compound.putBoolean("extractor", this.extractor);
         NBT.writePos(compound, this.corePos, "core_pos");
         return super.writeSync(compound);
     }
 
-    public void demolish(World world) {
-        TileEntity tile = world.getTileEntity(this.corePos);
+    public void demolish(Level world) {
+        BlockEntity tile = world.getBlockEntity(this.corePos);
         if (tile instanceof ReactorTile) {
             ReactorTile reactor = (ReactorTile) tile;
             reactor.demolish(world);
@@ -54,8 +55,8 @@ public class ReactorPartTile extends AbstractTileEntity<Tier, ReactorBlock> {
     }
 
     public Optional<ReactorTile> core() {
-        if (this.world != null) {
-            TileEntity tile = this.world.getTileEntity(this.corePos);
+        if (this.level != null) {
+            BlockEntity tile = this.level.getBlockEntity(this.corePos);
             if (tile instanceof ReactorTile) {
                 return Optional.of((ReactorTile) tile);
             }

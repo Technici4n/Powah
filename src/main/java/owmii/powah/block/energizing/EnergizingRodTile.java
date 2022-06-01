@@ -1,12 +1,6 @@
 package owmii.powah.block.energizing;
 
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.state.properties.BlockStateProperties;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.Direction;
-import net.minecraft.util.math.AxisAlignedBB;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.World;
+import net.minecraft.world.level.block.state.BlockState;
 import owmii.lib.block.AbstractEnergyStorage;
 import owmii.lib.util.NBT;
 import owmii.lib.util.Ticker;
@@ -16,33 +10,40 @@ import owmii.powah.config.Configs;
 import owmii.powah.config.EnergizingConfig;
 
 import javax.annotation.Nullable;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.state.properties.BlockStateProperties;
+import net.minecraft.world.phys.AABB;
 
 public class EnergizingRodTile extends AbstractEnergyStorage<Tier, EnergizingConfig, EnergizingRodBlock> {
     private BlockPos orbPos = BlockPos.ZERO;
     public final Ticker coolDown = new Ticker(20);
 
-    public EnergizingRodTile(Tier variant) {
-        super(Tiles.ENERGIZING_ROD, variant);
+    public EnergizingRodTile(BlockPos pos, BlockState state, Tier variant) {
+        super(Tiles.ENERGIZING_ROD, pos, state, variant);
     }
 
-    public EnergizingRodTile() {
-        this(Tier.STARTER);
+    public EnergizingRodTile(BlockPos pos, BlockState state) {
+        this(pos, state, Tier.STARTER);
     }
 
     @Override
-    public void readSync(CompoundNBT nbt) {
+    public void readSync(CompoundTag nbt) {
         super.readSync(nbt);
         this.orbPos = NBT.readPos(nbt, "OrbPos");
     }
 
     @Override
-    public CompoundNBT writeSync(CompoundNBT nbt) {
+    public CompoundTag writeSync(CompoundTag nbt) {
         NBT.writePos(nbt, this.orbPos, "OrbPos");
         return super.writeSync(nbt);
     }
 
     @Override
-    protected int postTick(World world) {
+    protected int postTick(Level world) {
         boolean flag = false;
         EnergizingOrbTile orb = getOrbTile();
         if (orb != null) {
@@ -65,8 +66,8 @@ public class EnergizingRodTile extends AbstractEnergyStorage<Tier, EnergizingCon
 
     @Nullable
     public EnergizingOrbTile getOrbTile() {
-        if (this.world != null && this.orbPos != BlockPos.ZERO && world.isBlockPresent(this.orbPos)) {
-            TileEntity tile = this.world.getTileEntity(this.orbPos);
+        if (this.level != null && this.orbPos != BlockPos.ZERO && level.isLoaded(this.orbPos)) {
+            BlockEntity tile = this.level.getBlockEntity(this.orbPos);
             if (tile instanceof EnergizingOrbTile) {
                 return (EnergizingOrbTile) tile;
             }
@@ -88,9 +89,9 @@ public class EnergizingRodTile extends AbstractEnergyStorage<Tier, EnergizingCon
     }
 
     @Override
-    public AxisAlignedBB getRenderBoundingBox() {
+    public AABB getRenderBoundingBox() {
         int range = Configs.ENERGIZING.range.get();
-        return new AxisAlignedBB(getPos()).grow(range);
+        return new AABB(getBlockPos()).inflate(range);
     }
 
     @Override
@@ -100,6 +101,6 @@ public class EnergizingRodTile extends AbstractEnergyStorage<Tier, EnergizingCon
 
     @Override
     public boolean isEnergyPresent(@Nullable Direction side) {
-        return side != null && side.equals(getBlockState().get(BlockStateProperties.FACING));
+        return side != null && side.equals(getBlockState().getValue(BlockStateProperties.FACING));
     }
 }

@@ -1,8 +1,10 @@
 package owmii.powah.block.magmator;
 
-import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.world.World;
+import net.minecraft.core.BlockPos;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.fluids.FluidAttributes;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.capability.IFluidHandler;
@@ -20,34 +22,34 @@ public class MagmatorTile extends AbstractEnergyProvider<Tier, MagmatorConfig, M
     protected final Energy buffer = Energy.create(0);
     protected boolean burning;
 
-    public MagmatorTile(Tier variant) {
-        super(Tiles.MAGMATOR, variant);
+    public MagmatorTile(BlockPos pos, BlockState state, Tier variant) {
+        super(Tiles.MAGMATOR, pos, state, variant);
         this.tank.setCapacity(FluidAttributes.BUCKET_VOLUME * 4)
                 .validate(stack -> PowahAPI.MAGMATIC_FLUIDS.containsKey(stack.getFluid()))
                 .setChange(() -> MagmatorTile.this.sync(10));
         this.inv.add(1);
     }
 
-    public MagmatorTile() {
-        this(Tier.STARTER);
+    public MagmatorTile(BlockPos pos, BlockState state) {
+        this(pos, state, Tier.STARTER);
     }
 
     @Override
-    public void readSync(CompoundNBT nbt) {
+    public void readSync(CompoundTag nbt) {
         super.readSync(nbt);
         this.energy.read(nbt, "energy_buffer", true, false);
         this.burning = nbt.getBoolean("burning");
     }
 
     @Override
-    public CompoundNBT writeSync(CompoundNBT nbt) {
+    public CompoundTag writeSync(CompoundTag nbt) {
         this.energy.write(nbt, "energy_buffer", true, false);
         nbt.putBoolean("burning", this.burning);
         return super.writeSync(nbt);
     }
 
     @Override
-    protected int postTick(World world) {
+    protected int postTick(Level world) {
         if (!isRemote() && checkRedstone()) {
             boolean flag = false;
             if (this.buffer.isEmpty() && !this.tank.isEmpty()) {

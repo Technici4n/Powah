@@ -1,10 +1,10 @@
 package owmii.lib.util.math;
 
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.util.Direction;
-import net.minecraft.util.math.AxisAlignedBB;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.vector.Vector3d;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.world.phys.AABB;
+import net.minecraft.world.phys.Vec3;
 
 public class Box {
     private double down;
@@ -43,7 +43,7 @@ public class Box {
         this.max = max;
     }
 
-    public void read(CompoundNBT nbt, String key) {
+    public void read(CompoundTag nbt, String key) {
         this.down = nbt.getDouble("down_" + key);
         this.up = nbt.getDouble("up_" + key);
         this.north = nbt.getDouble("north_" + key);
@@ -52,7 +52,7 @@ public class Box {
         this.east = nbt.getDouble("east_" + key);
     }
 
-    public CompoundNBT write(CompoundNBT nbt, String key) {
+    public CompoundTag write(CompoundTag nbt, String key) {
         nbt.putDouble("down_" + key, this.down);
         nbt.putDouble("up_" + key, this.up);
         nbt.putDouble("north_" + key, this.north);
@@ -62,16 +62,16 @@ public class Box {
         return nbt;
     }
 
-    public AxisAlignedBB geAxis() {
-        return geAxis(Vector3d.ZERO);
+    public AABB geAxis() {
+        return geAxis(Vec3.ZERO);
     }
 
-    public AxisAlignedBB geAxis(BlockPos pos) {
-        return geAxis(Vector3d.copy(pos));
+    public AABB geAxis(BlockPos pos) {
+        return geAxis(Vec3.atLowerCornerOf(pos));
     }
 
-    public AxisAlignedBB geAxis(Vector3d vector3d) {
-        return new AxisAlignedBB(-this.west, -this.down, -this.north, this.east + 1.0D, this.up + 1.0D, this.south + 1.0D).offset(vector3d);
+    public AABB geAxis(Vec3 vector3d) {
+        return new AABB(-this.west, -this.down, -this.north, this.east + 1.0D, this.up + 1.0D, this.south + 1.0D).move(vector3d);
     }
 
     public Box reset() {

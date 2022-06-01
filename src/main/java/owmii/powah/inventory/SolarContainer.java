@@ -1,25 +1,25 @@
 package owmii.powah.inventory;
 
-import net.minecraft.entity.player.PlayerInventory;
-import net.minecraft.network.PacketBuffer;
+import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.world.entity.player.Inventory;
 import owmii.lib.logistics.inventory.AbstractEnergyContainer;
 import owmii.powah.block.solar.SolarTile;
 
 public class SolarContainer extends AbstractEnergyContainer<SolarTile> {
-    public SolarContainer(int id, PlayerInventory inventory, PacketBuffer buffer) {
+    public SolarContainer(int id, Inventory inventory, FriendlyByteBuf buffer) {
         super(Containers.SOLAR, id, inventory, buffer);
     }
 
-    public SolarContainer(int id, PlayerInventory inventory, SolarTile te) {
+    public SolarContainer(int id, Inventory inventory, SolarTile te) {
         super(Containers.SOLAR, id, inventory, te);
     }
 
-    public static SolarContainer create(int id, PlayerInventory inventory, PacketBuffer buffer) {
+    public static SolarContainer create(int id, Inventory inventory, FriendlyByteBuf buffer) {
         return new SolarContainer(id, inventory, buffer);
     }
 
     @Override
-    protected void init(PlayerInventory inventory, SolarTile te) {
+    protected void init(Inventory inventory, SolarTile te) {
         super.init(inventory);
         addPlayerInventory(inventory, 8, 59, 4);
     }

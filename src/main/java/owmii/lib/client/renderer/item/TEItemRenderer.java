@@ -1,25 +1,31 @@
 package owmii.lib.client.renderer.item;
 
-import com.mojang.blaze3d.matrix.MatrixStack;
-import net.minecraft.block.Block;
-import net.minecraft.client.renderer.IRenderTypeBuffer;
-import net.minecraft.client.renderer.model.ItemCameraTransforms;
-import net.minecraft.client.renderer.tileentity.ItemStackTileEntityRenderer;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
+import net.minecraft.client.model.geom.EntityModelSet;
+import net.minecraft.client.renderer.BlockEntityWithoutLevelRenderer;
+import net.minecraft.client.renderer.MultiBufferSource;
+import net.minecraft.client.renderer.block.model.ItemTransforms;
+import net.minecraft.client.renderer.blockentity.BlockEntityRenderDispatcher;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.block.Block;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import owmii.lib.item.IItem;
-
+import com.mojang.blaze3d.vertex.PoseStack;
 import java.util.HashSet;
 import java.util.Set;
 
 @OnlyIn(Dist.CLIENT)
-public class TEItemRenderer extends ItemStackTileEntityRenderer {
+public class TEItemRenderer extends BlockEntityWithoutLevelRenderer {
     private static final Set<Item> ITEMS = new HashSet<>();
 
+    public TEItemRenderer() {
+        //noinspection ConstantConditions
+        super(null, null);
+    }
+
     @Override
-    public void func_239207_a_(ItemStack stack, ItemCameraTransforms.TransformType transformType, MatrixStack matrix, IRenderTypeBuffer rtb, int light, int ov) {
+    public void renderByItem(ItemStack stack, ItemTransforms.TransformType transformType, PoseStack matrix, MultiBufferSource rtb, int light, int ov) {
         final Item item = stack.getItem();
         if (item instanceof IItem) {
             IItem base = (IItem) item;

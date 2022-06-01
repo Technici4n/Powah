@@ -12,6 +12,7 @@ archivesBaseName = "dev.technici4n"
 //group = project.maven_group
 
 repositories {
+    maven { url "https://maven.parchmentmc.org" } //Parchment
     maven { url = "https://dvs1.progwml6.com/files/maven" } //JEI
     maven { url = "https://maven.theillusivec4.top" } //Curios
 }
@@ -19,12 +20,24 @@ repositories {
 dependencies {
     // To change the versions see the gradle.properties file
     minecraft "com.mojang:minecraft:${project.mc_version}"
-    mappings "de.oceanlabs.mcp:mcp_snapshot:20210309-1.16.5"
+    mappings(loom.layered {
+        officialMojangMappings()
+        parchment("org.parchmentmc.data:parchment-1.18.2:2022.05.22@zip")
+    })
 
     forge "net.minecraftforge:forge:${mc_version}-${forge_version}"
 
-    //modCompileOnly "mezz.jei:jei-${project.jei_version}:api"
-    //modRuntimeOnly "mezz.jei:jei-${project.jei_version}"
+    modCompileOnly "mezz.jei:jei-${project.jei_version}:api"
+    modRuntimeOnly "mezz.jei:jei-${project.jei_version}"
+
+    modCompileOnly "top.theillusivec4.curios:curios-forge:${project.curios_version}:api"
+    modRuntimeOnly "top.theillusivec4.curios:curios-forge:${project.curios_version}"
+}
+
+loom {
+    forge {
+        accessTransformer("src/main/resources/META-INF/accesstransformer.cfg")
+    }
 }
 
 sourceSets {

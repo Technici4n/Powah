@@ -1,28 +1,29 @@
 package owmii.powah.item;
 
-import net.minecraft.client.util.ITooltipFlag;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.monster.EndermanEntity;
-import net.minecraft.entity.monster.EndermiteEntity;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.player.ServerPlayerEntity;
-import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.util.ActionResult;
-import net.minecraft.util.ActionResultType;
-import net.minecraft.util.Hand;
-import net.minecraft.util.SoundEvents;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.StringTextComponent;
-import net.minecraft.util.text.TextFormatting;
-import net.minecraft.util.text.TranslationTextComponent;
-import net.minecraft.world.World;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.world.entity.Entity;
 import owmii.lib.item.ItemBase;
 import owmii.lib.util.Player;
 import owmii.lib.util.Stack;
 import owmii.powah.config.Configs;
 
 import javax.annotation.Nullable;
+import net.minecraft.ChatFormatting;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.TextComponent;
+import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.InteractionResult;
+import net.minecraft.world.InteractionResultHolder;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.monster.EnderMan;
+import net.minecraft.world.entity.monster.Endermite;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.TooltipFlag;
+import net.minecraft.world.level.Level;
 import java.util.List;
 import java.util.Optional;
 
@@ -35,58 +36,58 @@ public class BindingCardItem extends ItemBase {
     }
 
     @Override
-    public ActionResultType itemInteractionForEntity(ItemStack stack, PlayerEntity playerIn, LivingEntity target, Hand hand) {
+    public InteractionResult interactLivingEntity(ItemStack stack, net.minecraft.world.entity.player.Player playerIn, LivingEntity target, InteractionHand hand) {
         if (Configs.GENERAL.binding_card_dim.get()) {
             if (this == Itms.BINDING_CARD) {
-                if (target.getClass() == EndermanEntity.class || target.getClass() == EndermiteEntity.class) {
-                    if (!playerIn.world.isRemote) {
-                        ItemStack stack1 = playerIn.getHeldItem(hand);
+                if (target.getClass() == EnderMan.class || target.getClass() == Endermite.class) {
+                    if (!playerIn.level.isClientSide) {
+                        ItemStack stack1 = playerIn.getItemInHand(hand);
                         ItemStack stack2 = new ItemStack(Itms.BINDING_CARD_DIM);
-                        CompoundNBT nbt = Stack.getTagOrEmpty(stack1);
-                        if (nbt.hasUniqueId("bound_player_id")) {
-                            CompoundNBT nbt1 = stack2.getOrCreateTag();
-                            nbt1.putUniqueId("bound_player_id", nbt.getUniqueId("bound_player_id"));
+                        CompoundTag nbt = Stack.getTagOrEmpty(stack1);
+                        if (nbt.hasUUID("bound_player_id")) {
+                            CompoundTag nbt1 = stack2.getOrCreateTag();
+                            nbt1.putUUID("bound_player_id", nbt.getUUID("bound_player_id"));
                             nbt1.putString("bound_player_name", nbt.getString("bound_player_name"));
                         }
-                        playerIn.setHeldItem(hand, stack2);
-                        target.playSound(SoundEvents.ENTITY_ENDERMAN_DEATH, 0.5F, 1.0F);
-                        target.remove();
+                        playerIn.setItemInHand(hand, stack2);
+                        target.playSound(SoundEvents.ENDERMAN_DEATH, 0.5F, 1.0F);
+                        target.remove(Entity.RemovalReason.KILLED);
                     }
-                    return ActionResultType.SUCCESS;
+                    return InteractionResult.SUCCESS;
                 }
             }
         }
-        return super.itemInteractionForEntity(stack, playerIn, target, hand);
+        return super.interactLivingEntity(stack, playerIn, target, hand);
     }
 
     @Override
-    public ActionResult<ItemStack> onItemRightClick(World worldIn, PlayerEntity playerIn, Hand handIn) {
-        ItemStack stack = playerIn.getHeldItem(handIn);
-        CompoundNBT nbt = stack.getOrCreateTag();
-        if (!nbt.hasUniqueId("bound_player_id")) {
-            nbt.putUniqueId("bound_player_id", playerIn.getUniqueID());
+    public InteractionResultHolder<ItemStack> use(Level worldIn, net.minecraft.world.entity.player.Player playerIn, InteractionHand handIn) {
+        ItemStack stack = playerIn.getItemInHand(handIn);
+        CompoundTag nbt = stack.getOrCreateTag();
+        if (!nbt.hasUUID("bound_player_id")) {
+            nbt.putUUID("bound_player_id", playerIn.getUUID());
             nbt.putString("bound_player_name", playerIn.getDisplayName().getString());
-            return new ActionResult<>(ActionResultType.SUCCESS, stack);
-        } else if (!playerIn.getUniqueID().equals(nbt.getUniqueId("bound_player_id"))) {
-            playerIn.sendStatusMessage(new TranslationTextComponent("chat.powah.no.binding", nbt.getString("bound_player_name")).mergeStyle(TextFormatting.DARK_RED), true);
-            return new ActionResult<>(ActionResultType.FAIL, stack);
+            return new InteractionResultHolder<>(InteractionResult.SUCCESS, stack);
+        } else if (!playerIn.getUUID().equals(nbt.getUUID("bound_player_id"))) {
+            playerIn.displayClientMessage(new TranslatableComponent("chat.powah.no.binding", nbt.getString("bound_player_name")).withStyle(ChatFormatting.DARK_RED), true);
+            return new InteractionResultHolder<>(InteractionResult.FAIL, stack);
         }
-        return new ActionResult<>(ActionResultType.PASS, stack);
+        return new InteractionResultHolder<>(InteractionResult.PASS, stack);
     }
 
-    public Optional<ServerPlayerEntity> getPlayer(ItemStack stack) {
-        return Player.get(Stack.getTagOrEmpty(stack).getUniqueId("bound_player_id"));
+    public Optional<ServerPlayer> getPlayer(ServerLevel level, ItemStack stack) {
+        return Player.get(level, Stack.getTagOrEmpty(stack).getUUID("bound_player_id"));
     }
 
     @Override
-    public void addInformation(ItemStack stack, @Nullable World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
-        CompoundNBT nbt = stack.getTag();
+    public void appendHoverText(ItemStack stack, @Nullable Level worldIn, List<Component> tooltip, TooltipFlag flagIn) {
+        CompoundTag nbt = stack.getTag();
         if (nbt == null) {
-            tooltip.add(new TranslationTextComponent("info.powah.click.to.bind").mergeStyle(TextFormatting.DARK_GRAY));
-            tooltip.add(new StringTextComponent(""));
-        } else if (nbt.hasUniqueId("bound_player_id")) {
-            tooltip.add(new TranslationTextComponent("info.lollipop.owner", TextFormatting.YELLOW + nbt.getString("bound_player_name")).mergeStyle(TextFormatting.GRAY));
-            tooltip.add(new StringTextComponent(""));
+            tooltip.add(new TranslatableComponent("info.powah.click.to.bind").withStyle(ChatFormatting.DARK_GRAY));
+            tooltip.add(new TextComponent(""));
+        } else if (nbt.hasUUID("bound_player_id")) {
+            tooltip.add(new TranslatableComponent("info.lollipop.owner", ChatFormatting.YELLOW + nbt.getString("bound_player_name")).withStyle(ChatFormatting.GRAY));
+            tooltip.add(new TextComponent(""));
         }
     }
 

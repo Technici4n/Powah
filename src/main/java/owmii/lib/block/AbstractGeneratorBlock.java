@@ -1,10 +1,5 @@
 package owmii.lib.block;
 
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.StringTextComponent;
-import net.minecraft.util.text.TextFormatting;
-import net.minecraft.util.text.TranslationTextComponent;
 import owmii.lib.client.util.Text;
 import owmii.lib.client.wiki.page.panel.InfoBox;
 import owmii.lib.config.IEnergyConfig;
@@ -14,6 +9,11 @@ import owmii.lib.registry.IVariant;
 import owmii.lib.util.Util;
 
 import java.util.List;
+import net.minecraft.ChatFormatting;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.TextComponent;
+import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.world.item.ItemStack;
 
 public abstract class AbstractGeneratorBlock<V extends Enum<V> & IVariant<V>, C extends IEnergyConfig<V>, B extends AbstractGeneratorBlock<V, C, B>> extends AbstractEnergyBlock<V, C, B> {
     public AbstractGeneratorBlock(Properties properties) {
@@ -25,8 +25,8 @@ public abstract class AbstractGeneratorBlock<V extends Enum<V> & IVariant<V>, C 
     }
 
     @Override
-    public void additionalEnergyInfo(ItemStack stack, Energy.Item energy, List<ITextComponent> tooltip) {
-        tooltip.add(new TranslationTextComponent("info.lollipop.generates").mergeStyle(TextFormatting.GRAY).append(Text.COLON).append(new StringTextComponent(Util.numFormat(getConfig().getGeneration(this.variant))).append(new TranslationTextComponent("info.lollipop.fe.pet.tick")).mergeStyle(TextFormatting.DARK_GRAY)));
+    public void additionalEnergyInfo(ItemStack stack, Energy.Item energy, List<Component> tooltip) {
+        tooltip.add(new TranslatableComponent("info.lollipop.generates").withStyle(ChatFormatting.GRAY).append(Text.COLON).append(new TextComponent(Util.numFormat(getConfig().getGeneration(this.variant))).append(new TranslatableComponent("info.lollipop.fe.pet.tick")).withStyle(ChatFormatting.DARK_GRAY)));
     }
 
     @Override
@@ -39,9 +39,9 @@ public abstract class AbstractGeneratorBlock<V extends Enum<V> & IVariant<V>, C 
         Energy.ifPresent(stack, storage -> {
             if (storage instanceof Energy.Item) {
                 Energy.Item energy = (Energy.Item) storage;
-                box.set(new TranslationTextComponent("info.lollipop.capacity"), new TranslationTextComponent("info.lollipop.fe", Util.addCommas(energy.getCapacity())));
-                box.set(new TranslationTextComponent("info.lollipop.generates"), new TranslationTextComponent("info.lollipop.fe.pet.tick", Util.addCommas(getConfig().getGeneration(this.variant))));
-                box.set(new TranslationTextComponent("info.lollipop.max.extract"), new TranslationTextComponent("info.lollipop.fe.pet.tick", Util.addCommas(energy.getMaxExtract())));
+                box.set(new TranslatableComponent("info.lollipop.capacity"), new TranslatableComponent("info.lollipop.fe", Util.addCommas(energy.getCapacity())));
+                box.set(new TranslatableComponent("info.lollipop.generates"), new TranslatableComponent("info.lollipop.fe.pet.tick", Util.addCommas(getConfig().getGeneration(this.variant))));
+                box.set(new TranslatableComponent("info.lollipop.max.extract"), new TranslatableComponent("info.lollipop.fe.pet.tick", Util.addCommas(energy.getMaxExtract())));
             }
         });
         return box;

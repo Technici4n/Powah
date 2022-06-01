@@ -1,37 +1,52 @@
 package owmii.lib.item;
 
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.ItemUseContext;
-import net.minecraft.util.ActionResultType;
-import net.minecraft.util.Direction;
-import net.minecraft.util.Hand;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.vector.Vector3d;
-import net.minecraft.world.World;
+import net.minecraft.client.renderer.BlockEntityWithoutLevelRenderer;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.InteractionResult;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.context.UseOnContext;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.phys.Vec3;
+import net.minecraftforge.client.IItemRenderProperties;
 import owmii.lib.client.renderer.item.TEItemRenderer;
+
+import java.util.function.Consumer;
 
 public class ItemBase extends Item implements IItem {
     public ItemBase(Properties properties) {
-        super(properties.setISTER(() -> TEItemRenderer::new));
+        super(properties);
     }
 
     @Override
-    public ActionResultType onItemUse(ItemUseContext context) {
-        return context.getPlayer() != null ? onItemUse(context.getWorld(), context.getPos(), context.getPlayer(), context.getHand(), context.getFace(), context.getHitVec()) : super.onItemUse(context);
-    }
-
-    public ActionResultType onItemUse(World world, BlockPos pos, PlayerEntity player, Hand hand, Direction side, Vector3d hit) {
-        return ActionResultType.PASS;
+    public void initializeClient(Consumer<IItemRenderProperties> consumer) {
+        consumer.accept(new IItemRenderProperties() {
+            @Override
+            public BlockEntityWithoutLevelRenderer getItemStackRenderer() {
+                return new TEItemRenderer();
+            }
+        });
+        super.initializeClient(consumer);
     }
 
     @Override
-    public ActionResultType onItemUseFirst(ItemStack stack, ItemUseContext context) {
-        return context.getPlayer() != null ? onItemUseFirst(stack, context.getWorld(), context.getPos(), context.getPlayer(), context.getHand(), context.getFace(), context.getHitVec()) : super.onItemUseFirst(stack, context);
+    public InteractionResult useOn(UseOnContext context) {
+        return context.getPlayer() != null ? onItemUse(context.getLevel(), context.getClickedPos(), context.getPlayer(), context.getHand(), context.getClickedFace(), context.getClickLocation()) : super.useOn(context);
     }
 
-    public ActionResultType onItemUseFirst(ItemStack stack, World world, BlockPos pos, PlayerEntity player, Hand hand, Direction side, Vector3d hit) {
-        return ActionResultType.PASS;
+    public InteractionResult onItemUse(Level world, BlockPos pos, Player player, InteractionHand hand, Direction side, Vec3 hit) {
+        return InteractionResult.PASS;
+    }
+
+    @Override
+    public InteractionResult onItemUseFirst(ItemStack stack, UseOnContext context) {
+        return context.getPlayer() != null ? onItemUseFirst(stack, context.getLevel(), context.getClickedPos(), context.getPlayer(), context.getHand(), context.getClickedFace(), context.getClickLocation()) : super.onItemUseFirst(stack, context);
+    }
+
+    public InteractionResult onItemUseFirst(ItemStack stack, Level world, BlockPos pos, Player player, InteractionHand hand, Direction side, Vec3 hit) {
+        return InteractionResult.PASS;
     }
 }

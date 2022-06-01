@@ -1,22 +1,22 @@
 package owmii.powah.item;
 
-import net.minecraft.block.BlockState;
-import net.minecraft.client.util.ITooltipFlag;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.ActionResult;
-import net.minecraft.util.ActionResultType;
-import net.minecraft.util.Direction;
-import net.minecraft.util.Hand;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.vector.Vector3d;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.TextFormatting;
-import net.minecraft.util.text.TranslationTextComponent;
-import net.minecraft.world.World;
+import net.minecraft.ChatFormatting;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.InteractionResult;
+import net.minecraft.world.InteractionResultHolder;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.TooltipFlag;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import owmii.lib.client.handler.IHudItem;
@@ -38,16 +38,16 @@ public class WrenchItem extends ItemBase implements IHudItem, IWrench {
     }
 
     @Override
-    public ActionResultType onItemUseFirst(ItemStack stack, World world, BlockPos pos, PlayerEntity player, Hand hand, Direction side, Vector3d hit) {
-        if (player.isSneaking()) return ActionResultType.PASS;
-        TileEntity te = world.getTileEntity(pos);
+    public InteractionResult onItemUseFirst(ItemStack stack, Level world, BlockPos pos, Player player, InteractionHand hand, Direction side, Vec3 hit) {
+        if (player.isShiftKeyDown()) return InteractionResult.PASS;
+        BlockEntity te = world.getBlockEntity(pos);
         BlockState state = world.getBlockState(pos);
         if (state.getBlock() instanceof IWrenchable) {
             if (((IWrenchable) state.getBlock()).onWrench(state, world, pos, player, hand, side, getWrenchMode(stack), hit)) {
-                return ActionResultType.SUCCESS;
+                return InteractionResult.SUCCESS;
             }
         } else {
-            if (!world.isRemote && getWrenchMode(stack).config()) {
+            if (!world.isClientSide && getWrenchMode(stack).config()) {
                 if (te instanceof CableTile) {
                     CableTile cable = (CableTile) te;
                     if (stack.getItem() instanceof WrenchItem) {
@@ -58,7 +58,7 @@ public class WrenchItem extends ItemBase implements IHudItem, IWrench {
                             config.nextType(direction);
                             cable.sync();
                         });
-                        return ActionResultType.SUCCESS;
+                        return InteractionResult.SUCCESS;
                     }
                 }
 //                else if (te instanceof TileBase.EnergyStorage) {
@@ -76,32 +76,32 @@ public class WrenchItem extends ItemBase implements IHudItem, IWrench {
     }
 
     @Override
-    public ActionResult<ItemStack> onItemRightClick(World worldIn, PlayerEntity playerIn, Hand handIn) {
-        ItemStack stack = playerIn.getHeldItem(handIn);
-        if (playerIn.isSneaking()) {
+    public InteractionResultHolder<ItemStack> use(Level worldIn, Player playerIn, InteractionHand handIn) {
+        ItemStack stack = playerIn.getItemInHand(handIn);
+        if (playerIn.isShiftKeyDown()) {
             nextWrenchMode(stack);
-            playerIn.sendStatusMessage(new TranslationTextComponent("info.powah.wrench.mode." + getWrenchMode(stack).name().toLowerCase(), TextFormatting.YELLOW).mergeStyle(TextFormatting.GRAY), true);
-            return ActionResult.resultSuccess(stack);
+            playerIn.displayClientMessage(new TranslatableComponent("info.powah.wrench.mode." + getWrenchMode(stack).name().toLowerCase(), ChatFormatting.YELLOW).withStyle(ChatFormatting.GRAY), true);
+            return InteractionResultHolder.success(stack);
         }
-        return super.onItemRightClick(worldIn, playerIn, handIn);
+        return super.use(worldIn, playerIn, handIn);
     }
 
     @Override
-    public void addInformation(ItemStack stack, @Nullable World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
-        tooltip.add(new TranslationTextComponent("info.powah.wrench.mode." + getWrenchMode(stack).name().toLowerCase(), TextFormatting.YELLOW).mergeStyle(TextFormatting.GRAY));
+    public void appendHoverText(ItemStack stack, @Nullable Level worldIn, List<Component> tooltip, TooltipFlag flagIn) {
+        tooltip.add(new TranslatableComponent("info.powah.wrench.mode." + getWrenchMode(stack).name().toLowerCase(), ChatFormatting.YELLOW).withStyle(ChatFormatting.GRAY));
     }
 
     @Override
-    public void inventoryTick(ItemStack stack, World worldIn, Entity entityIn, int itemSlot, boolean isSelected) {
-        if (entityIn instanceof PlayerEntity) {
-            PlayerEntity player = (PlayerEntity) entityIn;
-            oneTimeInfo(player, stack, new TranslationTextComponent("info.powah.wrench.mode." + getWrenchMode(stack).name().toLowerCase(), TextFormatting.YELLOW).mergeStyle(TextFormatting.GRAY));
+    public void inventoryTick(ItemStack stack, Level worldIn, Entity entityIn, int itemSlot, boolean isSelected) {
+        if (entityIn instanceof Player) {
+            Player player = (Player) entityIn;
+            oneTimeInfo(player, stack, new TranslatableComponent("info.powah.wrench.mode." + getWrenchMode(stack).name().toLowerCase(), ChatFormatting.YELLOW).withStyle(ChatFormatting.GRAY));
         }
     }
 
     @Override
     @OnlyIn(Dist.CLIENT)
-    public boolean renderHud(World world, BlockPos pos, PlayerEntity player, Hand hand, Direction side, Vector3d hit) {
+    public boolean renderHud(Level world, BlockPos pos, Player player, InteractionHand hand, Direction side, Vec3 hit) {
         return false;
     }
 
@@ -118,14 +118,14 @@ public class WrenchItem extends ItemBase implements IHudItem, IWrench {
     }
 
     private void nextWrenchMode(ItemStack stack) {
-        CompoundNBT nbt = getWrenchNBT(stack);
+        CompoundTag nbt = getWrenchNBT(stack);
         int i = nbt.getInt("WrenchMode") + 1;
         int j = WrenchMode.values().length - 1;
         nbt.putInt("WrenchMode", i > j ? 0 : i);
     }
 
     private void prevWrenchMode(ItemStack stack) {
-        CompoundNBT nbt = getWrenchNBT(stack);
+        CompoundTag nbt = getWrenchNBT(stack);
         int i = nbt.getInt("WrenchMode") - 1;
         int j = WrenchMode.values().length - 1;
         nbt.putInt("WrenchMode", i < j ? j : i);
@@ -136,7 +136,7 @@ public class WrenchItem extends ItemBase implements IHudItem, IWrench {
         return WrenchMode.values()[getWrenchNBT(stack).getInt("WrenchMode")];
     }
 
-    public CompoundNBT getWrenchNBT(ItemStack stack) {
-        return stack.getOrCreateChildTag("PowahWrenchNBT");
+    public CompoundTag getWrenchNBT(ItemStack stack) {
+        return stack.getOrCreateTagElement("PowahWrenchNBT");
     }
 }

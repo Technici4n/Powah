@@ -1,12 +1,6 @@
 package owmii.powah.block.discharger;
 
-import net.minecraft.block.BlockState;
-import net.minecraft.entity.player.PlayerInventory;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemGroup;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.math.BlockRayTraceResult;
-import net.minecraft.world.IBlockReader;
+import net.minecraft.core.BlockPos;
 import owmii.lib.block.AbstractEnergyBlock;
 import owmii.lib.block.AbstractTileEntity;
 import owmii.lib.item.EnergyBlockItem;
@@ -18,6 +12,12 @@ import owmii.powah.config.EnergyDischargerConfig;
 import owmii.powah.inventory.DischargerContainer;
 
 import javax.annotation.Nullable;
+import net.minecraft.world.entity.player.Inventory;
+import net.minecraft.world.item.CreativeModeTab;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.phys.BlockHitResult;
 
 public class EnergyDischargerBlock extends AbstractEnergyBlock<Tier, EnergyDischargerConfig, EnergyDischargerBlock> {
     public EnergyDischargerBlock(Properties properties, Tier variant) {
@@ -30,19 +30,19 @@ public class EnergyDischargerBlock extends AbstractEnergyBlock<Tier, EnergyDisch
     }
 
     @Override
-    public EnergyBlockItem getBlockItem(Item.Properties properties, @Nullable ItemGroup group) {
-        return super.getBlockItem(properties.maxStackSize(1), group);
+    public EnergyBlockItem getBlockItem(Item.Properties properties, @Nullable CreativeModeTab group) {
+        return super.getBlockItem(properties.stacksTo(1), group);
     }
 
     @Nullable
     @Override
-    public TileEntity createTileEntity(BlockState state, IBlockReader world) {
-        return new EnergyDischargerTile(this.variant);
+    public BlockEntity newBlockEntity(BlockPos pos, BlockState state) {
+        return new EnergyDischargerTile(pos, state, this.variant);
     }
 
     @Nullable
     @Override
-    public <T extends AbstractTileEntity> AbstractContainer getContainer(int id, PlayerInventory inventory, AbstractTileEntity te, BlockRayTraceResult result) {
+    public <T extends AbstractTileEntity> AbstractContainer getContainer(int id, Inventory inventory, AbstractTileEntity te, BlockHitResult result) {
         if (te instanceof EnergyDischargerTile) {
             return new DischargerContainer(id, inventory, (EnergyDischargerTile) te);
         }

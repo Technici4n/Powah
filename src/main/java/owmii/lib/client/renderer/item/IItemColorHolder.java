@@ -1,8 +1,8 @@
 package owmii.lib.client.renderer.item;
 
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.renderer.color.IItemColor;
-import net.minecraft.item.Item;
+import net.minecraft.client.color.item.ItemColor;
+import net.minecraft.world.item.Item;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
@@ -11,7 +11,7 @@ import java.util.Collection;
 
 public interface IItemColorHolder {
     @OnlyIn(Dist.CLIENT)
-    IItemColor getItemColor();
+    ItemColor getItemColor();
 
     static void registerAll(Item... items) {
         registerAll(Arrays.asList(items));

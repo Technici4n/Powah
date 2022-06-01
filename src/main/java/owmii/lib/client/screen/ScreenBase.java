@@ -1,11 +1,12 @@
 package owmii.lib.client.screen;
 
-import com.mojang.blaze3d.matrix.MatrixStack;
+import com.mojang.blaze3d.platform.InputConstants;
+import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.screen.Screen;
-import net.minecraft.client.gui.widget.Widget;
-import net.minecraft.client.util.InputMappings;
-import net.minecraft.util.text.ITextComponent;
+import net.minecraft.client.gui.components.AbstractWidget;
+import net.minecraft.client.gui.components.Widget;
+import net.minecraft.client.gui.screens.Screen;
+import net.minecraft.network.chat.Component;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
@@ -14,7 +15,7 @@ public class ScreenBase extends Screen {
     public final Minecraft mc = Minecraft.getInstance();
     public int x, y, w, h;
 
-    protected ScreenBase(ITextComponent title) {
+    protected ScreenBase(Component title) {
         super(title);
     }
 
@@ -26,13 +27,10 @@ public class ScreenBase extends Screen {
     }
 
     @Override
-    public void render(MatrixStack matrix, int mx, int my, float pt) {
+    public void render(PoseStack matrix, int mx, int my, float pt) {
         super.render(matrix, mx, my, pt);
-        for (Widget widget : this.buttons) {
-            if (widget.isHovered()) {
-                widget.renderToolTip(matrix, mx, my);
-                return;
-            }
+        if (getFocused() instanceof AbstractWidget widget) {
+            widget.renderToolTip(matrix, mx, my);
         }
     }
 
@@ -41,9 +39,9 @@ public class ScreenBase extends Screen {
         if (super.keyPressed(keyCode, scanCode, modifiers)) {
             return true;
         } else {
-            InputMappings.Input code = InputMappings.getInputByCode(keyCode, scanCode);
-            if (keyCode == 256 || Minecraft.getInstance().gameSettings.keyBindInventory.isActiveAndMatches(code)) {
-                closeScreen();
+            InputConstants.Key code = InputConstants.getKey(keyCode, scanCode);
+            if (keyCode == 256 || Minecraft.getInstance().options.keyInventory.isActiveAndMatches(code)) {
+                onClose();
                 return true;
             }
         }
@@ -59,7 +57,7 @@ public class ScreenBase extends Screen {
         return mouseX >= x && mouseY >= y && mouseX < x + w && mouseY < y + h;
     }
 
-    public <T extends Widget> T addButton2(T button) {
-        return addButton(button);
+    public <T extends AbstractWidget> T addButton2(T button) {
+        return addRenderableWidget(button);
     }
 }

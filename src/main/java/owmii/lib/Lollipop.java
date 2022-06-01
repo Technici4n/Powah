@@ -11,24 +11,12 @@ import owmii.lib.network.Packets;
 
 import javax.annotation.Nullable;
 
-@Mod(Lollipop.MOD_ID)
-public class Lollipop implements IMod {
+public class Lollipop {
     public static final String MOD_ID = "lollipop";
     public static final Network NET = new Network(MOD_ID);
     public static final Logger LOGGER = LogManager.getLogger(MOD_ID);
 
-    public Lollipop() {
-        loadListeners();
-    }
-
-    @Override
-    public void setup(FMLCommonSetupEvent event) {
+    public static void setup(FMLCommonSetupEvent event) {
         Packets.register();
-    }
-
-    @Nullable
-    @Override
-    public IClient getClient() {
-        return null;
     }
 }

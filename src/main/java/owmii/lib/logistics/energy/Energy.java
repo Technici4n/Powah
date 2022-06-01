@@ -1,10 +1,9 @@
 package owmii.lib.logistics.energy;
 
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.Direction;
+import net.minecraft.core.Direction;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.capabilities.ICapabilityProvider;
 import net.minecraftforge.common.util.LazyOptional;
@@ -75,11 +74,11 @@ public class Energy implements IEnergyStorage {
         return flag;
     }
 
-    public Energy read(CompoundNBT nbt, boolean capacity, boolean transfer) {
+    public Energy read(CompoundTag nbt, boolean capacity, boolean transfer) {
         return read(nbt, "main_energy", capacity, transfer);
     }
 
-    public Energy read(CompoundNBT nbt, String key, boolean capacity, boolean transfer) {
+    public Energy read(CompoundTag nbt, String key, boolean capacity, boolean transfer) {
         if (capacity) {
             this.capacity = nbt.getLong("energy_capacity_" + key);
         }
@@ -91,19 +90,19 @@ public class Energy implements IEnergyStorage {
         return this;
     }
 
-    public CompoundNBT write(boolean capacity, boolean transfer) {
+    public CompoundTag write(boolean capacity, boolean transfer) {
         return write("main_energy", capacity, transfer);
     }
 
-    public CompoundNBT write(String key, boolean capacity, boolean transfer) {
-        return write(new CompoundNBT(), key, capacity, transfer);
+    public CompoundTag write(String key, boolean capacity, boolean transfer) {
+        return write(new CompoundTag(), key, capacity, transfer);
     }
 
-    public CompoundNBT write(CompoundNBT nbt, boolean capacity, boolean transfer) {
+    public CompoundTag write(CompoundTag nbt, boolean capacity, boolean transfer) {
         return write(nbt, "main_energy", capacity, transfer);
     }
 
-    public CompoundNBT write(CompoundNBT nbt, String key, boolean capacity, boolean transfer) {
+    public CompoundTag write(CompoundTag nbt, String key, boolean capacity, boolean transfer) {
         if (capacity) {
             nbt.putLong("energy_capacity_" + key, this.capacity);
         }
@@ -155,7 +154,7 @@ public class Energy implements IEnergyStorage {
         return min;
     }
 
-    public long chargeInventory(PlayerEntity player, Predicate<ItemStack> checker) {
+    public long chargeInventory(net.minecraft.world.entity.player.Player player, Predicate<ItemStack> checker) {
         long l = 0L;
         for (ItemStack stack1 : Player.invStacks(player)) {
             if (stack1.isEmpty() || !isPresent(stack1) || !checker.test(stack1)) continue;
@@ -303,7 +302,7 @@ public class Energy implements IEnergyStorage {
         public int receiveEnergy(int maxReceive, boolean simulate) {
             int energy = super.receiveEnergy(maxReceive, simulate);
             if (!simulate) {
-                write(this.stack.getOrCreateChildTag(NBT.TAG_STORABLE_STACK), false, false);
+                write(this.stack.getOrCreateTagElement(NBT.TAG_STORABLE_STACK), false, false);
             }
             return energy;
         }
@@ -312,7 +311,7 @@ public class Energy implements IEnergyStorage {
         public int extractEnergy(int maxExtract, boolean simulate) {
             int energy = super.extractEnergy(maxExtract, simulate);
             if (!simulate) {
-                write(this.stack.getOrCreateChildTag(NBT.TAG_STORABLE_STACK), false, false);
+                write(this.stack.getOrCreateTagElement(NBT.TAG_STORABLE_STACK), false, false);
             }
             return energy;
         }
@@ -373,32 +372,32 @@ public class Energy implements IEnergyStorage {
         return !stack.isEmpty() ? stack.getCapability(CapabilityEnergy.ENERGY, null) : LazyOptional.empty();
     }
 
-    public static int extract(@Nullable TileEntity tile, Direction direction, long energy, boolean simulate) {
+    public static int extract(@Nullable BlockEntity tile, Direction direction, long energy, boolean simulate) {
         return tile == null ? 0 : get(tile, direction).orElse(EMPTY).extractEnergy(Util.safeInt(energy), simulate);
     }
 
-    public static int receive(@Nullable TileEntity tile, Direction direction, long energy, boolean simulate) {
+    public static int receive(@Nullable BlockEntity tile, Direction direction, long energy, boolean simulate) {
         return tile == null ? 0 : get(tile, direction).orElse(EMPTY).receiveEnergy(Util.safeInt(energy), simulate);
     }
 
-    public static void ifPresent(@Nullable TileEntity tile, @Nullable Direction direction, NonNullConsumer<? super IEnergyStorage> consumer) {
+    public static void ifPresent(@Nullable BlockEntity tile, @Nullable Direction direction, NonNullConsumer<? super IEnergyStorage> consumer) {
         get(tile, direction).ifPresent(consumer);
     }
 
-    public static boolean isPresent(@Nullable TileEntity tile, @Nullable Direction direction) {
+    public static boolean isPresent(@Nullable BlockEntity tile, @Nullable Direction direction) {
         return get(tile, direction).isPresent();
     }
 
-    public static LazyOptional<IEnergyStorage> get(@Nullable TileEntity tile, @Nullable Direction direction) {
+    public static LazyOptional<IEnergyStorage> get(@Nullable BlockEntity tile, @Nullable Direction direction) {
         return tile == null ? LazyOptional.empty() : tile.getCapability(CapabilityEnergy.ENERGY, direction != null ? direction.getOpposite() : null);
     }
 
-    public static boolean canExtract(@Nullable TileEntity tile, @Nullable Direction direction) {
+    public static boolean canExtract(@Nullable BlockEntity tile, @Nullable Direction direction) {
         return tile != null && get(tile, direction).orElse(EMPTY).canExtract();
 
     }
 
-    public static boolean canReceive(@Nullable TileEntity tile, @Nullable Direction direction) {
+    public static boolean canReceive(@Nullable BlockEntity tile, @Nullable Direction direction) {
         return tile != null && get(tile, direction).orElse(EMPTY).canReceive();
     }
 }

@@ -1,13 +1,13 @@
 package owmii.powah.item;
 
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.monster.EndermanEntity;
-import net.minecraft.entity.monster.EndermiteEntity;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.ActionResultType;
-import net.minecraft.util.Hand;
-import net.minecraft.util.SoundEvents;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.InteractionResult;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.monster.EnderMan;
+import net.minecraft.world.entity.monster.Endermite;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.items.ItemHandlerHelper;
 import owmii.lib.item.ItemBase;
 import owmii.powah.config.Configs;
@@ -18,21 +18,21 @@ public class PhotoelectricPaneItem extends ItemBase {
     }
 
     @Override
-    public ActionResultType itemInteractionForEntity(ItemStack stack, PlayerEntity playerIn, LivingEntity target, Hand hand) {
+    public InteractionResult interactLivingEntity(ItemStack stack, Player playerIn, LivingEntity target, InteractionHand hand) {
         if (Configs.GENERAL.lens_of_ender.get()) {
-            if (target.getClass() == EndermanEntity.class || target.getClass() == EndermiteEntity.class) {
-                if (!playerIn.world.isRemote) {
-                    ItemStack stack1 = playerIn.getHeldItem(hand);
+            if (target.getClass() == EnderMan.class || target.getClass() == Endermite.class) {
+                if (!playerIn.level.isClientSide) {
+                    ItemStack stack1 = playerIn.getItemInHand(hand);
                     if (!playerIn.isCreative()) {
                         stack1.shrink(1);
                     }
                     ItemHandlerHelper.giveItemToPlayer(playerIn, new ItemStack(Itms.LENS_OF_ENDER));
-                    target.playSound(SoundEvents.ENTITY_ENDERMAN_DEATH, 0.5F, 1.0F);
+                    target.playSound(SoundEvents.ENDERMAN_DEATH, 0.5F, 1.0F);
                     target.remove();
                 }
-                return ActionResultType.SUCCESS;
+                return InteractionResult.SUCCESS;
             }
         }
-        return super.itemInteractionForEntity(stack, playerIn, target, hand);
+        return super.interactLivingEntity(stack, playerIn, target, hand);
     }
 }

@@ -1,26 +1,26 @@
 package owmii.powah.inventory;
 
-import net.minecraft.entity.player.PlayerInventory;
-import net.minecraft.network.PacketBuffer;
+import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.world.entity.player.Inventory;
 import owmii.lib.logistics.inventory.AbstractEnergyContainer;
 import owmii.lib.logistics.inventory.slot.SlotBase;
 import owmii.powah.block.ender.AbstractEnderTile;
 
 public class EnderCellContainer extends AbstractEnergyContainer<AbstractEnderTile<?, ?, ?>> {
-    public EnderCellContainer(int id, PlayerInventory inventory, PacketBuffer buffer) {
+    public EnderCellContainer(int id, Inventory inventory, FriendlyByteBuf buffer) {
         super(Containers.ENDER_CELL, id, inventory, buffer);
     }
 
-    public EnderCellContainer(int id, PlayerInventory inventory, AbstractEnderTile te) {
+    public EnderCellContainer(int id, Inventory inventory, AbstractEnderTile te) {
         super(Containers.ENDER_CELL, id, inventory, te);
     }
 
-    public static EnderCellContainer create(int id, PlayerInventory inventory, PacketBuffer buffer) {
+    public static EnderCellContainer create(int id, Inventory inventory, FriendlyByteBuf buffer) {
         return new EnderCellContainer(id, inventory, buffer);
     }
 
     @Override
-    protected void init(PlayerInventory inventory, AbstractEnderTile te) {
+    protected void init(Inventory inventory, AbstractEnderTile te) {
         super.init(inventory);
         addSlot(new SlotBase(te.getInventory(), 0, 0, 1000));
         addSlot(new SlotBase(te.getInventory(), 1, 4, 4));

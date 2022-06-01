@@ -1,8 +1,7 @@
 package owmii.lib.registry;
 
-import net.minecraft.nbt.CompoundNBT;
-
 import java.util.Locale;
+import net.minecraft.nbt.CompoundTag;
 
 public interface IVariant<V extends Enum<V> & IVariant<V>> {
     V[] getVariants();
@@ -11,11 +10,11 @@ public interface IVariant<V extends Enum<V> & IVariant<V>> {
         return ((Enum<?>) this).name().toLowerCase(Locale.ENGLISH);
     }
 
-    default V read(CompoundNBT nbt, String key) {
+    default V read(CompoundTag nbt, String key) {
         return getVariants()[nbt.getInt(key)];
     }
 
-    default CompoundNBT write(CompoundNBT nbt, V v, String key) {
+    default CompoundTag write(CompoundTag nbt, V v, String key) {
         nbt.putInt(key, ((Enum<?>) this).ordinal());
         return nbt;
     }

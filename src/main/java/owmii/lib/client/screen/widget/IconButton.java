@@ -1,21 +1,21 @@
 package owmii.lib.client.screen.widget;
 
-import com.mojang.blaze3d.matrix.MatrixStack;
 import com.mojang.blaze3d.systems.RenderSystem;
+import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.audio.SimpleSound;
-import net.minecraft.client.audio.SoundHandler;
-import net.minecraft.client.gui.FontRenderer;
-import net.minecraft.client.gui.screen.ChatScreen;
-import net.minecraft.client.gui.screen.Screen;
-import net.minecraft.client.gui.widget.button.Button;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.SoundEvent;
-import net.minecraft.util.SoundEvents;
-import net.minecraft.util.text.Color;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.StringTextComponent;
+import net.minecraft.client.gui.Font;
+import net.minecraft.client.gui.components.Button;
+import net.minecraft.client.gui.screens.ChatScreen;
+import net.minecraft.client.gui.screens.Screen;
+import net.minecraft.client.resources.sounds.SimpleSoundInstance;
+import net.minecraft.client.sounds.SoundManager;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.TextColor;
+import net.minecraft.network.chat.TextComponent;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.sounds.SoundEvent;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.world.item.ItemStack;
 import owmii.lib.client.screen.Texture;
 
 import javax.annotation.Nullable;
@@ -25,7 +25,7 @@ import java.util.function.Consumer;
 
 public class IconButton extends Button {
     protected final Minecraft mc = Minecraft.getInstance();
-    private Consumer<List<ITextComponent>> tooltipConsumer = stringList -> {
+    private Consumer<List<Component>> tooltipConsumer = stringList -> {
     };
     private Screen screen;
     private Texture texture;
@@ -37,31 +37,31 @@ public class IconButton extends Button {
     @Nullable
     private SoundEvent sound;
 
-    public IconButton(int x, int y, ITextComponent text, Texture texture, IPressable onPress, Screen screen) {
+    public IconButton(int x, int y, Component text, Texture texture, OnPress onPress, Screen screen) {
         this(x, y, ItemStack.EMPTY, texture, Texture.EMPTY, text, onPress, screen);
     }
 
-    public IconButton(int x, int y, ITextComponent text, Texture texture, IPressable onPress, Texture hovering, Screen screen) {
+    public IconButton(int x, int y, Component text, Texture texture, OnPress onPress, Texture hovering, Screen screen) {
         this(x, y, ItemStack.EMPTY, texture, hovering, text, onPress, screen);
     }
 
-    public IconButton(int x, int y, Texture texture, IPressable onPress, Screen screen) {
-        this(x, y, ItemStack.EMPTY, texture, Texture.EMPTY, new StringTextComponent(""), onPress, screen);
+    public IconButton(int x, int y, Texture texture, OnPress onPress, Screen screen) {
+        this(x, y, ItemStack.EMPTY, texture, Texture.EMPTY, new TextComponent(""), onPress, screen);
     }
 
-    public IconButton(int x, int y, Texture texture, Texture hovering, IPressable onPress, Screen screen) {
-        this(x, y, ItemStack.EMPTY, texture, hovering, new StringTextComponent(""), onPress, screen);
+    public IconButton(int x, int y, Texture texture, Texture hovering, OnPress onPress, Screen screen) {
+        this(x, y, ItemStack.EMPTY, texture, hovering, new TextComponent(""), onPress, screen);
     }
 
-    public IconButton(int x, int y, ItemStack stack, Texture texture, IPressable onPress, Screen screen) {
-        this(x, y, stack, texture, Texture.EMPTY, new StringTextComponent(""), onPress, screen);
+    public IconButton(int x, int y, ItemStack stack, Texture texture, OnPress onPress, Screen screen) {
+        this(x, y, stack, texture, Texture.EMPTY, new TextComponent(""), onPress, screen);
     }
 
-    public IconButton(int x, int y, ItemStack stack, Texture texture, Texture hovering, IPressable onPress, Screen screen) {
-        this(x, y, stack, texture, hovering, new StringTextComponent(""), onPress, screen);
+    public IconButton(int x, int y, ItemStack stack, Texture texture, Texture hovering, OnPress onPress, Screen screen) {
+        this(x, y, stack, texture, hovering, new TextComponent(""), onPress, screen);
     }
 
-    public IconButton(int x, int y, ItemStack stack, Texture texture, Texture hovering, ITextComponent text, IPressable onPress, Screen screen) {
+    public IconButton(int x, int y, ItemStack stack, Texture texture, Texture hovering, Component text, OnPress onPress, Screen screen) {
         super(x, y, texture.getWidth(), texture.getHeight(), text, onPress);
         this.texture = texture;
         this.screen = screen;
@@ -70,7 +70,7 @@ public class IconButton extends Button {
     }
 
     @Override
-    public void render(MatrixStack matrix, int mouseX, int mouseY, float pt) {
+    public void render(PoseStack matrix, int mouseX, int mouseY, float pt) {
         if (this.visible) {
             this.isHovered = mouseX >= this.x && mouseY >= this.y && mouseX < this.x + this.width && mouseY < this.y + this.height;
             if (this.isHovered && !this.hovering.isEmpty()) {
@@ -78,40 +78,44 @@ public class IconButton extends Button {
             } else {
                 this.texture.draw(matrix, this.x, this.y);
             }
-            FontRenderer f = this.mc.fontRenderer;
+            Font f = this.mc.font;
             String s = getMessage().getString();
             if (!s.isEmpty()) {
-                int width = f.getStringWidth(s);
-                Color c = getMessage().getStyle().getColor();
-                int color = c == null ? 0x555555 : c.getColor();
-                f.drawString(matrix, s, this.xOffset + this.x + 0.5F + this.width / 2.0F - width / 2.0F, this.yOffset + this.y + this.height / 2.0F - 4, color);
+                int width = f.width(s);
+                TextColor c = getMessage().getStyle().getColor();
+                int color = c == null ? 0x555555 : c.getValue();
+                f.draw(matrix, s, this.xOffset + this.x + 0.5F + this.width / 2.0F - width / 2.0F, this.yOffset + this.y + this.height / 2.0F - 4, color);
             }
             if (!this.stack.isEmpty()) {
-                RenderSystem.pushMatrix();
+                var globalStack = RenderSystem.getModelViewStack();
+                globalStack.pushPose();
                 Minecraft mc = Minecraft.getInstance();
-                RenderSystem.translated(this.xOffset + this.x - 8.0D + this.width / 2.0F, this.yOffset + this.y - 8.0D + this.height / 2.0F, 0.0F);
-                mc.getItemRenderer().renderItemAndEffectIntoGUI(this.stack, 0, 0);
-                RenderSystem.popMatrix();
+                globalStack.translate(this.xOffset + this.x - 8.0D + this.width / 2.0F, this.yOffset + this.y - 8.0D + this.height / 2.0F, 0.0F);
+                mc.getItemRenderer().renderAndDecorateItem(this.stack, 0, 0);
+                globalStack.popPose();
+
+                // TODO: not sure if this "cleanup" call is needed or not?
+                RenderSystem.applyModelViewMatrix();
             }
         }
     }
 
     @Override
-    public void renderToolTip(MatrixStack matrix, int mouseX, int mouseY) {
-        List<ITextComponent> tooltip = new ArrayList<>();
+    public void renderToolTip(PoseStack matrix, int mouseX, int mouseY) {
+        List<Component> tooltip = new ArrayList<>();
         this.tooltipConsumer.accept(tooltip);
         if (!tooltip.isEmpty()) {
-            this.screen.func_243308_b(matrix, tooltip, mouseX, mouseY);
+            this.screen.renderComponentTooltip(matrix, tooltip, mouseX, mouseY);
         }
     }
 
-    public void blit(MatrixStack matrix, Texture texture, int x, int y) {
+    public void blit(PoseStack matrix, Texture texture, int x, int y) {
         bindTexture(texture.getLocation());
         blit(matrix, x, y, texture.getU(), texture.getV(), texture.getWidth(), texture.getHeight());
     }
 
     public void bindTexture(ResourceLocation guiTexture) {
-        this.mc.getTextureManager().bindTexture(guiTexture);
+        RenderSystem.setShaderTexture(0, guiTexture);
     }
 
     public Screen getScreen() {
@@ -141,11 +145,11 @@ public class IconButton extends Button {
         return this;
     }
 
-    public Consumer<List<ITextComponent>> getTooltip() {
+    public Consumer<List<Component>> getTooltip() {
         return this.tooltipConsumer;
     }
 
-    public IconButton setTooltip(Consumer<List<ITextComponent>> tooltipConsumer) {
+    public IconButton setTooltip(Consumer<List<Component>> tooltipConsumer) {
         this.tooltipConsumer = tooltipConsumer;
         return this;
     }
@@ -166,9 +170,9 @@ public class IconButton extends Button {
     }
 
     @Override
-    public void playDownSound(SoundHandler handler) {
+    public void playDownSound(SoundManager handler) {
         if (this.sound != null) {
-            handler.play(SimpleSound.master(this.sound, 1.0F));
+            handler.play(SimpleSoundInstance.forUI(this.sound, 1.0F));
         }
     }
 

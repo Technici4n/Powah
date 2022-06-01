@@ -1,13 +1,7 @@
 package owmii.lib.client.screen.container;
 
 import com.google.common.collect.Lists;
-import com.mojang.blaze3d.matrix.MatrixStack;
-import net.minecraft.client.renderer.Rectangle2d;
-import net.minecraft.entity.player.PlayerInventory;
-import net.minecraft.util.Direction;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.TextFormatting;
-import net.minecraft.util.text.TranslationTextComponent;
+import com.mojang.blaze3d.vertex.PoseStack;
 import org.apache.commons.lang3.tuple.Pair;
 import owmii.lib.Lollipop;
 import owmii.lib.block.AbstractEnergyStorage;
@@ -19,12 +13,18 @@ import owmii.lib.logistics.inventory.AbstractEnergyContainer;
 import owmii.lib.network.packets.NextEnergyConfigPacket;
 
 import java.util.List;
+import net.minecraft.ChatFormatting;
+import net.minecraft.client.renderer.Rect2i;
+import net.minecraft.core.Direction;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.world.entity.player.Inventory;
 
 public class AbstractEnergyScreen<T extends AbstractEnergyStorage<?, ?, ?> & IInventoryHolder, C extends AbstractEnergyContainer<T>> extends AbstractTileScreen<T, C> {
     protected IconButton[] configButtons = new IconButton[6];
     protected IconButton configButtonAll = IconButton.EMPTY;
 
-    public AbstractEnergyScreen(C container, PlayerInventory inv, ITextComponent title, Texture backGround) {
+    public AbstractEnergyScreen(C container, Inventory inv, Component title, Texture backGround) {
         super(container, inv, title, backGround);
     }
 
@@ -45,33 +45,33 @@ public class AbstractEnergyScreen<T extends AbstractEnergyStorage<?, ?, ?> & IIn
             Pair<Integer, Integer> offset = getSideButtonOffsets(6).get(i);
             int xOffset = offset.getLeft();
             int yOffset = offset.getRight();
-            Direction side = Direction.byIndex(i);
-            this.configButtons[i] = addButton(new IconButton(this.guiLeft + xOffset + this.xSize + x + 8, this.guiTop + yOffset + y + 10, Texture.CONFIG.get(this.te.getSideConfig().getType(side)), button -> {
-                Lollipop.NET.toServer(new NextEnergyConfigPacket(id, this.te.getPos()));
+            Direction side = Direction.from3DDataValue(i);
+            this.configButtons[i] = addWidget(new IconButton(this.leftPos + xOffset + this.imageWidth + x + 8, this.topPos + yOffset + y + 10, Texture.CONFIG.get(this.te.getSideConfig().getType(side)), button -> {
+                Lollipop.NET.toServer(new NextEnergyConfigPacket(id, this.te.getBlockPos()));
                 this.te.getSideConfig().nextType(side);
             }, this).setTooltip(tooltip -> {
-                tooltip.add(new TranslationTextComponent("info.lollipop.facing").append(Text.COLON).mergeStyle(TextFormatting.GRAY)
-                        .append(new TranslationTextComponent("info.lollipop.side." + side.getString()).mergeStyle(TextFormatting.DARK_GRAY)));
+                tooltip.add(new TranslatableComponent("info.lollipop.facing").append(Text.COLON).withStyle(ChatFormatting.GRAY)
+                        .append(new TranslatableComponent("info.lollipop.side." + side.getSerializedName()).withStyle(ChatFormatting.DARK_GRAY)));
                 tooltip.add(this.te.getSideConfig().getType(side).getDisplayName());
             }));
         }
 
-        this.configButtonAll = addButton(new IconButton(this.guiLeft + this.xSize + x + 14, this.guiTop + y + 4, Texture.CONFIG_BTN, button -> {
-            Lollipop.NET.toServer(new NextEnergyConfigPacket(6, this.te.getPos()));
+        this.configButtonAll = addWidget(new IconButton(this.leftPos + this.imageWidth + x + 14, this.topPos + y + 4, Texture.CONFIG_BTN, button -> {
+            Lollipop.NET.toServer(new NextEnergyConfigPacket(6, this.te.getBlockPos()));
             this.te.getSideConfig().nextTypeAll();
         }, this).setTooltip(tooltip -> {
-            tooltip.add(new TranslationTextComponent("info.lollipop.facing").append(Text.COLON).mergeStyle(TextFormatting.GRAY)
-                    .append(new TranslationTextComponent("info.lollipop.all").mergeStyle(TextFormatting.DARK_GRAY)));
+            tooltip.add(new TranslatableComponent("info.lollipop.facing").append(Text.COLON).withStyle(ChatFormatting.GRAY)
+                    .append(new TranslatableComponent("info.lollipop.all").withStyle(ChatFormatting.DARK_GRAY)));
             tooltip.add(this.te.getSideConfig().getType(Direction.UP).getDisplayName());
         }));
     }
 
     @Override
-    public void tick() {
-        super.tick();
+    public void containerTick() {
+        super.containerTick();
         if (hasConfigButtons()) {
             for (int i = 0; i < 6; i++) {
-                this.configButtons[i].setTexture(Texture.CONFIG.get(this.te.getSideConfig().getType(Direction.byIndex(i))));
+                this.configButtons[i].setTexture(Texture.CONFIG.get(this.te.getSideConfig().getType(Direction.from3DDataValue(i))));
             }
         }
     }
@@ -81,7 +81,7 @@ public class AbstractEnergyScreen<T extends AbstractEnergyStorage<?, ?, ?> & IIn
     }
 
     @Override
-    protected void drawBackground(MatrixStack matrix, float partialTicks, int mouseX, int mouseY) {
+    protected void drawBackground(PoseStack matrix, float partialTicks, int mouseX, int mouseY) {
         super.drawBackground(matrix, partialTicks, mouseX, mouseY);
         if (hasConfigButtons()) {
             Texture.CONFIG_BTN_BG.draw(matrix, this.configButtons[1].x - 8, this.configButtons[1].y - 4);
@@ -89,8 +89,8 @@ public class AbstractEnergyScreen<T extends AbstractEnergyStorage<?, ?, ?> & IIn
     }
 
     @Override
-    public List<Rectangle2d> getExtraAreas() {
-        final List<Rectangle2d> extraAreas = super.getExtraAreas();
+    public List<Rect2i> getExtraAreas() {
+        final List<Rect2i> extraAreas = super.getExtraAreas();
         if (hasConfigButtons()) {
             extraAreas.add(toRectangle2d(this.configButtons[1].x - 8, this.configButtons[1].y - 4, Texture.CONFIG_BTN_BG));
         }

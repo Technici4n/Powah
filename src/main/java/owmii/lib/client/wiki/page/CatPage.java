@@ -1,6 +1,5 @@
 package owmii.lib.client.wiki.page;
 
-import net.minecraft.util.IItemProvider;
 import owmii.lib.client.screen.Texture;
 import owmii.lib.client.wiki.Entry;
 import owmii.lib.client.wiki.Icon;
@@ -8,6 +7,7 @@ import owmii.lib.client.wiki.Page;
 import owmii.lib.client.wiki.Section;
 
 import javax.annotation.Nullable;
+import net.minecraft.world.level.ItemLike;
 import java.util.function.Consumer;
 
 public class CatPage extends Page {
@@ -15,11 +15,11 @@ public class CatPage extends Page {
         super(name, parent);
     }
 
-    public CatPage e(IItemProvider provider, Consumer<Entry> consumer) {
+    public CatPage e(ItemLike provider, Consumer<Entry> consumer) {
         return e("", provider, consumer);
     }
 
-    public CatPage e(String name, IItemProvider icon, Consumer<Entry> consumer) {
+    public CatPage e(String name, ItemLike icon, Consumer<Entry> consumer) {
         return e(name, new Icon(icon), consumer);
     }
 
@@ -53,10 +53,10 @@ public class CatPage extends Page {
 //    public void render(MatrixStack matrix, int x, int y, int mx, int my, float pt, FontRenderer font, WikiScreen screen) {
 //
 //
-//        ITextComponent t = new TranslationTextComponent(getSection().getEntry().getTransKey()).copyRaw().mergeStyle(TextFormatting.DARK_AQUA).modifyStyle(style -> {
+//        ITextComponent t = new TranslationTextComponent(getSection().getEntry().getTransKey()).copyRaw().withStyle(TextFormatting.DARK_AQUA).modifyStyle(style -> {
 //            style.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_ITEM, new HoverEvent.ItemHover(new ItemStack(Blocks.COBBLESTONE))));
 //            return style;
-//        }).append(new TranslationTextComponent(" Test").mergeStyle(TextFormatting.GRAY));
+//        }).append(new TranslationTextComponent(" Test").withStyle(TextFormatting.GRAY));
 //        Minecraft.getInstance().fontRenderer.func_243248_b(matrix, t, x + 10, y + 10, 0x444444);
 //    }
 }

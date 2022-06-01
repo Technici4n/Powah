@@ -1,23 +1,22 @@
 package owmii.lib.block;
 
-import net.minecraft.block.BlockState;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.network.NetworkManager;
-import net.minecraft.network.play.server.SUpdateTileEntityPacket;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.tileentity.TileEntityType;
-import net.minecraft.util.Direction;
-import net.minecraft.world.World;
-import net.minecraft.world.server.ServerWorld;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.entity.BlockEntityType;
+import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.common.capabilities.Capability;
-import net.minecraftforge.common.capabilities.CapabilityInject;
+import net.minecraftforge.common.capabilities.CapabilityManager;
+import net.minecraftforge.common.capabilities.CapabilityToken;
 import net.minecraftforge.common.util.LazyOptional;
-import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
 import net.minecraftforge.fluids.capability.IFluidHandler;
 import net.minecraftforge.fluids.capability.templates.FluidTank;
-import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
 import owmii.lib.logistics.IRedstoneInteract;
 import owmii.lib.logistics.Redstone;
@@ -30,11 +29,9 @@ import owmii.lib.util.Stack;
 import javax.annotation.Nullable;
 
 @SuppressWarnings("unchecked")
-public class AbstractTileEntity<V extends IVariant, B extends AbstractBlock<V, B>> extends TileEntity implements IBlockEntity, IRedstoneInteract {
-    @CapabilityInject(IItemHandler.class)
-    public static Capability<IItemHandler> ITEM_HANDLER_CAPABILITY = CapabilityItemHandler.ITEM_HANDLER_CAPABILITY;
-    @CapabilityInject(IFluidHandler.class)
-    public static Capability<IFluidHandler> FLUID_HANDLER_CAPABILITY = CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY;
+public class AbstractTileEntity<V extends IVariant, B extends AbstractBlock<V, B>> extends BlockEntity implements IBlockEntity, IRedstoneInteract {
+    public static Capability<IItemHandler> ITEM_HANDLER_CAPABILITY = CapabilityManager.get(new CapabilityToken<>() {});
+    public static Capability<IFluidHandler> FLUID_HANDLER_CAPABILITY = CapabilityManager.get(new CapabilityToken<>() {});
 
     /**
      * Used when this is instance of {@link IInventoryHolder}
@@ -54,13 +51,13 @@ public class AbstractTileEntity<V extends IVariant, B extends AbstractBlock<V, B
      **/
     private Redstone redstone = Redstone.IGNORE;
 
-    public AbstractTileEntity(TileEntityType<?> type) {
-        this(type, IVariant.getEmpty());
+    public AbstractTileEntity(BlockEntityType<?> type, BlockPos pos, BlockState state) {
+        this(type, pos, state, IVariant.getEmpty());
         this.tank.validate(stack -> true);
     }
 
-    public AbstractTileEntity(TileEntityType<?> type, V variant) {
-        super(type);
+    public AbstractTileEntity(BlockEntityType<?> type, BlockPos pos, BlockState state, V variant) {
+        super(type, pos, state);
         this.variant = variant;
         if (this instanceof IInventoryHolder) {
             this.inv.setTile((IInventoryHolder) this);
@@ -76,34 +73,43 @@ public class AbstractTileEntity<V extends IVariant, B extends AbstractBlock<V, B
     }
 
     @Override
-    public void read(BlockState state, CompoundNBT compound) {
-        super.read(state, compound);
-        readSync(compound);
+    public final void load(CompoundTag tag) {
+        super.load(tag);
+        readSync(tag);
+
+        if (!tag.contains("#c")) { // Server only...
+            loadServerOnly(tag);
+        }
     }
 
     @Override
-    public CompoundNBT write(CompoundNBT compound) {
-        CompoundNBT nbt = super.write(compound);
-        return writeSync(nbt);
+    protected final void saveAdditional(CompoundTag tag) {
+        super.saveAdditional(tag);
+        writeSync(tag);
+        saveServerOnly(tag);
     }
 
     @Override
-    public CompoundNBT getUpdateTag() {
-        return write(new CompoundNBT());
+    public final CompoundTag getUpdateTag() {
+        var tag = saveWithoutMetadata();
+        tag.putBoolean("#c", true); // mark client tag
+        return tag;
     }
 
     @Nullable
     @Override
-    public SUpdateTileEntityPacket getUpdatePacket() {
-        return new SUpdateTileEntityPacket(getPos(), 3, writeSync(new CompoundNBT()));
+    public final ClientboundBlockEntityDataPacket getUpdatePacket() {
+        return ClientboundBlockEntityDataPacket.create(this);
     }
 
-    @Override
-    public void onDataPacket(NetworkManager net, SUpdateTileEntityPacket pkt) {
-        readSync(pkt.getNbtCompound());
+    protected void loadServerOnly(CompoundTag compound) {
     }
 
-    protected void readSync(CompoundNBT nbt) {
+    protected CompoundTag saveServerOnly(CompoundTag compound) {
+        return compound;
+    }
+
+    protected void readSync(CompoundTag nbt) {
         if (!this.variant.isEmpty() && nbt.contains("variant", 3)) {
             this.variant = (V) this.variant.read(nbt, "variant");
         }
@@ -119,7 +125,7 @@ public class AbstractTileEntity<V extends IVariant, B extends AbstractBlock<V, B
         readStorable(nbt);
     }
 
-    protected CompoundNBT writeSync(CompoundNBT nbt) {
+    protected CompoundTag writeSync(CompoundTag nbt) {
         if (!this.variant.isEmpty()) {
             this.variant.write(nbt, (Enum<?>) this.variant, "variant");
         }
@@ -135,7 +141,7 @@ public class AbstractTileEntity<V extends IVariant, B extends AbstractBlock<V, B
         return writeStorable(nbt);
     }
 
-    public void readStorable(CompoundNBT nbt) {
+    public void readStorable(CompoundTag nbt) {
         if (this instanceof IInventoryHolder && keepInventory()) {
             this.inv.deserializeNBT(nbt);
         }
@@ -146,7 +152,7 @@ public class AbstractTileEntity<V extends IVariant, B extends AbstractBlock<V, B
         }
     }
 
-    public CompoundNBT writeStorable(CompoundNBT nbt) {
+    public CompoundTag writeStorable(CompoundTag nbt) {
         if (this instanceof IInventoryHolder && keepInventory()) {
             nbt.merge(this.inv.serializeNBT());
         }
@@ -159,27 +165,27 @@ public class AbstractTileEntity<V extends IVariant, B extends AbstractBlock<V, B
     }
 
     @Override
-    public void onPlaced(World world, BlockState state, @Nullable LivingEntity placer, ItemStack stack) {
-        CompoundNBT tag = Stack.getTagOrEmpty(stack);
+    public void onPlaced(Level world, BlockState state, @Nullable LivingEntity placer, ItemStack stack) {
+        CompoundTag tag = Stack.getTagOrEmpty(stack);
         if (!tag.isEmpty()) {
             readStorable(tag.getCompound(NBT.TAG_STORABLE_STACK));
         }
     }
 
     @Override
-    public void onRemoved(World world, BlockState state, BlockState newState, boolean isMoving) {
+    public void onRemoved(Level world, BlockState state, BlockState newState, boolean isMoving) {
         if (state.getBlock() != newState.getBlock()) {
             if (this instanceof IInventoryHolder) {
                 if (!keepInventory() || !keepStorable()) {
-                    getInventory().drop(world, this.pos);
+                    getInventory().drop(world, this.worldPosition);
                 }
             }
         }
     }
 
     public ItemStack storeToStack(ItemStack stack) {
-        CompoundNBT nbt = writeStorable(new CompoundNBT());
-        CompoundNBT nbt1 = Stack.getTagOrEmpty(stack);
+        CompoundTag nbt = writeStorable(new CompoundTag());
+        CompoundTag nbt1 = Stack.getTagOrEmpty(stack);
         if (!nbt.isEmpty() && keepStorable()) {
             nbt1.put(NBT.TAG_STORABLE_STACK, nbt);
             stack.setTag(nbt1);
@@ -188,7 +194,7 @@ public class AbstractTileEntity<V extends IVariant, B extends AbstractBlock<V, B
     }
 
     public static <T extends AbstractTileEntity> T fromStack(ItemStack stack, T tile) {
-        CompoundNBT nbt = stack.getChildTag(NBT.TAG_STORABLE_STACK);
+        CompoundTag nbt = stack.getTagElement(NBT.TAG_STORABLE_STACK);
         if (nbt != null) {
             tile.readStorable(nbt);
         }
@@ -216,24 +222,24 @@ public class AbstractTileEntity<V extends IVariant, B extends AbstractBlock<V, B
     }
 
     public boolean checkRedstone() {
-        boolean power = this.world != null && this.world.getRedstonePowerFromNeighbors(this.pos) > 0;
+        boolean power = this.level != null && this.level.getBestNeighborSignal(this.worldPosition) > 0;
         return Redstone.IGNORE.equals(getRedstoneMode()) || power && Redstone.ON.equals(getRedstoneMode()) || !power && Redstone.OFF.equals(getRedstoneMode());
     }
 
     public void sync() {
-        if (this.world instanceof ServerWorld) {
+        if (this.level instanceof ServerLevel) {
             final BlockState state = getBlockState();
-            this.world.notifyBlockUpdate(this.pos, state, state, 3);
-            this.world.markChunkDirty(this.pos, this);
+            this.level.sendBlockUpdated(this.worldPosition, state, state, 3);
+            this.level.blockEntityChanged(this.worldPosition);
         }
     }
 
     public boolean isRemote() {
-        return this.world != null && this.world.isRemote;
+        return this.level != null && this.level.isClientSide;
     }
 
     @Override
-    protected void invalidateCaps() {
+    public void invalidateCaps() {
         super.invalidateCaps();
         invHolder.invalidate();
         tankHolder.invalidate();

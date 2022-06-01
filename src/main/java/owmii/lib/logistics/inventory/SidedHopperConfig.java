@@ -1,8 +1,8 @@
 package owmii.lib.logistics.inventory;
 
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.util.Direction;
-import net.minecraftforge.common.util.Constants;
+import net.minecraft.core.Direction;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.Tag;
 import owmii.lib.logistics.Transfer;
 
 import javax.annotation.Nullable;
@@ -22,16 +22,16 @@ public class SidedHopperConfig {
         Arrays.fill(this.transfers, NONE);
     }
 
-    public void read(CompoundNBT nbt) {
-        if (nbt.contains("hopper_transfer_type", Constants.NBT.TAG_INT_ARRAY)) {
+    public void read(CompoundTag nbt) {
+        if (nbt.contains("hopper_transfer_type", Tag.TAG_INT_ARRAY)) {
             int[] arr = nbt.getIntArray("hopper_transfer_type");
             for (int i = 0; i < arr.length; i++) {
-                setType(Direction.byIndex(i), Transfer.values()[arr[i]]);
+                setType(Direction.from3DDataValue(i), Transfer.values()[arr[i]]);
             }
         }
     }
 
-    public CompoundNBT write(CompoundNBT nbt) {
+    public CompoundTag write(CompoundTag nbt) {
         List<Integer> list = new ArrayList<>();
         for (int i = 0, valuesLength = this.transfers.length; i < valuesLength; i++) {
             list.add(i, this.transfers[i].ordinal());
@@ -68,7 +68,7 @@ public class SidedHopperConfig {
 
     public Transfer getType(@Nullable Direction side) {
         if (side != null) {
-            return this.transfers[side.getIndex()];
+            return this.transfers[side.get3DDataValue()];
         }
         return NONE;
     }
@@ -76,7 +76,7 @@ public class SidedHopperConfig {
     public void setType(@Nullable Direction side, Transfer type) {
         if (side == null || this.hopper.getItemTransfer().equals(NONE))
             return;
-        this.transfers[side.getIndex()] = type;
+        this.transfers[side.get3DDataValue()] = type;
         this.hopper.getSidedHopper().setPush(side, type.canExtract);
         this.hopper.getSidedHopper().setPull(side, type.canReceive);
     }

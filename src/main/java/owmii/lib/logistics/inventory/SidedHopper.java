@@ -1,10 +1,9 @@
 package owmii.lib.logistics.inventory;
 
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.util.Direction;
-
 import java.util.HashMap;
 import java.util.Map;
+import net.minecraft.core.Direction;
+import net.minecraft.nbt.CompoundTag;
 
 public class SidedHopper {
     private final Hopper[] hoppers = new Hopper[6];
@@ -17,17 +16,17 @@ public class SidedHopper {
         }
     }
 
-    public void read(CompoundNBT nbt, String key) {
+    public void read(CompoundTag nbt, String key) {
         for (int i = 0; i < this.hoppers.length; i++) {
             Direction side = Direction.values()[i];
-            this.hoppers[i].read(nbt, key + "_" + side.getName2());
+            this.hoppers[i].read(nbt, key + "_" + side.getName());
         }
     }
 
-    public CompoundNBT write(CompoundNBT nbt, String key) {
+    public CompoundTag write(CompoundTag nbt, String key) {
         for (int i = 0; i < this.hoppers.length; i++) {
             Direction side = Direction.values()[i];
-            this.hoppers[i].write(nbt, key + "_" + side.getName2());
+            this.hoppers[i].write(nbt, key + "_" + side.getName());
         }
         return nbt;
     }
@@ -61,14 +60,14 @@ public class SidedHopper {
         for (int i = 0; i < this.hoppers.length; i++) {
             Hopper hopper = this.hoppers[i];
             if (hopper.isActive()) {
-                hoppers.put(Direction.byIndex(i), hopper);
+                hoppers.put(Direction.from3DDataValue(i), hopper);
             }
         }
         return hoppers;
     }
 
     public Hopper getHopper(Direction side) {
-        return this.hoppers[side.getIndex()];
+        return this.hoppers[side.get3DDataValue()];
     }
 
     public Hopper[] getHoppers() {

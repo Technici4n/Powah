@@ -1,15 +1,15 @@
 package owmii.lib.client.wiki;
 
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.crafting.IRecipe;
-import net.minecraft.item.crafting.IRecipeType;
-import net.minecraft.util.IItemProvider;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.crafting.Recipe;
+import net.minecraft.world.item.crafting.RecipeType;
+import net.minecraft.world.level.ItemLike;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.client.event.RecipesUpdatedEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.MavenVersionStringHelper;
+import net.minecraftforge.common.util.MavenVersionStringHelper;
 import net.minecraftforge.fml.ModContainer;
 import net.minecraftforge.fml.ModList;
 import net.minecraftforge.fml.common.Mod;
@@ -29,8 +29,8 @@ public class Wiki {
     public static final Marker MARKER = new MarkerManager.Log4jMarker("Wiki");
     public static final Map<String, Wiki> WIKIS = new HashMap<>();
     private final List<Entry> categories = new ArrayList<>();
-    private final Map<IItemProvider, List<IRecipe<?>>> crafting = new HashMap<>();
-    private final Map<IItemProvider, List<IRecipe<?>>> smelting = new HashMap<>();
+    private final Map<ItemLike, List<Recipe<?>>> crafting = new HashMap<>();
+    private final Map<ItemLike, List<Recipe<?>>> smelting = new HashMap<>();
     public final Registry<Item> items;
     private final String modId;
 
@@ -67,11 +67,11 @@ public class Wiki {
         return this.categories;
     }
 
-    public Map<IItemProvider, List<IRecipe<?>>> getCrafting() {
+    public Map<ItemLike, List<Recipe<?>>> getCrafting() {
         return this.crafting;
     }
 
-    public Map<IItemProvider, List<IRecipe<?>>> getSmelting() {
+    public Map<ItemLike, List<Recipe<?>>> getSmelting() {
         return this.smelting;
     }
 
@@ -105,16 +105,16 @@ public class Wiki {
         Lollipop.LOGGER.info(MARKER, "Started wikis recipes collecting...");
         WIKIS.forEach((s, wiki) -> {
             wiki.items.forEach(item -> {
-                List<IRecipe<?>> crafting = new ArrayList<>();
-                event.getRecipeManager().getRecipes(IRecipeType.CRAFTING).forEach((location, recipe) -> {
-                    if (recipe.getRecipeOutput().isItemEqual(new ItemStack(item))) {
+                List<Recipe<?>> crafting = new ArrayList<>();
+                event.getRecipeManager().getAllRecipesFor(RecipeType.CRAFTING).forEach(recipe -> {
+                    if (recipe.getResultItem().sameItem(new ItemStack(item))) {
                         crafting.add(recipe);
                     }
                 });
                 wiki.crafting.put(item, crafting);
-                List<IRecipe<?>> smelting = new ArrayList<>();
-                event.getRecipeManager().getRecipes(IRecipeType.SMELTING).forEach((location, recipe) -> {
-                    if (recipe.getRecipeOutput().isItemEqual(new ItemStack(item))) {
+                List<Recipe<?>> smelting = new ArrayList<>();
+                event.getRecipeManager().getAllRecipesFor(RecipeType.CRAFTING).forEach(recipe -> {
+                    if (recipe.getResultItem().sameItem(new ItemStack(item))) {
                         smelting.add(recipe);
                     }
                 });

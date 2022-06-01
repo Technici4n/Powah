@@ -1,6 +1,6 @@
 package owmii.lib.block;
 
-import net.minecraft.item.ItemStack;
+import net.minecraft.world.item.ItemStack;
 import owmii.lib.logistics.inventory.Inventory;
 
 public interface IInventoryHolder {

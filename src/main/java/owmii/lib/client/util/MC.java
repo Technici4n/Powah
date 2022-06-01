@@ -1,9 +1,9 @@
 package owmii.lib.client.util;
 
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.screen.Screen;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.world.World;
+import net.minecraft.client.gui.screens.Screen;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.level.Level;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -22,16 +22,16 @@ public class MC {
         }
     }
 
-    public static Optional<PlayerEntity> player() {
+    public static Optional<Player> player() {
         return Optional.ofNullable(get().player);
     }
 
-    public static Optional<World> world() {
-        return Optional.ofNullable(get().world);
+    public static Optional<Level> world() {
+        return Optional.ofNullable(get().level);
     }
 
     public static void open(Screen screen) {
-        get().displayGuiScreen(screen);
+        get().setScreen(screen);
     }
 
     public static Minecraft get() {

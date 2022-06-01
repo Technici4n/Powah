@@ -1,12 +1,13 @@
 package owmii.powah.block.energizing;
 
-import net.minecraft.block.BlockState;
-import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.state.properties.BlockStateProperties;
-import net.minecraft.util.Direction;
-import net.minecraft.util.math.vector.Vector3d;
-import net.minecraft.world.World;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.state.properties.BlockStateProperties;
+import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.items.wrapper.RecipeWrapper;
 import owmii.lib.block.AbstractTickableTile;
 import owmii.lib.block.IInventoryHolder;
@@ -25,13 +26,13 @@ public class EnergizingOrbTile extends AbstractTickableTile<IVariant.Single, Ene
     @Nullable
     private EnergizingRecipe recipe;
 
-    public EnergizingOrbTile() {
-        super(Tiles.ENERGIZING_ORB);
+    public EnergizingOrbTile(BlockPos pos, BlockState state) {
+        super(Tiles.ENERGIZING_ORB, pos, state);
         this.inv.set(7);
     }
 
     @Override
-    public void readSync(CompoundNBT nbt) {
+    public void readSync(CompoundTag nbt) {
         super.readSync(nbt);
         this.buffer.read(nbt, "buffer", true, false);
         this.buffer.setTransfer(this.buffer.getCapacity());
@@ -39,26 +40,26 @@ public class EnergizingOrbTile extends AbstractTickableTile<IVariant.Single, Ene
     }
 
     @Override
-    public CompoundNBT writeSync(CompoundNBT nbt) {
+    public CompoundTag writeSync(CompoundTag nbt) {
         this.buffer.write(nbt, "buffer", true, false);
         nbt.putBoolean("contain_recipe", this.containRecipe);
         return super.writeSync(nbt);
     }
 
     public Direction getOrbUp() {
-        if (this.world != null) {
+        if (this.level != null) {
             BlockState state = this.getBlockState();
             if (state.hasProperty(BlockStateProperties.FACING)) {
-                return state.get(BlockStateProperties.FACING).getOpposite();
+                return state.getValue(BlockStateProperties.FACING).getOpposite();
             }
         }
         return Direction.UP;
     }
 
-    public Vector3d getOrbCenter() {
+    public Vec3 getOrbCenter() {
         Direction up = getOrbUp();
         double scale = 0.1;
-        return Vector3d.copyCentered(this.pos).add(up.getXOffset() * scale, up.getYOffset() * scale, up.getZOffset() * scale);
+        return Vec3.atCenterOf(this.worldPosition).add(up.getStepX() * scale, up.getStepY() * scale, up.getStepZ() * scale);
     }
 
     @Nullable
@@ -67,7 +68,7 @@ public class EnergizingOrbTile extends AbstractTickableTile<IVariant.Single, Ene
     }
 
     @Override
-    protected void onFirstTick(World world) {
+    protected void onFirstTick(Level world) {
         super.onFirstTick(world);
         checkRecipe();
     }
@@ -83,8 +84,8 @@ public class EnergizingOrbTile extends AbstractTickableTile<IVariant.Single, Ene
     }
 
     private void checkRecipe() {
-        if (this.world != null && !isRemote()) {
-            Optional<EnergizingRecipe> recipe = this.world.getRecipeManager().getRecipe(Recipes.ENERGIZING, new RecipeWrapper(getInventory()), this.world);
+        if (this.level != null && !isRemote()) {
+            Optional<EnergizingRecipe> recipe = this.level.getRecipeManager().getRecipeFor(Recipes.ENERGIZING, new RecipeWrapper(getInventory()), this.level);
             if (recipe.isPresent()) {
                 this.recipe = recipe.get();
                 this.buffer.setCapacity(this.recipe.getEnergy());
@@ -101,17 +102,17 @@ public class EnergizingOrbTile extends AbstractTickableTile<IVariant.Single, Ene
 
     public long fillEnergy(long amount) {
         long filled = Math.min(this.buffer.getEmpty(), amount);
-        if (this.world != null) {
+        if (this.level != null) {
             if (this.recipe != null) {
                 this.buffer.produce(filled);
                 if (this.buffer.isFull()) {
-                    ItemStack stack = this.recipe.getRecipeOutput();
+                    ItemStack stack = this.recipe.getResultItem();
                     this.inv.clear();
                     this.inv.setStackInSlot(0, stack.copy());
                     this.buffer.setCapacity(0);
                     this.buffer.setStored(0);
                     this.buffer.setTransfer(0);
-                    markDirty();
+                    setChanged();
                 }
                 sync(5);
             }

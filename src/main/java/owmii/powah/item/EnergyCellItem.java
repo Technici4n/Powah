@@ -1,9 +1,9 @@
 package owmii.powah.item;
 
-import net.minecraft.item.ItemGroup;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.Rarity;
-import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.world.item.CreativeModeTab;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Rarity;
 import net.minecraftforge.common.capabilities.ICapabilityProvider;
 import owmii.lib.item.EnergyBlockItem;
 import owmii.lib.logistics.energy.Energy;
@@ -15,13 +15,13 @@ import owmii.powah.config.EnergyCellConfig;
 import javax.annotation.Nullable;
 
 public class EnergyCellItem extends EnergyBlockItem<Tier, EnergyCellConfig, EnergyCellBlock> implements IEnderExtender {
-    public EnergyCellItem(EnergyCellBlock block, Properties properties, @Nullable ItemGroup group) {
+    public EnergyCellItem(EnergyCellBlock block, Properties properties, @Nullable CreativeModeTab group) {
         super(block, properties, group);
     }
 
     @Nullable
     @Override
-    public ICapabilityProvider initCapabilities(ItemStack stack, @Nullable CompoundNBT nbt) {
+    public ICapabilityProvider initCapabilities(ItemStack stack, @Nullable CompoundTag nbt) {
         if (!getVariant().equals(Tier.CREATIVE)) {
             return super.initCapabilities(stack, nbt);
         }
@@ -37,8 +37,8 @@ public class EnergyCellItem extends EnergyBlockItem<Tier, EnergyCellConfig, Ener
     }
 
     @Override
-    public boolean hasEffect(ItemStack stack) {
-        return getVariant().equals(Tier.CREATIVE) || super.hasEffect(stack);
+    public boolean isFoil(ItemStack stack) {
+        return getVariant().equals(Tier.CREATIVE) || super.isFoil(stack);
     }
 
     @Override

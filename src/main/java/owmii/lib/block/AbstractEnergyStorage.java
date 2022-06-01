@@ -1,13 +1,15 @@
 package owmii.lib.block;
 
-import net.minecraft.block.BlockState;
-import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.tileentity.TileEntityType;
-import net.minecraft.util.Direction;
-import net.minecraft.world.World;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.entity.BlockEntityType;
+import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.common.capabilities.Capability;
-import net.minecraftforge.common.capabilities.CapabilityInject;
+import net.minecraftforge.common.capabilities.CapabilityManager;
+import net.minecraftforge.common.capabilities.CapabilityToken;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.energy.CapabilityEnergy;
 import net.minecraftforge.energy.IEnergyStorage;
@@ -26,18 +28,17 @@ import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 public class AbstractEnergyStorage<V extends Enum<V> & IVariant<V>, C extends IEnergyConfig<V>, B extends AbstractEnergyBlock<V, C, B>> extends AbstractTickableTile<V, B> implements IRedstoneInteract {
-    @CapabilityInject(IEnergyStorage.class)
-    public static Capability<IEnergyStorage> ENERGY_CAPABILITY = CapabilityEnergy.ENERGY;
+    public static Capability<IEnergyStorage> ENERGY_CAPABILITY = CapabilityManager.get(new CapabilityToken<>() {});
     protected final SideConfig sideConfig = new SideConfig(this);
     protected final Energy energy = Energy.create(0);
     private final SidedStorage<LazyOptional<IEnergyStorage>> energyProxies = SidedStorage.create(this::createEnergyProxy);
 
-    public AbstractEnergyStorage(TileEntityType<?> type) {
-        this(type, IVariant.getEmpty());
+    public AbstractEnergyStorage(BlockEntityType<?> type, BlockPos pos, BlockState state) {
+        this(type, pos, state, IVariant.getEmpty());
     }
 
-    public AbstractEnergyStorage(TileEntityType<?> type, V variant) {
-        super(type, variant);
+    public AbstractEnergyStorage(BlockEntityType<?> type, BlockPos pos, BlockState state, V variant) {
+        super(type, pos, state, variant);
     }
 
     private LazyOptional<IEnergyStorage> createEnergyProxy(@Nullable Direction side) {
@@ -75,7 +76,7 @@ public class AbstractEnergyStorage<V extends Enum<V> & IVariant<V>, C extends IE
     }
 
     @Override
-    public void readSync(CompoundNBT nbt) {
+    public void readSync(CompoundTag nbt) {
         this.sideConfig.read(nbt);
         if (!keepEnergy()) {
             this.energy.read(nbt, true, false);
@@ -84,7 +85,7 @@ public class AbstractEnergyStorage<V extends Enum<V> & IVariant<V>, C extends IE
     }
 
     @Override
-    public CompoundNBT writeSync(CompoundNBT nbt) {
+    public CompoundTag writeSync(CompoundTag nbt) {
         this.sideConfig.write(nbt);
         if (!keepEnergy()) {
             this.energy.write(nbt, true, false);
@@ -93,7 +94,7 @@ public class AbstractEnergyStorage<V extends Enum<V> & IVariant<V>, C extends IE
     }
 
     @Override
-    public void readStorable(CompoundNBT nbt) {
+    public void readStorable(CompoundTag nbt) {
         if (keepEnergy()) {
             this.energy.read(nbt, false, false);
         }
@@ -101,7 +102,7 @@ public class AbstractEnergyStorage<V extends Enum<V> & IVariant<V>, C extends IE
     }
 
     @Override
-    public CompoundNBT writeStorable(CompoundNBT nbt) {
+    public CompoundTag writeStorable(CompoundTag nbt) {
         if (keepEnergy()) {
             this.energy.write(nbt, false, false);
         }
@@ -109,7 +110,7 @@ public class AbstractEnergyStorage<V extends Enum<V> & IVariant<V>, C extends IE
     }
 
     @Override
-    protected void invalidateCaps() {
+    public void invalidateCaps() {
         super.invalidateCaps();
         this.energyProxies.stream().forEach(LazyOptional::invalidate);
     }
@@ -127,7 +128,7 @@ public class AbstractEnergyStorage<V extends Enum<V> & IVariant<V>, C extends IE
     }
 
     @Override
-    protected void onFirstTick(World world) {
+    protected void onFirstTick(Level world) {
         super.onFirstTick(world);
         this.energy.setCapacity(getEnergyCapacity());
         this.energy.setTransfer(getEnergyTransfer());
@@ -135,13 +136,13 @@ public class AbstractEnergyStorage<V extends Enum<V> & IVariant<V>, C extends IE
         sync();
     }
 
-    protected long extractFromSides(World world) {
+    protected long extractFromSides(Level world) {
         long extracted = 0;
         if (!isRemote()) {
             for (Direction side : Direction.values()) {
                 if (canExtractEnergy(side)) {
                     long amount = Math.min(getEnergyTransfer(), getEnergy().getStored());
-                    long toExtract = Energy.receive(world.getTileEntity(this.pos.offset(side, getExtractSidesOffsets()[side.ordinal()])), side, Util.safeInt(amount), false);
+                    long toExtract = Energy.receive(world.getBlockEntity(this.worldPosition.relative(side, getExtractSidesOffsets()[side.ordinal()])), side, Util.safeInt(amount), false);
                     extracted += extractEnergy(Util.safeInt(toExtract), false, side);
                 }
             }
@@ -217,7 +218,7 @@ public class AbstractEnergyStorage<V extends Enum<V> & IVariant<V>, C extends IE
     }
 
     @Override
-    public void onAdded(World world, BlockState state, BlockState oldState, boolean isMoving) {
+    public void onAdded(Level world, BlockState state, BlockState oldState, boolean isMoving) {
         super.onAdded(world, state, oldState, isMoving);
         if (state.getBlock() != oldState.getBlock()) {
             getSideConfig().init();

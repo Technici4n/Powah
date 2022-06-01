@@ -1,17 +1,16 @@
 package owmii.powah.block.hopper;
 
-import net.minecraft.block.BlockState;
-import net.minecraft.entity.player.PlayerInventory;
-import net.minecraft.inventory.IInventory;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemGroup;
-import net.minecraft.state.properties.BlockStateProperties;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.Direction;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.BlockRayTraceResult;
-import net.minecraft.world.IBlockReader;
-import net.minecraft.world.IWorldReader;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
+import net.minecraft.world.Container;
+import net.minecraft.world.entity.player.Inventory;
+import net.minecraft.world.item.CreativeModeTab;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.level.LevelReader;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.state.properties.BlockStateProperties;
+import net.minecraft.world.phys.BlockHitResult;
 import net.minecraftforge.items.CapabilityItemHandler;
 import owmii.lib.block.AbstractEnergyBlock;
 import owmii.lib.block.AbstractTileEntity;
@@ -29,17 +28,17 @@ public class EnergyHopperBlock extends AbstractEnergyBlock<Tier, EnergyHopperCon
     public EnergyHopperBlock(Properties properties, Tier variant) {
         super(properties, variant);
         setDefaultState();
-        this.shapes.put(Direction.UP, makeCuboidShape(0, 0, 0, 16, 12, 16));
-        this.shapes.put(Direction.DOWN, makeCuboidShape(0, 4, 0, 16, 16, 16));
-        this.shapes.put(Direction.NORTH, makeCuboidShape(0, 0, 4, 16, 16, 16));
-        this.shapes.put(Direction.SOUTH, makeCuboidShape(0, 0, 0, 16, 16, 12));
-        this.shapes.put(Direction.EAST, makeCuboidShape(0, 0, 0, 12, 16, 16));
-        this.shapes.put(Direction.WEST, makeCuboidShape(4, 0, 0, 16, 16, 16));
+        this.shapes.put(Direction.UP, box(0, 0, 0, 16, 12, 16));
+        this.shapes.put(Direction.DOWN, box(0, 4, 0, 16, 16, 16));
+        this.shapes.put(Direction.NORTH, box(0, 0, 4, 16, 16, 16));
+        this.shapes.put(Direction.SOUTH, box(0, 0, 0, 16, 16, 12));
+        this.shapes.put(Direction.EAST, box(0, 0, 0, 12, 16, 16));
+        this.shapes.put(Direction.WEST, box(4, 0, 0, 16, 16, 16));
     }
 
     @Override
-    public EnergyBlockItem getBlockItem(Item.Properties properties, @Nullable ItemGroup group) {
-        return super.getBlockItem(properties.maxStackSize(1), group);
+    public EnergyBlockItem getBlockItem(Item.Properties properties, @Nullable CreativeModeTab group) {
+        return super.getBlockItem(properties.stacksTo(1), group);
     }
 
     @Override
@@ -49,22 +48,22 @@ public class EnergyHopperBlock extends AbstractEnergyBlock<Tier, EnergyHopperCon
 
     @Nullable
     @Override
-    public TileEntity createTileEntity(BlockState state, IBlockReader world) {
-        return new EnergyHopperTile(this.variant);
+    public BlockEntity newBlockEntity(BlockPos pos, BlockState state) {
+        return new EnergyHopperTile(pos, state, this.variant);
     }
 
     @Override
-    public boolean isValidPosition(BlockState state, IWorldReader worldIn, BlockPos pos) {
-        Direction direction = state.get(BlockStateProperties.FACING);
-        TileEntity tile = worldIn.getTileEntity(pos.offset(direction));
-        return (tile instanceof IInventory || tile != null
+    public boolean canSurvive(BlockState state, LevelReader worldIn, BlockPos pos) {
+        Direction direction = state.getValue(BlockStateProperties.FACING);
+        BlockEntity tile = worldIn.getBlockEntity(pos.relative(direction));
+        return (tile instanceof Container || tile != null
                 && tile.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, direction).isPresent())
                 && !Energy.isPresent(tile, direction);
     }
 
     @Nullable
     @Override
-    public <T extends AbstractTileEntity> AbstractContainer getContainer(int id, PlayerInventory inventory, AbstractTileEntity te, BlockRayTraceResult result) {
+    public <T extends AbstractTileEntity> AbstractContainer getContainer(int id, Inventory inventory, AbstractTileEntity te, BlockHitResult result) {
         if (te instanceof EnergyHopperTile) {
             return new EnergyHopperContainer(id, inventory, (EnergyHopperTile) te);
         }

@@ -1,6 +1,6 @@
 package owmii.lib.util.math;
 
-import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.nbt.CompoundTag;
 
 public class RangedDouble {
     private double value;
@@ -24,12 +24,12 @@ public class RangedDouble {
         }
     }
 
-    public RangedDouble read(CompoundNBT nbt, String key) {
+    public RangedDouble read(CompoundTag nbt, String key) {
         this.value = nbt.getDouble(key);
         return this;
     }
 
-    public CompoundNBT writ(CompoundNBT nbt, String key, double value) {
+    public CompoundTag writ(CompoundTag nbt, String key, double value) {
         nbt.putDouble(key, value);
         return nbt;
     }

@@ -1,8 +1,8 @@
 package owmii.powah.network.packet;
 
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.network.PacketBuffer;
-import net.minecraftforge.fml.network.NetworkEvent;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.FriendlyByteBuf;
+import net.minecraftforge.network.NetworkEvent;
 import owmii.lib.client.util.MC;
 import owmii.lib.network.IPacket;
 import owmii.powah.block.ender.EnderNetwork;
@@ -12,26 +12,26 @@ import java.util.function.Supplier;
 
 public class SyncEnderNetworkPacket implements IPacket<SyncEnderNetworkPacket> {
     private UUID id;
-    private final CompoundNBT nbt;
+    private final CompoundTag nbt;
 
-    public SyncEnderNetworkPacket(UUID id, CompoundNBT nbt) {
+    public SyncEnderNetworkPacket(UUID id, CompoundTag nbt) {
         this.id = id;
         this.nbt = nbt;
     }
 
     public SyncEnderNetworkPacket() {
-        this(UUID.randomUUID(), new CompoundNBT());
+        this(UUID.randomUUID(), new CompoundTag());
     }
 
     @Override
-    public void encode(SyncEnderNetworkPacket msg, PacketBuffer buffer) {
-        buffer.writeUniqueId(this.id);
-        buffer.writeCompoundTag(this.nbt);
+    public void encode(SyncEnderNetworkPacket msg, FriendlyByteBuf buffer) {
+        buffer.writeUUID(this.id);
+        buffer.writeNbt(this.nbt);
     }
 
     @Override
-    public SyncEnderNetworkPacket decode(PacketBuffer buffer) {
-        return new SyncEnderNetworkPacket(buffer.readUniqueId(), buffer.readCompoundTag());
+    public SyncEnderNetworkPacket decode(FriendlyByteBuf buffer) {
+        return new SyncEnderNetworkPacket(buffer.readUUID(), buffer.readNbt());
     }
 
     @Override

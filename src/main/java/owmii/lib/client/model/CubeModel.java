@@ -1,31 +1,33 @@
 package owmii.lib.client.model;
 
-import com.mojang.blaze3d.matrix.MatrixStack;
-import com.mojang.blaze3d.vertex.IVertexBuilder;
+import net.minecraft.client.model.Model;
+import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.client.renderer.RenderType;
-import net.minecraft.client.renderer.model.Model;
-import net.minecraft.client.renderer.model.ModelRenderer;
-import net.minecraft.util.ResourceLocation;
-
+import net.minecraft.resources.ResourceLocation;
+import com.mojang.blaze3d.vertex.PoseStack;
+import com.mojang.blaze3d.vertex.VertexConsumer;
 import java.util.function.Function;
 
+// TODO PORT Fix
 public class CubeModel extends Model {
-    private final ModelRenderer cube;
+    //private final ModelPart cube;
 
     public CubeModel(int pixels, Function<ResourceLocation, RenderType> type) {
         super(type);
-        this.textureWidth = pixels * 4;
-        this.textureHeight = pixels * 2;
-        this.cube = new ModelRenderer(this, 0, 0);
+        /*
+        this.texWidth = pixels * 4;
+        this.texHeight = pixels * 2;
+        this.cube = new ModelPart(this, 0, 0);
         float offset = -(pixels / 2.0F);
         this.cube.addBox(offset, offset, offset, pixels, pixels, pixels);
-        this.cube.setRotationPoint(0F, 0F, 0F);
-        this.cube.setTextureSize(this.textureWidth, this.textureHeight);
+        this.cube.setPos(0F, 0F, 0F);
+        this.cube.setTexSize(this.texWidth, this.texHeight);
         this.cube.mirror = true;
+         */
     }
 
     @Override
-    public void render(MatrixStack matrix, IVertexBuilder buffer, int packedLight, int packedOverlay, float red, float green, float blue, float alpha) {
-        this.cube.render(matrix, buffer, packedLight, packedOverlay);
+    public void renderToBuffer(PoseStack matrix, VertexConsumer buffer, int packedLight, int packedOverlay, float red, float green, float blue, float alpha) {
+        //this.cube.render(matrix, buffer, packedLight, packedOverlay);
     }
 }

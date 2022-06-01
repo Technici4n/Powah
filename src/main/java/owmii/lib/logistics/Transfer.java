@@ -1,23 +1,23 @@
 package owmii.lib.logistics;
 
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.TextFormatting;
-import net.minecraft.util.text.TranslationTextComponent;
 import owmii.lib.client.util.Text;
 
 import java.util.Locale;
+import net.minecraft.ChatFormatting;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.TranslatableComponent;
 
 public enum Transfer {
-    ALL(true, true, TextFormatting.DARK_GRAY),
-    EXTRACT(true, false, TextFormatting.DARK_GRAY),
-    RECEIVE(false, true, TextFormatting.DARK_GRAY),
-    NONE(false, false, TextFormatting.DARK_RED);
+    ALL(true, true, ChatFormatting.DARK_GRAY),
+    EXTRACT(true, false, ChatFormatting.DARK_GRAY),
+    RECEIVE(false, true, ChatFormatting.DARK_GRAY),
+    NONE(false, false, ChatFormatting.DARK_RED);
 
     public final boolean canExtract;
     public final boolean canReceive;
-    private final TextFormatting color;
+    private final ChatFormatting color;
 
-    Transfer(boolean canExtract, boolean canReceive, TextFormatting color) {
+    Transfer(boolean canExtract, boolean canReceive, ChatFormatting color) {
         this.canExtract = canExtract;
         this.canReceive = canReceive;
         this.color = color;
@@ -37,14 +37,14 @@ public enum Transfer {
         return NONE;
     }
 
-    public ITextComponent getDisplayName() {
-        return new TranslationTextComponent("info.lollipop.io.mode").append(Text.COLON).mergeStyle(TextFormatting.GRAY)
-                .append(new TranslationTextComponent("info.lollipop.io.mode." + name().toLowerCase()).mergeStyle(this.color));
+    public Component getDisplayName() {
+        return new TranslatableComponent("info.lollipop.io.mode").append(Text.COLON).withStyle(ChatFormatting.GRAY)
+                .append(new TranslatableComponent("info.lollipop.io.mode." + name().toLowerCase()).withStyle(this.color));
     }
 
-    public ITextComponent getDisplayName2() {
-        return new TranslationTextComponent("info.lollipop.io.mode").append(Text.COLON).mergeStyle(TextFormatting.GRAY)
-                .append(new TranslationTextComponent("info.lollipop.io.mode." + translate(name().toLowerCase(Locale.ENGLISH))).mergeStyle(this.color));
+    public Component getDisplayName2() {
+        return new TranslatableComponent("info.lollipop.io.mode").append(Text.COLON).withStyle(ChatFormatting.GRAY)
+                .append(new TranslatableComponent("info.lollipop.io.mode." + translate(name().toLowerCase(Locale.ENGLISH))).withStyle(this.color));
     }
 
     private String translate(String s) {

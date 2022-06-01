@@ -16,6 +16,6 @@ Various ways to generate, store and transmit FE power.
 [[dependencies.powah]]
     modId="forge"
     mandatory=true
-    versionRange="[36.0.0,)"
+    versionRange="[40.1.0,)"
     ordering="NONE"
     side="BOTH"

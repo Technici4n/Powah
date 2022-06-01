@@ -1,8 +1,7 @@
 package owmii.lib.client.wiki;
 
-import com.mojang.blaze3d.matrix.MatrixStack;
-import net.minecraft.client.gui.FontRenderer;
-import net.minecraft.util.text.TranslationTextComponent;
+import net.minecraft.client.gui.Font;
+import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import owmii.lib.client.screen.Texture;
@@ -12,6 +11,7 @@ import owmii.lib.client.util.MC;
 import owmii.lib.client.wiki.page.panel.Panel;
 
 import javax.annotation.Nullable;
+import com.mojang.blaze3d.vertex.PoseStack;
 import java.util.List;
 import java.util.Objects;
 
@@ -44,7 +44,7 @@ public class Page {
                         boolean b = currEntry.equals(catEntry);
                         screen.addButton2(new IconButton(x + (b ? 0 : 2), 10 + y + (i * 28), catEntry.getStack(), Texture.WIKI_TABS.get(b), button -> {
                             MC.open(new WikiScreen(catEntry.getSections(0)));
-                        }, screen).xOffset(b ? -2.0F : 0.5F).setTooltip(tooltip -> tooltip.add(new TranslationTextComponent(catEntry.getTransKey()))));
+                        }, screen).xOffset(b ? -2.0F : 0.5F).setTooltip(tooltip -> tooltip.add(new TranslatableComponent(catEntry.getTransKey()))));
                     }
                 }
             }
@@ -79,7 +79,7 @@ public class Page {
     }
 
     @OnlyIn(Dist.CLIENT)
-    public void render(MatrixStack matrix, int x, int y, int mx, int my, float pt, FontRenderer font, WikiScreen screen) {
+    public void render(PoseStack matrix, int x, int y, int mx, int my, float pt, Font font, WikiScreen screen) {
     }
 
 

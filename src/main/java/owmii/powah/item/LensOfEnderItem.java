@@ -1,14 +1,14 @@
 package owmii.powah.item;
 
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.ItemStack;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.ActionResultType;
-import net.minecraft.util.Direction;
-import net.minecraft.util.Hand;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.vector.Vector3d;
-import net.minecraft.world.World;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.InteractionResult;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.phys.Vec3;
 import owmii.lib.item.ItemBase;
 import owmii.powah.block.solar.SolarTile;
 
@@ -18,9 +18,9 @@ public class LensOfEnderItem extends ItemBase {
     }
 
     @Override
-    public ActionResultType onItemUseFirst(ItemStack stack, World world, BlockPos pos, PlayerEntity player, Hand hand, Direction side, Vector3d hit) {
-        if (!world.isRemote) {
-            TileEntity tile = world.getTileEntity(pos);
+    public InteractionResult onItemUseFirst(ItemStack stack, Level world, BlockPos pos, Player player, InteractionHand hand, Direction side, Vec3 hit) {
+        if (!world.isClientSide) {
+            BlockEntity tile = world.getBlockEntity(pos);
             if (tile instanceof SolarTile) {
                 SolarTile solar = (SolarTile) tile;
                 if (!solar.hasLensOfEnder()) {
@@ -28,7 +28,7 @@ public class LensOfEnderItem extends ItemBase {
                     if (!player.isCreative()) {
                         stack.shrink(1);
                     }
-                    return ActionResultType.SUCCESS;
+                    return InteractionResult.SUCCESS;
                 }
             }
         }

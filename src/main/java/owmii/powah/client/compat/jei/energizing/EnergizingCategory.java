@@ -1,6 +1,6 @@
 package owmii.powah.client.compat.jei.energizing;
 
-import com.mojang.blaze3d.matrix.MatrixStack;
+import com.mojang.blaze3d.vertex.PoseStack;
 import mezz.jei.api.constants.VanillaTypes;
 import mezz.jei.api.gui.IRecipeLayout;
 import mezz.jei.api.gui.drawable.IDrawable;
@@ -9,9 +9,11 @@ import mezz.jei.api.helpers.IGuiHelper;
 import mezz.jei.api.ingredients.IIngredients;
 import mezz.jei.api.recipe.category.IRecipeCategory;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.resources.I18n;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.client.resources.language.I18n;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.item.ItemStack;
 import owmii.lib.util.Util;
 import owmii.powah.Powah;
 import owmii.powah.block.Blcks;
@@ -22,12 +24,10 @@ public class EnergizingCategory implements IRecipeCategory<EnergizingRecipe> {
     public static final ResourceLocation ID = new ResourceLocation(Powah.MOD_ID, "energizing");
     private final IDrawable background;
     private final IDrawable icon;
-    private final String localizedName;
 
     public EnergizingCategory(IGuiHelper guiHelper) {
         this.background = guiHelper.drawableBuilder(GUI_BACK, 0, 0, 160, 38).addPadding(1, 0, 0, 0).build();
         this.icon = guiHelper.createDrawableIngredient(new ItemStack(Blcks.ENERGIZING_ORB));
-        this.localizedName = I18n.format("gui.powah.jei.category.energizing");
     }
 
     @Override
@@ -41,8 +41,8 @@ public class EnergizingCategory implements IRecipeCategory<EnergizingRecipe> {
     }
 
     @Override
-    public String getTitle() {
-        return this.localizedName;
+    public Component getTitle() {
+        return new TranslatableComponent("gui.powah.jei.category.energizing");
     }
 
     @Override
@@ -58,7 +58,7 @@ public class EnergizingCategory implements IRecipeCategory<EnergizingRecipe> {
     @Override
     public void setIngredients(EnergizingRecipe recipe, IIngredients ingredients) {
         ingredients.setInputIngredients(recipe.getIngredients());
-        ingredients.setOutput(VanillaTypes.ITEM, recipe.getRecipeOutput());
+        ingredients.setOutput(VanillaTypes.ITEM, recipe.getResultItem());
     }
 
     @Override
@@ -73,8 +73,8 @@ public class EnergizingCategory implements IRecipeCategory<EnergizingRecipe> {
     }
 
     @Override
-    public void draw(EnergizingRecipe recipe, MatrixStack matrix, double mouseX, double mouseY) {
+    public void draw(EnergizingRecipe recipe, PoseStack matrix, double mouseX, double mouseY) {
         Minecraft minecraft = Minecraft.getInstance();
-        minecraft.fontRenderer.drawString(matrix, I18n.format("info.lollipop.fe", Util.addCommas(recipe.getEnergy())), 2.0F, 29.0F, 0x444444);
+        minecraft.font.draw(matrix, I18n.get("info.lollipop.fe", Util.addCommas(recipe.getEnergy())), 2.0F, 29.0F, 0x444444);
     }
 }

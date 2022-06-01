@@ -1,26 +1,26 @@
 package owmii.powah.inventory;
 
-import net.minecraft.entity.player.PlayerInventory;
-import net.minecraft.network.PacketBuffer;
+import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.world.entity.player.Inventory;
 import owmii.lib.logistics.inventory.AbstractEnergyContainer;
 import owmii.lib.logistics.inventory.slot.SlotBase;
 import owmii.powah.block.reactor.ReactorTile;
 
 public class ReactorContainer extends AbstractEnergyContainer<ReactorTile> {
-    public ReactorContainer(int id, PlayerInventory inventory, PacketBuffer buffer) {
+    public ReactorContainer(int id, Inventory inventory, FriendlyByteBuf buffer) {
         super(Containers.REACTOR, id, inventory, buffer);
     }
 
-    public ReactorContainer(int id, PlayerInventory inventory, ReactorTile te) {
+    public ReactorContainer(int id, Inventory inventory, ReactorTile te) {
         super(Containers.REACTOR, id, inventory, te);
     }
 
-    public static ReactorContainer create(int id, PlayerInventory inventory, PacketBuffer buffer) {
+    public static ReactorContainer create(int id, Inventory inventory, FriendlyByteBuf buffer) {
         return new ReactorContainer(id, inventory, buffer);
     }
 
     @Override
-    protected void init(PlayerInventory inventory, ReactorTile te) {
+    protected void init(Inventory inventory, ReactorTile te) {
         super.init(inventory, te);
         addSlot(new SlotBase(te.getInventory(), 0, 4, 54));
         addSlot(new SlotBase(te.getInventory(), 1, 73, 29));

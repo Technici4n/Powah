@@ -1,11 +1,11 @@
 package owmii.powah.network.packet;
 
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.network.PacketBuffer;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.World;
-import net.minecraftforge.fml.network.NetworkEvent;
+import net.minecraft.core.BlockPos;
+import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraftforge.network.NetworkEvent;
 import owmii.lib.network.IPacket;
 import owmii.powah.block.reactor.ReactorTile;
 
@@ -23,22 +23,22 @@ public class SwitchGenModePacket implements IPacket<SwitchGenModePacket> {
     }
 
     @Override
-    public void encode(SwitchGenModePacket msg, PacketBuffer buffer) {
+    public void encode(SwitchGenModePacket msg, FriendlyByteBuf buffer) {
         buffer.writeBlockPos(msg.pos);
     }
 
     @Override
-    public SwitchGenModePacket decode(PacketBuffer buffer) {
+    public SwitchGenModePacket decode(FriendlyByteBuf buffer) {
         return new SwitchGenModePacket(buffer.readBlockPos());
     }
 
     @Override
     public void handle(SwitchGenModePacket msg, Supplier<NetworkEvent.Context> ctx) {
         ctx.get().enqueueWork(() -> {
-            PlayerEntity player = ctx.get().getSender();
+            Player player = ctx.get().getSender();
             if (player != null) {
-                World world = player.getEntityWorld();
-                TileEntity te = world.getTileEntity(msg.pos);
+                Level world = player.getCommandSenderWorld();
+                BlockEntity te = world.getBlockEntity(msg.pos);
                 if (te instanceof ReactorTile) {
                     ReactorTile reactor = (ReactorTile) te;
                     reactor.setGenModeOn(!reactor.isGenModeOn());

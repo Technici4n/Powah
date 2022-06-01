@@ -1,19 +1,18 @@
 package owmii.lib.block;
 
-import net.minecraft.block.BlockState;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.item.ItemStack;
-import net.minecraft.world.World;
-
 import javax.annotation.Nullable;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.state.BlockState;
 
 public interface IBlockEntity {
-    default void onPlaced(World world, BlockState state, @Nullable LivingEntity placer, ItemStack stack) {
+    default void onPlaced(Level world, BlockState state, @Nullable LivingEntity placer, ItemStack stack) {
     }
 
-    default void onAdded(World world, BlockState state, BlockState oldState, boolean isMoving) {
+    default void onAdded(Level world, BlockState state, BlockState oldState, boolean isMoving) {
     }
 
-    default void onRemoved(World world, BlockState state, BlockState newState, boolean isMoving) {
+    default void onRemoved(Level world, BlockState state, BlockState newState, boolean isMoving) {
     }
 }

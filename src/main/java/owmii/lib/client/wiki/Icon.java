@@ -1,8 +1,8 @@
 package owmii.lib.client.wiki;
 
-import com.mojang.blaze3d.matrix.MatrixStack;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.IItemProvider;
+import com.mojang.blaze3d.vertex.PoseStack;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.ItemLike;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import owmii.lib.client.screen.Texture;
@@ -12,7 +12,7 @@ public class Icon {
     private ItemStack stack = ItemStack.EMPTY;
     private Texture texture = Texture.EMPTY;
 
-    public Icon(IItemProvider provider) {
+    public Icon(ItemLike provider) {
         this(new ItemStack(provider));
     }
 
@@ -27,7 +27,7 @@ public class Icon {
     }
 
     @OnlyIn(Dist.CLIENT)
-    public void draw(MatrixStack matrix, int x, int y) {
+    public void draw(PoseStack matrix, int x, int y) {
         if (this.type == 1) {
             this.texture.draw(matrix, x, y);
         } else {

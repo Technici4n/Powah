@@ -1,8 +1,8 @@
 package owmii.lib.item;
 
-import net.minecraft.item.ItemGroup;
-import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.world.item.CreativeModeTab;
+import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.common.capabilities.ICapabilityProvider;
 import owmii.lib.block.AbstractEnergyBlock;
 import owmii.lib.client.wiki.page.panel.InfoBox;
@@ -15,13 +15,13 @@ import owmii.lib.registry.IVariant;
 import javax.annotation.Nullable;
 
 public class EnergyBlockItem<V extends Enum<V> & IVariant<V>, C extends IEnergyConfig<V>, B extends AbstractEnergyBlock<V, C, B>> extends ItemBlock<V, B> implements IConfigHolder<V, C>, InfoBox.IInfoBoxHolder, IEnergyItemProvider {
-    public EnergyBlockItem(B block, Properties builder, @Nullable ItemGroup group) {
+    public EnergyBlockItem(B block, Properties builder, @Nullable CreativeModeTab group) {
         super(block, builder, group);
     }
 
     @Nullable
     @Override
-    public ICapabilityProvider initCapabilities(ItemStack stack, @Nullable CompoundNBT nbt) {
+    public ICapabilityProvider initCapabilities(ItemStack stack, @Nullable CompoundTag nbt) {
         long transfer = getConfig().getTransfer(getVariant());
         return new Energy.Item.Provider(stack, getConfig().getCapacity(getVariant()), getTransferType().canExtract ? transfer : 0, getTransferType().canReceive ? transfer : 0);
     }

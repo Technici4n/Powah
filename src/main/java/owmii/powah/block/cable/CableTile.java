@@ -1,18 +1,18 @@
 package owmii.powah.block.cable;
 
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
-import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.nbt.ListNBT;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.Direction;
-import net.minecraft.util.math.AxisAlignedBB;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.World;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.ListTag;
+import net.minecraft.nbt.Tag;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.phys.AABB;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
-import net.minecraftforge.common.util.Constants;
 import owmii.lib.block.AbstractEnergyStorage;
 import owmii.lib.block.IInventoryHolder;
 import owmii.lib.logistics.energy.Energy;
@@ -33,34 +33,34 @@ public class CableTile extends AbstractEnergyStorage<Tier, CableConfig, CableBlo
     public final Map<Direction, EnergyProxy> proxyMap = new HashMap<>();
     public final Set<Direction> energySides = new HashSet<>();
 
-    public CableTile(Tier variant) {
-        super(Tiles.CABLE, variant);
+    public CableTile(BlockPos pos, BlockState state, Tier variant) {
+        super(Tiles.CABLE, pos, state, variant);
         for (Direction side : Direction.values()) {
             this.proxyMap.put(side, new EnergyProxy());
         }
     }
 
-    public CableTile() {
-        this(Tier.STARTER);
+    public CableTile(BlockPos pos, BlockState state) {
+        this(pos, state, Tier.STARTER);
     }
 
     @Override
-    public CompoundNBT write(CompoundNBT compound) {
-        ListNBT list = new ListNBT();
+    public CompoundTag saveServerOnly(CompoundTag compound) {
+        ListTag list = new ListTag();
         this.proxyMap.forEach((direction, linkedCables) -> {
-            CompoundNBT nbt = new CompoundNBT();
+            CompoundTag nbt = new CompoundTag();
             linkedCables.write(nbt);
             nbt.putInt("direction", direction.ordinal());
             list.add(nbt);
         });
         compound.put("linked_cables", list);
-        return super.write(compound);
+        return super.saveServerOnly(compound);
     }
 
     @Override
-    public void read(BlockState state, CompoundNBT compound) {
-        super.read(state, compound);
-        ListNBT list = compound.getList("linked_cables", Constants.NBT.TAG_COMPOUND);
+    public void loadServerOnly(CompoundTag compound) {
+        super.loadServerOnly(compound);
+        ListTag list = compound.getList("linked_cables", Tag.TAG_COMPOUND);
         IntStream.range(0, list.size()).mapToObj(list::getCompound).forEach(nbt -> {
             Direction direction = Direction.values()[nbt.getInt("direction")];
             this.proxyMap.put(direction, new EnergyProxy().read(nbt));
@@ -68,19 +68,19 @@ public class CableTile extends AbstractEnergyStorage<Tier, CableConfig, CableBlo
     }
 
     @Override
-    public void readSync(CompoundNBT compound) {
+    public void readSync(CompoundTag compound) {
         super.readSync(compound);
-        ListNBT list1 = compound.getList("energy_directions", Constants.NBT.TAG_COMPOUND);
+        ListTag list1 = compound.getList("energy_directions", Tag.TAG_COMPOUND);
         IntStream.range(0, list1.size()).mapToObj(list1::getCompound)
                 .map(nbt -> Direction.values()[nbt.getInt("energy_direction")])
                 .forEach(this.energySides::add);
     }
 
     @Override
-    public CompoundNBT writeSync(CompoundNBT compound) {
-        ListNBT list1 = new ListNBT();
+    public CompoundTag writeSync(CompoundTag compound) {
+        ListTag list1 = new ListTag();
         this.energySides.forEach((direction) -> {
-            CompoundNBT nbt = new CompoundNBT();
+            CompoundTag nbt = new CompoundTag();
             nbt.putInt("energy_direction", direction.ordinal());
             list1.add(nbt);
         });
@@ -90,31 +90,31 @@ public class CableTile extends AbstractEnergyStorage<Tier, CableConfig, CableBlo
 
     @Override
     public long receiveEnergy(int maxReceive, boolean simulate, @Nullable Direction direction) {
-        if (this.world == null || isRemote() || direction == null || !checkRedstone() || !canReceiveEnergy(direction))
+        if (this.level == null || isRemote() || direction == null || !checkRedstone() || !canReceiveEnergy(direction))
             return 0;
         long received = 0;
-        received += pushEnergy(this.world, maxReceive, simulate, direction, this);
+        received += pushEnergy(this.level, maxReceive, simulate, direction, this);
         for (BlockPos cablePos : this.proxyMap.get(direction).cables()) {
             long amount = maxReceive - received;
             if (amount <= 0) break;
-            TileEntity cableTile = this.world.getTileEntity(cablePos);
+            BlockEntity cableTile = this.level.getBlockEntity(cablePos);
             if (cableTile instanceof CableTile) {
                 CableTile cable = (CableTile) cableTile;
-                received += cable.pushEnergy(this.world, amount, simulate, direction, this);
+                received += cable.pushEnergy(this.level, amount, simulate, direction, this);
             }
         }
         return received;
     }
 
-    private long pushEnergy(World world, long maxReceive, boolean simulate, @Nullable Direction direction, CableTile cable) {
+    private long pushEnergy(Level world, long maxReceive, boolean simulate, @Nullable Direction direction, CableTile cable) {
         long received = 0;
         for (Direction side : this.energySides) {
             long amount = Math.min(maxReceive - received, this.energy.getMaxExtract());
             if (amount <= 0) break;
             if (cable.equals(this) && side.equals(direction) || !canExtractEnergy(side)) continue;
-            BlockPos pos = this.pos.offset(side);
-            if (direction != null && cable.getPos().offset(direction).equals(pos)) continue;
-            TileEntity tile = world.getTileEntity(pos);
+            BlockPos pos = this.worldPosition.relative(side);
+            if (direction != null && cable.getBlockPos().relative(direction).equals(pos)) continue;
+            BlockEntity tile = world.getBlockEntity(pos);
             if (Energy.canReceive(tile, side)) {
                 received += Energy.receive(tile, side, amount, simulate);
             }
@@ -133,8 +133,8 @@ public class CableTile extends AbstractEnergyStorage<Tier, CableConfig, CableBlo
 
     @Override
     @OnlyIn(Dist.CLIENT)
-    public AxisAlignedBB getRenderBoundingBox() {
-        return new AxisAlignedBB(this.pos, this.pos.add(1, 1, 1));
+    public AABB getRenderBoundingBox() {
+        return new AABB(this.worldPosition, this.worldPosition.offset(1, 1, 1));
     }
 
     @Override

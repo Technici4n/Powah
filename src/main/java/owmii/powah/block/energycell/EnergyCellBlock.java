@@ -1,13 +1,6 @@
 package owmii.powah.block.energycell;
 
-import net.minecraft.block.BlockState;
-import net.minecraft.block.IWaterLoggable;
-import net.minecraft.entity.player.PlayerInventory;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemGroup;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.math.BlockRayTraceResult;
-import net.minecraft.world.IBlockReader;
+import net.minecraft.core.BlockPos;
 import owmii.lib.block.AbstractEnergyBlock;
 import owmii.lib.block.AbstractTileEntity;
 import owmii.lib.item.EnergyBlockItem;
@@ -19,15 +12,22 @@ import owmii.powah.inventory.EnergyCellContainer;
 import owmii.powah.item.EnergyCellItem;
 
 import javax.annotation.Nullable;
+import net.minecraft.world.entity.player.Inventory;
+import net.minecraft.world.item.CreativeModeTab;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.level.block.SimpleWaterloggedBlock;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.phys.BlockHitResult;
 
-public class EnergyCellBlock extends AbstractEnergyBlock<Tier, EnergyCellConfig, EnergyCellBlock> implements IWaterLoggable {
+public class EnergyCellBlock extends AbstractEnergyBlock<Tier, EnergyCellConfig, EnergyCellBlock> implements SimpleWaterloggedBlock {
     public EnergyCellBlock(Properties properties, Tier tier) {
         super(properties, tier);
     }
 
     @Override
-    public EnergyBlockItem getBlockItem(Item.Properties properties, @Nullable ItemGroup group) {
-        return new EnergyCellItem(this, properties.maxStackSize(1), group);
+    public EnergyBlockItem getBlockItem(Item.Properties properties, @Nullable CreativeModeTab group) {
+        return new EnergyCellItem(this, properties.stacksTo(1), group);
     }
 
     @Override
@@ -37,13 +37,13 @@ public class EnergyCellBlock extends AbstractEnergyBlock<Tier, EnergyCellConfig,
 
     @Nullable
     @Override
-    public TileEntity createTileEntity(BlockState state, IBlockReader world) {
-        return new EnergyCellTile(this.variant);
+    public BlockEntity newBlockEntity(BlockPos pos, BlockState state) {
+        return new EnergyCellTile(pos, state, this.variant);
     }
 
     @Nullable
     @Override
-    public AbstractContainer getContainer(int id, PlayerInventory inventory, AbstractTileEntity te, BlockRayTraceResult result) {
+    public AbstractContainer getContainer(int id, Inventory inventory, AbstractTileEntity te, BlockHitResult result) {
         if (te instanceof EnergyCellTile) {
             return new EnergyCellContainer(id, inventory, (EnergyCellTile) te);
         }

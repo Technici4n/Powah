@@ -1,15 +1,14 @@
 package owmii.lib.util.math;
 
-import net.minecraft.util.math.AxisAlignedBB;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.MathHelper;
-import net.minecraft.util.math.vector.Vector3d;
-import net.minecraft.util.math.vector.Vector3f;
-
+import com.mojang.math.Vector3f;
 import java.util.ArrayList;
 import java.util.List;
+import net.minecraft.core.BlockPos;
+import net.minecraft.util.Mth;
+import net.minecraft.world.phys.AABB;
+import net.minecraft.world.phys.Vec3;
 
-public class V3d extends Vector3d {
+public class V3d extends Vec3 {
 
     public static final V3d ZERO = new V3d(0.0D, 0.0D, 0.0D);
 
@@ -17,7 +16,7 @@ public class V3d extends Vector3d {
         super(x, y, z);
     }
 
-    public V3d(Vector3d vector) {
+    public V3d(Vec3 vector) {
         this(vector.x, vector.y, vector.z);
     }
 
@@ -25,7 +24,7 @@ public class V3d extends Vector3d {
         super(vector);
     }
 
-    public static V3d from(Vector3d vector) {
+    public static V3d from(Vec3 vector) {
         return new V3d(vector);
     }
 
@@ -38,21 +37,21 @@ public class V3d extends Vector3d {
     }
 
     public float distance(Vector3f vec3i) {
-        return distance(new Vector3d(vec3i));
+        return distance(new Vec3(vec3i));
     }
 
-    public float distance(Vector3d vec3d) {
+    public float distance(Vec3 vec3d) {
         float f = (float) (this.x - vec3d.x);
         float f1 = (float) (this.y - vec3d.y);
         float f2 = (float) (this.z - vec3d.z);
-        return MathHelper.sqrt(f * f + f1 * f1 + f2 * f2);
+        return Mth.sqrt(f * f + f1 * f1 + f2 * f2);
     }
 
     public float distance(BlockPos pos) {
         float f = (float) (this.x - pos.getX());
         float f1 = (float) (this.y - pos.getY());
         float f2 = (float) (this.z - pos.getZ());
-        return MathHelper.sqrt(f * f + f1 * f1 + f2 * f2);
+        return Mth.sqrt(f * f + f1 * f1 + f2 * f2);
     }
 
     public V3d up() {
@@ -107,7 +106,7 @@ public class V3d extends Vector3d {
         return new V3d(((int) this.x) + 0.5D, ((int) this.y) + 0.5D, ((int) this.z) + 0.5D);
     }
 
-    public V3d center(AxisAlignedBB bb) {
+    public V3d center(AABB bb) {
         return new V3d(
                 bb.minX + (bb.maxX - bb.minX) * 0.5D,
                 bb.minY + (bb.maxY - bb.minY) * 0.5D,
@@ -147,7 +146,7 @@ public class V3d extends Vector3d {
     }
 
     @Override
-    public V3d add(Vector3d vec) {
+    public V3d add(Vec3 vec) {
         return add(vec.x, vec.y, vec.z);
     }
 
@@ -157,7 +156,7 @@ public class V3d extends Vector3d {
     }
 
     public double hMagSqrt() {
-        return MathHelper.sqrt(hMag());
+        return Math.sqrt(hMag());
     }
 
     public double hMag() {
@@ -165,7 +164,7 @@ public class V3d extends Vector3d {
     }
 
     public double magSqrt() {
-        return MathHelper.sqrt(mag());
+        return Math.sqrt(mag());
     }
 
     public double mag() {

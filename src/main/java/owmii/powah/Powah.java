@@ -1,12 +1,14 @@
 package owmii.powah;
 
-import net.minecraft.block.Blocks;
-import net.minecraft.item.Items;
+import net.minecraft.world.item.Items;
+import net.minecraft.world.level.block.Blocks;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLLoadCompleteEvent;
+import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import owmii.lib.Lollipop;
 import owmii.lib.api.IClient;
 import owmii.lib.api.IMod;
 import owmii.lib.config.IConfig;
@@ -32,6 +34,9 @@ public class Powah implements IMod {
     public static final Logger LOGGER = LogManager.getLogger(MOD_ID);
 
     public Powah() {
+        var modEventBus = FMLJavaModLoadingContext.get().getModEventBus();
+        modEventBus.addListener(Lollipop::setup);
+
         Blcks.REG.init();
         Tiles.REG.init();
         Itms.REG.init();

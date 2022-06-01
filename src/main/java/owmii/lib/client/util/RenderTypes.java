@@ -2,14 +2,14 @@ package owmii.lib.client.util;
 
 import com.mojang.blaze3d.platform.GlStateManager;
 import com.mojang.blaze3d.systems.RenderSystem;
-import net.minecraft.client.renderer.RenderState;
+import com.mojang.blaze3d.vertex.DefaultVertexFormat;
+import com.mojang.blaze3d.vertex.VertexFormat;
+import net.minecraft.client.renderer.RenderStateShard;
 import net.minecraft.client.renderer.RenderType;
-import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
-import net.minecraft.client.renderer.vertex.VertexFormat;
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.resources.ResourceLocation;
 
 public class RenderTypes extends RenderType {
-    protected static final RenderState.TransparencyState BLENDED = new RenderState.TransparencyState("blended", () -> {
+    protected static final RenderStateShard.TransparencyStateShard BLENDED = new RenderStateShard.TransparencyStateShard("blended", () -> {
         RenderSystem.enableBlend();
         RenderSystem.blendFunc(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE);
     }, () -> {
@@ -17,7 +17,7 @@ public class RenderTypes extends RenderType {
         RenderSystem.defaultBlendFunc();
     });
 
-    protected static final RenderState.TransparencyState BLENDED_NO_DEPT = new RenderState.TransparencyState("blended_no_dept", () -> {
+    protected static final RenderStateShard.TransparencyStateShard BLENDED_NO_DEPT = new RenderStateShard.TransparencyStateShard("blended_no_dept", () -> {
         RenderSystem.enableBlend();
         RenderSystem.depthMask(false);
         RenderSystem.blendFunc(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE);
@@ -32,10 +32,13 @@ public class RenderTypes extends RenderType {
     }
 
     public static RenderType makeBlend(ResourceLocation location, boolean b) {
-        State state = State.getBuilder().texture(new TextureState(location, false, false))
-                .transparency(BLENDED).diffuseLighting(DIFFUSE_LIGHTING_ENABLED).alpha(DEFAULT_ALPHA).cull(CULL_DISABLED)
-                .lightmap(LIGHTMAP_DISABLED).build(true);
-        return makeType("blend", DefaultVertexFormats.POSITION_COLOR_TEX, 7, 256, true, true, state);
+        CompositeState state = CompositeState.builder().setTextureState(new TextureStateShard(location, false, false))
+                .setTransparencyState(BLENDED)
+                // TODO PORT
+                //.setDiffuseLightingState(DIFFUSE_LIGHTING).setAlphaState(DEFAULT_ALPHA)
+                .setCullState(NO_CULL)
+                .setLightmapState(NO_LIGHTMAP).createCompositeState(true);
+        return create("blend", DefaultVertexFormat.POSITION_COLOR_TEX, VertexFormat.Mode.QUADS, 256, true, true, state);
     }
 
     public static RenderType entityBlendedNoDept(ResourceLocation location) {
@@ -43,21 +46,25 @@ public class RenderTypes extends RenderType {
     }
 
     public static RenderType makeBlendNoDept(ResourceLocation location, boolean b) {
-        State state = State.getBuilder().texture(new TextureState(location, false, false))
-                .transparency(BLENDED_NO_DEPT).diffuseLighting(DIFFUSE_LIGHTING_ENABLED).alpha(DEFAULT_ALPHA).cull(CULL_DISABLED)
-                .lightmap(LIGHTMAP_DISABLED).build(true);
-        return makeType("blend_bo_dept", DefaultVertexFormats.POSITION_COLOR_TEX, 7, 256, true, true, state);
+        CompositeState state = CompositeState.builder().setTextureState(new TextureStateShard(location, false, false))
+                .setTransparencyState(BLENDED_NO_DEPT)
+                // TODO PORT
+                //.setDiffuseLightingState(DIFFUSE_LIGHTING).setAlphaState(DEFAULT_ALPHA)
+                .setCullState(NO_CULL)
+                .setLightmapState(NO_LIGHTMAP).createCompositeState(true);
+        return create("blend_bo_dept", DefaultVertexFormat.POSITION_COLOR_TEX, VertexFormat.Mode.QUADS, 256, true, true, state);
     }
 
     public static RenderType getTextBlended(ResourceLocation locationIn) {
-        State state = State.getBuilder().texture(new RenderState.TextureState(locationIn, false, false))
-                .alpha(DEFAULT_ALPHA)
-                .transparency(BLENDED)
-                .lightmap(LIGHTMAP_DISABLED).build(false);
-        return makeType("text_blended", DefaultVertexFormats.POSITION_COLOR_TEX_LIGHTMAP, 7, 256, false, true, state);
+        CompositeState state = CompositeState.builder().setTextureState(new RenderStateShard.TextureStateShard(locationIn, false, false))
+                // TODO PORT
+                //.setAlphaState(DEFAULT_ALPHA)
+                .setTransparencyState(BLENDED)
+                .setLightmapState(NO_LIGHTMAP).createCompositeState(false);
+        return create("text_blended", DefaultVertexFormat.POSITION_COLOR_TEX_LIGHTMAP, VertexFormat.Mode.QUADS, 256, false, true, state);
     }
 
-    public RenderTypes(String s, VertexFormat format, int i, int i1, boolean b, boolean b1, Runnable runnable, Runnable runnable1) {
-        super(s, format, i, i1, b, b1, runnable, runnable1);
+    public RenderTypes(String s, VertexFormat format, VertexFormat.Mode mode, int i1, boolean b, boolean b1, Runnable runnable, Runnable runnable1) {
+        super(s, format, mode, i1, b, b1, runnable, runnable1);
     }
 }

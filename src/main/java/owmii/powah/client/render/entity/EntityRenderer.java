@@ -1,16 +1,14 @@
 package owmii.powah.client.render.entity;
 
-import net.minecraft.client.Minecraft;
-import net.minecraft.client.renderer.entity.SpriteRenderer;
+import net.minecraft.client.renderer.entity.EntityRenderers;
+import net.minecraft.client.renderer.entity.ThrownItemRenderer;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
-import net.minecraftforge.fml.client.registry.RenderingRegistry;
 import owmii.powah.entity.Entities;
 
 @OnlyIn(Dist.CLIENT)
 public class EntityRenderer {
     public static void register() {
-        final Minecraft mc = Minecraft.getInstance();
-        RenderingRegistry.registerEntityRenderingHandler(Entities.CHARGED_SNOWBALL, manager -> new SpriteRenderer<>(mc.getRenderManager(), mc.getItemRenderer()));
+        EntityRenderers.register(Entities.CHARGED_SNOWBALL, ThrownItemRenderer::new);
     }
 }

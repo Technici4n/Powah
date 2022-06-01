@@ -1,7 +1,7 @@
 package owmii.lib.entity;
 
-import net.minecraft.entity.ai.attributes.AttributeModifierMap;
+import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 
 public interface IAttributeHolder {
-    AttributeModifierMap.MutableAttribute getAttribute();
+    AttributeSupplier.Builder getAttribute();
 }

@@ -1,5 +1,7 @@
 package owmii.powah.block.ender;
 
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.level.block.state.BlockState;
 import owmii.lib.block.IInventoryHolder;
 import owmii.lib.block.IOwnable;
 import owmii.powah.block.Tier;
@@ -7,13 +9,13 @@ import owmii.powah.block.Tiles;
 import owmii.powah.config.EnderCellConfig;
 
 public class EnderCellTile extends AbstractEnderTile<Tier, EnderCellConfig, EnderCellBlock> implements IOwnable, IInventoryHolder {
-    public EnderCellTile(Tier variant) {
-        super(Tiles.ENDER_CELL, variant);
+    public EnderCellTile(BlockPos pos, BlockState state, Tier variant) {
+        super(Tiles.ENDER_CELL, pos, state, variant);
         this.inv.add(3);
     }
 
-    public EnderCellTile() {
-        this(Tier.STARTER);
+    public EnderCellTile(BlockPos pos, BlockState state) {
+        this(pos, state, Tier.STARTER);
     }
 
     @Override

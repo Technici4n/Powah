@@ -1,8 +1,8 @@
 package owmii.lib.block;
 
-import net.minecraft.block.Block;
-import net.minecraft.block.SoundType;
-import net.minecraft.block.material.Material;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.SoundType;
+import net.minecraft.world.level.material.Material;
 
 public class Properties {
     public static Block.Properties rock(float hardnessAndResistance) {
@@ -11,8 +11,8 @@ public class Properties {
     }
 
     public static Block.Properties rock(float hardness, float resistance) {
-        return Block.Properties.create(Material.ROCK)
-                .hardnessAndResistance(hardness, resistance).setRequiresTool();
+        return Block.Properties.of(Material.STONE)
+                .strength(hardness, resistance).requiresCorrectToolForDrops();
     }
 
     public static Block.Properties wood(float hardnessAndResistance) {
@@ -21,8 +21,8 @@ public class Properties {
     }
 
     public static Block.Properties wood(float hardness, float resistance) {
-        return Block.Properties.create(Material.WOOD)
-                .hardnessAndResistance(hardness, resistance)
+        return Block.Properties.of(Material.WOOD)
+                .strength(hardness, resistance)
                 .sound(SoundType.WOOD);
     }
 
@@ -32,9 +32,9 @@ public class Properties {
     }
 
     public static Block.Properties metal(float hardness, float resistance) {
-        return Block.Properties.create(Material.IRON)
-                .hardnessAndResistance(hardness, resistance)
-                .sound(SoundType.METAL).setRequiresTool();
+        return Block.Properties.of(Material.METAL)
+                .strength(hardness, resistance)
+                .sound(SoundType.METAL).requiresCorrectToolForDrops();
     }
 
     public static Block.Properties rockNoSolid(float hardnessAndResistance) {
@@ -43,7 +43,7 @@ public class Properties {
     }
 
     public static Block.Properties rockNoSolid(float hardness, float resistance) {
-        return rock(hardness, resistance).notSolid();
+        return rock(hardness, resistance).noOcclusion();
     }
 
     public static Block.Properties woodNoSolid(float hardnessAndResistance) {
@@ -52,7 +52,7 @@ public class Properties {
     }
 
     public static Block.Properties woodNoSolid(float hardness, float resistance) {
-        return wood(hardness, resistance).notSolid();
+        return wood(hardness, resistance).noOcclusion();
     }
 
     public static Block.Properties metalNoSolid(float hardnessAndResistance) {
@@ -61,6 +61,6 @@ public class Properties {
     }
 
     public static Block.Properties metalNoSolid(float hardness, float resistance) {
-        return metal(hardness, resistance).notSolid();
+        return metal(hardness, resistance).noOcclusion();
     }
 }

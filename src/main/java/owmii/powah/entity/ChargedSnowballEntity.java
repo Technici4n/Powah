@@ -1,33 +1,33 @@
 package owmii.powah.entity;
 
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityType;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.effect.LightningBoltEntity;
-import net.minecraft.entity.monster.BlazeEntity;
-import net.minecraft.entity.player.ServerPlayerEntity;
-import net.minecraft.entity.projectile.ProjectileItemEntity;
-import net.minecraft.item.Item;
-import net.minecraft.network.IPacket;
-import net.minecraft.util.DamageSource;
-import net.minecraft.util.math.EntityRayTraceResult;
-import net.minecraft.util.math.RayTraceResult;
-import net.minecraft.util.math.vector.Vector3d;
-import net.minecraft.world.World;
-import net.minecraft.world.server.ServerWorld;
-import net.minecraftforge.fml.network.NetworkHooks;
+import net.minecraft.network.protocol.Packet;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.LightningBolt;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.monster.Blaze;
+import net.minecraft.world.entity.projectile.ThrowableItemProjectile;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.phys.EntityHitResult;
+import net.minecraft.world.phys.HitResult;
+import net.minecraft.world.phys.Vec3;
+import net.minecraftforge.network.NetworkHooks;
 import owmii.powah.item.Itms;
 
-public class ChargedSnowballEntity extends ProjectileItemEntity {
-    public ChargedSnowballEntity(World p_i50159_2_) {
+public class ChargedSnowballEntity extends ThrowableItemProjectile {
+    public ChargedSnowballEntity(Level p_i50159_2_) {
         super(Entities.CHARGED_SNOWBALL, p_i50159_2_);
     }
 
-    public ChargedSnowballEntity(World worldIn, LivingEntity livingEntityIn) {
+    public ChargedSnowballEntity(Level worldIn, LivingEntity livingEntityIn) {
         super(Entities.CHARGED_SNOWBALL, livingEntityIn, worldIn);
     }
 
-    public ChargedSnowballEntity(EntityType<ChargedSnowballEntity> snowballEntityEntityType, World world) {
+    public ChargedSnowballEntity(EntityType<ChargedSnowballEntity> snowballEntityEntityType, Level world) {
         super(snowballEntityEntityType, world);
     }
 
@@ -37,31 +37,31 @@ public class ChargedSnowballEntity extends ProjectileItemEntity {
     }
 
     @Override
-    protected void onImpact(RayTraceResult result) {
-        if (result.getType() == RayTraceResult.Type.ENTITY) {
-            Entity entity = ((EntityRayTraceResult) result).getEntity();
-            int i = entity instanceof BlazeEntity ? 3 : 0;
-            entity.attackEntityFrom(DamageSource.causeThrownDamage(this, func_234616_v_()), (float) i);
+    protected void onHit(HitResult result) {
+        if (result.getType() == HitResult.Type.ENTITY) {
+            Entity entity = ((EntityHitResult) result).getEntity();
+            int i = entity instanceof Blaze ? 3 : 0;
+            entity.hurt(DamageSource.thrown(this, func_234616_v_()), (float) i);
 
         }
 
-        if (this.world instanceof ServerWorld) {
-            LightningBoltEntity lightningboltentity = EntityType.LIGHTNING_BOLT.create(this.world);
+        if (this.level instanceof ServerLevel) {
+            LightningBolt lightningboltentity = EntityType.LIGHTNING_BOLT.create(this.level);
             if (lightningboltentity != null) {
-                lightningboltentity.moveForced(Vector3d.copyCenteredHorizontally(getPosition()));
-                lightningboltentity.setCaster(func_234616_v_() instanceof ServerPlayerEntity ? (ServerPlayerEntity) func_234616_v_() : null);
-                this.world.addEntity(lightningboltentity);
+                lightningboltentity.moveTo(Vec3.atBottomCenterOf(blockPosition()));
+                lightningboltentity.setCause(func_234616_v_() instanceof ServerPlayer ? (ServerPlayer) func_234616_v_() : null);
+                this.level.addFreshEntity(lightningboltentity);
             }
         }
 
-        if (!this.world.isRemote) {
-            this.world.setEntityState(this, (byte) 3);
+        if (!this.level.isClientSide) {
+            this.level.broadcastEntityEvent(this, (byte) 3);
             this.remove();
         }
     }
 
     @Override
-    public IPacket<?> createSpawnPacket() {
+    public Packet<?> getAddEntityPacket() {
         return NetworkHooks.getEntitySpawningPacket(this);
     }
 }

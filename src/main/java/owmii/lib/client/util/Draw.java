@@ -1,14 +1,16 @@
 package owmii.lib.client.util;
 
-import net.minecraft.client.renderer.BufferBuilder;
-import net.minecraft.client.renderer.Tessellator;
+import com.mojang.blaze3d.vertex.BufferBuilder;
+import com.mojang.blaze3d.vertex.DefaultVertexFormat;
+import com.mojang.blaze3d.vertex.Tesselator;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
-import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
-import net.minecraftforge.fml.client.gui.GuiUtils;
+import net.minecraftforge.client.gui.GuiUtils;
 import owmii.lib.logistics.energy.Energy;
 
+// TODO PORT fix everything that's commented
 public class Draw {
     public static void gaugeV(TextureAtlasSprite sprite, int x, int y, int w, int h, int cap, int cur) {
+        /*
         if (cap > 0 && cur > 0) {
             int i = (int) (((float) cur / cap) * h);
             final int j = i / 16;
@@ -19,29 +21,30 @@ public class Draw {
                 if (height > 0) {
                     int m = 16 - height;
                     int n = 16 - w;
-                    float uMin = sprite.getMinU();
-                    float uMax = sprite.getMaxU();
-                    float vMin = sprite.getMinV();
-                    float vMax = sprite.getMaxV();
+                    float uMin = sprite.getU0();
+                    float uMax = sprite.getU1();
+                    float vMin = sprite.getV0();
+                    float vMax = sprite.getV1();
                     uMax = uMax - n / 16.0F * (uMax - uMin);
                     vMin = vMin - m / 16.0F * (vMin - vMax);
-                    Tessellator tessellator = Tessellator.getInstance();
-                    BufferBuilder buffer = tessellator.getBuffer();
-                    buffer.begin(7, DefaultVertexFormats.POSITION_TEX);
-                    buffer.pos(x, yy + 16, 0).tex(uMin, vMax).endVertex();
-                    buffer.pos(x + w, yy + 16, 0).tex(uMax, vMax).endVertex();
-                    buffer.pos(x + w, yy + m, 0).tex(uMax, vMin).endVertex();
-                    buffer.pos(x, yy + m, 0).tex(uMin, vMin).endVertex();
-                    tessellator.draw();
+                    Tesselator tessellator = Tesselator.getInstance();
+                    BufferBuilder buffer = tessellator.getBuilder();
+                    buffer.begin(7, DefaultVertexFormat.POSITION_TEX);
+                    buffer.vertex(x, yy + 16, 0).uv(uMin, vMax).endVertex();
+                    buffer.vertex(x + w, yy + 16, 0).uv(uMax, vMax).endVertex();
+                    buffer.vertex(x + w, yy + m, 0).uv(uMax, vMin).endVertex();
+                    buffer.vertex(x, yy + m, 0).uv(uMin, vMin).endVertex();
+                    tessellator.end();
                 }
             }
         }
+        */
     }
 
     public static void gaugeV(int x, int y, int w, int h, int uvX, int uvY, double cap, double cur) {
         if (cap > 0 && cur > 0) {
             int i = (int) (((float) cur / cap) * h);
-            GuiUtils.drawTexturedModalRect(x, y + h - i, uvX, uvY + h - i, w, i, 0);
+            //GuiUtils.drawTexturedModalRect(x, y + h - i, uvX, uvY + h - i, w, i, 0);
         }
     }
 
@@ -52,7 +55,7 @@ public class Draw {
     public static void gaugeV(int x, int y, int w, int h, int uvX, int uvY, long cap, long cur) {
         if (cap > 0 && cur > 0) {
             int i = (int) (((float) cur / cap) * h);
-            GuiUtils.drawTexturedModalRect(x, y + h - i, uvX, uvY + h - i, w, i, 0);
+            //GuiUtils.drawTexturedModalRect(x, y + h - i, uvX, uvY + h - i, w, i, 0);
         }
     }
 
@@ -63,7 +66,7 @@ public class Draw {
     public static void gaugeH(int x, int y, int w, int h, int uvX, int uvY, long cap, long cur) {
         if (cap > 0 && cur > 0) {
             int i = (int) (((float) cur / cap) * w);
-            GuiUtils.drawTexturedModalRect(x, y, uvX, uvY, i, h, 0);
+            //GuiUtils.drawTexturedModalRect(x, y, uvX, uvY, i, h, 0);
         }
     }
 }

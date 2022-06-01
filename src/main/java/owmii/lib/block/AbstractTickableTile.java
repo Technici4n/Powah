@@ -1,26 +1,25 @@
 package owmii.lib.block;
 
-import net.minecraft.tileentity.ITickableTileEntity;
-import net.minecraft.tileentity.TileEntityType;
-import net.minecraft.world.World;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.entity.BlockEntityType;
+import net.minecraft.world.level.block.state.BlockState;
 import owmii.lib.registry.IVariant;
-import owmii.lib.util.Server;
 
-public class AbstractTickableTile<V extends IVariant, B extends AbstractBlock<V, B>> extends AbstractTileEntity<V, B> implements ITickableTileEntity {
+public class AbstractTickableTile<V extends IVariant, B extends AbstractBlock<V, B>> extends AbstractTileEntity<V, B> {
     private int syncTicks;
     public int ticks;
 
-    public AbstractTickableTile(TileEntityType<?> type) {
-        super(type);
+    public AbstractTickableTile(BlockEntityType<?> type, BlockPos pos, BlockState state) {
+        super(type, pos, state);
     }
 
-    public AbstractTickableTile(TileEntityType<?> type, V variant) {
-        super(type, variant);
+    public AbstractTickableTile(BlockEntityType<?> type, BlockPos pos, BlockState state, V variant) {
+        super(type, pos, state, variant);
     }
 
-    @Override
     public void tick() {
-        final World world = this.world;
+        final Level world = this.level;
         if (world != null) {
             if (this.ticks == 0) {
                 onFirstTick(world);
@@ -43,24 +42,26 @@ public class AbstractTickableTile<V extends IVariant, B extends AbstractBlock<V,
         }
     }
 
-    protected void onFirstTick(World world) {
+    protected void onFirstTick(Level world) {
     }
 
-    protected boolean doPostTicks(World world) {
+    protected boolean doPostTicks(Level world) {
         return true;
     }
 
-    protected int postTick(World world) {
+    protected int postTick(Level world) {
         return -1;
     }
 
-    protected void clientTick(World world) {
+    protected void clientTick(Level world) {
     }
 
     public void sync(int delay) {
         if (!isRemote()) {
             if (this.syncTicks <= 0 || delay < this.syncTicks) {
-                this.syncTicks = Server.isSinglePlayer() ? 2 : delay;
+                // TODO what the fuck is this?
+                // this.syncTicks = Server.isSinglePlayer() ? 2 : delay;
+                this.syncTicks = delay;
             }
         }
     }

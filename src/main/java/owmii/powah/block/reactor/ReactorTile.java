@@ -1,15 +1,15 @@
 package owmii.powah.block.reactor;
 
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.Items;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.util.Direction;
-import net.minecraft.util.math.AxisAlignedBB;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.World;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.phys.AABB;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.common.ForgeHooks;
@@ -50,36 +50,36 @@ public class ReactorTile extends AbstractEnergyProvider<Tier, ReactorConfig, Rea
     private boolean genModeOn;
     private boolean generate = true;
 
-    public ReactorTile(Tier variant) {
-        super(Tiles.REACTOR, variant);
+    public ReactorTile(BlockPos pos, BlockState state, Tier variant) {
+        super(Tiles.REACTOR, pos, state, variant);
         this.tank.setCapacity(FluidAttributes.BUCKET_VOLUME)
                 .validate(stack -> PowahAPI.COOLANTS.containsKey(stack.getFluid()))
                 .setChange(() -> ReactorTile.this.sync(10));
         this.inv.add(5);
     }
 
-    public ReactorTile() {
-        this(Tier.STARTER);
+    public ReactorTile(BlockPos pos, BlockState state) {
+        this(pos, state, Tier.STARTER);
     }
 
     @Override
-    public void read(BlockState state, CompoundNBT nbt) {
-        super.read(state, nbt);
+    public void loadServerOnly(CompoundTag nbt) {
+        super.loadServerOnly(nbt);
         this.baseTemp = nbt.getInt("base_temp");
         this.carbonTemp = nbt.getInt("carbon_temp");
         this.redstoneTemp = nbt.getInt("redstone_temp");
     }
 
     @Override
-    public CompoundNBT write(CompoundNBT nbt) {
+    public CompoundTag saveServerOnly(CompoundTag nbt) {
         nbt.putInt("base_temp", this.baseTemp);
         nbt.putInt("carbon_temp", this.carbonTemp);
         nbt.putInt("redstone_temp", this.redstoneTemp);
-        return super.write(nbt);
+        return super.saveServerOnly(nbt);
     }
 
     @Override
-    public void readSync(CompoundNBT nbt) {
+    public void readSync(CompoundTag nbt) {
         super.readSync(nbt);
         this.builder.read(nbt);
         this.fuel.read(nbt, "fuel");
@@ -94,7 +94,7 @@ public class ReactorTile extends AbstractEnergyProvider<Tier, ReactorConfig, Rea
     }
 
     @Override
-    public CompoundNBT writeSync(CompoundNBT nbt) {
+    public CompoundTag writeSync(CompoundTag nbt) {
         this.builder.write(nbt);
         this.fuel.write(nbt, "fuel");
         this.carbon.write(nbt, "carbon");
@@ -109,7 +109,7 @@ public class ReactorTile extends AbstractEnergyProvider<Tier, ReactorConfig, Rea
     }
 
     @Override
-    protected int postTick(World world) {
+    protected int postTick(Level world) {
         if (isRemote() || !this.builder.isDone(world)) return -1;
         long extracted = chargeItems(1);
         boolean flag = false;
@@ -142,8 +142,8 @@ public class ReactorTile extends AbstractEnergyProvider<Tier, ReactorConfig, Rea
         for (Direction direction : Direction.values()) {
             if (canExtractEnergy(direction)) {
                 long amount = Math.min(getEnergyTransfer(), getEnergy().getStored());
-                BlockPos pos = this.pos.offset(direction, direction.getAxis().isHorizontal() ? 2 : direction.equals(Direction.UP) ? 4 : 1);
-                int received = Energy.receive(world.getTileEntity(pos), direction, amount, false);
+                BlockPos pos = this.worldPosition.relative(direction, direction.getAxis().isHorizontal() ? 2 : direction.equals(Direction.UP) ? 4 : 1);
+                int received = Energy.receive(world.getBlockEntity(pos), direction, amount, false);
                 extracted += extractEnergy(received, false, direction);
             }
         }
@@ -157,7 +157,7 @@ public class ReactorTile extends AbstractEnergyProvider<Tier, ReactorConfig, Rea
     }
 
     @Override
-    protected void clientTick(World world) {
+    protected void clientTick(Level world) {
         if (this.running) {
             this.bright.onward();
         } else {
@@ -193,7 +193,7 @@ public class ReactorTile extends AbstractEnergyProvider<Tier, ReactorConfig, Rea
         return (this.temp.getTicks() / 1000.0D * 0.98D / 2.0D) * d0;
     }
 
-    private boolean processTemperature(World world, boolean generating) {
+    private boolean processTemperature(Level world, boolean generating) {
         boolean flag = false;
         if (this.solidCoolant.isEmpty()) {
             ItemStack stack = this.inv.getStackInSlot(4);
@@ -244,7 +244,7 @@ public class ReactorTile extends AbstractEnergyProvider<Tier, ReactorConfig, Rea
         return flag;
     }
 
-    private boolean processRedstone(World world, boolean generating) {
+    private boolean processRedstone(Level world, boolean generating) {
         boolean flag = false;
         if (this.redstone.isEmpty()) {
             ItemStack stack = this.inv.getStackInSlot(3);
@@ -271,12 +271,12 @@ public class ReactorTile extends AbstractEnergyProvider<Tier, ReactorConfig, Rea
         return flag;
     }
 
-    private boolean processCarbon(World world, boolean generating) {
+    private boolean processCarbon(Level world, boolean generating) {
         boolean flag = false;
         if (this.carbon.isEmpty()) {
             ItemStack stack = this.inv.getStackInSlot(2);
             if (!stack.isEmpty()) {
-                int carbon = ForgeHooks.getBurnTime(stack);
+                int carbon = ForgeHooks.getBurnTime(stack, null);
                 if (carbon > 0) {
                     this.carbon.setAll(carbon);
                     this.carbonTemp = 180;
@@ -297,7 +297,7 @@ public class ReactorTile extends AbstractEnergyProvider<Tier, ReactorConfig, Rea
         return flag;
     }
 
-    private boolean processFuel(World world) {
+    private boolean processFuel(Level world) {
         boolean flag = false;
         if (this.fuel.getTicks() <= 900) {
             ItemStack stack = this.inv.getStackInSlot(1);
@@ -316,15 +316,15 @@ public class ReactorTile extends AbstractEnergyProvider<Tier, ReactorConfig, Rea
     }
 
     @Override
-    public void onPlaced(World world, BlockState state, @Nullable LivingEntity placer, ItemStack stack) {
+    public void onPlaced(Level world, BlockState state, @Nullable LivingEntity placer, ItemStack stack) {
         super.onPlaced(world, state, placer, stack);
         this.builder.shuffle();
     }
 
-    public void demolish(World world) {
+    public void demolish(Level world) {
         this.builder.demolish(world);
         while (this.fuel.getTicks() >= 100) {
-            Block.spawnAsEntity(world, this.pos, new ItemStack(Itms.URANINITE));
+            Block.popResource(world, this.worldPosition, new ItemStack(Itms.URANINITE));
             this.fuel.back(100);
         }
     }
@@ -344,7 +344,7 @@ public class ReactorTile extends AbstractEnergyProvider<Tier, ReactorConfig, Rea
         if (slot == 1) {
             return stack.getItem() == Itms.URANINITE;
         } else if (slot == 2) {
-            return ForgeHooks.getBurnTime(stack) > 0 && !stack.hasContainerItem();
+            return ForgeHooks.getBurnTime(stack, null) > 0 && !stack.hasContainerItem();
         } else if (slot == 3) {
             return stack.getItem() == Items.REDSTONE || stack.getItem() == Items.REDSTONE_BLOCK;
         } else if (slot == 4) {
@@ -383,7 +383,7 @@ public class ReactorTile extends AbstractEnergyProvider<Tier, ReactorConfig, Rea
 
     @Override
     @OnlyIn(Dist.CLIENT)
-    public AxisAlignedBB getRenderBoundingBox() {
-        return new AxisAlignedBB(this.pos).grow(1.0D, 3.0D, 1.0D);
+    public AABB getRenderBoundingBox() {
+        return new AABB(this.worldPosition).inflate(1.0D, 3.0D, 1.0D);
     }
 }

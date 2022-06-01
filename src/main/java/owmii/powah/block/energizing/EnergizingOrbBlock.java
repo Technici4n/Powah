@@ -1,32 +1,31 @@
 package owmii.powah.block.energizing;
 
-import com.mojang.blaze3d.matrix.MatrixStack;
 import com.mojang.blaze3d.systems.RenderSystem;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.IWaterLoggable;
+import com.mojang.blaze3d.vertex.PoseStack;
+import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.FontRenderer;
-import net.minecraft.client.resources.I18n;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.nbt.NBTUtil;
-import net.minecraft.state.properties.BlockStateProperties;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.ActionResultType;
-import net.minecraft.util.Direction;
-import net.minecraft.util.Hand;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.BlockRayTraceResult;
-import net.minecraft.util.math.shapes.IBooleanFunction;
-import net.minecraft.util.math.vector.Vector3d;
-import net.minecraft.util.text.TextFormatting;
-import net.minecraft.util.text.TranslationTextComponent;
-import net.minecraft.world.IBlockReader;
-import net.minecraft.world.World;
+import net.minecraft.client.gui.Font;
+import net.minecraft.client.resources.language.I18n;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.NbtUtils;
+import net.minecraft.nbt.Tag;
+import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.InteractionResult;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.SimpleWaterloggedBlock;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.state.properties.BlockStateProperties;
+import net.minecraft.world.phys.BlockHitResult;
+import net.minecraft.world.phys.Vec3;
+import net.minecraft.world.phys.shapes.BooleanOp;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
-import net.minecraftforge.common.util.Constants;
 import net.minecraftforge.items.ItemHandlerHelper;
 import owmii.lib.block.AbstractBlock;
 import owmii.lib.client.handler.IHud;
@@ -43,42 +42,42 @@ import javax.annotation.Nullable;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import static net.minecraft.util.math.shapes.VoxelShapes.combineAndSimplify;
+import static net.minecraft.world.phys.shapes.Shapes.join;
 
-public class EnergizingOrbBlock extends AbstractBlock<IVariant.Single, EnergizingOrbBlock> implements IWaterLoggable, IWrenchable, IHud {
+public class EnergizingOrbBlock extends AbstractBlock<IVariant.Single, EnergizingOrbBlock> implements SimpleWaterloggedBlock, IWrenchable, IHud {
 
     public EnergizingOrbBlock(Properties properties) {
         super(properties);
-        setStateProps(state -> state.with(BlockStateProperties.FACING, Direction.DOWN));
-        this.shapes.put(Direction.UP, combineAndSimplify(makeCuboidShape(3.5D, 11.0D, 3.5D, 12.5D, 1.77D, 12.5D), makeCuboidShape(2.5D, 15.0D, 2.5D, 13.5D, 16.0D, 13.5D), IBooleanFunction.OR));
-        this.shapes.put(Direction.DOWN, combineAndSimplify(makeCuboidShape(3.5D, 14.23D, 3.5D, 12.5D, 5.0D, 12.5D), makeCuboidShape(2.5D, 0.0D, 2.5D, 13.5D, 1.0D, 13.5D), IBooleanFunction.OR));
-        this.shapes.put(Direction.NORTH, combineAndSimplify(makeCuboidShape(3.5D, 3.5D, 14.23D, 12.5D, 12.5D, 5.0D), makeCuboidShape(2.5D, 2.5D, 0.0D, 13.5D, 13.5D, 1.0D), IBooleanFunction.OR));
-        this.shapes.put(Direction.SOUTH, combineAndSimplify(makeCuboidShape(3.5D, 3.5D, 11.0D, 12.5D, 12.5D, 1.77D), makeCuboidShape(2.5D, 2.5D, 15.0D, 13.5D, 13.5D, 16.0D), IBooleanFunction.OR));
-        this.shapes.put(Direction.WEST, combineAndSimplify(makeCuboidShape(14.23D, 3.5D, 3.5D, 5.0D, 12.5D, 12.5D), makeCuboidShape(0.0D, 2.5D, 2.5D, 1.0D, 13.5D, 13.5D), IBooleanFunction.OR));
-        this.shapes.put(Direction.EAST, combineAndSimplify(makeCuboidShape(11.0D, 3.5D, 3.5D, 1.77D, 12.5D, 12.5D), makeCuboidShape(15.0D, 2.5D, 2.5D, 16.0D, 13.5D, 13.5D), IBooleanFunction.OR));
+        setStateProps(state -> state.setValue(BlockStateProperties.FACING, Direction.DOWN));
+        this.shapes.put(Direction.UP, join(box(3.5D, 11.0D, 3.5D, 12.5D, 1.77D, 12.5D), box(2.5D, 15.0D, 2.5D, 13.5D, 16.0D, 13.5D), BooleanOp.OR));
+        this.shapes.put(Direction.DOWN, join(box(3.5D, 14.23D, 3.5D, 12.5D, 5.0D, 12.5D), box(2.5D, 0.0D, 2.5D, 13.5D, 1.0D, 13.5D), BooleanOp.OR));
+        this.shapes.put(Direction.NORTH, join(box(3.5D, 3.5D, 14.23D, 12.5D, 12.5D, 5.0D), box(2.5D, 2.5D, 0.0D, 13.5D, 13.5D, 1.0D), BooleanOp.OR));
+        this.shapes.put(Direction.SOUTH, join(box(3.5D, 3.5D, 11.0D, 12.5D, 12.5D, 1.77D), box(2.5D, 2.5D, 15.0D, 13.5D, 13.5D, 16.0D), BooleanOp.OR));
+        this.shapes.put(Direction.WEST, join(box(14.23D, 3.5D, 3.5D, 5.0D, 12.5D, 12.5D), box(0.0D, 2.5D, 2.5D, 1.0D, 13.5D, 13.5D), BooleanOp.OR));
+        this.shapes.put(Direction.EAST, join(box(11.0D, 3.5D, 3.5D, 1.77D, 12.5D, 12.5D), box(15.0D, 2.5D, 2.5D, 16.0D, 13.5D, 13.5D), BooleanOp.OR));
     }
 
     @Nullable
     @Override
-    public TileEntity createTileEntity(BlockState state, IBlockReader world) {
-        return new EnergizingOrbTile();
+    public BlockEntity newBlockEntity(BlockPos pos, BlockState state) {
+        return new EnergizingOrbTile(pos, state);
     }
 
     @Override
-    public ActionResultType onBlockActivated(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockRayTraceResult result) {
-        ItemStack held = player.getHeldItem(hand);
-        TileEntity tileentity = world.getTileEntity(pos);
+    public InteractionResult use(BlockState state, Level world, BlockPos pos, Player player, InteractionHand hand, BlockHitResult result) {
+        ItemStack held = player.getItemInHand(hand);
+        BlockEntity tileentity = world.getBlockEntity(pos);
         if (tileentity instanceof EnergizingOrbTile) {
             EnergizingOrbTile orb = (EnergizingOrbTile) tileentity;
             Inventory inv = orb.getInventory();
             ItemStack output = inv.getStackInSlot(0);
-            ItemStack off = player.getHeldItemOffhand();
+            ItemStack off = player.getOffhandItem();
             //  if (!(off.getItem() instanceof IWrench && ((IWrench) off.getItem()).getWrenchMode(off).link())) {
             if (held.isEmpty() || !output.isEmpty()) {
-                if (!world.isRemote) {
+                if (!world.isClientSide) {
                     ItemHandlerHelper.giveItemToPlayer(player, inv.removeNext());
                 }
-                return ActionResultType.SUCCESS;
+                return InteractionResult.SUCCESS;
             } else {
                 // if (!world.isRemote) {
                 ItemStack copy = held.copy();
@@ -87,15 +86,15 @@ public class EnergizingOrbBlock extends AbstractBlock<IVariant.Single, Energizin
                     held.shrink(1);
                 }
                 // }
-                return ActionResultType.SUCCESS;
+                return InteractionResult.SUCCESS;
             }
             // }
         }
-        return super.onBlockActivated(state, world, pos, player, hand, result);
+        return super.use(state, world, pos, player, hand, result);
     }
 
     @Override
-    public void onBlockAdded(BlockState state, World worldIn, BlockPos pos, BlockState oldState, boolean isMoving) {
+    public void onPlace(BlockState state, Level worldIn, BlockPos pos, BlockState oldState, boolean isMoving) {
         search(worldIn, pos);
     }
 
@@ -105,30 +104,30 @@ public class EnergizingOrbBlock extends AbstractBlock<IVariant.Single, Energizin
     }
 
     @Override
-    public int getComparatorInputOverride(BlockState state, World world, BlockPos pos) {
-        TileEntity tileentity = world.getTileEntity(pos);
+    public int getAnalogOutputSignal(BlockState state, Level world, BlockPos pos) {
+        BlockEntity tileentity = world.getBlockEntity(pos);
         if (tileentity instanceof EnergizingOrbTile) {
             EnergizingOrbTile orb = (EnergizingOrbTile) tileentity;
             return orb.getInventory().getNonEmptyStacks().size();
         }
-        return super.getComparatorInputOverride(state, world, pos);
+        return super.getAnalogOutputSignal(state, world, pos);
     }
 
     @Override
-    public boolean hasComparatorInputOverride(BlockState state) {
+    public boolean hasAnalogOutputSignal(BlockState state) {
         return true;
     }
 
     @Override
-    public void onReplaced(BlockState state, World worldIn, BlockPos pos, BlockState newState, boolean isMoving) {
+    public void onRemove(BlockState state, Level worldIn, BlockPos pos, BlockState newState, boolean isMoving) {
         int range = Configs.ENERGIZING.range.get();
-        List<BlockPos> list = BlockPos.getAllInBox(pos.add(-range, -range, -range), pos.add(range, range, range))
-                .map(BlockPos::toImmutable)
+        List<BlockPos> list = BlockPos.betweenClosedStream(pos.offset(-range, -range, -range), pos.offset(range, range, range))
+                .map(BlockPos::immutable)
                 .filter(pos1 -> !pos.equals(pos1))
                 .collect(Collectors.toList());
 
         list.forEach(pos1 -> {
-            TileEntity tileEntity1 = worldIn.getTileEntity(pos1);
+            BlockEntity tileEntity1 = worldIn.getBlockEntity(pos1);
             if (tileEntity1 instanceof EnergizingRodTile) {
                 if (pos.equals(((EnergizingRodTile) tileEntity1).getOrbPos())) {
                     ((EnergizingRodTile) tileEntity1).setOrbPos(BlockPos.ZERO);
@@ -142,14 +141,14 @@ public class EnergizingOrbBlock extends AbstractBlock<IVariant.Single, Energizin
                 ((EnergizingOrbBlock) state1.getBlock()).search(worldIn, pos1);
             }
         });
-        super.onReplaced(state, worldIn, pos, newState, isMoving);
+        super.onRemove(state, worldIn, pos, newState, isMoving);
     }
 
-    public void search(World worldIn, BlockPos pos) {
+    public void search(Level worldIn, BlockPos pos) {
         int range = Configs.ENERGIZING.range.get();
-        List<BlockPos> list = BlockPos.getAllInBox(pos.add(-range, -range, -range), pos.add(range, range, range)).map(BlockPos::toImmutable).filter(pos1 -> !pos.equals(pos1)).collect(Collectors.toList());
-        list.stream().filter(p -> worldIn.isBlockPresent(pos)).forEach(pos1 -> {
-            TileEntity tileEntity1 = worldIn.getTileEntity(pos1);
+        List<BlockPos> list = BlockPos.betweenClosedStream(pos.offset(-range, -range, -range), pos.offset(range, range, range)).map(BlockPos::immutable).filter(pos1 -> !pos.equals(pos1)).collect(Collectors.toList());
+        list.stream().filter(p -> worldIn.isLoaded(pos)).forEach(pos1 -> {
+            BlockEntity tileEntity1 = worldIn.getBlockEntity(pos1);
             if (tileEntity1 instanceof EnergizingRodTile) {
                 if (!((EnergizingRodTile) tileEntity1).hasOrb()) {
                     ((EnergizingRodTile) tileEntity1).setOrbPos(pos);
@@ -159,32 +158,32 @@ public class EnergizingOrbBlock extends AbstractBlock<IVariant.Single, Energizin
     }
 
     @Override
-    public boolean onWrench(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, Direction side, WrenchMode mode, Vector3d hit) {
+    public boolean onWrench(BlockState state, Level world, BlockPos pos, Player player, InteractionHand hand, Direction side, WrenchMode mode, Vec3 hit) {
         if (mode.link()) {
-            ItemStack stack = player.getHeldItem(hand);
+            ItemStack stack = player.getItemInHand(hand);
             if (stack.getItem() instanceof WrenchItem) {
                 WrenchItem wrench = (WrenchItem) stack.getItem();
-                TileEntity tileEntity = world.getTileEntity(pos);
+                BlockEntity tileEntity = world.getBlockEntity(pos);
                 if (tileEntity instanceof EnergizingOrbTile) {
                     EnergizingOrbTile orb = (EnergizingOrbTile) tileEntity;
-                    CompoundNBT nbt = wrench.getWrenchNBT(stack);
-                    if (nbt.contains("RodPos", Constants.NBT.TAG_COMPOUND)) {
-                        BlockPos rodPos = NBTUtil.readBlockPos(nbt.getCompound("RodPos"));
-                        TileEntity tileEntity1 = world.getTileEntity(rodPos);
+                    CompoundTag nbt = wrench.getWrenchNBT(stack);
+                    if (nbt.contains("RodPos", Tag.TAG_COMPOUND)) {
+                        BlockPos rodPos = NbtUtils.readBlockPos(nbt.getCompound("RodPos"));
+                        BlockEntity tileEntity1 = world.getBlockEntity(rodPos);
                         if (tileEntity1 instanceof EnergizingRodTile) {
                             EnergizingRodTile rod = (EnergizingRodTile) tileEntity1;
                             V3d v3d = V3d.from(rodPos);
                             if ((int) v3d.distance(pos) <= Configs.ENERGIZING.range.get()) {
                                 rod.setOrbPos(pos);
-                                player.sendStatusMessage(new TranslationTextComponent("chat.powah.wrench.link.done").mergeStyle(TextFormatting.GOLD), true);
+                                player.displayClientMessage(new TranslatableComponent("chat.powah.wrench.link.done").withStyle(ChatFormatting.GOLD), true);
                             } else {
-                                player.sendStatusMessage(new TranslationTextComponent("chat.powah.wrench.link.fail").mergeStyle(TextFormatting.RED), true);
+                                player.displayClientMessage(new TranslatableComponent("chat.powah.wrench.link.fail").withStyle(ChatFormatting.RED), true);
                             }
                         }
                         nbt.remove("RodPos");
                     } else {
-                        nbt.put("OrbPos", NBTUtil.writeBlockPos(pos));
-                        player.sendStatusMessage(new TranslationTextComponent("chat.powah.wrench.link.start").mergeStyle(TextFormatting.YELLOW), true);
+                        nbt.put("OrbPos", NbtUtils.writeBlockPos(pos));
+                        player.displayClientMessage(new TranslatableComponent("chat.powah.wrench.link.start").withStyle(ChatFormatting.YELLOW), true);
                     }
                     return true;
                 }
@@ -195,22 +194,22 @@ public class EnergizingOrbBlock extends AbstractBlock<IVariant.Single, Energizin
 
     @Override
     @OnlyIn(Dist.CLIENT)
-    public boolean renderHud(MatrixStack matrix, BlockState state, World world, BlockPos pos, PlayerEntity player, BlockRayTraceResult result, @Nullable TileEntity te) {
+    public boolean renderHud(PoseStack matrix, BlockState state, Level world, BlockPos pos, Player player, BlockHitResult result, @Nullable BlockEntity te) {
         if (te instanceof EnergizingOrbTile) {
             EnergizingOrbTile orb = (EnergizingOrbTile) te;
             if (orb.getBuffer().getCapacity() > 0) {
-                RenderSystem.pushMatrix();
+                RenderSystem.getModelViewStack().pushPose();
                 RenderSystem.enableBlend();
                 Minecraft mc = Minecraft.getInstance();
-                FontRenderer font = mc.fontRenderer;
-                int x = mc.getMainWindow().getScaledWidth() / 2;
-                int y = mc.getMainWindow().getScaledHeight();
-                String s = "" + TextFormatting.GREEN + orb.getBuffer().getPercent() + "%";
-                String s1 = TextFormatting.GRAY + I18n.format("info.lollipop.fe.stored", Util.addCommas(orb.getBuffer().getEnergyStored()), Util.numFormat(orb.getBuffer().getCapacity()));
-                font.drawStringWithShadow(matrix, s, x - (font.getStringWidth(s) / 2.0f), y - 90, 0xffffff);
-                font.drawStringWithShadow(matrix, s1, x - (font.getStringWidth(s1) / 2.0f), y - 75, 0xffffff);
+                Font font = mc.font;
+                int x = mc.getWindow().getGuiScaledWidth() / 2;
+                int y = mc.getWindow().getGuiScaledHeight();
+                String s = "" + ChatFormatting.GREEN + orb.getBuffer().getPercent() + "%";
+                String s1 = ChatFormatting.GRAY + I18n.get("info.lollipop.fe.stored", Util.addCommas(orb.getBuffer().getEnergyStored()), Util.numFormat(orb.getBuffer().getCapacity()));
+                font.drawShadow(matrix, s, x - (font.width(s) / 2.0f), y - 90, 0xffffff);
+                font.drawShadow(matrix, s1, x - (font.width(s1) / 2.0f), y - 75, 0xffffff);
                 RenderSystem.disableBlend();
-                RenderSystem.popMatrix();
+                RenderSystem.getModelViewStack().popPose();
             }
         }
         return true;

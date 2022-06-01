@@ -1,7 +1,6 @@
 package owmii.lib.client.screen.wiki;
 
-import com.mojang.blaze3d.matrix.MatrixStack;
-import net.minecraft.item.ItemStack;
+import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import owmii.lib.client.screen.ScreenBase;
@@ -12,7 +11,7 @@ import owmii.lib.client.wiki.Entry;
 import owmii.lib.client.wiki.Page;
 import owmii.lib.client.wiki.Section;
 import owmii.lib.client.wiki.page.panel.Panel;
-
+import com.mojang.blaze3d.vertex.PoseStack;
 import javax.annotation.Nullable;
 
 @OnlyIn(Dist.CLIENT)
@@ -50,7 +49,7 @@ public class WikiScreen extends ScreenBase {
     }
 
     @Override
-    public void render(MatrixStack matrix, int mx, int my, float pt) {
+    public void render(PoseStack matrix, int mx, int my, float pt) {
         renderBackground(matrix);
         this.hoveredStack = ItemStack.EMPTY;
         Texture.WIKI_BG_0.draw(matrix, this.x + 28, this.y);
@@ -78,10 +77,10 @@ public class WikiScreen extends ScreenBase {
     }
 
     @Override
-    public void closeScreen() {
+    public void onClose() {
         this.page.onClose();
         this.panel.onClose();
-        super.closeScreen();
+        super.onClose();
     }
 
     public static void open(Entry entry) {

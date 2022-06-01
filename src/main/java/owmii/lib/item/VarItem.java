@@ -1,12 +1,12 @@
 package owmii.lib.item;
 
-import net.minecraft.item.Item;
 import owmii.lib.registry.IRegistryObject;
 import owmii.lib.registry.IVariant;
 import owmii.lib.registry.IVariantEntry;
 import owmii.lib.registry.Registry;
 
 import java.util.List;
+import net.minecraft.world.item.Item;
 
 public abstract class VarItem<V extends Enum<V> & IVariant<V>, I extends VarItem<V, I>> extends ItemBase implements IRegistryObject<Item>, IVariantEntry<V, I> {
     private final V variant;

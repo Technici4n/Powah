@@ -1,25 +1,5 @@
 package owmii.powah.block.solar;
 
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.IWaterLoggable;
-import net.minecraft.block.SixWayBlock;
-import net.minecraft.entity.player.PlayerInventory;
-import net.minecraft.fluid.Fluids;
-import net.minecraft.item.BlockItemUseContext;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemGroup;
-import net.minecraft.state.BooleanProperty;
-import net.minecraft.state.StateContainer;
-import net.minecraft.state.properties.BlockStateProperties;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.Direction;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.BlockRayTraceResult;
-import net.minecraft.util.math.shapes.ISelectionContext;
-import net.minecraft.util.math.shapes.VoxelShape;
-import net.minecraft.world.IBlockReader;
-import net.minecraft.world.IWorld;
 import owmii.lib.block.AbstractGeneratorBlock;
 import owmii.lib.block.AbstractTileEntity;
 import owmii.lib.item.EnergyBlockItem;
@@ -31,25 +11,45 @@ import owmii.powah.config.generator.SolarConfig;
 import owmii.powah.inventory.SolarContainer;
 
 import javax.annotation.Nullable;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
+import net.minecraft.world.entity.player.Inventory;
+import net.minecraft.world.item.CreativeModeTab;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.context.BlockPlaceContext;
+import net.minecraft.world.level.BlockGetter;
+import net.minecraft.world.level.LevelAccessor;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.PipeBlock;
+import net.minecraft.world.level.block.SimpleWaterloggedBlock;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.state.StateDefinition;
+import net.minecraft.world.level.block.state.properties.BlockStateProperties;
+import net.minecraft.world.level.block.state.properties.BooleanProperty;
+import net.minecraft.world.level.material.Fluids;
+import net.minecraft.world.phys.BlockHitResult;
+import net.minecraft.world.phys.shapes.CollisionContext;
+import net.minecraft.world.phys.shapes.VoxelShape;
 import java.util.ArrayList;
 import java.util.List;
 
-public class SolarBlock extends AbstractGeneratorBlock<Tier, SolarConfig, SolarBlock> implements IWaterLoggable {
-    protected static final VoxelShape SHAPE = makeCuboidShape(0.0D, 0.0D, 0.0D, 16.0D, 1.0D, 16.0D);
-    public static final BooleanProperty NORTH = SixWayBlock.NORTH;
-    public static final BooleanProperty EAST = SixWayBlock.EAST;
-    public static final BooleanProperty SOUTH = SixWayBlock.SOUTH;
-    public static final BooleanProperty WEST = SixWayBlock.WEST;
+public class SolarBlock extends AbstractGeneratorBlock<Tier, SolarConfig, SolarBlock> implements SimpleWaterloggedBlock {
+    protected static final VoxelShape SHAPE = box(0.0D, 0.0D, 0.0D, 16.0D, 1.0D, 16.0D);
+    public static final BooleanProperty NORTH = PipeBlock.NORTH;
+    public static final BooleanProperty EAST = PipeBlock.EAST;
+    public static final BooleanProperty SOUTH = PipeBlock.SOUTH;
+    public static final BooleanProperty WEST = PipeBlock.WEST;
     public static final BooleanProperty OUTPUT = BooleanProperty.create("output");
 
     public SolarBlock(Properties properties, Tier variant) {
         super(properties, variant);
-        setStateProps(state -> state.with(NORTH, false).with(EAST, false).with(SOUTH, false).with(WEST, false).with(OUTPUT, false));
+        setStateProps(state -> state.setValue(NORTH, false).setValue(EAST, false).setValue(SOUTH, false).setValue(WEST, false).setValue(OUTPUT, false));
     }
 
     @Override
-    public EnergyBlockItem getBlockItem(Item.Properties properties, @Nullable ItemGroup group) {
-        return super.getBlockItem(properties.maxStackSize(1), group);
+    public EnergyBlockItem getBlockItem(Item.Properties properties, @Nullable CreativeModeTab group) {
+        return super.getBlockItem(properties.stacksTo(1), group);
     }
 
     @Override
@@ -59,18 +59,18 @@ public class SolarBlock extends AbstractGeneratorBlock<Tier, SolarConfig, SolarB
 
     @Nullable
     @Override
-    public TileEntity createTileEntity(BlockState state, IBlockReader world) {
-        return new SolarTile(this.variant);
+    public BlockEntity newBlockEntity(BlockPos pos, BlockState state) {
+        return new SolarTile(pos, state, this.variant);
     }
 
     @Override
-    public VoxelShape getShape(BlockState state, IBlockReader worldIn, BlockPos pos, ISelectionContext context) {
+    public VoxelShape getShape(BlockState state, BlockGetter worldIn, BlockPos pos, CollisionContext context) {
         return SHAPE;
     }
 
     @Nullable
     @Override
-    public AbstractContainer getContainer(int id, PlayerInventory inventory, AbstractTileEntity te, BlockRayTraceResult result) {
+    public AbstractContainer getContainer(int id, Inventory inventory, AbstractTileEntity te, BlockHitResult result) {
         if (te instanceof SolarTile) {
             return new SolarContainer(id, inventory, (SolarTile) te);
         }
@@ -78,48 +78,48 @@ public class SolarBlock extends AbstractGeneratorBlock<Tier, SolarConfig, SolarB
     }
 
     @Override
-    public BlockState updatePostPlacement(BlockState state, Direction facing, BlockState facingState, IWorld world, BlockPos currentPos, BlockPos facingPos) {
+    public BlockState updateShape(BlockState state, Direction facing, BlockState facingState, LevelAccessor world, BlockPos currentPos, BlockPos facingPos) {
         return createState(world, currentPos);
     }
 
     @Override
-    public boolean propagatesSkylightDown(BlockState state, IBlockReader reader, BlockPos pos) {
+    public boolean propagatesSkylightDown(BlockState state, BlockGetter reader, BlockPos pos) {
         return false;
     }
 
     @Nullable
     @Override
-    public BlockState getStateForPlacement(BlockItemUseContext context) {
-        return createState(context.getWorld(), context.getPos());
+    public BlockState getStateForPlacement(BlockPlaceContext context) {
+        return createState(context.getLevel(), context.getClickedPos());
     }
 
-    private BlockState createState(IWorld world, BlockPos pos) {
-        final BlockState state = getDefaultState();
+    private BlockState createState(LevelAccessor world, BlockPos pos) {
+        final BlockState state = defaultBlockState();
         boolean north = canAttach(state, world, pos, Direction.NORTH);
         boolean south = canAttach(state, world, pos, Direction.SOUTH);
         boolean west = canAttach(state, world, pos, Direction.WEST);
         boolean east = canAttach(state, world, pos, Direction.EAST);
-        return state.with(NORTH, !north).with(SOUTH, !south).with(WEST, !west).with(EAST, !east)
-                .with(OUTPUT, Energy.isPresent(world.getTileEntity(pos.down()), Direction.DOWN))
-                .with(BlockStateProperties.WATERLOGGED, world.getFluidState(pos).getFluid() == Fluids.WATER);
+        return state.setValue(NORTH, !north).setValue(SOUTH, !south).setValue(WEST, !west).setValue(EAST, !east)
+                .setValue(OUTPUT, Energy.isPresent(world.getBlockEntity(pos.below()), Direction.DOWN))
+                .setValue(BlockStateProperties.WATERLOGGED, world.getFluidState(pos).getType() == Fluids.WATER);
     }
 
-    public boolean canAttach(BlockState state, IWorld world, BlockPos pos, Direction direction) {
-        return world.getBlockState(pos.offset(direction)).getBlock() == this;
+    public boolean canAttach(BlockState state, LevelAccessor world, BlockPos pos, Direction direction) {
+        return world.getBlockState(pos.relative(direction)).getBlock() == this;
     }
 
     @Override
-    protected void fillStateContainer(StateContainer.Builder<Block, BlockState> builder) {
+    protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
         builder.add(NORTH, EAST, SOUTH, WEST, OUTPUT);
-        super.fillStateContainer(builder);
+        super.createBlockStateDefinition(builder);
     }
 
     public List<Direction> getConnectedSides(BlockState state) {
         List<Direction> list = new ArrayList<>();
-        if (!state.get(NORTH)) list.add(Direction.NORTH);
-        if (!state.get(SOUTH)) list.add(Direction.SOUTH);
-        if (!state.get(WEST)) list.add(Direction.WEST);
-        if (!state.get(EAST)) list.add(Direction.EAST);
+        if (!state.getValue(NORTH)) list.add(Direction.NORTH);
+        if (!state.getValue(SOUTH)) list.add(Direction.SOUTH);
+        if (!state.getValue(WEST)) list.add(Direction.WEST);
+        if (!state.getValue(EAST)) list.add(Direction.EAST);
         return list;
     }
 }

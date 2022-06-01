@@ -1,10 +1,10 @@
 package owmii.powah.api;
 
-import net.minecraft.block.Block;
-import net.minecraft.block.Blocks;
-import net.minecraft.fluid.Fluid;
-import net.minecraft.util.IItemProvider;
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.level.ItemLike;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.material.Fluid;
 import net.minecraftforge.registries.ForgeRegistries;
 import org.apache.commons.lang3.tuple.Pair;
 
@@ -99,7 +99,7 @@ public class PowahAPI {
      * @param item:    the stack used as solid coolant.
      * @param cooling: the coldness of the stack.
      **/
-    public static void registerSolidCoolant(IItemProvider item, int size, int cooling) {
+    public static void registerSolidCoolant(ItemLike item, int size, int cooling) {
         SOLID_COOLANTS.put(item.asItem().getRegistryName(), Pair.of(size, cooling));
     }
 
@@ -109,7 +109,7 @@ public class PowahAPI {
      * @param item: the stack used as solid coolant.
      * @return the coldness value;
      **/
-    public static Pair<Integer, Integer> getSolidCoolant(IItemProvider item) {
+    public static Pair<Integer, Integer> getSolidCoolant(ItemLike item) {
         if (SOLID_COOLANTS.containsKey(item.asItem().getRegistryName())) {
             return SOLID_COOLANTS.get(item.asItem().getRegistryName());
         }

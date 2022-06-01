@@ -1,8 +1,8 @@
 package owmii.lib.client.wiki.page;
 
-import com.mojang.blaze3d.matrix.MatrixStack;
-import net.minecraft.client.gui.FontRenderer;
-import net.minecraft.util.text.TranslationTextComponent;
+import com.mojang.blaze3d.vertex.PoseStack;
+import net.minecraft.client.gui.Font;
+import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import owmii.lib.client.screen.Texture;
@@ -32,7 +32,7 @@ public class GridPage extends EntriesPage {
                     Entry e = this.entries.get(index);
                     screen.addButton2(new IconButton(27 + x + 13 + j * 29, 17 + y + 13 + i * 29, e.getStack(), Texture.WIKI_FRM, button -> {
                         MC.open(new WikiScreen(e.getSections(0)));
-                    }, screen).setTooltip(tooltip -> tooltip.add(new TranslationTextComponent(e.getTransKey()))));
+                    }, screen).setTooltip(tooltip -> tooltip.add(new TranslatableComponent(e.getTransKey()))));
                 } else break;
             }
         }
@@ -40,7 +40,7 @@ public class GridPage extends EntriesPage {
 
     @Override
     @OnlyIn(Dist.CLIENT)
-    public void render(MatrixStack matrix, int x, int y, int mx, int my, float pt, FontRenderer font, WikiScreen screen) {
-        font.func_243248_b(matrix, new TranslationTextComponent(getSection().getEntry().getTransKey()), x + 10, y + 10, 0x444444);
+    public void render(PoseStack matrix, int x, int y, int mx, int my, float pt, Font font, WikiScreen screen) {
+        font.draw(matrix, new TranslatableComponent(getSection().getEntry().getTransKey()), x + 10, y + 10, 0x444444);
     }
 }

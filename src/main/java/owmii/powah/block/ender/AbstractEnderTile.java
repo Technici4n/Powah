@@ -1,17 +1,7 @@
 package owmii.powah.block.ender;
 
 import com.mojang.authlib.GameProfile;
-import net.minecraft.block.BlockState;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.player.ServerPlayerEntity;
-import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.tileentity.TileEntityType;
-import net.minecraft.util.Direction;
-import net.minecraft.util.SoundCategory;
-import net.minecraft.util.SoundEvents;
-import net.minecraft.world.World;
+import net.minecraft.core.BlockPos;
 import owmii.lib.block.AbstractEnergyBlock;
 import owmii.lib.block.AbstractEnergyStorage;
 import owmii.lib.block.IInventoryHolder;
@@ -20,11 +10,20 @@ import owmii.lib.config.IEnergyConfig;
 import owmii.lib.logistics.energy.Energy;
 import owmii.lib.registry.IVariant;
 import owmii.lib.util.Player;
-import owmii.lib.util.Server;
 import owmii.lib.util.math.RangedInt;
 import owmii.powah.api.energy.endernetwork.IEnderExtender;
 
 import javax.annotation.Nullable;
+import net.minecraft.core.Direction;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.sounds.SoundSource;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.entity.BlockEntityType;
+import net.minecraft.world.level.block.state.BlockState;
 
 public class AbstractEnderTile<V extends Enum<V> & IVariant<V>, C extends IEnergyConfig<V>, B extends AbstractEnergyBlock<V, C, B>> extends AbstractEnergyStorage<V, C, B> implements IOwnable, IInventoryHolder {
     private final RangedInt channel = new RangedInt(12);
@@ -33,37 +32,37 @@ public class AbstractEnderTile<V extends Enum<V> & IVariant<V>, C extends IEnerg
     private GameProfile owner;
     private boolean flag;
 
-    public AbstractEnderTile(TileEntityType<?> type, V variant) {
-        super(type, variant);
+    public AbstractEnderTile(BlockEntityType<?> type, BlockPos pos, BlockState state, V variant) {
+        super(type, pos, state, variant);
     }
 
     @Override
-    public void readStorable(CompoundNBT nbt) {
+    public void readStorable(CompoundTag nbt) {
         super.readStorable(nbt);
         this.channel.read(nbt, "channel");
-        if (nbt.hasUniqueId("owner_id")) {
-            this.owner = new GameProfile(nbt.getUniqueId("owner_id"), nbt.getString("owner_name"));
+        if (nbt.hasUUID("owner_id")) {
+            this.owner = new GameProfile(nbt.getUUID("owner_id"), nbt.getString("owner_name"));
         }
     }
 
     @Override
-    public CompoundNBT writeStorable(CompoundNBT nbt) {
+    public CompoundTag writeStorable(CompoundTag nbt) {
         this.channel.writ(nbt, "channel");
         if (this.owner != null) {
-            nbt.putUniqueId("owner_id", this.owner.getId());
+            nbt.putUUID("owner_id", this.owner.getId());
             nbt.putString("owner_name", this.owner.getName());
         }
         return super.writeStorable(nbt);
     }
 
     @Override
-    protected void onFirstTick(World world) {
+    protected void onFirstTick(Level world) {
         super.onFirstTick(world);
         getEnergy().setTransfer(getEnergyTransfer());
     }
 
     @Override
-    protected int postTick(World world) {
+    protected int postTick(Level world) {
         if (!isRemote()) {
             if (this.energy.clone(getEnergy())) {
                 sync(5);
@@ -74,7 +73,7 @@ public class AbstractEnderTile<V extends Enum<V> & IVariant<V>, C extends IEnerg
 
     @Override
     public void onSlotChanged(int slot) {
-        if (this.world != null && slot == 0) {
+        if (this.level != null && slot == 0) {
             ItemStack stack = this.inv.getStackInSlot(0);
             if (isExtender() && stack.getItem() instanceof IEnderExtender) {
                 Energy energy = getEnergy();
@@ -88,7 +87,7 @@ public class AbstractEnderTile<V extends Enum<V> & IVariant<V>, C extends IEnerg
                         setEnergy(energy);
                     }
                     stack.shrink(1);
-                    this.world.playSound(null, this.pos, SoundEvents.ENTITY_ENDER_EYE_DEATH, SoundCategory.BLOCKS, 1.0F, 1.0F);
+                    this.level.playSound(null, this.worldPosition, SoundEvents.ENDER_EYE_DEATH, SoundSource.BLOCKS, 1.0F, 1.0F);
                 }
             }
         }
@@ -119,16 +118,16 @@ public class AbstractEnderTile<V extends Enum<V> & IVariant<V>, C extends IEnerg
     }
 
     @Override
-    public void onPlaced(World world, BlockState state, @Nullable LivingEntity placer, ItemStack stack) {
+    public void onPlaced(Level world, BlockState state, @Nullable LivingEntity placer, ItemStack stack) {
         super.onPlaced(world, state, placer, stack);
-        if (getOwner() == null && placer instanceof ServerPlayerEntity && !Player.isFake((PlayerEntity) placer)) {
-            setOwner(((ServerPlayerEntity) placer).getGameProfile());
+        if (getOwner() == null && placer instanceof ServerPlayer && !Player.isFake((net.minecraft.world.entity.player.Player) placer)) {
+            setOwner(((ServerPlayer) placer).getGameProfile());
         }
     }
 
     public void setEnergy(Energy energy) {
         if (!isRemote() && this.owner != null) {
-            EnderNetwork network = Server.getData(EnderNetwork::new);
+            EnderNetwork network = EnderNetwork.get(level);
             network.setEnergy(this.owner.getId(), this.channel.get(), energy);
         }
     }
@@ -153,8 +152,7 @@ public class AbstractEnderTile<V extends Enum<V> & IVariant<V>, C extends IEnerg
         if (isRemote()) {
             return this.energy;
         } else {
-            return Server.getData(EnderNetwork::new)
-                    .getEnergy(this, this.channel.get()).setTransfer(getEnergyTransfer());
+            return EnderNetwork.get(level).getEnergy(this, this.channel.get()).setTransfer(getEnergyTransfer());
         }
     }
 

@@ -1,6 +1,6 @@
 package owmii.powah.block;
 
-import net.minecraft.block.Block;
+import net.minecraft.world.level.block.Block;
 import owmii.lib.block.AbstractBlock;
 import owmii.lib.block.Properties;
 import owmii.lib.registry.Registry;
@@ -25,10 +25,10 @@ public class Blcks {
     public static final Registry<Block> REG = new Registry<>(Block.class, Powah.MOD_ID);
     public static final VarReg<Tier, Block> ENERGY_CELL = REG.getVar("energy_cell", variant -> new EnergyCellBlock(Properties.metalNoSolid(2.0f, 20.0f), variant), Tier.values());
     public static final VarReg<Tier, Block> ENDER_CELL = REG.getVar("ender_cell", variant -> new EnderCellBlock(Properties.metalNoSolid(2.0f, 20.0f), variant), Tier.getNormalVariants());
-    public static final VarReg<Tier, Block> ENERGY_CABLE = REG.getVar("energy_cable", variant -> new CableBlock(Properties.metalNoSolid(2.0f, 20.0f).doesNotBlockMovement(), variant), Tier.getNormalVariants());
-    public static final VarReg<Tier, Block> ENDER_GATE = REG.getVar("ender_gate", variant -> new EnderGateBlock(Properties.metalNoSolid(2.0f, 20.0f).doesNotBlockMovement(), variant), Tier.getNormalVariants());
+    public static final VarReg<Tier, Block> ENERGY_CABLE = REG.getVar("energy_cable", variant -> new CableBlock(Properties.metalNoSolid(2.0f, 20.0f).noCollission(), variant), Tier.getNormalVariants());
+    public static final VarReg<Tier, Block> ENDER_GATE = REG.getVar("ender_gate", variant -> new EnderGateBlock(Properties.metalNoSolid(2.0f, 20.0f).noCollission(), variant), Tier.getNormalVariants());
     public static final Block ENERGIZING_ORB = REG.register("energizing_orb", new EnergizingOrbBlock(Properties.metalNoSolid(2.0f, 20.0f)));
-    public static final VarReg<Tier, Block> ENERGIZING_ROD = REG.getVar("energizing_rod", variant -> new EnergizingRodBlock(Properties.metalNoSolid(2.0f, 20.0f).doesNotBlockMovement(), variant), Tier.getNormalVariants());
+    public static final VarReg<Tier, Block> ENERGIZING_ROD = REG.getVar("energizing_rod", variant -> new EnergizingRodBlock(Properties.metalNoSolid(2.0f, 20.0f).noCollission(), variant), Tier.getNormalVariants());
     public static final VarReg<Tier, Block> FURNATOR = REG.getVar("furnator", variant -> new FurnatorBlock(Properties.metalNoSolid(2.0f, 20.0f), variant), Tier.getNormalVariants());
     public static final VarReg<Tier, Block> MAGMATOR = REG.getVar("magmator", variant -> new MagmatorBlock(Properties.metalNoSolid(2.0f, 20.0f), variant), Tier.getNormalVariants());
     public static final VarReg<Tier, Block> THERMO_GENERATOR = REG.getVar("thermo_generator", variant -> new ThermoBlock(Properties.metalNoSolid(2.0f, 20.0f), variant), Tier.getNormalVariants());

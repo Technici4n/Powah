@@ -1,6 +1,6 @@
 package owmii.lib.logistics.inventory;
 
-import net.minecraft.item.ItemStack;
+import net.minecraft.world.item.ItemStack;
 
 public class ItemInventory extends NBTInventory {
     private final ItemStack stack;

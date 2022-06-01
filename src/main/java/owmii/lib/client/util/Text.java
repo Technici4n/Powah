@@ -1,38 +1,38 @@
 package owmii.lib.client.util;
 
+import com.mojang.blaze3d.vertex.Tesselator;
+import com.mojang.math.Matrix4f;
+import com.mojang.math.Transformation;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.FontRenderer;
-import net.minecraft.client.renderer.IRenderTypeBuffer;
-import net.minecraft.client.renderer.Tessellator;
-import net.minecraft.util.IReorderingProcessor;
-import net.minecraft.util.math.vector.Matrix4f;
-import net.minecraft.util.math.vector.TransformationMatrix;
-import net.minecraft.util.text.Color;
-import net.minecraft.util.text.ITextProperties;
-import net.minecraft.util.text.StringTextComponent;
-import net.minecraft.util.text.Style;
+import net.minecraft.client.gui.Font;
+import net.minecraft.client.renderer.MultiBufferSource;
+import net.minecraft.network.chat.FormattedText;
+import net.minecraft.network.chat.Style;
+import net.minecraft.network.chat.TextColor;
+import net.minecraft.network.chat.TextComponent;
+import net.minecraft.util.FormattedCharSequence;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
 @OnlyIn(Dist.CLIENT)
 public class Text {
-    public static final StringTextComponent EMPTY = new StringTextComponent("");
-    public static final StringTextComponent SPACE = new StringTextComponent(" ");
-    public static final StringTextComponent COLON = new StringTextComponent(": ");
-    public static final StringTextComponent COMA = new StringTextComponent(", ");
+    public static final TextComponent EMPTY = new TextComponent("");
+    public static final TextComponent SPACE = new TextComponent(" ");
+    public static final TextComponent COLON = new TextComponent(": ");
+    public static final TextComponent COMA = new TextComponent(", ");
 
     public static Style color(int color) {
-        return Style.EMPTY.setColor(Color.fromInt(color));
+        return Style.EMPTY.withColor(TextColor.fromRgb(color));
     }
 
-    public static void drawString(ITextProperties text, float x, float y, int w, int h, int color) {
+    public static void drawString(FormattedText text, float x, float y, int w, int h, int color) {
         Minecraft mc = Minecraft.getInstance();
-        FontRenderer font = mc.fontRenderer;
-        Matrix4f matrix4f = TransformationMatrix.identity().getMatrix();
-        for (IReorderingProcessor processor : font.trimStringToWidth(text, w)) {
-            IRenderTypeBuffer.Impl impl = IRenderTypeBuffer.getImpl(Tessellator.getInstance().getBuffer());
-            font.func_238416_a_(processor, x, y, color, false, matrix4f, impl, false, 0, 15728880);
-            impl.finish();
+        Font font = mc.font;
+        Matrix4f matrix4f = Transformation.identity().getMatrix();
+        for (FormattedCharSequence processor : font.split(text, w)) {
+            MultiBufferSource.BufferSource impl = MultiBufferSource.immediate(Tesselator.getInstance().getBuilder());
+            font.drawInBatch(processor, x, y, color, false, matrix4f, impl, false, 0, 15728880);
+            impl.endBatch();
             y += h;
         }
     }

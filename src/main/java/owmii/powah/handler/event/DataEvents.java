@@ -3,7 +3,7 @@ package owmii.powah.handler.event;
 import net.minecraft.data.DataGenerator;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
-import net.minecraftforge.fml.event.lifecycle.GatherDataEvent;
+import net.minecraftforge.forge.event.lifecycle.GatherDataEvent;
 import owmii.powah.Powah;
 import owmii.powah.compat.curios.CurioTagsProvider;
 

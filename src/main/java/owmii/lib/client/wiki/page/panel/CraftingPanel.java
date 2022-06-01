@@ -1,15 +1,15 @@
 package owmii.lib.client.wiki.page.panel;
 
-import com.mojang.blaze3d.matrix.MatrixStack;
 import com.mojang.blaze3d.systems.RenderSystem;
+import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.FontRenderer;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.crafting.IRecipe;
-import net.minecraft.item.crafting.Ingredient;
-import net.minecraft.util.IItemProvider;
-import net.minecraft.util.NonNullList;
-import net.minecraft.util.math.MathHelper;
+import net.minecraft.client.gui.Font;
+import net.minecraft.core.NonNullList;
+import net.minecraft.util.Mth;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.crafting.Ingredient;
+import net.minecraft.world.item.crafting.Recipe;
+import net.minecraft.world.level.ItemLike;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import owmii.lib.client.screen.Texture;
@@ -21,7 +21,7 @@ import owmii.lib.client.wiki.Section;
 import java.util.ArrayList;
 import java.util.List;
 
-public class CraftingPanel<T extends IItemProvider> extends ItemPanel<T> {
+public class CraftingPanel<T extends ItemLike> extends ItemPanel<T> {
     private int currRecipe;
 
     @OnlyIn(Dist.CLIENT)
@@ -41,7 +41,7 @@ public class CraftingPanel<T extends IItemProvider> extends ItemPanel<T> {
         super(items, parent);
     }
 
-    public CraftingPanel(IItemProvider[] items, Section parent) {
+    public CraftingPanel(ItemLike[] items, Section parent) {
         super(items, parent);
     }
 
@@ -70,14 +70,14 @@ public class CraftingPanel<T extends IItemProvider> extends ItemPanel<T> {
     @OnlyIn(Dist.CLIENT)
     public void refresh() {
         super.refresh();
-        this.currRecipe = MathHelper.clamp(this.currRecipe, 0, Math.max(0, getRecipe().size() - 1));
+        this.currRecipe = Mth.clamp(this.currRecipe, 0, Math.max(0, getRecipe().size() - 1));
         this.nextRecipe.visible = this.currRecipe < getRecipe().size() - 1;
         this.prevRecipe.visible = this.currRecipe > 0;
     }
 
     @Override
     @OnlyIn(Dist.CLIENT)
-    public void render(MatrixStack matrix, int x, int y, int mx, int my, float pt, FontRenderer font, WikiScreen screen) {
+    public void render(PoseStack matrix, int x, int y, int mx, int my, float pt, Font font, WikiScreen screen) {
         super.render(matrix, x, y, mx, my, pt, font, screen);
         if (0 <= this.currRecipe && this.currRecipe < getRecipe().size()) {
             NonNullList<Ingredient> ingredients = NonNullList.withSize(9, Ingredient.EMPTY);
@@ -88,21 +88,24 @@ public class CraftingPanel<T extends IItemProvider> extends ItemPanel<T> {
                     for (int j = 0; j < 3; ++j) {
                         int id = j + i * 3;
                         Ingredient ingredient = ingredients.get(id);
-                        ItemStack[] stacks = ingredient.getMatchingStacks();
-                        RenderSystem.pushMatrix();
-                        RenderSystem.translatef(x + 24 + j * 40, y + 90 + i * 40, 0);
+                        ItemStack[] stacks = ingredient.getItems();
+                        var globalStack = RenderSystem.getModelViewStack();
+                        globalStack.pushPose();
+                        globalStack.translate(x + 24 + j * 40, y + 90 + i * 40, 0);
                         Texture.WIKI_RCP_FRM.draw(matrix, 0, 0);
                         if (stacks.length > 0) {
                             boolean b = ingredients1.size() == 4 && id == 2;
-                            RenderSystem.translatef(b ? -36 : 4.0F, b ? 44 : 4.0F, 0.0F);
-                            RenderSystem.scaled(1.5F, 1.5F, 1.0F);
-                            ItemStack stack = stacks[MathHelper.floor(MC.ticks / 20.0F) % stacks.length];
+                            globalStack.translate(b ? -36 : 4.0F, b ? 44 : 4.0F, 0.0F);
+                            globalStack.scale(1.5F, 1.5F, 1.0F);
+                            ItemStack stack = stacks[Mth.floor(MC.ticks / 20.0F) % stacks.length];
                             if (Texture.WIKI_RCP_FRM.isMouseOver(x + 24 + j * 40, y + 90 + i * 40, mx, my)) {
                                 screen.hoveredStack = stack;
                             }
-                            Minecraft.getInstance().getItemRenderer().renderItemAndEffectIntoGUI(stack, 0, 0);
+                            Minecraft.getInstance().getItemRenderer().renderAndDecorateItem(stack, 0, 0);
                         }
-                        RenderSystem.popMatrix();
+                        globalStack.popPose();
+                        // TODO: is the cleanup call necessary here?
+                        RenderSystem.applyModelViewMatrix();
                     }
                 }
             }
@@ -123,7 +126,7 @@ public class CraftingPanel<T extends IItemProvider> extends ItemPanel<T> {
         return super.mouseScrolled(mouseX, mouseY, i);
     }
 
-    protected List<IRecipe<?>> getRecipe() {
+    protected List<Recipe<?>> getRecipe() {
         return getWiki().getCrafting().getOrDefault(getItem(), new ArrayList<>());
     }
 }

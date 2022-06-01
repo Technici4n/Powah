@@ -1,8 +1,7 @@
 package owmii.lib.util;
 
-import net.minecraft.world.World;
-
 import java.util.concurrent.TimeUnit;
+import net.minecraft.world.level.Level;
 
 public class Time {
     public static String secToDHMS(long time) {
@@ -13,8 +12,8 @@ public class Time {
         return String.format("%03d:%02d:%02d:%02d", days, hours, minutes, seconds);
     }
 
-    public static boolean isDay(World world) {
-        float celestialAngle = world.getCelestialAngleRadians(1.0F);
+    public static boolean isDay(Level world) {
+        float celestialAngle = world.getSunAngle(1.0F);
         return celestialAngle < 0.25F || celestialAngle > 0.75F;
     }
 }

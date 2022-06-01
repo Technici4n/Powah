@@ -1,11 +1,6 @@
 package owmii.powah.block.solar;
 
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
-import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.util.Direction;
-import net.minecraft.world.World;
+import net.minecraft.core.BlockPos;
 import owmii.lib.block.AbstractEnergyProvider;
 import owmii.lib.block.IInventoryHolder;
 import owmii.lib.logistics.energy.Energy;
@@ -16,6 +11,12 @@ import owmii.powah.config.generator.SolarConfig;
 import owmii.powah.item.Itms;
 
 import javax.annotation.Nullable;
+import net.minecraft.core.Direction;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.state.BlockState;
 
 public class SolarTile extends AbstractEnergyProvider<Tier, SolarConfig, SolarBlock> implements IInventoryHolder {
     public static final String CAN_SEE_SKY = "can_see_sky";
@@ -23,43 +24,43 @@ public class SolarTile extends AbstractEnergyProvider<Tier, SolarConfig, SolarBl
     private boolean canSeeSky;
     private boolean hasLensOfEnder;
 
-    public SolarTile(Tier variant) {
-        super(Tiles.SOLAR_PANEL, variant);
+    public SolarTile(BlockPos pos, BlockState state, Tier variant) {
+        super(Tiles.SOLAR_PANEL, pos, state, variant);
         this.inv.add(1);
     }
 
-    public SolarTile() {
-        this(Tier.STARTER);
+    public SolarTile(BlockPos pos, BlockState state) {
+        this(pos, state, Tier.STARTER);
     }
 
     @Override
-    public void readSync(CompoundNBT compound) {
+    public void readSync(CompoundTag compound) {
         super.readSync(compound);
         this.canSeeSky = compound.getBoolean(CAN_SEE_SKY);
         this.hasLensOfEnder = compound.getBoolean(HAS_LENS_OF_ENDER);
     }
 
     @Override
-    public CompoundNBT writeSync(CompoundNBT compound) {
+    public CompoundTag writeSync(CompoundTag compound) {
         compound.putBoolean(CAN_SEE_SKY, this.canSeeSky);
         compound.putBoolean(HAS_LENS_OF_ENDER, this.hasLensOfEnder);
         return super.writeSync(compound);
     }
 
     @Override
-    protected int postTick(World world) {
+    protected int postTick(Level world) {
         if (isRemote()) return -1;
         boolean flag = chargeItems(1) + extractFromSides(world) > 0;
         if (checkRedstone()) {
             if (!this.hasLensOfEnder && this.ticks % 40L == 0L) {
-                boolean canSeeSkyNow = Misc.canBlockSeeSky(world, this.pos.up());
+                boolean canSeeSkyNow = Misc.canBlockSeeSky(world, this.worldPosition.above());
                 if (this.canSeeSky != canSeeSkyNow) {
                     this.canSeeSky = canSeeSkyNow;
                     sync();
                 }
             }
             if (!this.energy.isFull()) {
-                if ((this.canSeeSky || this.hasLensOfEnder) && world.isDaytime()) {
+                if ((this.canSeeSky || this.hasLensOfEnder) && world.isDay()) {
                     this.energy.produce(getGeneration());
                     flag = true;
                 }
@@ -69,11 +70,11 @@ public class SolarTile extends AbstractEnergyProvider<Tier, SolarConfig, SolarBl
     }
 
     @Override
-    public void onRemoved(World world, BlockState state, BlockState newState, boolean isMoving) {
+    public void onRemoved(Level world, BlockState state, BlockState newState, boolean isMoving) {
         super.onRemoved(world, state, newState, isMoving);
         if (state.getBlock() != newState.getBlock()) {
             if (this.hasLensOfEnder) {
-                Block.spawnAsEntity(world, this.pos, new ItemStack(Itms.LENS_OF_ENDER));
+                Block.popResource(world, this.worldPosition, new ItemStack(Itms.LENS_OF_ENDER));
             }
         }
     }

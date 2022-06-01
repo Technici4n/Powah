@@ -1,15 +1,14 @@
 package owmii.lib.block;
 
 import com.mojang.authlib.GameProfile;
-import net.minecraft.entity.player.PlayerEntity;
-
 import javax.annotation.Nullable;
+import net.minecraft.world.entity.player.Player;
 
 public interface IOwnable {
     @Nullable
     GameProfile getOwner();
 
-    default void setOwner(PlayerEntity owner) {
+    default void setOwner(Player owner) {
         setOwner(owner.getGameProfile());
     }
 

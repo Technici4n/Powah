@@ -1,17 +1,17 @@
 package owmii.lib.client.screen;
 
-import com.mojang.blaze3d.matrix.MatrixStack;
+import com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.AbstractGui;
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.client.gui.GuiComponent;
+import net.minecraft.resources.ResourceLocation;
 import owmii.lib.Lollipop;
 import owmii.lib.logistics.Redstone;
 import owmii.lib.logistics.Transfer;
-
+import com.mojang.blaze3d.vertex.PoseStack;
 import java.util.HashMap;
 import java.util.Map;
 
-public class Texture extends AbstractGui {
+public class Texture extends GuiComponent {
     private static final Builder BUILDER = new Builder(Lollipop.MOD_ID);
     public static final Texture EMPTY = BUILDER.make("empty", 0, 0, 0, 0);
 
@@ -78,16 +78,16 @@ public class Texture extends AbstractGui {
         this.th = th;
     }
 
-    public void drawScalableW(MatrixStack matrix, float size, int x, int y) {
+    public void drawScalableW(PoseStack matrix, float size, int x, int y) {
         scaleW((int) (size * this.width)).draw(matrix, x, y);
     }
 
-    public void drawScalableH(MatrixStack matrix, float size, int x, int y) {
+    public void drawScalableH(PoseStack matrix, float size, int x, int y) {
         int i = (int) (size * this.height);
         scaleH(i).moveV(this.height - i).draw(matrix, x, y + this.height - i);
     }
 
-    public void draw(MatrixStack matrix, int x, int y) {
+    public void draw(PoseStack matrix, int x, int y) {
         if (!isEmpty()) {
             bindTexture(getLocation());
             blit(matrix, x, y, getU(), getV(), getWidth(), getHeight(), this.tw, this.th);
@@ -95,7 +95,7 @@ public class Texture extends AbstractGui {
     }
 
     public void bindTexture(ResourceLocation guiTexture) {
-        Minecraft.getInstance().getTextureManager().bindTexture(guiTexture);
+        RenderSystem.setShaderTexture(0, guiTexture);
     }
 
     public Texture addW(int width) {

@@ -1,6 +1,5 @@
 package owmii.powah.client.compat.jei;
 
-import com.mojang.blaze3d.matrix.MatrixStack;
 import mezz.jei.api.constants.VanillaTypes;
 import mezz.jei.api.gui.IRecipeLayout;
 import mezz.jei.api.gui.drawable.IDrawable;
@@ -9,16 +8,18 @@ import mezz.jei.api.helpers.IGuiHelper;
 import mezz.jei.api.ingredients.IIngredients;
 import mezz.jei.api.recipe.category.IRecipeCategory;
 import mezz.jei.api.runtime.IIngredientManager;
+import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.resources.I18n;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.text.TextFormatting;
+import net.minecraft.client.resources.language.I18n;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.item.ItemStack;
 import org.apache.commons.lang3.tuple.Pair;
 import owmii.powah.Powah;
 import owmii.powah.api.PowahAPI;
 import owmii.powah.block.Blcks;
-
+import com.mojang.blaze3d.vertex.PoseStack;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -28,12 +29,10 @@ public class SolidCoolantCategory implements IRecipeCategory<SolidCoolantCategor
     public static final ResourceLocation ID = new ResourceLocation(Powah.MOD_ID, "solid.coolants");
     private final IDrawable background;
     private final IDrawable icon;
-    private final String localizedName;
 
     public SolidCoolantCategory(IGuiHelper guiHelper) {
         this.background = guiHelper.drawableBuilder(GUI_BACK, 0, 0, 160, 24).addPadding(1, 0, 0, 0).build();
         this.icon = guiHelper.createDrawableIngredient(new ItemStack(Blcks.DRY_ICE));
-        this.localizedName = I18n.format("gui.powah.jei.category.solid.coolant");
     }
 
     @Override
@@ -47,8 +46,8 @@ public class SolidCoolantCategory implements IRecipeCategory<SolidCoolantCategor
     }
 
     @Override
-    public String getTitle() {
-        return this.localizedName;
+    public Component getTitle() {
+        return new TranslatableComponent("gui.powah.jei.category.solid.coolant");
     }
 
     @Override
@@ -75,10 +74,10 @@ public class SolidCoolantCategory implements IRecipeCategory<SolidCoolantCategor
     }
 
     @Override
-    public void draw(Recipe recipe, MatrixStack matrix, double mouseX, double mouseY) {
+    public void draw(Recipe recipe, PoseStack matrix, double mouseX, double mouseY) {
         Minecraft minecraft = Minecraft.getInstance();
-        minecraft.fontRenderer.drawString(matrix, I18n.format("info.lollipop.amount") + ": " + I18n.format("info.lollipop.mb", recipe.amount), 30.0F, 3.0F, 0x444444);
-        minecraft.fontRenderer.drawString(matrix, I18n.format("info.lollipop.temperature") + ": " + I18n.format("info.lollipop.temperature.c", "" + TextFormatting.DARK_AQUA + recipe.coldness), 30.0F, 15.0F, 0x444444);
+        minecraft.font.draw(matrix, I18n.get("info.lollipop.amount") + ": " + I18n.get("info.lollipop.mb", recipe.amount), 30.0F, 3.0F, 0x444444);
+        minecraft.font.draw(matrix, I18n.get("info.lollipop.temperature") + ": " + I18n.get("info.lollipop.temperature.c", "" + ChatFormatting.DARK_AQUA + recipe.coldness), 30.0F, 15.0F, 0x444444);
     }
 
     public static class Maker {

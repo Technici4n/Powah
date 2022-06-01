@@ -1,11 +1,11 @@
 package owmii.lib.item;
 
 import com.google.common.collect.Lists;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.NonNullList;
 import org.apache.commons.lang3.Validate;
 
 import javax.annotation.Nullable;
+import net.minecraft.core.NonNullList;
+import net.minecraft.world.item.ItemStack;
 import java.util.Arrays;
 import java.util.List;
 

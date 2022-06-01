@@ -8,9 +8,10 @@ import mezz.jei.api.registration.IRecipeCatalystRegistration;
 import mezz.jei.api.registration.IRecipeCategoryRegistration;
 import mezz.jei.api.registration.IRecipeRegistration;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.resources.I18n;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.client.resources.language.I18n;
+import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.item.ItemStack;
 import owmii.lib.util.Recipe;
 import owmii.powah.Powah;
 import owmii.powah.block.Blcks;
@@ -50,18 +51,18 @@ public class PowahJEIPlugin implements IModPlugin {
 
     @Override
     public void registerRecipes(IRecipeRegistration registration) {
-        registration.addRecipes(Recipe.getAll(Minecraft.getInstance().world, Recipes.ENERGIZING), EnergizingCategory.ID);
+        registration.addRecipes(Recipe.getAll(Minecraft.getInstance().level, Recipes.ENERGIZING), EnergizingCategory.ID);
         registration.addRecipes(MagmatorCategory.Maker.getBucketRecipes(registration.getIngredientManager()), MagmatorCategory.ID);
         registration.addRecipes(CoolantCategory.Maker.getBucketRecipes(registration.getIngredientManager()), CoolantCategory.ID);
         registration.addRecipes(SolidCoolantCategory.Maker.getBucketRecipes(registration.getIngredientManager()), SolidCoolantCategory.ID);
         registration.addRecipes(HeatSourceCategory.Maker.getBucketRecipes(registration.getIngredientManager()), HeatSourceCategory.ID);
 
         if (Configs.GENERAL.player_aerial_pearl.get())
-            registration.addIngredientInfo(new ItemStack(Itms.PLAYER_AERIAL_PEARL), VanillaTypes.ITEM, I18n.format("jei.powah.player_aerial_pearl"));
+            registration.addIngredientInfo(new ItemStack(Itms.PLAYER_AERIAL_PEARL), VanillaTypes.ITEM, new TranslatableComponent("jei.powah.player_aerial_pearl"));
         if (Configs.GENERAL.binding_card_dim.get())
-            registration.addIngredientInfo(new ItemStack(Itms.BINDING_CARD_DIM), VanillaTypes.ITEM, I18n.format("jei.powah.binding_card_dim"));
+            registration.addIngredientInfo(new ItemStack(Itms.BINDING_CARD_DIM), VanillaTypes.ITEM, new TranslatableComponent("jei.powah.binding_card_dim"));
         if (Configs.GENERAL.lens_of_ender.get())
-            registration.addIngredientInfo(new ItemStack(Itms.LENS_OF_ENDER), VanillaTypes.ITEM, I18n.format("jei.powah.lens_of_ender"));
+            registration.addIngredientInfo(new ItemStack(Itms.LENS_OF_ENDER), VanillaTypes.ITEM, new TranslatableComponent("jei.powah.lens_of_ender"));
     }
 
 

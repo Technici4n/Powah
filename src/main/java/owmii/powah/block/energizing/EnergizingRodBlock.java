@@ -1,35 +1,34 @@
 package owmii.powah.block.energizing;
 
-import com.mojang.blaze3d.matrix.MatrixStack;
 import com.mojang.blaze3d.systems.RenderSystem;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.IWaterLoggable;
+import com.mojang.blaze3d.vertex.PoseStack;
+import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.FontRenderer;
-import net.minecraft.client.resources.I18n;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemGroup;
-import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.nbt.NBTUtil;
-import net.minecraft.state.properties.BlockStateProperties;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.Direction;
-import net.minecraft.util.Hand;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.BlockRayTraceResult;
-import net.minecraft.util.math.shapes.IBooleanFunction;
-import net.minecraft.util.math.vector.Vector3d;
-import net.minecraft.util.text.TextFormatting;
-import net.minecraft.util.text.TranslationTextComponent;
-import net.minecraft.world.IBlockReader;
-import net.minecraft.world.World;
+import net.minecraft.client.gui.Font;
+import net.minecraft.client.resources.language.I18n;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.NbtUtils;
+import net.minecraft.nbt.Tag;
+import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.CreativeModeTab;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.SimpleWaterloggedBlock;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.state.properties.BlockStateProperties;
+import net.minecraft.world.phys.BlockHitResult;
+import net.minecraft.world.phys.Vec3;
+import net.minecraft.world.phys.shapes.BooleanOp;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
-import net.minecraftforge.common.util.Constants;
-import net.minecraftforge.fml.client.gui.GuiUtils;
+import net.minecraftforge.client.gui.GuiUtils;
 import owmii.lib.Lollipop;
 import owmii.lib.block.AbstractEnergyBlock;
 import owmii.lib.client.handler.IHud;
@@ -48,23 +47,23 @@ import javax.annotation.Nullable;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import static net.minecraft.util.math.shapes.VoxelShapes.combineAndSimplify;
+import static net.minecraft.world.phys.shapes.Shapes.join;
 
-public class EnergizingRodBlock extends AbstractEnergyBlock<Tier, EnergizingConfig, EnergizingRodBlock> implements IWaterLoggable, IWrenchable, IHud {
+public class EnergizingRodBlock extends AbstractEnergyBlock<Tier, EnergizingConfig, EnergizingRodBlock> implements SimpleWaterloggedBlock, IWrenchable, IHud {
     public EnergizingRodBlock(Properties properties, Tier variant) {
         super(properties, variant);
-        setStateProps(state -> state.with(BlockStateProperties.FACING, Direction.DOWN));
-        this.shapes.put(Direction.UP, combineAndSimplify(makeCuboidShape(7.0D, 7.0D, 7.0D, 9.0D, 9.0D, 9.0D), combineAndSimplify(makeCuboidShape(7.0D, 13.0D, 7.0D, 9.0D, 16.0D, 9.0D), makeCuboidShape(7.25D, 9.0D, 7.25D, 8.75D, 13.0D, 8.75D), IBooleanFunction.OR), IBooleanFunction.OR));
-        this.shapes.put(Direction.DOWN, combineAndSimplify(makeCuboidShape(7.0D, 7.0D, 7.0D, 9.0D, 9.0D, 9.0D), combineAndSimplify(makeCuboidShape(7.0D, 0.0D, 7.0D, 9.0D, 3.0D, 9.0D), makeCuboidShape(7.25D, 3.0D, 7.25D, 8.75D, 7.0D, 8.75D), IBooleanFunction.OR), IBooleanFunction.OR));
-        this.shapes.put(Direction.NORTH, combineAndSimplify(makeCuboidShape(7.0D, 7.0D, 7.0D, 9.0D, 9.0D, 9.0D), combineAndSimplify(makeCuboidShape(7.0D, 7.0D, 0.0D, 9.0D, 9.0D, 3.0D), makeCuboidShape(7.25D, 7.25D, 3.0D, 8.75D, 8.75D, 7.0D), IBooleanFunction.OR), IBooleanFunction.OR));
-        this.shapes.put(Direction.SOUTH, combineAndSimplify(makeCuboidShape(7.0D, 7.0D, 7.0D, 9.0D, 9.0D, 9.0D), combineAndSimplify(makeCuboidShape(7.0D, 7.0D, 13.0D, 9.0D, 9.0D, 16.0D), makeCuboidShape(7.25D, 7.25D, 13.0D, 8.75D, 8.75D, 9.0D), IBooleanFunction.OR), IBooleanFunction.OR));
-        this.shapes.put(Direction.WEST, combineAndSimplify(makeCuboidShape(7.0D, 7.0D, 7.0D, 9.0D, 9.0D, 9.0D), combineAndSimplify(makeCuboidShape(0.0D, 7.0D, 7.0D, 3.0D, 9.0D, 9.0D), makeCuboidShape(3.0D, 7.25D, 7.25D, 7.0D, 8.75D, 8.75D), IBooleanFunction.OR), IBooleanFunction.OR));
-        this.shapes.put(Direction.EAST, combineAndSimplify(makeCuboidShape(7.0D, 7.0D, 7.0D, 9.0D, 9.0D, 9.0D), combineAndSimplify(makeCuboidShape(13.0D, 7.0D, 7.0D, 16.0D, 9.0D, 9.0D), makeCuboidShape(13.0D, 7.25D, 7.25D, 9.0D, 8.75D, 8.75D), IBooleanFunction.OR), IBooleanFunction.OR));
+        setStateProps(state -> state.setValue(BlockStateProperties.FACING, Direction.DOWN));
+        this.shapes.put(Direction.UP, join(box(7.0D, 7.0D, 7.0D, 9.0D, 9.0D, 9.0D), join(box(7.0D, 13.0D, 7.0D, 9.0D, 16.0D, 9.0D), box(7.25D, 9.0D, 7.25D, 8.75D, 13.0D, 8.75D), BooleanOp.OR), BooleanOp.OR));
+        this.shapes.put(Direction.DOWN, join(box(7.0D, 7.0D, 7.0D, 9.0D, 9.0D, 9.0D), join(box(7.0D, 0.0D, 7.0D, 9.0D, 3.0D, 9.0D), box(7.25D, 3.0D, 7.25D, 8.75D, 7.0D, 8.75D), BooleanOp.OR), BooleanOp.OR));
+        this.shapes.put(Direction.NORTH, join(box(7.0D, 7.0D, 7.0D, 9.0D, 9.0D, 9.0D), join(box(7.0D, 7.0D, 0.0D, 9.0D, 9.0D, 3.0D), box(7.25D, 7.25D, 3.0D, 8.75D, 8.75D, 7.0D), BooleanOp.OR), BooleanOp.OR));
+        this.shapes.put(Direction.SOUTH, join(box(7.0D, 7.0D, 7.0D, 9.0D, 9.0D, 9.0D), join(box(7.0D, 7.0D, 13.0D, 9.0D, 9.0D, 16.0D), box(7.25D, 7.25D, 13.0D, 8.75D, 8.75D, 9.0D), BooleanOp.OR), BooleanOp.OR));
+        this.shapes.put(Direction.WEST, join(box(7.0D, 7.0D, 7.0D, 9.0D, 9.0D, 9.0D), join(box(0.0D, 7.0D, 7.0D, 3.0D, 9.0D, 9.0D), box(3.0D, 7.25D, 7.25D, 7.0D, 8.75D, 8.75D), BooleanOp.OR), BooleanOp.OR));
+        this.shapes.put(Direction.EAST, join(box(7.0D, 7.0D, 7.0D, 9.0D, 9.0D, 9.0D), join(box(13.0D, 7.0D, 7.0D, 16.0D, 9.0D, 9.0D), box(13.0D, 7.25D, 7.25D, 9.0D, 8.75D, 8.75D), BooleanOp.OR), BooleanOp.OR));
     }
 
     @Override
-    public EnergyBlockItem getBlockItem(Item.Properties properties, @Nullable ItemGroup group) {
-        return super.getBlockItem(properties.maxStackSize(1), group);
+    public EnergyBlockItem getBlockItem(Item.Properties properties, @Nullable CreativeModeTab group) {
+        return super.getBlockItem(properties.stacksTo(1), group);
     }
 
     @Override
@@ -74,8 +73,8 @@ public class EnergizingRodBlock extends AbstractEnergyBlock<Tier, EnergizingConf
 
     @Nullable
     @Override
-    public TileEntity createTileEntity(BlockState state, IBlockReader world) {
-        return new EnergizingRodTile(this.variant);
+    public BlockEntity newBlockEntity(BlockPos pos, BlockState state) {
+        return new EnergizingRodTile(pos, state, this.variant);
     }
 
     @Override
@@ -84,20 +83,20 @@ public class EnergizingRodBlock extends AbstractEnergyBlock<Tier, EnergizingConf
     }
 
     @Override
-    public void onBlockAdded(BlockState state, World worldIn, BlockPos pos, BlockState oldState, boolean isMoving) {
-        super.onBlockAdded(state, worldIn, pos, oldState, isMoving);
-        TileEntity tileEntity = worldIn.getTileEntity(pos);
+    public void onPlace(BlockState state, Level worldIn, BlockPos pos, BlockState oldState, boolean isMoving) {
+        super.onPlace(state, worldIn, pos, oldState, isMoving);
+        BlockEntity tileEntity = worldIn.getBlockEntity(pos);
         if (tileEntity instanceof EnergizingRodTile) {
             setOrbPos(worldIn, pos, (EnergizingRodTile) tileEntity);
         }
     }
 
-    public void setOrbPos(World worldIn, BlockPos pos, EnergizingRodTile tile) {
+    public void setOrbPos(Level worldIn, BlockPos pos, EnergizingRodTile tile) {
         int range = Configs.ENERGIZING.range.get();
-        List<BlockPos> list = BlockPos.getAllInBox(pos.add(-range, -range, -range), pos.add(range, range, range)).map(BlockPos::toImmutable).collect(Collectors.toList());
+        List<BlockPos> list = BlockPos.betweenClosedStream(pos.offset(-range, -range, -range), pos.offset(range, range, range)).map(BlockPos::immutable).collect(Collectors.toList());
         for (BlockPos pos1 : list) {
             if (pos1.equals(BlockPos.ZERO)) continue;
-            TileEntity tileEntity1 = worldIn.getTileEntity(pos1);
+            BlockEntity tileEntity1 = worldIn.getBlockEntity(pos1);
             if (tileEntity1 instanceof EnergizingOrbTile) {
                 tile.setOrbPos(pos1);
                 break;
@@ -112,32 +111,32 @@ public class EnergizingRodBlock extends AbstractEnergyBlock<Tier, EnergizingConf
 
 
     @Override
-    public boolean onWrench(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, Direction side, WrenchMode mode, Vector3d hit) {
+    public boolean onWrench(BlockState state, Level world, BlockPos pos, Player player, InteractionHand hand, Direction side, WrenchMode mode, Vec3 hit) {
         if (mode.link()) {
-            ItemStack stack = player.getHeldItem(hand);
+            ItemStack stack = player.getItemInHand(hand);
             if (stack.getItem() instanceof WrenchItem) {
                 WrenchItem wrench = (WrenchItem) stack.getItem();
-                TileEntity tileEntity = world.getTileEntity(pos);
+                BlockEntity tileEntity = world.getBlockEntity(pos);
                 if (tileEntity instanceof EnergizingRodTile) {
                     EnergizingRodTile rod = (EnergizingRodTile) tileEntity;
-                    CompoundNBT nbt = wrench.getWrenchNBT(stack);
-                    if (nbt.contains("OrbPos", Constants.NBT.TAG_COMPOUND)) {
-                        BlockPos orbPos = NBTUtil.readBlockPos(nbt.getCompound("OrbPos"));
-                        TileEntity tileEntity1 = world.getTileEntity(orbPos);
+                    CompoundTag nbt = wrench.getWrenchNBT(stack);
+                    if (nbt.contains("OrbPos", Tag.TAG_COMPOUND)) {
+                        BlockPos orbPos = NbtUtils.readBlockPos(nbt.getCompound("OrbPos"));
+                        BlockEntity tileEntity1 = world.getBlockEntity(orbPos);
                         if (tileEntity1 instanceof EnergizingOrbTile) {
                             EnergizingOrbTile orb = (EnergizingOrbTile) tileEntity1;
                             V3d v3d = V3d.from(orbPos);
                             if ((int) v3d.distance(pos) <= Configs.ENERGIZING.range.get()) {
                                 rod.setOrbPos(orbPos);
-                                player.sendStatusMessage(new TranslationTextComponent("chat.powah.wrench.link.done").mergeStyle(TextFormatting.GOLD), true);
+                                player.displayClientMessage(new TranslatableComponent("chat.powah.wrench.link.done").withStyle(ChatFormatting.GOLD), true);
                             } else {
-                                player.sendStatusMessage(new TranslationTextComponent("chat.powah.wrench.link.fail").mergeStyle(TextFormatting.RED), true);
+                                player.displayClientMessage(new TranslatableComponent("chat.powah.wrench.link.fail").withStyle(ChatFormatting.RED), true);
                             }
                         }
                         nbt.remove("OrbPos");
                     } else {
-                        nbt.put("RodPos", NBTUtil.writeBlockPos(pos));
-                        player.sendStatusMessage(new TranslationTextComponent("chat.powah.wrench.link.start").mergeStyle(TextFormatting.YELLOW), true);
+                        nbt.put("RodPos", NbtUtils.writeBlockPos(pos));
+                        player.displayClientMessage(new TranslatableComponent("chat.powah.wrench.link.start").withStyle(ChatFormatting.YELLOW), true);
                     }
                     return true;
                 }
@@ -148,22 +147,22 @@ public class EnergizingRodBlock extends AbstractEnergyBlock<Tier, EnergizingConf
 
     @Override
     @OnlyIn(Dist.CLIENT)
-    public boolean renderHud(MatrixStack matrix, BlockState state, World world, BlockPos pos, PlayerEntity player, BlockRayTraceResult result, @Nullable TileEntity te) {
+    public boolean renderHud(PoseStack matrix, BlockState state, Level world, BlockPos pos, Player player, BlockHitResult result, @Nullable BlockEntity te) {
         if (te instanceof EnergizingRodTile) {
             EnergizingRodTile rod = (EnergizingRodTile) te;
-            RenderSystem.pushMatrix();
+            RenderSystem.getModelViewStack().pushPose();
             RenderSystem.enableBlend();
             Minecraft mc = Minecraft.getInstance();
-            FontRenderer font = mc.fontRenderer;
-            int x = mc.getMainWindow().getScaledWidth() / 2;
-            int y = mc.getMainWindow().getScaledHeight();
-            String s = TextFormatting.GRAY + I18n.format("info.lollipop.stored") + ": " + I18n.format("info.lollipop.fe.stored", Util.addCommas(rod.getEnergy().getEnergyStored()), Util.numFormat(rod.getEnergy().getCapacity()));
-            mc.getTextureManager().bindTexture(new ResourceLocation(Lollipop.MOD_ID, "textures/gui/ov_energy.png"));
-            GuiUtils.drawTexturedModalRect(x - 37 - 1, y - 80, 0, 0, 74, 9, 0);
+            Font font = mc.font;
+            int x = mc.getWindow().getGuiScaledWidth() / 2;
+            int y = mc.getWindow().getGuiScaledHeight();
+            String s = ChatFormatting.GRAY + I18n.get("info.lollipop.stored") + ": " + I18n.get("info.lollipop.fe.stored", Util.addCommas(rod.getEnergy().getEnergyStored()), Util.numFormat(rod.getEnergy().getCapacity()));
+            RenderSystem.setShaderTexture(0, new ResourceLocation(Lollipop.MOD_ID, "textures/gui/ov_energy.png"));
+            GuiUtils.drawTexturedModalRect(matrix, x - 37 - 1, y - 80, 0, 0, 74, 9, 0);
             Draw.gaugeH(x - 37, y - 79, 72, 16, 0, 9, ((EnergizingRodTile) te).getEnergy());
-            font.drawStringWithShadow(matrix, s, x - (font.getStringWidth(s) / 2.0f), y - 67, 0xffffff);
+            font.drawShadow(matrix, s, x - (font.width(s) / 2.0f), y - 67, 0xffffff);
             RenderSystem.disableBlend();
-            RenderSystem.popMatrix();
+            RenderSystem.getModelViewStack().popPose();
         }
         return true;
     }

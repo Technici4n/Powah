@@ -1,10 +1,10 @@
 package owmii.lib.network.packets;
 
-import net.minecraft.entity.player.ServerPlayerEntity;
-import net.minecraft.network.PacketBuffer;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.math.BlockPos;
-import net.minecraftforge.fml.network.NetworkEvent;
+import net.minecraft.core.BlockPos;
+import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraftforge.network.NetworkEvent;
 import owmii.lib.block.AbstractTileEntity;
 import owmii.lib.logistics.IRedstoneInteract;
 import owmii.lib.network.IPacket;
@@ -23,21 +23,21 @@ public class NextRedstoneModePacket implements IPacket<NextRedstoneModePacket> {
     }
 
     @Override
-    public void encode(NextRedstoneModePacket msg, PacketBuffer buffer) {
+    public void encode(NextRedstoneModePacket msg, FriendlyByteBuf buffer) {
         buffer.writeBlockPos(msg.pos);
     }
 
     @Override
-    public NextRedstoneModePacket decode(PacketBuffer buffer) {
+    public NextRedstoneModePacket decode(FriendlyByteBuf buffer) {
         return new NextRedstoneModePacket(buffer.readBlockPos());
     }
 
     @Override
     public void handle(NextRedstoneModePacket msg, Supplier<NetworkEvent.Context> ctx) {
         ctx.get().enqueueWork(() -> {
-            ServerPlayerEntity player = ctx.get().getSender();
+            ServerPlayer player = ctx.get().getSender();
             if (player != null) {
-                TileEntity tileEntity = player.world.getTileEntity(msg.pos);
+                BlockEntity tileEntity = player.level.getBlockEntity(msg.pos);
                 if (tileEntity instanceof AbstractTileEntity) {
                     if (tileEntity instanceof IRedstoneInteract) {
                         ((IRedstoneInteract) tileEntity).nextRedstoneMode();

@@ -1,6 +1,6 @@
 package owmii.lib.util.math;
 
-import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.nbt.CompoundTag;
 
 public class RangedFloat {
     private float value;
@@ -24,12 +24,12 @@ public class RangedFloat {
         }
     }
 
-    public RangedFloat read(CompoundNBT nbt, String key) {
+    public RangedFloat read(CompoundTag nbt, String key) {
         this.value = nbt.getFloat(key);
         return this;
     }
 
-    public CompoundNBT writ(CompoundNBT nbt, String key, float value) {
+    public CompoundTag writ(CompoundTag nbt, String key, float value) {
         nbt.putFloat(key, value);
         return nbt;
     }

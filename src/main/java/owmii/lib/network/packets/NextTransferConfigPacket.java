@@ -1,11 +1,11 @@
 package owmii.lib.network.packets;
 
-import net.minecraft.entity.player.ServerPlayerEntity;
-import net.minecraft.network.PacketBuffer;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.Direction;
-import net.minecraft.util.math.BlockPos;
-import net.minecraftforge.fml.network.NetworkEvent;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
+import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraftforge.network.NetworkEvent;
 import owmii.lib.Lollipop;
 import owmii.lib.block.AbstractTileEntity;
 import owmii.lib.logistics.inventory.ISidedHopper;
@@ -31,26 +31,26 @@ public class NextTransferConfigPacket implements IPacket<NextTransferConfigPacke
     }
 
     @Override
-    public void encode(NextTransferConfigPacket msg, PacketBuffer buffer) {
+    public void encode(NextTransferConfigPacket msg, FriendlyByteBuf buffer) {
         buffer.writeInt(msg.i);
         buffer.writeBlockPos(msg.pos);
     }
 
     @Override
-    public NextTransferConfigPacket decode(PacketBuffer buffer) {
+    public NextTransferConfigPacket decode(FriendlyByteBuf buffer) {
         return new NextTransferConfigPacket(buffer.readInt(), buffer.readBlockPos());
     }
 
     @Override
     public void handle(NextTransferConfigPacket msg, Supplier<NetworkEvent.Context> ctx) {
         ctx.get().enqueueWork(() -> {
-            ServerPlayerEntity player = ctx.get().getSender();
+            ServerPlayer player = ctx.get().getSender();
             if (player != null) {
-                TileEntity te = player.world.getTileEntity(msg.pos);
+                BlockEntity te = player.level.getBlockEntity(msg.pos);
                 if (te instanceof ISidedHopper && te instanceof AbstractTileEntity) {
                     ISidedHopper handler = ((ISidedHopper) te);
                     if (msg.i > 5) handler.getHopperConfig().nextTypeAll();
-                    else handler.getHopperConfig().nextType(Direction.byIndex(msg.i));
+                    else handler.getHopperConfig().nextType(Direction.from3DDataValue(msg.i));
                     ((AbstractTileEntity) te).sync();
                 }
             }

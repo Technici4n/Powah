@@ -1,35 +1,41 @@
 package owmii.lib.block;
 
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.IWaterLoggable;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.player.PlayerInventory;
-import net.minecraft.entity.player.ServerPlayerEntity;
-import net.minecraft.fluid.FluidState;
-import net.minecraft.fluid.Fluids;
-import net.minecraft.inventory.container.Container;
-import net.minecraft.inventory.container.INamedContainerProvider;
-import net.minecraft.item.BlockItemUseContext;
-import net.minecraft.item.ItemStack;
-import net.minecraft.network.PacketBuffer;
-import net.minecraft.state.StateContainer;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
+import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.stats.Stats;
-import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.*;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.BlockRayTraceResult;
-import net.minecraft.util.math.RayTraceResult;
-import net.minecraft.util.math.shapes.ISelectionContext;
-import net.minecraft.util.math.shapes.VoxelShape;
-import net.minecraft.util.math.shapes.VoxelShapes;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.TranslationTextComponent;
-import net.minecraft.world.IBlockReader;
-import net.minecraft.world.IWorld;
-import net.minecraft.world.World;
-import net.minecraftforge.fml.network.NetworkHooks;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.InteractionResult;
+import net.minecraft.world.MenuProvider;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.player.Inventory;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.inventory.AbstractContainerMenu;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.context.BlockPlaceContext;
+import net.minecraft.world.level.BlockGetter;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.LevelAccessor;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.EntityBlock;
+import net.minecraft.world.level.block.Mirror;
+import net.minecraft.world.level.block.Rotation;
+import net.minecraft.world.level.block.SimpleWaterloggedBlock;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.state.StateDefinition;
+import net.minecraft.world.level.material.FluidState;
+import net.minecraft.world.level.material.Fluids;
+import net.minecraft.world.phys.BlockHitResult;
+import net.minecraft.world.phys.HitResult;
+import net.minecraft.world.phys.shapes.CollisionContext;
+import net.minecraft.world.phys.shapes.Shapes;
+import net.minecraft.world.phys.shapes.VoxelShape;
+import net.minecraftforge.network.NetworkHooks;
 import owmii.lib.logistics.inventory.AbstractContainer;
 import owmii.lib.registry.IRegistryObject;
 import owmii.lib.registry.IVariant;
@@ -41,10 +47,10 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import static net.minecraft.state.properties.BlockStateProperties.*;
+import static net.minecraft.world.level.block.state.properties.BlockStateProperties.*;
 
-public class AbstractBlock<V extends IVariant, B extends AbstractBlock<V, B>> extends Block implements IVariantEntry<V, B>, IBlock<V, B>, IRegistryObject<Block> {
-    public static final VoxelShape SEMI_FULL_SHAPE = makeCuboidShape(0.01D, 0.01D, 0.01D, 15.99D, 15.99D, 15.99D);
+public class AbstractBlock<V extends IVariant, B extends AbstractBlock<V, B>> extends Block implements IVariantEntry<V, B>, IBlock<V, B>, IRegistryObject<Block>, EntityBlock {
+    public static final VoxelShape SEMI_FULL_SHAPE = box(0.01D, 0.01D, 0.01D, 15.99D, 15.99D, 15.99D);
     protected final Map<Direction, VoxelShape> shapes = new HashMap<>();
     protected final V variant;
 
@@ -58,25 +64,25 @@ public class AbstractBlock<V extends IVariant, B extends AbstractBlock<V, B>> ex
     public AbstractBlock(Properties properties, V variant) {
         super(properties);
         this.variant = variant;
-        this.shapes.put(Direction.UP, VoxelShapes.fullCube());
-        this.shapes.put(Direction.DOWN, VoxelShapes.fullCube());
-        this.shapes.put(Direction.NORTH, VoxelShapes.fullCube());
-        this.shapes.put(Direction.SOUTH, VoxelShapes.fullCube());
-        this.shapes.put(Direction.EAST, VoxelShapes.fullCube());
-        this.shapes.put(Direction.WEST, VoxelShapes.fullCube());
+        this.shapes.put(Direction.UP, Shapes.block());
+        this.shapes.put(Direction.DOWN, Shapes.block());
+        this.shapes.put(Direction.NORTH, Shapes.block());
+        this.shapes.put(Direction.SOUTH, Shapes.block());
+        this.shapes.put(Direction.EAST, Shapes.block());
+        this.shapes.put(Direction.WEST, Shapes.block());
     }
 
     @Override
-    public VoxelShape getShape(BlockState state, IBlockReader worldIn, BlockPos pos, ISelectionContext context) {
+    public VoxelShape getShape(BlockState state, BlockGetter worldIn, BlockPos pos, CollisionContext context) {
         if (!this.shapes.isEmpty() && !getFacing().equals(Facing.NONE)) {
-            return this.shapes.get(state.get(FACING));
+            return this.shapes.get(state.getValue(FACING));
         } else {
             return super.getShape(state, worldIn, pos, context);
         }
     }
 
-    public ITextComponent getDisplayName(ItemStack stack) {
-        return new TranslationTextComponent(asItem().getTranslationKey(stack));
+    public Component getDisplayName(ItemStack stack) {
+        return new TranslatableComponent(asItem().getDescriptionId(stack));
     }
 
     @Override
@@ -104,111 +110,111 @@ public class AbstractBlock<V extends IVariant, B extends AbstractBlock<V, B>> ex
     }
 
     @Override
-    public void onBlockAdded(BlockState state, World world, BlockPos pos, BlockState oldState, boolean isMoving) {
-        TileEntity tile = world.getTileEntity(pos);
+    public void onPlace(BlockState state, Level world, BlockPos pos, BlockState oldState, boolean isMoving) {
+        BlockEntity tile = world.getBlockEntity(pos);
         if (tile instanceof IBlockEntity) {
             ((IBlockEntity) tile).onAdded(world, state, oldState, isMoving);
         }
     }
 
     @Override
-    public void onReplaced(BlockState state, World world, BlockPos pos, BlockState newState, boolean isMoving) {
-        TileEntity tile = world.getTileEntity(pos);
+    public void onRemove(BlockState state, Level world, BlockPos pos, BlockState newState, boolean isMoving) {
+        BlockEntity tile = world.getBlockEntity(pos);
         if (tile instanceof IBlockEntity) {
             ((IBlockEntity) tile).onRemoved(world, state, newState, isMoving);
         }
-        super.onReplaced(state, world, pos, newState, isMoving);
+        super.onRemove(state, world, pos, newState, isMoving);
     }
 
     @Override
-    public void onBlockPlacedBy(World world, BlockPos pos, BlockState state, @Nullable LivingEntity placer, ItemStack stack) {
-        TileEntity tile = world.getTileEntity(pos);
+    public void setPlacedBy(Level world, BlockPos pos, BlockState state, @Nullable LivingEntity placer, ItemStack stack) {
+        BlockEntity tile = world.getBlockEntity(pos);
         if (tile instanceof IBlockEntity) {
             ((IBlockEntity) tile).onPlaced(world, state, placer, stack);
         }
     }
 
     @Override
-    public void harvestBlock(World world, PlayerEntity player, BlockPos pos, BlockState state, @Nullable TileEntity te, ItemStack stack) {
+    public void playerDestroy(Level world, Player player, BlockPos pos, BlockState state, @Nullable BlockEntity te, ItemStack stack) {
         if (te instanceof AbstractTileEntity) {
             AbstractTileEntity tile = (AbstractTileEntity) te;
             ItemStack stack1 = tile.storeToStack(new ItemStack(this));
-            spawnAsEntity(world, pos, stack1);
-            player.addStat(Stats.BLOCK_MINED.get(this));
-            player.addExhaustion(0.005F);
+            popResource(world, pos, stack1);
+            player.awardStat(Stats.BLOCK_MINED.get(this));
+            player.causeFoodExhaustion(0.005F);
         } else {
-            super.harvestBlock(world, player, pos, state, te, stack);
+            super.playerDestroy(world, player, pos, state, te, stack);
         }
     }
 
     @Override
-    public BlockState updatePostPlacement(BlockState state, Direction facing, BlockState facingState, IWorld world, BlockPos currentPos, BlockPos facingPos) {
-        if (this instanceof IWaterLoggable && state.get(WATERLOGGED))
-            world.getPendingFluidTicks().scheduleTick(currentPos, Fluids.WATER, Fluids.WATER.getTickRate(world));
-        if (!state.isValidPosition(world, currentPos)) {
-            TileEntity tileEntity = world.getTileEntity(currentPos);
-            if (!world.isRemote() && tileEntity instanceof AbstractTileEntity) {
+    public BlockState updateShape(BlockState state, Direction facing, BlockState facingState, LevelAccessor world, BlockPos currentPos, BlockPos facingPos) {
+        if (this instanceof SimpleWaterloggedBlock && state.getValue(WATERLOGGED))
+            world.scheduleTick(currentPos, Fluids.WATER, Fluids.WATER.getTickDelay(world));
+        if (!state.canSurvive(world, currentPos)) {
+            BlockEntity tileEntity = world.getBlockEntity(currentPos);
+            if (!world.isClientSide() && tileEntity instanceof AbstractTileEntity) {
                 AbstractTileEntity tile = (AbstractTileEntity) tileEntity;
                 ItemStack stack = tile.storeToStack(new ItemStack(this));
-                spawnAsEntity((World) world, currentPos, stack);
+                popResource((Level) world, currentPos, stack);
                 world.destroyBlock(currentPos, false);
             }
         }
-        return super.updatePostPlacement(state, facing, facingState, world, currentPos, facingPos);
+        return super.updateShape(state, facing, facingState, world, currentPos, facingPos);
     }
 
     @Override
-    public ItemStack getPickBlock(BlockState state, RayTraceResult target, IBlockReader world, BlockPos pos, PlayerEntity player) {
-        TileEntity te = world.getTileEntity(pos);
+    public ItemStack getCloneItemStack(BlockState state, HitResult target, BlockGetter world, BlockPos pos, Player player) {
+        BlockEntity te = world.getBlockEntity(pos);
         if (te instanceof AbstractTileEntity) {
             AbstractTileEntity tile = (AbstractTileEntity) te;
             ItemStack stack = tile.storeToStack(new ItemStack(this));
             return tile.storeToStack(new ItemStack(this));
         }
-        return super.getPickBlock(state, target, world, pos, player);
+        return super.getCloneItemStack(state, target, world, pos, player);
     }
 
     @Override
-    public ActionResultType onBlockActivated(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockRayTraceResult result) {
-        TileEntity tile = world.getTileEntity(pos);
+    public InteractionResult use(BlockState state, Level world, BlockPos pos, Player player, InteractionHand hand, BlockHitResult result) {
+        BlockEntity tile = world.getBlockEntity(pos);
         if (tile instanceof AbstractTileEntity) {
-            INamedContainerProvider provider = new INamedContainerProvider() {
+            MenuProvider provider = new MenuProvider() {
                 @Override
-                public ITextComponent getDisplayName() {
-                    return new ItemStack(AbstractBlock.this).getDisplayName();
+                public Component getDisplayName() {
+                    return new ItemStack(AbstractBlock.this).getHoverName();
                 }
 
                 @Nullable
                 @Override
-                public Container createMenu(int i, PlayerInventory playerInventory, PlayerEntity playerEntity) {
+                public AbstractContainerMenu createMenu(int i, Inventory playerInventory, Player playerEntity) {
                     return getContainer(i, playerInventory, (AbstractTileEntity) tile, result);
                 }
             };
-            Container container = provider.createMenu(0, player.inventory, player);
+            AbstractContainerMenu container = provider.createMenu(0, player.getInventory(), player);
             if (container != null) {
-                if (player instanceof ServerPlayerEntity) {
-                    NetworkHooks.openGui((ServerPlayerEntity) player, provider, buffer -> {
+                if (player instanceof ServerPlayer) {
+                    NetworkHooks.openGui((ServerPlayer) player, provider, buffer -> {
                         buffer.writeBlockPos(pos);
                         additionalGuiData(buffer, state, world, pos, player, hand, result);
                     });
                 }
-                return ActionResultType.SUCCESS;
+                return InteractionResult.SUCCESS;
             }
         }
-        return super.onBlockActivated(state, world, pos, player, hand, result);
+        return super.use(state, world, pos, player, hand, result);
     }
 
     @Nullable
-    public <T extends AbstractTileEntity> AbstractContainer getContainer(int id, PlayerInventory inventory, AbstractTileEntity te, BlockRayTraceResult result) {
+    public <T extends AbstractTileEntity> AbstractContainer getContainer(int id, Inventory inventory, AbstractTileEntity te, BlockHitResult result) {
         return null;
     }
 
-    protected void additionalGuiData(PacketBuffer buffer, BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockRayTraceResult result) {
+    protected void additionalGuiData(FriendlyByteBuf buffer, BlockState state, Level world, BlockPos pos, Player player, InteractionHand hand, BlockHitResult result) {
     }
 
     @Override
-    public boolean isTransparent(BlockState state) {
-        return !state.isSolid();
+    public boolean useShapeForLightOcclusion(BlockState state) {
+        return !state.canOcclude();
     }
 
     protected void setDefaultState() {
@@ -216,17 +222,17 @@ public class AbstractBlock<V extends IVariant, B extends AbstractBlock<V, B>> ex
     }
 
     protected void setStateProps(BaseState baseState) {
-        BlockState state = this.stateContainer.getBaseState();
-        if (this instanceof IWaterLoggable) {
-            state = state.with(WATERLOGGED, false);
+        BlockState state = this.stateDefinition.any();
+        if (this instanceof SimpleWaterloggedBlock) {
+            state = state.setValue(WATERLOGGED, false);
         }
         if (!getFacing().equals(Facing.NONE)) {
-            state = state.with(FACING, Direction.NORTH);
+            state = state.setValue(FACING, Direction.NORTH);
         }
         if (hasLitProp()) {
-            state = state.with(LIT, false);
+            state = state.setValue(LIT, false);
         }
-        setDefaultState(baseState.get(state));
+        registerDefaultState(baseState.get(state));
     }
 
     protected interface BaseState {
@@ -246,41 +252,41 @@ public class AbstractBlock<V extends IVariant, B extends AbstractBlock<V, B>> ex
     }
 
     @Override
-    public boolean propagatesSkylightDown(BlockState state, IBlockReader reader, BlockPos pos) {
+    public boolean propagatesSkylightDown(BlockState state, BlockGetter reader, BlockPos pos) {
         return getFluidState(state).isEmpty() || super.propagatesSkylightDown(state, reader, pos);
     }
 
     @Nullable
     @Override
-    public BlockState getStateForPlacement(BlockItemUseContext context) {
-        BlockState state = getDefaultState();
+    public BlockState getStateForPlacement(BlockPlaceContext context) {
+        BlockState state = defaultBlockState();
         if (getFacing().equals(Facing.HORIZONTAL)) {
             if (!isPlacerFacing()) {
                 state = facing(context, false);
             } else {
-                state = getDefaultState().with(FACING, context.getPlacementHorizontalFacing().getOpposite());
+                state = defaultBlockState().setValue(FACING, context.getHorizontalDirection().getOpposite());
             }
         } else if (getFacing().equals(Facing.ALL)) {
             if (!isPlacerFacing()) {
                 state = facing(context, true);
             } else {
-                state = getDefaultState().with(FACING, context.getNearestLookingDirection().getOpposite());
+                state = defaultBlockState().setValue(FACING, context.getNearestLookingDirection().getOpposite());
             }
         }
-        if (state != null && this instanceof IWaterLoggable) {
-            FluidState fluidState = context.getWorld().getFluidState(context.getPos());
-            state = state.with(WATERLOGGED, fluidState.getFluid() == Fluids.WATER);
+        if (state != null && this instanceof SimpleWaterloggedBlock) {
+            FluidState fluidState = context.getLevel().getFluidState(context.getClickedPos());
+            state = state.setValue(WATERLOGGED, fluidState.getType() == Fluids.WATER);
         }
         return state;
     }
 
     @Nullable
-    private BlockState facing(BlockItemUseContext context, boolean b) {
-        BlockState blockstate = this.getDefaultState();
+    private BlockState facing(BlockPlaceContext context, boolean b) {
+        BlockState blockstate = this.defaultBlockState();
         for (Direction direction : context.getNearestLookingDirections()) {
             if (b || direction.getAxis().isHorizontal()) {
-                blockstate = blockstate.with(FACING, b ? direction : direction.getOpposite());
-                if (blockstate.isValidPosition(context.getWorld(), context.getPos())) {
+                blockstate = blockstate.setValue(FACING, b ? direction : direction.getOpposite());
+                if (blockstate.canSurvive(context.getLevel(), context.getClickedPos())) {
                     return blockstate;
                 }
             }
@@ -289,11 +295,11 @@ public class AbstractBlock<V extends IVariant, B extends AbstractBlock<V, B>> ex
     }
 
     @Override
-    public BlockState rotate(BlockState state, IWorld world, BlockPos pos, Rotation direction) {
+    public BlockState rotate(BlockState state, LevelAccessor world, BlockPos pos, Rotation direction) {
         if (!getFacing().equals(Facing.NONE)) {
             for (Rotation rotation : Rotation.values()) {
                 if (!rotation.equals(Rotation.NONE)) {
-                    if (isValidPosition(super.rotate(state, world, pos, rotation), world, pos)) {
+                    if (canSurvive(super.rotate(state, world, pos, rotation), world, pos)) {
                         return super.rotate(state, world, pos, rotation);
                     }
                 }
@@ -305,7 +311,7 @@ public class AbstractBlock<V extends IVariant, B extends AbstractBlock<V, B>> ex
     @Override
     public BlockState rotate(BlockState state, Rotation rot) {
         if (getFacing().equals(Facing.ALL) || getFacing().equals(Facing.HORIZONTAL)) {
-            return state.with(FACING, rot.rotate(state.get(FACING)));
+            return state.setValue(FACING, rot.rotate(state.getValue(FACING)));
         }
         return super.rotate(state, rot);
     }
@@ -313,26 +319,26 @@ public class AbstractBlock<V extends IVariant, B extends AbstractBlock<V, B>> ex
     @Override
     public BlockState mirror(BlockState state, Mirror mirror) {
         if (getFacing().equals(Facing.ALL) || getFacing().equals(Facing.HORIZONTAL)) {
-            return state.rotate(mirror.toRotation(state.get(FACING)));
+            return state.rotate(mirror.getRotation(state.getValue(FACING)));
         }
         return super.mirror(state, mirror);
     }
 
     @Override
     public FluidState getFluidState(BlockState state) {
-        return this instanceof IWaterLoggable && state.get(WATERLOGGED) ? Fluids.WATER.getStillFluidState(false) : super.getFluidState(state);
+        return this instanceof SimpleWaterloggedBlock && state.getValue(WATERLOGGED) ? Fluids.WATER.getSource(false) : super.getFluidState(state);
     }
 
     @Override
-    public boolean eventReceived(BlockState state, World world, BlockPos pos, int id, int param) {
-        TileEntity tileEntity = world.getTileEntity(pos);
-        return tileEntity != null && tileEntity.receiveClientEvent(id, param);
+    public boolean triggerEvent(BlockState state, Level world, BlockPos pos, int id, int param) {
+        BlockEntity tileEntity = world.getBlockEntity(pos);
+        return tileEntity != null && tileEntity.triggerEvent(id, param);
     }
 
     @Override
-    protected void fillStateContainer(StateContainer.Builder<Block, BlockState> builder) {
+    protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
         if (getFacing().equals(Facing.ALL) || getFacing().equals(Facing.HORIZONTAL)) builder.add(FACING);
-        if (this instanceof IWaterLoggable) builder.add(WATERLOGGED);
+        if (this instanceof SimpleWaterloggedBlock) builder.add(WATERLOGGED);
         if (hasLitProp()) builder.add(LIT);
     }
 

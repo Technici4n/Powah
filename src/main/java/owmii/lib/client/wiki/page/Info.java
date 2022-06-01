@@ -1,14 +1,13 @@
 package owmii.lib.client.wiki.page;
 
-import com.mojang.blaze3d.matrix.MatrixStack;
-import net.minecraft.client.gui.FontRenderer;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.text.IFormattableTextComponent;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.TextFormatting;
-import net.minecraft.util.text.TranslationTextComponent;
+import net.minecraft.ChatFormatting;
+import net.minecraft.client.gui.Font;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.MutableComponent;
+import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.registries.ForgeRegistries;
@@ -18,12 +17,12 @@ import owmii.lib.client.util.Text;
 import owmii.lib.client.wiki.Entry;
 import owmii.lib.client.wiki.Page;
 import owmii.lib.client.wiki.Section;
-
+import com.mojang.blaze3d.vertex.PoseStack;
 import java.util.ArrayList;
 import java.util.List;
 
 public class Info extends Page {
-    private final List<ITextComponent> cache = new ArrayList<>();
+    private final List<Component> cache = new ArrayList<>();
     private final Texture img;
     private final int paragraphs;
     private final Object[][] args;
@@ -100,34 +99,34 @@ public class Info extends Page {
         }
         Entry e = getSection().getEntry();
         for (int i = 0; i < this.paragraphs; i++) {
-            ITextComponent text = new TranslationTextComponent("wiki." + e.getWiki().getModId() + "." + e.getName() + "_" + (i + pp), this.args[i]);
-            IFormattableTextComponent ft = new TranslationTextComponent("");
+            Component text = new TranslatableComponent("wiki." + e.getWiki().getModId() + "." + e.getName() + "_" + (i + pp), this.args[i]);
+            MutableComponent ft = new TranslatableComponent("");
             String[] words = text.getString().split("\\s+");
             for (int j = 0; j < words.length; j++) {
                 String w = words[j];
                 if (w.startsWith("<") && w.contains(":") && w.endsWith(">")) {
                     Item item = ForgeRegistries.ITEMS.getValue(new ResourceLocation(w.substring(1, w.length() - 1)));
-                    ft = ft.append(new ItemStack(item).getDisplayName().copyRaw().mergeStyle(TextFormatting.BLUE)).appendString(" ");
+                    ft = ft.append(new ItemStack(item).getHoverName().plainCopy().withStyle(ChatFormatting.BLUE)).append(" ");
                 } else {
-                    ft = ft.appendString(w).appendString(" ");
+                    ft = ft.append(w).append(" ");
                 }
             }
-            ft.mergeStyle(Text.color(0x1F373F));
+            ft.withStyle(Text.color(0x1F373F));
             this.cache.add(ft);
         }
     }
 
     @Override
     @OnlyIn(Dist.CLIENT)
-    public void render(MatrixStack matrix, int x, int y, int mx, int my, float pt, FontRenderer font, WikiScreen screen) {
+    public void render(PoseStack matrix, int x, int y, int mx, int my, float pt, Font font, WikiScreen screen) {
         if (!this.img.isEmpty()) {
             this.img.draw(matrix, x + 3, y + 3);
             y += this.img.getHeight() + 2;
         }
         for (int i = 0; i < this.cache.size(); i++) {
-            ITextComponent text = this.cache.get(i);
+            Component text = this.cache.get(i);
             Text.drawString(text, x + 6, y + 7, screen.w / 2 - 5, 10, 0x38453c);
-            y += (i + 1 == this.cache.size() ? 0 : 3) + font.trimStringToWidth(text, screen.w / 2 - 5).size() * 10;
+            y += (i + 1 == this.cache.size() ? 0 : 3) + font.split(text, screen.w / 2 - 5).size() * 10;
         }
     }
 }

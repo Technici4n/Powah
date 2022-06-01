@@ -1,6 +1,6 @@
 package owmii.lib.logistics.fluid;
 
-import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.nbt.CompoundTag;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.capability.templates.FluidTank;
 
@@ -18,12 +18,12 @@ public class Tank extends FluidTank {
         super(capacity, validator);
     }
 
-    public FluidTank readFromNBT(CompoundNBT nbt, String key) {
+    public FluidTank readFromNBT(CompoundTag nbt, String key) {
         return super.readFromNBT(nbt.getCompound(key));
     }
 
-    public CompoundNBT writeToNBT(CompoundNBT nbt, String key) {
-        CompoundNBT compound = super.writeToNBT(new CompoundNBT());
+    public CompoundTag writeToNBT(CompoundTag nbt, String key) {
+        CompoundTag compound = super.writeToNBT(new CompoundTag());
         compound.put(key, nbt);
         return compound;
     }

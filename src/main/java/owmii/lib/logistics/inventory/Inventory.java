@@ -1,13 +1,13 @@
 package owmii.lib.logistics.inventory;
 
-import net.minecraft.inventory.InventoryHelper;
-import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.Direction;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.MathHelper;
-import net.minecraft.world.World;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.util.Mth;
+import net.minecraft.world.Containers;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
@@ -64,15 +64,15 @@ public class Inventory extends ItemStackHandler {
         this.tile = tile;
     }
 
-    public void deserializeNBT(CompoundNBT nbt) {
+    public void deserializeNBT(CompoundTag nbt) {
         if (isBlank()) return;
         nbt.putInt("Size", getSlots());
         super.deserializeNBT(nbt);
     }
 
     @Override
-    public CompoundNBT serializeNBT() {
-        return isBlank() ? new CompoundNBT() : super.serializeNBT();
+    public CompoundTag serializeNBT() {
+        return isBlank() ? new CompoundTag() : super.serializeNBT();
     }
 
     public Inventory set(int size) {
@@ -262,17 +262,17 @@ public class Inventory extends ItemStackHandler {
         return stack;
     }
 
-    public void drop(World world, BlockPos pos) {
+    public void drop(Level world, BlockPos pos) {
         this.stacks.forEach(stack -> {
-            InventoryHelper.spawnItemStack(world, pos.getX(), pos.getY(), pos.getZ(), stack);
+            Containers.dropItemStack(world, pos.getX(), pos.getY(), pos.getZ(), stack);
         });
         clear();
     }
 
-    public void drop(int index, World world, BlockPos pos) {
+    public void drop(int index, Level world, BlockPos pos) {
         ItemStack stack = getStackInSlot(index);
         if (!stack.isEmpty()) {
-            InventoryHelper.spawnItemStack(world, pos.getX(), pos.getY(), pos.getZ(), stack);
+            Containers.dropItemStack(world, pos.getX(), pos.getY(), pos.getZ(), stack);
             setStackInSlot(index, ItemStack.EMPTY);
         }
     }
@@ -315,8 +315,8 @@ public class Inventory extends ItemStackHandler {
         return stacks;
     }
 
-    public static LazyOptional<IItemHandler> get(World world, BlockPos pos, Direction side) {
-        TileEntity te = world.getTileEntity(pos);
+    public static LazyOptional<IItemHandler> get(Level world, BlockPos pos, Direction side) {
+        BlockEntity te = world.getBlockEntity(pos);
         return te != null ? te.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, side) : LazyOptional.empty();
     }
 
@@ -331,6 +331,6 @@ public class Inventory extends ItemStackHandler {
             }
         }
         f = f / (float) inv.getSlots();
-        return MathHelper.floor(f * 14.0F) + (i > 0 ? 1 : 0);
+        return Mth.floor(f * 14.0F) + (i > 0 ? 1 : 0);
     }
 }

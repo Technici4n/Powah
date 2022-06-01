@@ -1,12 +1,12 @@
 package owmii.powah.block.thermo;
 
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.FlowingFluidBlock;
-import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.World;
+import net.minecraft.core.BlockPos;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.LiquidBlock;
+import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.fluids.FluidAttributes;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.capability.IFluidHandler;
@@ -22,47 +22,47 @@ import owmii.powah.config.generator.ThermoConfig;
 public class ThermoTile extends AbstractEnergyProvider<Tier, ThermoConfig, ThermoBlock> implements IInventoryHolder, ITankHolder {
     public long generating;
 
-    public ThermoTile(Tier variant) {
-        super(Tiles.THERMO_GEN, variant);
+    public ThermoTile(BlockPos pos, BlockState state, Tier variant) {
+        super(Tiles.THERMO_GEN, pos, state, variant);
         this.tank.setCapacity(FluidAttributes.BUCKET_VOLUME * 4)
                 .validate(stack -> PowahAPI.COOLANTS.containsKey(stack.getFluid()))
                 .setChange(() -> ThermoTile.this.sync(10));
         this.inv.add(1);
     }
 
-    public ThermoTile() {
-        this(Tier.STARTER);
+    public ThermoTile(BlockPos pos, BlockState state) {
+        this(pos, state, Tier.STARTER);
     }
 
     @Override
-    public void readSync(CompoundNBT nbt) {
+    public void readSync(CompoundTag nbt) {
         super.readSync(nbt);
         this.generating = nbt.getLong("generating");
     }
 
     @Override
-    public CompoundNBT writeSync(CompoundNBT nbt) {
+    public CompoundTag writeSync(CompoundTag nbt) {
         nbt.putLong("generating", this.generating);
         return super.writeSync(nbt);
     }
 
     @Override
-    protected int postTick(World world) {
+    protected int postTick(Level world) {
         boolean flag = chargeItems(1) + extractFromSides(world) > 0;
         int i = 0;
         if (!isRemote() && checkRedstone() && !this.tank.isEmpty()) {
             FluidStack fluid = this.tank.getFluid();
             if (PowahAPI.COOLANTS.containsKey(fluid.getFluid())) {
                 int fluidCooling = PowahAPI.getCoolant(fluid.getFluid());
-                BlockPos heatPos = this.pos.down();
+                BlockPos heatPos = this.worldPosition.below();
                 BlockState state = world.getBlockState(heatPos);
                 Block block = state.getBlock();
                 if (!this.energy.isFull() && PowahAPI.HEAT_SOURCES.containsKey(block)) {
                     int heat = PowahAPI.getHeatSource(block);
-                    if (block instanceof FlowingFluidBlock) {
-                        FlowingFluidBlock fluidBlock = (FlowingFluidBlock) block;
+                    if (block instanceof LiquidBlock) {
+                        LiquidBlock fluidBlock = (LiquidBlock) block;
                         if (!fluidBlock.getFluidState(state).isSource()) {
-                            int level = state.get(FlowingFluidBlock.LEVEL);
+                            int level = state.getValue(LiquidBlock.LEVEL);
                             heat = (int) (heat / ((float) level + 1));
                         }
                     }

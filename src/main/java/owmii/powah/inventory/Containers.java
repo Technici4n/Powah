@@ -1,22 +1,23 @@
 package owmii.powah.inventory;
 
-import net.minecraft.inventory.container.ContainerType;
-import net.minecraftforge.common.extensions.IForgeContainerType;
+import net.minecraft.world.inventory.MenuType;
+import net.minecraftforge.common.extensions.IForgeMenuType;
+import net.minecraftforge.common.extensions.IForgeMenuType;
 import owmii.lib.registry.Registry;
 import owmii.powah.Powah;
 
 public class Containers {
     @SuppressWarnings("unchecked")
-    public static final Registry<ContainerType<?>> REG = new Registry(ContainerType.class, Powah.MOD_ID);
-    public static final ContainerType<EnergyCellContainer> ENERGY_CELL = REG.register("energy_cell", IForgeContainerType.create(EnergyCellContainer::create));
-    public static final ContainerType<EnderCellContainer> ENDER_CELL = REG.register("ender_cell", IForgeContainerType.create(EnderCellContainer::create));
-    public static final ContainerType<FurnatorContainer> FURNATOR = REG.register("furnator", IForgeContainerType.create(FurnatorContainer::create));
-    public static final ContainerType<MagmatorContainer> MAGMATOR = REG.register("magmator", IForgeContainerType.create(MagmatorContainer::create));
-    public static final ContainerType<PlayerTransmitterContainer> PLAYER_TRANSMITTER = REG.register("player_transmitter", IForgeContainerType.create(PlayerTransmitterContainer::create));
-    public static final ContainerType<EnergyHopperContainer> ENERGY_HOPPER = REG.register("energy_hopper", IForgeContainerType.create(EnergyHopperContainer::create));
-    public static final ContainerType<CableContainer> CABLE = REG.register("cable", IForgeContainerType.create(CableContainer::create));
-    public static final ContainerType<ReactorContainer> REACTOR = REG.register("reactor", IForgeContainerType.create(ReactorContainer::create));
-    public static final ContainerType<SolarContainer> SOLAR = REG.register("solar", IForgeContainerType.create(SolarContainer::create));
-    public static final ContainerType<ThermoContainer> THERMO = REG.register("thermo", IForgeContainerType.create(ThermoContainer::create));
-    public static final ContainerType<DischargerContainer> DISCHARGER = REG.register("discharger", IForgeContainerType.create(DischargerContainer::create));
+    public static final Registry<MenuType<?>> REG = new Registry(MenuType.class, Powah.MOD_ID);
+    public static final MenuType<EnergyCellContainer> ENERGY_CELL = REG.register("energy_cell", IForgeMenuType.create(EnergyCellContainer::create));
+    public static final MenuType<EnderCellContainer> ENDER_CELL = REG.register("ender_cell", IForgeMenuType.create(EnderCellContainer::create));
+    public static final MenuType<FurnatorContainer> FURNATOR = REG.register("furnator", IForgeMenuType.create(FurnatorContainer::create));
+    public static final MenuType<MagmatorContainer> MAGMATOR = REG.register("magmator", IForgeMenuType.create(MagmatorContainer::create));
+    public static final MenuType<PlayerTransmitterContainer> PLAYER_TRANSMITTER = REG.register("player_transmitter", IForgeMenuType.create(PlayerTransmitterContainer::create));
+    public static final MenuType<EnergyHopperContainer> ENERGY_HOPPER = REG.register("energy_hopper", IForgeMenuType.create(EnergyHopperContainer::create));
+    public static final MenuType<CableContainer> CABLE = REG.register("cable", IForgeMenuType.create(CableContainer::create));
+    public static final MenuType<ReactorContainer> REACTOR = REG.register("reactor", IForgeMenuType.create(ReactorContainer::create));
+    public static final MenuType<SolarContainer> SOLAR = REG.register("solar", IForgeMenuType.create(SolarContainer::create));
+    public static final MenuType<ThermoContainer> THERMO = REG.register("thermo", IForgeMenuType.create(ThermoContainer::create));
+    public static final MenuType<DischargerContainer> DISCHARGER = REG.register("discharger", IForgeMenuType.create(DischargerContainer::create));
 }

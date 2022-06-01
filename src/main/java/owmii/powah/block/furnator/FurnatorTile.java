@@ -1,8 +1,10 @@
 package owmii.powah.block.furnator;
 
-import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.world.World;
+import net.minecraft.core.BlockPos;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.common.ForgeHooks;
 import owmii.lib.block.AbstractEnergyProvider;
 import owmii.lib.block.IInventoryHolder;
@@ -17,47 +19,47 @@ public class FurnatorTile extends AbstractEnergyProvider<Tier, FurnatorConfig, F
     protected final Ticker carbon = Ticker.empty();
     protected boolean burning;
 
-    public FurnatorTile(Tier variant) {
-        super(Tiles.FURNATOR, variant);
+    public FurnatorTile(BlockPos pos, BlockState state, Tier variant) {
+        super(Tiles.FURNATOR, pos, state, variant);
         this.inv.set(2);
     }
 
-    public FurnatorTile() {
-        this(Tier.STARTER);
+    public FurnatorTile(BlockPos pos, BlockState state) {
+        this(pos, state, Tier.STARTER);
     }
 
     @Override
-    public void readStorable(CompoundNBT nbt) {
+    public void readStorable(CompoundTag nbt) {
         super.readStorable(nbt);
         this.carbon.read(nbt, "carbon");
     }
 
     @Override
-    public CompoundNBT writeStorable(CompoundNBT nbt) {
+    public CompoundTag writeStorable(CompoundTag nbt) {
         this.carbon.write(nbt, "carbon");
         return super.writeStorable(nbt);
     }
 
     @Override
-    public void readSync(CompoundNBT nbt) {
+    public void readSync(CompoundTag nbt) {
         super.readSync(nbt);
         this.burning = nbt.getBoolean("burning");
     }
 
     @Override
-    public CompoundNBT writeSync(CompoundNBT nbt) {
+    public CompoundTag writeSync(CompoundTag nbt) {
         nbt.putBoolean("burning", this.burning);
         return super.writeSync(nbt);
     }
 
     @Override
-    protected int postTick(World world) {
+    protected int postTick(Level world) {
         if (!isRemote() && checkRedstone()) {
             boolean flag = false;
             if (this.carbon.isEmpty()) {
                 ItemStack stack = this.inv.getStackInSlot(1);
                 if (!stack.isEmpty()) {
-                    int burnTime = ForgeHooks.getBurnTime(stack);
+                    int burnTime = ForgeHooks.getBurnTime(stack, null);
                     if (burnTime > 0) {
                         long perFuelTick = Configs.GENERAL.fuelTicks.get();
                         this.carbon.setAll(burnTime * perFuelTick);
@@ -102,7 +104,7 @@ public class FurnatorTile extends AbstractEnergyProvider<Tier, FurnatorConfig, F
 
     @Override
     public boolean canInsert(int index, ItemStack stack) {
-        return index == 1 && ForgeHooks.getBurnTime(stack) > 0
+        return index == 1 && ForgeHooks.getBurnTime(stack, null) > 0
                 || index == 0 && Energy.chargeable(stack);
     }
 

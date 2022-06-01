@@ -1,14 +1,14 @@
 package owmii.lib.util;
 
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.item.ItemEntity;
-import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.util.IItemProvider;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.vector.Vector3d;
-import net.minecraft.world.World;
+import net.minecraft.core.BlockPos;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.item.ItemEntity;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.ItemLike;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.items.ItemHandlerHelper;
 import net.minecraftforge.registries.ForgeRegistries;
 import owmii.lib.item.Stacks;
@@ -32,7 +32,7 @@ public class Stack {
     }
 
     public static boolean equals(ItemStack stack, ItemStack other) {
-        return !stack.isEmpty() && stack.isItemEqual(other) && ItemStack.areItemStackTagsEqual(stack, other);
+        return !stack.isEmpty() && stack.sameItem(other) && ItemStack.tagMatches(stack, other);
     }
 
     public static boolean isFull(ItemStack stack) {
@@ -43,14 +43,14 @@ public class Stack {
         return getTagOrEmpty(stack).equals(getTagOrEmpty(stack1));
     }
 
-    public static CompoundNBT getTagOrEmptyChild(ItemStack stack, String key) {
-        CompoundNBT nbt = stack.getChildTag(key);
-        return nbt != null ? nbt : new CompoundNBT();
+    public static CompoundTag getTagOrEmptyChild(ItemStack stack, String key) {
+        CompoundTag nbt = stack.getTagElement(key);
+        return nbt != null ? nbt : new CompoundTag();
     }
 
-    public static CompoundNBT getTagOrEmpty(ItemStack stack) {
-        CompoundNBT nbt = stack.getTag();
-        return nbt != null ? nbt : new CompoundNBT();
+    public static CompoundTag getTagOrEmpty(ItemStack stack) {
+        CompoundTag nbt = stack.getTag();
+        return nbt != null ? nbt : new CompoundTag();
     }
 
     public static String path(ItemStack provider) {
@@ -65,16 +65,16 @@ public class Stack {
         return location(stack.getItem());
     }
 
-    public static String path(IItemProvider provider) {
+    public static String path(ItemLike provider) {
         return location(provider).getPath();
     }
 
-    public static String modId(IItemProvider provider) {
+    public static String modId(ItemLike provider) {
         return location(provider).getNamespace();
     }
 
     @SuppressWarnings("ConstantConditions")
-    public static ResourceLocation location(IItemProvider provider) {
+    public static ResourceLocation location(ItemLike provider) {
         return ForgeRegistries.ITEMS.getKey(provider.asItem());
     }
 
@@ -88,16 +88,16 @@ public class Stack {
     }
 
     public static void drop(Entity entity, ItemStack stack) {
-        drop(entity.world, entity.getPositionVec().add(0.0D, 0.3D, 0.0D), stack);
+        drop(entity.level, entity.position().add(0.0D, 0.3D, 0.0D), stack);
     }
 
-    public static void drop(World world, BlockPos pos, ItemStack stack) {
-        drop(world, new Vector3d(pos.getX() + 0.5D, pos.getY(), pos.getZ() + 0.5D), stack);
+    public static void drop(Level world, BlockPos pos, ItemStack stack) {
+        drop(world, new Vec3(pos.getX() + 0.5D, pos.getY(), pos.getZ() + 0.5D), stack);
     }
 
-    public static void drop(World world, Vector3d pos, ItemStack stack) {
-        ItemEntity entity = new ItemEntity(world, pos.getX(), pos.getY(), pos.getZ(), stack);
-        entity.setPickupDelay(8);
-        world.addEntity(entity);
+    public static void drop(Level world, Vec3 pos, ItemStack stack) {
+        ItemEntity entity = new ItemEntity(world, pos.x(), pos.y(), pos.z(), stack);
+        entity.setPickUpDelay(8);
+        world.addFreshEntity(entity);
     }
 }

@@ -1,16 +1,16 @@
 package owmii.lib.client.wiki.page.panel;
 
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.text.Style;
-import net.minecraft.util.text.TextComponent;
-import net.minecraft.util.text.TextFormatting;
 import owmii.lib.client.util.Text;
 
 import javax.annotation.Nullable;
+import net.minecraft.ChatFormatting;
+import net.minecraft.network.chat.BaseComponent;
+import net.minecraft.network.chat.Style;
+import net.minecraft.world.item.ItemStack;
 import java.util.LinkedHashMap;
 
 public class InfoBox {
-    private final LinkedHashMap<TextComponent, TextComponent> lines = new LinkedHashMap<>();
+    private final LinkedHashMap<BaseComponent, BaseComponent> lines = new LinkedHashMap<>();
     public static final InfoBox EMPTY = new InfoBox();
     @Nullable
     private Style titleStyle;
@@ -20,8 +20,8 @@ public class InfoBox {
     public InfoBox() {
     }
 
-    public InfoBox(TextFormatting titleStyle, TextFormatting valueStyle) {
-        this(Style.EMPTY.applyFormatting(titleStyle), Style.EMPTY.applyFormatting(valueStyle));
+    public InfoBox(ChatFormatting titleStyle, ChatFormatting valueStyle) {
+        this(Style.EMPTY.applyFormat(titleStyle), Style.EMPTY.applyFormat(valueStyle));
     }
 
     public InfoBox(int titleColor, int valueColor) {
@@ -33,7 +33,7 @@ public class InfoBox {
         this.valueStyle = valueStyle;
     }
 
-    public void set(TextComponent title, TextComponent value) {
+    public void set(BaseComponent title, BaseComponent value) {
         this.lines.put(title, value);
     }
 
@@ -57,7 +57,7 @@ public class InfoBox {
         return this;
     }
 
-    public LinkedHashMap<TextComponent, TextComponent> getLines() {
+    public LinkedHashMap<BaseComponent, BaseComponent> getLines() {
         return this.lines;
     }
 
