@@ -57,7 +57,7 @@ public class EnergizingParticle extends TextureSheetParticle {
 
         @Nullable
         @Override
-        public Particle makeParticle(SimpleParticleType typeIn, ClientLevel worldIn, double x, double y, double z, double xSpeed, double ySpeed, double zSpeed) {
+        public Particle createParticle(SimpleParticleType typeIn, ClientLevel worldIn, double x, double y, double z, double xSpeed, double ySpeed, double zSpeed) {
             EnergizingParticle particle = new EnergizingParticle(worldIn, x, y, z);
             particle.pickSprite(this.spriteSet);
             return particle;

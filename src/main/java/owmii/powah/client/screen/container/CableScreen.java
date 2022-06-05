@@ -28,7 +28,7 @@ public class CableScreen extends AbstractEnergyScreen<CableTile, CableContainer>
     protected void init() {
         super.init();
 
-        this.configButton = addButton(new IconButton(this.leftPos + 5, this.topPos + 5, Textures.CABLE_CONFIG.get(this.te.getSideConfig().getType(this.side)), button -> {
+        this.configButton = addRenderableWidget(new IconButton(this.leftPos + 5, this.topPos + 5, Textures.CABLE_CONFIG.get(this.te.getSideConfig().getType(this.side)), button -> {
             Lollipop.NET.toServer(new NextEnergyConfigPacket(this.side.get3DDataValue(), this.te.getBlockPos()));
             this.te.getSideConfig().nextType(this.side);
         }, this).setTooltip(tooltip -> {

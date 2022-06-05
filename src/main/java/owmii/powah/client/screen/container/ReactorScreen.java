@@ -39,7 +39,7 @@ public class ReactorScreen extends AbstractEnergyScreen<ReactorTile, ReactorCont
     @Override
     protected void init() {
         super.init();
-        this.modeButton = addButton(new IconButton(this.leftPos - 11, this.topPos + 10, Textures.REACTOR_GEN_MODE.get(this.te.isGenModeOn()), b -> {
+        this.modeButton = addRenderableWidget(new IconButton(this.leftPos - 11, this.topPos + 10, Textures.REACTOR_GEN_MODE.get(this.te.isGenModeOn()), b -> {
             Powah.NET.toServer(new SwitchGenModePacket(this.te.getBlockPos()));
             this.te.setGenModeOn(!this.te.isGenModeOn());
         }, this).setTooltip(tooltip -> {
@@ -77,11 +77,11 @@ public class ReactorScreen extends AbstractEnergyScreen<ReactorTile, ReactorCont
                 float red = (color >> 16 & 0xFF) / 255.0F;
                 float green = (color >> 8 & 0xFF) / 255.0F;
                 float blue = (color & 0xFF) / 255.0F;
-                RenderSystem.color3f(red, green, blue);
+                RenderSystem.setShaderColor(red, green, blue, 1.0F);
                 TextureAtlasSprite sprite = this.mc.getTextureAtlas(InventoryMenu.BLOCK_ATLAS).apply(still);
                 bindTexture(InventoryMenu.BLOCK_ATLAS);
                 Draw.gaugeV(sprite, this.leftPos + 157, this.topPos + 5, 14, 65, tank.getCapacity(), tank.getFluidAmount());
-                RenderSystem.color3f(1.0F, 1.0F, 1.0F);
+                RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
             }
         }
     }

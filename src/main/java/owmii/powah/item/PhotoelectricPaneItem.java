@@ -3,6 +3,7 @@ package owmii.powah.item;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
+import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.monster.EnderMan;
 import net.minecraft.world.entity.monster.Endermite;
@@ -28,7 +29,7 @@ public class PhotoelectricPaneItem extends ItemBase {
                     }
                     ItemHandlerHelper.giveItemToPlayer(playerIn, new ItemStack(Itms.LENS_OF_ENDER));
                     target.playSound(SoundEvents.ENDERMAN_DEATH, 0.5F, 1.0F);
-                    target.remove();
+                    target.remove(Entity.RemovalReason.KILLED);
                 }
                 return InteractionResult.SUCCESS;
             }

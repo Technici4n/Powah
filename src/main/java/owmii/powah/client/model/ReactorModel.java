@@ -13,11 +13,13 @@ import owmii.powah.block.Tier;
 import owmii.powah.block.reactor.ReactorTile;
 import owmii.powah.client.render.tile.ReactorRenderer;
 
+// TODO PORT fix
 public class ReactorModel extends AbstractModel<ReactorTile, ReactorRenderer> {
-    private final ModelPart reactor;
+    //private final ModelPart reactor;
 
     public ReactorModel() {
         super(RenderType::entityTranslucent);
+        /*
         this.texWidth = 256;
         this.texHeight = 128;
         this.reactor = new ModelPart(this, 0, 0);
@@ -26,10 +28,12 @@ public class ReactorModel extends AbstractModel<ReactorTile, ReactorRenderer> {
         this.reactor.setTexSize(256, 128);
         this.reactor.mirror = true;
         setRotation(this.reactor, 0F, 0F, 0F);
+         */
     }
 
     @Override
     public void render(ReactorTile te, ReactorRenderer renderer, PoseStack matrix, MultiBufferSource rtb, int light, int ov) {
+        /*
         VertexConsumer buffer = rtb.getBuffer(renderType(new ResourceLocation(Powah.MOD_ID, "textures/model/tile/reactor.png")));
         this.reactor.render(matrix, buffer, light, ov);
 
@@ -51,5 +55,6 @@ public class ReactorModel extends AbstractModel<ReactorTile, ReactorRenderer> {
             VertexConsumer buffer_type = rtb.getBuffer(renderType(new ResourceLocation(Powah.MOD_ID, "textures/model/tile/reactor_" + te.getVariant().getName() + ".png")));
             this.reactor.render(matrix, buffer_type, light, ov);
         }
+         */
     }
 }

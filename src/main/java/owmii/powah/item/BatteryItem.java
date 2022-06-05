@@ -48,15 +48,15 @@ public class BatteryItem extends EnergyItem<Tier, BatteryConfig, BatteryItem> im
     }
 
     @Override
-    public boolean showDurabilityBar(ItemStack stack) {
+    public boolean isBarVisible(ItemStack stack) {
         IEnergyStorage energy = Energy.get(stack).orElse(Energy.Item.create(0));
         return energy.getEnergyStored() < energy.getMaxEnergyStored();
     }
 
     @Override
-    public double getDurabilityForDisplay(ItemStack stack) {
+    public int getBarWidth(ItemStack stack) {
         IEnergyStorage energy = Energy.get(stack).orElse(Energy.Item.create(0));
-        return 1.0F - ((double) energy.getEnergyStored() / energy.getMaxEnergyStored());
+        return Math.min(1 + 12 * energy.getEnergyStored() / energy.getMaxEnergyStored(), 13);
     }
 
     @Override

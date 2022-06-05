@@ -25,7 +25,6 @@ public class EnergyHopperScreen extends AbstractEnergyScreen<EnergyHopperTile, E
     @Override
     protected void drawForeground(PoseStack matrix, int mouseX, int mouseY) {
         super.drawForeground(matrix, mouseX, mouseY);
-        RenderSystem.pushMatrix();
         RenderSystem.enableBlend();
         int a = (int) (255.0D * 1.0D * 0.4D) << 24;
         Energy e = this.te.getEnergy();
@@ -33,6 +32,5 @@ public class EnergyHopperScreen extends AbstractEnergyScreen<EnergyHopperTile, E
         this.font.draw(matrix, s, 12, 13.0F, a);
         this.font.draw(matrix, Util.numFormat(e.getMaxExtract()) + " FE/t", 12, 27.0F, a);
         RenderSystem.disableBlend();
-        RenderSystem.popMatrix();
     }
 }

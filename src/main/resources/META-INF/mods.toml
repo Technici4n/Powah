@@ -5,7 +5,7 @@ license="LGPLv3"
 
 [[mods]]
 modId="powah"
-version="${version}"
+version="0.0.0"
 displayName="Powah"
 displayURL="https://www.curseforge.com/minecraft/mc-mods/powah"
 authors="owmii"

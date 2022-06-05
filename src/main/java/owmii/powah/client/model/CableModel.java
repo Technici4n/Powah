@@ -19,6 +19,8 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class CableModel extends AbstractModel<CableTile, CableRenderer> {
+    // TODO PORT fix
+    /*
     private final ModelPart north;
     private final ModelPart northPlate;
     private final ModelPart south;
@@ -31,9 +33,11 @@ public class CableModel extends AbstractModel<CableTile, CableRenderer> {
     private final ModelPart upPlate;
     private final ModelPart up;
     private final ModelPart downPlate;
+     */
 
     public CableModel() {
         super(RenderType::entitySolid);
+        /*
         this.texWidth = 64;
         this.texHeight = 32;
 
@@ -109,6 +113,7 @@ public class CableModel extends AbstractModel<CableTile, CableRenderer> {
         this.downPlate.setTexSize(64, 32);
         this.downPlate.mirror = true;
         setRotation(this.downPlate, 0F, 0F, 0F);
+         */
     }
 
     private static final Map<Transfer, ResourceLocation> TEXTURES = new HashMap<>();
@@ -121,6 +126,8 @@ public class CableModel extends AbstractModel<CableTile, CableRenderer> {
 
     @Override
     public void render(CableTile te, CableRenderer renderer, PoseStack matrix, MultiBufferSource rtb, int light, int ov) {
+        // TODO PORT fix
+        /*
         if (te.getLevel() == null) return;
         final Direction[] flags = new Direction[6];
         for (Direction side : te.energySides) {
@@ -184,5 +191,6 @@ public class CableModel extends AbstractModel<CableTile, CableRenderer> {
                 this.eastPlate.render(matrix, buffer, light, ov);
             }
         }
+         */
     }
 }

@@ -44,9 +44,9 @@ public class FurnatorScreen extends AbstractEnergyScreen<FurnatorTile, FurnatorC
         super.drawBackground(matrix, partialTicks, mouseX, mouseY);
         Textures.FURNATOR_GAUGE.drawScalableH(matrix, this.te.getEnergy().subSized(), this.leftPos + 5, this.topPos + 5);
         Textures.FURNATOR_CARBON_GAUGE.drawScalableH(matrix, this.te.getCarbon().subSized(), this.leftPos + 110, this.topPos + 18);
-        RenderSystem.color4f(1.0F, 1.0F, 1.0F, this.heat.subSized());
+        RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, this.heat.subSized());
         Textures.FURNATOR_BUFFER.draw(matrix, this.leftPos + 94, this.topPos + 43);
-        RenderSystem.color4f(1.0F, 1.0F, 1.0F, 1.0F);
+        RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
     }
 
     @Override

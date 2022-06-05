@@ -21,15 +21,15 @@ public class ChargedSnowballItem extends ItemBase {
     @Override
     public InteractionResultHolder<ItemStack> use(Level worldIn, Player playerIn, InteractionHand handIn) {
         ItemStack itemstack = playerIn.getItemInHand(handIn);
-        if (!playerIn.abilities.instabuild) {
+        if (!playerIn.getAbilities().instabuild) {
             itemstack.shrink(1);
         }
 
-        worldIn.playSound(null, playerIn.getX(), playerIn.getY(), playerIn.getZ(), SoundEvents.SNOWBALL_THROW, SoundSource.NEUTRAL, 0.5F, 0.4F / (random.nextFloat() * 0.4F + 0.8F));
+        worldIn.playSound(null, playerIn.getX(), playerIn.getY(), playerIn.getZ(), SoundEvents.SNOWBALL_THROW, SoundSource.NEUTRAL, 0.5F, 0.4F / (playerIn.getRandom().nextFloat() * 0.4F + 0.8F));
         if (!worldIn.isClientSide) {
             ChargedSnowballEntity entity = new ChargedSnowballEntity(worldIn, playerIn);
             entity.setItem(itemstack);
-            entity.func_234612_a_(playerIn, playerIn.xRot, playerIn.yRot, 0.0F, 1.5F, 1.0F);
+            entity.shootFromRotation(playerIn, playerIn.getXRot(), playerIn.getYRot(), 0.0F, 1.5F, 1.0F);
             worldIn.addFreshEntity(entity);
         }
 

@@ -41,7 +41,7 @@ public class ChargedSnowballEntity extends ThrowableItemProjectile {
         if (result.getType() == HitResult.Type.ENTITY) {
             Entity entity = ((EntityHitResult) result).getEntity();
             int i = entity instanceof Blaze ? 3 : 0;
-            entity.hurt(DamageSource.thrown(this, func_234616_v_()), (float) i);
+            entity.hurt(DamageSource.thrown(this, getOwner()), (float) i);
 
         }
 
@@ -49,14 +49,14 @@ public class ChargedSnowballEntity extends ThrowableItemProjectile {
             LightningBolt lightningboltentity = EntityType.LIGHTNING_BOLT.create(this.level);
             if (lightningboltentity != null) {
                 lightningboltentity.moveTo(Vec3.atBottomCenterOf(blockPosition()));
-                lightningboltentity.setCause(func_234616_v_() instanceof ServerPlayer ? (ServerPlayer) func_234616_v_() : null);
+                lightningboltentity.setCause(getOwner() instanceof ServerPlayer sp ? sp : null);
                 this.level.addFreshEntity(lightningboltentity);
             }
         }
 
         if (!this.level.isClientSide) {
             this.level.broadcastEntityEvent(this, (byte) 3);
-            this.remove();
+            this.discard();
         }
     }
 

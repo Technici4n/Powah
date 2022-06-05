@@ -17,6 +17,8 @@ public class WorldGen {
     public static void gen(BiomeLoadingEvent event) {
         if (Configs.GENERAL.oreGen.get()) {
             BiomeGenerationSettingsBuilder generation = event.getGeneration();
+            // TODO PORT fix
+            /*
             generation.addFeature(GenerationStep.Decoration.UNDERGROUND_ORES, ORE_POOR);
             generation.addFeature(GenerationStep.Decoration.UNDERGROUND_ORES, ORE);
             generation.addFeature(GenerationStep.Decoration.UNDERGROUND_ORES, ORE_DENSE);
@@ -25,6 +27,7 @@ public class WorldGen {
                     || event.getCategory().equals(Biome.BiomeCategory.EXTREME_HILLS)) {
                 generation.addFeature(GenerationStep.Decoration.UNDERGROUND_ORES, DRY_ICE);
             }
+             */
         }
     }
 }

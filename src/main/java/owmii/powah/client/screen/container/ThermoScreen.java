@@ -46,11 +46,11 @@ public class ThermoScreen extends AbstractEnergyScreen<ThermoTile, ThermoContain
                 float red = (color >> 16 & 0xFF) / 255.0F;
                 float green = (color >> 8 & 0xFF) / 255.0F;
                 float blue = (color & 0xFF) / 255.0F;
-                RenderSystem.color3f(red, green, blue);
+                RenderSystem.setShaderColor(red, green, blue, 1.0F);
                 TextureAtlasSprite sprite = this.mc.getTextureAtlas(InventoryMenu.BLOCK_ATLAS).apply(still);
                 bindTexture(InventoryMenu.BLOCK_ATLAS);
                 Draw.gaugeV(sprite, this.leftPos + 157, this.topPos + 5, 14, 65, tank.getCapacity(), tank.getFluidAmount());
-                RenderSystem.color3f(1.0F, 1.0F, 1.0F);
+                RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
             }
         }
 

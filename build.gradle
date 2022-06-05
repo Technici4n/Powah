@@ -8,7 +8,7 @@ targetCompatibility = JavaVersion.VERSION_17
 
 archivesBaseName = "dev.technici4n"
 // TODO: figure out publishing later
-//version = project.mod_version
+version = project.mod_version
 //group = project.maven_group
 
 repositories {
@@ -35,6 +35,8 @@ dependencies {
 }
 
 loom {
+    silentMojangMappingsLicense()
+
     forge {
         accessTransformer("src/main/resources/META-INF/accesstransformer.cfg")
     }
@@ -52,7 +54,9 @@ processResources {
     inputs.property "version", project.version
 
     filesMatching("META-INF/mods.toml") {
-        expand "version": project.version
+        filter { line ->
+            line.replace 'version="0.0.0"', "version=\"$version\""
+        }
     }
 }
 

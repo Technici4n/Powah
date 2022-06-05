@@ -27,7 +27,6 @@ public class PlayerTransmitterScreen extends AbstractEnergyScreen<PlayerTransmit
     @Override
     protected void drawForeground(PoseStack matrix, int mouseX, int mouseY) {
         super.drawForeground(matrix, mouseX, mouseY);
-        RenderSystem.pushMatrix();
         RenderSystem.enableBlend();
         int a = (int) (255.0D * 1.0D * 0.4D) << 24;
         Energy e = this.te.getEnergy();
@@ -35,6 +34,5 @@ public class PlayerTransmitterScreen extends AbstractEnergyScreen<PlayerTransmit
         this.font.draw(matrix, s, 38, 13.0F, a);
         this.font.draw(matrix, Util.numFormat(e.getMaxExtract()) + " FE/t", 38, 27.0F, a);
         RenderSystem.disableBlend();
-        RenderSystem.popMatrix();
     }
 }

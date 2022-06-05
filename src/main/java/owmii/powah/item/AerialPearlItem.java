@@ -3,6 +3,7 @@ package owmii.powah.item;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
+import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.monster.Husk;
 import net.minecraft.world.entity.monster.Zombie;
@@ -29,7 +30,7 @@ public class AerialPearlItem extends ItemBase {
                         ItemStack stack1 = playerIn.getItemInHand(hand);
                         ItemHandlerHelper.giveItemToPlayer(playerIn, new ItemStack(Itms.PLAYER_AERIAL_PEARL));
                         target.playSound(SoundEvents.ZOMBIE_DEATH, 0.5F, 1.0F);
-                        target.remove();
+                        target.remove(Entity.RemovalReason.KILLED);
                         if (!playerIn.isCreative()) {
                             stack1.shrink(1);
                         }
