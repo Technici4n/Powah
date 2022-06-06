@@ -23,7 +23,7 @@ public class ThermoTile extends AbstractEnergyProvider<Tier, ThermoConfig, Therm
     public long generating;
 
     public ThermoTile(BlockPos pos, BlockState state, Tier variant) {
-        super(Tiles.THERMO_GEN, pos, state, variant);
+        super(Tiles.THERMO_GEN.get(), pos, state, variant);
         this.tank.setCapacity(FluidAttributes.BUCKET_VOLUME * 4)
                 .validate(stack -> PowahAPI.COOLANTS.containsKey(stack.getFluid()))
                 .setChange(() -> ThermoTile.this.sync(10));

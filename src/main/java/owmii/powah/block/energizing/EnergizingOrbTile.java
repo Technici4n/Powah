@@ -27,7 +27,7 @@ public class EnergizingOrbTile extends AbstractTickableTile<IVariant.Single, Ene
     private EnergizingRecipe recipe;
 
     public EnergizingOrbTile(BlockPos pos, BlockState state) {
-        super(Tiles.ENERGIZING_ORB, pos, state);
+        super(Tiles.ENERGIZING_ORB.get(), pos, state);
         this.inv.set(7);
     }
 
@@ -85,7 +85,7 @@ public class EnergizingOrbTile extends AbstractTickableTile<IVariant.Single, Ene
 
     private void checkRecipe() {
         if (this.level != null && !isRemote()) {
-            Optional<EnergizingRecipe> recipe = this.level.getRecipeManager().getRecipeFor(Recipes.ENERGIZING, new RecipeWrapper(getInventory()), this.level);
+            Optional<EnergizingRecipe> recipe = this.level.getRecipeManager().getRecipeFor(Recipes.ENERGIZING.get(), new RecipeWrapper(getInventory()), this.level);
             if (recipe.isPresent()) {
                 this.recipe = recipe.get();
                 this.buffer.setCapacity(this.recipe.getEnergy());

@@ -8,11 +8,11 @@ import owmii.powah.block.reactor.ReactorTile;
 
 public class ReactorContainer extends AbstractEnergyContainer<ReactorTile> {
     public ReactorContainer(int id, Inventory inventory, FriendlyByteBuf buffer) {
-        super(Containers.REACTOR, id, inventory, buffer);
+        super(Containers.REACTOR.get(), id, inventory, buffer);
     }
 
     public ReactorContainer(int id, Inventory inventory, ReactorTile te) {
-        super(Containers.REACTOR, id, inventory, te);
+        super(Containers.REACTOR.get(), id, inventory, te);
     }
 
     public static ReactorContainer create(int id, Inventory inventory, FriendlyByteBuf buffer) {

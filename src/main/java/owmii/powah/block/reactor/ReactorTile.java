@@ -51,7 +51,7 @@ public class ReactorTile extends AbstractEnergyProvider<Tier, ReactorConfig, Rea
     private boolean generate = true;
 
     public ReactorTile(BlockPos pos, BlockState state, Tier variant) {
-        super(Tiles.REACTOR, pos, state, variant);
+        super(Tiles.REACTOR.get(), pos, state, variant);
         this.tank.setCapacity(FluidAttributes.BUCKET_VOLUME)
                 .validate(stack -> PowahAPI.COOLANTS.containsKey(stack.getFluid()))
                 .setChange(() -> ReactorTile.this.sync(10));
@@ -301,7 +301,7 @@ public class ReactorTile extends AbstractEnergyProvider<Tier, ReactorConfig, Rea
         boolean flag = false;
         if (this.fuel.getTicks() <= 900) {
             ItemStack stack = this.inv.getStackInSlot(1);
-            if (stack.getItem() == Itms.URANINITE) {
+            if (stack.getItem() == Itms.URANINITE.get()) {
                 this.fuel.add(100);
                 this.baseTemp = 700;
                 stack.shrink(1);
@@ -324,7 +324,7 @@ public class ReactorTile extends AbstractEnergyProvider<Tier, ReactorConfig, Rea
     public void demolish(Level world) {
         this.builder.demolish(world);
         while (this.fuel.getTicks() >= 100) {
-            Block.popResource(world, this.worldPosition, new ItemStack(Itms.URANINITE));
+            Block.popResource(world, this.worldPosition, new ItemStack(Itms.URANINITE.get()));
             this.fuel.back(100);
         }
     }
@@ -342,7 +342,7 @@ public class ReactorTile extends AbstractEnergyProvider<Tier, ReactorConfig, Rea
     @Override
     public boolean canInsert(int slot, ItemStack stack) {
         if (slot == 1) {
-            return stack.getItem() == Itms.URANINITE;
+            return stack.getItem() == Itms.URANINITE.get();
         } else if (slot == 2) {
             return ForgeHooks.getBurnTime(stack, null) > 0 && !stack.hasContainerItem();
         } else if (slot == 3) {

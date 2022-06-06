@@ -32,7 +32,7 @@ public class SolidCoolantCategory implements IRecipeCategory<SolidCoolantCategor
 
     public SolidCoolantCategory(IGuiHelper guiHelper) {
         this.background = guiHelper.drawableBuilder(GUI_BACK, 0, 0, 160, 24).addPadding(1, 0, 0, 0).build();
-        this.icon = guiHelper.createDrawableIngredient(new ItemStack(Blcks.DRY_ICE));
+        this.icon = guiHelper.createDrawableIngredient(new ItemStack(Blcks.DRY_ICE.get()));
     }
 
     @Override

@@ -8,11 +8,11 @@ import owmii.powah.block.thermo.ThermoTile;
 
 public class ThermoContainer extends AbstractEnergyContainer<ThermoTile> {
     public ThermoContainer(int id, Inventory inventory, FriendlyByteBuf buffer) {
-        super(Containers.THERMO, id, inventory, buffer);
+        super(Containers.THERMO.get(), id, inventory, buffer);
     }
 
     public ThermoContainer(int id, Inventory inventory, ThermoTile te) {
-        super(Containers.THERMO, id, inventory, te);
+        super(Containers.THERMO.get(), id, inventory, te);
     }
 
     public static ThermoContainer create(int id, Inventory inventory, FriendlyByteBuf buffer) {

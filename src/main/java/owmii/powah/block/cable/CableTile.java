@@ -34,7 +34,7 @@ public class CableTile extends AbstractEnergyStorage<Tier, CableConfig, CableBlo
     public final Set<Direction> energySides = new HashSet<>();
 
     public CableTile(BlockPos pos, BlockState state, Tier variant) {
-        super(Tiles.CABLE, pos, state, variant);
+        super(Tiles.CABLE.get(), pos, state, variant);
         for (Direction side : Direction.values()) {
             this.proxyMap.put(side, new EnergyProxy());
         }

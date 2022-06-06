@@ -20,7 +20,7 @@ public class PowahBookItem extends ItemBase {
         if (worldIn.isClientSide) {
             Screens.openManualScreen();
 //            RecipeManager manager = Minecraft.getInstance().world.getRecipeManager();
-//            System.out.println(manager.getRecipes(IRecipeType.CRAFTING).values().stream().filter(recipe -> recipe.getRecipeOutput().getItem() == Itms.DIELECTRIC_PASTE)
+//            System.out.println(manager.getRecipes(IRecipeType.CRAFTING).values().stream().filter(recipe -> recipe.getRecipeOutput().getItem() == Itms.DIELECTRIC_PASTE.get())
 //                    .collect(Collectors.toList()));
 
         }

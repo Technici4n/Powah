@@ -14,7 +14,7 @@ import owmii.powah.config.EnergyDischargerConfig;
 
 public class EnergyDischargerTile extends AbstractEnergyStorage<Tier, EnergyDischargerConfig, EnergyDischargerBlock> implements IInventoryHolder {
     public EnergyDischargerTile(BlockPos pos, BlockState state, Tier variant) {
-        super(Tiles.ENERGY_DISCHARGER, pos, state, variant);
+        super(Tiles.ENERGY_DISCHARGER.get(), pos, state, variant);
         this.inv.add(7);
     }
 

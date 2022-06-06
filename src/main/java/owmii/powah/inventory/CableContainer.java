@@ -10,12 +10,12 @@ public class CableContainer extends AbstractEnergyContainer<CableTile> {
     private Direction side = Direction.NORTH;
 
     public CableContainer(int id, Inventory inventory, FriendlyByteBuf buffer) {
-        super(Containers.CABLE, id, inventory, buffer);
+        super(Containers.CABLE.get(), id, inventory, buffer);
         this.side = Direction.from3DDataValue(buffer.readInt());
     }
 
     public CableContainer(int id, Inventory inventory, CableTile te) {
-        super(Containers.CABLE, id, inventory, te);
+        super(Containers.CABLE.get(), id, inventory, te);
     }
 
     public static CableContainer create(int id, Inventory inventory, FriendlyByteBuf buffer) {

@@ -1,16 +1,22 @@
 package owmii.powah;
 
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.block.Blocks;
+import net.minecraftforge.event.RegistryEvent;
+import net.minecraftforge.eventbus.api.GenericEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLLoadCompleteEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
+import net.minecraftforge.registries.ForgeRegistries;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import owmii.lib.Lollipop;
 import owmii.lib.api.IClient;
 import owmii.lib.api.IMod;
+import owmii.lib.block.IBlock;
 import owmii.lib.config.IConfig;
 import owmii.lib.network.Network;
 import owmii.powah.api.PowahAPI;
@@ -21,11 +27,13 @@ import owmii.powah.config.ConfigHandler;
 import owmii.powah.config.Configs;
 import owmii.powah.entity.Entities;
 import owmii.powah.inventory.Containers;
+import owmii.powah.item.ItemGroups;
 import owmii.powah.item.Itms;
 import owmii.powah.network.Packets;
 import owmii.powah.recipe.Recipes;
 
 import javax.annotation.Nullable;
+import java.util.function.Consumer;
 
 @Mod(Powah.MOD_ID)
 public class Powah implements IMod {
@@ -33,16 +41,31 @@ public class Powah implements IMod {
     public static final Network NET = new Network(MOD_ID);
     public static final Logger LOGGER = LogManager.getLogger(MOD_ID);
 
+    public static ResourceLocation id(String path) {
+        return new ResourceLocation(MOD_ID, path);
+    }
+
     public Powah() {
         var modEventBus = FMLJavaModLoadingContext.get().getModEventBus();
         modEventBus.addListener(Lollipop::setup);
 
-        Blcks.REG.init();
-        Tiles.REG.init();
-        Itms.REG.init();
-        Containers.REG.init();
-        Entities.REG.init();
-        Recipes.REG.init();
+        Blcks.DR.register(modEventBus);
+        // TODO: register block items, somehow
+        Tiles.DR.register(modEventBus);
+        modEventBus.addGenericListener(Item.class, (RegistryEvent.Register<Item> event) -> {
+            for (var block : ForgeRegistries.BLOCKS.getValues()) {
+                if (block instanceof IBlock<?,?> iBlock) {
+                    var blockItem = iBlock.getBlockItem(new Item.Properties(), ItemGroups.MAIN);
+                    blockItem.setRegistryName(block.getRegistryName());
+                    event.getRegistry().register(blockItem);
+                }
+            }
+        });
+        Itms.DR.register(modEventBus);
+        Containers.DR.register(modEventBus);
+        Entities.DR.register(modEventBus);
+        Recipes.DR_SERIALIZER.register(modEventBus);
+        Recipes.DR_TYPE.register(modEventBus);
 
         loadListeners();
         Configs.register();
@@ -55,7 +78,7 @@ public class Powah implements IMod {
         PowahAPI.registerSolidCoolant(Blocks.ICE, 48, -5);
         PowahAPI.registerSolidCoolant(Blocks.PACKED_ICE, 192, -8);
         PowahAPI.registerSolidCoolant(Blocks.BLUE_ICE, 568, -17);
-        PowahAPI.registerSolidCoolant(Blcks.DRY_ICE, 712, -32);
+        PowahAPI.registerSolidCoolant(Blcks.DRY_ICE.get(), 712, -32);
 
         Packets.register();
     }

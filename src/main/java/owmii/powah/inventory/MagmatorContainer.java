@@ -8,11 +8,11 @@ import owmii.powah.block.magmator.MagmatorTile;
 
 public class MagmatorContainer extends AbstractEnergyContainer<MagmatorTile> {
     public MagmatorContainer(int id, Inventory inventory, FriendlyByteBuf buffer) {
-        super(Containers.MAGMATOR, id, inventory, buffer);
+        super(Containers.MAGMATOR.get(), id, inventory, buffer);
     }
 
     public MagmatorContainer(int id, Inventory inventory, MagmatorTile te) {
-        super(Containers.MAGMATOR, id, inventory, te);
+        super(Containers.MAGMATOR.get(), id, inventory, te);
     }
 
     public static MagmatorContainer create(int id, Inventory inventory, FriendlyByteBuf buffer) {

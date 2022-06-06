@@ -15,7 +15,7 @@ import owmii.powah.config.Configs;
 import owmii.powah.item.Itms;
 
 public class PowahBook {
-    public static final Wiki WIKI = new Wiki(Itms.REG);
+    public static final Wiki WIKI = new Wiki();
 
     static {
         WIKI
@@ -33,23 +33,23 @@ public class PowahBook {
                                 .e("ender_gate", e -> e.s(s -> s.p(new Info(IMG.ENDER_GATE, 2, s), new EnergyPanel<>(s).next(new CraftingPanel<>(s)))))
                         , new WelcomePanel(as))))
                 .e("energy_blocks", new Icon(Blcks.PLAYER_TRANSMITTER.get(Tier.SPIRITED)), ae -> ae.s(as -> as.p(new GridPage(as)
-                                .e("energizing", Blcks.ENERGIZING_ORB, e -> e.s(s -> s.p(new Info(IMG.ENERGIZING, 2, new Object[][]{{Text.toRange(Configs.ENERGIZING.range.get())}, {}}, s).next(new Info(IMG.ENERGIZING, s)), new CraftingPanel<>(s).next(new EnergyPanel<>(Blcks.ENERGIZING_ROD.get(Tier.STARTER), s).next(new CraftingPanel<>(Blcks.ENERGIZING_ROD.get(Tier.STARTER), s))))))
+                                .e("energizing", Blcks.ENERGIZING_ORB.get(), e -> e.s(s -> s.p(new Info(IMG.ENERGIZING, 2, new Object[][]{{Text.toRange(Configs.ENERGIZING.range.get())}, {}}, s).next(new Info(IMG.ENERGIZING, s)), new CraftingPanel<>(s).next(new EnergyPanel<>(Blcks.ENERGIZING_ROD.get(Tier.STARTER), s).next(new CraftingPanel<>(Blcks.ENERGIZING_ROD.get(Tier.STARTER), s))))))
                                 .e("player_transmitter", e -> e.s(s -> s.p(new Info(IMG.PLAYER_TRANSMITTER, s), new EnergyPanel<>(s).next(new CraftingPanel<>(s)))))
                                 .e("energy_hopper", e -> e.s(s -> s.p(new Info(IMG.ENERGY_HOPPER, s), new EnergyPanel<>(s).next(new CraftingPanel<>(s)))))
                                 .e("energy_discharger", e -> e.s(s -> s.p(new Info(IMG.ENERGY_DISCHARGER, s), new EnergyPanel<>(s).next(new CraftingPanel<>(s)))))
                         , new WelcomePanel(as))))
                 .e("items", new Icon(Itms.BATTERY.get(Tier.NITRO)), ae -> ae.s(as -> as.p(new GridPage(as)
                                 .e("battery", e -> e.s(s -> s.p(new Info(s), new EnergyPanel<>(s).next(new CraftingPanel<>(s)))))
-                                .e("wrench", Itms.WRENCH, e -> e.s(s -> s.p(new Info(4, s), new CraftingPanel<>(s))))
-                                .e("charged_snowball", Itms.CHARGED_SNOWBALL, e -> e.s(s -> s.p(new Info(s), new CraftingPanel<>(s))))
-                                .e("player_aerial_pearl", Itms.PLAYER_AERIAL_PEARL, e -> e.s(s -> s.p(new Info(2, s), new CraftingPanel<>(s))))
-                                .e("binding_card", Itms.BINDING_CARD, e -> e.s(s -> s.p(new Info(2, s), new CraftingPanel<>(s))))
-                                .e("binding_card_dim", Itms.BINDING_CARD_DIM, e -> e.s(s -> s.p(new Info(2, s), new CraftingPanel<>(s))))
-                                .e("lens_of_ender", Itms.LENS_OF_ENDER, e -> e.s(s -> s.p(new Info(s), new CraftingPanel<>(s))))
+                                .e("wrench", Itms.WRENCH.get(), e -> e.s(s -> s.p(new Info(4, s), new CraftingPanel<>(s))))
+                                .e("charged_snowball", Itms.CHARGED_SNOWBALL.get(), e -> e.s(s -> s.p(new Info(s), new CraftingPanel<>(s))))
+                                .e("player_aerial_pearl", Itms.PLAYER_AERIAL_PEARL.get(), e -> e.s(s -> s.p(new Info(2, s), new CraftingPanel<>(s))))
+                                .e("binding_card", Itms.BINDING_CARD.get(), e -> e.s(s -> s.p(new Info(2, s), new CraftingPanel<>(s))))
+                                .e("binding_card_dim", Itms.BINDING_CARD_DIM.get(), e -> e.s(s -> s.p(new Info(2, s), new CraftingPanel<>(s))))
+                                .e("lens_of_ender", Itms.LENS_OF_ENDER.get(), e -> e.s(s -> s.p(new Info(s), new CraftingPanel<>(s))))
                         , new WelcomePanel(as))))
-                .e("materials", new Icon(Itms.URANINITE), ae -> ae.s(as -> as.p(new GridPage(as)
-                                .e("uraninite", Blcks.URANINITE_ORE_DENSE, e -> e.s(s -> s.p(new Info(IMG.URANINITE, 2, s), new WelcomePanel(as))))
-                                .e("dry_ice", Blcks.DRY_ICE, e -> e.s(s -> s.p(new Info(IMG.DRY_ICE, s), new WelcomePanel(as))))
+                .e("materials", new Icon(Itms.URANINITE.get()), ae -> ae.s(as -> as.p(new GridPage(as)
+                                .e("uraninite", Blcks.URANINITE_ORE_DENSE.get(), e -> e.s(s -> s.p(new Info(IMG.URANINITE, 2, s), new WelcomePanel(as))))
+                                .e("dry_ice", Blcks.DRY_ICE.get(), e -> e.s(s -> s.p(new Info(IMG.DRY_ICE, s), new WelcomePanel(as))))
                         , new WelcomePanel(as))));
     }
 

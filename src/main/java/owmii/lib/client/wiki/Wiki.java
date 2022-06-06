@@ -1,5 +1,6 @@
 package owmii.lib.client.wiki;
 
+import net.minecraft.core.Registry;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Recipe;
@@ -14,11 +15,12 @@ import net.minecraftforge.fml.ModContainer;
 import net.minecraftforge.fml.ModList;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.forgespi.language.IModInfo;
+import net.minecraftforge.registries.ForgeRegistries;
 import org.apache.commons.lang3.time.StopWatch;
 import org.apache.logging.log4j.Marker;
 import org.apache.logging.log4j.MarkerManager;
 import owmii.lib.Lollipop;
-import owmii.lib.registry.Registry;
+import owmii.powah.Powah;
 
 import javax.annotation.Nullable;
 import java.util.*;
@@ -31,15 +33,13 @@ public class Wiki {
     private final List<Entry> categories = new ArrayList<>();
     private final Map<ItemLike, List<Recipe<?>>> crafting = new HashMap<>();
     private final Map<ItemLike, List<Recipe<?>>> smelting = new HashMap<>();
-    public final Registry<Item> items;
     private final String modId;
 
     @Nullable
     private final IModInfo modInfo;
 
-    public Wiki(Registry<Item> items) {
-        this.items = items;
-        this.modId = items.getId();
+    public Wiki() {
+        this.modId = Powah.MOD_ID;
         Optional<? extends ModContainer> isd = ModList.get().getModContainerById(this.modId);
         this.modInfo = isd.map(ModContainer::getModInfo).orElse(null);
         WIKIS.put(this.modId, this);
@@ -104,7 +104,7 @@ public class Wiki {
         StopWatch watch = StopWatch.createStarted();
         Lollipop.LOGGER.info(MARKER, "Started wikis recipes collecting...");
         WIKIS.forEach((s, wiki) -> {
-            wiki.items.forEach(item -> {
+            ForgeRegistries.ITEMS.getValues().stream().filter(i -> i.getRegistryName().getNamespace().equals(Powah.MOD_ID)).forEach(item -> {
                 List<Recipe<?>> crafting = new ArrayList<>();
                 event.getRecipeManager().getAllRecipesFor(RecipeType.CRAFTING).forEach(recipe -> {
                     if (recipe.getResultItem().sameItem(new ItemStack(item))) {

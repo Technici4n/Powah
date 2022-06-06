@@ -23,7 +23,7 @@ public class EnergizingRodTile extends AbstractEnergyStorage<Tier, EnergizingCon
     public final Ticker coolDown = new Ticker(20);
 
     public EnergizingRodTile(BlockPos pos, BlockState state, Tier variant) {
-        super(Tiles.ENERGIZING_ROD, pos, state, variant);
+        super(Tiles.ENERGIZING_ROD.get(), pos, state, variant);
     }
 
     public EnergizingRodTile(BlockPos pos, BlockState state) {

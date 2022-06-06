@@ -20,7 +20,7 @@ public class FurnatorTile extends AbstractEnergyProvider<Tier, FurnatorConfig, F
     protected boolean burning;
 
     public FurnatorTile(BlockPos pos, BlockState state, Tier variant) {
-        super(Tiles.FURNATOR, pos, state, variant);
+        super(Tiles.FURNATOR.get(), pos, state, variant);
         this.inv.set(2);
     }
 

@@ -8,11 +8,11 @@ import owmii.powah.block.discharger.EnergyDischargerTile;
 
 public class DischargerContainer extends AbstractEnergyContainer<EnergyDischargerTile> {
     public DischargerContainer(int id, Inventory inventory, FriendlyByteBuf buffer) {
-        super(Containers.DISCHARGER, id, inventory, buffer);
+        super(Containers.DISCHARGER.get(), id, inventory, buffer);
     }
 
     public DischargerContainer(int id, Inventory inventory, EnergyDischargerTile te) {
-        super(Containers.DISCHARGER, id, inventory, te);
+        super(Containers.DISCHARGER.get(), id, inventory, te);
     }
 
     public static DischargerContainer create(int id, Inventory inventory, FriendlyByteBuf buffer) {

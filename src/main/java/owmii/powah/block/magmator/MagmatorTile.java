@@ -23,7 +23,7 @@ public class MagmatorTile extends AbstractEnergyProvider<Tier, MagmatorConfig, M
     protected boolean burning;
 
     public MagmatorTile(BlockPos pos, BlockState state, Tier variant) {
-        super(Tiles.MAGMATOR, pos, state, variant);
+        super(Tiles.MAGMATOR.get(), pos, state, variant);
         this.tank.setCapacity(FluidAttributes.BUCKET_VOLUME * 4)
                 .validate(stack -> PowahAPI.MAGMATIC_FLUIDS.containsKey(stack.getFluid()))
                 .setChange(() -> MagmatorTile.this.sync(10));

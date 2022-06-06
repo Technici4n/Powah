@@ -9,6 +9,6 @@ import owmii.powah.entity.Entities;
 @OnlyIn(Dist.CLIENT)
 public class EntityRenderer {
     public static void register() {
-        EntityRenderers.register(Entities.CHARGED_SNOWBALL, ThrownItemRenderer::new);
+        EntityRenderers.register(Entities.CHARGED_SNOWBALL.get(), ThrownItemRenderer::new);
     }
 }

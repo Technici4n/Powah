@@ -21,7 +21,6 @@ import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.function.Consumer;
-import java.util.function.Supplier;
 
 @SuppressWarnings({"unchecked", "ConstantConditions"})
 public class Registry<T extends IForgeRegistryEntry<T>> {
@@ -101,14 +100,12 @@ public class Registry<T extends IForgeRegistryEntry<T>> {
     public Registry<Item> getBlockItems(@Nullable CreativeModeTab group) {
         Registry<Item> reg = new Registry<>(Item.class, this.id);
         forEach(object -> {
-            if (object instanceof Block) {
-                Block block = (Block) object;
+            if (object instanceof Block block) {
                 ResourceLocation rl = block.getRegistryName();
                 if (block instanceof IBlock) {
                     Item im = ((IBlock) object).getBlockItem(new Item.Properties(), group);
                     boolean flag = true;
-                    if (block instanceof IVariantEntry) {
-                        IVariantEntry v = (IVariantEntry) block;
+                    if (block instanceof IVariantEntry v) {
                         if (!(v.getVariant() instanceof IVariant.Single)) { // TODO: optimise
                             ResourceLocation key = v.getSiblingsKey(v);
                             final Item t = reg.register(key.getPath() + "_" + v.getVariant().getName(), im, false);
@@ -132,10 +129,6 @@ public class Registry<T extends IForgeRegistryEntry<T>> {
 
     public void forEach(Consumer<T> action) {
         this.objects.forEach((rl, ts) -> ts.forEach(action));
-    }
-
-    public <V extends Enum<V> & IVariant<V>> VarReg<V, T> getVar(String name, VarReg.VarObject<V, T> varObject, V[] variants) {
-        return new VarReg<>(name, varObject, variants, this);
     }
 
     public LinkedHashMap<ResourceLocation, List<T>> getObjects() {

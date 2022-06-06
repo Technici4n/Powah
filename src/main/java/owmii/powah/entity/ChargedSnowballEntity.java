@@ -19,21 +19,18 @@ import net.minecraftforge.network.NetworkHooks;
 import owmii.powah.item.Itms;
 
 public class ChargedSnowballEntity extends ThrowableItemProjectile {
-    public ChargedSnowballEntity(Level p_i50159_2_) {
-        super(Entities.CHARGED_SNOWBALL, p_i50159_2_);
-    }
 
     public ChargedSnowballEntity(Level worldIn, LivingEntity livingEntityIn) {
-        super(Entities.CHARGED_SNOWBALL, livingEntityIn, worldIn);
+        super(Entities.CHARGED_SNOWBALL.get(), livingEntityIn, worldIn);
     }
 
-    public ChargedSnowballEntity(EntityType<ChargedSnowballEntity> snowballEntityEntityType, Level world) {
-        super(snowballEntityEntityType, world);
+    public ChargedSnowballEntity(EntityType<ChargedSnowballEntity> type, Level world) {
+        super(type, world);
     }
 
     @Override
     protected Item getDefaultItem() {
-        return Itms.CHARGED_SNOWBALL;
+        return Itms.CHARGED_SNOWBALL.get();
     }
 
     @Override

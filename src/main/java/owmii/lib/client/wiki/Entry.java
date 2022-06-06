@@ -3,6 +3,10 @@ package owmii.lib.client.wiki;
 import javax.annotation.Nullable;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
+import net.minecraftforge.registries.ForgeRegistries;
+import owmii.lib.registry.VarReg;
+import owmii.powah.Powah;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Consumer;
@@ -27,7 +31,7 @@ public class Entry {
     public Entry(String name, @Nullable Icon icon, Wiki wiki) {
         this.wiki = wiki;
         if (icon == null) {
-            List<Item> items = wiki.items.getSiblings(name);
+            List<Item> items = VarReg.getSiblingIds(name).stream().map(s -> ForgeRegistries.ITEMS.getValue(Powah.id(s))).toList();
             this.icon = items.isEmpty() ? null : new Icon(items.get(0));
             this.name = name;
         } else {

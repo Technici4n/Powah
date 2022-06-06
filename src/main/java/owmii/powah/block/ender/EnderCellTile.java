@@ -10,7 +10,7 @@ import owmii.powah.config.EnderCellConfig;
 
 public class EnderCellTile extends AbstractEnderTile<Tier, EnderCellConfig, EnderCellBlock> implements IOwnable, IInventoryHolder {
     public EnderCellTile(BlockPos pos, BlockState state, Tier variant) {
-        super(Tiles.ENDER_CELL, pos, state, variant);
+        super(Tiles.ENDER_CELL.get(), pos, state, variant);
         this.inv.add(3);
     }
 

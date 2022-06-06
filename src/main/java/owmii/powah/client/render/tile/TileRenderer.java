@@ -8,13 +8,13 @@ import owmii.powah.block.Tiles;
 
 public class TileRenderer {
     public static void register() {
-        BlockEntityRenderers.register(Tiles.CABLE, CableRenderer::new);
-        BlockEntityRenderers.register(Tiles.ENERGIZING_ORB, EnergizingOrbRenderer::new);
-        BlockEntityRenderers.register(Tiles.ENERGIZING_ROD, EnergizingRodRenderer::new);
-        BlockEntityRenderers.register(Tiles.FURNATOR, FurnatorRenderer::new);
-        BlockEntityRenderers.register(Tiles.MAGMATOR, MagmatorRenderer::new);
-        BlockEntityRenderers.register(Tiles.REACTOR, ReactorRenderer::new);
-        BlockEntityRenderers.register(Tiles.REACTOR_PART, ReactorPartRenderer::new);
+        BlockEntityRenderers.register(Tiles.CABLE.get(), CableRenderer::new);
+        BlockEntityRenderers.register(Tiles.ENERGIZING_ORB.get(), EnergizingOrbRenderer::new);
+        BlockEntityRenderers.register(Tiles.ENERGIZING_ROD.get(), EnergizingRodRenderer::new);
+        BlockEntityRenderers.register(Tiles.FURNATOR.get(), FurnatorRenderer::new);
+        BlockEntityRenderers.register(Tiles.MAGMATOR.get(), MagmatorRenderer::new);
+        BlockEntityRenderers.register(Tiles.REACTOR.get(), ReactorRenderer::new);
+        BlockEntityRenderers.register(Tiles.REACTOR_PART.get(), ReactorPartRenderer::new);
 
         TEItemRenderer.register(Blcks.REACTOR.getArr(Block[]::new));
     }

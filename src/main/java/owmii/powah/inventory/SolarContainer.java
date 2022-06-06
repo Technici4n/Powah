@@ -7,11 +7,11 @@ import owmii.powah.block.solar.SolarTile;
 
 public class SolarContainer extends AbstractEnergyContainer<SolarTile> {
     public SolarContainer(int id, Inventory inventory, FriendlyByteBuf buffer) {
-        super(Containers.SOLAR, id, inventory, buffer);
+        super(Containers.SOLAR.get(), id, inventory, buffer);
     }
 
     public SolarContainer(int id, Inventory inventory, SolarTile te) {
-        super(Containers.SOLAR, id, inventory, te);
+        super(Containers.SOLAR.get(), id, inventory, te);
     }
 
     public static SolarContainer create(int id, Inventory inventory, FriendlyByteBuf buffer) {

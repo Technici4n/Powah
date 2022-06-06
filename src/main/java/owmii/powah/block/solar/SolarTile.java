@@ -25,7 +25,7 @@ public class SolarTile extends AbstractEnergyProvider<Tier, SolarConfig, SolarBl
     private boolean hasLensOfEnder;
 
     public SolarTile(BlockPos pos, BlockState state, Tier variant) {
-        super(Tiles.SOLAR_PANEL, pos, state, variant);
+        super(Tiles.SOLAR_PANEL.get(), pos, state, variant);
         this.inv.add(1);
     }
 
@@ -74,7 +74,7 @@ public class SolarTile extends AbstractEnergyProvider<Tier, SolarConfig, SolarBl
         super.onRemoved(world, state, newState, isMoving);
         if (state.getBlock() != newState.getBlock()) {
             if (this.hasLensOfEnder) {
-                Block.popResource(world, this.worldPosition, new ItemStack(Itms.LENS_OF_ENDER));
+                Block.popResource(world, this.worldPosition, new ItemStack(Itms.LENS_OF_ENDER.get()));
             }
         }
     }

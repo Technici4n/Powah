@@ -38,11 +38,11 @@ public class BindingCardItem extends ItemBase {
     @Override
     public InteractionResult interactLivingEntity(ItemStack stack, net.minecraft.world.entity.player.Player playerIn, LivingEntity target, InteractionHand hand) {
         if (Configs.GENERAL.binding_card_dim.get()) {
-            if (this == Itms.BINDING_CARD) {
+            if (this == Itms.BINDING_CARD.get()) {
                 if (target.getClass() == EnderMan.class || target.getClass() == Endermite.class) {
                     if (!playerIn.level.isClientSide) {
                         ItemStack stack1 = playerIn.getItemInHand(hand);
-                        ItemStack stack2 = new ItemStack(Itms.BINDING_CARD_DIM);
+                        ItemStack stack2 = new ItemStack(Itms.BINDING_CARD_DIM.get());
                         CompoundTag nbt = Stack.getTagOrEmpty(stack1);
                         if (nbt.hasUUID("bound_player_id")) {
                             CompoundTag nbt1 = stack2.getOrCreateTag();

@@ -13,7 +13,7 @@ import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 
 public class EnderGateTile extends AbstractEnderTile<Tier, EnderGateConfig, EnderGateBlock> {
     public EnderGateTile(BlockPos pos, BlockState state, Tier variant) {
-        super(Tiles.ENDER_GATE, pos, state, variant);
+        super(Tiles.ENDER_GATE.get(), pos, state, variant);
         this.inv.add(3);
     }
 

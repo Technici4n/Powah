@@ -32,11 +32,6 @@ public class EnergizingRecipe implements Recipe<RecipeWrapper> {
     private final long energy;
     private final NonNullList<Ingredient> ingredients;
 
-
-    public EnergizingRecipe(ItemStack output, long energy, Ingredient... ingredients) {
-        this(ID, output, energy, NonNullList.of(Ingredient.EMPTY, ingredients));
-    }
-
     public EnergizingRecipe(ResourceLocation id, ItemStack output, long energy, Ingredient... ingredients) {
         this(id, output, energy, NonNullList.of(Ingredient.EMPTY, ingredients));
     }
@@ -94,12 +89,12 @@ public class EnergizingRecipe implements Recipe<RecipeWrapper> {
 
     @Override
     public RecipeSerializer<?> getSerializer() {
-        return Recipes.ENERGIZING_SERIALIZER;
+        return Recipes.ENERGIZING_SERIALIZER.get();
     }
 
     @Override
     public RecipeType<?> getType() {
-        return Recipes.ENERGIZING;
+        return Recipes.ENERGIZING.get();
     }
 
     public long getEnergy() {

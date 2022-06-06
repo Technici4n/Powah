@@ -1,6 +1,8 @@
 package owmii.powah.block;
 
 import net.minecraft.world.level.block.Block;
+import net.minecraftforge.registries.DeferredRegister;
+import net.minecraftforge.registries.ForgeRegistries;
 import owmii.lib.block.AbstractBlock;
 import owmii.lib.block.Properties;
 import owmii.lib.registry.Registry;
@@ -21,30 +23,33 @@ import owmii.powah.block.solar.SolarBlock;
 import owmii.powah.block.thermo.ThermoBlock;
 import owmii.powah.block.transmitter.PlayerTransmitterBlock;
 
+import java.util.function.Supplier;
+
 public class Blcks {
-    public static final Registry<Block> REG = new Registry<>(Block.class, Powah.MOD_ID);
-    public static final VarReg<Tier, Block> ENERGY_CELL = REG.getVar("energy_cell", variant -> new EnergyCellBlock(Properties.metalNoSolid(2.0f, 20.0f), variant), Tier.values());
-    public static final VarReg<Tier, Block> ENDER_CELL = REG.getVar("ender_cell", variant -> new EnderCellBlock(Properties.metalNoSolid(2.0f, 20.0f), variant), Tier.getNormalVariants());
-    public static final VarReg<Tier, Block> ENERGY_CABLE = REG.getVar("energy_cable", variant -> new CableBlock(Properties.metalNoSolid(2.0f, 20.0f).noCollission(), variant), Tier.getNormalVariants());
-    public static final VarReg<Tier, Block> ENDER_GATE = REG.getVar("ender_gate", variant -> new EnderGateBlock(Properties.metalNoSolid(2.0f, 20.0f).noCollission(), variant), Tier.getNormalVariants());
-    public static final Block ENERGIZING_ORB = REG.register("energizing_orb", new EnergizingOrbBlock(Properties.metalNoSolid(2.0f, 20.0f)));
-    public static final VarReg<Tier, Block> ENERGIZING_ROD = REG.getVar("energizing_rod", variant -> new EnergizingRodBlock(Properties.metalNoSolid(2.0f, 20.0f).noCollission(), variant), Tier.getNormalVariants());
-    public static final VarReg<Tier, Block> FURNATOR = REG.getVar("furnator", variant -> new FurnatorBlock(Properties.metalNoSolid(2.0f, 20.0f), variant), Tier.getNormalVariants());
-    public static final VarReg<Tier, Block> MAGMATOR = REG.getVar("magmator", variant -> new MagmatorBlock(Properties.metalNoSolid(2.0f, 20.0f), variant), Tier.getNormalVariants());
-    public static final VarReg<Tier, Block> THERMO_GENERATOR = REG.getVar("thermo_generator", variant -> new ThermoBlock(Properties.metalNoSolid(2.0f, 20.0f), variant), Tier.getNormalVariants());
-    public static final VarReg<Tier, Block> SOLAR_PANEL = REG.getVar("solar_panel", variant -> new SolarBlock(Properties.metalNoSolid(2.0f, 20.0f), variant), Tier.getNormalVariants());
-    public static final VarReg<Tier, Block> REACTOR = REG.getVar("reactor", variant -> new ReactorBlock(Properties.metalNoSolid(2.0f, 20.0f), variant), Tier.getNormalVariants());
-    public static final VarReg<Tier, Block> PLAYER_TRANSMITTER = REG.getVar("player_transmitter", variant -> new PlayerTransmitterBlock(Properties.metalNoSolid(2.0f, 20.0f), variant), Tier.getNormalVariants());
-    public static final VarReg<Tier, Block> ENERGY_HOPPER = REG.getVar("energy_hopper", variant -> new EnergyHopperBlock(Properties.metalNoSolid(2.0f, 20.0f), variant), Tier.getNormalVariants());
-    public static final VarReg<Tier, Block> ENERGY_DISCHARGER = REG.getVar("energy_discharger", variant -> new EnergyDischargerBlock(Properties.metalNoSolid(2.0f, 20.0f), variant), Tier.getNormalVariants());
-    public static final Block ENERGIZED_STEEL = REG.register("energized_steel_block", new AbstractBlock(Properties.metal(2.0f, 20.0f)));
-    public static final Block BLAZING_CRYSTAL = REG.register("blazing_crystal_block", new AbstractBlock(Properties.metal(2.0f, 20.0f)));
-    public static final Block NIOTIC_CRYSTAL = REG.register("niotic_crystal_block", new AbstractBlock(Properties.metal(2.0f, 20.0f)));
-    public static final Block SPIRITED_CRYSTAL = REG.register("spirited_crystal_block", new AbstractBlock(Properties.metal(2.0f, 20.0f)));
-    public static final Block NITRO_CRYSTAL = REG.register("nitro_crystal_block", new AbstractBlock(Properties.metal(2.0f, 20.0f)));
-    public static final Block URANINITE = REG.register("uraninite_block", new AbstractBlock(Properties.metal(2.0f, 20.0f)));
-    public static final Block URANINITE_ORE_POOR = REG.register("uraninite_ore_poor", new AbstractBlock(Properties.rock(3.0f, 8.0f)));
-    public static final Block URANINITE_ORE = REG.register("uraninite_ore", new AbstractBlock(Properties.rock(3.2f, 8.0f)));
-    public static final Block URANINITE_ORE_DENSE = REG.register("uraninite_ore_dense", new AbstractBlock(Properties.rock(4.0f, 8.0f)));
-    public static final Block DRY_ICE = REG.register("dry_ice", new AbstractBlock(Properties.rock(2.0f, 8.0f)));
+    public static final DeferredRegister<Block> DR = DeferredRegister.create(ForgeRegistries.BLOCKS, Powah.MOD_ID);
+
+    public static final VarReg<Tier, Block> ENERGY_CELL = new VarReg<>(DR, "energy_cell", variant -> new EnergyCellBlock(Properties.metalNoSolid(2.0f, 20.0f), variant), Tier.values());
+    public static final VarReg<Tier, Block> ENDER_CELL = new VarReg<>(DR, "ender_cell", variant -> new EnderCellBlock(Properties.metalNoSolid(2.0f, 20.0f), variant), Tier.getNormalVariants());
+    public static final VarReg<Tier, Block> ENERGY_CABLE = new VarReg<>(DR, "energy_cable", variant -> new CableBlock(Properties.metalNoSolid(2.0f, 20.0f).noCollission(), variant), Tier.getNormalVariants());
+    public static final VarReg<Tier, Block> ENDER_GATE = new VarReg<>(DR, "ender_gate", variant -> new EnderGateBlock(Properties.metalNoSolid(2.0f, 20.0f).noCollission(), variant), Tier.getNormalVariants());
+    public static final Supplier<Block> ENERGIZING_ORB = DR.register("energizing_orb", () -> new EnergizingOrbBlock(Properties.metalNoSolid(2.0f, 20.0f)));
+    public static final VarReg<Tier, Block> ENERGIZING_ROD = new VarReg<>(DR, "energizing_rod", variant -> new EnergizingRodBlock(Properties.metalNoSolid(2.0f, 20.0f).noCollission(), variant), Tier.getNormalVariants());
+    public static final VarReg<Tier, Block> FURNATOR = new VarReg<>(DR, "furnator", variant -> new FurnatorBlock(Properties.metalNoSolid(2.0f, 20.0f), variant), Tier.getNormalVariants());
+    public static final VarReg<Tier, Block> MAGMATOR = new VarReg<>(DR, "magmator", variant -> new MagmatorBlock(Properties.metalNoSolid(2.0f, 20.0f), variant), Tier.getNormalVariants());
+    public static final VarReg<Tier, Block> THERMO_GENERATOR = new VarReg<>(DR, "thermo_generator", variant -> new ThermoBlock(Properties.metalNoSolid(2.0f, 20.0f), variant), Tier.getNormalVariants());
+    public static final VarReg<Tier, Block> SOLAR_PANEL = new VarReg<>(DR, "solar_panel", variant -> new SolarBlock(Properties.metalNoSolid(2.0f, 20.0f), variant), Tier.getNormalVariants());
+    public static final VarReg<Tier, Block> REACTOR = new VarReg<>(DR, "reactor", variant -> new ReactorBlock(Properties.metalNoSolid(2.0f, 20.0f), variant), Tier.getNormalVariants());
+    public static final VarReg<Tier, Block> PLAYER_TRANSMITTER = new VarReg<>(DR, "player_transmitter", variant -> new PlayerTransmitterBlock(Properties.metalNoSolid(2.0f, 20.0f), variant), Tier.getNormalVariants());
+    public static final VarReg<Tier, Block> ENERGY_HOPPER = new VarReg<>(DR, "energy_hopper", variant -> new EnergyHopperBlock(Properties.metalNoSolid(2.0f, 20.0f), variant), Tier.getNormalVariants());
+    public static final VarReg<Tier, Block> ENERGY_DISCHARGER = new VarReg<>(DR, "energy_discharger", variant -> new EnergyDischargerBlock(Properties.metalNoSolid(2.0f, 20.0f), variant), Tier.getNormalVariants());
+    public static final Supplier<Block> ENERGIZED_STEEL = DR.register("energized_steel_block", () -> new AbstractBlock(Properties.metal(2.0f, 20.0f)));
+    public static final Supplier<Block> BLAZING_CRYSTAL = DR.register("blazing_crystal_block", () -> new AbstractBlock(Properties.metal(2.0f, 20.0f)));
+    public static final Supplier<Block> NIOTIC_CRYSTAL = DR.register("niotic_crystal_block", () -> new AbstractBlock(Properties.metal(2.0f, 20.0f)));
+    public static final Supplier<Block> SPIRITED_CRYSTAL = DR.register("spirited_crystal_block", () -> new AbstractBlock(Properties.metal(2.0f, 20.0f)));
+    public static final Supplier<Block> NITRO_CRYSTAL = DR.register("nitro_crystal_block", () -> new AbstractBlock(Properties.metal(2.0f, 20.0f)));
+    public static final Supplier<Block> URANINITE = DR.register("uraninite_block", () -> new AbstractBlock(Properties.metal(2.0f, 20.0f)));
+    public static final Supplier<Block> URANINITE_ORE_POOR = DR.register("uraninite_ore_poor", () -> new AbstractBlock(Properties.rock(3.0f, 8.0f)));
+    public static final Supplier<Block> URANINITE_ORE = DR.register("uraninite_ore", () -> new AbstractBlock(Properties.rock(3.2f, 8.0f)));
+    public static final Supplier<Block> URANINITE_ORE_DENSE = DR.register("uraninite_ore_dense", () -> new AbstractBlock(Properties.rock(4.0f, 8.0f)));
+    public static final Supplier<Block> DRY_ICE = DR.register("dry_ice", () -> new AbstractBlock(Properties.rock(2.0f, 8.0f)));
 }

@@ -27,7 +27,7 @@ public class EnergizingCategory implements IRecipeCategory<EnergizingRecipe> {
 
     public EnergizingCategory(IGuiHelper guiHelper) {
         this.background = guiHelper.drawableBuilder(GUI_BACK, 0, 0, 160, 38).addPadding(1, 0, 0, 0).build();
-        this.icon = guiHelper.createDrawableIngredient(new ItemStack(Blcks.ENERGIZING_ORB));
+        this.icon = guiHelper.createDrawableIngredient(new ItemStack(Blcks.ENERGIZING_ORB.get()));
     }
 
     @Override

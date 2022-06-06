@@ -8,11 +8,11 @@ import owmii.powah.block.furnator.FurnatorTile;
 
 public class FurnatorContainer extends AbstractEnergyContainer<FurnatorTile> {
     public FurnatorContainer(int id, Inventory inventory, FriendlyByteBuf buffer) {
-        super(Containers.FURNATOR, id, inventory, buffer);
+        super(Containers.FURNATOR.get(), id, inventory, buffer);
     }
 
     public FurnatorContainer(int id, Inventory inventory, FurnatorTile te) {
-        super(Containers.FURNATOR, id, inventory, te);
+        super(Containers.FURNATOR.get(), id, inventory, te);
     }
 
     public static FurnatorContainer create(int id, Inventory inventory, FriendlyByteBuf buffer) {

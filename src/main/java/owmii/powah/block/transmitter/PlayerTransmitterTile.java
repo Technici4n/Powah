@@ -22,7 +22,7 @@ import net.minecraft.world.level.Level;
 public class PlayerTransmitterTile extends AbstractEnergyStorage<Tier, PlayerTransmitterConfig, PlayerTransmitterBlock> implements IInventoryHolder {
 
     public PlayerTransmitterTile(BlockPos pos, BlockState state, Tier variant) {
-        super(Tiles.PLAYER_TRANSMITTER, pos, state, variant);
+        super(Tiles.PLAYER_TRANSMITTER.get(), pos, state, variant);
         this.inv.add(1);
     }
 

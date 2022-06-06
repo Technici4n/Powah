@@ -8,11 +8,11 @@ import owmii.powah.block.ender.AbstractEnderTile;
 
 public class EnderCellContainer extends AbstractEnergyContainer<AbstractEnderTile<?, ?, ?>> {
     public EnderCellContainer(int id, Inventory inventory, FriendlyByteBuf buffer) {
-        super(Containers.ENDER_CELL, id, inventory, buffer);
+        super(Containers.ENDER_CELL.get(), id, inventory, buffer);
     }
 
     public EnderCellContainer(int id, Inventory inventory, AbstractEnderTile te) {
-        super(Containers.ENDER_CELL, id, inventory, te);
+        super(Containers.ENDER_CELL.get(), id, inventory, te);
     }
 
     public static EnderCellContainer create(int id, Inventory inventory, FriendlyByteBuf buffer) {

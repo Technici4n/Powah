@@ -23,7 +23,7 @@ public class ReactorPartTile extends AbstractTileEntity<Tier, ReactorBlock> {
     private boolean built;
 
     public ReactorPartTile(BlockPos pos, BlockState state, Tier variant) {
-        super(Tiles.REACTOR_PART, pos, state, variant);
+        super(Tiles.REACTOR_PART.get(), pos, state, variant);
     }
 
     public ReactorPartTile(BlockPos pos, BlockState state) {

@@ -17,7 +17,7 @@ import net.minecraft.world.level.Level;
 
 public class EnergyCellTile extends AbstractEnergyStorage<Tier, EnergyCellConfig, EnergyCellBlock> implements IInventoryHolder {
     public EnergyCellTile(BlockPos pos, BlockState state, Tier tier) {
-        super(Tiles.ENERGY_CELL, pos, state, tier);
+        super(Tiles.ENERGY_CELL.get(), pos, state, tier);
         this.inv.add(2);
     }
 

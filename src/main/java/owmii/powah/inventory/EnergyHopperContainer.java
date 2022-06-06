@@ -7,11 +7,11 @@ import owmii.powah.block.hopper.EnergyHopperTile;
 
 public class EnergyHopperContainer extends AbstractEnergyContainer<EnergyHopperTile> {
     public EnergyHopperContainer(int id, Inventory inventory, FriendlyByteBuf buffer) {
-        super(Containers.ENERGY_HOPPER, id, inventory, buffer);
+        super(Containers.ENERGY_HOPPER.get(), id, inventory, buffer);
     }
 
     public EnergyHopperContainer(int id, Inventory inventory, EnergyHopperTile te) {
-        super(Containers.ENERGY_HOPPER, id, inventory, te);
+        super(Containers.ENERGY_HOPPER.get(), id, inventory, te);
     }
 
     public static EnergyHopperContainer create(int id, Inventory inventory, FriendlyByteBuf buffer) {

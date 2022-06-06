@@ -8,11 +8,11 @@ import owmii.powah.block.transmitter.PlayerTransmitterTile;
 
 public class PlayerTransmitterContainer extends AbstractEnergyContainer<PlayerTransmitterTile> {
     public PlayerTransmitterContainer(int id, Inventory inventory, FriendlyByteBuf buffer) {
-        super(Containers.PLAYER_TRANSMITTER, id, inventory, buffer);
+        super(Containers.PLAYER_TRANSMITTER.get(), id, inventory, buffer);
     }
 
     public PlayerTransmitterContainer(int id, Inventory inventory, PlayerTransmitterTile te) {
-        super(Containers.PLAYER_TRANSMITTER, id, inventory, te);
+        super(Containers.PLAYER_TRANSMITTER.get(), id, inventory, te);
     }
 
     public static PlayerTransmitterContainer create(int id, Inventory inventory, FriendlyByteBuf buffer) {

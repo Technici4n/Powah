@@ -17,7 +17,7 @@ import owmii.powah.config.EnergyHopperConfig;
 
 public class EnergyHopperTile extends AbstractEnergyStorage<Tier, EnergyHopperConfig, EnergyHopperBlock> implements IInventoryHolder {
     public EnergyHopperTile(BlockPos pos, BlockState state, Tier variant) {
-        super(Tiles.ENERGY_HOPPER, pos, state, variant);
+        super(Tiles.ENERGY_HOPPER.get(), pos, state, variant);
     }
 
     public EnergyHopperTile(BlockPos pos, BlockState state) {

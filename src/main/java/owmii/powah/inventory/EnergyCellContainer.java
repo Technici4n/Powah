@@ -8,11 +8,11 @@ import owmii.powah.block.energycell.EnergyCellTile;
 
 public class EnergyCellContainer extends AbstractEnergyContainer<EnergyCellTile> {
     public EnergyCellContainer(int id, Inventory inventory, FriendlyByteBuf buffer) {
-        super(Containers.ENERGY_CELL, id, inventory, buffer);
+        super(Containers.ENERGY_CELL.get(), id, inventory, buffer);
     }
 
     public EnergyCellContainer(int id, Inventory inventory, EnergyCellTile te) {
-        super(Containers.ENERGY_CELL, id, inventory, te);
+        super(Containers.ENERGY_CELL.get(), id, inventory, te);
     }
 
     public static EnergyCellContainer create(int id, Inventory inventory, FriendlyByteBuf buffer) {
