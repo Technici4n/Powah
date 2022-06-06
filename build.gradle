@@ -54,18 +54,29 @@ dependencies {
 loom {
     silentMojangMappingsLicense()
 
+    runs {
+        data {
+            data()
+        }
+    }
+
     forge {
         accessTransformer("src/main/resources/META-INF/accesstransformer.cfg")
+
+        dataGen {
+            mod "powah"
+        }
     }
 }
 
+/*
 sourceSets {
     main {
         resources {
             srcDir "src/generated/resources"
         }
     }
-}
+}*/
 
 processResources {
     inputs.property "version", project.version

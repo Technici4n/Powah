@@ -3,6 +3,7 @@ package owmii.lib.client.screen;
 import com.mojang.blaze3d.platform.InputConstants;
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.components.AbstractButton;
 import net.minecraft.client.gui.components.AbstractWidget;
 import net.minecraft.client.gui.components.Widget;
 import net.minecraft.client.gui.screens.Screen;
@@ -29,8 +30,13 @@ public class ScreenBase extends Screen {
     @Override
     public void render(PoseStack matrix, int mx, int my, float pt) {
         super.render(matrix, mx, my, pt);
-        if (getFocused() instanceof AbstractWidget widget) {
-            widget.renderToolTip(matrix, mx, my);
+        for (var widget : renderables) {
+            if (getFocused() != null && getFocused() != widget) {
+                continue;
+            }
+            if (widget instanceof AbstractWidget aw && aw.isHoveredOrFocused()) {
+                aw.renderToolTip(matrix, mx, my);
+            }
         }
     }
 

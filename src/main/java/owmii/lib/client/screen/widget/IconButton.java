@@ -93,8 +93,6 @@ public class IconButton extends Button {
                 globalStack.translate(this.xOffset + this.x - 8.0D + this.width / 2.0F, this.yOffset + this.y - 8.0D + this.height / 2.0F, 0.0F);
                 mc.getItemRenderer().renderAndDecorateItem(this.stack, 0, 0);
                 globalStack.popPose();
-
-                // TODO: not sure if this "cleanup" call is needed or not?
                 RenderSystem.applyModelViewMatrix();
             }
         }

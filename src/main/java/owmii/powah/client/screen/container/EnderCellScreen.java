@@ -85,10 +85,7 @@ public class EnderCellScreen extends AbstractEnergyScreen<AbstractEnderTile<?, ?
             long cap = e.getExtendedCapacity(stack);
             long newCap = energy.getCapacity() + cap;
             if (cap > 0 && cap <= Energy.MAX && newCap > 0 && newCap <= Energy.MAX) {
-                // TODO PORT
-                //Lighting.turnOff();
                 Texture.SLOT_HIGHLIGHT_BG.draw(matrix, slot.x, slot.y);
-                Lighting.setupFor3DItems();
             }
         }
         super.renderSlot(matrix, slot);

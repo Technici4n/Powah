@@ -1,4 +1,4 @@
-package owmii.powah.handler.event;
+package owmii.powah.data;
 
 import net.minecraft.data.DataGenerator;
 import net.minecraftforge.eventbus.api.SubscribeEvent;

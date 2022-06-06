@@ -8,7 +8,6 @@ import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraftforge.client.gui.GuiUtils;
 import owmii.lib.logistics.energy.Energy;
 
-// TODO PORT fix everything that's commented
 public class Draw {
     public static void gaugeV(TextureAtlasSprite sprite, int x, int y, int w, int h, int cap, int cur) {
         if (cap > 0 && cur > 0) {
@@ -40,24 +39,6 @@ public class Draw {
         }
     }
 
-    public static void gaugeV(int x, int y, int w, int h, int uvX, int uvY, double cap, double cur) {
-        if (cap > 0 && cur > 0) {
-            int i = (int) (((float) cur / cap) * h);
-            //GuiUtils.drawTexturedModalRect(x, y + h - i, uvX, uvY + h - i, w, i, 0);
-        }
-    }
-
-    public static void gaugeV(int x, int y, int w, int h, int uvX, int uvY, Energy energy) {
-        gaugeV(x, y, w, h, uvX, uvY, energy.getCapacity(), energy.getStored());
-    }
-
-    public static void gaugeV(int x, int y, int w, int h, int uvX, int uvY, long cap, long cur) {
-        if (cap > 0 && cur > 0) {
-            int i = (int) (((float) cur / cap) * h);
-            //GuiUtils.drawTexturedModalRect(x, y + h - i, uvX, uvY + h - i, w, i, 0);
-        }
-    }
-
     public static void gaugeH(int x, int y, int w, int h, int uvX, int uvY, Energy energy) {
         gaugeH(x, y, w, h, uvX, uvY, energy.getCapacity(), energy.getStored());
     }
@@ -73,7 +54,6 @@ public class Draw {
             buffer.vertex(x + w, y, 0).uv(uvX + w, uvY).endVertex();
             buffer.vertex(x, y, 0).uv(uvX, uvY).endVertex();
             tessellator.end();
-            //GuiUtils.drawTexturedModalRect(x, y, uvX, uvY, i, h, 0);
         }
     }
 }

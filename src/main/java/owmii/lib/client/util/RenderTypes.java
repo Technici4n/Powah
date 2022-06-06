@@ -35,8 +35,6 @@ public class RenderTypes extends RenderType {
         CompositeState state = CompositeState.builder().setTextureState(new TextureStateShard(location, false, false))
                 .setTransparencyState(BLENDED_NO_DEPT)
                 .setShaderState(RenderStateShard.POSITION_COLOR_TEX_SHADER)
-                // TODO PORT
-                //.setDiffuseLightingState(DIFFUSE_LIGHTING).setAlphaState(DEFAULT_ALPHA)
                 .setCullState(NO_CULL)
                 .setLightmapState(NO_LIGHTMAP).createCompositeState(true);
         return create("blend_bo_dept", DefaultVertexFormat.POSITION_COLOR_TEX, VertexFormat.Mode.QUADS, 256, true, true, state);
@@ -45,8 +43,6 @@ public class RenderTypes extends RenderType {
     public static RenderType getTextBlended(ResourceLocation locationIn) {
         CompositeState state = CompositeState.builder().setTextureState(new RenderStateShard.TextureStateShard(locationIn, false, false))
                 .setShaderState(RenderStateShard.RENDERTYPE_TEXT_SHADER)
-                // TODO PORT
-                //.setAlphaState(DEFAULT_ALPHA)
                 .setTransparencyState(BLENDED)
                 .setLightmapState(NO_LIGHTMAP).createCompositeState(false);
         return create("text_blended", DefaultVertexFormat.POSITION_COLOR_TEX_LIGHTMAP, VertexFormat.Mode.QUADS, 256, false, true, state);

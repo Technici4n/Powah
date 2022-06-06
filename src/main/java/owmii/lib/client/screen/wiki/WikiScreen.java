@@ -84,7 +84,7 @@ public class WikiScreen extends ScreenBase {
     }
 
     public static void open(Entry entry) {
-        if (last != null) {
+        if (last != null && false) {
             MC.open(last);
         } else MC.open(new WikiScreen(entry.getSections().get(0)));
     }

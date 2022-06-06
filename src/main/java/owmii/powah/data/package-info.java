@@ -1,4 +1,4 @@
 @NonnullDefault
-package owmii.powah.handler;
+package owmii.powah.data;
 
 import org.lwjgl.system.NonnullDefault;

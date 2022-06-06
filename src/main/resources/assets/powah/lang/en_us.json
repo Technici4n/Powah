@@ -250,8 +250,8 @@
   "wiki.powah.lens_of_ender": "Lens Of Ender",
   "wiki.powah.lens_of_ender_0": "When Applying a Lens Of Ender to a Solar Panel will make it see through blocks.",
   "wiki.powah.uraninite": "Uraninite Ore",
-  "wiki.powah.uraninite_0": "Uraninite Ore is an ore rarely found underground at levels 1 - 64 for poor, at levels 1 - 32 for the normal, and at levels 1 - 16 for dense, and is found in 1 - 4 block deposits.",
+  "wiki.powah.uraninite_0": "Uraninite Ore is an ore rarely found underground at levels below 64 for poor, below 20 for the normal, and below 0 for dense, and is found in 1 - 5 block deposits.",
   "wiki.powah.uraninite_1": "An iron or better pickaxe is needed to mine it, and when mined it will drop 1 piece of Raw Uraninite based on the ore type (the amount dropped are effected by fortune).",
   "wiki.powah.dry_ice": "Dry Ice",
-  "wiki.powah.dry_ice_0": "Dry Ice used mainly to cool down reactors, it can be found underground at levels 1 - 64, you can also obtain it by energizing two pieces of blue ice."
+  "wiki.powah.dry_ice_0": "Dry Ice used mainly to cool down reactors, it can be found underground at levels below 64, you can also obtain it by energizing two pieces of blue ice."
 }

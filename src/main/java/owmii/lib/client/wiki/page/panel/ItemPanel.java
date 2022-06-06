@@ -16,6 +16,8 @@ import owmii.lib.client.screen.widget.IconButton;
 import owmii.lib.client.screen.wiki.WikiScreen;
 import owmii.lib.client.util.MC;
 import owmii.lib.client.wiki.Section;
+import owmii.lib.item.IItem;
+import owmii.lib.registry.IVariantEntry;
 import owmii.lib.registry.VarReg;
 import owmii.powah.Powah;
 
@@ -54,6 +56,9 @@ public class ItemPanel<T extends ItemLike> extends Panel {
             return new ItemLike[0];
         } else {
             var id = item.asItem().getRegistryName();
+            if (item instanceof IVariantEntry variantEntry) {
+                id = variantEntry.getSiblingsKey(variantEntry);
+            }
             return VarReg.getSiblingIds(Objects.requireNonNull(id).getPath()).stream().map(rl -> ForgeRegistries.ITEMS.getValue(Powah.id(rl))).toArray(ItemLike[]::new);
         }
     }
@@ -97,10 +102,12 @@ public class ItemPanel<T extends ItemLike> extends Panel {
         var globalStack = RenderSystem.getModelViewStack();
         globalStack.pushPose();
         globalStack.translate(x + 4 + 161 / 2.0F - 42 / 2.0F, y + 4 + 10, 0);
+        RenderSystem.applyModelViewMatrix();
         Texture.WIKI_BIG_FRM.draw(matrix, -4, -4);
         globalStack.scale(2.1f, 2.1f, 1);
         Minecraft.getInstance().getItemRenderer().renderAndDecorateItem(stack, 0, 0);
         globalStack.popPose();
+        RenderSystem.applyModelViewMatrix();
         String s = stack.getHoverName().getString();
         font.draw(matrix, s, x + 161 / 2.0F - font.width(s) / 2.0F, y + 61, 0x2D3F48);
     }

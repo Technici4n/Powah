@@ -89,9 +89,14 @@ public class CraftingPanel<T extends ItemLike> extends ItemPanel<T> {
                         int id = j + i * 3;
                         Ingredient ingredient = ingredients.get(id);
                         ItemStack[] stacks = ingredient.getItems();
+
                         var globalStack = RenderSystem.getModelViewStack();
                         globalStack.pushPose();
+                        matrix.pushPose();
+
                         globalStack.translate(x + 24 + j * 40, y + 90 + i * 40, 0);
+                        matrix.translate(x + 24 + j * 40, y + 90 + i * 40, 0);
+
                         Texture.WIKI_RCP_FRM.draw(matrix, 0, 0);
                         if (stacks.length > 0) {
                             boolean b = ingredients1.size() == 4 && id == 2;
@@ -103,8 +108,9 @@ public class CraftingPanel<T extends ItemLike> extends ItemPanel<T> {
                             }
                             Minecraft.getInstance().getItemRenderer().renderAndDecorateItem(stack, 0, 0);
                         }
+
                         globalStack.popPose();
-                        // TODO: is the cleanup call necessary here?
+                        matrix.popPose();
                         RenderSystem.applyModelViewMatrix();
                     }
                 }

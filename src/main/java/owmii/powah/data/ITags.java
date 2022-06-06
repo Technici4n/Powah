@@ -1,4 +1,4 @@
-package owmii.powah.handler;
+package owmii.powah.data;
 
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.BlockTags;
@@ -17,8 +17,6 @@ public class ITags {
         public static final TagKey<Block> ICES_BLUE = tag("ices/blue");
         public static final TagKey<Block> ICES_DRY = tag("ices/dry");
         public static final TagKey<Block> URANINITE_ORE = tag("ores/uraninite");
-        public static final TagKey<Block> URANINITE_ORE_POOR = tag("ores/uraninite_poor");
-        public static final TagKey<Block> URANINITE_ORE_DENSE = tag("ores/uraninite_dense");
         public static final TagKey<Block> URANINITE_BLOCK = tag("storage_blocks/uraninite");
 
         private static TagKey<Block> tag(String name) {
@@ -34,8 +32,6 @@ public class ITags {
         public static final TagKey<Item> ICES_BLUE = tag("ices/blue");
         public static final TagKey<Item> ICES_DRY = tag("ices/dry");
         public static final TagKey<Item> URANINITE_ORE = tag("ores/uraninite");
-        public static final TagKey<Item> URANINITE_ORE_POOR = tag("ores/uraninite_poor");
-        public static final TagKey<Item> URANINITE_ORE_DENSE = tag("ores/uraninite_dense");
         public static final TagKey<Item> URANINITE_BLOCK = tag("storage_blocks/uraninite");
 
         private static TagKey<Item> tag(String name) {

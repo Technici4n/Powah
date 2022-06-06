@@ -71,5 +71,6 @@ public class WelcomePanel extends Panel {
             font.draw(matrix, s4, x + 161 / 2.0F - font.width(s4) / 2.0F, y + 115, 0x777777);
         }
         globalStack.popPose();
+        RenderSystem.applyModelViewMatrix();
     }
 }
