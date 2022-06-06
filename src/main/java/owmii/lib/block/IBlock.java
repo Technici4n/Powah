@@ -36,13 +36,9 @@ public interface IBlock<V extends IVariant, B extends Block & IBlock<V, B>> exte
     @Nullable
     @Override
     default <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level level, BlockState state, BlockEntityType<T> blockEntityType) {
-        if (newBlockEntity(BlockPos.ZERO, state) != null) {
+        if (newBlockEntity(BlockPos.ZERO, state) instanceof AbstractTickableTile<?,?>) {
             return (l, p, s, be) -> ((AbstractTickableTile<?, ?>) be).tick();
         }
         return null;
-    }
-
-    @OnlyIn(Dist.CLIENT)
-    default void renderByItem(ItemStack stack, PoseStack matrix, MultiBufferSource rtb, int light, int ov) {
     }
 }

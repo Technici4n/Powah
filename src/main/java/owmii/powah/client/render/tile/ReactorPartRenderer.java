@@ -14,12 +14,14 @@ import owmii.lib.client.model.CubeModel;
 import owmii.lib.client.renderer.tile.AbstractTileRenderer;
 import owmii.powah.Powah;
 import owmii.powah.block.reactor.ReactorPartTile;
+import owmii.powah.client.model.PowahLayerDefinitions;
 
 public class ReactorPartRenderer extends AbstractTileRenderer<ReactorPartTile> {
-    public static final CubeModel CUBE_MODEL = new CubeModel(16, RenderType::entitySolid);
+    private final CubeModel reactorPartModel;
 
     protected ReactorPartRenderer(BlockEntityRendererProvider.Context context) {
         super(context);
+        reactorPartModel = new CubeModel(RenderType::entitySolid, context.bakeLayer(PowahLayerDefinitions.REACTOR_PART));
     }
 
     @Override
@@ -28,8 +30,8 @@ public class ReactorPartRenderer extends AbstractTileRenderer<ReactorPartTile> {
         matrix.pushPose();
         matrix.translate(0.5, 0.5, 0.5);
         matrix.scale(1.0f, -1.0f, -1.0f);
-        VertexConsumer buffer = rtb.getBuffer(CUBE_MODEL.renderType(new ResourceLocation(Powah.MOD_ID, "textures/model/tile/reactor_block_" + te.getVariant().getName() + ".png")));
-        CUBE_MODEL.renderToBuffer(matrix, buffer, light, ov, 1.0F, 1.0F, 1.0F, 1.0F);
+        VertexConsumer buffer = rtb.getBuffer(reactorPartModel.renderType(new ResourceLocation(Powah.MOD_ID, "textures/model/tile/reactor_block_" + te.getVariant().getName() + ".png")));
+        reactorPartModel.renderToBuffer(matrix, buffer, light, ov, 1.0F, 1.0F, 1.0F, 1.0F);
         matrix.popPose();
     }
 }

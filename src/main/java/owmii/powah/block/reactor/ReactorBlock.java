@@ -138,17 +138,6 @@ public class ReactorBlock extends AbstractGeneratorBlock<Tier, ReactorConfig, Re
     }
 
     @Override
-    @OnlyIn(Dist.CLIENT)
-    public void renderByItem(ItemStack stack, PoseStack matrix, MultiBufferSource rtb, int light, int ov) {
-        matrix.pushPose();
-        matrix.translate(0.5D, 0.5D, 0.5D);
-        matrix.scale(1.0F, -1.0F, -1.0F);
-        VertexConsumer buffer = rtb.getBuffer(ReactorRenderer.CUBE_MODEL.renderType(new ResourceLocation(Powah.MOD_ID, "textures/model/tile/reactor_block_" + getVariant().getName() + ".png")));
-        ReactorRenderer.CUBE_MODEL.renderToBuffer(matrix, buffer, light, ov, 1.0F, 1.0F, 1.0F, 1.0F);
-        matrix.popPose();
-    }
-
-    @Override
     public void additionalEnergyInfo(ItemStack stack, Energy.Item energy, List<Component> tooltip) {
         tooltip.add(new TranslatableComponent("info.powah.generation.factor").withStyle(ChatFormatting.GRAY).append(Text.COLON).append(new TextComponent(Util.numFormat(getConfig().getGeneration(this.variant))).append(new TranslatableComponent("info.lollipop.fe.pet.tick")).withStyle(ChatFormatting.DARK_GRAY)));
     }

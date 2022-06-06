@@ -13,10 +13,6 @@ import net.minecraftforge.common.extensions.IForgeItem;
 import owmii.lib.data.ItemModelType;
 
 public interface IItem extends IForgeItem {
-    @OnlyIn(Dist.CLIENT)
-    default void renderByItem(ItemStack stack, PoseStack matrix, MultiBufferSource rtb, int light, int ov) {
-    }
-
     default ItemModelType getItemModelType() {
         return this instanceof DiggerItem ? ItemModelType.HANDHELD : ItemModelType.GENERATED;
     }

@@ -5,7 +5,6 @@ import net.minecraft.world.item.Item;
 import net.minecraftforge.fml.ModList;
 import net.minecraftforge.fml.loading.FMLPaths;
 import net.minecraftforge.forgespi.language.IModInfo;
-import owmii.lib.registry.Registry;
 
 import javax.annotation.Nullable;
 import java.io.BufferedWriter;
@@ -15,12 +14,6 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 
 public class DevUtil {
-    public static void genItemModels(Registry<? extends Item> registry) {
-        registry.forEach(item -> {
-            DevUtil.genItemModel(item.getRegistryName());
-        });
-    }
-
     public static void genItemModel(@Nullable ResourceLocation location) {
         if (location != null) {
             String domain = location.getNamespace();

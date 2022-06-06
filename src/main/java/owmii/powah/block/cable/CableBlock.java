@@ -102,9 +102,7 @@ public class CableBlock extends AbstractEnergyBlock<Tier, CableConfig, CableBloc
 
     @Override
     public BlockState updateShape(BlockState state, Direction facing, BlockState facingState, LevelAccessor world, BlockPos currentPos, BlockPos facingPos) {
-        BlockEntity tileEntity = world.getBlockEntity(currentPos);
-        if (tileEntity instanceof CableTile) {
-            CableTile cable = (CableTile) tileEntity;
+        if (world.getBlockEntity(currentPos) instanceof CableTile cable) {
             cable.energySides.clear();
             for (Direction direction : Direction.values()) {
                 if (canConnectEnergy(world, currentPos, direction)) {
@@ -136,8 +134,7 @@ public class CableBlock extends AbstractEnergyBlock<Tier, CableConfig, CableBloc
             tile = true;
         } else {
             BlockEntity tileEntity = world.getBlockEntity(pos);
-            if (tileEntity instanceof CableTile) {
-                CableTile cable = (CableTile) tileEntity;
+            if (tileEntity instanceof CableTile cable) {
                 cable.getInventory().drop((Level) world, pos);
                 cable.setRemoved();
             }
@@ -175,8 +172,7 @@ public class CableBlock extends AbstractEnergyBlock<Tier, CableConfig, CableBloc
         super.setPlacedBy(world, pos, state, placer, stack);
         if (world.isClientSide) return;
         BlockEntity tileEntity = world.getBlockEntity(pos);
-        if (tileEntity instanceof CableTile) {
-            CableTile cable = (CableTile) tileEntity;
+        if (tileEntity instanceof CableTile cable) {
             for (Direction direction : Direction.values()) {
                 if (cable.canExtractEnergy(direction)) {
                     cable.search(this, direction);
@@ -190,8 +186,7 @@ public class CableBlock extends AbstractEnergyBlock<Tier, CableConfig, CableBloc
     @Override
     public void onPlace(BlockState state, Level world, BlockPos pos, BlockState oldState, boolean isMoving) {
         BlockEntity tileEntity = world.getBlockEntity(pos);
-        if (tileEntity instanceof CableTile) {
-            CableTile cable = (CableTile) tileEntity;
+        if (tileEntity instanceof CableTile cable) {
             cable.energySides.clear();
             for (Direction direction : Direction.values()) {
                 if (canConnectEnergy(world, pos, direction)) {
@@ -251,8 +246,7 @@ public class CableBlock extends AbstractEnergyBlock<Tier, CableConfig, CableBloc
                 BlockState state = world.getBlockState(blockPos);
                 if (state.getBlock() == this) {
                     BlockEntity tileEntity = world.getBlockEntity(blockPos);
-                    if (tileEntity instanceof CableTile) {
-                        CableTile cable = (CableTile) tileEntity;
+                    if (tileEntity instanceof CableTile cable) {
                         for (Direction side : Direction.values()) {
                             cable.proxyMap.get(side).cables().clear();
                             cable.search(this, side);

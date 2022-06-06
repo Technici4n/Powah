@@ -5,7 +5,6 @@ import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 import owmii.lib.block.AbstractBlock;
 import owmii.lib.block.Properties;
-import owmii.lib.registry.Registry;
 import owmii.lib.registry.VarReg;
 import owmii.powah.Powah;
 import owmii.powah.block.cable.CableBlock;

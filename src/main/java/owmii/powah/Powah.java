@@ -4,6 +4,7 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.levelgen.feature.Feature;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.eventbus.api.GenericEvent;
 import net.minecraftforge.fml.common.Mod;
@@ -31,6 +32,7 @@ import owmii.powah.item.ItemGroups;
 import owmii.powah.item.Itms;
 import owmii.powah.network.Packets;
 import owmii.powah.recipe.Recipes;
+import owmii.powah.world.gen.WorldGen;
 
 import javax.annotation.Nullable;
 import java.util.function.Consumer;
@@ -50,7 +52,6 @@ public class Powah implements IMod {
         modEventBus.addListener(Lollipop::setup);
 
         Blcks.DR.register(modEventBus);
-        // TODO: register block items, somehow
         Tiles.DR.register(modEventBus);
         modEventBus.addGenericListener(Item.class, (RegistryEvent.Register<Item> event) -> {
             for (var block : ForgeRegistries.BLOCKS.getValues()) {
@@ -66,6 +67,7 @@ public class Powah implements IMod {
         Entities.DR.register(modEventBus);
         Recipes.DR_SERIALIZER.register(modEventBus);
         Recipes.DR_TYPE.register(modEventBus);
+        modEventBus.addGenericListener(Feature.class, WorldGen::register);
 
         loadListeners();
         Configs.register();

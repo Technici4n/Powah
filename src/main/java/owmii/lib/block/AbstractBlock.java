@@ -7,7 +7,6 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.stats.Stats;
-import net.minecraft.util.*;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.MenuProvider;
@@ -37,25 +36,19 @@ import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
 import net.minecraftforge.network.NetworkHooks;
 import owmii.lib.logistics.inventory.AbstractContainer;
-import owmii.lib.registry.IRegistryObject;
 import owmii.lib.registry.IVariant;
 import owmii.lib.registry.IVariantEntry;
-import owmii.lib.registry.Registry;
 
 import javax.annotation.Nullable;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import static net.minecraft.world.level.block.state.properties.BlockStateProperties.*;
 
-public class AbstractBlock<V extends IVariant, B extends AbstractBlock<V, B>> extends Block implements IVariantEntry<V, B>, IBlock<V, B>, IRegistryObject<Block>, EntityBlock {
+public class AbstractBlock<V extends IVariant, B extends AbstractBlock<V, B>> extends Block implements IVariantEntry<V, B>, IBlock<V, B>, EntityBlock {
     public static final VoxelShape SEMI_FULL_SHAPE = box(0.01D, 0.01D, 0.01D, 15.99D, 15.99D, 15.99D);
     protected final Map<Direction, VoxelShape> shapes = new HashMap<>();
     protected final V variant;
-
-    @SuppressWarnings("NullableProblems")
-    private Registry<Block> registry;
 
     public AbstractBlock(Properties properties) {
         this(properties, IVariant.getEmpty());
@@ -72,6 +65,10 @@ public class AbstractBlock<V extends IVariant, B extends AbstractBlock<V, B>> ex
         this.shapes.put(Direction.WEST, Shapes.block());
     }
 
+    public static VoxelShape box(double x1, double y1, double z1, double x2, double y2, double z2) {
+        return Block.box(Math.min(x1, x2), Math.min(y1, y2), Math.min(z1, z2), Math.max(x1, x2), Math.max(y1, y2), Math.max(z1, z2));
+    }
+
     @Override
     public VoxelShape getShape(BlockState state, BlockGetter worldIn, BlockPos pos, CollisionContext context) {
         if (!this.shapes.isEmpty() && !getFacing().equals(Facing.NONE)) {
@@ -83,25 +80,6 @@ public class AbstractBlock<V extends IVariant, B extends AbstractBlock<V, B>> ex
 
     public Component getDisplayName(ItemStack stack) {
         return new TranslatableComponent(asItem().getDescriptionId(stack));
-    }
-
-    @Override
-    @SuppressWarnings("unchecked")
-    public List<Block> getSiblings() {
-        if (getVariant() instanceof IVariant.Single) {
-            return getRegistry().getObjects().get(getRegistryName());
-        }
-        return getRegistry().getObjects().get(getSiblingsKey((B) this));
-    }
-
-    @Override
-    public Registry<Block> getRegistry() {
-        return this.registry;
-    }
-
-    @Override
-    public void setRegistry(Registry<Block> registry) {
-        this.registry = registry;
     }
 
     @Override

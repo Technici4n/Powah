@@ -46,7 +46,7 @@ public class AbstractEnergyScreen<T extends AbstractEnergyStorage<?, ?, ?> & IIn
             int xOffset = offset.getLeft();
             int yOffset = offset.getRight();
             Direction side = Direction.from3DDataValue(i);
-            this.configButtons[i] = addWidget(new IconButton(this.leftPos + xOffset + this.imageWidth + x + 8, this.topPos + yOffset + y + 10, Texture.CONFIG.get(this.te.getSideConfig().getType(side)), button -> {
+            this.configButtons[i] = addRenderableWidget(new IconButton(this.leftPos + xOffset + this.imageWidth + x + 8, this.topPos + yOffset + y + 10, Texture.CONFIG.get(this.te.getSideConfig().getType(side)), button -> {
                 Lollipop.NET.toServer(new NextEnergyConfigPacket(id, this.te.getBlockPos()));
                 this.te.getSideConfig().nextType(side);
             }, this).setTooltip(tooltip -> {
@@ -56,7 +56,7 @@ public class AbstractEnergyScreen<T extends AbstractEnergyStorage<?, ?, ?> & IIn
             }));
         }
 
-        this.configButtonAll = addWidget(new IconButton(this.leftPos + this.imageWidth + x + 14, this.topPos + y + 4, Texture.CONFIG_BTN, button -> {
+        this.configButtonAll = addRenderableWidget(new IconButton(this.leftPos + this.imageWidth + x + 14, this.topPos + y + 4, Texture.CONFIG_BTN, button -> {
             Lollipop.NET.toServer(new NextEnergyConfigPacket(6, this.te.getBlockPos()));
             this.te.getSideConfig().nextTypeAll();
         }, this).setTooltip(tooltip -> {

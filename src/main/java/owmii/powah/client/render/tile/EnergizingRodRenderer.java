@@ -41,8 +41,7 @@ public class EnergizingRodRenderer extends AbstractTileRenderer<EnergizingRodTil
 
         for (InteractionHand hand : InteractionHand.values()) {
             ItemStack stack = player.getItemInHand(hand);
-            if (stack.getItem() instanceof IWrench) {
-                IWrench wrench = (IWrench) stack.getItem();
+            if (stack.getItem() instanceof IWrench wrench) {
                 if (wrench.getWrenchMode(stack).link()) {
                     flag = true;
                     break;

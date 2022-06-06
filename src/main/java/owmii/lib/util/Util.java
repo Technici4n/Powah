@@ -2,6 +2,7 @@ package owmii.lib.util;
 
 import java.text.NumberFormat;
 import java.util.Arrays;
+import java.util.Locale;
 import java.util.Map;
 import java.util.NavigableMap;
 import java.util.TreeMap;
@@ -62,6 +63,6 @@ public class Util {
     }
 
     public static String addCommas(long value) {
-        return NumberFormat.getInstance().format(value);
+        return NumberFormat.getInstance(Locale.ROOT).format(value);
     }
 }

@@ -3,6 +3,10 @@ package owmii.powah.client.model;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import net.minecraft.client.model.geom.ModelPart;
+import net.minecraft.client.model.geom.PartPose;
+import net.minecraft.client.model.geom.builders.CubeListBuilder;
+import net.minecraft.client.model.geom.builders.LayerDefinition;
+import net.minecraft.client.model.geom.builders.MeshDefinition;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.resources.ResourceLocation;
@@ -13,27 +17,25 @@ import owmii.powah.block.Tier;
 import owmii.powah.block.reactor.ReactorTile;
 import owmii.powah.client.render.tile.ReactorRenderer;
 
-// TODO PORT fix
 public class ReactorModel extends AbstractModel<ReactorTile, ReactorRenderer> {
-    //private final ModelPart reactor;
+    private static final String REACTOR = "reactor";
+    private final ModelPart reactor;
 
-    public ReactorModel() {
+    public ReactorModel(ModelPart root) {
         super(RenderType::entityTranslucent);
-        /*
-        this.texWidth = 256;
-        this.texHeight = 128;
-        this.reactor = new ModelPart(this, 0, 0);
-        this.reactor.addBox(-24F, -32F, -24F, 48, 64, 48);
-        this.reactor.setPos(0F, -8F, 0F);
-        this.reactor.setTexSize(256, 128);
-        this.reactor.mirror = true;
-        setRotation(this.reactor, 0F, 0F, 0F);
-         */
+        this.reactor = root.getChild(REACTOR);
+    }
+
+    public static LayerDefinition createDefinition() {
+        var meshDefinition = new MeshDefinition();
+        var root = meshDefinition.getRoot();
+        root.addOrReplaceChild(REACTOR, CubeListBuilder.create().mirror().addBox(-24F, -32F, -24F, 48, 64, 48), PartPose.offset(0, -8F, 0F));
+
+        return LayerDefinition.create(meshDefinition, 256, 128);
     }
 
     @Override
     public void render(ReactorTile te, ReactorRenderer renderer, PoseStack matrix, MultiBufferSource rtb, int light, int ov) {
-        /*
         VertexConsumer buffer = rtb.getBuffer(renderType(new ResourceLocation(Powah.MOD_ID, "textures/model/tile/reactor.png")));
         this.reactor.render(matrix, buffer, light, ov);
 
@@ -55,6 +57,5 @@ public class ReactorModel extends AbstractModel<ReactorTile, ReactorRenderer> {
             VertexConsumer buffer_type = rtb.getBuffer(renderType(new ResourceLocation(Powah.MOD_ID, "textures/model/tile/reactor_" + te.getVariant().getName() + ".png")));
             this.reactor.render(matrix, buffer_type, light, ov);
         }
-         */
     }
 }

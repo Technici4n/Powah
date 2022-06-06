@@ -14,14 +14,17 @@ import owmii.lib.client.model.CubeModel;
 import owmii.lib.client.renderer.tile.AbstractTileRenderer;
 import owmii.powah.Powah;
 import owmii.powah.block.reactor.ReactorTile;
+import owmii.powah.client.model.PowahLayerDefinitions;
 import owmii.powah.client.model.ReactorModel;
 
 public class ReactorRenderer extends AbstractTileRenderer<ReactorTile> {
-    public static final CubeModel CUBE_MODEL = new CubeModel(16, RenderType::entitySolid);
-    private static final ReactorModel REACTOR_MODEL = new ReactorModel();
+    private final ReactorModel reactorModel;
+    private final CubeModel reactorPartModel;
 
     protected ReactorRenderer(BlockEntityRendererProvider.Context context) {
         super(context);
+        reactorModel = new ReactorModel(context.bakeLayer(PowahLayerDefinitions.REACTOR));
+        reactorPartModel = new CubeModel(RenderType::entitySolid, context.bakeLayer(PowahLayerDefinitions.REACTOR_PART));
     }
 
     @Override
@@ -30,11 +33,11 @@ public class ReactorRenderer extends AbstractTileRenderer<ReactorTile> {
         matrix.translate(0.5, 0.5, 0.5);
         matrix.scale(1.0f, -1.0f, -1.0f);
         if (!te.isBuilt()) {
-            VertexConsumer buffer = rtb.getBuffer(CUBE_MODEL.renderType(new ResourceLocation(Powah.MOD_ID, "textures/model/tile/reactor_block_" + te.getVariant().getName() + ".png")));
-            CUBE_MODEL.renderToBuffer(matrix, buffer, light, ov, 1.0F, 1.0F, 1.0F, 1.0F);
+            VertexConsumer buffer = rtb.getBuffer(reactorPartModel.renderType(new ResourceLocation(Powah.MOD_ID, "textures/model/tile/reactor_block_" + te.getVariant().getName() + ".png")));
+            reactorPartModel.renderToBuffer(matrix, buffer, light, ov, 1.0F, 1.0F, 1.0F, 1.0F);
         } else {
             matrix.translate(0.0D, -1.0D, 0.0D);
-            REACTOR_MODEL.render(te, this, matrix, rtb, light, ov);
+            reactorModel.render(te, this, matrix, rtb, light, ov);
         }
         matrix.popPose();
     }

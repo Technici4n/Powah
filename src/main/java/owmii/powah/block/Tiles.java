@@ -5,7 +5,6 @@ import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
-import owmii.lib.registry.Registry;
 import owmii.powah.Powah;
 import owmii.powah.block.cable.CableTile;
 import owmii.powah.block.discharger.EnergyDischargerTile;

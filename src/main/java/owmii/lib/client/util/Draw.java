@@ -3,6 +3,7 @@ package owmii.lib.client.util;
 import com.mojang.blaze3d.vertex.BufferBuilder;
 import com.mojang.blaze3d.vertex.DefaultVertexFormat;
 import com.mojang.blaze3d.vertex.Tesselator;
+import com.mojang.blaze3d.vertex.VertexFormat;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraftforge.client.gui.GuiUtils;
 import owmii.lib.logistics.energy.Energy;
@@ -10,7 +11,6 @@ import owmii.lib.logistics.energy.Energy;
 // TODO PORT fix everything that's commented
 public class Draw {
     public static void gaugeV(TextureAtlasSprite sprite, int x, int y, int w, int h, int cap, int cur) {
-        /*
         if (cap > 0 && cur > 0) {
             int i = (int) (((float) cur / cap) * h);
             final int j = i / 16;
@@ -29,7 +29,7 @@ public class Draw {
                     vMin = vMin - m / 16.0F * (vMin - vMax);
                     Tesselator tessellator = Tesselator.getInstance();
                     BufferBuilder buffer = tessellator.getBuilder();
-                    buffer.begin(7, DefaultVertexFormat.POSITION_TEX);
+                    buffer.begin(VertexFormat.Mode.QUADS, DefaultVertexFormat.POSITION_TEX);
                     buffer.vertex(x, yy + 16, 0).uv(uMin, vMax).endVertex();
                     buffer.vertex(x + w, yy + 16, 0).uv(uMax, vMax).endVertex();
                     buffer.vertex(x + w, yy + m, 0).uv(uMax, vMin).endVertex();
@@ -38,7 +38,6 @@ public class Draw {
                 }
             }
         }
-        */
     }
 
     public static void gaugeV(int x, int y, int w, int h, int uvX, int uvY, double cap, double cur) {
@@ -65,7 +64,15 @@ public class Draw {
 
     public static void gaugeH(int x, int y, int w, int h, int uvX, int uvY, long cap, long cur) {
         if (cap > 0 && cur > 0) {
-            int i = (int) (((float) cur / cap) * w);
+            w = (int) (((float) cur / cap) * w);
+            Tesselator tessellator = Tesselator.getInstance();
+            BufferBuilder buffer = tessellator.getBuilder();
+            buffer.begin(VertexFormat.Mode.QUADS, DefaultVertexFormat.POSITION_TEX);
+            buffer.vertex(x, y + h, 0).uv(uvX, uvY + h).endVertex();
+            buffer.vertex(x + w, y + h, 0).uv(uvX + w, uvY + h).endVertex();
+            buffer.vertex(x + w, y, 0).uv(uvX + w, uvY).endVertex();
+            buffer.vertex(x, y, 0).uv(uvX, uvY).endVertex();
+            tessellator.end();
             //GuiUtils.drawTexturedModalRect(x, y, uvX, uvY, i, h, 0);
         }
     }

@@ -16,14 +16,17 @@ import owmii.powah.block.energizing.EnergizingOrbTile;
 import owmii.powah.client.model.OrbModel;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.math.Vector3f;
+import owmii.powah.client.model.PowahLayerDefinitions;
+
 import java.util.ArrayList;
 import java.util.List;
 
 public class EnergizingOrbRenderer extends AbstractTileRenderer<EnergizingOrbTile> {
-    public static final OrbModel MODEL = new OrbModel();
+    private final OrbModel model;
 
     protected EnergizingOrbRenderer(BlockEntityRendererProvider.Context context) {
         super(context);
+        model = new OrbModel(context.bakeLayer(PowahLayerDefinitions.ORB));
     }
 
     @Override
@@ -66,7 +69,7 @@ public class EnergizingOrbRenderer extends AbstractTileRenderer<EnergizingOrbTil
         matrix.mulPose(te.getOrbUp().getRotation());
         matrix.translate(0.0D, 0.1D, 0.0D);
         matrix.scale(1.8F, 1.8F, 1.8F);
-        MODEL.render(te, this, matrix, rtb, light, ov);
+        model.render(te, this, matrix, rtb, light, ov);
         matrix.popPose();
     }
 }

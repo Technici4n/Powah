@@ -12,24 +12,12 @@ import net.minecraft.world.item.context.UseOnContext;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.client.IItemRenderProperties;
-import owmii.lib.client.renderer.item.TEItemRenderer;
 
 import java.util.function.Consumer;
 
 public class ItemBase extends Item implements IItem {
     public ItemBase(Properties properties) {
         super(properties);
-    }
-
-    @Override
-    public void initializeClient(Consumer<IItemRenderProperties> consumer) {
-        consumer.accept(new IItemRenderProperties() {
-            @Override
-            public BlockEntityWithoutLevelRenderer getItemStackRenderer() {
-                return new TEItemRenderer();
-            }
-        });
-        super.initializeClient(consumer);
     }
 
     @Override

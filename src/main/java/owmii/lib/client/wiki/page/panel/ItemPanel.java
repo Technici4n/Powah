@@ -10,14 +10,17 @@ import net.minecraft.world.item.Items;
 import net.minecraft.world.level.ItemLike;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
+import net.minecraftforge.registries.ForgeRegistries;
 import owmii.lib.client.screen.Texture;
 import owmii.lib.client.screen.widget.IconButton;
 import owmii.lib.client.screen.wiki.WikiScreen;
 import owmii.lib.client.util.MC;
 import owmii.lib.client.wiki.Section;
-import owmii.lib.registry.IRegistryObject;
+import owmii.lib.registry.VarReg;
+import owmii.powah.Powah;
 
 import java.util.List;
+import java.util.Objects;
 
 public class ItemPanel<T extends ItemLike> extends Panel {
     private final ItemLike[] items;
@@ -46,18 +49,13 @@ public class ItemPanel<T extends ItemLike> extends Panel {
         this.items = items;
     }
 
-    @SuppressWarnings("unchecked")
     protected static ItemLike[] getSiblings(ItemLike item) {
         if (item.equals(Items.AIR)) {
             return new ItemLike[0];
         } else {
-            if (item instanceof IRegistryObject) {
-                IRegistryObject object = (IRegistryObject) item;
-                List<ItemLike> list = Lists.newArrayList(object.getSiblings());
-                return list.toArray(new ItemLike[0]);
-            }
+            var id = item.asItem().getRegistryName();
+            return VarReg.getSiblingIds(Objects.requireNonNull(id).getPath()).stream().map(rl -> ForgeRegistries.ITEMS.getValue(Powah.id(rl))).toArray(ItemLike[]::new);
         }
-        return new ItemLike[]{item};
     }
 
     @Override

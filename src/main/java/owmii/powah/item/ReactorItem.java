@@ -1,11 +1,13 @@
 package owmii.powah.item;
 
+import com.mojang.authlib.minecraft.client.MinecraftClient;
 import com.mojang.blaze3d.platform.GlStateManager;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.renderer.BlockEntityWithoutLevelRenderer;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -23,6 +25,7 @@ import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
+import net.minecraftforge.client.IItemRenderProperties;
 import net.minecraftforge.client.event.RenderLevelLastEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
@@ -33,17 +36,29 @@ import owmii.lib.util.Player;
 import owmii.powah.Powah;
 import owmii.powah.block.Tier;
 import owmii.powah.block.reactor.ReactorBlock;
+import owmii.powah.client.render.tile.ReactorItemRenderer;
 import owmii.powah.client.render.tile.ReactorRenderer;
 import owmii.powah.config.generator.ReactorConfig;
 
 import javax.annotation.Nullable;
 import java.util.List;
+import java.util.function.Consumer;
 import java.util.stream.Collectors;
 
 @Mod.EventBusSubscriber(Dist.CLIENT)
 public class ReactorItem extends EnergyBlockItem<Tier, ReactorConfig, ReactorBlock> {
     public ReactorItem(ReactorBlock block, Properties properties, @Nullable CreativeModeTab group) {
         super(block, properties, group);
+    }
+
+    @Override
+    public void initializeClient(Consumer<IItemRenderProperties> consumer) {
+        consumer.accept(new IItemRenderProperties() {
+            @Override
+            public BlockEntityWithoutLevelRenderer getItemStackRenderer() {
+                return new ReactorItemRenderer(Minecraft.getInstance().getBlockEntityRenderDispatcher());
+            }
+        });
     }
 
     @Override
@@ -96,8 +111,7 @@ public class ReactorItem extends EnergyBlockItem<Tier, ReactorConfig, ReactorBlo
 
         if (!flag) return;
         HitResult result = mc.hitResult;
-        if (result instanceof BlockHitResult) {
-            BlockHitResult br = (BlockHitResult) result;
+        if (result instanceof BlockHitResult br) {
             boolean isReplaceable = mc.level.getBlockState(br.getBlockPos()).getMaterial().isReplaceable() && !mc.level.isEmptyBlock(br.getBlockPos());
             if (mc.level.isEmptyBlock(br.getBlockPos()) || !isReplaceable && !br.getDirection().equals(Direction.UP)) return;
             BlockPos pos = isReplaceable ? br.getBlockPos() : br.getBlockPos().relative(br.getDirection());
@@ -123,8 +137,6 @@ public class ReactorItem extends EnergyBlockItem<Tier, ReactorConfig, ReactorBlo
             float r = (color >> 16 & 0xFF) / 255.0F;
             float g = (color >> 8 & 0xFF) / 255.0F;
             float b = (color & 0xFF) / 255.0F;
-            // TODO PORT
-            //RenderSystem.pushMatrix();
             MultiBufferSource.BufferSource rtb = mc.renderBuffers().bufferSource();
             VertexConsumer buffer = rtb.getBuffer(RenderTypes.getTextBlended(OV_TEXTURE));
             RenderSystem.blendFunc(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE);
@@ -134,22 +146,8 @@ public class ReactorItem extends EnergyBlockItem<Tier, ReactorConfig, ReactorBlo
             buffer.vertex(matrix.last().pose(), pos.getX(), pos.getY(), pos.getZ()).color(r, g, b, 1.0F).uv(0.0F, 0.0F).uv2(Render.MAX_LIGHT).endVertex();
             rtb.endBatch(RenderTypes.getTextBlended(OV_TEXTURE));
             RenderSystem.blendFunc(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA);
-            // TODO PORT
-            //RenderSystem.popMatrix();
             matrix.popPose();
 
         }
-    }
-
-
-    @Override
-    @OnlyIn(Dist.CLIENT)
-    public void renderByItem(ItemStack stack, PoseStack matrix, MultiBufferSource rtb, int light, int ov) {
-        matrix.pushPose();
-        matrix.translate(0.5D, 0.5D, 0.5D);
-        matrix.scale(1.0F, -1.0F, -1.0F);
-        VertexConsumer buffer = rtb.getBuffer(ReactorRenderer.CUBE_MODEL.renderType(new ResourceLocation(Powah.MOD_ID, "textures/model/tile/reactor_block_" + getVariant().getName() + ".png")));
-        ReactorRenderer.CUBE_MODEL.renderToBuffer(matrix, buffer, light, ov, 1.0F, 1.0F, 1.0F, 1.0F);
-        matrix.popPose();
     }
 }

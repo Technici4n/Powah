@@ -8,7 +8,7 @@ modId="powah"
 version="0.0.0"
 displayName="Powah"
 displayURL="https://www.curseforge.com/minecraft/mc-mods/powah"
-authors="owmii"
+authors="owmii,Technici4n"
 description='''
 Various ways to generate, store and transmit FE power.
 '''

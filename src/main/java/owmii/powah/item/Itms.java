@@ -1,22 +1,17 @@
 package owmii.powah.item;
 
 import net.minecraft.world.item.Item;
-import net.minecraft.world.level.block.Block;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 import owmii.lib.item.ItemBase;
-import owmii.lib.registry.Registry;
 import owmii.lib.registry.VarReg;
 import owmii.powah.Powah;
-import owmii.powah.block.Blcks;
 import owmii.powah.block.Tier;
 
 import java.util.function.Supplier;
 
 public class Itms {
     public static final DeferredRegister<Item> DR = DeferredRegister.create(ForgeRegistries.ITEMS, Powah.MOD_ID);
-
-    // TODO: also register block items
 
     public static final Supplier<Item> BOOK = DR.register("book", () -> new PowahBookItem(new Item.Properties().tab(ItemGroups.MAIN).stacksTo(1)));
     public static final Supplier<Item> WRENCH = DR.register("wrench", () -> new WrenchItem(new Item.Properties().tab(ItemGroups.MAIN).stacksTo(1)));

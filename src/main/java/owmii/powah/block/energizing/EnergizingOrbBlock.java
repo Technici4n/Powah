@@ -17,6 +17,7 @@ import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.SimpleWaterloggedBlock;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
@@ -24,6 +25,7 @@ import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.Vec3;
 import net.minecraft.world.phys.shapes.BooleanOp;
+import net.minecraft.world.phys.shapes.VoxelShape;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.items.ItemHandlerHelper;
@@ -49,12 +51,12 @@ public class EnergizingOrbBlock extends AbstractBlock<IVariant.Single, Energizin
     public EnergizingOrbBlock(Properties properties) {
         super(properties);
         setStateProps(state -> state.setValue(BlockStateProperties.FACING, Direction.DOWN));
-        this.shapes.put(Direction.UP, join(box(Math.min(3.5D, 11.0D), Math.min(3.5D, 12.5D), Math.min(1.77D, 12.5D), Math.max(3.5D, 11.0D), Math.max(3.5D, 12.5D), Math.max(1.77D, 12.5D)), box(Math.min(2.5D, 15.0D), Math.min(2.5D, 13.5D), Math.min(16.0D, 13.5D), Math.max(2.5D, 15.0D), Math.max(2.5D, 13.5D), Math.max(16.0D, 13.5D)), BooleanOp.OR));
-        this.shapes.put(Direction.DOWN, join(box(Math.min(3.5D, 14.23D), Math.min(3.5D, 12.5D), Math.min(5.0D, 12.5D), Math.max(3.5D, 14.23D), Math.max(3.5D, 12.5D), Math.max(5.0D, 12.5D)), box(Math.min(2.5D, 0.0D), Math.min(2.5D, 13.5D), Math.min(1.0D, 13.5D), Math.max(2.5D, 0.0D), Math.max(2.5D, 13.5D), Math.max(1.0D, 13.5D)), BooleanOp.OR));
-        this.shapes.put(Direction.NORTH, join(box(Math.min(3.5D, 3.5D), Math.min(14.23D, 12.5D), Math.min(12.5D, 5.0D), Math.max(3.5D, 3.5D), Math.max(14.23D, 12.5D), Math.max(12.5D, 5.0D)), box(Math.min(2.5D, 2.5D), Math.min(0.0D, 13.5D), Math.min(13.5D, 1.0D), Math.max(2.5D, 2.5D), Math.max(0.0D, 13.5D), Math.max(13.5D, 1.0D)), BooleanOp.OR));
-        this.shapes.put(Direction.SOUTH, join(box(Math.min(3.5D, 3.5D), Math.min(11.0D, 12.5D), Math.min(12.5D, 1.77D), Math.max(3.5D, 3.5D), Math.max(11.0D, 12.5D), Math.max(12.5D, 1.77D)), box(Math.min(2.5D, 2.5D), Math.min(15.0D, 13.5D), Math.min(13.5D, 16.0D), Math.max(2.5D, 2.5D), Math.max(15.0D, 13.5D), Math.max(13.5D, 16.0D)), BooleanOp.OR));
-        this.shapes.put(Direction.WEST, join(box(Math.min(14.23D, 3.5D), Math.min(3.5D, 5.0D), Math.min(12.5D, 12.5D), Math.max(14.23D, 3.5D), Math.max(3.5D, 5.0D), Math.max(12.5D, 12.5D)), box(Math.min(0.0D, 2.5D), Math.min(2.5D, 1.0D), Math.min(13.5D, 13.5D), Math.max(0.0D, 2.5D), Math.max(2.5D, 1.0D), Math.max(13.5D, 13.5D)), BooleanOp.OR));
-        this.shapes.put(Direction.EAST, join(box(Math.min(11.0D, 3.5D), Math.min(3.5D, 1.77D), Math.min(12.5D, 12.5D), Math.max(11.0D, 3.5D), Math.max(3.5D, 1.77D), Math.max(12.5D, 12.5D)), box(Math.min(15.0D, 2.5D), Math.min(2.5D, 16.0D), Math.min(13.5D, 13.5D), Math.max(15.0D, 2.5D), Math.max(2.5D, 16.0D), Math.max(13.5D, 13.5D)), BooleanOp.OR));
+        this.shapes.put(Direction.UP, join(box(3.5D, 11.0D, 3.5D, 12.5D, 1.77D, 12.5D), box(2.5D, 15.0D, 2.5D, 13.5D, 16.0D, 13.5D), BooleanOp.OR));
+        this.shapes.put(Direction.DOWN, join(box(3.5D, 14.23D, 3.5D, 12.5D, 5.0D, 12.5D), box(2.5D, 0.0D, 2.5D, 13.5D, 1.0D, 13.5D), BooleanOp.OR));
+        this.shapes.put(Direction.NORTH, join(box(3.5D, 3.5D, 14.23D, 12.5D, 12.5D, 5.0D), box(2.5D, 2.5D, 0.0D, 13.5D, 13.5D, 1.0D), BooleanOp.OR));
+        this.shapes.put(Direction.SOUTH, join(box(3.5D, 3.5D, 11.0D, 12.5D, 12.5D, 1.77D), box(2.5D, 2.5D, 15.0D, 13.5D, 13.5D, 16.0D), BooleanOp.OR));
+        this.shapes.put(Direction.WEST, join(box(14.23D, 3.5D, 3.5D, 5.0D, 12.5D, 12.5D), box(0.0D, 2.5D, 2.5D, 1.0D, 13.5D, 13.5D), BooleanOp.OR));
+        this.shapes.put(Direction.EAST, join(box(11.0D, 3.5D, 3.5D, 1.77D, 12.5D, 12.5D), box(15.0D, 2.5D, 2.5D, 16.0D, 13.5D, 13.5D), BooleanOp.OR));
     }
 
     @Nullable

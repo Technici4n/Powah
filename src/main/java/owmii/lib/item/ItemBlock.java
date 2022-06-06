@@ -14,35 +14,21 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.client.IItemRenderProperties;
 import owmii.lib.block.AbstractBlock;
 import owmii.lib.block.IBlock;
-import owmii.lib.client.renderer.item.TEItemRenderer;
 import owmii.lib.data.ItemModelType;
-import owmii.lib.registry.IRegistryObject;
 import owmii.lib.registry.IVariant;
 import owmii.lib.registry.IVariantEntry;
-import owmii.lib.registry.Registry;
 
 import javax.annotation.Nullable;
 import java.util.List;
 import java.util.function.Consumer;
 
-public class ItemBlock<V extends IVariant, B extends Block & IBlock<V, B>> extends BlockItem implements IItem, IRegistryObject<Block>, IVariantEntry<V, B> {
+public class ItemBlock<V extends IVariant, B extends Block & IBlock<V, B>> extends BlockItem implements IItem, IVariantEntry<V, B> {
     private final B block;
 
     @SuppressWarnings("ConstantConditions")
     public ItemBlock(B block, Properties builder, @Nullable CreativeModeTab group) {
         super(block, builder.tab(group));
         this.block = block;
-    }
-
-    @Override
-    public void initializeClient(Consumer<IItemRenderProperties> consumer) {
-        consumer.accept(new IItemRenderProperties() {
-            @Override
-            public BlockEntityWithoutLevelRenderer getItemStackRenderer() {
-                return new TEItemRenderer();
-            }
-        });
-        super.initializeClient(consumer);
     }
 
     @Override
@@ -59,32 +45,8 @@ public class ItemBlock<V extends IVariant, B extends Block & IBlock<V, B>> exten
     }
 
     @Override
-    @OnlyIn(Dist.CLIENT)
-    public void renderByItem(ItemStack stack, PoseStack matrix, MultiBufferSource rtb, int light, int ov) {
-        getBlock().renderByItem(stack, matrix, rtb, light, ov);
-    }
-
-    @Override
     public ItemModelType getItemModelType() {
         return ItemModelType.BLOCK;
-    }
-
-    @Override
-    @SuppressWarnings("unchecked")
-    public List<Block> getSiblings() {
-        if (getBlock() instanceof IRegistryObject) {
-            return ((IRegistryObject) getBlock()).getSiblings();
-        } else return Lists.newArrayList(getBlock());
-    }
-
-    @Override
-    @SuppressWarnings("ConstantConditions")
-    public Registry<Block> getRegistry() {
-        return null;
-    }
-
-    @Override
-    public void setRegistry(Registry<Block> registry) {
     }
 
     @Override

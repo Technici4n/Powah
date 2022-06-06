@@ -6,12 +6,19 @@ plugins {
 sourceCompatibility = JavaVersion.VERSION_17
 targetCompatibility = JavaVersion.VERSION_17
 
-archivesBaseName = "dev.technici4n"
+group = "dev.technici4n"
+archivesBaseName = "Powah"
 // TODO: figure out publishing later
 version = project.mod_version
-//group = project.maven_group
+
+// All jar files from this folder will be added automatically as runtime mod dependencies
+def extraModsDir = "extra-mods-${project.mc_version}"
 
 repositories {
+    flatDir {
+        name "extra-mods"
+        dir file(extraModsDir)
+    }
     maven { url "https://maven.parchmentmc.org" } //Parchment
     maven { url = "https://dvs1.progwml6.com/files/maven" } //JEI
     maven { url = "https://maven.theillusivec4.top" } //Curios
@@ -32,6 +39,16 @@ dependencies {
 
     modCompileOnly "top.theillusivec4.curios:curios-forge:${project.curios_version}:api"
     modRuntimeOnly "top.theillusivec4.curios:curios-forge:${project.curios_version}"
+
+    // Locally sourced extra mods for runtime (i.e. testing)
+    for (extraModJar in fileTree(dir: extraModsDir, include: '*.jar')) {
+        def basename = extraModJar.name.substring(0, extraModJar.name.length() - ".jar".length())
+        def versionSep = basename.lastIndexOf('-')
+        assert versionSep != -1
+        def artifactId = basename.substring(0, versionSep)
+        def version = basename.substring(versionSep + 1)
+        modRuntimeOnly "extra-mods:$artifactId:$version"
+    }
 }
 
 loom {

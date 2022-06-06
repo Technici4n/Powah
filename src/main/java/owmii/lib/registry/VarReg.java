@@ -16,7 +16,7 @@ public class VarReg<V extends Enum<V> & IVariant<V>, E extends IForgeRegistryEnt
     private static final Map<String, List<String>> ALL_VARIANTS = new HashMap<>();
 
     public static List<String> getSiblingIds(String name) {
-        return ALL_VARIANTS.getOrDefault(name, List.of());
+        return ALL_VARIANTS.getOrDefault(name, List.of(name));
     }
 
     private final LinkedHashMap<V, Supplier<E>> all = new LinkedHashMap<>();

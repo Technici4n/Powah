@@ -39,7 +39,7 @@ public class AbstractContainerScreen<C extends AbstractContainer> extends net.mi
 
     @Override
     public void containerTick() {
-        super.tick();
+        super.containerTick();
         if (this.delayedClick != null) {
             if (this.clickDelay >= 0) {
                 this.clickDelay--;
@@ -72,7 +72,7 @@ public class AbstractContainerScreen<C extends AbstractContainer> extends net.mi
     protected void renderTooltip(PoseStack matrix, int mouseX, int mouseY) {
         super.renderTooltip(matrix, mouseX, mouseY);
         for (var iWidget : this.renderables) {
-            if (iWidget instanceof AbstractWidget widget) {
+            if (iWidget instanceof AbstractWidget widget && widget.isHoveredOrFocused()) {
                 widget.renderToolTip(matrix, mouseX, mouseY);
                 return;
             }

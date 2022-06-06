@@ -22,7 +22,7 @@ public class AbstractTileScreen<T extends AbstractTileEntity<?, ?> & IInventoryH
 
     protected void addRedstoneButton(int x, int y) {
         if (hasRedstone()) {
-            this.redStoneButton = addWidget(new IconButton(this.leftPos + this.imageWidth + x + 2, this.topPos + y + 3, Texture.REDSTONE.get(this.te.getRedstoneMode()), b -> {
+            this.redStoneButton = addRenderableWidget(new IconButton(this.leftPos + this.imageWidth + x + 2, this.topPos + y + 3, Texture.REDSTONE.get(this.te.getRedstoneMode()), b -> {
                 Lollipop.NET.toServer(new NextRedstoneModePacket(this.te.getBlockPos()));
                 this.te.setRedstoneMode(this.te.getRedstoneMode().next());
             }, this).setTooltip(tooltip -> tooltip.add(this.te.getRedstoneMode().getDisplayName())));
