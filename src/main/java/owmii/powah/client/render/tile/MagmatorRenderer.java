@@ -8,7 +8,6 @@ import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderType;
-import net.minecraft.client.renderer.blockentity.BlockEntityRenderDispatcher;
 import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.resources.ResourceLocation;
@@ -16,8 +15,8 @@ import net.minecraft.world.inventory.InventoryMenu;
 import net.minecraftforge.fluids.FluidAttributes;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.capability.templates.FluidTank;
-import owmii.lib.client.renderer.tile.AbstractTileRenderer;
-import owmii.lib.client.util.Render;
+import owmii.powah.lib.client.renderer.tile.AbstractTileRenderer;
+import owmii.powah.lib.client.util.Render;
 import owmii.powah.block.magmator.MagmatorTile;
 
 public class MagmatorRenderer extends AbstractTileRenderer<MagmatorTile> {

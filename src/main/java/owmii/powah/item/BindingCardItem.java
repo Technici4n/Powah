@@ -2,9 +2,9 @@ package owmii.powah.item;
 
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.Entity;
-import owmii.lib.item.ItemBase;
-import owmii.lib.util.Player;
-import owmii.lib.util.Stack;
+import owmii.powah.lib.item.ItemBase;
+import owmii.powah.lib.util.Player;
+import owmii.powah.lib.util.Stack;
 import owmii.powah.config.Configs;
 
 import javax.annotation.Nullable;

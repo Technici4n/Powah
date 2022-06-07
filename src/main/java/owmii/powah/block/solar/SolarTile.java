@@ -1,10 +1,10 @@
 package owmii.powah.block.solar;
 
 import net.minecraft.core.BlockPos;
-import owmii.lib.block.AbstractEnergyProvider;
-import owmii.lib.block.IInventoryHolder;
-import owmii.lib.logistics.energy.Energy;
-import owmii.lib.util.Misc;
+import owmii.powah.lib.block.AbstractEnergyProvider;
+import owmii.powah.lib.block.IInventoryHolder;
+import owmii.powah.lib.logistics.energy.Energy;
+import owmii.powah.lib.util.Misc;
 import owmii.powah.block.Tier;
 import owmii.powah.block.Tiles;
 import owmii.powah.config.generator.SolarConfig;

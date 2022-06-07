@@ -6,7 +6,7 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraftforge.network.NetworkEvent;
-import owmii.lib.network.IPacket;
+import owmii.powah.lib.network.IPacket;
 import owmii.powah.block.ender.AbstractEnderTile;
 
 import java.util.function.Supplier;

@@ -2,11 +2,11 @@ package owmii.powah.client.screen.container;
 
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
-import owmii.lib.client.screen.container.AbstractEnergyScreen;
-import owmii.lib.client.util.Text;
-import owmii.lib.logistics.energy.Energy;
-import owmii.lib.util.Ticker;
-import owmii.lib.util.Util;
+import owmii.powah.lib.client.screen.container.AbstractEnergyScreen;
+import owmii.powah.lib.client.util.Text;
+import owmii.powah.lib.logistics.energy.Energy;
+import owmii.powah.lib.util.Ticker;
+import owmii.powah.lib.util.Util;
 import owmii.powah.block.furnator.FurnatorTile;
 import owmii.powah.client.screen.Textures;
 import owmii.powah.inventory.FurnatorContainer;

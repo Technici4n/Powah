@@ -2,7 +2,6 @@ package owmii.powah.client.model;
 
 import net.minecraft.client.model.geom.ModelLayerLocation;
 import net.minecraftforge.client.event.EntityRenderersEvent;
-import owmii.lib.client.model.CubeModel;
 import owmii.powah.Powah;
 
 public class PowahLayerDefinitions {

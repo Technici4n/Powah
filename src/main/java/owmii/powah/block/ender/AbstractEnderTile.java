@@ -2,15 +2,15 @@ package owmii.powah.block.ender;
 
 import com.mojang.authlib.GameProfile;
 import net.minecraft.core.BlockPos;
-import owmii.lib.block.AbstractEnergyBlock;
-import owmii.lib.block.AbstractEnergyStorage;
-import owmii.lib.block.IInventoryHolder;
-import owmii.lib.block.IOwnable;
-import owmii.lib.config.IEnergyConfig;
-import owmii.lib.logistics.energy.Energy;
-import owmii.lib.registry.IVariant;
-import owmii.lib.util.Player;
-import owmii.lib.util.math.RangedInt;
+import owmii.powah.lib.block.AbstractEnergyBlock;
+import owmii.powah.lib.block.AbstractEnergyStorage;
+import owmii.powah.lib.block.IInventoryHolder;
+import owmii.powah.lib.block.IOwnable;
+import owmii.powah.lib.config.IEnergyConfig;
+import owmii.powah.lib.logistics.energy.Energy;
+import owmii.powah.lib.registry.IVariant;
+import owmii.powah.lib.util.Player;
+import owmii.powah.lib.util.math.RangedInt;
 import owmii.powah.api.energy.endernetwork.IEnderExtender;
 
 import javax.annotation.Nullable;

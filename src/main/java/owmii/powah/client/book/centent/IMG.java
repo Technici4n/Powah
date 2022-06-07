@@ -1,6 +1,6 @@
 package owmii.powah.client.book.centent;
 
-import owmii.lib.client.screen.Texture;
+import owmii.powah.lib.client.screen.Texture;
 import owmii.powah.Powah;
 
 public class IMG {

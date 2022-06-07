@@ -9,8 +9,8 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.energy.CapabilityEnergy;
-import owmii.lib.block.AbstractTileEntity;
-import owmii.lib.util.NBT;
+import owmii.powah.lib.block.AbstractTileEntity;
+import owmii.powah.lib.util.NBT;
 import owmii.powah.block.Tier;
 import owmii.powah.block.Tiles;
 

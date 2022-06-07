@@ -2,10 +2,10 @@ package owmii.powah.block.energycell;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.block.state.BlockState;
-import owmii.lib.block.AbstractEnergyStorage;
-import owmii.lib.block.IInventoryHolder;
-import owmii.lib.logistics.Transfer;
-import owmii.lib.logistics.energy.Energy;
+import owmii.powah.lib.block.AbstractEnergyStorage;
+import owmii.powah.lib.block.IInventoryHolder;
+import owmii.powah.lib.logistics.Transfer;
+import owmii.powah.lib.logistics.energy.Energy;
 import owmii.powah.block.Tier;
 import owmii.powah.block.Tiles;
 import owmii.powah.config.EnergyCellConfig;

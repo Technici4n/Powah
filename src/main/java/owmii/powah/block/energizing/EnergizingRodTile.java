@@ -1,9 +1,9 @@
 package owmii.powah.block.energizing;
 
 import net.minecraft.world.level.block.state.BlockState;
-import owmii.lib.block.AbstractEnergyStorage;
-import owmii.lib.util.NBT;
-import owmii.lib.util.Ticker;
+import owmii.powah.lib.block.AbstractEnergyStorage;
+import owmii.powah.lib.util.NBT;
+import owmii.powah.lib.util.Ticker;
 import owmii.powah.block.Tier;
 import owmii.powah.block.Tiles;
 import owmii.powah.config.Configs;

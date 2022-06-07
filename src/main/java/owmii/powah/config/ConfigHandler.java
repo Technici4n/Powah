@@ -11,7 +11,7 @@ import owmii.powah.api.PowahAPI;
 import java.util.HashMap;
 import java.util.Map;
 
-import static owmii.lib.config.Config.MARKER;
+import static owmii.powah.lib.config.Config.MARKER;
 import static owmii.powah.Powah.LOGGER;
 
 public class ConfigHandler {

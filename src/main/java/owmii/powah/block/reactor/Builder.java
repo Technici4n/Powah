@@ -1,6 +1,6 @@
 package owmii.powah.block.reactor;
 
-import owmii.lib.util.NBT;
+import owmii.powah.lib.util.NBT;
 
 import java.util.ArrayList;
 import java.util.Collections;

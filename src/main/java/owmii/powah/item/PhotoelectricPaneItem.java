@@ -10,7 +10,7 @@ import net.minecraft.world.entity.monster.Endermite;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.items.ItemHandlerHelper;
-import owmii.lib.item.ItemBase;
+import owmii.powah.lib.item.ItemBase;
 import owmii.powah.config.Configs;
 
 public class PhotoelectricPaneItem extends ItemBase {

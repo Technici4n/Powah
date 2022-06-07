@@ -1,13 +1,13 @@
 package owmii.powah.client.book;
 
-import owmii.lib.client.util.Text;
-import owmii.lib.client.wiki.Icon;
-import owmii.lib.client.wiki.Wiki;
-import owmii.lib.client.wiki.page.GridPage;
-import owmii.lib.client.wiki.page.Info;
-import owmii.lib.client.wiki.page.panel.CraftingPanel;
-import owmii.lib.client.wiki.page.panel.EnergyPanel;
-import owmii.lib.client.wiki.page.panel.WelcomePanel;
+import owmii.powah.lib.client.util.Text;
+import owmii.powah.lib.client.wiki.Icon;
+import owmii.powah.lib.client.wiki.Wiki;
+import owmii.powah.lib.client.wiki.page.GridPage;
+import owmii.powah.lib.client.wiki.page.Info;
+import owmii.powah.lib.client.wiki.page.panel.CraftingPanel;
+import owmii.powah.lib.client.wiki.page.panel.EnergyPanel;
+import owmii.powah.lib.client.wiki.page.panel.WelcomePanel;
 import owmii.powah.block.Blcks;
 import owmii.powah.block.Tier;
 import owmii.powah.client.book.centent.IMG;

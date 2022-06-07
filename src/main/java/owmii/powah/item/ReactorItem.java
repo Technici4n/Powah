@@ -1,6 +1,5 @@
 package owmii.powah.item;
 
-import com.mojang.authlib.minecraft.client.MinecraftClient;
 import com.mojang.blaze3d.platform.GlStateManager;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
@@ -29,15 +28,14 @@ import net.minecraftforge.client.IItemRenderProperties;
 import net.minecraftforge.client.event.RenderLevelLastEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
-import owmii.lib.client.util.Render;
-import owmii.lib.client.util.RenderTypes;
-import owmii.lib.item.EnergyBlockItem;
-import owmii.lib.util.Player;
+import owmii.powah.lib.client.util.Render;
+import owmii.powah.lib.client.util.RenderTypes;
+import owmii.powah.lib.item.EnergyBlockItem;
+import owmii.powah.lib.util.Player;
 import owmii.powah.Powah;
 import owmii.powah.block.Tier;
 import owmii.powah.block.reactor.ReactorBlock;
 import owmii.powah.client.render.tile.ReactorItemRenderer;
-import owmii.powah.client.render.tile.ReactorRenderer;
 import owmii.powah.config.generator.ReactorConfig;
 
 import javax.annotation.Nullable;

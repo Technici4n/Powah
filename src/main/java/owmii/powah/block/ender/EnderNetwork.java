@@ -5,8 +5,8 @@ import com.google.common.collect.ImmutableList;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.level.Level;
-import owmii.lib.block.IOwnable;
-import owmii.lib.logistics.energy.Energy;
+import owmii.powah.lib.block.IOwnable;
+import owmii.powah.lib.logistics.energy.Energy;
 
 import java.util.HashMap;
 import java.util.Map;

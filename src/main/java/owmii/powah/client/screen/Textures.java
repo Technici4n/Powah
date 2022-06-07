@@ -1,7 +1,7 @@
 package owmii.powah.client.screen;
 
-import owmii.lib.client.screen.Texture;
-import owmii.lib.logistics.Transfer;
+import owmii.powah.lib.client.screen.Texture;
+import owmii.powah.lib.logistics.Transfer;
 import owmii.powah.Powah;
 
 import java.util.HashMap;

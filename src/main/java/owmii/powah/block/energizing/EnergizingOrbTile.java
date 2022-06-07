@@ -9,10 +9,10 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.items.wrapper.RecipeWrapper;
-import owmii.lib.block.AbstractTickableTile;
-import owmii.lib.block.IInventoryHolder;
-import owmii.lib.logistics.energy.Energy;
-import owmii.lib.registry.IVariant;
+import owmii.powah.lib.block.AbstractTickableTile;
+import owmii.powah.lib.block.IInventoryHolder;
+import owmii.powah.lib.logistics.energy.Energy;
+import owmii.powah.lib.registry.IVariant;
 import owmii.powah.block.Tiles;
 import owmii.powah.recipe.Recipes;
 

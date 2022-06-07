@@ -1,6 +1,6 @@
 package owmii.powah.block;
 
-import owmii.lib.registry.IVariant;
+import owmii.powah.lib.registry.IVariant;
 
 public enum Tier implements IVariant<Tier> {
     STARTER(0xA7A7A7),

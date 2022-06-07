@@ -3,8 +3,8 @@ package owmii.powah.network.packet;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraftforge.network.NetworkEvent;
-import owmii.lib.client.util.MC;
-import owmii.lib.network.IPacket;
+import owmii.powah.lib.client.util.MC;
+import owmii.powah.lib.network.IPacket;
 import owmii.powah.block.ender.EnderNetwork;
 
 import java.util.UUID;

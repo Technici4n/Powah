@@ -2,8 +2,8 @@ package owmii.powah.config;
 
 import net.minecraftforge.common.ForgeConfigSpec;
 import org.apache.commons.lang3.tuple.Pair;
-import owmii.lib.config.Config;
-import owmii.lib.config.IConfig;
+import owmii.powah.lib.config.Config;
+import owmii.powah.lib.config.IConfig;
 import owmii.powah.config.generator.*;
 import owmii.powah.config.item.BatteryConfig;
 

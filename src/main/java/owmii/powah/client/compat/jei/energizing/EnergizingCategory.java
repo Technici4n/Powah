@@ -14,7 +14,7 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
-import owmii.lib.util.Util;
+import owmii.powah.lib.util.Util;
 import owmii.powah.Powah;
 import owmii.powah.block.Blcks;
 import owmii.powah.block.energizing.EnergizingRecipe;

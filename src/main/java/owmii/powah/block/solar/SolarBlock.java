@@ -1,10 +1,10 @@
 package owmii.powah.block.solar;
 
-import owmii.lib.block.AbstractGeneratorBlock;
-import owmii.lib.block.AbstractTileEntity;
-import owmii.lib.item.EnergyBlockItem;
-import owmii.lib.logistics.energy.Energy;
-import owmii.lib.logistics.inventory.AbstractContainer;
+import owmii.powah.lib.block.AbstractGeneratorBlock;
+import owmii.powah.lib.block.AbstractTileEntity;
+import owmii.powah.lib.item.EnergyBlockItem;
+import owmii.powah.lib.logistics.energy.Energy;
+import owmii.powah.lib.logistics.inventory.AbstractContainer;
 import owmii.powah.block.Tier;
 import owmii.powah.config.Configs;
 import owmii.powah.config.generator.SolarConfig;

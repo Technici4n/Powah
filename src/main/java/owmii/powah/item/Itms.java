@@ -3,8 +3,8 @@ package owmii.powah.item;
 import net.minecraft.world.item.Item;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
-import owmii.lib.item.ItemBase;
-import owmii.lib.registry.VarReg;
+import owmii.powah.lib.item.ItemBase;
+import owmii.powah.lib.registry.VarReg;
 import owmii.powah.Powah;
 import owmii.powah.block.Tier;
 

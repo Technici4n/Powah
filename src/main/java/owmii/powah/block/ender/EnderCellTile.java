@@ -2,8 +2,8 @@ package owmii.powah.block.ender;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.block.state.BlockState;
-import owmii.lib.block.IInventoryHolder;
-import owmii.lib.block.IOwnable;
+import owmii.powah.lib.block.IInventoryHolder;
+import owmii.powah.lib.block.IOwnable;
 import owmii.powah.block.Tier;
 import owmii.powah.block.Tiles;
 import owmii.powah.config.EnderCellConfig;

@@ -1,7 +1,7 @@
 package owmii.powah.config;
 
 import net.minecraftforge.common.ForgeConfigSpec;
-import owmii.lib.logistics.energy.Energy;
+import owmii.powah.lib.logistics.energy.Energy;
 import owmii.powah.block.Tier;
 
 import java.util.HashMap;

@@ -1,11 +1,11 @@
 package owmii.powah.block.discharger;
 
 import net.minecraft.core.BlockPos;
-import owmii.lib.block.AbstractEnergyBlock;
-import owmii.lib.block.AbstractTileEntity;
-import owmii.lib.item.EnergyBlockItem;
-import owmii.lib.logistics.Transfer;
-import owmii.lib.logistics.inventory.AbstractContainer;
+import owmii.powah.lib.block.AbstractEnergyBlock;
+import owmii.powah.lib.block.AbstractTileEntity;
+import owmii.powah.lib.item.EnergyBlockItem;
+import owmii.powah.lib.logistics.Transfer;
+import owmii.powah.lib.logistics.inventory.AbstractContainer;
 import owmii.powah.block.Tier;
 import owmii.powah.config.Configs;
 import owmii.powah.config.EnergyDischargerConfig;
