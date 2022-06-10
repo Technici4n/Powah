@@ -1,125 +1,70 @@
 plugins {
-    id 'dev.architectury.loom' version '0.12.0-SNAPSHOT'
-    id 'maven-publish'
+    id "architectury-plugin" version "3.4-SNAPSHOT"
+    id "dev.architectury.loom" version "0.12.0-SNAPSHOT" apply false
 }
 
-sourceCompatibility = JavaVersion.VERSION_17
-targetCompatibility = JavaVersion.VERSION_17
-
-group = "dev.technici4n"
-archivesBaseName = "Powah"
-// TODO: figure out publishing later
-version = project.mod_version
-
-// All jar files from this folder will be added automatically as runtime mod dependencies
-def extraModsDir = "extra-mods-${project.mc_version}"
-
-repositories {
-    flatDir {
-        name "extra-mods"
-        dir file(extraModsDir)
-    }
-    maven { url "https://maven.parchmentmc.org" } //Parchment
-    maven { url = "https://dvs1.progwml6.com/files/maven" } //JEI
-    maven { url = "https://maven.theillusivec4.top" } //Curios
+architectury {
+    minecraft = rootProject.minecraft_version
 }
 
-dependencies {
-    // To change the versions see the gradle.properties file
-    minecraft "com.mojang:minecraft:${project.mc_version}"
-    mappings(loom.layered {
-        officialMojangMappings()
-        parchment("org.parchmentmc.data:parchment-1.18.2:2022.05.22@zip")
-    })
+subprojects {
+    apply plugin: "dev.architectury.loom"
 
-    forge "net.minecraftforge:forge:${mc_version}-${forge_version}"
-
-    modCompileOnly "mezz.jei:jei-${project.jei_version}:api"
-    modRuntimeOnly "mezz.jei:jei-${project.jei_version}"
-
-    modCompileOnly "top.theillusivec4.curios:curios-forge:${project.curios_version}:api"
-    modRuntimeOnly "top.theillusivec4.curios:curios-forge:${project.curios_version}"
-
-    // Locally sourced extra mods for runtime (i.e. testing)
-    for (extraModJar in fileTree(dir: extraModsDir, include: '*.jar')) {
-        def basename = extraModJar.name.substring(0, extraModJar.name.length() - ".jar".length())
-        def versionSep = basename.lastIndexOf('-')
-        assert versionSep != -1
-        def artifactId = basename.substring(0, versionSep)
-        def version = basename.substring(versionSep + 1)
-        modRuntimeOnly "extra-mods:$artifactId:$version"
-    }
-}
-
-loom {
-    silentMojangMappingsLicense()
-
-    runs {
-        data {
-            data()
-        }
-    }
-
-    forge {
-        accessTransformer("src/main/resources/META-INF/accesstransformer.cfg")
-
-        dataGen {
-            mod "powah"
-        }
-    }
-}
-
-/*
-sourceSets {
-    main {
-        resources {
-            srcDir "src/generated/resources"
-        }
-    }
-}*/
-
-processResources {
-    inputs.property "version", project.version
-
-    filesMatching("META-INF/mods.toml") {
-        filter { line ->
-            line.replace 'version="0.0.0"', "version=\"$version\""
-        }
-    }
-}
-
-tasks.withType(JavaCompile).configureEach {
-    it.options.release = 17
-}
-
-java {
-    // Loom will automatically attach sourcesJar to a RemapSourcesJar task and to the "build" task
-    // if it is present.
-    // If you remove this line, sources will not be generated.
-    withSourcesJar()
-}
-
-jar {
-    from("LICENSE") {
-        rename { "${it}_${project.archivesBaseName}"}
-    }
-}
-
-// configure the maven publication
-publishing {
-    publications {
-        mavenJava(MavenPublication) {
-            mavenJava(MavenPublication) {
-                from components.java
-            }
-        }
-    }
-
-    // See https://docs.gradle.org/current/userguide/publishing_maven.html for information on how to set up publishing.
     repositories {
-        // Add repositories to publish to here.
-        // Notice: This block does NOT have the same function as the block in the top level.
-        // The repositories here will be used for publishing your artifact, not for
-        // retrieving dependencies.
+        maven { url "https://maven.parchmentmc.org" } //Parchment
+    }
+
+    sourceCompatibility = JavaVersion.VERSION_17
+    targetCompatibility = JavaVersion.VERSION_17
+
+    loom {
+        silentMojangMappingsLicense()
+    }
+
+    dependencies {
+        minecraft "com.mojang:minecraft:${rootProject.minecraft_version}"
+        mappings(loom.layered {
+            officialMojangMappings()
+            parchment("org.parchmentmc.data:parchment-1.18.2:2022.05.22@zip")
+        })
+    }
+
+    architectury {
+        // Disable Architectury's injectables like @ExpectPlatform
+        // since we don't use them.
+        injectInjectables = false
+    }
+}
+
+allprojects {
+    apply plugin: "java"
+    apply plugin: "architectury-plugin"
+    apply plugin: "maven-publish"
+
+    archivesBaseName = rootProject.archives_base_name
+    version = rootProject.mod_version
+    group = rootProject.maven_group
+
+    repositories {
+        // Add repositories to retrieve artifacts from in here.
+        // You should only use this when depending on other mods because
+        // Loom adds the essential maven repositories to download Minecraft and libraries from automatically.
+        // See https://docs.gradle.org/current/userguide/declaring_repositories.html
+        // for more information about repositories.
+    }
+
+    tasks.withType(JavaCompile).configureEach {
+        it.options.encoding = "UTF-8"
+        it.options.release = 17
+    }
+
+    java {
+        withSourcesJar()
+    }
+
+    jar {
+        from("LICENSE") {
+            rename { "${it}_${project.archivesBaseName}"}
+        }
     }
 }
