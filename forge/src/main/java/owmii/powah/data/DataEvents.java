@@ -5,7 +5,7 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.forge.event.lifecycle.GatherDataEvent;
 import owmii.powah.Powah;
-import owmii.powah.compat.curios.CurioTagsProvider;
+import owmii.powah.forge.compat.curios.CurioTagsProvider;
 
 @Mod.EventBusSubscriber(bus = Mod.EventBusSubscriber.Bus.MOD)
 public class DataEvents {

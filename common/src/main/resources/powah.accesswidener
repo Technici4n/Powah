@@ -16,3 +16,6 @@ extendable method net/minecraft/client/gui/screens/inventory/AbstractContainerSc
 
 # Worldgen
 accessible method net/minecraft/data/worldgen/placement/OrePlacements commonOrePlacement (ILnet/minecraft/world/level/levelgen/placement/PlacementModifier;)Ljava/util/List;
+
+# Screen
+accessible field net/minecraft/client/gui/screens/Screen renderables Ljava/util/List;
