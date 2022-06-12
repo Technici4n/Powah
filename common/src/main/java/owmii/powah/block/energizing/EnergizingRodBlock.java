@@ -2,6 +2,8 @@ package owmii.powah.block.energizing;
 
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
@@ -142,9 +144,9 @@ public class EnergizingRodBlock extends AbstractEnergyBlock<EnergyConfig, Energi
     }
 
     @Override
+    @Environment(EnvType.CLIENT)
     public boolean renderHud(PoseStack matrix, BlockState state, Level world, BlockPos pos, Player player, BlockHitResult result, @Nullable BlockEntity te) {
         if (te instanceof EnergizingRodTile rod) {
-            /* TODO ARCH
             RenderSystem.getModelViewStack().pushPose();
             RenderSystem.enableBlend();
             Minecraft mc = Minecraft.getInstance();
@@ -152,13 +154,12 @@ public class EnergizingRodBlock extends AbstractEnergyBlock<EnergyConfig, Energi
             int x = mc.getWindow().getGuiScaledWidth() / 2;
             int y = mc.getWindow().getGuiScaledHeight();
             String s = ChatFormatting.GRAY + I18n.get("info.lollipop.stored") + ": " + I18n.get("info.lollipop.fe.stored", Util.addCommas(rod.getEnergy().getEnergyStored()), Util.numFormat(rod.getEnergy().getCapacity()));
-            RenderSystem.setShaderTexture(0, new ResourceLocation(Lollipop.MOD_ID, "textures/gui/ov_energy.png"));
-            GuiUtils.drawTexturedModalRect(matrix, x - 37 - 1, y - 80, 0, 0, 74, 9, 0);
+            RenderSystem.setShaderTexture(0, new ResourceLocation("lollipop", "textures/gui/ov_energy.png"));
+            Draw.drawTexturedModalRect(matrix, x - 37 - 1, y - 80, 0, 0, 74, 9, 0);
             Draw.gaugeH(x - 37, y - 79, 72, 16, 0, 9, ((EnergizingRodTile) te).getEnergy());
             font.drawShadow(matrix, s, x - (font.width(s) / 2.0f), y - 67, 0xffffff);
             RenderSystem.disableBlend();
             RenderSystem.getModelViewStack().popPose();
-            */
         }
         return true;
     }

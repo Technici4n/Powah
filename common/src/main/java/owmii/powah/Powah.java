@@ -53,21 +53,5 @@ public class Powah {
             PowahAPI.registerSolidCoolant(Blocks.BLUE_ICE, 568, -17);
             PowahAPI.registerSolidCoolant(Blcks.DRY_ICE.get(), 712, -32);
         });
-
-        // TODO ARCH
-        // Configs.register();
-        // Configs.ALL.forEach(IConfig::reload);
-        // ConfigHandler.post();
-
-        /* TODO ARCH
-        if (FMLEnvironment.dist.isClient()) {
-            try {
-                var clientClass = Class.forName("owmii.powah.client.PowahClient");
-                clientClass.getMethod("init").invoke(null);
-            } catch (Exception exception) {
-                throw new RuntimeException("Failed Powah client-side setup", exception);
-            }
-        }
-         */
     }
 }

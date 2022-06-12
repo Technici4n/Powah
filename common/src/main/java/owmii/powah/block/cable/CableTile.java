@@ -10,6 +10,7 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.phys.AABB;
 import owmii.powah.config.v2.types.CableConfig;
 import owmii.powah.lib.block.AbstractEnergyStorage;
 import owmii.powah.lib.block.IInventoryHolder;
@@ -90,13 +91,9 @@ public abstract class CableTile extends AbstractEnergyStorage<CableConfig, Cable
         return 0;
     }
 
-    /* TODO ARCH
-    @Override
-    @OnlyIn(Dist.CLIENT)
     public AABB getRenderBoundingBox() {
         return new AABB(this.worldPosition, this.worldPosition.offset(1, 1, 1));
     }
-     */
 
     @Override
     public int getSlotLimit(int slot) {

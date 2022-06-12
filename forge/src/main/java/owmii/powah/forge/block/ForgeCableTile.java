@@ -43,7 +43,7 @@ public class ForgeCableTile extends CableTile {
 			BlockPos pos = this.worldPosition.relative(side);
 			if (direction != null && cable.getBlockPos().relative(direction).equals(pos)) continue;
 			BlockEntity tile = world.getBlockEntity(pos);
-			received += receive(tile, side, amount, simulate);
+			received += receive(tile, side.getOpposite(), amount, simulate);
 		}
 		return received;
 	}

@@ -1,6 +1,8 @@
 package owmii.powah.block.energizing;
 
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.phys.AABB;
+import owmii.powah.Powah;
 import owmii.powah.config.v2.types.EnergyConfig;
 import owmii.powah.lib.block.AbstractEnergyStorage;
 import owmii.powah.lib.util.NBT;
@@ -86,13 +88,10 @@ public class EnergizingRodTile extends AbstractEnergyStorage<EnergyConfig, Energ
         sync(2);
     }
 
-    /* TODO ARCH
-    @Override
     public AABB getRenderBoundingBox() {
-        int range = Configs.ENERGIZING.range.get();
+        int range = Powah.config().devices.energizing_range;
         return new AABB(getBlockPos()).inflate(range);
     }
-     */
 
     @Override
     public boolean keepEnergy() {

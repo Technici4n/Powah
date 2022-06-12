@@ -160,17 +160,14 @@ public class EnergizingOrbBlock extends AbstractBlock<IVariant.Single, Energizin
     public boolean onWrench(BlockState state, Level world, BlockPos pos, Player player, InteractionHand hand, Direction side, WrenchMode mode, Vec3 hit) {
         if (mode.link()) {
             ItemStack stack = player.getItemInHand(hand);
-            if (stack.getItem() instanceof WrenchItem) {
-                WrenchItem wrench = (WrenchItem) stack.getItem();
+            if (stack.getItem() instanceof WrenchItem wrench) {
                 BlockEntity tileEntity = world.getBlockEntity(pos);
                 if (tileEntity instanceof EnergizingOrbTile) {
-                    EnergizingOrbTile orb = (EnergizingOrbTile) tileEntity;
                     CompoundTag nbt = wrench.getWrenchNBT(stack);
                     if (nbt.contains("RodPos", Tag.TAG_COMPOUND)) {
                         BlockPos rodPos = NbtUtils.readBlockPos(nbt.getCompound("RodPos"));
                         BlockEntity tileEntity1 = world.getBlockEntity(rodPos);
-                        if (tileEntity1 instanceof EnergizingRodTile) {
-                            EnergizingRodTile rod = (EnergizingRodTile) tileEntity1;
+                        if (tileEntity1 instanceof EnergizingRodTile rod) {
                             V3d v3d = V3d.from(rodPos);
                             if ((int) v3d.distance(pos) <= Powah.config().devices.energizing_range) {
                                 rod.setOrbPos(pos);
@@ -194,8 +191,7 @@ public class EnergizingOrbBlock extends AbstractBlock<IVariant.Single, Energizin
     @Override
     @Environment(EnvType.CLIENT)
     public boolean renderHud(PoseStack matrix, BlockState state, Level world, BlockPos pos, Player player, BlockHitResult result, @Nullable BlockEntity te) {
-        if (te instanceof EnergizingOrbTile) {
-            EnergizingOrbTile orb = (EnergizingOrbTile) te;
+        if (te instanceof EnergizingOrbTile orb) {
             if (orb.getBuffer().getCapacity() > 0) {
                 RenderSystem.getModelViewStack().pushPose();
                 RenderSystem.enableBlend();

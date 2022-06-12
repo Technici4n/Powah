@@ -28,6 +28,7 @@ public final class Network {
         try {
             ctor = packetClass.getConstructor(FriendlyByteBuf.class);
             decoders.add(ctor);
+            packetIds.put(packetClass, nextId);
             nextId++;
         } catch (NoSuchMethodException e) {
             throw new RuntimeException("Failed to register packet", e);
@@ -70,15 +71,4 @@ public final class Network {
             NetworkManager.sendToPlayer(serverPlayer, PACKET_ID, encodePacket(msg));
         }
     }
-
-    /* TODO ARCH use or cleanup
-    public <T> void toTracking(T msg, Entity entity) {
-        this.channel.send(PacketDistributor.TRACKING_ENTITY.with(() -> entity), msg);
-    }
-
-    public <T> void toTrackingAndSelf(T msg, Entity entity) {
-        this.channel.send(PacketDistributor.TRACKING_ENTITY_AND_SELF.with(() -> entity), msg);
-    }
-
-     */
 }

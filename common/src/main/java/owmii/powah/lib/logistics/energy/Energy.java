@@ -156,7 +156,7 @@ public class Energy {
             int received = Energy.receive(stack1, amount, false);
             l += extractEnergy(received, false);
         }
-        /* TODO ARCH
+        /* TODO ARCH - curios compat
         if (CuriosCompat.isLoaded()) {
             for (ItemStack stack1 : CuriosCompat.getAllStacks(player)) {
                 if (stack1.isEmpty() || !isPresent(stack1) || !checker.test(stack1)) continue;

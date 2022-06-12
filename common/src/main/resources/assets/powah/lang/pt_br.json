@@ -1,5 +1,5 @@
 {
-  "itemGroup.powah": "Powah",
+  "itemGroup.powah.tab": "Powah",
   "block.powah.energy_cell_starter": "Célula de Energia (Inicial)",
   "block.powah.energy_cell_basic": "Célula de Energia (Básico)",
   "block.powah.energy_cell_hardened": "Célula de Energia (Endurecido)",

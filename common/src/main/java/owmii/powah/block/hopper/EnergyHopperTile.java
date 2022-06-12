@@ -39,7 +39,7 @@ public class EnergyHopperTile extends AbstractEnergyStorage<ChargingConfig, Ener
                     }
                 }
             } else if (tile != null) {
-        /* TODO ARCH
+        /* TODO ARCH - essential, need to fix transfer
                 tile.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY).ifPresent(iItemHandler -> {
                     for (int i = 0; i < iItemHandler.getSlots(); i++) {
                         ItemStack stack = iItemHandler.getStackInSlot(i);

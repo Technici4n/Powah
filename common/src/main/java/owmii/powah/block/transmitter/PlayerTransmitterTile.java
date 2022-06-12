@@ -46,7 +46,7 @@ public class PlayerTransmitterTile extends AbstractEnergyStorage<ChargingConfig,
                             int received = Energy.receive(stack1, amount, false);
                             extracted += extractEnergy(received, false, null);
                         }
-                        /* TODO ARCH
+                        /* TODO ARCH - curios compat
                         for (ItemStack stack1 : CuriosCompat.getAllStacks(player)) {
                             if (stack1.isEmpty() || !Energy.chargeable(stack1)) continue;
                             long amount = Math.min(charging, getEnergy().getStored());

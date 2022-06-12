@@ -141,18 +141,14 @@ public class AbstractBlock<V extends IVariant, B extends AbstractBlock<V, B>> ex
         return super.updateShape(state, facing, facingState, world, currentPos, facingPos);
     }
 
-    /* TODO ARCH
-    @Override
+    // TODO FABRIC: this will need an event
     public ItemStack getCloneItemStack(BlockState state, HitResult target, BlockGetter world, BlockPos pos, Player player) {
         BlockEntity te = world.getBlockEntity(pos);
-        if (te instanceof AbstractTileEntity) {
-            AbstractTileEntity tile = (AbstractTileEntity) te;
-            ItemStack stack = tile.storeToStack(new ItemStack(this));
+        if (te instanceof AbstractTileEntity tile) {
             return tile.storeToStack(new ItemStack(this));
         }
-        return super.getCloneItemStack(state, target, world, pos, player);
+        return new ItemStack(this);
     }
-     */
 
     @Override
     public InteractionResult use(BlockState state, Level world, BlockPos pos, Player player, InteractionHand hand, BlockHitResult result) {
@@ -274,7 +270,7 @@ public class AbstractBlock<V extends IVariant, B extends AbstractBlock<V, B>> ex
         return null;
     }
 
-    /* TODO ARCH
+    /* TODO ARCH - not essential (what the hell is this even?)
     @Override
     public BlockState rotate(BlockState state, LevelAccessor world, BlockPos pos, Rotation direction) {
         if (!getFacing().equals(Facing.NONE)) {

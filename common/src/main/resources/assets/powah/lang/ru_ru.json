@@ -1,5 +1,5 @@
 {
-  "itemGroup.powah": "Powah",
+  "itemGroup.powah.tab": "Powah",
   "block.powah.energy_cell_starter": "Энергоячейка (Начальная)",
   "block.powah.energy_cell_basic": "Энергоячейка (Основная)",
   "block.powah.energy_cell_hardened": "Энергоячейка (Усиленная)",

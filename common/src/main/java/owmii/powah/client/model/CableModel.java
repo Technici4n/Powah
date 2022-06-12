@@ -104,7 +104,7 @@ public class CableModel extends AbstractModel<CableTile, CableRenderer> {
             final BlockPos pos = te.getBlockPos().relative(side);
             final BlockEntity tile = te.getLevel().getBlockEntity(pos);
             final Transfer config = te.getSideConfig().getType(side);
-            if (!(tile instanceof CableTile) && EnvHandler.INSTANCE.hasEnergy(te.getLevel(), pos, side) && (config.canExtract || config.canReceive)) {
+            if (!(tile instanceof CableTile) && EnvHandler.INSTANCE.hasEnergy(te.getLevel(), pos, side.getOpposite()) && (config.canExtract || config.canReceive)) {
                 flags[side.get3DDataValue()] = side;
             }
         }

@@ -1,5 +1,6 @@
 package owmii.powah.lib.block;
 
+import owmii.powah.EnvHandler;
 import owmii.powah.api.energy.IEnergyConnector;
 import owmii.powah.block.Tier;
 import owmii.powah.config.IConfigHolder;
@@ -66,8 +67,8 @@ public abstract class AbstractEnergyBlock<C extends IEnergyConfig<Tier>, B exten
         if (checkValidEnergySide()) {
             Direction side = state.getValue(BlockStateProperties.FACING);
             BlockPos pos1 = pos.relative(side);
-            return world.getBlockState(pos1).getBlock() instanceof IEnergyConnector;
-            // TODO ARCH || Energy.isPresent(world.getBlockEntity(pos1), side);
+            return world.getBlockState(pos1).getBlock() instanceof IEnergyConnector ||
+                    world instanceof Level level && EnvHandler.INSTANCE.hasEnergy(level, pos, side.getOpposite());
         }
         return super.canSurvive(state, world, pos);
     }

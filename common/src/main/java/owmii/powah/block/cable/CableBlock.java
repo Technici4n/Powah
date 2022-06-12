@@ -210,7 +210,7 @@ public class CableBlock extends AbstractEnergyBlock<CableConfig, CableBlock> imp
 
     public boolean canConnectEnergy(Level world, BlockPos pos, Direction direction) {
         BlockEntity tile = world.getBlockEntity(pos.relative(direction));
-        return !(tile instanceof CableTile) && EnvHandler.INSTANCE.hasEnergy(world, pos.relative(direction), direction);
+        return !(tile instanceof CableTile) && EnvHandler.INSTANCE.hasEnergy(world, pos.relative(direction), direction.getOpposite());
     }
 
     static final Map<BlockPos, Set<BlockPos>> CACHE = new HashMap<>();
@@ -274,7 +274,7 @@ public class CableBlock extends AbstractEnergyBlock<CableConfig, CableBlock> imp
         return Optional.empty();
     }
 
-    /* TODO ARCH
+    /* TODO ARCH - not essential
     @Override
     public void initializeClient(Consumer<IBlockRenderProperties> consumer) {
         consumer.accept(new IBlockRenderProperties() {

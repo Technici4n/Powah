@@ -1,6 +1,6 @@
 package owmii.powah.config;
 
-/* TODO ARCH
+/* TODO ARCH - essential, need to fix config!
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;

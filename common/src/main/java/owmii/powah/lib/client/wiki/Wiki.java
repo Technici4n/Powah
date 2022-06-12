@@ -1,8 +1,13 @@
 package owmii.powah.lib.client.wiki;
 
+import dev.architectury.event.events.client.ClientRecipeUpdateEvent;
 import dev.architectury.platform.Platform;
+import net.minecraft.core.Registry;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Recipe;
+import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraft.world.level.ItemLike;
+import org.apache.commons.lang3.time.StopWatch;
 import org.apache.logging.log4j.Marker;
 import org.apache.logging.log4j.MarkerManager;
 import owmii.powah.Powah;
@@ -66,32 +71,30 @@ public class Wiki {
         return Platform.getMod(this.modId).getVersion();
     }
 
-    /* TODO ARCH
-    @SubscribeEvent
-    @OnlyIn(Dist.CLIENT)
-    public static void collect(RecipesUpdatedEvent event) {
-        StopWatch watch = StopWatch.createStarted();
-        Lollipop.LOGGER.info(MARKER, "Started wikis recipes collecting...");
-        WIKIS.forEach((s, wiki) -> {
-            ForgeRegistries.ITEMS.getValues().stream().filter(i -> i.getRegistryName().getNamespace().equals(Powah.MOD_ID)).forEach(item -> {
-                List<Recipe<?>> crafting = new ArrayList<>();
-                event.getRecipeManager().getAllRecipesFor(RecipeType.CRAFTING).forEach(recipe -> {
-                    if (recipe.getResultItem().sameItem(new ItemStack(item))) {
-                        crafting.add(recipe);
-                    }
+    static {
+        ClientRecipeUpdateEvent.EVENT.register(recipeManager -> {
+            StopWatch watch = StopWatch.createStarted();
+            Powah.LOGGER.info(MARKER, "Started wikis recipes collecting...");
+            WIKIS.forEach((s, wiki) -> {
+                Registry.ITEM.stream().filter(i -> Registry.ITEM.getKey(i).getNamespace().equals(Powah.MOD_ID)).forEach(item -> {
+                    List<Recipe<?>> crafting = new ArrayList<>();
+                    recipeManager.getAllRecipesFor(RecipeType.CRAFTING).forEach(recipe -> {
+                        if (recipe.getResultItem().sameItem(new ItemStack(item))) {
+                            crafting.add(recipe);
+                        }
+                    });
+                    wiki.crafting.put(item, crafting);
+                    List<Recipe<?>> smelting = new ArrayList<>();
+                    recipeManager.getAllRecipesFor(RecipeType.CRAFTING).forEach(recipe -> {
+                        if (recipe.getResultItem().sameItem(new ItemStack(item))) {
+                            smelting.add(recipe);
+                        }
+                    });
+                    wiki.smelting.put(item, smelting);
                 });
-                wiki.crafting.put(item, crafting);
-                List<Recipe<?>> smelting = new ArrayList<>();
-                event.getRecipeManager().getAllRecipesFor(RecipeType.CRAFTING).forEach(recipe -> {
-                    if (recipe.getResultItem().sameItem(new ItemStack(item))) {
-                        smelting.add(recipe);
-                    }
-                });
-                wiki.smelting.put(item, smelting);
             });
+            watch.stop();
+            Powah.LOGGER.info(MARKER, "Wiki recipes collecting completed in : {} ms", watch.getTime());
         });
-        watch.stop();
-        Lollipop.LOGGER.info(MARKER, "Wiki recipes collecting completed in : {} ms", watch.getTime());
     }
-     */
 }

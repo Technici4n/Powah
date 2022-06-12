@@ -87,7 +87,7 @@ public abstract class AbstractEnergyStorage<C extends IEnergyConfig<Tier>, B ext
             for (Direction side : Direction.values()) {
                 if (canExtractEnergy(side)) {
                     long amount = Math.min(getEnergyTransfer(), getEnergy().getStored());
-                    long toExtract = EnvHandler.INSTANCE.pushEnergy(world, worldPosition.relative(side), side, amount);
+                    long toExtract = EnvHandler.INSTANCE.pushEnergy(world, worldPosition.relative(side), side.getOpposite(), amount);
                     extracted += extractEnergy(Util.safeInt(toExtract), false, side);
                 }
             }

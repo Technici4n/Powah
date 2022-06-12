@@ -51,18 +51,6 @@ public class EnergyHopperBlock extends AbstractEnergyBlock<ChargingConfig, Energ
         return new EnergyHopperTile(pos, state, this.variant);
     }
 
-    @Override
-    public boolean canSurvive(BlockState state, LevelReader worldIn, BlockPos pos) {
-        Direction direction = state.getValue(BlockStateProperties.FACING);
-        BlockEntity tile = worldIn.getBlockEntity(pos.relative(direction));
-        return tile instanceof Container;
-        /* TODO ARCH
-        return (tile instanceof Container || tile != null
-                && tile.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, direction).isPresent())
-                && !Energy.isPresent(tile, direction);
-         */
-    }
-
     @Nullable
     @Override
     public <T extends AbstractTileEntity> AbstractContainer getContainer(int id, Inventory inventory, AbstractTileEntity te, BlockHitResult result) {

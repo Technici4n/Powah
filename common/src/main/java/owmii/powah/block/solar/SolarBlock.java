@@ -40,11 +40,10 @@ public class SolarBlock extends AbstractGeneratorBlock<SolarBlock> implements Si
     public static final BooleanProperty EAST = PipeBlock.EAST;
     public static final BooleanProperty SOUTH = PipeBlock.SOUTH;
     public static final BooleanProperty WEST = PipeBlock.WEST;
-    public static final BooleanProperty OUTPUT = BooleanProperty.create("output");
 
     public SolarBlock(Properties properties, Tier variant) {
         super(properties, variant);
-        setStateProps(state -> state.setValue(NORTH, false).setValue(EAST, false).setValue(SOUTH, false).setValue(WEST, false).setValue(OUTPUT, false));
+        setStateProps(state -> state.setValue(NORTH, false).setValue(EAST, false).setValue(SOUTH, false).setValue(WEST, false));
     }
 
     @Override
@@ -100,7 +99,6 @@ public class SolarBlock extends AbstractGeneratorBlock<SolarBlock> implements Si
         boolean west = canAttach(state, world, pos, Direction.WEST);
         boolean east = canAttach(state, world, pos, Direction.EAST);
         return state.setValue(NORTH, !north).setValue(SOUTH, !south).setValue(WEST, !west).setValue(EAST, !east)
-                .setValue(OUTPUT, true) // TODO ARCH Energy.isPresent(world.getBlockEntity(pos.below()), Direction.DOWN))
                 .setValue(BlockStateProperties.WATERLOGGED, world.getFluidState(pos).getType() == Fluids.WATER);
     }
 
@@ -110,7 +108,7 @@ public class SolarBlock extends AbstractGeneratorBlock<SolarBlock> implements Si
 
     @Override
     protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
-        builder.add(NORTH, EAST, SOUTH, WEST, OUTPUT);
+        builder.add(NORTH, EAST, SOUTH, WEST);
         super.createBlockStateDefinition(builder);
     }
 

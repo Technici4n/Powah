@@ -42,7 +42,7 @@ public class ReactorBlock extends AbstractGeneratorBlock<ReactorBlock> {
     public static final BooleanProperty CORE = BooleanProperty.create("core");
 
     public ReactorBlock(Properties properties, Tier variant) {
-        super(properties, variant);
+        super(properties.isValidSpawn((state, blockGetter, blockPos, entityType) -> false), variant);
         setStateProps(state -> state.setValue(CORE, false));
     }
 
@@ -114,13 +114,6 @@ public class ReactorBlock extends AbstractGeneratorBlock<ReactorBlock> {
         }
         super.onRemove(state, world, pos, newState, isMoving);
     }
-
-    /* TODO ARCH
-    @Override
-    public boolean isValidSpawn(BlockState state, BlockGetter level, BlockPos pos, SpawnPlacements.Type type, EntityType<?> entityType) {
-        return false;
-    }
-     */
 
     @Override
     protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {

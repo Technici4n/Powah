@@ -13,7 +13,7 @@ public interface IItem {
     }
 
     default void oneTimeInfo(Player player, ItemStack stack, Component component) {
-        /* TODO ARCH
+        /* TODO ARCH - unclear
         CompoundTag p = player.getPersistentData();
         int i = player.getInventory().selected;
         int j = p.getInt("ChatInfo");

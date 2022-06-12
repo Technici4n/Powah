@@ -7,16 +7,15 @@ import net.minecraft.core.Direction;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.crafting.Recipe;
-import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
 import owmii.powah.block.Tier;
 import owmii.powah.block.cable.CableTile;
 import owmii.powah.lib.logistics.fluid.Tank;
 import owmii.powah.lib.logistics.inventory.Inventory;
-import owmii.powah.lib.logistics.inventory.ItemStackHandler;
 import owmii.powah.world.gen.WorldGen;
+
+import java.util.function.Consumer;
 
 public interface EnvHandler {
 	EnvHandler INSTANCE = Util.make(()  -> {
@@ -34,6 +33,9 @@ public interface EnvHandler {
 		WorldGen.init();
 	}
 	void scheduleCommonSetup(Runnable runnable);
+
+	// WEIRD PLATFORM STUFF
+	void handleReactorInitClient(Consumer<?> consumer);
 
 	// MISC HOOKS
 	boolean hasContainerItem(ItemStack stack);

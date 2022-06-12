@@ -1,5 +1,5 @@
 {
-  "itemGroup.powah": "Powah",
+  "itemGroup.powah.tab": "Powah",
   "block.powah.energy_cell_starter": "能量单元（初级）",
   "block.powah.energy_cell_basic": "能量单元（基础）",
   "block.powah.energy_cell_hardened": "能量单元（硬化）",

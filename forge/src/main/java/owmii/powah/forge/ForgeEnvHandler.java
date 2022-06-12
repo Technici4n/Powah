@@ -2,6 +2,7 @@ package owmii.powah.forge;
 
 import com.google.common.primitives.Ints;
 import dev.architectury.hooks.fluid.forge.FluidStackHooksForge;
+import net.minecraft.client.renderer.BlockEntityWithoutLevelRenderer;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.world.InteractionHand;
@@ -12,6 +13,8 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.levelgen.feature.Feature;
+import net.minecraftforge.client.IItemRenderProperties;
+import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.capabilities.ICapabilityProvider;
 import net.minecraftforge.common.util.LazyOptional;
@@ -36,22 +39,21 @@ import owmii.powah.Powah;
 import owmii.powah.block.Tier;
 import owmii.powah.block.cable.CableTile;
 import owmii.powah.block.reactor.ReactorPartTile;
-import owmii.powah.config.IEnergyConfig;
+import owmii.powah.client.render.tile.ReactorItemRenderer;
 import owmii.powah.forge.block.ForgeCableTile;
 import owmii.powah.item.ItemGroups;
 import owmii.powah.lib.block.AbstractEnergyStorage;
 import owmii.powah.lib.block.IBlock;
 import owmii.powah.lib.block.IInventoryHolder;
 import owmii.powah.lib.block.ITankHolder;
-import owmii.powah.lib.item.EnergyBlockItem;
-import owmii.powah.lib.item.EnergyItem;
 import owmii.powah.lib.item.IEnergyContainingItem;
 import owmii.powah.lib.logistics.energy.Energy;
 import owmii.powah.lib.logistics.fluid.Tank;
 import owmii.powah.lib.logistics.inventory.Inventory;
-import owmii.powah.lib.registry.IVariantEntry;
 import owmii.powah.lib.util.Util;
 import owmii.powah.world.gen.Features;
+
+import java.util.function.Consumer;
 
 public class ForgeEnvHandler implements EnvHandler {
 	private final IEventBus modEventBus = FMLJavaModLoadingContext.get().getModEventBus();
@@ -76,6 +78,17 @@ public class ForgeEnvHandler implements EnvHandler {
 	}
 
 	@Override
+	public void handleReactorInitClient(Consumer<?> consumer) {
+		// :help_me:
+		((Consumer<IItemRenderProperties>) consumer).accept(new IItemRenderProperties() {
+			@Override
+			public BlockEntityWithoutLevelRenderer getItemStackRenderer() {
+				return new ReactorItemRenderer();
+			}
+		});
+	}
+
+	@Override
 	public void scheduleCommonSetup(Runnable runnable) {
 		modEventBus.addListener((FMLCommonSetupEvent event) -> runnable.run());
 	}
@@ -92,7 +105,7 @@ public class ForgeEnvHandler implements EnvHandler {
 
 	@Override
 	public void registerTransfer() {
-		modEventBus.addGenericListener(BlockEntity.class, (AttachCapabilitiesEvent<BlockEntity> event) -> {
+		MinecraftForge.EVENT_BUS.addGenericListener(BlockEntity.class, (AttachCapabilitiesEvent<BlockEntity> event) -> {
 			if (event.getObject() instanceof ReactorPartTile reactorPart) {
 				event.addCapability(Powah.id("reactor_part"), new ICapabilityProvider() {
 					@NotNull
@@ -179,7 +192,7 @@ public class ForgeEnvHandler implements EnvHandler {
 				});
 			}
 		});
-		modEventBus.addGenericListener(ItemStack.class, (AttachCapabilitiesEvent<ItemStack> event) -> {
+		MinecraftForge.EVENT_BUS.addGenericListener(ItemStack.class, (AttachCapabilitiesEvent<ItemStack> event) -> {
 			if (event.getObject().getItem() instanceof IEnergyContainingItem eci) {
 				event.addCapability(Powah.id("energy"), new ICapabilityProvider() {
 					@NotNull

@@ -11,6 +11,7 @@ import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.phys.AABB;
 import org.apache.commons.lang3.tuple.Pair;
 import owmii.powah.EnvHandler;
 import owmii.powah.lib.block.AbstractEnergyProvider;
@@ -378,11 +379,8 @@ public class ReactorTile extends AbstractEnergyProvider<ReactorBlock> implements
         sync();
     }
 
-    /* TODO ARCH
-    @Override
-    @OnlyIn(Dist.CLIENT)
+    // TODO Fabric: is this necessary, or does the reactor render fine without it?
     public AABB getRenderBoundingBox() {
         return new AABB(this.worldPosition).inflate(1.0D, 3.0D, 1.0D);
     }
-     */
 }

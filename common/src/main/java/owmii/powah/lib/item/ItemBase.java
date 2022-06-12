@@ -25,12 +25,14 @@ public class ItemBase extends Item implements IItem {
         return InteractionResult.PASS;
     }
 
-    /* TODO ARCH
-    @Override
+    // TODO fabric this will need an event handler
     public InteractionResult onItemUseFirst(ItemStack stack, UseOnContext context) {
-        return context.getPlayer() != null ? onItemUseFirst(stack, context.getLevel(), context.getClickedPos(), context.getPlayer(), context.getHand(), context.getClickedFace(), context.getClickLocation()) : super.onItemUseFirst(stack, context);
+        if (context.getPlayer() != null) {
+            return onItemUseFirst(stack, context.getLevel(), context.getClickedPos(), context.getPlayer(), context.getHand(), context.getClickedFace(), context.getClickLocation());
+        } else {
+            return InteractionResult.PASS;
+        }
     }
-     */
 
     public InteractionResult onItemUseFirst(ItemStack stack, Level world, BlockPos pos, Player player, InteractionHand hand, Direction side, Vec3 hit) {
         return InteractionResult.PASS;
