@@ -22,6 +22,8 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.PipeBlock;
 import net.minecraft.world.level.block.SimpleWaterloggedBlock;
 import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.entity.BlockEntityTicker;
+import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
@@ -39,14 +41,12 @@ import owmii.powah.api.energy.IEnergyConnector;
 import owmii.powah.config.v2.types.CableConfig;
 import owmii.powah.lib.block.AbstractEnergyBlock;
 import owmii.powah.lib.block.AbstractTileEntity;
-import owmii.powah.lib.logistics.energy.Energy;
 import owmii.powah.lib.logistics.inventory.AbstractContainer;
 import owmii.powah.block.Tier;
 import owmii.powah.inventory.CableContainer;
 
 import javax.annotation.Nullable;
 import java.util.*;
-import java.util.function.Consumer;
 
 public class CableBlock extends AbstractEnergyBlock<CableConfig, CableBlock> implements SimpleWaterloggedBlock, IEnergyConnector {
     public static final BooleanProperty NORTH = PipeBlock.NORTH;
@@ -55,13 +55,12 @@ public class CableBlock extends AbstractEnergyBlock<CableConfig, CableBlock> imp
     public static final BooleanProperty WEST = PipeBlock.WEST;
     public static final BooleanProperty UP = PipeBlock.UP;
     public static final BooleanProperty DOWN = PipeBlock.DOWN;
-    public static final BooleanProperty TILE = BooleanProperty.create("tile");
     private static final VoxelShape CABLE = box(6.25, 6.25, 6.25, 9.75, 9.75, 9.75);
     private static final VoxelShape[] MULTIPART = new VoxelShape[]{box(6.5, 6.5, 0, 9.5, 9.5, 7), box(9.5, 6.5, 6.5, 16, 9.5, 9.5), box(6.5, 6.5, 9.5, 9.5, 9.5, 16), box(0, 6.5, 6.5, 6.5, 9.5, 9.5), box(6.5, 9.5, 6.5, 9.5, 16, 9.5), box(6.5, 0, 6.5, 9.5, 7, 9.5)};
 
     public CableBlock(Properties properties, Tier variant) {
         super(properties, variant);
-        setStateProps(state -> state.setValue(NORTH, false).setValue(EAST, false).setValue(SOUTH, false).setValue(WEST, false).setValue(UP, false).setValue(DOWN, false).setValue(TILE, false));
+        setStateProps(state -> state.setValue(NORTH, false).setValue(EAST, false).setValue(SOUTH, false).setValue(WEST, false).setValue(UP, false).setValue(DOWN, false));
     }
 
     @Override
@@ -72,7 +71,7 @@ public class CableBlock extends AbstractEnergyBlock<CableConfig, CableBlock> imp
     @Nullable
     @Override
     public BlockEntity newBlockEntity(BlockPos pos, BlockState state) {
-        return state.getValue(TILE) ? EnvHandler.INSTANCE.createCable(pos, state, this.variant) : null;
+        return EnvHandler.INSTANCE.createCable(pos, state, this.variant);
     }
 
     @Override
@@ -101,18 +100,29 @@ public class CableBlock extends AbstractEnergyBlock<CableConfig, CableBlock> imp
     }
 
     @Override
-    public BlockState updateShape(BlockState state, Direction facing, BlockState facingState, LevelAccessor world, BlockPos currentPos, BlockPos facingPos) {
-        if (world.getBlockEntity(currentPos) instanceof CableTile cable) {
+    public void neighborChanged(BlockState state, Level level, BlockPos pos, Block block, BlockPos fromPos, boolean isMoving) {
+        var newState = createCableState(level, pos);
+
+        if (newState != state) {
+            level.setBlockAndUpdate(pos, newState);
+        }
+
+        if (level.getBlockEntity(pos) instanceof CableTile cable) {
+            var oldSides = new HashSet<>(cable.energySides);
+
             cable.energySides.clear();
             for (Direction direction : Direction.values()) {
-                if (world instanceof Level level && canConnectEnergy(level, currentPos, direction)) {
+                if (canConnectEnergy(level, pos, direction)) {
                     cable.energySides.add(direction);
                 }
             }
-            cable.sync();
+
+            if (!oldSides.equals(cable.energySides)) {
+                cable.sync();
+            }
         }
 
-        return world instanceof Level level ? createCableState(level, currentPos) : defaultBlockState();
+        super.neighborChanged(state, level, pos, block, fromPos, isMoving);
     }
 
     @Nullable
@@ -129,18 +139,8 @@ public class CableBlock extends AbstractEnergyBlock<CableConfig, CableBlock> imp
         boolean[] east = canAttach(state, world, pos, Direction.EAST);
         boolean[] up = canAttach(state, world, pos, Direction.UP);
         boolean[] down = canAttach(state, world, pos, Direction.DOWN);
-        boolean tile = false;
-        if (north[1] || south[1] || west[1] || east[1] || up[1] || down[1]) {
-            tile = true;
-        } else {
-            BlockEntity tileEntity = world.getBlockEntity(pos);
-            if (tileEntity instanceof CableTile cable) {
-                cable.getInventory().drop((Level) world, pos);
-                cable.setRemoved();
-            }
-        }
         FluidState fluidState = world.getFluidState(pos);
-        return state.setValue(NORTH, north[0] && !north[1]).setValue(SOUTH, south[0] && !south[1]).setValue(WEST, west[0] && !west[1]).setValue(EAST, east[0] && !east[1]).setValue(UP, up[0] && !up[1]).setValue(DOWN, down[0] && !down[1]).setValue(TILE, tile).setValue(BlockStateProperties.WATERLOGGED, fluidState.getType() == Fluids.WATER);
+        return state.setValue(NORTH, north[0] && !north[1]).setValue(SOUTH, south[0] && !south[1]).setValue(WEST, west[0] && !west[1]).setValue(EAST, east[0] && !east[1]).setValue(UP, up[0] && !up[1]).setValue(DOWN, down[0] && !down[1]).setValue(BlockStateProperties.WATERLOGGED, fluidState.getType() == Fluids.WATER);
     }
 
     @Override
@@ -310,7 +310,7 @@ public class CableBlock extends AbstractEnergyBlock<CableConfig, CableBlock> imp
 
     @Override
     protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
-        builder.add(NORTH, EAST, SOUTH, WEST, UP, DOWN, TILE);
+        builder.add(NORTH, EAST, SOUTH, WEST, UP, DOWN);
         super.createBlockStateDefinition(builder);
     }
 }

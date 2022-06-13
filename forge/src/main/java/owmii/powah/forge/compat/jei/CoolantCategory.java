@@ -11,6 +11,7 @@ import mezz.jei.api.runtime.IIngredientManager;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.resources.language.I18n;
+import net.minecraft.core.Registry;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.resources.ResourceLocation;
@@ -90,16 +91,15 @@ public class CoolantCategory implements IRecipeCategory<CoolantCategory.Recipe> 
             List<Recipe> recipes = new ArrayList<>();
 
             allItemStacks.forEach(stack -> {
-                if (stack.getItem() instanceof BucketItem && !(stack.getItem() instanceof MobBucketItem)) {
-                    BucketItem bucket = (BucketItem) stack.getItem();
+                if (stack.getItem() instanceof BucketItem bucket && !(stack.getItem() instanceof MobBucketItem)) {
                     Fluid fluid = bucket.getFluid();
-                    if (PowahAPI.COOLANTS.containsKey(fluid)) {
+                    if (PowahAPI.getCoolant(fluid) != 0) {
                         recipes.add(new Recipe(bucket, PowahAPI.getCoolant(fluid)));
                     }
                 }
             });
 
-            List<Fluid> fluids = new ArrayList<>(PowahAPI.COOLANTS.keySet());
+            List<Fluid> fluids = PowahAPI.COOLANT_FLUIDS.keySet().stream().flatMap(f -> Registry.FLUID.getOptional(f).stream()).toList();
             recipes.forEach(recipe -> {
                 fluids.remove(recipe.fluid);
             });

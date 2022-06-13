@@ -20,7 +20,7 @@ import owmii.powah.recipe.Recipes;
 
 public class Powah {
     public static final String MOD_ID = "powah";
-    private static final ConfigHolder<PowahConfig> CONFIG = AutoConfig.register(PowahConfig.class, JanksonConfigSerializer::new);
+    private static final ConfigHolder<PowahConfig> CONFIG = PowahConfig.register();
     public static final Logger LOGGER = LogManager.getLogger(MOD_ID);
 
     public static ResourceLocation id(String path) {

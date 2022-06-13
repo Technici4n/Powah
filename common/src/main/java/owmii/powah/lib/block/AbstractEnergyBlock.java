@@ -68,7 +68,7 @@ public abstract class AbstractEnergyBlock<C extends IEnergyConfig<Tier>, B exten
             Direction side = state.getValue(BlockStateProperties.FACING);
             BlockPos pos1 = pos.relative(side);
             return world.getBlockState(pos1).getBlock() instanceof IEnergyConnector ||
-                    world instanceof Level level && EnvHandler.INSTANCE.hasEnergy(level, pos, side.getOpposite());
+                    world instanceof Level level && EnvHandler.INSTANCE.hasEnergy(level, pos1, side.getOpposite());
         }
         return super.canSurvive(state, world, pos);
     }

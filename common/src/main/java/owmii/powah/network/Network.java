@@ -20,8 +20,8 @@ import java.util.List;
 public final class Network {
     private static final ResourceLocation PACKET_ID = Powah.id("packet");
     private static int nextId = 0;
-    private static List<Constructor<? extends IPacket>> decoders = new ArrayList<>();
-    private static IdentityHashMap<Class<?>, Integer> packetIds = new IdentityHashMap<>();
+    private static final List<Constructor<? extends IPacket>> decoders = new ArrayList<>();
+    private static final IdentityHashMap<Class<?>, Integer> packetIds = new IdentityHashMap<>();
 
     public static <T extends IPacket> void register(Class<T> packetClass) {
         Constructor<T> ctor = null;

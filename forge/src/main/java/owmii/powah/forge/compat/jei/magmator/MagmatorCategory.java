@@ -9,6 +9,7 @@ import mezz.jei.api.ingredients.IIngredients;
 import mezz.jei.api.recipe.category.IRecipeCategory;
 import mezz.jei.api.runtime.IIngredientManager;
 import net.minecraft.client.Minecraft;
+import net.minecraft.core.Registry;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.resources.ResourceLocation;
@@ -90,16 +91,15 @@ public class MagmatorCategory implements IRecipeCategory<MagmatorCategory.Recipe
             List<Recipe> recipes = new ArrayList<>();
 
             allItemStacks.forEach(stack -> {
-                if (stack.getItem() instanceof BucketItem) {
-                    BucketItem bucket = (BucketItem) stack.getItem();
+                if (stack.getItem() instanceof BucketItem bucket) {
                     Fluid fluid = bucket.getFluid();
-                    if (PowahAPI.MAGMATIC_FLUIDS.containsKey(fluid)) {
+                    if (PowahAPI.getMagmaticFluidHeat(fluid) != 0) {
                         recipes.add(new Recipe(bucket, PowahAPI.getMagmaticFluidHeat(fluid)));
                     }
                 }
             });
 
-            List<Fluid> fluids = new ArrayList<>(PowahAPI.MAGMATIC_FLUIDS.keySet());
+            List<Fluid> fluids = PowahAPI.MAGMATIC_FLUIDS.keySet().stream().flatMap(f -> Registry.FLUID.getOptional(f).stream()).toList();
             recipes.forEach(recipe -> {
                 fluids.remove(recipe.fluid);
             });

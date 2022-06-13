@@ -75,8 +75,7 @@ public class ReactorBlock extends AbstractGeneratorBlock<ReactorBlock> {
     @Override
     public InteractionResult use(BlockState state, Level world, BlockPos pos, Player player, InteractionHand hand, BlockHitResult result) {
         BlockEntity tileentity = world.getBlockEntity(pos);
-        if (tileentity instanceof ReactorTile) {
-            ReactorTile reactor = (ReactorTile) tileentity;
+        if (tileentity instanceof ReactorTile reactor) {
             if (reactor.isBuilt()) {
                 if (EnvHandler.INSTANCE.interactWithTank(player, hand, reactor.getTank())) {
                     reactor.sync();
@@ -84,8 +83,7 @@ public class ReactorBlock extends AbstractGeneratorBlock<ReactorBlock> {
                 }
                 return super.use(state, world, pos, player, hand, result);
             }
-        } else if (tileentity instanceof ReactorPartTile) {
-            ReactorPartTile reactor = (ReactorPartTile) tileentity;
+        } else if (tileentity instanceof ReactorPartTile reactor) {
             if (reactor.isBuilt() && reactor.core().isPresent()) {
                 return reactor.getBlock().use(state, world, reactor.getCorePos(), player, hand, result);
             }

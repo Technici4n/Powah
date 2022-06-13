@@ -68,15 +68,15 @@ public class Builder {
                 if (side.equals(Direction.DOWN)) continue;
                 BlockPos pos = this.reactor.getBlockPos().relative(side).above(side.equals(Direction.UP) ? 2 : 0);
                 BlockEntity tileEntity = world.getBlockEntity(pos);
-                if (tileEntity instanceof ReactorPartTile) {
-                    ReactorPartTile part = (ReactorPartTile) tileEntity;
+                if (tileEntity instanceof ReactorPartTile part) {
                     part.setExtractor(true);
+                    // Send block update to make cables reconnect
+                    world.updateNeighborsAt(pos, part.getBlock());
                 }
             }
             for (BlockPos pos : getPosList()) {
                 BlockEntity tileEntity = world.getBlockEntity(pos);
-                if (tileEntity instanceof ReactorPartTile) {
-                    ReactorPartTile part = (ReactorPartTile) tileEntity;
+                if (tileEntity instanceof ReactorPartTile part) {
                     part.setBuilt(true);
                     part.sync();
                 }

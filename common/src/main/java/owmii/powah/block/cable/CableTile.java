@@ -1,16 +1,21 @@
 package owmii.powah.block.cable;
 
+import com.google.common.collect.Iterables;
+import com.google.common.collect.Lists;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
 import net.minecraft.nbt.Tag;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.ChunkPos;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.AABB;
+import org.spongepowered.include.com.google.common.collect.Iterators;
 import owmii.powah.config.v2.types.CableConfig;
 import owmii.powah.lib.block.AbstractEnergyStorage;
 import owmii.powah.lib.block.IInventoryHolder;
@@ -21,21 +26,51 @@ import owmii.powah.block.Tiles;
 import javax.annotation.Nullable;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.stream.IntStream;
 
 public abstract class CableTile extends AbstractEnergyStorage<CableConfig, CableBlock> implements IInventoryHolder {
 
-
     public final Map<Direction, EnergyProxy> proxyMap = new HashMap<>();
-    public final Set<Direction> energySides = new HashSet<>();
+    public final Set<Direction> energySides = new HashSet<>(); // TODO ensure order?
+    @Nullable CableNet net = null;
+    protected int startIndex = 0;
 
     public CableTile(BlockPos pos, BlockState state, Tier variant) {
         super(Tiles.CABLE.get(), pos, state, variant);
         for (Direction side : Direction.values()) {
             this.proxyMap.put(side, new EnergyProxy());
         }
+    }
+
+    @Override
+    public void clearRemoved() {
+        super.clearRemoved();
+        CableNet.addCable(this);
+    }
+
+    @Override
+    public void setRemoved() {
+        super.setRemoved();
+        CableNet.removeCable(this);
+    }
+
+    public boolean isActive() {
+        if (getLevel() instanceof ServerLevel serverLevel) {
+            return serverLevel.getChunkSource().isPositionTicking(ChunkPos.asLong(getBlockPos()));
+        }
+        return false;
+    }
+
+    protected Iterable<CableTile> getCables() {
+        if (net == null) {
+            CableNet.calculateNetwork(this);
+        }
+        startIndex %= net.cableList.size();
+        return Iterables.concat(net.cableList.subList(startIndex, net.cableList.size()), net.cableList.subList(0, startIndex));
     }
 
     @Override

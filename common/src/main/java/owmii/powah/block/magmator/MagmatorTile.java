@@ -22,7 +22,7 @@ public class MagmatorTile extends AbstractEnergyProvider<MagmatorBlock> implemen
     public MagmatorTile(BlockPos pos, BlockState state, Tier variant) {
         super(Tiles.MAGMATOR.get(), pos, state, variant);
         this.tank.setCapacity(FluidStack.bucketAmount() * 4)
-                .validate(stack -> PowahAPI.MAGMATIC_FLUIDS.containsKey(stack.getFluid()))
+                .validate(stack -> PowahAPI.getMagmaticFluidHeat(stack.getFluid()) != 0)
                 .setChange(() -> MagmatorTile.this.sync(10));
         this.inv.add(1);
     }
@@ -51,14 +51,12 @@ public class MagmatorTile extends AbstractEnergyProvider<MagmatorBlock> implemen
             boolean flag = false;
             if (this.buffer.isEmpty() && !this.tank.isEmpty()) {
                 FluidStack fluid = this.tank.getFluid();
-                if (PowahAPI.MAGMATIC_FLUIDS.containsKey(fluid.getFluid())) {
-                    int fluidHeat = PowahAPI.getMagmaticFluidHeat(fluid.getFluid());
-                    if (fluidHeat > 0) {
-                        long minStored = Math.min(this.tank.getFluidAmount(), 100);
-                        this.buffer.setStored(minStored * fluidHeat / 100);
-                        this.buffer.setCapacity(minStored * fluidHeat / 100);
-                        this.tank.drain(minStored, false);
-                    }
+                int fluidHeat = PowahAPI.getMagmaticFluidHeat(fluid.getFluid());
+                if (fluidHeat > 0) {
+                    long minStored = Math.min(this.tank.getFluidAmount(), 100);
+                    this.buffer.setStored(minStored * fluidHeat / 100);
+                    this.buffer.setCapacity(minStored * fluidHeat / 100);
+                    this.tank.drain(minStored, false);
                 }
             }
 
