@@ -45,9 +45,17 @@ public class Tank extends FluidTank {
         return this;
     }
 
+    private boolean sendUpdates = true;
+
+    public void setSendUpdates(boolean sendUpdates) {
+        this.sendUpdates = sendUpdates;
+    }
+
     @Override
-    protected void onContentsChanged() {
-        this.changed.run();
+    public void onContentsChanged() {
+        if (sendUpdates) {
+            this.changed.run();
+        }
     }
 
     public Object getPlatformWrapper() {

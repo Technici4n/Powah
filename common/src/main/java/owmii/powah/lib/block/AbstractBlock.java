@@ -141,8 +141,12 @@ public class AbstractBlock<V extends IVariant, B extends AbstractBlock<V, B>> ex
         return super.updateShape(state, facing, facingState, world, currentPos, facingPos);
     }
 
-    // TODO FABRIC: this will need an event
+    // Called on Forge, it's an override
     public ItemStack getCloneItemStack(BlockState state, HitResult target, BlockGetter world, BlockPos pos, Player player) {
+        return getCloneItemStack(world, pos);
+    }
+
+    public ItemStack getCloneItemStack(BlockGetter world, BlockPos pos) {
         BlockEntity te = world.getBlockEntity(pos);
         if (te instanceof AbstractTileEntity tile) {
             return tile.storeToStack(new ItemStack(this));

@@ -1,9 +1,9 @@
 {
   "type": "powah:energizing",
   "ingredients": [
-	{"tag": "forge:nether_stars"},
-	{"tag": "forge:storage_blocks/redstone"},
-	{"tag": "forge:storage_blocks/redstone"},
+	{"item": "minecraft:nether_star"},
+	{"item": "minecraft:redstone_block"},
+	{"item": "minecraft:redstone_block"},
 	{"item": "powah:blazing_crystal_block"}
   ],
   "energy": 20000000,

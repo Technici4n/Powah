@@ -137,9 +137,15 @@ public class Inventory extends ItemStackHandler {
         return true;
     }
 
+    private boolean sendUpdates = true;
+
+    public void setSendUpdates(boolean sendUpdates) {
+        this.sendUpdates = sendUpdates;
+    }
+
     @Override
-    protected void onContentsChanged(int slot) {
-        if (this.tile != null) {
+    public void onContentsChanged(int slot) {
+        if (this.tile != null && sendUpdates) {
             this.tile.onSlotChanged(slot);
         }
     }

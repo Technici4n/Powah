@@ -2,10 +2,10 @@
   "type": "powah:energizing",
   "ingredients": [
 	{
-	  "tag": "forge:ingots/iron"
+	  "item": "minecraft:iron_ingot"
 	},
 	{
-	  "tag": "forge:ingots/gold"
+	  "item": "minecraft:gold_ingot"
 	}
   ],
   "energy": 10000,

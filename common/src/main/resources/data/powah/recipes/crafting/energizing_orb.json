@@ -10,7 +10,7 @@
 	  "item": "powah:dielectric_rod_horizontal"
 	},
 	"g": {
-	  "tag": "forge:glass"
+	  "tag": "c:glass_blocks"
 	},
 	"c": {
 	  "item": "powah:dielectric_casing"

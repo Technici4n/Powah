@@ -7,7 +7,7 @@
   ],
   "key": {
 	"q": {
-	  "tag": "forge:gems/quartz"
+	  "item": "minecraft:quartz"
 	},
 	"h": {
 	  "item": "powah:dielectric_rod"

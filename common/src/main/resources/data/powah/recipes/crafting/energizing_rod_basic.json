@@ -7,7 +7,7 @@
   ],
   "key": {
 	"q": {
-	  "tag": "forge:storage_blocks/quartz"
+	  "tag": "c:quartz_blocks"
 	},
 	"h": {
 	  "item": "powah:energizing_rod_starter"

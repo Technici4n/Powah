@@ -13,7 +13,7 @@
 	  "item": "powah:dielectric_rod_horizontal"
 	},
 	"i": {
-	  "tag": "forge:ingots/iron"
+	  "item": "minecraft:iron_ingots"
 	}
   },
   "result": {

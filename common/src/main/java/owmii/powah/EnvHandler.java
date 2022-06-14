@@ -18,7 +18,7 @@ import owmii.powah.world.gen.WorldGen;
 import java.util.function.Consumer;
 
 public interface EnvHandler {
-	EnvHandler INSTANCE = Util.make(()  -> {
+	EnvHandler INSTANCE = Util.make(() -> {
 		try {
 			var klass = Class.forName(Platform.isForge() ? "owmii.powah.forge.ForgeEnvHandler" : "owmii.powah.fabric.FabricEnvHandler");
 			return (EnvHandler) klass.getConstructor().newInstance();

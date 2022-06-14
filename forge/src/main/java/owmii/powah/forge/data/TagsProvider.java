@@ -1,12 +1,12 @@
-package owmii.powah.data;
+package owmii.powah.forge.data;
 
+import net.minecraft.core.Registry;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.data.tags.BlockTagsProvider;
 import net.minecraft.data.tags.ItemTagsProvider;
 import net.minecraft.tags.BlockTags;
 import net.minecraftforge.common.Tags;
 import net.minecraftforge.common.data.ExistingFileHelper;
-import net.minecraftforge.registries.ForgeRegistries;
 import owmii.powah.Powah;
 import owmii.powah.block.Blcks;
 
@@ -36,8 +36,8 @@ public class TagsProvider {
             tag(ITags.Blocks.URANINITE_BLOCK).add(Blcks.URANINITE.get());
 
             // All of our blocks are mineable with a pickaxe
-            for (var block : ForgeRegistries.BLOCKS) {
-                if (block.getRegistryName().getNamespace().equals(Powah.MOD_ID)) {
+            for (var block : Registry.BLOCK) {
+                if (Registry.BLOCK.getKey(block).getNamespace().equals(Powah.MOD_ID)) {
                     tag(BlockTags.MINEABLE_WITH_PICKAXE).add(block);
                 }
             }
@@ -67,6 +67,11 @@ public class TagsProvider {
 
             tag(Tags.Items.STORAGE_BLOCKS).add(Blcks.URANINITE.get().asItem());
             tag(ITags.Items.URANINITE_BLOCK).add(Blcks.URANINITE.get().asItem());
+
+            // Platform abstractions!
+            tag(ITags.ItemAbstractions.GLASS).addTag(Tags.Items.GLASS);
+            tag(ITags.ItemAbstractions.GLASS_PANES).addTag(Tags.Items.GLASS_PANES);
+            tag(ITags.ItemAbstractions.QUARTZ_BLOCKS).addTag(Tags.Items.STORAGE_BLOCKS_QUARTZ);
         }
     }
 }

@@ -124,7 +124,7 @@ public abstract class AbstractEnergyStorage<C extends IEnergyConfig<Tier>, B ext
         return 0;
     }
 
-    public long extractEnergy(int maxExtract, boolean simulate, @Nullable Direction side) {
+    public long extractEnergy(long maxExtract, boolean simulate, @Nullable Direction side) {
         if (!canExtractEnergy(side)) return 0;
         final Energy energy = getEnergy();
         long extracted = Math.min(energy.getStored(), Math.min(energy.getMaxExtract(), maxExtract));
@@ -135,7 +135,7 @@ public abstract class AbstractEnergyStorage<C extends IEnergyConfig<Tier>, B ext
         return extracted;
     }
 
-    public long receiveEnergy(int maxReceive, boolean simulate, @Nullable Direction side) {
+    public long receiveEnergy(long maxReceive, boolean simulate, @Nullable Direction side) {
         if (!canReceiveEnergy(side)) return 0;
         final Energy energy = getEnergy();
         long received = Math.min(energy.getEmpty(), Math.min(energy.getMaxReceive(), maxReceive));

@@ -16,8 +16,6 @@ import owmii.powah.block.reactor.ReactorPartTile;
 import owmii.powah.item.ReactorItem;
 
 public class ReactorItemRenderer extends BlockEntityWithoutLevelRenderer {
-	private static final BlockEntityRenderDispatcher dispatcher = Minecraft.getInstance().getBlockEntityRenderDispatcher();
-
 	public ReactorItemRenderer() {
 		super(null, null);
 	}
@@ -26,6 +24,7 @@ public class ReactorItemRenderer extends BlockEntityWithoutLevelRenderer {
 	public void renderByItem(ItemStack stack, ItemTransforms.TransformType transformType, PoseStack poseStack, MultiBufferSource buffer, int packedLight, int packedOverlay) {
 		if (stack.getItem() instanceof ReactorItem reactorItem) {
 			var tile = new ReactorPartTile(BlockPos.ZERO, reactorItem.getBlock().defaultBlockState(), reactorItem.getVariant());
+			var dispatcher = Minecraft.getInstance().getBlockEntityRenderDispatcher();
 			dispatcher.renderItem(tile, poseStack, buffer, packedLight, packedOverlay);
 		}
 	}

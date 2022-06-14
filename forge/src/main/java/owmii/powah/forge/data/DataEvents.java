@@ -1,4 +1,4 @@
-package owmii.powah.data;
+package owmii.powah.forge.data;
 
 import net.minecraft.data.DataGenerator;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -7,9 +7,7 @@ import net.minecraftforge.forge.event.lifecycle.GatherDataEvent;
 import owmii.powah.Powah;
 import owmii.powah.forge.compat.curios.CurioTagsProvider;
 
-@Mod.EventBusSubscriber(bus = Mod.EventBusSubscriber.Bus.MOD)
 public class DataEvents {
-    @SubscribeEvent
     public static void gatherData(GatherDataEvent event) {
         DataGenerator generator = event.getGenerator();
         TagsProvider.Blocks bp = new TagsProvider.Blocks(generator, Powah.MOD_ID, event.getExistingFileHelper());

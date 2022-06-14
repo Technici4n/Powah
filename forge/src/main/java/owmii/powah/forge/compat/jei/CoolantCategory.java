@@ -27,6 +27,7 @@ import com.mojang.blaze3d.vertex.PoseStack;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class CoolantCategory implements IRecipeCategory<CoolantCategory.Recipe> {
     public static final ResourceLocation GUI_BACK = new ResourceLocation(Powah.MOD_ID, "textures/gui/jei/misc.png");
@@ -99,7 +100,7 @@ public class CoolantCategory implements IRecipeCategory<CoolantCategory.Recipe> 
                 }
             });
 
-            List<Fluid> fluids = PowahAPI.COOLANT_FLUIDS.keySet().stream().flatMap(f -> Registry.FLUID.getOptional(f).stream()).toList();
+            List<Fluid> fluids = PowahAPI.COOLANT_FLUIDS.keySet().stream().flatMap(f -> Registry.FLUID.getOptional(f).stream()).collect(Collectors.toCollection(ArrayList::new));
             recipes.forEach(recipe -> {
                 fluids.remove(recipe.fluid);
             });

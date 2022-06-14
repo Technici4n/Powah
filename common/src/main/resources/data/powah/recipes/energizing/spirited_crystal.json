@@ -1,7 +1,7 @@
 {
   "type": "powah:energizing",
   "ingredients": [
-	{"tag": "forge:gems/emerald"}
+	{"item": "minecraft:emerald"}
   ],
   "energy": 1000000,
   "result": {

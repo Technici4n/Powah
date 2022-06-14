@@ -11,6 +11,7 @@ import owmii.powah.lib.util.Player;
 import owmii.powah.lib.util.Stack;
 import owmii.powah.lib.util.Util;
 
+import javax.annotation.Nullable;
 import java.util.Optional;
 import java.util.function.Consumer;
 import java.util.function.Predicate;
@@ -24,6 +25,8 @@ public class Energy {
     private long stored;
     private long maxExtract;
     private long maxReceive;
+    @Nullable
+    public Object platformWrapper;
 
     public Energy(Energy energy) {
         this(energy.capacity, energy.maxExtract, energy.maxReceive);
@@ -309,6 +312,11 @@ public class Energy {
                 write(this.stack.getOrCreateTagElement(NBT.TAG_STORABLE_STACK), false, false);
             }
             return energy;
+        }
+
+        public void setStoredAndWrite(long stored) {
+            setStored(stored);
+            write(this.stack.getOrCreateTagElement(NBT.TAG_STORABLE_STACK), false, false);
         }
     }
 

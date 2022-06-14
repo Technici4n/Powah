@@ -8,9 +8,7 @@ import owmii.powah.lib.block.AbstractEnergyBlock;
 import owmii.powah.lib.block.AbstractEnergyStorage;
 import owmii.powah.lib.block.IInventoryHolder;
 import owmii.powah.lib.block.IOwnable;
-import owmii.powah.config.IEnergyConfig;
 import owmii.powah.lib.logistics.energy.Energy;
-import owmii.powah.lib.registry.IVariant;
 import owmii.powah.lib.util.Player;
 import owmii.powah.lib.util.math.RangedInt;
 import owmii.powah.api.energy.endernetwork.IEnderExtender;
@@ -96,14 +94,14 @@ public class AbstractEnderTile<B extends AbstractEnergyBlock<EnderConfig, B>> ex
     }
 
     @Override
-    public long receiveEnergy(int maxReceive, boolean simulate, @Nullable Direction side) {
+    public long receiveEnergy(long maxReceive, boolean simulate, @Nullable Direction side) {
         final long l = super.receiveEnergy(maxReceive, simulate, side);
         setEnergy(getEnergy());
         return l;
     }
 
     @Override
-    public long extractEnergy(int maxExtract, boolean simulate, @Nullable Direction side) {
+    public long extractEnergy(long maxExtract, boolean simulate, @Nullable Direction side) {
         final long l = super.extractEnergy(maxExtract, simulate, side);
         setEnergy(getEnergy());
         return l;

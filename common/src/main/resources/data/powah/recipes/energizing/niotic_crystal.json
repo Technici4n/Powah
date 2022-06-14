@@ -1,7 +1,7 @@
 {
   "type": "powah:energizing",
   "ingredients": [
-	{"tag": "forge:gems/diamond"}
+	{"item": "minecraft:diamond"}
   ],
   "energy": 300000,
   "result": {

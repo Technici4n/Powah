@@ -5,13 +5,16 @@ import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import net.minecraftforge.fml.loading.FMLEnvironment;
 import owmii.powah.Powah;
+import owmii.powah.forge.data.DataEvents;
 
 @Mod(Powah.MOD_ID)
 public class PowahForge {
 	public PowahForge() {
-		EventBuses.registerModEventBus(Powah.MOD_ID, FMLJavaModLoadingContext.get().getModEventBus());
+		var modEventBus = FMLJavaModLoadingContext.get().getModEventBus();
+		EventBuses.registerModEventBus(Powah.MOD_ID, modEventBus);
 
 		Powah.init();
+		modEventBus.addListener(DataEvents::gatherData);
 
 		if (FMLEnvironment.dist.isClient()) {
 			try {

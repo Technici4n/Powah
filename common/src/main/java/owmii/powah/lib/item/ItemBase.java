@@ -25,7 +25,6 @@ public class ItemBase extends Item implements IItem {
         return InteractionResult.PASS;
     }
 
-    // TODO fabric this will need an event handler
     public InteractionResult onItemUseFirst(ItemStack stack, UseOnContext context) {
         if (context.getPlayer() != null) {
             return onItemUseFirst(stack, context.getLevel(), context.getClickedPos(), context.getPlayer(), context.getHand(), context.getClickedFace(), context.getClickLocation());

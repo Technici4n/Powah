@@ -1,0 +1,9 @@
+{
+  "replace": false,
+  "values": [
+    "#c:regular_ices",
+    "#c:packed_ices",
+    "#c:blue_ices",
+    "#c:dry_ices"
+  ]
+}

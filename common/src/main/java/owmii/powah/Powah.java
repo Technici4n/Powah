@@ -46,6 +46,7 @@ public class Powah {
         Network.register();
 
         EnvHandler.INSTANCE.scheduleCommonSetup(() -> {
+            // TODO: move to config
             PowahAPI.registerSolidCoolant(Blocks.SNOW_BLOCK, 48, -3);
             PowahAPI.registerSolidCoolant(Items.SNOWBALL, 12, -3);
             PowahAPI.registerSolidCoolant(Blocks.ICE, 48, -5);
