@@ -90,7 +90,7 @@ public class EnergizingRodBlock extends AbstractEnergyBlock<EnergyConfig, Energi
     }
 
     public void setOrbPos(Level worldIn, BlockPos pos, EnergizingRodTile tile) {
-        int range = Powah.config().devices.energizing_range;
+        int range = Powah.config().general.energizing_range;
         List<BlockPos> list = BlockPos.betweenClosedStream(pos.offset(-range, -range, -range), pos.offset(range, range, range)).map(BlockPos::immutable).collect(Collectors.toList());
         for (BlockPos pos1 : list) {
             if (pos1.equals(BlockPos.ZERO)) continue;
@@ -124,7 +124,7 @@ public class EnergizingRodBlock extends AbstractEnergyBlock<EnergyConfig, Energi
                         if (tileEntity1 instanceof EnergizingOrbTile) {
                             EnergizingOrbTile orb = (EnergizingOrbTile) tileEntity1;
                             V3d v3d = V3d.from(orbPos);
-                            if ((int) v3d.distance(pos) <= Powah.config().devices.energizing_range) {
+                            if ((int) v3d.distance(pos) <= Powah.config().general.energizing_range) {
                                 rod.setOrbPos(orbPos);
                                 player.displayClientMessage(new TranslatableComponent("chat.powah.wrench.link.done").withStyle(ChatFormatting.GOLD), true);
                             } else {

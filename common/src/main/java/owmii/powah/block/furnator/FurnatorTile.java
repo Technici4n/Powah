@@ -61,7 +61,7 @@ public class FurnatorTile extends AbstractEnergyProvider<FurnatorBlock> implemen
                 if (!stack.isEmpty()) {
                     int burnTime = FuelRegistry.get(stack);
                     if (burnTime > 0) {
-                        long perFuelTick = Powah.config().generators.furnator_energy_per_fuel_tick;
+                        long perFuelTick = Powah.config().general.energy_per_fuel_tick;
                         this.carbon.setAll(burnTime * perFuelTick);
                         if (EnvHandler.INSTANCE.hasContainerItem(stack)) {
                             this.inv.setStackInSlot(1, EnvHandler.INSTANCE.getContainerItem(stack));

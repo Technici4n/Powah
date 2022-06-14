@@ -18,7 +18,7 @@ public class EnergyBlockItem<C extends IEnergyConfig<Tier>, B extends AbstractEn
     @Override
     public Info getEnergyInfo() {
         long transfer = getConfig().getTransfer(getVariant());
-        return new Info(getConfig().getCapacity(getVariant()), getTransferType().canExtract ? transfer : 0, getTransferType().canReceive ? transfer : 0);
+        return new Info(getConfig().getCapacity(getVariant()), getTransferType().canReceive ? transfer : 0, getTransferType().canExtract ? transfer : 0);
     }
 
     public Transfer getTransferType() {

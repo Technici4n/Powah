@@ -89,7 +89,7 @@ public class EnergizingRodTile extends AbstractEnergyStorage<EnergyConfig, Energ
     }
 
     public AABB getRenderBoundingBox() {
-        int range = Powah.config().devices.energizing_range;
+        int range = Powah.config().general.energizing_range;
         return new AABB(getBlockPos()).inflate(range);
     }
 

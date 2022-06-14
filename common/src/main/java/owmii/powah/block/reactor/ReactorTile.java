@@ -174,9 +174,9 @@ public class ReactorTile extends AbstractEnergyProvider<ReactorBlock> implements
     }
 
     public double calcProduction() {
-        double d = this.carbon.isEmpty() ? 1 : 1.2D;
-        double d1 = this.redstone.isEmpty() ? 1 : 1.4D;
-        return (1.0D - calc()) * (this.fuel.getTicks() / 100) * getGeneration() * d * d1;
+        double d = this.carbon.isEmpty() ? 1.2D : 1D;
+        double d1 = this.redstone.isEmpty() ? 1.4D : 1D;
+        return (1.0D - calc()) * (this.fuel.getTicks() / 1000) * getGeneration() / d / d1;
     }
 
     public double calcConsumption() {

@@ -119,7 +119,7 @@ public class EnergizingOrbBlock extends AbstractBlock<IVariant.Single, Energizin
 
     @Override
     public void onRemove(BlockState state, Level worldIn, BlockPos pos, BlockState newState, boolean isMoving) {
-        int range = Powah.config().devices.energizing_range;
+        int range = Powah.config().general.energizing_range;
         List<BlockPos> list = BlockPos.betweenClosedStream(pos.offset(-range, -range, -range), pos.offset(range, range, range))
                 .map(BlockPos::immutable)
                 .filter(pos1 -> !pos.equals(pos1))
@@ -144,7 +144,7 @@ public class EnergizingOrbBlock extends AbstractBlock<IVariant.Single, Energizin
     }
 
     public void search(Level worldIn, BlockPos pos) {
-        int range = Powah.config().devices.energizing_range;
+        int range = Powah.config().general.energizing_range;
         List<BlockPos> list = BlockPos.betweenClosedStream(pos.offset(-range, -range, -range), pos.offset(range, range, range)).map(BlockPos::immutable).filter(pos1 -> !pos.equals(pos1)).collect(Collectors.toList());
         list.stream().filter(p -> worldIn.isLoaded(pos)).forEach(pos1 -> {
             BlockEntity tileEntity1 = worldIn.getBlockEntity(pos1);
@@ -169,7 +169,7 @@ public class EnergizingOrbBlock extends AbstractBlock<IVariant.Single, Energizin
                         BlockEntity tileEntity1 = world.getBlockEntity(rodPos);
                         if (tileEntity1 instanceof EnergizingRodTile rod) {
                             V3d v3d = V3d.from(rodPos);
-                            if ((int) v3d.distance(pos) <= Powah.config().devices.energizing_range) {
+                            if ((int) v3d.distance(pos) <= Powah.config().general.energizing_range) {
                                 rod.setOrbPos(pos);
                                 player.displayClientMessage(new TranslatableComponent("chat.powah.wrench.link.done").withStyle(ChatFormatting.GOLD), true);
                             } else {

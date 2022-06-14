@@ -111,6 +111,8 @@ public class EnergizingRecipe implements Recipe<RecipeWrapper> {
         public EnergizingRecipe fromJson(ResourceLocation recipeId, JsonObject json) {
             NonNullList<Ingredient> list = readIngredients(GsonHelper.getAsJsonArray(json, "ingredients"));
             long energy = Long.parseLong(GsonHelper.getAsString(json, "energy", "0"));
+            // Apply multiplier from config
+            energy = Math.max(1, (long) (energy * Powah.config().general.energizing_energy_ratio));
 
             if (list.isEmpty()) {
                 throw new JsonParseException("No ingredients for energizing recipe");

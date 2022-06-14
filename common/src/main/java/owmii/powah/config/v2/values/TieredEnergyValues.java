@@ -1,23 +1,23 @@
 package owmii.powah.config.v2.values;
 
-import me.shedaniel.autoconfig.annotation.ConfigEntry;
 import owmii.powah.block.Tier;
+import owmii.powah.config.v2.annotations.LongRange;
 import owmii.powah.lib.logistics.energy.Energy;
 
 public class TieredEnergyValues {
-	@ConfigEntry.BoundedDiscrete(max = Energy.MAX)
+	@LongRange(min = 1, max = Energy.MAX)
 	public long starter;
-	@ConfigEntry.BoundedDiscrete(max = Energy.MAX)
+	@LongRange(min = 1, max = Energy.MAX)
 	public long basic;
-	@ConfigEntry.BoundedDiscrete(max = Energy.MAX)
+	@LongRange(min = 1, max = Energy.MAX)
 	public long hardened;
-	@ConfigEntry.BoundedDiscrete(max = Energy.MAX)
+	@LongRange(min = 1, max = Energy.MAX)
 	public long blazing;
-	@ConfigEntry.BoundedDiscrete(max = Energy.MAX)
+	@LongRange(min = 1, max = Energy.MAX)
 	public long niotic;
-	@ConfigEntry.BoundedDiscrete(max = Energy.MAX)
+	@LongRange(min = 1, max = Energy.MAX)
 	public long spirited;
-	@ConfigEntry.BoundedDiscrete(max = Energy.MAX)
+	@LongRange(min = 1, max = Energy.MAX)
 	public long nitro;
 
 	public TieredEnergyValues(long starter, long basic, long hardened, long blazing, long niotic, long spirited, long nitro) {
@@ -41,5 +41,9 @@ public class TieredEnergyValues {
 			case NITRO -> nitro;
 			case CREATIVE -> 0;
 		};
+	}
+
+	public TieredEnergyValues copy(long factor) {
+		return new TieredEnergyValues(starter * factor, basic * factor, hardened * factor, blazing * factor, niotic * factor, spirited * factor, nitro * factor);
 	}
 }

@@ -1,9 +1,9 @@
 {
   "type": "minecraft:crafting_shaped",
   "pattern": [
-	"ulu",
-	"lcl",
-	"ulu"
+	"rlr",
+	"lul",
+	"rlr"
   ],
   "key": {
 	"u": {
@@ -12,9 +12,9 @@
 	"l": {
 	  "item": "powah:capacitor_blazing"
 	},
-	"c": {
-	  "item": "powah:dielectric_casing"
-	}
+    "r": {
+	  "item": "powah:reactor_hardened"
+    }
   },
   "result": {
 	"item": "powah:reactor_blazing",

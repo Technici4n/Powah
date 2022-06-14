@@ -49,7 +49,7 @@ public class ThermoScreen extends AbstractEnergyScreen<ThermoTile, ThermoContain
         }
 
         long percent = this.te.getGeneration() > 0 ? (100 * this.te.generating) / this.te.getGeneration() : 0;
-        this.font.draw(matrix, percent + "%" + " (" + this.te.generating + " EF/t)", this.leftPos + 34, this.topPos + 10, 5592405);
+        this.font.draw(matrix, percent + "%" + " (" + this.te.generating + " FE/t)", this.leftPos + 34, this.topPos + 10, 5592405);
     }
 
     @Override

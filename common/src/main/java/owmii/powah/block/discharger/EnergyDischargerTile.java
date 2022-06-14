@@ -28,6 +28,7 @@ public class EnergyDischargerTile extends AbstractEnergyStorage<EnergyConfig, En
         int extracted = 0;
         if (!isRemote()) {
             if (checkRedstone()) {
+                // TODO ARCH fix transfer
                 for (int i = 0; i < this.inv.getSlots(); i++) {
                     final ItemStack stack = this.inv.getStackInSlot(i);
                     long amount = Math.min(getEnergyTransfer(), Energy.getStored(stack));

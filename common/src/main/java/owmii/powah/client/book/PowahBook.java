@@ -33,7 +33,7 @@ public class PowahBook {
                                 .e("ender_gate", e -> e.s(s -> s.p(new Info(IMG.ENDER_GATE, 2, s), new EnergyPanel<>(s).next(new CraftingPanel<>(s)))))
                         , new WelcomePanel(as))))
                 .e("energy_blocks", new Icon(Blcks.PLAYER_TRANSMITTER.get(Tier.SPIRITED)), ae -> ae.s(as -> as.p(new GridPage(as)
-                                .e("energizing", Blcks.ENERGIZING_ORB.get(), e -> e.s(s -> s.p(new Info(IMG.ENERGIZING, 2, new Object[][]{{Text.toRange(Powah.config().devices.energizing_range)}, {}}, s).next(new Info(IMG.ENERGIZING, s)), new CraftingPanel<>(s).next(new EnergyPanel<>(Blcks.ENERGIZING_ROD.get(Tier.STARTER), s).next(new CraftingPanel<>(Blcks.ENERGIZING_ROD.get(Tier.STARTER), s))))))
+                                .e("energizing", Blcks.ENERGIZING_ORB.get(), e -> e.s(s -> s.p(new Info(IMG.ENERGIZING, 2, new Object[][]{{Text.toRange(Powah.config().general.energizing_range)}, {}}, s).next(new Info(IMG.ENERGIZING, s)), new CraftingPanel<>(s).next(new EnergyPanel<>(Blcks.ENERGIZING_ROD.get(Tier.STARTER), s).next(new CraftingPanel<>(Blcks.ENERGIZING_ROD.get(Tier.STARTER), s))))))
                                 .e("player_transmitter", e -> e.s(s -> s.p(new Info(IMG.PLAYER_TRANSMITTER, s), new EnergyPanel<>(s).next(new CraftingPanel<>(s)))))
                                 .e("energy_hopper", e -> e.s(s -> s.p(new Info(IMG.ENERGY_HOPPER, s), new EnergyPanel<>(s).next(new CraftingPanel<>(s)))))
                                 .e("energy_discharger", e -> e.s(s -> s.p(new Info(IMG.ENERGY_DISCHARGER, s), new EnergyPanel<>(s).next(new CraftingPanel<>(s)))))
