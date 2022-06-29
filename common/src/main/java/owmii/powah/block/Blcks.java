@@ -47,6 +47,9 @@ public class Blcks {
     public static final Supplier<Block> SPIRITED_CRYSTAL = DR.register("spirited_crystal_block", () -> new AbstractBlock(Properties.metal(2.0f, 20.0f)));
     public static final Supplier<Block> NITRO_CRYSTAL = DR.register("nitro_crystal_block", () -> new AbstractBlock(Properties.metal(2.0f, 20.0f)));
     public static final Supplier<Block> URANINITE = DR.register("uraninite_block", () -> new AbstractBlock(Properties.metal(2.0f, 20.0f)));
+    public static final Supplier<Block> DEEPSLATE_URANINITE_ORE_POOR = DR.register("deepslate_uraninite_ore_poor", () -> new AbstractBlock(Properties.deepslate()));
+    public static final Supplier<Block> DEEPSLATE_URANINITE_ORE = DR.register("deepslate_uraninite_ore", () -> new AbstractBlock(Properties.deepslate()));
+    public static final Supplier<Block> DEEPSLATE_URANINITE_ORE_DENSE = DR.register("deepslate_uraninite_ore_dense", () -> new AbstractBlock(Properties.deepslate()));
     public static final Supplier<Block> URANINITE_ORE_POOR = DR.register("uraninite_ore_poor", () -> new AbstractBlock(Properties.rock(3.0f, 8.0f)));
     public static final Supplier<Block> URANINITE_ORE = DR.register("uraninite_ore", () -> new AbstractBlock(Properties.rock(3.2f, 8.0f)));
     public static final Supplier<Block> URANINITE_ORE_DENSE = DR.register("uraninite_ore_dense", () -> new AbstractBlock(Properties.rock(4.0f, 8.0f)));

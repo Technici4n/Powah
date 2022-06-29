@@ -4,9 +4,8 @@
 	"item": "powah:uraninite_raw"
   },
   "result": {
-	"item": "powah:uraninite",
-	"count": 2
+	"item": "powah:uraninite"
   },
   "experience": 0.7,
-  "cookingtime": 75
+  "cookingtime": 100
 }

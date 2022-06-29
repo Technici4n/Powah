@@ -1,0 +1,6 @@
+{
+    "parent": "block/cube_all",
+    "textures": {
+        "all": "powah:block/deepslate_uraninite_ore_poor"
+    }
+}

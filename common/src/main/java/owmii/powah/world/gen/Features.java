@@ -20,21 +20,22 @@ import java.util.Map;
 import java.util.function.Function;
 import java.util.function.Supplier;
 
-// TODO: deepslate ores, one day
-// The configs are probably not going to work thanks to Forge loading them too late. (Thanks Forge!)
 public class Features {
-    public static final Holder<PlacedFeature> DRY_ICE = register("dry_ice", Blcks.URANINITE_ORE_POOR, 17, wg -> wg.dry_ice_veins_per_chunk, 64);
-    public static final Holder<PlacedFeature> URANINITE_POOR = register("uraninite_ore_poor", Blcks.URANINITE_ORE_POOR, 5, wg -> wg.poor_uraninite_veins_per_chunk, 64);
-    public static final Holder<PlacedFeature> URANINITE = register("uraninite_ore", Blcks.URANINITE_ORE, 4, wg -> wg.uraninite_veins_per_chunk, 20);
-    public static final Holder<PlacedFeature> URANINITE_DENSE = register("uraninite_ore_dense", Blcks.URANINITE_ORE_DENSE, 3, wg -> wg.dense_uraninite_veins_per_chunk, 0);
+    public static final Holder<PlacedFeature> DRY_ICE = register("dry_ice", Blcks.DRY_ICE, Blcks.DRY_ICE, 17, wg -> wg.dry_ice_veins_per_chunk, 64);
+    public static final Holder<PlacedFeature> URANINITE_POOR = register("uraninite_ore_poor", Blcks.URANINITE_ORE_POOR, Blcks.DEEPSLATE_URANINITE_ORE_POOR, 5, wg -> wg.poor_uraninite_veins_per_chunk, 64);
+    public static final Holder<PlacedFeature> URANINITE = register("uraninite_ore", Blcks.URANINITE_ORE, Blcks.DEEPSLATE_URANINITE_ORE, 4, wg -> wg.uraninite_veins_per_chunk, 20);
+    public static final Holder<PlacedFeature> URANINITE_DENSE = register("uraninite_ore_dense", Blcks.URANINITE_ORE_DENSE, Blcks.DEEPSLATE_URANINITE_ORE_DENSE, 3, wg -> wg.dense_uraninite_veins_per_chunk, 0);
 
     public static void init() {
         // init static
     }
 
-    private static Holder<PlacedFeature> register(String name, Supplier<Block> block, int amountPerVein, Function<PowahConfig.WorldGen, Integer> veinsPerChunk, int maxY) {
+    private static Holder<PlacedFeature> register(String name, Supplier<Block> block, Supplier<Block> deepslateBlock, int amountPerVein, Function<PowahConfig.WorldGen, Integer> veinsPerChunk, int maxY) {
         var id = Powah.id(name);
-        var target = List.of(OreConfiguration.target(OreFeatures.STONE_ORE_REPLACEABLES, block.get().defaultBlockState()));
+        var target = List.of(
+                OreConfiguration.target(OreFeatures.STONE_ORE_REPLACEABLES, block.get().defaultBlockState()),
+                OreConfiguration.target(OreFeatures.DEEPSLATE_ORE_REPLACEABLES, deepslateBlock.get().defaultBlockState())
+        );
         var conf = new ConfiguredFeature<>(Feature.ORE, new OreConfiguration(target, amountPerVein));
         var confHolder = BuiltinRegistries.register(BuiltinRegistries.CONFIGURED_FEATURE, id, conf);
         var placed = new PlacedFeature(Holder.hackyErase(confHolder),

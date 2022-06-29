@@ -144,8 +144,6 @@
   "item.powah.crystal_spirited": "富生水晶",
   "item.powah.crystal_nitro": "下界水晶",
   "item.powah.uraninite_raw": "天然晶质铀（普通）",
-  "item.powah.uraninite_raw_poor": "天然晶质铀（贫瘠）",
-  "item.powah.uraninite_raw_dense": "天然晶质铀（致密）",
   "item.powah.uraninite": "晶质铀",
   "info.powah.unlimited": "无限的能量！！！",
   "info.powah.wrench.mode.config": "模式：%s配置",

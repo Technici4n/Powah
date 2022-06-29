@@ -43,8 +43,6 @@ public class Itms {
     public static final Supplier<Item> NITRO_CRYSTAL = DR.register("crystal_nitro", () -> new ItemBase(new Item.Properties().tab(ItemGroups.MAIN)));
     public static final Supplier<Item> ENDER_CORE = DR.register("ender_core", () -> new ItemBase(new Item.Properties().tab(ItemGroups.MAIN)));
     public static final Supplier<Item> CHARGED_SNOWBALL = DR.register("charged_snowball", () -> new ChargedSnowballItem(new Item.Properties().tab(ItemGroups.MAIN).stacksTo(16)));
-    public static final Supplier<Item> URANINITE_RAW_POOR = DR.register("uraninite_raw_poor", () -> new UraniniteItem(new Item.Properties().tab(ItemGroups.MAIN)));
     public static final Supplier<Item> URANINITE_RAW = DR.register("uraninite_raw", () -> new UraniniteItem(new Item.Properties().tab(ItemGroups.MAIN)));
-    public static final Supplier<Item> URANINITE_RAW_DENSE = DR.register("uraninite_raw_dense", () -> new UraniniteItem(new Item.Properties().tab(ItemGroups.MAIN)));
     public static final Supplier<Item> URANINITE = DR.register("uraninite", () -> new UraniniteItem(new Item.Properties().tab(ItemGroups.MAIN)));
 }

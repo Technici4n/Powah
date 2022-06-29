@@ -1,0 +1,11 @@
+{
+  "type": "powah:energizing",
+  "ingredients": [
+    [{ "item": "powah:uraninite_ore_dense" }, { "item": "powah:deepslate_uraninite_ore_dense" }]
+  ],
+  "energy": 100000,
+  "result": {
+    "item": "powah:uraninite",
+    "count": 10
+  }
+}

@@ -144,8 +144,6 @@
   "item.powah.crystal_spirited": "綠寶石電晶",
   "item.powah.crystal_nitro": "地獄之星電晶",
   "item.powah.uraninite_raw": "天然晶質鈾",
-  "item.powah.uraninite_raw_poor": "天然晶質鈾(低密度)",
-  "item.powah.uraninite_raw_dense": "天然晶質鈾(高密度)",
   "item.powah.uraninite": "晶質鈾燃料",
   "info.powah.unlimited": "終極能量!!!",
   "info.powah.wrench.mode.config": "模式: %s配置",

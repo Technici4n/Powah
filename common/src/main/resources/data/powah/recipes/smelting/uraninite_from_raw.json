@@ -1,12 +1,11 @@
 {
   "type": "minecraft:smelting",
   "ingredient": {
-	"item": "powah:uraninite_ore_dense"
+	"item": "powah:uraninite_raw"
   },
   "result": {
-	"item": "powah:uraninite",
-	"count": 4
+	"item": "powah:uraninite"
   },
   "experience": 0.7,
-  "cookingtime": 150
+  "cookingtime": 200
 }
