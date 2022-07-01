@@ -17,6 +17,7 @@ public class CuriosCompat {
         return loaded == 1;
     }
 
+    // I don't really like this, hopefully it doesn't crash...
     public static List<ItemStack> getAllStacks(Player player) {
         final List<ItemStack> list = new ArrayList<>();
         if (isLoaded()) {

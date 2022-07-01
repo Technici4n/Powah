@@ -100,28 +100,9 @@ public abstract class AbstractEnergyStorage<C extends IEnergyConfig<Tier>, B ext
     }
 
     protected long chargeItems(int i, int j) {
-        long extracted = 0;
-        if (!isRemote()) {
-            for (ItemStack stack : getChargingInv(i, j)) {
-                extracted += chargeItem(stack, getEnergyTransfer());
-            }
-        }
-        return extracted;
-    }
-
-    public List<ItemStack> getChargingInv(int i, int j) {
-        return IntStream.range(i, j)
-                .mapToObj(value -> this.inv.getStacks().get(value))
-                .collect(Collectors.toList());
-    }
-
-    protected long chargeItem(ItemStack stack, long transfer) {
-        if (!stack.isEmpty()) {
-            long amount = Math.min(transfer, getEnergy().getStored());
-            int received = Energy.receive(stack, amount, false);
-            return extractEnergy(received, false, null);
-        }
-        return 0;
+        long charged = EnvHandler.INSTANCE.chargeItemsInInventory(inv, i, j, getEnergyTransfer(), energy.getStored());
+        energy.consume(charged);
+        return charged;
     }
 
     public long extractEnergy(long maxExtract, boolean simulate, @Nullable Direction side) {

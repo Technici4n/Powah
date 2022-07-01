@@ -3,11 +3,10 @@ package owmii.powah.block.transmitter;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.level.block.state.BlockState;
+import owmii.powah.EnvHandler;
 import owmii.powah.config.v2.types.ChargingConfig;
 import owmii.powah.lib.block.AbstractEnergyStorage;
 import owmii.powah.lib.block.IInventoryHolder;
-import owmii.powah.lib.logistics.energy.Energy;
-import owmii.powah.lib.util.Player;
 import owmii.powah.lib.util.Stack;
 import owmii.powah.block.Tier;
 import owmii.powah.block.Tiles;
@@ -40,20 +39,8 @@ public class PlayerTransmitterTile extends AbstractEnergyStorage<ChargingConfig,
                     ServerPlayer player = op.get();
                     if (card.isMultiDim(stack) || player.level.dimensionType().equals(world.dimensionType())) {
                         long charging = getConfig().getChargingSpeed(this.variant);
-                        for (ItemStack stack1 : Player.invStacks(player)) {
-                            if (stack1.isEmpty() || !Energy.chargeable(stack1)) continue;
-                            long amount = Math.min(charging, getEnergy().getStored());
-                            int received = Energy.receive(stack1, amount, false);
-                            extracted += extractEnergy(received, false, null);
-                        }
-                        /* TODO ARCH - curios compat
-                        for (ItemStack stack1 : CuriosCompat.getAllStacks(player)) {
-                            if (stack1.isEmpty() || !Energy.chargeable(stack1)) continue;
-                            long amount = Math.min(charging, getEnergy().getStored());
-                            int received = Energy.receive(stack1, amount, false);
-                            extracted += extractEnergy(received, false, null);
-                        }
-                         */
+                        extracted = EnvHandler.INSTANCE.chargeItemsInPlayerInv(player, charging, getEnergy().getStored());
+                        energy.consume(extracted);
                     }
                 }
             }

@@ -5,6 +5,7 @@ import dev.architectury.hooks.fluid.forge.FluidStackHooksForge;
 import net.minecraft.client.renderer.BlockEntityWithoutLevelRenderer;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.world.Container;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
@@ -41,6 +42,7 @@ import owmii.powah.block.cable.CableTile;
 import owmii.powah.block.reactor.ReactorPartTile;
 import owmii.powah.client.render.tile.ReactorItemRenderer;
 import owmii.powah.forge.block.ForgeCableTile;
+import owmii.powah.forge.compat.curios.CuriosCompat;
 import owmii.powah.item.ItemGroups;
 import owmii.powah.lib.block.AbstractEnergyStorage;
 import owmii.powah.lib.block.IBlock;
@@ -53,7 +55,9 @@ import owmii.powah.lib.logistics.inventory.Inventory;
 import owmii.powah.lib.util.Util;
 import owmii.powah.world.gen.Features;
 
+import java.util.ArrayList;
 import java.util.function.Consumer;
+import java.util.stream.IntStream;
 
 public class ForgeEnvHandler implements EnvHandler {
 	private final IEventBus modEventBus = FMLJavaModLoadingContext.get().getModEventBus();
@@ -351,5 +355,44 @@ public class ForgeEnvHandler implements EnvHandler {
 	@Override
 	public CableTile createCable(BlockPos pos, BlockState state, Tier variant) {
 		return new ForgeCableTile(pos, state, variant);
+	}
+
+	@Override
+	public long chargeItemsInPlayerInv(Player player, long maxPerSlot, long maxTotal) {
+		var stacks = new ArrayList<>(owmii.powah.lib.util.Player.invStacks(player).stream().toList());
+		stacks.addAll(CuriosCompat.getAllStacks(player));
+		return transferSlotList(IEnergyStorage::receiveEnergy, stacks, maxPerSlot, maxTotal);
+	}
+
+	@Override
+	public long chargeItemsInContainer(Container container, long maxPerSlot, long maxTotal) {
+		var ret = transferSlotList(IEnergyStorage::receiveEnergy, IntStream.range(0, container.getContainerSize()).mapToObj(container::getItem).toList(), maxPerSlot, maxTotal);
+		container.setChanged();
+		return ret;
+	}
+
+	@Override
+	public long chargeItemsInInventory(Inventory inv, int slotFrom, int slotTo, long maxPerSlot, long maxTotal) {
+		// maybe call setChanged?
+		return transferSlotList(IEnergyStorage::receiveEnergy, IntStream.range(slotFrom, slotTo).mapToObj(inv::getStackInSlot).toList(), maxPerSlot, maxTotal);
+	}
+
+	@Override
+	public long dischargeItemsInInventory(Inventory inv, long maxPerSlot, long maxTotal) {
+		return transferSlotList(IEnergyStorage::extractEnergy, IntStream.range(0, inv.getSlots()).mapToObj(inv::getStackInSlot).toList(), maxPerSlot, maxTotal);
+	}
+
+	private long transferSlotList(EnergyTransferOperation op, Iterable<ItemStack> stacks, long maxPerStack, long maxTotal) {
+		long charged = 0;
+		for (ItemStack stack : stacks) {
+			if (stack.isEmpty()) continue;
+			var cap = stack.getCapability(CapabilityEnergy.ENERGY).orElse(EmptyEnergyStorage.INSTANCE);
+			charged += op.perform(cap, Ints.saturatedCast(Math.min(maxPerStack, maxTotal - charged)), false);
+		}
+		return charged;
+	}
+
+	private interface EnergyTransferOperation {
+		int perform(IEnergyStorage storage, int maxAmount, boolean simulate);
 	}
 }

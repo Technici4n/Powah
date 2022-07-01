@@ -25,18 +25,11 @@ public class EnergyDischargerTile extends AbstractEnergyStorage<EnergyConfig, En
 
     @Override
     protected int postTick(Level world) {
-        int extracted = 0;
+        long extracted = 0;
         if (!isRemote()) {
             if (checkRedstone()) {
-                // TODO ARCH fix transfer
-                for (int i = 0; i < this.inv.getSlots(); i++) {
-                    final ItemStack stack = this.inv.getStackInSlot(i);
-                    long amount = Math.min(getEnergyTransfer(), Energy.getStored(stack));
-                    long received = Math.min(getEnergyCapacity() - getEnergy().getStored(), amount);
-                    int j = Energy.extract(stack, received, false);
-                    this.energy.produce(j);
-                    extracted += j;
-                }
+                extracted = EnvHandler.INSTANCE.dischargeItemsInInventory(this.inv, getEnergyTransfer(), getEnergyCapacity() - energy.getStored());
+                this.energy.produce(extracted);
             }
             extracted += extractFromSides(world);
         }

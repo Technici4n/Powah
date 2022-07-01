@@ -1,17 +1,23 @@
 package owmii.powah.fabric;
 
+import com.google.common.primitives.Ints;
 import net.fabricmc.fabric.api.transfer.v1.context.ContainerItemContext;
 import net.fabricmc.fabric.api.transfer.v1.fluid.FluidStorage;
 import net.fabricmc.fabric.api.transfer.v1.fluid.FluidVariant;
+import net.fabricmc.fabric.api.transfer.v1.item.InventoryStorage;
 import net.fabricmc.fabric.api.transfer.v1.item.ItemStorage;
+import net.fabricmc.fabric.api.transfer.v1.item.ItemVariant;
+import net.fabricmc.fabric.api.transfer.v1.item.PlayerInventoryStorage;
 import net.fabricmc.fabric.api.transfer.v1.storage.Storage;
 import net.fabricmc.fabric.api.transfer.v1.storage.StoragePreconditions;
 import net.fabricmc.fabric.api.transfer.v1.storage.StorageUtil;
+import net.fabricmc.fabric.api.transfer.v1.storage.base.SingleSlotStorage;
 import net.fabricmc.fabric.api.transfer.v1.transaction.Transaction;
 import net.fabricmc.fabric.api.transfer.v1.transaction.TransactionContext;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.Registry;
+import net.minecraft.world.Container;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
@@ -243,5 +249,43 @@ public class FabricEnvHandler implements EnvHandler {
 	@Override
 	public CableTile createCable(BlockPos pos, BlockState state, Tier variant) {
 		return new FabricCableTile(pos, state, variant);
+	}
+
+	@Override
+	public long chargeItemsInPlayerInv(Player player, long maxPerSlot, long maxTotal) {
+		return chargeItemsInContainer(player.getInventory(), maxPerSlot, maxTotal);
+	}
+
+	@Override
+	public long chargeItemsInContainer(Container container, long maxPerSlot, long maxTotal) {
+		return transferSlotList(EnergyStorage::insert, InventoryStorage.of(container, null).getSlots(), maxPerSlot, maxTotal);
+	}
+
+	@Override
+	public long chargeItemsInInventory(Inventory inv, int slotFrom, int slotTo, long maxPerSlot, long maxTotal) {
+		return transferSlotList(EnergyStorage::insert, createInvWrapper(inv).parts.subList(slotFrom, slotTo), maxPerSlot, maxTotal);
+	}
+
+	@Override
+	public long dischargeItemsInInventory(Inventory inv, long maxPerSlot, long maxTotal) {
+		return transferSlotList(EnergyStorage::extract, createInvWrapper(inv).parts, maxPerSlot, maxTotal);
+	}
+
+	private long transferSlotList(EnergyTransferOperation op, Iterable<? extends SingleSlotStorage<ItemVariant>> slots, long maxPerSlot, long maxTotal) {
+		long charged = 0;
+		try (var transaction = Transaction.openOuter()) {
+			for (var slot : slots) {
+				var storage = ContainerItemContext.ofSingleSlot(slot).find(EnergyStorage.ITEM);
+				if (storage != null) {
+					charged += op.perform(storage, Math.min(maxPerSlot, maxTotal - charged), transaction);
+				}
+			}
+			transaction.commit();
+		}
+		return charged;
+	}
+
+	private interface EnergyTransferOperation {
+		long perform(EnergyStorage storage, long maxAmount, TransactionContext transaction);
 	}
 }

@@ -4,6 +4,7 @@ import dev.architectury.platform.Platform;
 import net.minecraft.Util;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.world.Container;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
@@ -53,4 +54,9 @@ public interface EnvHandler {
 	boolean hasEnergy(Level level, BlockPos pos, Direction side);
 	long pushEnergy(Level level, BlockPos pos, Direction side, long howMuch);
 	CableTile createCable(BlockPos pos, BlockState state, Tier variant);
+	// a bit ugly, but I couldn't find a better way
+	long chargeItemsInPlayerInv(Player player, long maxPerSlot, long maxTotal);
+	long chargeItemsInContainer(Container container, long maxPerSlot, long maxTotal);
+	long chargeItemsInInventory(Inventory inv, int slotFrom, int slotTo, long maxPerSlot, long maxTotal);
+	long dischargeItemsInInventory(Inventory inv, long maxPerSlot, long maxTotal);
 }
