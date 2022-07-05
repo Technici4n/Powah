@@ -5,7 +5,10 @@ import owmii.powah.config.IEnergyConfig;
 import owmii.powah.config.v2.values.TieredEnergyValues;
 
 public class CableConfig implements IEnergyConfig<Tier> {
-	public final TieredEnergyValues transfer_rates;
+	public TieredEnergyValues transfer_rates;
+
+	private CableConfig() {
+	}
 
 	public CableConfig(TieredEnergyValues transfer_rates) {
 		this.transfer_rates = transfer_rates;

@@ -5,9 +5,12 @@ import owmii.powah.config.IEnergyConfig;
 import owmii.powah.config.v2.values.TieredEnergyValues;
 
 public class ChargingConfig implements IEnergyConfig<Tier> {
-	public final TieredEnergyValues capacities;
-	public final TieredEnergyValues transfer_rates;
-	public final TieredEnergyValues charging_rates;
+	public TieredEnergyValues capacities;
+	public TieredEnergyValues transfer_rates;
+	public TieredEnergyValues charging_rates;
+
+	private ChargingConfig() {
+	}
 
 	public ChargingConfig(TieredEnergyValues capacities, TieredEnergyValues transfer_rates, TieredEnergyValues charging_rates) {
 		this.capacities = capacities;

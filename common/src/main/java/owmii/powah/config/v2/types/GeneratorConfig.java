@@ -5,9 +5,12 @@ import owmii.powah.config.IEnergyConfig;
 import owmii.powah.config.v2.values.TieredEnergyValues;
 
 public class GeneratorConfig implements IEnergyConfig<Tier> {
-	public final TieredEnergyValues capacities;
-	public final TieredEnergyValues transfer_rates;
-	public final TieredEnergyValues generation_rates;
+	public TieredEnergyValues capacities;
+	public TieredEnergyValues transfer_rates;
+	public TieredEnergyValues generation_rates;
+
+	private GeneratorConfig() {
+	}
 
 	public GeneratorConfig(TieredEnergyValues capacities, TieredEnergyValues transfer_rates, TieredEnergyValues generation_rates) {
 		this.capacities = capacities;

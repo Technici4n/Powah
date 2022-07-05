@@ -23,6 +23,9 @@ public class TieredChannelValues {
 		return new TieredChannelValues(1, 2, 3, 5, 7, 9, 12);
 	}
 
+	private TieredChannelValues() {
+	}
+
 	public TieredChannelValues(int starter, int basic, int hardened, int blazing, int niotic, int spirited, int nitro) {
 		this.starter = starter;
 		this.basic = basic;

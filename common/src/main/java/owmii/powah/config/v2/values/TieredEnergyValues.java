@@ -20,6 +20,9 @@ public class TieredEnergyValues {
 	@LongRange(min = 1, max = Energy.MAX)
 	public long nitro;
 
+	private TieredEnergyValues() {
+	}
+
 	public TieredEnergyValues(long starter, long basic, long hardened, long blazing, long niotic, long spirited, long nitro) {
 		this.starter = starter;
 		this.basic = basic;

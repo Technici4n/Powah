@@ -24,6 +24,7 @@ import owmii.powah.config.v2.values.TieredChannelValues;
 import owmii.powah.lib.logistics.energy.Energy;
 
 import java.lang.reflect.Field;
+import java.util.LinkedHashMap;
 import java.util.Map;
 
 import static owmii.powah.config.v2.DefaultEnergies.*;
@@ -47,20 +48,21 @@ public class PowahConfig implements ConfigData {
 		@Comment("Enable this to get Lens Of Ender by right clicking an Enderman or Endermite with a Photoelectric Pane.")
 		public boolean lens_of_ender = true;
 
+		// Note: don't use Map.of directly, otherwise jankson fails to read it because it can't edit it...
 		@Comment("List of fluids used in the Magmator.")
-		public final Map<ResourceLocation, Integer> magmatic_fluids = Map.of(
+		public final Map<ResourceLocation, Integer> magmatic_fluids = new LinkedHashMap<>(Map.of(
 				new ResourceLocation("minecraft:lava"), 10000
-		);
+		));
 		@Comment("List of coolant fluids used in the Reactor and the Thermo Generator.")
-		public final Map<ResourceLocation, Integer> coolant_fluids = Map.of(
+		public final Map<ResourceLocation, Integer> coolant_fluids = new LinkedHashMap<>(Map.of(
 				new ResourceLocation("minecraft:water"), 1
-		);
+		));
 		@Comment("List of heat source blocks used under Thermo Generator.")
-		public final Map<ResourceLocation, Integer> heat_blocks = Map.of(
+		public final Map<ResourceLocation, Integer> heat_blocks = new LinkedHashMap<>(Map.of(
 				new ResourceLocation("minecraft:lava"), 1000,
 				new ResourceLocation("minecraft:magma_block"), 800,
 				new ResourceLocation("powah:blazing_crystal_block"), 2800
-		);
+		));
 		@Comment("Energy produced per fuel tick in the Furnator.")
 		@LongRange(min = 1, max = Integer.MAX_VALUE)
 		public long energy_per_fuel_tick = energyPerFuelTick();

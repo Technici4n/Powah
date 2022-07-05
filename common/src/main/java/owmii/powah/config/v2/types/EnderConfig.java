@@ -6,8 +6,11 @@ import owmii.powah.config.v2.values.TieredChannelValues;
 import owmii.powah.config.v2.values.TieredEnergyValues;
 
 public class EnderConfig implements IEnergyConfig<Tier> {
-	public final TieredEnergyValues transfer_rates;
-	public final TieredChannelValues channels;
+	public TieredEnergyValues transfer_rates;
+	public TieredChannelValues channels;
+
+	private EnderConfig() {
+	}
 
 	public EnderConfig(TieredEnergyValues transfer_rates, TieredChannelValues channels) {
 		this.transfer_rates = transfer_rates;

@@ -5,8 +5,11 @@ import owmii.powah.config.IEnergyConfig;
 import owmii.powah.config.v2.values.TieredEnergyValues;
 
 public class EnergyConfig implements IEnergyConfig<Tier> {
-	public final TieredEnergyValues capacities;
-	public final TieredEnergyValues transfer_rates;
+	public TieredEnergyValues capacities;
+	public TieredEnergyValues transfer_rates;
+
+	private EnergyConfig() {
+	}
 
 	public EnergyConfig(TieredEnergyValues capacities, TieredEnergyValues transfer_rates) {
 		this.capacities = capacities;
