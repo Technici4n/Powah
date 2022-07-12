@@ -1,13 +1,11 @@
 package owmii.powah.fabric;
 
-import com.google.common.primitives.Ints;
 import net.fabricmc.fabric.api.transfer.v1.context.ContainerItemContext;
 import net.fabricmc.fabric.api.transfer.v1.fluid.FluidStorage;
 import net.fabricmc.fabric.api.transfer.v1.fluid.FluidVariant;
 import net.fabricmc.fabric.api.transfer.v1.item.InventoryStorage;
 import net.fabricmc.fabric.api.transfer.v1.item.ItemStorage;
 import net.fabricmc.fabric.api.transfer.v1.item.ItemVariant;
-import net.fabricmc.fabric.api.transfer.v1.item.PlayerInventoryStorage;
 import net.fabricmc.fabric.api.transfer.v1.storage.Storage;
 import net.fabricmc.fabric.api.transfer.v1.storage.StoragePreconditions;
 import net.fabricmc.fabric.api.transfer.v1.storage.StorageUtil;
@@ -43,6 +41,7 @@ import owmii.powah.lib.logistics.fluid.Tank;
 import owmii.powah.lib.logistics.inventory.Inventory;
 import owmii.powah.world.gen.Features;
 import team.reborn.energy.api.EnergyStorage;
+import team.reborn.energy.api.EnergyStorageUtil;
 import team.reborn.energy.api.base.DelegatingEnergyStorage;
 
 import java.util.Objects;
@@ -221,12 +220,7 @@ public class FabricEnvHandler implements EnvHandler {
 
 	@Override
 	public boolean canDischarge(ItemStack stack) {
-		try (var tx = Transaction.openNested(Transaction.getCurrentUnsafe())) {
-			return Objects.requireNonNullElse(
-					ContainerItemContext.withInitial(stack).find(EnergyStorage.ITEM),
-					EnergyStorage.EMPTY
-			).extract(Long.MAX_VALUE, tx) > 0;
-		}
+		return EnergyStorageUtil.isEnergyStorage(stack);
 	}
 
 	@Override
