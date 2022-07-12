@@ -57,6 +57,7 @@ import owmii.powah.world.gen.Features;
 
 import java.util.ArrayList;
 import java.util.function.Consumer;
+import java.util.function.Predicate;
 import java.util.stream.IntStream;
 
 public class ForgeEnvHandler implements EnvHandler {
@@ -144,7 +145,7 @@ public class ForgeEnvHandler implements EnvHandler {
 
 									@Override
 									public int getMaxEnergyStored() {
-										return energyStorage.getEnergy().getMaxEnergyStored();
+										return Ints.saturatedCast(energyStorage.getEnergy().getMaxEnergyStored());
 									}
 
 									@Override
@@ -210,22 +211,22 @@ public class ForgeEnvHandler implements EnvHandler {
 									return new IEnergyStorage() {
 										@Override
 										public int receiveEnergy(int i, boolean bl) {
-											return energyItem.receiveEnergy(i, bl);
+											return Ints.saturatedCast(energyItem.receiveEnergy(i, bl));
 										}
 
 										@Override
 										public int extractEnergy(int i, boolean bl) {
-											return energyItem.extractEnergy(i, bl);
+											return Ints.saturatedCast(energyItem.extractEnergy(i, bl));
 										}
 
 										@Override
 										public int getEnergyStored() {
-											return energyItem.getEnergyStored();
+											return Ints.saturatedCast(energyItem.getEnergyStored());
 										}
 
 										@Override
 										public int getMaxEnergyStored() {
-											return energyItem.getMaxEnergyStored();
+											return Ints.saturatedCast(energyItem.getMaxEnergyStored());
 										}
 
 										@Override
@@ -358,9 +359,10 @@ public class ForgeEnvHandler implements EnvHandler {
 	}
 
 	@Override
-	public long chargeItemsInPlayerInv(Player player, long maxPerSlot, long maxTotal) {
+	public long chargeItemsInPlayerInv(Player player, long maxPerSlot, long maxTotal, Predicate<ItemStack> allowStack) {
 		var stacks = new ArrayList<>(owmii.powah.lib.util.Player.invStacks(player).stream().toList());
 		stacks.addAll(CuriosCompat.getAllStacks(player));
+		stacks.removeIf(allowStack.negate());
 		return transferSlotList(IEnergyStorage::receiveEnergy, stacks, maxPerSlot, maxTotal);
 	}
 

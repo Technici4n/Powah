@@ -1,9 +1,7 @@
 package owmii.powah.lib.logistics.energy;
 
-import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.level.block.entity.BlockEntity;
 import owmii.powah.lib.item.EnergyBlockItem;
 import owmii.powah.lib.item.IEnergyContainingItem;
 import owmii.powah.lib.util.NBT;
@@ -112,7 +110,7 @@ public class Energy {
         return nbt;
     }
 
-    public int receiveEnergy(int maxReceive, boolean simulate) {
+    public long receiveEnergy(long maxReceive, boolean simulate) {
         if (!canReceive())
             return 0;
         long received = Math.min(this.capacity - this.stored, Math.min(this.maxReceive, maxReceive));
@@ -121,7 +119,7 @@ public class Energy {
         return Util.safeInt(received);
     }
 
-    public int extractEnergy(int maxExtract, boolean simulate) {
+    public long extractEnergy(long maxExtract, boolean simulate) {
         if (!canExtract())
             return 0;
         long extracted = Math.min(this.stored, Math.min(this.maxExtract, maxExtract));
@@ -148,29 +146,6 @@ public class Energy {
         long min = Math.min(this.stored, Math.max(0, amount));
         this.stored -= min;
         return min;
-    }
-
-    public long chargeInventory(net.minecraft.world.entity.player.Player player, Predicate<ItemStack> checker) {
-        long l = 0L;
-        for (ItemStack stack1 : Player.invStacks(player)) {
-            if (stack1.isEmpty() || !isPresent(stack1) || !checker.test(stack1)) continue;
-            long amount = Math.min(getMaxExtract(), getEnergyStored());
-            if (amount <= 0) break;
-            int received = Energy.receive(stack1, amount, false);
-            l += extractEnergy(received, false);
-        }
-        /* TODO ARCH - curios compat
-        if (CuriosCompat.isLoaded()) {
-            for (ItemStack stack1 : CuriosCompat.getAllStacks(player)) {
-                if (stack1.isEmpty() || !isPresent(stack1) || !checker.test(stack1)) continue;
-                long amount = Math.min(getMaxExtract(), getEnergyStored());
-                if (amount <= 0) break;
-                int received = Energy.receive(stack1, amount, false);
-                l += extractEnergy(received, false);
-            }
-        }
-         */
-        return l;
     }
 
     public long getEmpty() {
@@ -238,12 +213,12 @@ public class Energy {
         return Math.max(this.maxExtract, this.maxReceive);
     }
 
-    public int getEnergyStored() {
-        return Util.safeInt(this.stored);
+    public long getEnergyStored() {
+        return this.stored;
     }
 
-    public int getMaxEnergyStored() {
-        return Util.safeInt(this.capacity);
+    public long getMaxEnergyStored() {
+        return this.capacity;
     }
 
     public boolean canExtract() {
@@ -297,8 +272,8 @@ public class Energy {
         }
 
         @Override
-        public int receiveEnergy(int maxReceive, boolean simulate) {
-            int energy = super.receiveEnergy(maxReceive, simulate);
+        public long receiveEnergy(long maxReceive, boolean simulate) {
+            long energy = super.receiveEnergy(maxReceive, simulate);
             if (!simulate) {
                 write(this.stack.getOrCreateTagElement(NBT.TAG_STORABLE_STACK), false, false);
             }
@@ -306,8 +281,8 @@ public class Energy {
         }
 
         @Override
-        public int extractEnergy(int maxExtract, boolean simulate) {
-            int energy = super.extractEnergy(maxExtract, simulate);
+        public long extractEnergy(long maxExtract, boolean simulate) {
+            long energy = super.extractEnergy(maxExtract, simulate);
             if (!simulate) {
                 write(this.stack.getOrCreateTagElement(NBT.TAG_STORABLE_STACK), false, false);
             }
@@ -320,15 +295,15 @@ public class Energy {
         }
     }
 
-    public static int extract(ItemStack stack, long energy, boolean simulate) {
+    public static long extract(ItemStack stack, long energy, boolean simulate) {
         return getEnergy(stack).orElse(EMPTY).extractEnergy(Util.safeInt(energy), simulate);
     }
 
-    public static int receive(ItemStack stack, long energy, boolean simulate) {
+    public static long receive(ItemStack stack, long energy, boolean simulate) {
         return getEnergy(stack).orElse(EMPTY).receiveEnergy(Util.safeInt(energy), simulate);
     }
 
-    public static int getStored(ItemStack stack) {
+    public static long getStored(ItemStack stack) {
         return getEnergy(stack).orElse(EMPTY).getEnergyStored();
     }
 

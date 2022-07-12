@@ -7,6 +7,7 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
+import owmii.powah.EnvHandler;
 import owmii.powah.Powah;
 import owmii.powah.config.IEnergyConfig;
 import owmii.powah.config.v2.types.EnergyConfig;
@@ -27,9 +28,10 @@ public class BatteryItem extends EnergyItem<Tier, EnergyConfig, BatteryItem> imp
 
     @Override
     public void inventoryTick(ItemStack stack, Level world, Entity entity, int itemSlot, boolean isSelected) {
-        if (entity instanceof Player && isCharging(stack)) {
+        if (entity instanceof Player player && isCharging(stack)) {
             Energy.ifPresent(stack, storage -> {
-                storage.chargeInventory((Player) entity, stack1 -> !(stack1.getItem() instanceof BatteryItem));
+                long charged = EnvHandler.INSTANCE.chargeItemsInPlayerInv(player, storage.getMaxExtract(), storage.getEnergyStored(), s -> !(s.getItem() instanceof BatteryItem));
+                storage.extractEnergy(charged, false);
             });
         }
     }
@@ -53,7 +55,7 @@ public class BatteryItem extends EnergyItem<Tier, EnergyConfig, BatteryItem> imp
     @Override
     public int getBarWidth(ItemStack stack) {
         var energy = Energy.getEnergy(stack).orElse(Energy.Item.create(0));
-        return Math.min(1 + 12 * energy.getEnergyStored() / energy.getMaxEnergyStored(), 13);
+        return (int) Math.min(1 + 12 * energy.getEnergyStored() / energy.getMaxEnergyStored(), 13);
     }
 
     @Override

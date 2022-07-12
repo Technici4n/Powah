@@ -46,6 +46,7 @@ import team.reborn.energy.api.base.DelegatingEnergyStorage;
 
 import java.util.Objects;
 import java.util.function.Consumer;
+import java.util.function.Predicate;
 
 public class FabricEnvHandler implements EnvHandler {
 	@Override
@@ -246,29 +247,35 @@ public class FabricEnvHandler implements EnvHandler {
 	}
 
 	@Override
-	public long chargeItemsInPlayerInv(Player player, long maxPerSlot, long maxTotal) {
-		return chargeItemsInContainer(player.getInventory(), maxPerSlot, maxTotal);
+	public long chargeItemsInPlayerInv(Player player, long maxPerSlot, long maxTotal, Predicate<ItemStack> allowStack) {
+		return chargeItemsInContainer(player.getInventory(), maxPerSlot, maxTotal, allowStack);
 	}
 
 	@Override
 	public long chargeItemsInContainer(Container container, long maxPerSlot, long maxTotal) {
-		return transferSlotList(EnergyStorage::insert, InventoryStorage.of(container, null).getSlots(), maxPerSlot, maxTotal);
+		return chargeItemsInContainer(container, maxPerSlot, maxTotal, s -> true);
+	}
+
+	public long chargeItemsInContainer(Container container, long maxPerSlot, long maxTotal, Predicate<ItemStack> allowStack) {
+		return transferSlotList(EnergyStorage::insert, InventoryStorage.of(container, null).getSlots(), maxPerSlot, maxTotal, allowStack);
 	}
 
 	@Override
 	public long chargeItemsInInventory(Inventory inv, int slotFrom, int slotTo, long maxPerSlot, long maxTotal) {
-		return transferSlotList(EnergyStorage::insert, createInvWrapper(inv).parts.subList(slotFrom, slotTo), maxPerSlot, maxTotal);
+		return transferSlotList(EnergyStorage::insert, createInvWrapper(inv).parts.subList(slotFrom, slotTo), maxPerSlot, maxTotal, s -> true);
 	}
 
 	@Override
 	public long dischargeItemsInInventory(Inventory inv, long maxPerSlot, long maxTotal) {
-		return transferSlotList(EnergyStorage::extract, createInvWrapper(inv).parts, maxPerSlot, maxTotal);
+		return transferSlotList(EnergyStorage::extract, createInvWrapper(inv).parts, maxPerSlot, maxTotal, s -> true);
 	}
 
-	private long transferSlotList(EnergyTransferOperation op, Iterable<? extends SingleSlotStorage<ItemVariant>> slots, long maxPerSlot, long maxTotal) {
+	private long transferSlotList(EnergyTransferOperation op, Iterable<? extends SingleSlotStorage<ItemVariant>> slots, long maxPerSlot, long maxTotal, Predicate<ItemStack> allowStack) {
 		long charged = 0;
 		try (var transaction = Transaction.openOuter()) {
 			for (var slot : slots) {
+				if (!allowStack.test(slot.getResource().toStack())) continue;
+
 				var storage = ContainerItemContext.ofSingleSlot(slot).find(EnergyStorage.ITEM);
 				if (storage != null) {
 					charged += op.perform(storage, Math.min(maxPerSlot, maxTotal - charged), transaction);

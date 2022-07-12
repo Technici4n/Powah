@@ -122,11 +122,10 @@ public abstract class AbstractEnergyBlock<C extends IEnergyConfig<Tier>, B exten
     @Override
     public InfoBox getInfoBox(ItemStack stack, InfoBox box) {
         Energy.ifPresent(stack, storage -> {
-            if (storage instanceof Energy.Item) {
-                Energy.Item energy = (Energy.Item) storage;
+            if (storage != null) {
                 if (storage.getMaxEnergyStored() > 0)
-                    box.set(new TranslatableComponent("info.lollipop.capacity"), new TranslatableComponent("info.lollipop.fe", Util.addCommas(energy.getCapacity())));
-                box.set(new TranslatableComponent("info.lollipop.max.io"), new TranslatableComponent("info.lollipop.fe.pet.tick", Util.addCommas(energy.getMaxExtract())));
+                    box.set(new TranslatableComponent("info.lollipop.capacity"), new TranslatableComponent("info.lollipop.fe", Util.addCommas(storage.getCapacity())));
+                box.set(new TranslatableComponent("info.lollipop.max.io"), new TranslatableComponent("info.lollipop.fe.pet.tick", Util.addCommas(storage.getMaxExtract())));
             }
         });
         return box;
