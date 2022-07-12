@@ -42,7 +42,7 @@ public class TieredEnergyValues {
 			case NIOTIC -> niotic;
 			case SPIRITED -> spirited;
 			case NITRO -> nitro;
-			case CREATIVE -> 0;
+			case CREATIVE -> Energy.MAX;
 		};
 	}
 
