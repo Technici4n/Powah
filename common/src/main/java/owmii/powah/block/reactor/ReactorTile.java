@@ -141,7 +141,7 @@ public class ReactorTile extends AbstractEnergyProvider<ReactorBlock> implements
             if (canExtractEnergy(direction)) {
                 long amount = Math.min(getEnergyTransfer(), getEnergy().getStored());
                 BlockPos pos = this.worldPosition.relative(direction, direction.getAxis().isHorizontal() ? 2 : direction.equals(Direction.UP) ? 4 : 1);
-                long received = EnvHandler.INSTANCE.pushEnergy(world, pos, direction, amount);
+                long received = EnvHandler.INSTANCE.pushEnergy(world, pos, direction.getOpposite(), amount);
                 extracted += extractEnergy((int) received, false, direction);
             }
         }
