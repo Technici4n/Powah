@@ -5,6 +5,8 @@ dependencies {
     // Remove the next line if you don't want to depend on the API
     modApi "dev.architectury:architectury:${rootProject.architectury_version}"
     modImplementation "me.shedaniel.cloth:cloth-config:${rootProject.cloth_config_version}"
+
+    modCompileOnly "mezz.jei:jei-${project.jei_minecraft_release}-common-api:${project.jei_version}"
 }
 
 architectury {

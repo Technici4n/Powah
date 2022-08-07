@@ -1,4 +1,4 @@
-package owmii.powah.forge.compat.jei;
+package owmii.powah.compat.jei;
 
 import mezz.jei.api.constants.VanillaTypes;
 import mezz.jei.api.gui.builder.IRecipeLayoutBuilder;

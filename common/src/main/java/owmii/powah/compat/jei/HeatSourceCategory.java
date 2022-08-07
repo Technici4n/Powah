@@ -1,7 +1,7 @@
-package owmii.powah.forge.compat.jei;
+package owmii.powah.compat.jei;
 
+import dev.architectury.fluid.FluidStack;
 import mezz.jei.api.constants.VanillaTypes;
-import mezz.jei.api.forge.ForgeTypes;
 import mezz.jei.api.gui.builder.IRecipeLayoutBuilder;
 import mezz.jei.api.gui.drawable.IDrawable;
 import mezz.jei.api.gui.ingredient.IRecipeSlotsView;
@@ -23,7 +23,7 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.LiquidBlock;
 import net.minecraft.world.level.material.Fluid;
-import net.minecraftforge.fluids.FluidStack;
+import owmii.powah.EnvHandler;
 import owmii.powah.Powah;
 import owmii.powah.api.PowahAPI;
 
@@ -74,7 +74,7 @@ public class HeatSourceCategory implements IRecipeCategory<HeatSourceCategory.Re
         if (recipe.fluid == null) {
             input.addItemStack(new ItemStack(recipe.getBlock()));
         } else {
-            input.addFluidStack(recipe.fluid, 1000);
+            input.addFluidStack(recipe.fluid, FluidStack.bucketAmount());
         }
     }
 
@@ -101,9 +101,7 @@ public class HeatSourceCategory implements IRecipeCategory<HeatSourceCategory.Re
                 }
             });
 
-            Collection<FluidStack> allIngredients = ingredientManager.getAllIngredients(ForgeTypes.FLUID_STACK);
-
-            allIngredients.forEach(fluidStack -> {
+            EnvHandler.INSTANCE.getAllFluidIngredients(ingredientManager).forEach(fluidStack -> {
                 if (!fluidStack.isEmpty()) {
                     Block block = fluidStack.getFluid().defaultFluidState().createLegacyBlock().getBlock();
                     if (PowahAPI.HEAT_SOURCES.containsKey(block)) {
@@ -125,7 +123,7 @@ public class HeatSourceCategory implements IRecipeCategory<HeatSourceCategory.Re
 
         public Recipe(Block block, int heat) {
             if (block instanceof LiquidBlock) {
-                this.fluid = ((LiquidBlock) block).getFluid();
+                this.fluid = ((LiquidBlock) block).fluid;
             } else {
                 this.fluid = null;
             }

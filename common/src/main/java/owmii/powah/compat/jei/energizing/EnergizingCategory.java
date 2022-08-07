@@ -1,4 +1,4 @@
-package owmii.powah.forge.compat.jei.energizing;
+package owmii.powah.compat.jei.energizing;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 import mezz.jei.api.constants.VanillaTypes;

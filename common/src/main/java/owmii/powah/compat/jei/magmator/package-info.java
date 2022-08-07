@@ -1,4 +1,4 @@
 @NonnullDefault
-package owmii.powah.forge.compat.jei;
+package owmii.powah.compat.jei.magmator;
 
 import org.lwjgl.system.NonnullDefault;

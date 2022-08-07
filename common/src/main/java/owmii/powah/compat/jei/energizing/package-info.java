@@ -1,4 +1,4 @@
 @NonnullDefault
-package owmii.powah.forge.compat.jei.energizing;
+package owmii.powah.compat.jei.energizing;
 
 import org.lwjgl.system.NonnullDefault;

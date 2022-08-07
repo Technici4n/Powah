@@ -1,5 +1,6 @@
-package owmii.powah.forge.compat.jei;
+package owmii.powah.compat.jei;
 
+import dev.architectury.fluid.FluidStack;
 import mezz.jei.api.constants.VanillaTypes;
 import mezz.jei.api.gui.builder.IRecipeLayoutBuilder;
 import mezz.jei.api.gui.drawable.IDrawable;
@@ -21,7 +22,6 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.MobBucketItem;
 import net.minecraft.world.level.material.Fluid;
-import net.minecraftforge.fluids.FluidStack;
 import owmii.powah.Powah;
 import owmii.powah.api.PowahAPI;
 import com.mojang.blaze3d.vertex.PoseStack;
@@ -65,7 +65,7 @@ public class CoolantCategory implements IRecipeCategory<CoolantCategory.Recipe> 
     @Override
     public void setRecipe(IRecipeLayoutBuilder builder, Recipe recipe, IFocusGroup focuses) {
         var slot = builder.addSlot(RecipeIngredientRole.INPUT, 4, 5)
-                .addFluidStack(recipe.getFluid(), 1000);
+                .addFluidStack(recipe.getFluid(), FluidStack.bucketAmount());
         if (!Items.BUCKET.equals(recipe.bucket)) {
             slot.addItemStack(new ItemStack(recipe.bucket));
         }
@@ -84,7 +84,7 @@ public class CoolantCategory implements IRecipeCategory<CoolantCategory.Recipe> 
 
             allItemStacks.forEach(stack -> {
                 if (stack.getItem() instanceof BucketItem bucket && !(stack.getItem() instanceof MobBucketItem)) {
-                    Fluid fluid = bucket.getFluid();
+                    Fluid fluid = bucket.content;
                     if (PowahAPI.getCoolant(fluid) != 0) {
                         recipes.add(new Recipe(bucket, PowahAPI.getCoolant(fluid)));
                     }
@@ -107,7 +107,7 @@ public class CoolantCategory implements IRecipeCategory<CoolantCategory.Recipe> 
 
         public Recipe(BucketItem bucket, int coldness) {
             this.bucket = bucket;
-            this.fluid = bucket.getFluid();
+            this.fluid = bucket.content;
             this.coldness = coldness;
         }
 

@@ -1,5 +1,6 @@
-package owmii.powah.forge.compat.jei.magmator;
+package owmii.powah.compat.jei.magmator;
 
+import dev.architectury.fluid.FluidStack;
 import mezz.jei.api.constants.VanillaTypes;
 import mezz.jei.api.gui.builder.IRecipeLayoutBuilder;
 import mezz.jei.api.gui.drawable.IDrawable;
@@ -65,7 +66,7 @@ public class MagmatorCategory implements IRecipeCategory<MagmatorCategory.Recipe
     @Override
     public void setRecipe(IRecipeLayoutBuilder builder, Recipe recipe, IFocusGroup focuses) {
         var slot = builder.addSlot(RecipeIngredientRole.INPUT, 4, 5)
-                .addFluidStack(recipe.getFluid(), 1000);
+                .addFluidStack(recipe.getFluid(), FluidStack.bucketAmount());
 
         if (!Items.BUCKET.equals(recipe.bucket)) {
             slot.addItemStack(new ItemStack(recipe.bucket));
@@ -85,7 +86,7 @@ public class MagmatorCategory implements IRecipeCategory<MagmatorCategory.Recipe
 
             allItemStacks.forEach(stack -> {
                 if (stack.getItem() instanceof BucketItem bucket) {
-                    Fluid fluid = bucket.getFluid();
+                    Fluid fluid = bucket.content;
                     if (PowahAPI.getMagmaticFluidHeat(fluid) != 0) {
                         recipes.add(new Recipe(bucket, PowahAPI.getMagmaticFluidHeat(fluid)));
                     }
@@ -112,7 +113,7 @@ public class MagmatorCategory implements IRecipeCategory<MagmatorCategory.Recipe
 
         public Recipe(BucketItem bucket, int heat) {
             this.bucket = bucket;
-            this.fluid = bucket.getFluid();
+            this.fluid = bucket.content;
             this.heat = heat;
         }
 

@@ -1,4 +1,4 @@
-package owmii.powah.forge.compat.jei;
+package owmii.powah.compat.jei;
 
 import mezz.jei.api.IModPlugin;
 import mezz.jei.api.JeiPlugin;
@@ -11,11 +11,11 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
-import owmii.powah.forge.compat.jei.magmator.MagmatorCategory;
+import owmii.powah.compat.jei.magmator.MagmatorCategory;
 import owmii.powah.lib.util.Recipe;
 import owmii.powah.Powah;
 import owmii.powah.block.Blcks;
-import owmii.powah.forge.compat.jei.energizing.EnergizingCategory;
+import owmii.powah.compat.jei.energizing.EnergizingCategory;
 import owmii.powah.item.Itms;
 import owmii.powah.recipe.Recipes;
 

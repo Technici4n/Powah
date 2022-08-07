@@ -15,7 +15,6 @@ repositories {
         name "extra-mods"
         dir file(extraModsDir)
     }
-    maven { url = "https://dvs1.progwml6.com/files/maven" } //JEI
     maven { url = "https://maven.theillusivec4.top" } //Curios
 }
 

@@ -2,6 +2,8 @@ package owmii.powah.forge;
 
 import com.google.common.primitives.Ints;
 import dev.architectury.hooks.fluid.forge.FluidStackHooksForge;
+import mezz.jei.api.forge.ForgeTypes;
+import mezz.jei.api.runtime.IIngredientManager;
 import net.minecraft.client.renderer.BlockEntityWithoutLevelRenderer;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -57,9 +59,11 @@ import owmii.powah.lib.util.Util;
 import owmii.powah.world.gen.Features;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.function.Consumer;
 import java.util.function.Predicate;
 import java.util.stream.IntStream;
+import java.util.stream.Stream;
 
 public class ForgeEnvHandler implements EnvHandler {
 	private final IEventBus modEventBus = FMLJavaModLoadingContext.get().getModEventBus();
@@ -392,7 +396,14 @@ public class ForgeEnvHandler implements EnvHandler {
 		return transferSlotList(IEnergyStorage::extractEnergy, IntStream.range(0, inv.getSlots()).mapToObj(inv::getStackInSlot).toList(), maxPerSlot, maxTotal);
 	}
 
-	private long transferSlotList(EnergyTransferOperation op, Iterable<ItemStack> stacks, long maxPerStack, long maxTotal) {
+    @Override
+    public Stream<dev.architectury.fluid.FluidStack> getAllFluidIngredients(IIngredientManager ingredientManager) {
+		return ingredientManager.getAllIngredients(ForgeTypes.FLUID_STACK)
+				.stream()
+				.map(FluidStackHooksForge::fromForge);
+    }
+
+    private long transferSlotList(EnergyTransferOperation op, Iterable<ItemStack> stacks, long maxPerStack, long maxTotal) {
 		long charged = 0;
 		for (ItemStack stack : stacks) {
 			if (stack.isEmpty()) continue;

@@ -1,5 +1,8 @@
 package owmii.powah.fabric;
 
+import dev.architectury.fluid.FluidStack;
+import mezz.jei.api.fabric.constants.FabricTypes;
+import mezz.jei.api.runtime.IIngredientManager;
 import net.fabricmc.fabric.api.transfer.v1.context.ContainerItemContext;
 import net.fabricmc.fabric.api.transfer.v1.fluid.FluidStorage;
 import net.fabricmc.fabric.api.transfer.v1.fluid.FluidVariant;
@@ -47,6 +50,7 @@ import team.reborn.energy.api.base.DelegatingEnergyStorage;
 import java.util.Objects;
 import java.util.function.Consumer;
 import java.util.function.Predicate;
+import java.util.stream.Stream;
 
 public class FabricEnvHandler implements EnvHandler {
 	@Override
@@ -270,7 +274,14 @@ public class FabricEnvHandler implements EnvHandler {
 		return transferSlotList(EnergyStorage::extract, createInvWrapper(inv).parts, maxPerSlot, maxTotal, s -> true);
 	}
 
-	private long transferSlotList(EnergyTransferOperation op, Iterable<? extends SingleSlotStorage<ItemVariant>> slots, long maxPerSlot, long maxTotal, Predicate<ItemStack> allowStack) {
+	@Override
+	public Stream<dev.architectury.fluid.FluidStack> getAllFluidIngredients(IIngredientManager ingredientManager) {
+		return ingredientManager.getAllIngredients(FabricTypes.FLUID_STACK)
+				.stream()
+				.map(ingr -> FluidStack.create(ingr.getFluid(), ingr.getAmount(), ingr.getTag().orElse(null)));
+	}
+
+    private long transferSlotList(EnergyTransferOperation op, Iterable<? extends SingleSlotStorage<ItemVariant>> slots, long maxPerSlot, long maxTotal, Predicate<ItemStack> allowStack) {
 		long charged = 0;
 		try (var transaction = Transaction.openOuter()) {
 			for (var slot : slots) {
