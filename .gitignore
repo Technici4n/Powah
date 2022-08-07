@@ -29,3 +29,5 @@ jars
 forge*changelog.txt
 
 extra-mods-*
+
+.cache
