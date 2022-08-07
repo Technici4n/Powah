@@ -1,7 +1,6 @@
 package owmii.powah.lib.client.wiki.page.panel;
 
 import net.minecraft.client.gui.Font;
-import net.minecraft.network.chat.BaseComponent;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.ItemLike;
 import owmii.powah.lib.client.screen.Texture;
@@ -10,7 +9,6 @@ import owmii.powah.lib.client.util.Text;
 import owmii.powah.lib.client.wiki.Section;
 import com.mojang.blaze3d.vertex.PoseStack;
 import java.util.List;
-import java.util.Map;
 
 public class EnergyPanel<T extends ItemLike> extends ItemPanel<T> {
     public EnergyPanel(Section parent) {
@@ -36,7 +34,7 @@ public class EnergyPanel<T extends ItemLike> extends ItemPanel<T> {
             int i = 0;
             InfoBox.IInfoBoxHolder holder = (InfoBox.IInfoBoxHolder) getItem();
             InfoBox box = holder.getInfoBox(new ItemStack(getItem()), new InfoBox(0xff0000, 0x3d3d3d));
-            for (Map.Entry<BaseComponent, BaseComponent> entry : box.getLines().entrySet()) {
+            for (var entry : box.getLines().entrySet()) {
                 Texture.WIKI_INF_LN_BG.draw(matrix, x + 9, y + 80 + (i * 12));
                 Texture.WIKI_INF_LN_BG.draw(matrix, x + 9, y + 102 + (i * 12));
                 font.draw(matrix, entry.getKey().append(Text.COLON), x + 15, y + 86 + (i * 12), 0x7C898B);

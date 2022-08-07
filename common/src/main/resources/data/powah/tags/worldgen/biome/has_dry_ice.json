@@ -1,0 +1,13 @@
+{
+  "replace": false,
+  "values": [
+    {
+      "id": "#c:icy",
+      "required": false
+    },
+    {
+      "id": "#forge:is_cold/overworld",
+      "required": false
+    }
+  ]
+}

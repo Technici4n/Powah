@@ -6,7 +6,7 @@ import net.minecraft.Util;
 import net.minecraft.client.gui.Font;
 import net.minecraft.client.gui.screens.ConfirmLinkScreen;
 import net.minecraft.client.resources.language.I18n;
-import net.minecraft.network.chat.TextComponent;
+import net.minecraft.network.chat.Component;
 import owmii.powah.lib.client.screen.Texture;
 import owmii.powah.lib.client.screen.widget.IconButton;
 import owmii.powah.lib.client.screen.wiki.WikiScreen;
@@ -35,7 +35,7 @@ public class WelcomePanel extends Panel {
                 }
                 MC.get().setScreen(screen);
             }, "https://twitter.com/_owmii", true));
-        }, screen).setTooltip(tooltip -> tooltip.add(new TextComponent("Follow me on Twitter!"))));
+        }, screen).setTooltip(tooltip -> tooltip.add(Component.literal("Follow me on Twitter!"))));
         this.twitter = screen.addButton2(new IconButton(x + 24, y - 22 + screen.h, Texture.WIKI_PATREON, button -> {
             MC.get().setScreen(new ConfirmLinkScreen((b) -> {
                 if (b) {
@@ -43,7 +43,7 @@ public class WelcomePanel extends Panel {
                 }
                 MC.get().setScreen(screen);
             }, "https://www.patreon.com/owmii", true));
-        }, screen).setTooltip(tooltip -> tooltip.add(new TextComponent("Support me on Patreon! <3"))));
+        }, screen).setTooltip(tooltip -> tooltip.add(Component.literal("Support me on Patreon! <3"))));
     }
 
     @Override

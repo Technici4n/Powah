@@ -15,8 +15,6 @@ import java.util.ArrayList;
 import java.util.List;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TextComponent;
-import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.world.entity.player.Inventory;
 
 public class FurnatorScreen extends AbstractEnergyScreen<FurnatorTile, FurnatorContainer> {
@@ -55,14 +53,14 @@ public class FurnatorScreen extends AbstractEnergyScreen<FurnatorTile, FurnatorC
         if (Textures.FURNATOR_GAUGE.isMouseOver(this.leftPos + 5, this.topPos + 5, mouseX, mouseY)) {
             List<Component> list = new ArrayList<>();
             Energy energy = this.te.getEnergy();
-            list.add(new TranslatableComponent("info.lollipop.stored").withStyle(ChatFormatting.GRAY).append(Text.COLON).append(new TranslatableComponent("info.lollipop.fe.stored", Util.addCommas(energy.getStored()), Util.numFormat(energy.getCapacity())).withStyle(ChatFormatting.DARK_GRAY)));
-            list.add(new TranslatableComponent("info.lollipop.generates").withStyle(ChatFormatting.GRAY).append(Text.COLON).append(new TextComponent(Util.numFormat(this.te.getGeneration())).append(new TranslatableComponent("info.lollipop.fe.pet.tick")).withStyle(ChatFormatting.DARK_GRAY)));
-            list.add(new TranslatableComponent("info.lollipop.max.extract").withStyle(ChatFormatting.GRAY).append(Text.COLON).append(new TextComponent(Util.numFormat(energy.getMaxExtract())).append(new TranslatableComponent("info.lollipop.fe.pet.tick")).withStyle(ChatFormatting.DARK_GRAY)));
+            list.add(Component.translatable("info.lollipop.stored").withStyle(ChatFormatting.GRAY).append(Text.COLON).append(Component.translatable("info.lollipop.fe.stored", Util.addCommas(energy.getStored()), Util.numFormat(energy.getCapacity())).withStyle(ChatFormatting.DARK_GRAY)));
+            list.add(Component.translatable("info.lollipop.generates").withStyle(ChatFormatting.GRAY).append(Text.COLON).append(Component.literal(Util.numFormat(this.te.getGeneration())).append(Component.translatable("info.lollipop.fe.pet.tick")).withStyle(ChatFormatting.DARK_GRAY)));
+            list.add(Component.translatable("info.lollipop.max.extract").withStyle(ChatFormatting.GRAY).append(Text.COLON).append(Component.literal(Util.numFormat(energy.getMaxExtract())).append(Component.translatable("info.lollipop.fe.pet.tick")).withStyle(ChatFormatting.DARK_GRAY)));
             renderComponentTooltip(matrix, list, mouseX, mouseY);
         }
         if (Textures.FURNATOR_CARBON_GAUGE.isMouseOver(this.leftPos + 110, this.topPos + 18, mouseX, mouseY)) {
             List<Component> list = new ArrayList<>();
-            list.add(new TranslatableComponent("info.powah.carbon").withStyle(ChatFormatting.DARK_GRAY));
+            list.add(Component.translatable("info.powah.carbon").withStyle(ChatFormatting.DARK_GRAY));
             renderComponentTooltip(matrix, list, mouseX, mouseY);
         }
     }

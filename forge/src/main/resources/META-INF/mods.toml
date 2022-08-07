@@ -16,20 +16,20 @@ Various ways to generate, store and transmit FE power.
 [[dependencies.powah]]
     modId="forge"
     mandatory=true
-    versionRange="[40.1.0,)"
+    versionRange="[42.0.0,)"
     ordering="NONE"
     side="BOTH"
 
 [[dependencies.powah]]
     modId="architectury"
     mandatory=true
-    versionRange="[4.4.70,]"
+    versionRange="[5.9.0,]"
     ordering="NONE"
     side="BOTH"
 
 [[dependencies.powah]]
     modId="cloth_config"
     mandatory=true
-    versionRange="[6.2.62,]"
+    versionRange="[7.0.0,]"
     ordering="NONE"
     side="BOTH"

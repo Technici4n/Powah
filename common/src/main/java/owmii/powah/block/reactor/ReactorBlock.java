@@ -3,8 +3,6 @@ package owmii.powah.block.reactor;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TextComponent;
-import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Inventory;
@@ -121,15 +119,15 @@ public class ReactorBlock extends AbstractGeneratorBlock<ReactorBlock> {
 
     @Override
     public void additionalEnergyInfo(ItemStack stack, Energy.Item energy, List<Component> tooltip) {
-        tooltip.add(new TranslatableComponent("info.powah.generation.factor").withStyle(ChatFormatting.GRAY).append(Text.COLON).append(new TextComponent(Util.numFormat(getConfig().getGeneration(this.variant))).append(new TranslatableComponent("info.lollipop.fe.pet.tick")).withStyle(ChatFormatting.DARK_GRAY)));
+        tooltip.add(Component.translatable("info.powah.generation.factor").withStyle(ChatFormatting.GRAY).append(Text.COLON).append(Component.literal(Util.numFormat(getConfig().getGeneration(this.variant))).append(Component.translatable("info.lollipop.fe.pet.tick")).withStyle(ChatFormatting.DARK_GRAY)));
     }
 
     @Override
     public InfoBox getInfoBox(ItemStack stack, InfoBox box) {
         Energy.ifPresent(stack, energy -> {
-            box.set(new TranslatableComponent("info.lollipop.capacity"), new TranslatableComponent("info.lollipop.fe", Util.addCommas(energy.getCapacity())));
-            box.set(new TranslatableComponent("info.powah.generation.factor"), new TranslatableComponent("info.lollipop.fe.pet.tick", Util.addCommas(getConfig().getGeneration(this.variant))));
-            box.set(new TranslatableComponent("info.lollipop.max.extract"), new TranslatableComponent("info.lollipop.fe.pet.tick", Util.addCommas(energy.getMaxExtract())));
+            box.set(Component.translatable("info.lollipop.capacity"), Component.translatable("info.lollipop.fe", Util.addCommas(energy.getCapacity())));
+            box.set(Component.translatable("info.powah.generation.factor"), Component.translatable("info.lollipop.fe.pet.tick", Util.addCommas(getConfig().getGeneration(this.variant))));
+            box.set(Component.translatable("info.lollipop.max.extract"), Component.translatable("info.lollipop.fe.pet.tick", Util.addCommas(energy.getMaxExtract())));
         });
         return box;
     }

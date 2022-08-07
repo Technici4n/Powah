@@ -5,7 +5,6 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.stats.Stats;
 import net.minecraft.world.InteractionHand;
@@ -79,7 +78,7 @@ public class AbstractBlock<V extends IVariant, B extends AbstractBlock<V, B>> ex
     }
 
     public Component getDisplayName(ItemStack stack) {
-        return new TranslatableComponent(asItem().getDescriptionId(stack));
+        return Component.translatable(asItem().getDescriptionId(stack));
     }
 
     @Override

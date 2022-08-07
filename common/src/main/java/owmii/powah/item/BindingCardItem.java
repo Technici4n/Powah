@@ -11,8 +11,6 @@ import javax.annotation.Nullable;
 import net.minecraft.ChatFormatting;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TextComponent;
-import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.InteractionHand;
@@ -69,7 +67,7 @@ public class BindingCardItem extends ItemBase {
             nbt.putString("bound_player_name", playerIn.getDisplayName().getString());
             return new InteractionResultHolder<>(InteractionResult.SUCCESS, stack);
         } else if (!playerIn.getUUID().equals(nbt.getUUID("bound_player_id"))) {
-            playerIn.displayClientMessage(new TranslatableComponent("chat.powah.no.binding", nbt.getString("bound_player_name")).withStyle(ChatFormatting.DARK_RED), true);
+            playerIn.displayClientMessage(Component.translatable("chat.powah.no.binding", nbt.getString("bound_player_name")).withStyle(ChatFormatting.DARK_RED), true);
             return new InteractionResultHolder<>(InteractionResult.FAIL, stack);
         }
         return new InteractionResultHolder<>(InteractionResult.PASS, stack);
@@ -83,11 +81,11 @@ public class BindingCardItem extends ItemBase {
     public void appendHoverText(ItemStack stack, @Nullable Level worldIn, List<Component> tooltip, TooltipFlag flagIn) {
         CompoundTag nbt = stack.getTag();
         if (nbt == null) {
-            tooltip.add(new TranslatableComponent("info.powah.click.to.bind").withStyle(ChatFormatting.DARK_GRAY));
-            tooltip.add(new TextComponent(""));
+            tooltip.add(Component.translatable("info.powah.click.to.bind").withStyle(ChatFormatting.DARK_GRAY));
+            tooltip.add(Component.empty());
         } else if (nbt.hasUUID("bound_player_id")) {
-            tooltip.add(new TranslatableComponent("info.lollipop.owner", ChatFormatting.YELLOW + nbt.getString("bound_player_name")).withStyle(ChatFormatting.GRAY));
-            tooltip.add(new TextComponent(""));
+            tooltip.add(Component.translatable("info.lollipop.owner", ChatFormatting.YELLOW + nbt.getString("bound_player_name")).withStyle(ChatFormatting.GRAY));
+            tooltip.add(Component.empty());
         }
     }
 

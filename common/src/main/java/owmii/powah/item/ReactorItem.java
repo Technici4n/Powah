@@ -4,7 +4,7 @@ import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.BlockEntityWithoutLevelRenderer;
 import net.minecraft.core.BlockPos;
-import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.LivingEntity;
@@ -43,7 +43,7 @@ public class ReactorItem extends EnergyBlockItem<GeneratorConfig, ReactorBlock> 
         if (player == null || Player.isFake(player)) return InteractionResult.FAIL;
         ItemStack stack = context.getItemInHand();
         if (stack.getCount() < 36 && !player.isCreative()) {
-            player.displayClientMessage(new TranslatableComponent("chat.powah.not.enough.blocks", "" + ChatFormatting.YELLOW + (36 - stack.getCount()) + ChatFormatting.RED).withStyle(ChatFormatting.RED), true);
+            player.displayClientMessage(Component.translatable("chat.powah.not.enough.blocks", "" + ChatFormatting.YELLOW + (36 - stack.getCount()) + ChatFormatting.RED).withStyle(ChatFormatting.RED), true);
             return InteractionResult.FAIL;
         }
         BlockPos pos = context.getClickedPos();

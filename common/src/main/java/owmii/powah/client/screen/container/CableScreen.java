@@ -5,7 +5,6 @@ import net.minecraft.ChatFormatting;
 import net.minecraft.client.resources.language.I18n;
 import net.minecraft.core.Direction;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.world.entity.player.Inventory;
 import owmii.powah.lib.client.screen.container.AbstractEnergyScreen;
 import owmii.powah.lib.client.screen.widget.IconButton;
@@ -32,7 +31,7 @@ public class CableScreen extends AbstractEnergyScreen<CableTile, CableContainer>
             Network.toServer(new NextEnergyConfigPacket(this.side.get3DDataValue(), this.te.getBlockPos()));
             this.te.getSideConfig().nextType(this.side);
         }, this).setTooltip(tooltip -> {
-            tooltip.add(new TranslatableComponent("info.lollipop.side." + this.side.getSerializedName(), ChatFormatting.DARK_GRAY).withStyle(ChatFormatting.GRAY));
+            tooltip.add(Component.translatable("info.lollipop.side." + this.side.getSerializedName(), ChatFormatting.DARK_GRAY).withStyle(ChatFormatting.GRAY));
             tooltip.add(this.te.getSideConfig().getType(this.side).getDisplayName2());
         }));
     }

@@ -13,7 +13,7 @@ import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.NbtUtils;
 import net.minecraft.nbt.Tag;
-import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.player.Player;
@@ -126,15 +126,15 @@ public class EnergizingRodBlock extends AbstractEnergyBlock<EnergyConfig, Energi
                             V3d v3d = V3d.from(orbPos);
                             if ((int) v3d.distance(pos) <= Powah.config().general.energizing_range) {
                                 rod.setOrbPos(orbPos);
-                                player.displayClientMessage(new TranslatableComponent("chat.powah.wrench.link.done").withStyle(ChatFormatting.GOLD), true);
+                                player.displayClientMessage(Component.translatable("chat.powah.wrench.link.done").withStyle(ChatFormatting.GOLD), true);
                             } else {
-                                player.displayClientMessage(new TranslatableComponent("chat.powah.wrench.link.fail").withStyle(ChatFormatting.RED), true);
+                                player.displayClientMessage(Component.translatable("chat.powah.wrench.link.fail").withStyle(ChatFormatting.RED), true);
                             }
                         }
                         nbt.remove("OrbPos");
                     } else {
                         nbt.put("RodPos", NbtUtils.writeBlockPos(pos));
-                        player.displayClientMessage(new TranslatableComponent("chat.powah.wrench.link.start").withStyle(ChatFormatting.YELLOW), true);
+                        player.displayClientMessage(Component.translatable("chat.powah.wrench.link.start").withStyle(ChatFormatting.YELLOW), true);
                     }
                     return true;
                 }

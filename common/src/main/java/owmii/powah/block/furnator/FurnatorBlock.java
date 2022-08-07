@@ -1,5 +1,6 @@
 package owmii.powah.block.furnator;
 
+import net.minecraft.util.RandomSource;
 import owmii.powah.Powah;
 import owmii.powah.config.v2.types.GeneratorConfig;
 import owmii.powah.lib.block.AbstractGeneratorBlock;
@@ -73,7 +74,7 @@ public class FurnatorBlock extends AbstractGeneratorBlock<FurnatorBlock> impleme
     }
 
     @Override
-    public void animateTick(BlockState state, Level world, BlockPos pos, Random rand) {
+    public void animateTick(BlockState state, Level world, BlockPos pos, RandomSource rand) {
         BlockEntity te = world.getBlockEntity(pos);
         if (te instanceof FurnatorTile && ((FurnatorTile) te).isBurning()) {
             double d0 = (double) pos.getX() + 0.5D;

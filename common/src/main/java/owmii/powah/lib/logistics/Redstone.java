@@ -2,7 +2,6 @@ package owmii.powah.lib.logistics;
 
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TranslatableComponent;
 import owmii.powah.lib.client.util.Text;
 
 public enum Redstone {
@@ -22,7 +21,7 @@ public enum Redstone {
     }
 
     public Component getDisplayName() {
-        return new TranslatableComponent("info.lollipop.redstone").append(Text.COLON).withStyle(ChatFormatting.GRAY)
-                .append(new TranslatableComponent("info.lollipop." + name().toLowerCase()).withStyle(this.color));
+        return Component.translatable("info.lollipop.redstone").append(Text.COLON).withStyle(ChatFormatting.GRAY)
+                .append(Component.translatable("info.lollipop." + name().toLowerCase()).withStyle(this.color));
     }
 }

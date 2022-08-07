@@ -5,6 +5,7 @@ import dev.architectury.hooks.fluid.forge.FluidStackHooksForge;
 import net.minecraft.client.renderer.BlockEntityWithoutLevelRenderer;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.core.Registry;
 import net.minecraft.world.Container;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.player.Player;
@@ -14,7 +15,7 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.levelgen.feature.Feature;
-import net.minecraftforge.client.IItemRenderProperties;
+import net.minecraftforge.client.extensions.common.IClientItemExtensions;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.capabilities.ICapabilityProvider;
@@ -22,7 +23,6 @@ import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.energy.CapabilityEnergy;
 import net.minecraftforge.energy.IEnergyStorage;
 import net.minecraftforge.event.AttachCapabilitiesEvent;
-import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.FluidUtil;
@@ -33,6 +33,7 @@ import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.registries.ForgeRegistries;
+import net.minecraftforge.registries.RegisterEvent;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import owmii.powah.EnvHandler;
@@ -65,12 +66,15 @@ public class ForgeEnvHandler implements EnvHandler {
 
 	@Override
 	public void setupBlockItems() {
-		modEventBus.addGenericListener(Item.class, (RegistryEvent.Register<Item> event) -> {
-			for (var block : ForgeRegistries.BLOCKS.getValues()) {
-				if (block instanceof IBlock<?,?> iBlock) {
-					var blockItem = iBlock.getBlockItem(new Item.Properties(), ItemGroups.MAIN);
-					blockItem.setRegistryName(block.getRegistryName());
-					event.getRegistry().register(blockItem);
+		modEventBus.addListener((RegisterEvent event) -> {
+			if (event.getRegistryKey() == Registry.ITEM_REGISTRY) {
+				var registry = event.getForgeRegistry();
+				for (var block : ForgeRegistries.BLOCKS.getValues()) {
+					if (block instanceof IBlock<?, ?> iBlock) {
+						var blockItem = iBlock.getBlockItem(new Item.Properties(), ItemGroups.MAIN);
+						var name = Registry.BLOCK.getKey(block);
+						registry.register(name, blockItem);
+					}
 				}
 			}
 		});
@@ -79,15 +83,19 @@ public class ForgeEnvHandler implements EnvHandler {
 	@Override
 	public void registerWorldgen() {
 		EnvHandler.super.registerWorldgen();
-		modEventBus.addGenericListener(Feature.class, (RegistryEvent.Register<Feature<?>> event) -> Features.init());
+		modEventBus.addListener((RegisterEvent event) -> {
+			if (event.getRegistryKey() == Registry.FEATURE_REGISTRY) {
+				Features.init();
+			}
+		});
 	}
 
 	@Override
 	public void handleReactorInitClient(Consumer<?> consumer) {
 		// :help_me:
-		((Consumer<IItemRenderProperties>) consumer).accept(new IItemRenderProperties() {
+		((Consumer<IClientItemExtensions>) consumer).accept(new IClientItemExtensions() {
 			@Override
-			public BlockEntityWithoutLevelRenderer getItemStackRenderer() {
+			public BlockEntityWithoutLevelRenderer getCustomRenderer() {
 				return new ReactorItemRenderer();
 			}
 		});
@@ -100,12 +108,12 @@ public class ForgeEnvHandler implements EnvHandler {
 
 	@Override
 	public boolean hasContainerItem(ItemStack stack) {
-		return stack.hasContainerItem();
+		return stack.hasCraftingRemainingItem();
 	}
 
 	@Override
 	public ItemStack getContainerItem(ItemStack stack) {
-		return stack.getContainerItem();
+		return stack.getCraftingRemainingItem();
 	}
 
 	@Override

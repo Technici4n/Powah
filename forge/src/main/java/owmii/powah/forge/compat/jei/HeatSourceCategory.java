@@ -1,19 +1,21 @@
 package owmii.powah.forge.compat.jei;
 
 import mezz.jei.api.constants.VanillaTypes;
-import mezz.jei.api.gui.IRecipeLayout;
+import mezz.jei.api.forge.ForgeTypes;
+import mezz.jei.api.gui.builder.IRecipeLayoutBuilder;
 import mezz.jei.api.gui.drawable.IDrawable;
-import mezz.jei.api.gui.ingredient.IGuiFluidStackGroup;
-import mezz.jei.api.gui.ingredient.IGuiItemStackGroup;
+import mezz.jei.api.gui.ingredient.IRecipeSlotsView;
 import mezz.jei.api.helpers.IGuiHelper;
-import mezz.jei.api.ingredients.IIngredients;
+import mezz.jei.api.recipe.IFocusGroup;
+import mezz.jei.api.recipe.RecipeIngredientRole;
+import mezz.jei.api.recipe.RecipeType;
 import mezz.jei.api.recipe.category.IRecipeCategory;
 import mezz.jei.api.runtime.IIngredientManager;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.resources.language.I18n;
+import net.minecraft.core.Registry;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.ItemStack;
@@ -33,30 +35,26 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class HeatSourceCategory implements IRecipeCategory<HeatSourceCategory.Recipe> {
+    public static final RecipeType<Recipe> TYPE = RecipeType.create(Powah.MOD_ID, "heat_source", Recipe.class);
+
     public static final ResourceLocation GUI_BACK = new ResourceLocation(Powah.MOD_ID, "textures/gui/jei/misc.png");
-    public static final ResourceLocation ID = new ResourceLocation(Powah.MOD_ID, "heat.sources");
     private final IDrawable background;
     private final IDrawable icon;
 
     public HeatSourceCategory(IGuiHelper guiHelper) {
         this.background = guiHelper.drawableBuilder(GUI_BACK, 0, 0, 160, 24).addPadding(1, 0, 0, 0).build();
-        this.icon = guiHelper.createDrawableIngredient(new ItemStack(Blocks.MAGMA_BLOCK));
+        this.icon = guiHelper.createDrawableIngredient(VanillaTypes.ITEM_STACK, new ItemStack(Blocks.MAGMA_BLOCK));
 
     }
 
     @Override
-    public ResourceLocation getUid() {
-        return ID;
-    }
-
-    @Override
-    public Class<? extends Recipe> getRecipeClass() {
-        return Recipe.class;
+    public RecipeType<Recipe> getRecipeType() {
+        return TYPE;
     }
 
     @Override
     public Component getTitle() {
-        return new TranslatableComponent("gui.powah.jei.category.heat.sources");
+        return Component.translatable("gui.powah.jei.category.heat.sources");
     }
 
     @Override
@@ -70,36 +68,25 @@ public class HeatSourceCategory implements IRecipeCategory<HeatSourceCategory.Re
     }
 
     @Override
-    public void setIngredients(Recipe recipe, IIngredients ingredients) {
+    public void setRecipe(IRecipeLayoutBuilder builder, Recipe recipe, IFocusGroup focuses) {
+        var input = builder.addSlot(RecipeIngredientRole.INPUT, 4, 5);
+
         if (recipe.fluid == null) {
-            ingredients.setInput(VanillaTypes.ITEM, new ItemStack(recipe.getBlock()));
+            input.addItemStack(new ItemStack(recipe.getBlock()));
         } else {
-            ingredients.setInput(VanillaTypes.FLUID, new FluidStack(recipe.fluid, 1000));
+            input.addFluidStack(recipe.fluid, 1000);
         }
     }
 
     @Override
-    public void setRecipe(IRecipeLayout iRecipeLayout, Recipe recipe, IIngredients ingredients) {
-        if (recipe.fluid == null) {
-            IGuiItemStackGroup itemStacks = iRecipeLayout.getItemStacks();
-            itemStacks.init(0, true, 3, 4);
-            itemStacks.set(ingredients);
-        } else {
-            IGuiFluidStackGroup fluidStack = iRecipeLayout.getFluidStacks();
-            fluidStack.init(0, true, 4, 5);
-            fluidStack.set(ingredients);
-        }
-    }
-
-    @Override
-    public void draw(Recipe recipe, PoseStack matrix, double mouseX, double mouseY) {
+    public void draw(Recipe recipe, IRecipeSlotsView recipeSlotsView, PoseStack matrix, double mouseX, double mouseY) {
         Minecraft minecraft = Minecraft.getInstance();
         minecraft.font.draw(matrix, ChatFormatting.DARK_GRAY + I18n.get("info.lollipop.temperature") + ": " + ChatFormatting.RESET + I18n.get("info.lollipop.temperature.c", recipe.heat), 30.0F, 9.0F, 0xc43400);
     }
 
     public static class Maker {
         public static List<Recipe> getBucketRecipes(IIngredientManager ingredientManager) {
-            Collection<ItemStack> allItemStacks = ingredientManager.getAllIngredients(VanillaTypes.ITEM);
+            Collection<ItemStack> allItemStacks = ingredientManager.getAllIngredients(VanillaTypes.ITEM_STACK);
             List<Recipe> recipes = new ArrayList<>();
             Powah.LOGGER.debug("HEAT SOURCE RECIPE ALL: [" + PowahAPI.HEAT_SOURCES.entrySet().stream()
                     .map(e -> e.getKey() + " -> " + e.getValue())
@@ -114,7 +101,7 @@ public class HeatSourceCategory implements IRecipeCategory<HeatSourceCategory.Re
                 }
             });
 
-            Collection<FluidStack> allIngredients = ingredientManager.getAllIngredients(VanillaTypes.FLUID);
+            Collection<FluidStack> allIngredients = ingredientManager.getAllIngredients(ForgeTypes.FLUID_STACK);
 
             allIngredients.forEach(fluidStack -> {
                 if (!fluidStack.isEmpty()) {
@@ -162,7 +149,10 @@ public class HeatSourceCategory implements IRecipeCategory<HeatSourceCategory.Re
 
         @Override
         public String toString() {
-            return "HeatSourceRecipe{" + block.getRegistryName() + (fluid != null ? " (fluid " + fluid.getRegistryName() + ")" : "") + " -> " + heat + "}";
+            var blockId = Registry.BLOCK.getKey(block);
+            var fluidId = fluid != null ? Registry.FLUID.getKey(fluid) : null;
+
+            return "HeatSourceRecipe{" + blockId + (fluid != null ? " (fluid " + fluidId + ")" : "") + " -> " + heat + "}";
         }
     }
 }

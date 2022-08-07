@@ -6,17 +6,17 @@ import com.mojang.math.Transformation;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
 import net.minecraft.client.renderer.MultiBufferSource;
+import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.FormattedText;
 import net.minecraft.network.chat.Style;
 import net.minecraft.network.chat.TextColor;
-import net.minecraft.network.chat.TextComponent;
 import net.minecraft.util.FormattedCharSequence;
 
 public class Text {
-    public static final TextComponent EMPTY = new TextComponent("");
-    public static final TextComponent SPACE = new TextComponent(" ");
-    public static final TextComponent COLON = new TextComponent(": ");
-    public static final TextComponent COMA = new TextComponent(", ");
+    public static final Component EMPTY = Component.empty();
+    public static final Component SPACE = Component.literal(" ");
+    public static final Component COLON = Component.literal(": ");
+    public static final Component COMA = Component.literal(", ");
 
     public static Style color(int color) {
         return Style.EMPTY.withColor(TextColor.fromRgb(color));

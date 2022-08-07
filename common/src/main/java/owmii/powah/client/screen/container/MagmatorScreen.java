@@ -6,8 +6,6 @@ import dev.architectury.hooks.fluid.FluidStackHooks;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TextComponent;
-import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.inventory.InventoryMenu;
@@ -76,9 +74,9 @@ public class MagmatorScreen extends AbstractEnergyScreen<MagmatorTile, MagmatorC
         if (Textures.FURNATOR_GAUGE.isMouseOver(this.leftPos + 5, this.topPos + 5, mouseX, mouseY)) {
             List<Component> list = new ArrayList<>();
             Energy energy = this.te.getEnergy();
-            list.add(new TranslatableComponent("info.lollipop.stored").withStyle(ChatFormatting.GRAY).append(Text.COLON).append(new TranslatableComponent("info.lollipop.fe.stored", Util.addCommas(energy.getStored()), Util.numFormat(energy.getCapacity())).withStyle(ChatFormatting.DARK_GRAY)));
-            list.add(new TranslatableComponent("info.lollipop.generates").withStyle(ChatFormatting.GRAY).append(Text.COLON).append(new TextComponent(Util.numFormat(this.te.getGeneration())).append(new TranslatableComponent("info.lollipop.fe.pet.tick")).withStyle(ChatFormatting.DARK_GRAY)));
-            list.add(new TranslatableComponent("info.lollipop.max.extract").withStyle(ChatFormatting.GRAY).append(Text.COLON).append(new TextComponent(Util.numFormat(energy.getMaxExtract())).append(new TranslatableComponent("info.lollipop.fe.pet.tick")).withStyle(ChatFormatting.DARK_GRAY)));
+            list.add(Component.translatable("info.lollipop.stored").withStyle(ChatFormatting.GRAY).append(Text.COLON).append(Component.translatable("info.lollipop.fe.stored", Util.addCommas(energy.getStored()), Util.numFormat(energy.getCapacity())).withStyle(ChatFormatting.DARK_GRAY)));
+            list.add(Component.translatable("info.lollipop.generates").withStyle(ChatFormatting.GRAY).append(Text.COLON).append(Component.literal(Util.numFormat(this.te.getGeneration())).append(Component.translatable("info.lollipop.fe.pet.tick")).withStyle(ChatFormatting.DARK_GRAY)));
+            list.add(Component.translatable("info.lollipop.max.extract").withStyle(ChatFormatting.GRAY).append(Text.COLON).append(Component.literal(Util.numFormat(energy.getMaxExtract())).append(Component.translatable("info.lollipop.fe.pet.tick")).withStyle(ChatFormatting.DARK_GRAY)));
             renderComponentTooltip(matrix, list, mouseX, mouseY);
         }
 
@@ -86,11 +84,11 @@ public class MagmatorScreen extends AbstractEnergyScreen<MagmatorTile, MagmatorC
         if (isMouseOver(mouseX - 157, mouseY - 5, 14, 65)) {
             List<Component> list = new ArrayList<>();
             if (!tank.isEmpty()) {
-                list.add(new TranslatableComponent("info.lollipop.fluid").withStyle(ChatFormatting.GRAY).append(Text.COLON).append(FluidStackHooks.getName(tank.getFluid()).plainCopy().withStyle(ChatFormatting.GOLD)));
-                list.add(new TranslatableComponent("info.lollipop.stored").withStyle(ChatFormatting.GRAY).append(Text.COLON).append(new TranslatableComponent("info.lollipop.mb.stored", Util.addCommas(tank.getFluidAmount()), Util.numFormat(tank.getCapacity())).withStyle(ChatFormatting.DARK_GRAY)));
-                list.add(new TranslatableComponent("info.lollipop.Gain").withStyle(ChatFormatting.GRAY).append(Text.COLON).append(new TranslatableComponent("info.lollipop.fe.per.mb", PowahAPI.getMagmaticFluidHeat(tank.getFluid().getFluid()), "100").withStyle(ChatFormatting.DARK_GRAY)));
+                list.add(Component.translatable("info.lollipop.fluid").withStyle(ChatFormatting.GRAY).append(Text.COLON).append(FluidStackHooks.getName(tank.getFluid()).plainCopy().withStyle(ChatFormatting.GOLD)));
+                list.add(Component.translatable("info.lollipop.stored").withStyle(ChatFormatting.GRAY).append(Text.COLON).append(Component.translatable("info.lollipop.mb.stored", Util.addCommas(tank.getFluidAmount()), Util.numFormat(tank.getCapacity())).withStyle(ChatFormatting.DARK_GRAY)));
+                list.add(Component.translatable("info.lollipop.Gain").withStyle(ChatFormatting.GRAY).append(Text.COLON).append(Component.translatable("info.lollipop.fe.per.mb", PowahAPI.getMagmaticFluidHeat(tank.getFluid().getFluid()), "100").withStyle(ChatFormatting.DARK_GRAY)));
             } else {
-                list.add(new TranslatableComponent("info.lollipop.fluid").withStyle(ChatFormatting.GRAY).append(Text.COLON).append(new TextComponent("---").withStyle(ChatFormatting.DARK_GRAY)));
+                list.add(Component.translatable("info.lollipop.fluid").withStyle(ChatFormatting.GRAY).append(Text.COLON).append(Component.literal("---").withStyle(ChatFormatting.DARK_GRAY)));
             }
             renderComponentTooltip(matrix, list, mouseX, mouseY);
         }

@@ -2,8 +2,12 @@ package owmii.powah.forge.compat.jei;
 
 import mezz.jei.api.IModPlugin;
 import mezz.jei.api.JeiPlugin;
+import mezz.jei.api.constants.VanillaTypes;
+import mezz.jei.api.helpers.IJeiHelpers;
 import mezz.jei.api.recipe.IFocus;
+import mezz.jei.api.recipe.IFocusFactory;
 import mezz.jei.api.recipe.IRecipeManager;
+import mezz.jei.api.recipe.RecipeIngredientRole;
 import mezz.jei.api.registration.IGuiHandlerRegistration;
 import mezz.jei.api.runtime.IJeiRuntime;
 import net.minecraft.resources.ResourceLocation;
@@ -30,22 +34,6 @@ public class JEI implements IModPlugin {
     @SuppressWarnings("unchecked")
     public void registerGuiHandlers(IGuiHandlerRegistration registration) {
         registration.addGuiContainerHandler(AbstractContainerScreen.class, new GuiContainerHandler());
-    }
-
-    public static void showRecipes(ItemStack stack) {
-        if (isLoaded() && JEI.runtime != null) {
-            IRecipeManager register = JEI.runtime.getRecipeManager();
-            IFocus<?> focus = register.createFocus(IFocus.Mode.OUTPUT, stack);
-            JEI.runtime.getRecipesGui().show(focus);
-        }
-    }
-
-    public static void showUsage(ItemStack stack) {
-        if (isLoaded() && JEI.runtime != null) {
-            IRecipeManager register = JEI.runtime.getRecipeManager();
-            IFocus<?> focus = register.createFocus(IFocus.Mode.INPUT, stack);
-            JEI.runtime.getRecipesGui().show(focus);
-        }
     }
 
     @Override

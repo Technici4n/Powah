@@ -17,7 +17,6 @@ import net.minecraft.ChatFormatting;
 import net.minecraft.client.renderer.Rect2i;
 import net.minecraft.core.Direction;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.world.entity.player.Inventory;
 
 public class AbstractEnergyScreen<T extends AbstractEnergyStorage<?, ?> & IInventoryHolder, C extends AbstractEnergyContainer<T>> extends AbstractTileScreen<T, C> {
@@ -50,8 +49,8 @@ public class AbstractEnergyScreen<T extends AbstractEnergyStorage<?, ?> & IInven
                 Network.toServer(new NextEnergyConfigPacket(id, this.te.getBlockPos()));
                 this.te.getSideConfig().nextType(side);
             }, this).setTooltip(tooltip -> {
-                tooltip.add(new TranslatableComponent("info.lollipop.facing").append(Text.COLON).withStyle(ChatFormatting.GRAY)
-                        .append(new TranslatableComponent("info.lollipop.side." + side.getSerializedName()).withStyle(ChatFormatting.DARK_GRAY)));
+                tooltip.add(Component.translatable("info.lollipop.facing").append(Text.COLON).withStyle(ChatFormatting.GRAY)
+                        .append(Component.translatable("info.lollipop.side." + side.getSerializedName()).withStyle(ChatFormatting.DARK_GRAY)));
                 tooltip.add(this.te.getSideConfig().getType(side).getDisplayName());
             }));
         }
@@ -60,8 +59,8 @@ public class AbstractEnergyScreen<T extends AbstractEnergyStorage<?, ?> & IInven
             Network.toServer(new NextEnergyConfigPacket(6, this.te.getBlockPos()));
             this.te.getSideConfig().nextTypeAll();
         }, this).setTooltip(tooltip -> {
-            tooltip.add(new TranslatableComponent("info.lollipop.facing").append(Text.COLON).withStyle(ChatFormatting.GRAY)
-                    .append(new TranslatableComponent("info.lollipop.all").withStyle(ChatFormatting.DARK_GRAY)));
+            tooltip.add(Component.translatable("info.lollipop.facing").append(Text.COLON).withStyle(ChatFormatting.GRAY)
+                    .append(Component.translatable("info.lollipop.all").withStyle(ChatFormatting.DARK_GRAY)));
             tooltip.add(this.te.getSideConfig().getType(Direction.UP).getDisplayName());
         }));
     }

@@ -7,9 +7,10 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.inventory.MenuType;
 import net.minecraft.world.inventory.Slot;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 
-public class AbstractContainer extends AbstractContainerMenu {
+public abstract class AbstractContainer extends AbstractContainerMenu {
     public final Player player;
     public final Level world;
 
@@ -47,6 +48,11 @@ public class AbstractContainer extends AbstractContainerMenu {
         @Override
         public boolean stillValid(Player playerIn) {
             return true;
+        }
+
+        @Override
+        public ItemStack quickMoveStack(Player player, int index) {
+            return ItemStack.EMPTY;
         }
     };
 }

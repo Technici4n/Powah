@@ -5,7 +5,6 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.InteractionResultHolder;
@@ -78,7 +77,7 @@ public class WrenchItem extends ItemBase implements IHudItem, IWrench {
         ItemStack stack = playerIn.getItemInHand(handIn);
         if (playerIn.isShiftKeyDown()) {
             nextWrenchMode(stack);
-            playerIn.displayClientMessage(new TranslatableComponent("info.powah.wrench.mode." + getWrenchMode(stack).name().toLowerCase(), ChatFormatting.YELLOW).withStyle(ChatFormatting.GRAY), true);
+            playerIn.displayClientMessage(Component.translatable("info.powah.wrench.mode." + getWrenchMode(stack).name().toLowerCase(), ChatFormatting.YELLOW).withStyle(ChatFormatting.GRAY), true);
             return InteractionResultHolder.success(stack);
         }
         return super.use(worldIn, playerIn, handIn);
@@ -86,14 +85,14 @@ public class WrenchItem extends ItemBase implements IHudItem, IWrench {
 
     @Override
     public void appendHoverText(ItemStack stack, @Nullable Level worldIn, List<Component> tooltip, TooltipFlag flagIn) {
-        tooltip.add(new TranslatableComponent("info.powah.wrench.mode." + getWrenchMode(stack).name().toLowerCase(), ChatFormatting.YELLOW).withStyle(ChatFormatting.GRAY));
+        tooltip.add(Component.translatable("info.powah.wrench.mode." + getWrenchMode(stack).name().toLowerCase(), ChatFormatting.YELLOW).withStyle(ChatFormatting.GRAY));
     }
 
     @Override
     public void inventoryTick(ItemStack stack, Level worldIn, Entity entityIn, int itemSlot, boolean isSelected) {
         if (entityIn instanceof Player) {
             Player player = (Player) entityIn;
-            oneTimeInfo(player, stack, new TranslatableComponent("info.powah.wrench.mode." + getWrenchMode(stack).name().toLowerCase(), ChatFormatting.YELLOW).withStyle(ChatFormatting.GRAY));
+            oneTimeInfo(player, stack, Component.translatable("info.powah.wrench.mode." + getWrenchMode(stack).name().toLowerCase(), ChatFormatting.YELLOW).withStyle(ChatFormatting.GRAY));
         }
     }
 

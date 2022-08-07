@@ -5,7 +5,6 @@ import net.minecraft.client.gui.Font;
 import net.minecraft.core.Registry;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
-import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
@@ -96,8 +95,8 @@ public class Info extends Page {
         }
         Entry e = getSection().getEntry();
         for (int i = 0; i < this.paragraphs; i++) {
-            Component text = new TranslatableComponent("wiki." + e.getWiki().getModId() + "." + e.getName() + "_" + (i + pp), this.args[i]);
-            MutableComponent ft = new TranslatableComponent("");
+            Component text = Component.translatable("wiki." + e.getWiki().getModId() + "." + e.getName() + "_" + (i + pp), this.args[i]);
+            MutableComponent ft = Component.translatable("");
             String[] words = text.getString().split("\\s+");
             for (int j = 0; j < words.length; j++) {
                 String w = words[j];

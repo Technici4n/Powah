@@ -3,7 +3,6 @@ package owmii.powah.block.energizing;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParseException;
-import dev.architectury.core.RegistryEntry;
 import net.minecraft.core.NonNullList;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.resources.ResourceLocation;
@@ -106,7 +105,7 @@ public class EnergizingRecipe implements Recipe<RecipeWrapper> {
         return this.ingredients;
     }
 
-    public static class Serializer extends RegistryEntry<RecipeSerializer<?>> implements RecipeSerializer<EnergizingRecipe> {
+    public static class Serializer implements RecipeSerializer<EnergizingRecipe> {
         @Override
         public EnergizingRecipe fromJson(ResourceLocation recipeId, JsonObject json) {
             NonNullList<Ingredient> list = readIngredients(GsonHelper.getAsJsonArray(json, "ingredients"));

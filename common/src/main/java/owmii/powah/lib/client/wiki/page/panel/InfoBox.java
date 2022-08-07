@@ -4,13 +4,13 @@ import owmii.powah.lib.client.util.Text;
 
 import javax.annotation.Nullable;
 import net.minecraft.ChatFormatting;
-import net.minecraft.network.chat.BaseComponent;
+import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.network.chat.Style;
 import net.minecraft.world.item.ItemStack;
 import java.util.LinkedHashMap;
 
 public class InfoBox {
-    private final LinkedHashMap<BaseComponent, BaseComponent> lines = new LinkedHashMap<>();
+    private final LinkedHashMap<MutableComponent, MutableComponent> lines = new LinkedHashMap<>();
     public static final InfoBox EMPTY = new InfoBox();
     @Nullable
     private Style titleStyle;
@@ -33,7 +33,7 @@ public class InfoBox {
         this.valueStyle = valueStyle;
     }
 
-    public void set(BaseComponent title, BaseComponent value) {
+    public void set(MutableComponent title, MutableComponent value) {
         this.lines.put(title, value);
     }
 
@@ -57,7 +57,7 @@ public class InfoBox {
         return this;
     }
 
-    public LinkedHashMap<BaseComponent, BaseComponent> getLines() {
+    public LinkedHashMap<MutableComponent, MutableComponent> getLines() {
         return this.lines;
     }
 

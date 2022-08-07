@@ -1,6 +1,8 @@
 package owmii.powah.world.gen;
 
 import dev.architectury.registry.level.biome.BiomeModifications;
+import net.minecraft.core.Registry;
+import net.minecraft.tags.TagKey;
 import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.levelgen.GenerationStep;
 import owmii.powah.Powah;
@@ -8,6 +10,9 @@ import owmii.powah.Powah;
 import static owmii.powah.world.gen.Features.*;
 
 public class WorldGen {
+
+    private static final TagKey<Biome> DRY_ICE_BIOME = TagKey.create(Registry.BIOME_REGISTRY, Powah.id("has_dry_ice"));
+
     public static void init() {
         BiomeModifications.addProperties((ctx, mut) -> {
             if (Powah.config().worldgen.disable_all) {
@@ -18,9 +23,7 @@ public class WorldGen {
             mut.getGenerationProperties().addFeature(GenerationStep.Decoration.UNDERGROUND_ORES, URANINITE);
             mut.getGenerationProperties().addFeature(GenerationStep.Decoration.UNDERGROUND_ORES, URANINITE_DENSE);
 
-            if (mut.getCategory() == Biome.BiomeCategory.TAIGA
-                    || mut.getCategory() == Biome.BiomeCategory.ICY
-                    || mut.getCategory() == Biome.BiomeCategory.EXTREME_HILLS) {
+            if (ctx.hasTag(DRY_ICE_BIOME)) {
                 mut.getGenerationProperties().addFeature(GenerationStep.Decoration.UNDERGROUND_ORES, DRY_ICE);
             }
         });

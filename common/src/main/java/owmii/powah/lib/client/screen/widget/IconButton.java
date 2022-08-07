@@ -11,7 +11,6 @@ import net.minecraft.client.resources.sounds.SimpleSoundInstance;
 import net.minecraft.client.sounds.SoundManager;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.TextColor;
-import net.minecraft.network.chat.TextComponent;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
@@ -46,19 +45,19 @@ public class IconButton extends Button {
     }
 
     public IconButton(int x, int y, Texture texture, OnPress onPress, Screen screen) {
-        this(x, y, ItemStack.EMPTY, texture, Texture.EMPTY, new TextComponent(""), onPress, screen);
+        this(x, y, ItemStack.EMPTY, texture, Texture.EMPTY, Component.empty(), onPress, screen);
     }
 
     public IconButton(int x, int y, Texture texture, Texture hovering, OnPress onPress, Screen screen) {
-        this(x, y, ItemStack.EMPTY, texture, hovering, new TextComponent(""), onPress, screen);
+        this(x, y, ItemStack.EMPTY, texture, hovering, Component.empty(), onPress, screen);
     }
 
     public IconButton(int x, int y, ItemStack stack, Texture texture, OnPress onPress, Screen screen) {
-        this(x, y, stack, texture, Texture.EMPTY, new TextComponent(""), onPress, screen);
+        this(x, y, stack, texture, Texture.EMPTY, Component.empty(), onPress, screen);
     }
 
     public IconButton(int x, int y, ItemStack stack, Texture texture, Texture hovering, OnPress onPress, Screen screen) {
-        this(x, y, stack, texture, hovering, new TextComponent(""), onPress, screen);
+        this(x, y, stack, texture, hovering, Component.empty(), onPress, screen);
     }
 
     public IconButton(int x, int y, ItemStack stack, Texture texture, Texture hovering, Component text, OnPress onPress, Screen screen) {

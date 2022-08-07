@@ -6,8 +6,6 @@ import dev.architectury.hooks.fluid.FluidStackHooks;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TextComponent;
-import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.inventory.InventoryMenu;
@@ -42,9 +40,9 @@ public class ReactorScreen extends AbstractEnergyScreen<ReactorTile, ReactorCont
             Network.toServer(new SwitchGenModePacket(this.te.getBlockPos()));
             this.te.setGenModeOn(!this.te.isGenModeOn());
         }, this).setTooltip(tooltip -> {
-            tooltip.add(new TranslatableComponent("info.powah.gen.mode").withStyle(ChatFormatting.GRAY).append(Text.COLON)
-                    .append(new TranslatableComponent("info.lollipop." + (this.te.isGenModeOn() ? "on" : "off")).withStyle(this.te.isGenModeOn() ? ChatFormatting.GREEN : ChatFormatting.RED)));
-            tooltip.add(new TranslatableComponent("info.powah.gen.mode.desc").withStyle(ChatFormatting.DARK_GRAY));
+            tooltip.add(Component.translatable("info.powah.gen.mode").withStyle(ChatFormatting.GRAY).append(Text.COLON)
+                    .append(Component.translatable("info.lollipop." + (this.te.isGenModeOn() ? "on" : "off")).withStyle(this.te.isGenModeOn() ? ChatFormatting.GREEN : ChatFormatting.RED)));
+            tooltip.add(Component.translatable("info.powah.gen.mode.desc").withStyle(ChatFormatting.DARK_GRAY));
         }));
     }
 
@@ -89,57 +87,57 @@ public class ReactorScreen extends AbstractEnergyScreen<ReactorTile, ReactorCont
         if (Textures.REACTOR_GAUGE.isMouseOver(this.leftPos + 5, this.topPos + 5, mouseX, mouseY)) {
             List<Component> list = new ArrayList<>();
             Energy energy = this.te.getEnergy();
-            list.add(new TranslatableComponent("info.powah.gen.mode").withStyle(ChatFormatting.GRAY).append(Text.COLON).append(new TranslatableComponent("info.lollipop." + (this.te.isGenModeOn() ? "on" : "off")).withStyle(this.te.isGenModeOn() ? ChatFormatting.GREEN : ChatFormatting.RED)));
-            list.add(new TranslatableComponent("info.lollipop.stored").withStyle(ChatFormatting.GRAY).append(Text.COLON).append(new TranslatableComponent("info.lollipop.fe.stored", Util.addCommas(energy.getStored()), Util.numFormat(energy.getCapacity())).withStyle(ChatFormatting.DARK_GRAY)));
-            list.add(new TranslatableComponent("info.powah.generation.factor").withStyle(ChatFormatting.GRAY).append(Text.COLON).append(new TextComponent(Util.numFormat(this.te.getGeneration())).append(new TranslatableComponent("info.lollipop.fe.pet.tick")).withStyle(ChatFormatting.DARK_GRAY)));
-            list.add(new TranslatableComponent("info.lollipop.generating").withStyle(ChatFormatting.GRAY).append(Text.COLON).append(new TextComponent(Util.numFormat((long) this.te.calcProduction())).append(new TranslatableComponent("info.lollipop.fe.pet.tick")).withStyle(ChatFormatting.DARK_GRAY)));
-            list.add(new TranslatableComponent("info.lollipop.max.extract").withStyle(ChatFormatting.GRAY).append(Text.COLON).append(new TextComponent(Util.numFormat(energy.getMaxExtract())).append(new TranslatableComponent("info.lollipop.fe.pet.tick")).withStyle(ChatFormatting.DARK_GRAY)));
+            list.add(Component.translatable("info.powah.gen.mode").withStyle(ChatFormatting.GRAY).append(Text.COLON).append(Component.translatable("info.lollipop." + (this.te.isGenModeOn() ? "on" : "off")).withStyle(this.te.isGenModeOn() ? ChatFormatting.GREEN : ChatFormatting.RED)));
+            list.add(Component.translatable("info.lollipop.stored").withStyle(ChatFormatting.GRAY).append(Text.COLON).append(Component.translatable("info.lollipop.fe.stored", Util.addCommas(energy.getStored()), Util.numFormat(energy.getCapacity())).withStyle(ChatFormatting.DARK_GRAY)));
+            list.add(Component.translatable("info.powah.generation.factor").withStyle(ChatFormatting.GRAY).append(Text.COLON).append(Component.literal(Util.numFormat(this.te.getGeneration())).append(Component.translatable("info.lollipop.fe.pet.tick")).withStyle(ChatFormatting.DARK_GRAY)));
+            list.add(Component.translatable("info.lollipop.generating").withStyle(ChatFormatting.GRAY).append(Text.COLON).append(Component.literal(Util.numFormat((long) this.te.calcProduction())).append(Component.translatable("info.lollipop.fe.pet.tick")).withStyle(ChatFormatting.DARK_GRAY)));
+            list.add(Component.translatable("info.lollipop.max.extract").withStyle(ChatFormatting.GRAY).append(Text.COLON).append(Component.literal(Util.numFormat(energy.getMaxExtract())).append(Component.translatable("info.lollipop.fe.pet.tick")).withStyle(ChatFormatting.DARK_GRAY)));
 
             renderComponentTooltip(matrix, list, mouseX, mouseY);
         }
 
         if (Textures.REACTOR_GAUGE_TEMP.isMouseOver(this.leftPos + 114, this.topPos + 28, mouseX, mouseY)) {
             List<Component> list = new ArrayList<>();
-            list.add(new TextComponent(ChatFormatting.GRAY + String.format("%.1f", this.te.temp.getTicks()) + " C"));
+            list.add(Component.literal(ChatFormatting.GRAY + String.format("%.1f", this.te.temp.getTicks()) + " C"));
             renderComponentTooltip(matrix, list, mouseX, mouseY);
         }
 
         if (Textures.REACTOR_GAUGE_URN.isMouseOver(this.leftPos + 103, this.topPos + 13, mouseX, mouseY)) {
             List<Component> list = new ArrayList<>();
-            list.add(new TranslatableComponent("item.powah.uraninite").withStyle(ChatFormatting.GREEN));
-            list.add(new TranslatableComponent("info.lollipop.stored").withStyle(ChatFormatting.GRAY).append(Text.COLON).append(new TranslatableComponent("info.lollipop.mb.stored", String.format("%.0f", this.te.fuel.getTicks()), String.format("%.0f", this.te.fuel.getMax())).withStyle(ChatFormatting.DARK_GRAY)));
-            list.add(new TranslatableComponent("info.lollipop.using").withStyle(ChatFormatting.GRAY).append(Text.COLON).append(new TextComponent(ChatFormatting.GREEN + String.format("%.4f", this.te.calcConsumption())).append(new TranslatableComponent("info.lollipop.mb.pet.tick")).withStyle(ChatFormatting.DARK_GRAY)));
+            list.add(Component.translatable("item.powah.uraninite").withStyle(ChatFormatting.GREEN));
+            list.add(Component.translatable("info.lollipop.stored").withStyle(ChatFormatting.GRAY).append(Text.COLON).append(Component.translatable("info.lollipop.mb.stored", String.format("%.0f", this.te.fuel.getTicks()), String.format("%.0f", this.te.fuel.getMax())).withStyle(ChatFormatting.DARK_GRAY)));
+            list.add(Component.translatable("info.lollipop.using").withStyle(ChatFormatting.GRAY).append(Text.COLON).append(Component.literal(ChatFormatting.GREEN + String.format("%.4f", this.te.calcConsumption())).append(Component.translatable("info.lollipop.mb.pet.tick")).withStyle(ChatFormatting.DARK_GRAY)));
             renderComponentTooltip(matrix, list, mouseX, mouseY);
         }
 
         if (Textures.REACTOR_GAUGE_CARBON.isMouseOver(this.leftPos + 51, this.topPos + 6, mouseX, mouseY)) {
             List<Component> list = new ArrayList<>();
             boolean b = this.te.carbon.isEmpty();
-            list.add((new TranslatableComponent("info.powah.carbon")).withStyle(ChatFormatting.GRAY));
-            list.add(new TranslatableComponent("info.lollipop.stored").withStyle(ChatFormatting.DARK_GRAY).append(Text.COLON).append(new TranslatableComponent("info.lollipop.mb.stored", String.format("%.1f", this.te.carbon.getTicks()), String.format("%.1f", this.te.carbon.getMax())).withStyle(ChatFormatting.DARK_GRAY)));
-            list.add(new TextComponent(""));
-            list.add(new TranslatableComponent("enchantment.minecraft.efficiency").withStyle(ChatFormatting.DARK_AQUA));
-            list.add(new TextComponent(ChatFormatting.DARK_RED + (b ? "+0 C" : "+180 C")));
+            list.add((Component.translatable("info.powah.carbon")).withStyle(ChatFormatting.GRAY));
+            list.add(Component.translatable("info.lollipop.stored").withStyle(ChatFormatting.DARK_GRAY).append(Text.COLON).append(Component.translatable("info.lollipop.mb.stored", String.format("%.1f", this.te.carbon.getTicks()), String.format("%.1f", this.te.carbon.getMax())).withStyle(ChatFormatting.DARK_GRAY)));
+            list.add(Component.empty());
+            list.add(Component.translatable("enchantment.minecraft.efficiency").withStyle(ChatFormatting.DARK_AQUA));
+            list.add(Component.literal(ChatFormatting.DARK_RED + (b ? "+0 C" : "+180 C")));
             renderComponentTooltip(matrix, list, mouseX, mouseY);
         }
 
         if (Textures.REACTOR_GAUGE_REDSTONE.isMouseOver(this.leftPos + 51, this.topPos + 52, mouseX, mouseY)) {
             List<Component> list = new ArrayList<>();
             boolean b = this.te.redstone.isEmpty();
-            list.add(new TranslatableComponent("info.powah.redstone").withStyle(ChatFormatting.GRAY));
-            list.add(new TranslatableComponent("info.lollipop.stored").withStyle(ChatFormatting.DARK_GRAY).append(Text.COLON).append(new TranslatableComponent("info.lollipop.mb.stored", String.format("%.1f", this.te.redstone.getTicks()), String.format("%.1f", this.te.redstone.getMax())).withStyle(ChatFormatting.DARK_GRAY)));
-            list.add(new TextComponent(""));
-            list.add(new TranslatableComponent("info.powah.production").withStyle(ChatFormatting.DARK_AQUA));
-            list.add(new TranslatableComponent("info.powah.fuel.consumption").withStyle(ChatFormatting.DARK_RED));
-            list.add(new TextComponent(ChatFormatting.DARK_RED + (b ? "+0 C" : "+120 C")));
+            list.add(Component.translatable("info.powah.redstone").withStyle(ChatFormatting.GRAY));
+            list.add(Component.translatable("info.lollipop.stored").withStyle(ChatFormatting.DARK_GRAY).append(Text.COLON).append(Component.translatable("info.lollipop.mb.stored", String.format("%.1f", this.te.redstone.getTicks()), String.format("%.1f", this.te.redstone.getMax())).withStyle(ChatFormatting.DARK_GRAY)));
+            list.add(Component.empty());
+            list.add(Component.translatable("info.powah.production").withStyle(ChatFormatting.DARK_AQUA));
+            list.add(Component.translatable("info.powah.fuel.consumption").withStyle(ChatFormatting.DARK_RED));
+            list.add(Component.literal(ChatFormatting.DARK_RED + (b ? "+0 C" : "+120 C")));
             renderComponentTooltip(matrix, list, mouseX, mouseY);
         }
 
         if (Textures.REACTOR_GAUGE_COOLANT.isMouseOver(this.leftPos + 140, this.topPos + 52, mouseX, mouseY)) {
             List<Component> list = new ArrayList<>();
-            list.add(new TranslatableComponent("info.powah.solid.coolant").withStyle(ChatFormatting.GRAY));
-            list.add(new TranslatableComponent("info.lollipop.stored").withStyle(ChatFormatting.DARK_GRAY).append(Text.COLON).append(new TranslatableComponent("info.lollipop.mb.stored", String.format("%.1f", this.te.solidCoolant.getTicks()), String.format("%.1f", this.te.solidCoolant.getMax())).withStyle(ChatFormatting.DARK_GRAY)));
-            list.add(new TextComponent("" + ChatFormatting.AQUA + this.te.solidCoolantTemp + " C"));
+            list.add(Component.translatable("info.powah.solid.coolant").withStyle(ChatFormatting.GRAY));
+            list.add(Component.translatable("info.lollipop.stored").withStyle(ChatFormatting.DARK_GRAY).append(Text.COLON).append(Component.translatable("info.lollipop.mb.stored", String.format("%.1f", this.te.solidCoolant.getTicks()), String.format("%.1f", this.te.solidCoolant.getMax())).withStyle(ChatFormatting.DARK_GRAY)));
+            list.add(Component.literal("" + ChatFormatting.AQUA + this.te.solidCoolantTemp + " C"));
             renderComponentTooltip(matrix, list, mouseX, mouseY);
         }
 
@@ -147,11 +145,11 @@ public class ReactorScreen extends AbstractEnergyScreen<ReactorTile, ReactorCont
         if (isMouseOver(mouseX - 157, mouseY - 5, 14, 65)) {
             List<Component> list = new ArrayList<>();
             if (!tank.isEmpty()) {
-                list.add(new TranslatableComponent("info.lollipop.coolant").withStyle(ChatFormatting.GRAY).append(Text.COLON).append(FluidStackHooks.getName(tank.getFluid()).plainCopy().withStyle(ChatFormatting.AQUA)));
-                list.add(new TranslatableComponent("info.lollipop.stored").withStyle(ChatFormatting.GRAY).append(Text.COLON).append(new TranslatableComponent("info.lollipop.mb.stored", Util.addCommas(tank.getFluidAmount()), Util.numFormat(tank.getCapacity())).withStyle(ChatFormatting.DARK_GRAY)));
-                list.add(new TranslatableComponent("info.lollipop.temperature").withStyle(ChatFormatting.GRAY).append(Text.COLON).append(new TranslatableComponent("info.lollipop.temperature.c", "" + ChatFormatting.AQUA + PowahAPI.getCoolant(tank.getFluid().getFluid())).withStyle(ChatFormatting.DARK_GRAY)));
+                list.add(Component.translatable("info.lollipop.coolant").withStyle(ChatFormatting.GRAY).append(Text.COLON).append(FluidStackHooks.getName(tank.getFluid()).plainCopy().withStyle(ChatFormatting.AQUA)));
+                list.add(Component.translatable("info.lollipop.stored").withStyle(ChatFormatting.GRAY).append(Text.COLON).append(Component.translatable("info.lollipop.mb.stored", Util.addCommas(tank.getFluidAmount()), Util.numFormat(tank.getCapacity())).withStyle(ChatFormatting.DARK_GRAY)));
+                list.add(Component.translatable("info.lollipop.temperature").withStyle(ChatFormatting.GRAY).append(Text.COLON).append(Component.translatable("info.lollipop.temperature.c", "" + ChatFormatting.AQUA + PowahAPI.getCoolant(tank.getFluid().getFluid())).withStyle(ChatFormatting.DARK_GRAY)));
             } else {
-                list.add(new TranslatableComponent("info.lollipop.fluid").withStyle(ChatFormatting.GRAY).append(Text.COLON).append(new TextComponent("---").withStyle(ChatFormatting.DARK_GRAY)));
+                list.add(Component.translatable("info.lollipop.fluid").withStyle(ChatFormatting.GRAY).append(Text.COLON).append(Component.literal("---").withStyle(ChatFormatting.DARK_GRAY)));
             }
             renderComponentTooltip(matrix, list, mouseX, mouseY);
         }

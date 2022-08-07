@@ -5,7 +5,6 @@ import owmii.powah.lib.client.util.Text;
 import java.util.Locale;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TranslatableComponent;
 
 public enum Transfer {
     ALL(true, true, ChatFormatting.DARK_GRAY),
@@ -38,13 +37,13 @@ public enum Transfer {
     }
 
     public Component getDisplayName() {
-        return new TranslatableComponent("info.lollipop.io.mode").append(Text.COLON).withStyle(ChatFormatting.GRAY)
-                .append(new TranslatableComponent("info.lollipop.io.mode." + name().toLowerCase()).withStyle(this.color));
+        return Component.translatable("info.lollipop.io.mode").append(Text.COLON).withStyle(ChatFormatting.GRAY)
+                .append(Component.translatable("info.lollipop.io.mode." + name().toLowerCase()).withStyle(this.color));
     }
 
     public Component getDisplayName2() {
-        return new TranslatableComponent("info.lollipop.io.mode").append(Text.COLON).withStyle(ChatFormatting.GRAY)
-                .append(new TranslatableComponent("info.lollipop.io.mode." + translate(name().toLowerCase(Locale.ENGLISH))).withStyle(this.color));
+        return Component.translatable("info.lollipop.io.mode").append(Text.COLON).withStyle(ChatFormatting.GRAY)
+                .append(Component.translatable("info.lollipop.io.mode." + translate(name().toLowerCase(Locale.ENGLISH))).withStyle(this.color));
     }
 
     private String translate(String s) {
