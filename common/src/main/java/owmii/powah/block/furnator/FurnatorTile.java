@@ -1,5 +1,6 @@
 package owmii.powah.block.furnator;
 
+import dev.architectury.hooks.item.ItemStackHooks;
 import dev.architectury.registry.fuel.FuelRegistry;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
@@ -63,8 +64,8 @@ public class FurnatorTile extends AbstractEnergyProvider<FurnatorBlock> implemen
                     if (burnTime > 0) {
                         long perFuelTick = Powah.config().general.energy_per_fuel_tick;
                         this.carbon.setAll(burnTime * perFuelTick);
-                        if (EnvHandler.INSTANCE.hasContainerItem(stack)) {
-                            this.inv.setStackInSlot(1, EnvHandler.INSTANCE.getContainerItem(stack));
+                        if (ItemStackHooks.hasCraftingRemainingItem(stack)) {
+                            this.inv.setStackInSlot(1, ItemStackHooks.getCraftingRemainingItem(stack));
                         } else {
                             stack.shrink(1);
                         }

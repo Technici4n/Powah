@@ -92,19 +92,18 @@ public class HeatSourceCategory implements IRecipeCategory<HeatSourceCategory.Re
                     .map(e -> e.getKey() + " -> " + e.getValue())
                     .collect(Collectors.joining(", ")) + "]");
             allItemStacks.forEach(stack -> {
-                if (stack.getItem() instanceof BlockItem) {
-                    BlockItem item = (BlockItem) stack.getItem();
+                if (stack.getItem() instanceof BlockItem item) {
                     Block block = item.getBlock();
-                    if (PowahAPI.HEAT_SOURCES.containsKey(block)) {
+                    if (PowahAPI.HEAT_SOURCES.containsKey(Registry.BLOCK.getKey(block))) {
                         recipes.add(new Recipe(block, PowahAPI.getHeatSource(block)));
                     }
                 }
             });
 
-            EnvHandler.INSTANCE.getAllFluidIngredients(ingredientManager).forEach(fluidStack -> {
+            JeiEnvHandler.INSTANCE.getAllFluidIngredients(ingredientManager).forEach(fluidStack -> {
                 if (!fluidStack.isEmpty()) {
                     Block block = fluidStack.getFluid().defaultFluidState().createLegacyBlock().getBlock();
-                    if (PowahAPI.HEAT_SOURCES.containsKey(block)) {
+                    if (PowahAPI.HEAT_SOURCES.containsKey(Registry.BLOCK.getKey(block))) {
                         recipes.add(new Recipe(block, PowahAPI.getHeatSource(block)));
                     }
                 }

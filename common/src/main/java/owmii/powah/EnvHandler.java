@@ -1,8 +1,6 @@
 package owmii.powah;
 
-import dev.architectury.fluid.FluidStack;
 import dev.architectury.platform.Platform;
-import mezz.jei.api.runtime.IIngredientManager;
 import net.minecraft.Util;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -18,10 +16,8 @@ import owmii.powah.lib.logistics.fluid.Tank;
 import owmii.powah.lib.logistics.inventory.Inventory;
 import owmii.powah.world.gen.WorldGen;
 
-import java.util.Collection;
 import java.util.function.Consumer;
 import java.util.function.Predicate;
-import java.util.stream.Stream;
 
 public interface EnvHandler {
 	EnvHandler INSTANCE = Util.make(() -> {
@@ -43,10 +39,6 @@ public interface EnvHandler {
 	// WEIRD PLATFORM STUFF
 	void handleReactorInitClient(Consumer<?> consumer);
 
-	// MISC HOOKS
-	boolean hasContainerItem(ItemStack stack);
-	ItemStack getContainerItem(ItemStack stack);
-
 	// TRANSFER
 	void registerTransfer();
 	// items
@@ -67,7 +59,4 @@ public interface EnvHandler {
 	long chargeItemsInContainer(Container container, long maxPerSlot, long maxTotal);
 	long chargeItemsInInventory(Inventory inv, int slotFrom, int slotTo, long maxPerSlot, long maxTotal);
 	long dischargeItemsInInventory(Inventory inv, long maxPerSlot, long maxTotal);
-
-	// JEI FluidStacks
-	Stream<FluidStack> getAllFluidIngredients(IIngredientManager ingredientManager);
 }

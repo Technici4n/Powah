@@ -2,8 +2,6 @@ package owmii.powah.forge;
 
 import com.google.common.primitives.Ints;
 import dev.architectury.hooks.fluid.forge.FluidStackHooksForge;
-import mezz.jei.api.forge.ForgeTypes;
-import mezz.jei.api.runtime.IIngredientManager;
 import net.minecraft.client.renderer.BlockEntityWithoutLevelRenderer;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -16,7 +14,6 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.levelgen.feature.Feature;
 import net.minecraftforge.client.extensions.common.IClientItemExtensions;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.capabilities.Capability;
@@ -59,11 +56,9 @@ import owmii.powah.lib.util.Util;
 import owmii.powah.world.gen.Features;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.function.Consumer;
 import java.util.function.Predicate;
 import java.util.stream.IntStream;
-import java.util.stream.Stream;
 
 public class ForgeEnvHandler implements EnvHandler {
 	private final IEventBus modEventBus = FMLJavaModLoadingContext.get().getModEventBus();
@@ -108,16 +103,6 @@ public class ForgeEnvHandler implements EnvHandler {
 	@Override
 	public void scheduleCommonSetup(Runnable runnable) {
 		modEventBus.addListener((FMLCommonSetupEvent event) -> runnable.run());
-	}
-
-	@Override
-	public boolean hasContainerItem(ItemStack stack) {
-		return stack.hasCraftingRemainingItem();
-	}
-
-	@Override
-	public ItemStack getContainerItem(ItemStack stack) {
-		return stack.getCraftingRemainingItem();
 	}
 
 	@Override
@@ -395,13 +380,6 @@ public class ForgeEnvHandler implements EnvHandler {
 	public long dischargeItemsInInventory(Inventory inv, long maxPerSlot, long maxTotal) {
 		return transferSlotList(IEnergyStorage::extractEnergy, IntStream.range(0, inv.getSlots()).mapToObj(inv::getStackInSlot).toList(), maxPerSlot, maxTotal);
 	}
-
-    @Override
-    public Stream<dev.architectury.fluid.FluidStack> getAllFluidIngredients(IIngredientManager ingredientManager) {
-		return ingredientManager.getAllIngredients(ForgeTypes.FLUID_STACK)
-				.stream()
-				.map(FluidStackHooksForge::fromForge);
-    }
 
     private long transferSlotList(EnergyTransferOperation op, Iterable<ItemStack> stacks, long maxPerStack, long maxTotal) {
 		long charged = 0;

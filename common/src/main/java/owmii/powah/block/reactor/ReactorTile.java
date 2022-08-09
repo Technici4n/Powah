@@ -1,6 +1,7 @@
 package owmii.powah.block.reactor;
 
 import dev.architectury.fluid.FluidStack;
+import dev.architectury.hooks.item.ItemStackHooks;
 import dev.architectury.registry.fuel.FuelRegistry;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -342,7 +343,7 @@ public class ReactorTile extends AbstractEnergyProvider<ReactorBlock> implements
         if (slot == 1) {
             return stack.getItem() == Itms.URANINITE.get();
         } else if (slot == 2) {
-            return FuelRegistry.get(stack) > 0 && !EnvHandler.INSTANCE.hasContainerItem(stack);
+            return FuelRegistry.get(stack) > 0 && !ItemStackHooks.hasCraftingRemainingItem(stack);
         } else if (slot == 3) {
             return stack.getItem() == Items.REDSTONE || stack.getItem() == Items.REDSTONE_BLOCK;
         } else if (slot == 4) {
