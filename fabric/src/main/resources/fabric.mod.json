@@ -23,6 +23,9 @@
     ],
     "fabric-datagen": [
       "owmii.powah.fabric.data.DataEvents"
+    ],
+    "rei_common": [
+      "owmii.powah.fabric.compat.rei.PowahREIPlugin"
     ]
   },
   "depends": {

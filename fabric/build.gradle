@@ -28,7 +28,7 @@ dependencies {
 
     dependencies {
         modCompileOnly "me.shedaniel:RoughlyEnoughItems-api-fabric:${rootProject.rei_version}"
-        modRuntimeOnly "me.shedaniel:RoughlyEnoughItems-fabric:${rootProject.rei_version}"
+        modImplementation "me.shedaniel:RoughlyEnoughItems-fabric:${rootProject.rei_version}"
     }
 
     include modApi('teamreborn:energy:2.2.0') {
