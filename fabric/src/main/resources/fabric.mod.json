@@ -24,7 +24,10 @@
     "fabric-datagen": [
       "owmii.powah.fabric.data.DataEvents"
     ],
-    "jei_mod_plugin": ["owmii.powah.compat.jei.PowahJEIPlugin"]
+    "jei_mod_plugin": ["owmii.powah.compat.jei.PowahJEIPlugin"],
+    "rei_client": [
+      "owmii.powah.fabric.compat.rei.PowahREIPlugin"
+    ]
   },
   "depends": {
     "fabricloader": ">=0.14.9",

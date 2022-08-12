@@ -27,7 +27,13 @@ dependencies {
     }
 
     dependencies {
-        modRuntimeOnly("mezz.jei:jei-${project.jei_minecraft_release}-fabric:${project.jei_version}")
+        // Uncomment when we stop depending on REI internals
+        //modCompileOnly "me.shedaniel:RoughlyEnoughItems-api-fabric:${rootProject.rei_version}"
+        modCompileOnly "me.shedaniel:RoughlyEnoughItems-fabric:${rootProject.rei_version}"
+
+        // Choose REI or JEI
+        modRuntimeOnly "me.shedaniel:RoughlyEnoughItems-fabric:${rootProject.rei_version}"
+        //modRuntimeOnly("mezz.jei:jei-${project.jei_minecraft_release}-fabric:${project.jei_version}")
     }
 
     include modApi('teamreborn:energy:2.2.0') {
