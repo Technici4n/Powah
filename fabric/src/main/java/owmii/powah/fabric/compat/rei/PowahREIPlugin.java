@@ -8,7 +8,6 @@ import me.shedaniel.rei.api.common.util.EntryStacks;
 import me.shedaniel.rei.plugin.common.displays.DefaultInformationDisplay;
 import net.minecraft.network.chat.TextComponent;
 import net.minecraft.network.chat.TranslatableComponent;
-import net.minecraft.world.item.ItemStack;
 import owmii.powah.Powah;
 import owmii.powah.block.Blcks;
 import owmii.powah.block.energizing.EnergizingRecipe;

@@ -1,6 +1,7 @@
 package owmii.powah.fabric.compat.rei;
 
 import dev.architectury.fluid.FluidStack;
+import dev.architectury.hooks.fluid.LiquidBlockHooks;
 import me.shedaniel.rei.api.client.registry.entry.EntryRegistry;
 import me.shedaniel.rei.api.common.category.CategoryIdentifier;
 import me.shedaniel.rei.api.common.display.Display;
@@ -100,7 +101,7 @@ public class HeatSourceDisplay implements Display {
 
         public Recipe(Block block, int heat) {
             if (block instanceof LiquidBlock liquidBlock) {
-                this.fluid = liquidBlock.fluid;
+                this.fluid = LiquidBlockHooks.getFluid(liquidBlock);
             } else {
                 this.fluid = null;
             }

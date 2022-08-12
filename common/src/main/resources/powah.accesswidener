@@ -19,9 +19,3 @@ accessible method net/minecraft/data/worldgen/placement/OrePlacements commonOreP
 
 # Screen
 accessible field net/minecraft/client/gui/screens/Screen renderables Ljava/util/List;
-
-# LiquidBlock
-accessible field net/minecraft/world/level/block/LiquidBlock fluid Lnet/minecraft/world/level/material/FlowingFluid;
-
-# BucketItem
-accessible field net/minecraft/world/item/BucketItem content Lnet/minecraft/world/level/material/Fluid;
