@@ -1,5 +1,6 @@
 package owmii.powah.fabric.compat.rei;
 
+import dev.architectury.hooks.fluid.FluidBucketHooks;
 import me.shedaniel.rei.api.client.registry.entry.EntryRegistry;
 import me.shedaniel.rei.api.common.category.CategoryIdentifier;
 import me.shedaniel.rei.api.common.display.Display;
@@ -59,7 +60,7 @@ public class CoolantDisplay implements Display {
 
             allItemStacks.forEach(stack -> {
                 if (stack.getItem() instanceof BucketItem bucket && !(stack.getItem() instanceof MobBucketItem)) {
-                    Fluid fluid = bucket.content;
+                    Fluid fluid = FluidBucketHooks.getFluid(bucket);
                     if (PowahAPI.getCoolant(fluid) != 0) {
                         recipes.add(new Recipe(bucket, PowahAPI.getCoolant(fluid)));
                     }
@@ -82,7 +83,7 @@ public class CoolantDisplay implements Display {
 
         public Recipe(BucketItem bucket, int coldness) {
             this.bucket = bucket;
-            this.fluid = bucket.content;
+            this.fluid = FluidBucketHooks.getFluid(bucket);
             this.coldness = coldness;
         }
 
