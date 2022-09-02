@@ -1,6 +1,7 @@
 package owmii.powah.compat.jei.magmator;
 
 import dev.architectury.fluid.FluidStack;
+import dev.architectury.hooks.fluid.FluidBucketHooks;
 import mezz.jei.api.constants.VanillaTypes;
 import mezz.jei.api.gui.builder.IRecipeLayoutBuilder;
 import mezz.jei.api.gui.drawable.IDrawable;
@@ -86,7 +87,7 @@ public class MagmatorCategory implements IRecipeCategory<MagmatorCategory.Recipe
 
             allItemStacks.forEach(stack -> {
                 if (stack.getItem() instanceof BucketItem bucket) {
-                    Fluid fluid = bucket.content;
+                    Fluid fluid = FluidBucketHooks.getFluid(bucket);
                     if (PowahAPI.getMagmaticFluidHeat(fluid) != 0) {
                         recipes.add(new Recipe(bucket, PowahAPI.getMagmaticFluidHeat(fluid)));
                     }
@@ -113,7 +114,7 @@ public class MagmatorCategory implements IRecipeCategory<MagmatorCategory.Recipe
 
         public Recipe(BucketItem bucket, int heat) {
             this.bucket = bucket;
-            this.fluid = bucket.content;
+            this.fluid = FluidBucketHooks.getFluid(bucket);
             this.heat = heat;
         }
 

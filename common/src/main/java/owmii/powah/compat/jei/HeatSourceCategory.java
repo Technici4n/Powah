@@ -1,6 +1,7 @@
 package owmii.powah.compat.jei;
 
 import dev.architectury.fluid.FluidStack;
+import dev.architectury.hooks.fluid.LiquidBlockHooks;
 import mezz.jei.api.constants.VanillaTypes;
 import mezz.jei.api.gui.builder.IRecipeLayoutBuilder;
 import mezz.jei.api.gui.drawable.IDrawable;
@@ -122,7 +123,7 @@ public class HeatSourceCategory implements IRecipeCategory<HeatSourceCategory.Re
 
         public Recipe(Block block, int heat) {
             if (block instanceof LiquidBlock) {
-                this.fluid = ((LiquidBlock) block).fluid;
+                this.fluid = LiquidBlockHooks.getFluid((LiquidBlock) block);
             } else {
                 this.fluid = null;
             }

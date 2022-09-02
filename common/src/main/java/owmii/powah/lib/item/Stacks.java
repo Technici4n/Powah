@@ -26,7 +26,7 @@ public class Stacks extends NonNullList<ItemStack> {
         Validate.notNull(fill);
         ItemStack[] objects = new ItemStack[size];
         Arrays.fill(objects, fill);
-        return new Stacks(Arrays.asList((ItemStack[]) objects), fill);
+        return new Stacks(Arrays.asList(objects), fill);
     }
 
     public static Stacks from(ItemStack... elements) {
@@ -41,10 +41,5 @@ public class Stacks extends NonNullList<ItemStack> {
         Stacks stacks = Stacks.create();
         forEach(stack -> stacks.add(stack.copy()));
         return stacks;
-    }
-
-    public int sum() {
-        return stream().filter(stack -> !stack.isEmpty())
-                .mapToInt(ItemStack::getCount).sum();
     }
 }

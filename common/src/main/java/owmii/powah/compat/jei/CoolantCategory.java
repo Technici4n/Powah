@@ -1,6 +1,7 @@
 package owmii.powah.compat.jei;
 
 import dev.architectury.fluid.FluidStack;
+import dev.architectury.hooks.fluid.FluidBucketHooks;
 import mezz.jei.api.constants.VanillaTypes;
 import mezz.jei.api.gui.builder.IRecipeLayoutBuilder;
 import mezz.jei.api.gui.drawable.IDrawable;
@@ -84,7 +85,7 @@ public class CoolantCategory implements IRecipeCategory<CoolantCategory.Recipe> 
 
             allItemStacks.forEach(stack -> {
                 if (stack.getItem() instanceof BucketItem bucket && !(stack.getItem() instanceof MobBucketItem)) {
-                    Fluid fluid = bucket.content;
+                    Fluid fluid = FluidBucketHooks.getFluid(bucket);
                     if (PowahAPI.getCoolant(fluid) != 0) {
                         recipes.add(new Recipe(bucket, PowahAPI.getCoolant(fluid)));
                     }
@@ -107,7 +108,7 @@ public class CoolantCategory implements IRecipeCategory<CoolantCategory.Recipe> 
 
         public Recipe(BucketItem bucket, int coldness) {
             this.bucket = bucket;
-            this.fluid = bucket.content;
+            this.fluid = FluidBucketHooks.getFluid(bucket);
             this.coldness = coldness;
         }
 
