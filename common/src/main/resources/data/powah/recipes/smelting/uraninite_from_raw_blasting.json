@@ -3,9 +3,7 @@
   "ingredient": {
 	"item": "powah:uraninite_raw"
   },
-  "result": {
-	"item": "powah:uraninite"
-  },
+  "result": "powah:uraninite",
   "experience": 0.7,
   "cookingtime": 100
 }
