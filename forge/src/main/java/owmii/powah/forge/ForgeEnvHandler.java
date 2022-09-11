@@ -37,6 +37,7 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import owmii.powah.EnvHandler;
 import owmii.powah.Powah;
+import owmii.powah.api.forge.ChargeableItemsEvent;
 import owmii.powah.block.Tier;
 import owmii.powah.block.cable.CableTile;
 import owmii.powah.block.reactor.ReactorPartTile;
@@ -358,7 +359,9 @@ public class ForgeEnvHandler implements EnvHandler {
 	@Override
 	public long chargeItemsInPlayerInv(Player player, long maxPerSlot, long maxTotal, Predicate<ItemStack> allowStack) {
 		var stacks = new ArrayList<>(owmii.powah.lib.util.Player.invStacks(player).stream().toList());
-		stacks.addAll(CuriosCompat.getAllStacks(player));
+		var event = new ChargeableItemsEvent(player);
+		MinecraftForge.EVENT_BUS.post(event);
+		stacks.addAll(event.getItems());
 		stacks.removeIf(allowStack.negate());
 		return transferSlotList(IEnergyStorage::receiveEnergy, stacks, maxPerSlot, maxTotal);
 	}
