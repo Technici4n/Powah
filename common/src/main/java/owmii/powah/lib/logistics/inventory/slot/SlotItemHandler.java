@@ -43,6 +43,11 @@ public class SlotItemHandler extends Slot
 	}
 
 	@Override
+	public void initialize(ItemStack stack) {
+		this.getItemHandler().setStackInSlot(index, stack);
+	}
+
+	@Override
 	public void onQuickCraft(@NotNull ItemStack oldStackIn, @NotNull ItemStack newStackIn)
 	{
 
