@@ -2,6 +2,7 @@ package owmii.powah.lib.logistics.fluid;
 
 import dev.architectury.fluid.FluidStack;
 import net.minecraft.nbt.CompoundTag;
+import org.checkerframework.checker.units.qual.K;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.function.Predicate;
@@ -60,15 +61,15 @@ public class FluidTank {
 	}
 
 	public FluidTank readFromNBT(CompoundTag nbt) {
-
-		FluidStack fluid = FluidStack.read(nbt);
+		FluidStack fluid = FluidStack.read(nbt.getCompound("tank"));
 		setFluid(fluid);
 		return this;
 	}
 
 	public CompoundTag writeToNBT(CompoundTag nbt) {
-
-		fluid.write(nbt);
+		if (!fluid.isEmpty()) {
+			nbt.put("tank", fluid.write(new CompoundTag()));
+		}
 
 		return nbt;
 	}

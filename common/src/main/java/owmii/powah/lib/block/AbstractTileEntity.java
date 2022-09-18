@@ -104,8 +104,8 @@ public class AbstractTileEntity<V extends IVariant, B extends AbstractBlock<V, B
         if (this instanceof IInventoryHolder && !keepInventory()) {
             this.inv.deserializeNBT(nbt);
         }
-        if (this instanceof ITankHolder) {
-            if (!((ITankHolder) this).keepFluid()) {
+        if (this instanceof ITankHolder tankHolder) {
+            if (!tankHolder.keepFluid()) {
                 this.tank.readFromNBT(nbt);
             }
         }
@@ -120,8 +120,8 @@ public class AbstractTileEntity<V extends IVariant, B extends AbstractBlock<V, B
         if (this instanceof IInventoryHolder && !keepInventory()) {
             nbt.merge(this.inv.serializeNBT());
         }
-        if (this instanceof ITankHolder) {
-            if (!((ITankHolder) this).keepFluid()) {
+        if (this instanceof ITankHolder tankHolder) {
+            if (!tankHolder.keepFluid()) {
                 this.tank.writeToNBT(nbt);
             }
         }
@@ -133,8 +133,8 @@ public class AbstractTileEntity<V extends IVariant, B extends AbstractBlock<V, B
         if (this instanceof IInventoryHolder && keepInventory()) {
             this.inv.deserializeNBT(nbt);
         }
-        if (this instanceof ITankHolder) {
-            if (((ITankHolder) this).keepFluid()) {
+        if (this instanceof ITankHolder tankHolder) {
+            if (tankHolder.keepFluid()) {
                 this.tank.readFromNBT(nbt);
             }
         }
@@ -144,8 +144,8 @@ public class AbstractTileEntity<V extends IVariant, B extends AbstractBlock<V, B
         if (this instanceof IInventoryHolder && keepInventory()) {
             nbt.merge(this.inv.serializeNBT());
         }
-        if (this instanceof ITankHolder) {
-            if (((ITankHolder) this).keepFluid()) {
+        if (this instanceof ITankHolder tankHolder) {
+            if (tankHolder.keepFluid()) {
                 this.tank.writeToNBT(nbt);
             }
         }
