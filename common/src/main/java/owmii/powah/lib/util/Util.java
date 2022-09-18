@@ -1,5 +1,11 @@
 package owmii.powah.lib.util;
 
+import dev.architectury.fluid.FluidStack;
+import net.minecraft.ChatFormatting;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.MutableComponent;
+import owmii.powah.lib.logistics.fluid.Tank;
+
 import java.text.NumberFormat;
 import java.util.Arrays;
 import java.util.Locale;
@@ -45,6 +51,21 @@ public class Util {
         SUFFIXES.put(1_000_000_000_000L, "T");
         SUFFIXES.put(1_000_000_000_000_000L, "P");
         SUFFIXES.put(1_000_000_000_000_000_000L, "E");
+    }
+
+    public static MutableComponent formatTankContent(Tank tank) {
+        return formatTankContent(tank.getFluidAmount(), tank.getCapacity());
+    }
+
+    public static MutableComponent formatTankContent(long amount, long capacity) {
+        return Component.translatable("info.lollipop.mb.stored",
+                Util.addCommas(amountToMillibuckets(amount)),
+                Util.numFormat(amountToMillibuckets(capacity))
+        ).withStyle(ChatFormatting.DARK_GRAY);
+    }
+
+    public static long amountToMillibuckets(long amount) {
+        return amount * 1000 / FluidStack.bucketAmount();
     }
 
     @SuppressWarnings("IntegerDivisionInFloatingPointContext")
