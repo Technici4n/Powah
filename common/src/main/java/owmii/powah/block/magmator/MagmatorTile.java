@@ -14,6 +14,7 @@ import owmii.powah.lib.logistics.fluid.Tank;
 import owmii.powah.api.PowahAPI;
 import owmii.powah.block.Tier;
 import owmii.powah.block.Tiles;
+import owmii.powah.lib.util.Util;
 
 public class MagmatorTile extends AbstractEnergyProvider<MagmatorBlock> implements IInventoryHolder, ITankHolder {
     protected final Energy buffer = Energy.create(0);
@@ -53,9 +54,10 @@ public class MagmatorTile extends AbstractEnergyProvider<MagmatorBlock> implemen
                 FluidStack fluid = this.tank.getFluid();
                 int fluidHeat = PowahAPI.getMagmaticFluidHeat(fluid.getFluid());
                 if (fluidHeat > 0) {
-                    long minStored = Math.min(this.tank.getFluidAmount(), 100);
-                    this.buffer.setStored(minStored * fluidHeat / 100);
-                    this.buffer.setCapacity(minStored * fluidHeat / 100);
+                    var amountPerDrain = 100L * Util.millibucketAmount();
+                    long minStored = Math.min(this.tank.getFluidAmount(), amountPerDrain);
+                    this.buffer.setStored(minStored * fluidHeat / amountPerDrain);
+                    this.buffer.setCapacity(minStored * fluidHeat / amountPerDrain);
                     this.tank.drain(minStored, false);
                 }
             }
