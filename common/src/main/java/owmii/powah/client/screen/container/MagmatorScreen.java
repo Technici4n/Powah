@@ -85,7 +85,7 @@ public class MagmatorScreen extends AbstractEnergyScreen<MagmatorTile, MagmatorC
             List<Component> list = new ArrayList<>();
             if (!tank.isEmpty()) {
                 list.add(Component.translatable("info.lollipop.fluid").withStyle(ChatFormatting.GRAY).append(Text.COLON).append(FluidStackHooks.getName(tank.getFluid()).plainCopy().withStyle(ChatFormatting.GOLD)));
-                list.add(Component.translatable("info.lollipop.stored").withStyle(ChatFormatting.GRAY).append(Text.COLON).append(Component.translatable("info.lollipop.mb.stored", Util.addCommas(tank.getFluidAmount()), Util.numFormat(tank.getCapacity())).withStyle(ChatFormatting.DARK_GRAY)));
+                list.add(Component.translatable("info.lollipop.stored").withStyle(ChatFormatting.GRAY).append(Text.COLON).append(Util.formatTankContent(tank)));
                 list.add(Component.translatable("info.lollipop.Gain").withStyle(ChatFormatting.GRAY).append(Text.COLON).append(Component.translatable("info.lollipop.fe.per.mb", PowahAPI.getMagmaticFluidHeat(tank.getFluid().getFluid()), "100").withStyle(ChatFormatting.DARK_GRAY)));
             } else {
                 list.add(Component.translatable("info.lollipop.fluid").withStyle(ChatFormatting.GRAY).append(Text.COLON).append(Component.literal("---").withStyle(ChatFormatting.DARK_GRAY)));
