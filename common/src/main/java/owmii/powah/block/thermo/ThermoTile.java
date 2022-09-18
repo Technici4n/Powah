@@ -15,6 +15,7 @@ import owmii.powah.lib.logistics.energy.Energy;
 import owmii.powah.api.PowahAPI;
 import owmii.powah.block.Tier;
 import owmii.powah.block.Tiles;
+import owmii.powah.lib.util.Util;
 
 public class ThermoTile extends AbstractEnergyProvider<ThermoBlock> implements IInventoryHolder, ITankHolder {
     public long generating;
@@ -65,7 +66,7 @@ public class ThermoTile extends AbstractEnergyProvider<ThermoBlock> implements I
                     this.generating = (int) ((heat * Math.max(1D, (1D + fluidCooling) / 2D) * getGeneration()) / 1000.0D);
                     this.energy.produce(this.generating);
                     if (world.getGameTime() % 40 == 0L) {
-                        this.tank.drain(1, false);
+                        this.tank.drain(Util.millibucketAmount(), false);
                     }
                 }
             }

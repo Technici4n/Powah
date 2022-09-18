@@ -64,8 +64,20 @@ public class Util {
         ).withStyle(ChatFormatting.DARK_GRAY);
     }
 
+    /**
+     * Amount of fluid in one millibucket.
+     * 1 on Forge.
+     */
+    public static int millibucketAmount() {
+        return (int) (FluidStack.bucketAmount() / 1000);
+    }
+
     public static long amountToMillibuckets(long amount) {
-        return amount * 1000 / FluidStack.bucketAmount();
+        var result = amount * 1000 / FluidStack.bucketAmount();
+        if (result == 0 && amount != 0) {
+            return amount >= 0 ? 1 : -1;
+        }
+        return result;
     }
 
     @SuppressWarnings("IntegerDivisionInFloatingPointContext")
