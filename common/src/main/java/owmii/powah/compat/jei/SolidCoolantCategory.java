@@ -1,5 +1,6 @@
 package owmii.powah.compat.jei;
 
+import com.mojang.blaze3d.vertex.PoseStack;
 import mezz.jei.api.constants.VanillaTypes;
 import mezz.jei.api.gui.builder.IRecipeLayoutBuilder;
 import mezz.jei.api.gui.drawable.IDrawable;
@@ -17,13 +18,11 @@ import net.minecraft.core.Registry;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
-import org.apache.commons.lang3.tuple.Pair;
 import owmii.powah.Powah;
 import owmii.powah.api.PowahAPI;
 import owmii.powah.block.Blcks;
-import com.mojang.blaze3d.vertex.PoseStack;
+
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 
 public class SolidCoolantCategory implements IRecipeCategory<SolidCoolantCategory.Recipe> {
@@ -71,42 +70,20 @@ public class SolidCoolantCategory implements IRecipeCategory<SolidCoolantCategor
         minecraft.font.draw(matrix, I18n.get("info.lollipop.temperature") + ": " + I18n.get("info.lollipop.temperature.c", "" + ChatFormatting.DARK_AQUA + recipe.coldness), 30.0F, 15.0F, 0x444444);
     }
 
-    public static class Maker {
-        public static List<Recipe> getBucketRecipes(IIngredientManager ingredientManager) {
-            Collection<ItemStack> allItemStacks = ingredientManager.getAllIngredients(VanillaTypes.ITEM_STACK);
-            List<Recipe> recipes = new ArrayList<>();
-            allItemStacks.forEach(stack -> {
-                var id = Registry.ITEM.getKey(stack.getItem());
-                if (PowahAPI.SOLID_COOLANTS.containsKey(id)) {
-                    Pair<Integer, Integer> pr = PowahAPI.getSolidCoolant(stack.getItem());
-                    recipes.add(new Recipe(stack, pr.getLeft(), pr.getRight()));
-                }
-            });
-            return recipes;
+    public static List<Recipe> getRecipes(IIngredientManager ingredientManager) {
+
+        List<Recipe> recipes = new ArrayList<>();
+        for (var stack : ingredientManager.getAllIngredients(VanillaTypes.ITEM_STACK)) {
+            var id = Registry.ITEM.getKey(stack.getItem());
+
+            var coolantInfo = PowahAPI.SOLID_COOLANTS.get(id);
+            if (coolantInfo != null) {
+                recipes.add(new Recipe(stack, coolantInfo.getLeft(), coolantInfo.getRight()));
+            }
         }
+        return recipes;
     }
 
-    public static class Recipe {
-        private final ItemStack stack;
-        private final int amount;
-        private final int coldness;
-
-        public Recipe(ItemStack stack, int amount, int coldness) {
-            this.stack = stack;
-            this.amount = amount;
-            this.coldness = coldness;
-        }
-
-        public ItemStack getStack() {
-            return this.stack;
-        }
-
-        public int getAmount() {
-            return this.amount;
-        }
-
-        public int getColdness() {
-            return this.coldness;
-        }
+    public record Recipe(ItemStack stack, int amount, int coldness) {
     }
 }

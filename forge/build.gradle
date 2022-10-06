@@ -36,8 +36,8 @@ dependencies {
     shadowCommon(project(path: ":common", configuration: "transformProductionForge")) { transitive = false }
 
     // Forge-only deps
-    modCompileOnly "mezz.jei:jei-${project.jei_minecraft_release}-forge-api:${project.jei_version}"
-    //modRuntimeOnly "mezz.jei:jei-${project.jei_minecraft_release}-forge:${project.jei_version}"
+//    modCompileOnly "mezz.jei:jei-${project.jei_minecraft_release}-forge-api:${project.jei_version}"
+    modImplementation("mezz.jei:jei-${project.jei_minecraft_release}-forge:${project.jei_version}") { transitive = false }
 
     modCompileOnly "top.theillusivec4.curios:curios-forge:${project.curios_version}:api"
     //modRuntimeOnly "top.theillusivec4.curios:curios-forge:${project.curios_version}"

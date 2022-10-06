@@ -1,7 +1,7 @@
 package owmii.powah.compat.jei;
 
+import com.mojang.blaze3d.vertex.PoseStack;
 import dev.architectury.fluid.FluidStack;
-import dev.architectury.hooks.fluid.LiquidBlockHooks;
 import mezz.jei.api.constants.VanillaTypes;
 import mezz.jei.api.gui.builder.IRecipeLayoutBuilder;
 import mezz.jei.api.gui.drawable.IDrawable;
@@ -11,7 +11,6 @@ import mezz.jei.api.recipe.IFocusGroup;
 import mezz.jei.api.recipe.RecipeIngredientRole;
 import mezz.jei.api.recipe.RecipeType;
 import mezz.jei.api.recipe.category.IRecipeCategory;
-import mezz.jei.api.runtime.IIngredientManager;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.resources.language.I18n;
@@ -20,20 +19,15 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
-import net.minecraft.world.level.block.LiquidBlock;
 import net.minecraft.world.level.material.Fluid;
-import owmii.powah.EnvHandler;
 import owmii.powah.Powah;
 import owmii.powah.api.PowahAPI;
 
 import javax.annotation.Nullable;
-import com.mojang.blaze3d.vertex.PoseStack;
 import java.util.ArrayList;
-import java.util.Collection;
+import java.util.Comparator;
 import java.util.List;
-import java.util.stream.Collectors;
 
 public class HeatSourceCategory implements IRecipeCategory<HeatSourceCategory.Recipe> {
     public static final RecipeType<Recipe> TYPE = RecipeType.create(Powah.MOD_ID, "heat_source", Recipe.class);
@@ -72,9 +66,10 @@ public class HeatSourceCategory implements IRecipeCategory<HeatSourceCategory.Re
     public void setRecipe(IRecipeLayoutBuilder builder, Recipe recipe, IFocusGroup focuses) {
         var input = builder.addSlot(RecipeIngredientRole.INPUT, 4, 5);
 
-        if (recipe.fluid == null) {
-            input.addItemStack(new ItemStack(recipe.getBlock()));
-        } else {
+        if (recipe.block() != null) {
+            input.addItemStack(recipe.block());
+        }
+        if (recipe.fluid != null) {
             input.addFluidStack(recipe.fluid, FluidStack.bucketAmount());
         }
     }
@@ -82,75 +77,43 @@ public class HeatSourceCategory implements IRecipeCategory<HeatSourceCategory.Re
     @Override
     public void draw(Recipe recipe, IRecipeSlotsView recipeSlotsView, PoseStack matrix, double mouseX, double mouseY) {
         Minecraft minecraft = Minecraft.getInstance();
-        minecraft.font.draw(matrix, ChatFormatting.DARK_GRAY + I18n.get("info.lollipop.temperature") + ": " + ChatFormatting.RESET + I18n.get("info.lollipop.temperature.c", recipe.heat), 30.0F, 9.0F, 0xc43400);
+        minecraft.font.draw(matrix, ChatFormatting.DARK_GRAY + I18n.get("info.lollipop.temperature") + ": "
+                + ChatFormatting.RESET + I18n.get("info.lollipop.temperature.c", recipe.heat), 30.0F, 9.0F, 0xc43400);
     }
 
-    public static class Maker {
-        public static List<Recipe> getBucketRecipes(IIngredientManager ingredientManager) {
-            Collection<ItemStack> allItemStacks = ingredientManager.getAllIngredients(VanillaTypes.ITEM_STACK);
-            List<Recipe> recipes = new ArrayList<>();
-            Powah.LOGGER.debug("HEAT SOURCE RECIPE ALL: [" + PowahAPI.HEAT_SOURCES.entrySet().stream()
-                    .map(e -> e.getKey() + " -> " + e.getValue())
-                    .collect(Collectors.joining(", ")) + "]");
-            allItemStacks.forEach(stack -> {
-                if (stack.getItem() instanceof BlockItem item) {
-                    Block block = item.getBlock();
-                    if (PowahAPI.HEAT_SOURCES.containsKey(Registry.BLOCK.getKey(block))) {
-                        recipes.add(new Recipe(block, PowahAPI.getHeatSource(block)));
-                    }
-                }
-            });
+    public static List<Recipe> getRecipes() {
+        List<Recipe> recipes = new ArrayList<>();
 
-            JeiEnvHandler.INSTANCE.getAllFluidIngredients(ingredientManager).forEach(fluidStack -> {
-                if (!fluidStack.isEmpty()) {
-                    Block block = fluidStack.getFluid().defaultFluidState().createLegacyBlock().getBlock();
-                    if (PowahAPI.HEAT_SOURCES.containsKey(Registry.BLOCK.getKey(block))) {
-                        recipes.add(new Recipe(block, PowahAPI.getHeatSource(block)));
-                    }
-                }
-            });
-
-            return recipes;
-        }
-    }
-
-    public static class Recipe {
-        private final Block block;
-        private final int heat;
-
-        @Nullable
-        private final Fluid fluid;
-
-        public Recipe(Block block, int heat) {
-            if (block instanceof LiquidBlock) {
-                this.fluid = LiquidBlockHooks.getFluid((LiquidBlock) block);
-            } else {
-                this.fluid = null;
+        // Block heat sources. We iterate the item registry in search of block items, because
+        // we need an item to show as the ingredient and link it as a JEI ingredient.
+        for (var item : Registry.ITEM) {
+            if (!(item instanceof BlockItem blockItem)) {
+                continue;
             }
-            this.block = block;
-            this.heat = heat;
-            Powah.LOGGER.debug("HEAT SOURCE RECIPE INIT: " + this);
-        }
 
-        @Nullable
-        public Fluid getFluid() {
-            return this.fluid;
-        }
-
-        public Block getBlock() {
-            return this.block;
-        }
-
-        public int getHeat() {
-            return this.heat;
-        }
-
-        @Override
-        public String toString() {
+            var block = blockItem.getBlock();
             var blockId = Registry.BLOCK.getKey(block);
-            var fluidId = fluid != null ? Registry.FLUID.getKey(fluid) : null;
-
-            return "HeatSourceRecipe{" + blockId + (fluid != null ? " (fluid " + fluidId + ")" : "") + " -> " + heat + "}";
+            var heat = PowahAPI.HEAT_SOURCES.getOrDefault(blockId, 0);
+            if (heat != 0) {
+                recipes.add(new Recipe(blockItem.getDefaultInstance(), null, heat));
+            }
         }
+
+        // Fluid heat sources
+        for (var entry : Registry.FLUID.entrySet()) {
+            var fluidId = entry.getKey().location();
+            var heat = PowahAPI.HEAT_SOURCES.getOrDefault(fluidId, 0);
+            if (heat != 0) {
+                recipes.add(new Recipe(null, entry.getValue(), heat));
+            }
+        }
+
+        // Sort by heat ascending
+        recipes.sort(Comparator.comparingInt(Recipe::heat));
+
+        return recipes;
+    }
+
+    public record Recipe(@Nullable ItemStack block, @Nullable Fluid fluid, int heat) {
     }
 }
