@@ -51,9 +51,9 @@ public class PowahJEIPlugin implements IModPlugin {
     public void registerRecipes(IRecipeRegistration registration) {
         registration.addRecipes(Recipe.getAll(Minecraft.getInstance().level, Recipes.ENERGIZING.get()), EnergizingCategory.ID);
         registration.addRecipes(MagmatorCategory.Maker.getBucketRecipes(registration.getIngredientManager()), MagmatorCategory.ID);
-        registration.addRecipes(CoolantCategory.Maker.getBucketRecipes(registration.getIngredientManager()), CoolantCategory.ID);
+        registration.addRecipes(CoolantCategory.getRecipes(registration.getIngredientManager()), CoolantCategory.ID);
         registration.addRecipes(SolidCoolantCategory.Maker.getBucketRecipes(registration.getIngredientManager()), SolidCoolantCategory.ID);
-        registration.addRecipes(HeatSourceCategory.Maker.getBucketRecipes(registration.getIngredientManager()), HeatSourceCategory.ID);
+        registration.addRecipes(HeatSourceCategory.getRecipes(registration.getIngredientManager()), HeatSourceCategory.ID);
 
         if (Powah.config().general.player_aerial_pearl)
             registration.addIngredientInfo(new ItemStack(Itms.PLAYER_AERIAL_PEARL.get()), VanillaTypes.ITEM, new TranslatableComponent("jei.powah.player_aerial_pearl"));
