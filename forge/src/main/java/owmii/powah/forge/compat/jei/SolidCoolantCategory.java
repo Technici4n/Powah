@@ -82,14 +82,13 @@ public class SolidCoolantCategory implements IRecipeCategory<SolidCoolantCategor
 
     public static class Maker {
         public static List<Recipe> getBucketRecipes(IIngredientManager ingredientManager) {
-            Collection<ItemStack> allItemStacks = ingredientManager.getAllIngredients(VanillaTypes.ITEM);
             List<Recipe> recipes = new ArrayList<>();
-            allItemStacks.forEach(stack -> {
+            for (var stack : ingredientManager.getAllIngredients(VanillaTypes.ITEM)) {
                 if (PowahAPI.SOLID_COOLANTS.containsKey(stack.getItem().getRegistryName())) {
                     Pair<Integer, Integer> pr = PowahAPI.getSolidCoolant(stack.getItem());
                     recipes.add(new Recipe(stack, pr.getLeft(), pr.getRight()));
                 }
-            });
+            }
             return recipes;
         }
     }

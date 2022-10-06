@@ -1,5 +1,6 @@
 package owmii.powah.forge.compat.jei;
 
+import com.mojang.blaze3d.vertex.PoseStack;
 import mezz.jei.api.constants.VanillaTypes;
 import mezz.jei.api.gui.IRecipeLayout;
 import mezz.jei.api.gui.drawable.IDrawable;
@@ -18,16 +19,16 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.BucketItem;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
-import net.minecraft.world.item.MobBucketItem;
 import net.minecraft.world.level.material.Fluid;
 import net.minecraftforge.fluids.FluidStack;
 import owmii.powah.Powah;
 import owmii.powah.api.PowahAPI;
-import com.mojang.blaze3d.vertex.PoseStack;
+
 import java.util.ArrayList;
-import java.util.Collection;
+import java.util.Comparator;
+import java.util.IdentityHashMap;
 import java.util.List;
-import java.util.stream.Collectors;
+import java.util.Map;
 
 public class CoolantCategory implements IRecipeCategory<CoolantCategory.Recipe> {
     public static final ResourceLocation GUI_BACK = new ResourceLocation(Powah.MOD_ID, "textures/gui/jei/misc.png");
@@ -67,10 +68,8 @@ public class CoolantCategory implements IRecipeCategory<CoolantCategory.Recipe> 
 
     @Override
     public void setIngredients(Recipe recipe, IIngredients ingredients) {
-        ingredients.setInput(VanillaTypes.FLUID, new FluidStack(recipe.getFluid(), 1000));
-        if (!Items.BUCKET.equals(recipe.bucket)) {
-            ingredients.setInput(VanillaTypes.ITEM, new ItemStack(recipe.bucket));
-        }
+        ingredients.setInput(VanillaTypes.FLUID, new FluidStack(recipe.fluid(), 1000));
+        ingredients.setInputs(VanillaTypes.ITEM_STACK, recipe.buckets());
     }
 
     @Override
@@ -86,56 +85,40 @@ public class CoolantCategory implements IRecipeCategory<CoolantCategory.Recipe> 
         minecraft.font.draw(matrix, I18n.get("info.lollipop.temperature") + ": " + I18n.get("info.lollipop.temperature.c", "" + ChatFormatting.DARK_AQUA + recipe.coldness), 30.0F, 9.0F, 0x444444);
     }
 
-    public static class Maker {
-        public static List<Recipe> getBucketRecipes(IIngredientManager ingredientManager) {
-            Collection<ItemStack> allItemStacks = ingredientManager.getAllIngredients(VanillaTypes.ITEM);
-            List<Recipe> recipes = new ArrayList<>();
+    public static List<Recipe> getRecipes(IIngredientManager ingredientManager) {
+        Map<Fluid, List<ItemStack>> fluidsAndBuckets = new IdentityHashMap<>();
 
-            allItemStacks.forEach(stack -> {
-                if (stack.getItem() instanceof BucketItem bucket && !(stack.getItem() instanceof MobBucketItem)) {
-                    Fluid fluid = bucket.getFluid();
-                    if (PowahAPI.getCoolant(fluid) != 0) {
-                        recipes.add(new Recipe(bucket, PowahAPI.getCoolant(fluid)));
-                    }
-                }
-            });
-
-            List<Fluid> fluids = PowahAPI.COOLANT_FLUIDS.keySet().stream().flatMap(f -> Registry.FLUID.getOptional(f).stream()).collect(Collectors.toCollection(ArrayList::new));
-            recipes.forEach(recipe -> {
-                fluids.remove(recipe.fluid);
-            });
-
-            return recipes;
+        // Find all fluids
+        for (var fluid : Registry.FLUID) {
+            if (PowahAPI.getCoolant(fluid) != 0) {
+                fluidsAndBuckets.put(fluid, new ArrayList<>());
+            }
         }
+
+        // Find all associated bucket items / tanks
+        for (var stack : ingredientManager.getAllIngredients(VanillaTypes.ITEM_STACK)) {
+            if (stack.getItem() instanceof BucketItem bucketItem) {
+                var buckets = fluidsAndBuckets.get(bucketItem.getFluid());
+                if (buckets != null) {
+                    buckets.add(stack);
+                }
+            }
+        }
+
+        List<Recipe> recipes = new ArrayList<>();
+        for (var entry : fluidsAndBuckets.entrySet()) {
+            var temperature = PowahAPI.getCoolant(entry.getKey());
+            if (temperature != 0) {
+                recipes.add(new Recipe(entry.getKey(), entry.getValue(), temperature));
+            }
+        }
+
+        // Sort from bad to good
+        recipes.sort(Comparator.comparingInt(Recipe::coldness).reversed());
+
+        return recipes;
     }
 
-    public static class Recipe {
-        private final Fluid fluid;
-        private final BucketItem bucket;
-        private final int coldness;
-
-        public Recipe(BucketItem bucket, int coldness) {
-            this.bucket = bucket;
-            this.fluid = bucket.getFluid();
-            this.coldness = coldness;
-        }
-
-        public Recipe(Fluid fluid, int coldness) {
-            this.bucket = (BucketItem) Items.BUCKET;
-            this.fluid = fluid;
-            this.coldness = coldness;
-        }
-
-        public BucketItem getBucket() {
-            return this.bucket;
-        }
-
-        public Fluid getFluid() {
-            return this.fluid;
-        }
-
-        public int getColdness() {
-            return this.coldness;
-        }
+    public record Recipe(Fluid fluid, List<ItemStack> buckets, int coldness) {
     }
 }
