@@ -11,7 +11,6 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
-import owmii.powah.compat.jei.magmator.MagmatorCategory;
 import owmii.powah.lib.util.Recipe;
 import owmii.powah.Powah;
 import owmii.powah.block.Blcks;
@@ -50,10 +49,10 @@ public class PowahJEIPlugin implements IModPlugin {
     @Override
     public void registerRecipes(IRecipeRegistration registration) {
         registration.addRecipes(EnergizingCategory.TYPE, Recipe.getAll(Minecraft.getInstance().level, Recipes.ENERGIZING.get()));
-        registration.addRecipes(MagmatorCategory.TYPE, MagmatorCategory.Maker.getBucketRecipes(registration.getIngredientManager()));
-        registration.addRecipes(CoolantCategory.TYPE, CoolantCategory.Maker.getBucketRecipes(registration.getIngredientManager()));
-        registration.addRecipes(SolidCoolantCategory.TYPE, SolidCoolantCategory.Maker.getBucketRecipes(registration.getIngredientManager()));
-        registration.addRecipes(HeatSourceCategory.TYPE, HeatSourceCategory.Maker.getBucketRecipes(registration.getIngredientManager()));
+        registration.addRecipes(MagmatorCategory.TYPE, MagmatorCategory.getRecipes());
+        registration.addRecipes(CoolantCategory.TYPE, CoolantCategory.getRecipes());
+        registration.addRecipes(SolidCoolantCategory.TYPE, SolidCoolantCategory.getRecipes(registration.getIngredientManager()));
+        registration.addRecipes(HeatSourceCategory.TYPE, HeatSourceCategory.getRecipes());
 
         if (Powah.config().general.player_aerial_pearl)
             registration.addIngredientInfo(new ItemStack(Itms.PLAYER_AERIAL_PEARL.get()), VanillaTypes.ITEM_STACK, Component.translatable("jei.powah.player_aerial_pearl"));
