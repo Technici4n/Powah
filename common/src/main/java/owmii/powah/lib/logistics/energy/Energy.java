@@ -271,11 +271,15 @@ public class Energy {
             read(Stack.getTagOrEmpty(stack).getCompound(NBT.TAG_STORABLE_STACK), false, false);
         }
 
+        private void write() {
+            this.write(this.stack.getOrCreateTagElement(NBT.TAG_STORABLE_STACK), false, false);
+        }
+
         @Override
         public long receiveEnergy(long maxReceive, boolean simulate) {
             long energy = super.receiveEnergy(maxReceive, simulate);
             if (!simulate) {
-                write(this.stack.getOrCreateTagElement(NBT.TAG_STORABLE_STACK), false, false);
+                write();
             }
             return energy;
         }
@@ -284,14 +288,21 @@ public class Energy {
         public long extractEnergy(long maxExtract, boolean simulate) {
             long energy = super.extractEnergy(maxExtract, simulate);
             if (!simulate) {
-                write(this.stack.getOrCreateTagElement(NBT.TAG_STORABLE_STACK), false, false);
+                write();
             }
             return energy;
         }
 
+        @Override
+        public long consume(long amount) {
+            long ret = super.consume(amount);
+            write();
+            return ret;
+        }
+
         public void setStoredAndWrite(long stored) {
             setStored(stored);
-            write(this.stack.getOrCreateTagElement(NBT.TAG_STORABLE_STACK), false, false);
+            write();
         }
     }
 
