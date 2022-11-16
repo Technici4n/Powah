@@ -11,6 +11,8 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.context.BlockPlaceContext;
+import net.minecraft.world.item.context.UseOnContext;
+import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.AABB;
 import owmii.powah.EnvHandler;
 import owmii.powah.config.v2.types.GeneratorConfig;
@@ -27,6 +29,11 @@ import java.util.function.Consumer;
 import java.util.stream.Collectors;
 
 public class ReactorItem extends EnergyBlockItem<GeneratorConfig, ReactorBlock> {
+    /**
+     * Prevent dupe with mods that check for instanceof BlockItem and place it without going through our {@link #place} override.
+     */
+    private final ThreadLocal<Boolean> ALLOW_PLACEMENT = ThreadLocal.withInitial(() -> false);
+
     public ReactorItem(ReactorBlock block, Properties properties, @Nullable CreativeModeTab group) {
         super(block, properties, group);
     }
@@ -58,6 +65,16 @@ public class ReactorItem extends EnergyBlockItem<GeneratorConfig, ReactorBlock> 
         if (!entities.isEmpty()) return InteractionResult.FAIL;
 
         stack.shrink(35);
-        return super.place(context);
+        ALLOW_PLACEMENT.set(true);
+        try {
+            return super.place(context);
+        } finally {
+            ALLOW_PLACEMENT.set(false);
+        }
+    }
+
+    @Override
+    protected boolean placeBlock(BlockPlaceContext context, BlockState state) {
+        return ALLOW_PLACEMENT.get() && super.placeBlock(context, state);
     }
 }
