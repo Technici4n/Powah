@@ -218,7 +218,7 @@ public class AbstractTileEntity<V extends IVariant, B extends AbstractBlock<V, B
         if (this.level instanceof ServerLevel) {
             final BlockState state = getBlockState();
             this.level.sendBlockUpdated(this.worldPosition, state, state, 3);
-            this.level.blockEntityChanged(this.worldPosition);
+            setChanged();
         }
     }
 
