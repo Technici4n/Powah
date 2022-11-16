@@ -71,19 +71,20 @@ public class CableModel extends AbstractModel<CableTile, CableRenderer> {
 
         var pos = PartPose.offset(0F, 14F, 0F);
 
-        root.addOrReplaceChild(NORTH, CubeListBuilder.create().texOffs(0, 10).mirror().addBox(-1.5F, -1.5F, -7.75F, 3, 3, 6), pos);
-        root.addOrReplaceChild(NORTH_PLATE, CubeListBuilder.create().texOffs(0, 20).mirror().addBox(-2.5F, -2.5F, -8.2F, 5, 5, 1), pos);
-        root.addOrReplaceChild(SOUTH, CubeListBuilder.create().texOffs(0, 0).mirror().addBox(-1.5F, -1.5F, 1.75F, 3, 3, 6), pos);
-        root.addOrReplaceChild(SOUTH_PLATE, CubeListBuilder.create().texOffs(0, 20).mirror().addBox(-2.5F, -2.5F, 7.2F, 5, 5, 1), pos);
+        root.addOrReplaceChild(NORTH, CubeListBuilder.create().texOffs(0, 10).addBox(-1.5F, -1.5F, -7.75F, 3, 3, 6), pos);
+        root.addOrReplaceChild(NORTH_PLATE, CubeListBuilder.create().texOffs(0, 20).addBox(-2.5F, -2.5F, -8.2F, 5, 5, 1), pos);
+        root.addOrReplaceChild(SOUTH, CubeListBuilder.create().texOffs(0, 0).addBox(-1.5F, -1.5F, 1.75F, 3, 3, 6), pos);
+        root.addOrReplaceChild(SOUTH_PLATE, CubeListBuilder.create().texOffs(0, 20).addBox(-2.5F, -2.5F, 7.2F, 5, 5, 1), pos);
 
-        root.addOrReplaceChild(WEST, CubeListBuilder.create().texOffs(19, 0).mirror().addBox(-7.75F, -1.5F, -1.5F, 6, 3, 3), pos);
-        root.addOrReplaceChild(WEST_PLATE, CubeListBuilder.create().texOffs(13, 20).mirror().addBox(-8.2F, -2.5F, -2.5F, 1, 5, 5), pos);
-        root.addOrReplaceChild(EAST, CubeListBuilder.create().texOffs(19, 7).mirror().addBox(1.75F, -1.5F, -1.5F, 6, 3, 3), pos);
-        root.addOrReplaceChild(EAST_PLATE, CubeListBuilder.create().texOffs(13, 20).mirror().addBox(7.2F, -2.5F, -2.5F, 1, 5, 5), pos);
-        root.addOrReplaceChild(DOWN, CubeListBuilder.create().texOffs(38, 10).mirror().addBox(-1.5F, -7.75F, -1.5F, 3, 6, 3), pos);
-        root.addOrReplaceChild(DOWN_PLATE, CubeListBuilder.create().texOffs(26, 20).mirror().addBox(-2.5F, -8.2F, -2.5F, 5, 1, 5), pos);
-        root.addOrReplaceChild(UP, CubeListBuilder.create().texOffs(38, 0).mirror().addBox(-1.5F, 1.75F, -1.5F, 3, 6, 3), pos);
-        root.addOrReplaceChild(UP_PLATE, CubeListBuilder.create().texOffs(26, 20).mirror().addBox(-2.5F, 7.2F, -2.5F, 5, 1, 5), pos);
+        root.addOrReplaceChild(WEST, CubeListBuilder.create().texOffs(19, 0).addBox(-7.75F, -1.5F, -1.5F, 6, 3, 3), pos);
+        root.addOrReplaceChild(WEST_PLATE, CubeListBuilder.create().texOffs(13, 20).addBox(-8.2F, -2.5F, -2.5F, 1, 5, 5), pos);
+        root.addOrReplaceChild(EAST, CubeListBuilder.create().texOffs(19, 7).addBox(1.75F, -1.5F, -1.5F, 6, 3, 3), pos);
+        root.addOrReplaceChild(EAST_PLATE, CubeListBuilder.create().texOffs(13, 20).addBox(7.2F, -2.5F, -2.5F, 1, 5, 5), pos);
+
+        root.addOrReplaceChild(DOWN, CubeListBuilder.create().texOffs(38, 10).addBox(-1.5F, -7.75F, -1.5F, 3, 6, 3), pos);
+        root.addOrReplaceChild(DOWN_PLATE, CubeListBuilder.create().texOffs(26, 20).addBox(-2.5F, -8.2F, -2.5F, 5, 1, 5), pos);
+        root.addOrReplaceChild(UP, CubeListBuilder.create().texOffs(38, 0).addBox(-1.5F, 1.75F, -1.5F, 3, 6, 3), pos);
+        root.addOrReplaceChild(UP_PLATE, CubeListBuilder.create().texOffs(26, 20).addBox(-2.5F, 7.2F, -2.5F, 5, 1, 5), pos);
 
         return LayerDefinition.create(meshDefinition, 64, 32);
     }
