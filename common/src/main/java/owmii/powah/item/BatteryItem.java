@@ -31,7 +31,7 @@ public class BatteryItem extends EnergyItem<Tier, EnergyConfig, BatteryItem> imp
         if (entity instanceof Player player && isCharging(stack)) {
             Energy.ifPresent(stack, storage -> {
                 long charged = EnvHandler.INSTANCE.chargeItemsInPlayerInv(player, storage.getMaxExtract(), storage.getEnergyStored(), s -> !(s.getItem() instanceof BatteryItem));
-                storage.extractEnergy(charged, false);
+                storage.consume(charged);
             });
         }
     }
