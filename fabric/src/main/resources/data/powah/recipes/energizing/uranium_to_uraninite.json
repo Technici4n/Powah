@@ -1,0 +1,20 @@
+{
+  "type": "powah:energizing",
+  "ingredients": [
+    {
+      "tag": "c:uranium_ingots"
+    }
+  ],
+  "energy": 30000,
+  "result": {
+    "item": "powah:uraninite"
+  },
+  "fabric:load_conditions": [
+    {
+      "condition": "fabric:item_tags_populated",
+      "values": [
+        "c:uranium_ingots"
+      ]
+    }
+  ]
+}
