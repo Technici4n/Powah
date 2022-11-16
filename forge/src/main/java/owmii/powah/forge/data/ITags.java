@@ -34,6 +34,7 @@ public class ITags {
         public static final TagKey<Item> ICES_DRY = tag("ices/dry");
         public static final TagKey<Item> URANINITE_ORE = tag("ores/uraninite");
         public static final TagKey<Item> URANINITE_BLOCK = tag("storage_blocks/uraninite");
+        public static final TagKey<Item> URANINITE_RAW = tag("raw_materials/uraninite");
 
         private static TagKey<Item> tag(String name) {
             return ItemTags.create(new ResourceLocation("forge", name));
