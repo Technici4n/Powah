@@ -48,7 +48,7 @@ public class EnderGateBlock extends AbstractEnergyBlock<EnderConfig, EnderGateBl
 
     @Override
     public EnergyBlockItem getBlockItem(Item.Properties properties, @Nullable CreativeModeTab group) {
-        return super.getBlockItem(properties.stacksTo(1), group);
+        return super.getBlockItem(properties, group);
     }
 
     @Override
