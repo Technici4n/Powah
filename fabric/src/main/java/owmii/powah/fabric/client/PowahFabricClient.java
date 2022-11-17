@@ -4,6 +4,7 @@ import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.fabric.api.client.rendering.v1.BuiltinItemRendererRegistry;
 import net.fabricmc.fabric.api.client.rendering.v1.WorldRenderEvents;
 import net.fabricmc.fabric.api.event.client.player.ClientPickBlockGatherCallback;
+import net.minecraft.client.Minecraft;
 import net.minecraft.core.Registry;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.phys.BlockHitResult;
@@ -26,8 +27,13 @@ public class PowahFabricClient implements ClientModInitializer {
 			BuiltinItemRendererRegistry.INSTANCE.register(item, reactorRenderer::renderByItem);
 		});
 
-		WorldRenderEvents.LAST.register(context -> {
-			ReactorOverlayHandler.onRenderLast(context.matrixStack());
+		WorldRenderEvents.BLOCK_OUTLINE.register((context, outline) -> {
+			// TODO PR to fabric
+			var hitResult = Minecraft.getInstance().hitResult;
+			if (hitResult instanceof BlockHitResult blockHitResult) {
+				ReactorOverlayHandler.renderPlacementHighlight(context.matrixStack(), context.consumers(), blockHitResult, context.camera());
+			}
+			return true;
 		});
 
 		ClientPickBlockGatherCallback.EVENT.register((player, result) -> {
