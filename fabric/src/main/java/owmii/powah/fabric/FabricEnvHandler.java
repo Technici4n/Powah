@@ -1,5 +1,6 @@
 package owmii.powah.fabric;
 
+import net.fabricmc.fabric.api.tag.convention.v1.ConventionalBiomeTags;
 import net.fabricmc.fabric.api.transfer.v1.context.ContainerItemContext;
 import net.fabricmc.fabric.api.transfer.v1.fluid.FluidStorage;
 import net.fabricmc.fabric.api.transfer.v1.fluid.FluidVariant;
@@ -15,12 +16,14 @@ import net.fabricmc.fabric.api.transfer.v1.transaction.TransactionContext;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.Registry;
+import net.minecraft.tags.TagKey;
 import net.minecraft.world.Container;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.block.state.BlockState;
 import owmii.powah.EnvHandler;
 import owmii.powah.block.Tier;
@@ -73,6 +76,11 @@ public class FabricEnvHandler implements EnvHandler {
 	@Override
 	public void handleReactorInitClient(Consumer<?> consumer) {
 		// do nothing, thanks forge
+	}
+
+	@Override
+	public TagKey<Biome> getOverworldBiomeTag() {
+		return ConventionalBiomeTags.IN_OVERWORLD;
 	}
 
 	@Override

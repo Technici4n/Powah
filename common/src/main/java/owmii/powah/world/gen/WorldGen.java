@@ -5,6 +5,7 @@ import net.minecraft.core.Registry;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.levelgen.GenerationStep;
+import owmii.powah.EnvHandler;
 import owmii.powah.Powah;
 
 import static owmii.powah.world.gen.Features.*;
@@ -15,7 +16,7 @@ public class WorldGen {
 
     public static void init() {
         BiomeModifications.addProperties((ctx, mut) -> {
-            if (Powah.config().worldgen.disable_all) {
+            if (Powah.config().worldgen.disable_all || !ctx.hasTag(EnvHandler.INSTANCE.getOverworldBiomeTag())) {
                 return;
             }
 

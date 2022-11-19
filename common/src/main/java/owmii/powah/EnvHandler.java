@@ -4,11 +4,13 @@ import dev.architectury.platform.Platform;
 import net.minecraft.Util;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.tags.TagKey;
 import net.minecraft.world.Container;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.block.state.BlockState;
 import owmii.powah.block.Tier;
 import owmii.powah.block.cable.CableTile;
@@ -36,8 +38,11 @@ public interface EnvHandler {
 	}
 	void scheduleCommonSetup(Runnable runnable);
 
-	// WEIRD PLATFORM STUFF
+	// MISC PLATFORM STUFF
 	void handleReactorInitClient(Consumer<?> consumer);
+
+	// MISC ABSTRACTIONS
+	TagKey<Biome> getOverworldBiomeTag();
 
 	// TRANSFER
 	void registerTransfer();
