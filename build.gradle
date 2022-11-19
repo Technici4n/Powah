@@ -110,6 +110,11 @@ allprojects {
                     curseforge {
                         token = cfToken
                         id = "633483" // Required, must be a string, ID of CurseForge project
+
+                        if (project.name == "fabric" && releaseChannel == "release") {
+                            // Use beta channel for Fabric releases on CurseForge, to separate from Forge builds
+                            releaseType = "beta"
+                        }
                     }
                 }
 
