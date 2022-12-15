@@ -104,7 +104,7 @@ public class CableBlock extends AbstractEnergyBlock<CableConfig, CableBlock> imp
         var newState = createCableState(level, pos);
 
         if (newState != state) {
-            level.setBlockAndUpdate(pos, newState);
+            level.setBlock(pos, newState, Block.UPDATE_CLIENTS);
         }
 
         if (level.getBlockEntity(pos) instanceof CableTile cable) {
