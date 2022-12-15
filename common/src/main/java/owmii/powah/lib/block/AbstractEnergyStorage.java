@@ -100,6 +100,7 @@ public abstract class AbstractEnergyStorage<C extends IEnergyConfig<Tier>, B ext
     }
 
     protected long chargeItems(int i, int j) {
+        final Energy energy = getEnergy();
         long charged = EnvHandler.INSTANCE.chargeItemsInInventory(inv, i, j, getEnergyTransfer(), energy.getStored());
         energy.consume(charged);
         return charged;
