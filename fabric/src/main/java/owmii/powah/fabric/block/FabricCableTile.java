@@ -1,6 +1,5 @@
 package owmii.powah.fabric.block;
 
-import com.google.common.primitives.Ints;
 import net.fabricmc.fabric.api.transfer.v1.transaction.TransactionContext;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
