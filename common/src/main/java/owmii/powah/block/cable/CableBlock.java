@@ -108,7 +108,7 @@ public class CableBlock extends AbstractEnergyBlock<CableConfig, CableBlock> imp
         }
 
         if (level.getBlockEntity(pos) instanceof CableTile cable) {
-            var oldSides = new HashSet<>(cable.energySides);
+            var oldSides = EnumSet.copyOf(cable.energySides);
 
             cable.energySides.clear();
             for (Direction direction : Direction.values()) {
@@ -168,22 +168,6 @@ public class CableBlock extends AbstractEnergyBlock<CableConfig, CableBlock> imp
     }
 
     @Override
-    public void setPlacedBy(Level world, BlockPos pos, BlockState state, @Nullable LivingEntity placer, ItemStack stack) {
-        super.setPlacedBy(world, pos, state, placer, stack);
-        if (world.isClientSide) return;
-        BlockEntity tileEntity = world.getBlockEntity(pos);
-        if (tileEntity instanceof CableTile cable) {
-            for (Direction direction : Direction.values()) {
-                if (cable.canExtractEnergy(direction)) {
-                    cable.search(this, direction);
-                }
-            }
-        } else {
-            findCables(world, pos, pos);
-        }
-    }
-
-    @Override
     public void onPlace(BlockState state, Level world, BlockPos pos, BlockState oldState, boolean isMoving) {
         BlockEntity tileEntity = world.getBlockEntity(pos);
         if (tileEntity instanceof CableTile cable) {
@@ -198,12 +182,6 @@ public class CableBlock extends AbstractEnergyBlock<CableConfig, CableBlock> imp
         super.onPlace(state, world, pos, oldState, isMoving);
     }
 
-    @Override
-    public void onRemove(BlockState state, Level world, BlockPos pos, BlockState newState, boolean isMoving) {
-        findCables(world, pos, pos);
-        super.onRemove(state, world, pos, newState, isMoving);
-    }
-
     public boolean[] canAttach(BlockState state, Level world, BlockPos pos, Direction direction) {
         return new boolean[]{world.getBlockState(pos.relative(direction)).getBlock() == this || canConnectEnergy(world, pos, direction), canConnectEnergy(world, pos, direction)};
     }
@@ -211,54 +189,6 @@ public class CableBlock extends AbstractEnergyBlock<CableConfig, CableBlock> imp
     public boolean canConnectEnergy(Level world, BlockPos pos, Direction direction) {
         BlockEntity tile = world.getBlockEntity(pos.relative(direction));
         return !(tile instanceof CableTile) && EnvHandler.INSTANCE.hasEnergy(world, pos.relative(direction), direction.getOpposite());
-    }
-
-    static final Map<BlockPos, Set<BlockPos>> CACHE = new HashMap<>();
-
-    public void searchCables(LevelAccessor world, BlockPos pos, CableTile first, Direction side) {
-        if (!first.proxyMap.get(side).searchCache.contains(pos)) {
-            for (Direction direction : Direction.values()) {
-                BlockPos blockPos = pos.relative(direction);
-                if (blockPos.equals(first.getBlockPos())) continue;
-                BlockState state = world.getBlockState(blockPos);
-                if (state.getBlock() == this) {
-                    BlockEntity tileEntity = world.getBlockEntity(blockPos);
-                    if (tileEntity instanceof CableTile) {
-                        first.proxyMap.get(side).add(blockPos);
-                    }
-                    CableBlock cableBlock = (CableBlock) state.getBlock();
-                    first.proxyMap.get(side).searchCache.add(pos);
-                    cableBlock.searchCables(world, blockPos, first, side);
-                }
-            }
-        }
-    }
-
-    public void findCables(LevelAccessor world, BlockPos poss, BlockPos pos) {
-        Set<BlockPos> ss = CACHE.get(poss);
-        if (ss == null) {
-            ss = new HashSet<>();
-        }
-        if (!ss.contains(pos)) {
-            for (Direction direction : Direction.values()) {
-                BlockPos blockPos = pos.relative(direction);
-                BlockState state = world.getBlockState(blockPos);
-                if (state.getBlock() == this) {
-                    BlockEntity tileEntity = world.getBlockEntity(blockPos);
-                    if (tileEntity instanceof CableTile cable) {
-                        for (Direction side : Direction.values()) {
-                            cable.proxyMap.get(side).cables().clear();
-                            cable.search(this, side);
-                        }
-                    }
-                    CableBlock cableBlock = (CableBlock) state.getBlock();
-                    ss.add(pos);
-                    CACHE.put(poss, ss);
-                    cableBlock.findCables(world, poss, blockPos);
-                }
-            }
-        }
-        CACHE.clear();
     }
 
     public static Optional<Direction> getHitSide(Vec3 hit, BlockPos pos) {
