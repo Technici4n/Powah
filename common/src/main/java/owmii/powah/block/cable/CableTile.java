@@ -1,49 +1,37 @@
 package owmii.powah.block.cable;
 
 import com.google.common.collect.Iterables;
-import com.google.common.collect.Lists;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.nbt.ListTag;
-import net.minecraft.nbt.Tag;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.ChunkPos;
-import net.minecraft.world.level.Level;
-import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.phys.AABB;
-import org.spongepowered.include.com.google.common.collect.Iterators;
+import owmii.powah.block.Tier;
+import owmii.powah.block.Tiles;
 import owmii.powah.config.v2.types.CableConfig;
 import owmii.powah.lib.block.AbstractEnergyStorage;
 import owmii.powah.lib.block.IInventoryHolder;
-import owmii.powah.lib.logistics.energy.Energy;
-import owmii.powah.block.Tier;
-import owmii.powah.block.Tiles;
 
 import javax.annotation.Nullable;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
+import java.util.EnumSet;
 import java.util.Set;
-import java.util.stream.IntStream;
 
 public abstract class CableTile extends AbstractEnergyStorage<CableConfig, CableBlock> implements IInventoryHolder {
 
-    public final Map<Direction, EnergyProxy> proxyMap = new HashMap<>();
-    public final Set<Direction> energySides = new HashSet<>(); // TODO ensure order?
-    @Nullable CableNet net = null;
+    /**
+     * Tag-Name used for synchronizing connected sides to the client.
+     */
+    private static final String NBT_ENERGY_SIDES = "cs";
+
+    public final EnumSet<Direction> energySides = EnumSet.noneOf(Direction.class);
+    @Nullable
+    CableNet net = null;
     protected int startIndex = 0;
 
     public CableTile(BlockPos pos, BlockState state, Tier variant) {
         super(Tiles.CABLE.get(), pos, state, variant);
-        for (Direction side : Direction.values()) {
-            this.proxyMap.put(side, new EnergyProxy());
-        }
     }
 
     @Override
@@ -74,60 +62,45 @@ public abstract class CableTile extends AbstractEnergyStorage<CableConfig, Cable
     }
 
     @Override
-    public CompoundTag saveServerOnly(CompoundTag compound) {
-        ListTag list = new ListTag();
-        this.proxyMap.forEach((direction, linkedCables) -> {
-            CompoundTag nbt = new CompoundTag();
-            linkedCables.write(nbt);
-            nbt.putInt("direction", direction.ordinal());
-            list.add(nbt);
-        });
-        compound.put("linked_cables", list);
-        return super.saveServerOnly(compound);
-    }
-
-    @Override
-    public void loadServerOnly(CompoundTag compound) {
-        super.loadServerOnly(compound);
-        ListTag list = compound.getList("linked_cables", Tag.TAG_COMPOUND);
-        IntStream.range(0, list.size()).mapToObj(list::getCompound).forEach(nbt -> {
-            Direction direction = Direction.values()[nbt.getInt("direction")];
-            this.proxyMap.put(direction, new EnergyProxy().read(nbt));
-        });
-    }
-
-    @Override
     public void readSync(CompoundTag compound) {
         super.readSync(compound);
-        ListTag list1 = compound.getList("energy_directions", Tag.TAG_COMPOUND);
-        IntStream.range(0, list1.size()).mapToObj(list1::getCompound)
-                .map(nbt -> Direction.values()[nbt.getInt("energy_direction")])
-                .forEach(this.energySides::add);
+        readEnergySides(compound);
     }
 
     @Override
     public CompoundTag writeSync(CompoundTag compound) {
-        ListTag list1 = new ListTag();
-        this.energySides.forEach((direction) -> {
-            CompoundTag nbt = new CompoundTag();
-            nbt.putInt("energy_direction", direction.ordinal());
-            list1.add(nbt);
-        });
-        compound.put("energy_directions", list1);
+        writeEnergySides(compound);
+
         return super.writeSync(compound);
     }
 
-    public void search(Block block, Direction side) {
-        this.proxyMap.get(side).search(block, this, side).clear();
+    private void readEnergySides(CompoundTag compound) {
+        // Read connected sides
+        this.energySides.clear();
+        var sideBits = compound.getByte(NBT_ENERGY_SIDES);
+        for (var side : Direction.values()) {
+            if ((sideBits & getSideMask(side)) != 0) {
+                this.energySides.add(side);
+            }
+        }
+    }
+
+    private void writeEnergySides(CompoundTag compound) {
+        // Write connected sides
+        byte sideBits = 0;
+        for (var side : this.energySides) {
+            sideBits |= getSideMask(side);
+        }
+        compound.putByte(NBT_ENERGY_SIDES, sideBits);
+    }
+
+    private static byte getSideMask(Direction side) {
+        return (byte) (1 << side.ordinal());
     }
 
     @Override
     protected long getEnergyCapacity() {
         return 0;
-    }
-
-    public AABB getRenderBoundingBox() {
-        return new AABB(this.worldPosition, this.worldPosition.offset(1, 1, 1));
     }
 
     @Override
