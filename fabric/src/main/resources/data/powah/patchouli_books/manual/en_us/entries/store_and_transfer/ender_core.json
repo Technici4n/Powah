@@ -5,8 +5,9 @@
   "sortnum": 4,
   "pages": [
     {
-      "type": "patchouli:text",
+      "type": "patchouli:spotlight",
       "title": "Ender Core",
+      "item": "powah:ender_core",
       "text": "a"
     }
   ]

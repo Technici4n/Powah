@@ -5,9 +5,45 @@
   "sortnum": 5,
   "pages": [
     {
-      "type": "patchouli:text",
+      "type": "patchouli:spotlight",
       "title": "Ender Gate",
-      "text": "An Ender Gate transfers energy (FE) between the adjacent block and a channel on the Ender Network. You can not upgrade the Ender Network using an Ender Gate, but you can using an Ender Cell."
+      "item": "powah:ender_gate_basic",
+      "text": "An Ender Gate transfers energy (FE) between the adjacent block and a channel on the Ender Network. You can not upgrade the Ender Network using an Ender Gate, but you can using an Ender Cell. $(p)There are 7 tiers of Ender Gates with increasing max I/O rates."
+    },
+    {
+      "type": "patchouli:crafting",
+      "recipe": "powah:crafting/ender_gate_starter",
+      "title": "Starter"
+    },
+    {
+      "type": "patchouli:crafting",
+      "recipe": "powah:crafting/ender_gate_basic",
+      "title": "Basic"
+    },
+    {
+      "type": "patchouli:crafting",
+      "recipe": "powah:crafting/ender_gate_hardened",
+      "title": "Hardened"
+    },
+    {
+      "type": "patchouli:crafting",
+      "recipe": "powah:crafting/ender_gate_blazing",
+      "title": "Blazing"
+    },
+    {
+      "type": "patchouli:crafting",
+      "recipe": "powah:crafting/ender_gate_niotic",
+      "title": "Niotic"
+    },
+    {
+      "type": "patchouli:crafting",
+      "recipe": "powah:crafting/ender_gate_spirited",
+      "title": "Spirited"
+    },
+    {
+      "type": "patchouli:crafting",
+      "recipe": "powah:crafting/ender_gate_nitro",
+      "title": "Nitro"
     }
   ]
 }

@@ -4,10 +4,53 @@
   "category": "powah:generators_category",
   "sortnum": 3,
   "pages": [
-    "These two pages are equivalent",
     {
-      "type": "patchouli:text",
+      "type": "patchouli:spotlight",
+      "title": "Magmator",
+      "item": "powah:magmator_basic",
       "text": "A Magmator generates energy (FE) from high temp fluids like lava. Higher tiers generate more FE per tick (FE/t), have a higher energy output, and burn fuel faster."
+    },
+    {
+      "type": "patchouli:crafting",
+      "recipe": "powah:crafting/magmator_starter",
+      "title": "Starter",
+      "text": "$(br)Capacity: 1k FE/t $(br)Max I/O: 1 $(br)Generates: 1"
+    },
+    {
+      "type": "patchouli:crafting",
+      "recipe": "powah:crafting/magmator_basic",
+      "title": "Basic",
+      "text": "$(br)Capacity: 1k FE/t $(br)Max I/O: 1 $(br)Generates: 1"
+    },
+    {
+      "type": "patchouli:crafting",
+      "recipe": "powah:crafting/magmator_hardened",
+      "title": "Hardened",
+      "text": "$(br)Capacity: 1k FE/t $(br)Max I/O: 1 $(br)Generates: 1"
+    },
+    {
+      "type": "patchouli:crafting",
+      "recipe": "powah:crafting/magmator_blazing",
+      "title": "Blazing",
+      "text": "$(br)Capacity: 1k FE/t $(br)Max I/O: 1 $(br)Generates: 1"
+    },
+    {
+      "type": "patchouli:crafting",
+      "recipe": "powah:crafting/magmator_niotic",
+      "title": "Niotic",
+      "text": "$(br)Capacity: 1k FE/t $(br)Max I/O: 1 $(br)Generates: 1"
+    },
+    {
+      "type": "patchouli:crafting",
+      "recipe": "powah:crafting/magmator_spirited",
+      "title": "Spirited",
+      "text": "$(br)Capacity: 1k FE/t $(br)Max I/O: 1 $(br)Generates: 1"
+    },
+    {
+      "type": "patchouli:crafting",
+      "recipe": "powah:crafting/magmator_nitro",
+      "title": "Nitro",
+      "text": "$(br)Capacity: 1k FE/t $(br)Max I/O: 1 $(br)Generates: 1"
     }
   ]
 }

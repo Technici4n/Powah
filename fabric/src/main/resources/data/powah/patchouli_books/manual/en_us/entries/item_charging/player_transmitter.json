@@ -5,9 +5,45 @@
   "sortnum": 6,
   "pages": [
     {
-      "type": "patchouli:text",
+      "type": "patchouli:spotlight",
       "title": "Player Transmitter",
-      "text": "A Player Transmitter charges items in a player's inventory including armor slots and off-hand. Insert a Binding Card that has been bound to a player to begin charging. A Binding Card will charge anywhere in the same dimension. Use a Binding Card (Dimensional) to charge across dimensions."
+      "item": "powah:player_transmitter_basic",
+      "text": "A Player Transmitter charges items in a player's inventory including armor slots and off-hand. Insert a $(l:item_charging/binding_card)Binding Card $(/l)that has been bound to a player to begin charging. A Binding Card will charge anywhere in the same dimension. Use a $(l:item_charging/binding_card_dim)Binding Card (Dimensional) $(/l)to charge across dimensions. $(p)There are 7 tiers of Energy Hoppers with increasing storage capacity and max I/O rates."
+    },
+    {
+      "type": "patchouli:crafting",
+      "recipe": "powah:crafting/player_tranmitter_starter",
+      "title": "Starter"
+    },
+    {
+      "type": "patchouli:crafting",
+      "recipe": "powah:crafting/player_tranmitter_basic",
+      "title": "Basic"
+    },
+    {
+      "type": "patchouli:crafting",
+      "recipe": "powah:crafting/player_tranmitter_hardened",
+      "title": "Hardened"
+    },
+    {
+      "type": "patchouli:crafting",
+      "recipe": "powah:crafting/player_tranmitter_blazing",
+      "title": "Blazing"
+    },
+    {
+      "type": "patchouli:crafting",
+      "recipe": "powah:crafting/player_tranmitter_niotic",
+      "title": "Niotic"
+    },
+    {
+      "type": "patchouli:crafting",
+      "recipe": "powah:crafting/player_tranmitter_spirited",
+      "title": "Spirited"
+    },
+    {
+      "type": "patchouli:crafting",
+      "recipe": "powah:crafting/player_tranmitter_nitro",
+      "title": "Nitro"
     }
   ]
 }

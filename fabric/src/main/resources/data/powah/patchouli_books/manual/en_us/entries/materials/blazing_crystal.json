@@ -1,0 +1,18 @@
+{
+  "name": "Blazing Crystal",
+  "icon": "powah:crystal_blazing",
+  "category": "powah:materials_category",
+  "sortnum": 2,
+  "pages": [
+    {
+      "type": "patchouli:spotlight",
+      "title": "Blazing Crystal",
+      "item": "powah:crystal_blazing",
+      "text": "Blazing Crystal is made my Energizing one Blaze Rod or 4 Blaze Powder. It is used to create Blazing devices."
+    },
+    {
+      "type": "patchouli:crafting",
+      "recipe": "powah:crafting/blazing_crystal_block"
+    }
+  ]
+}

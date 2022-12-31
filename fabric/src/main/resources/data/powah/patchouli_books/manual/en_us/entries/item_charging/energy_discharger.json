@@ -5,9 +5,45 @@
   "sortnum": 8,
   "pages": [
     {
-      "type": "patchouli:text",
+      "type": "patchouli:spotlight",
       "title": "Energy Discharger",
-      "text": "An Energy Discharger drains energy (FE) out of charged items like $(l:materials_and_components/batteries)Batteries$(l). The drained energy is stored in the Energy Discharger and can be extracted at any time."
+      "item": "powah:energy_discharger_basic",
+      "text": "An Energy Discharger drains energy (FE) out of charged items like $(l:materials_and_components/batteries)Batteries$(/l). The drained energy is stored in the Energy Discharger and can be extracted at any time. $(p)There are 7 tiers of Energy Dischargers with increasing storage capacity and extract rates."
+    },
+    {
+      "type": "patchouli:crafting",
+      "recipe": "powah:crafting/energy_discharger_starter",
+      "title": "Starter"
+    },
+    {
+      "type": "patchouli:crafting",
+      "recipe": "powah:crafting/energy_discharger_basic",
+      "title": "Basic"
+    },
+    {
+      "type": "patchouli:crafting",
+      "recipe": "powah:crafting/energy_discharger_hardened",
+      "title": "Hardened"
+    },
+    {
+      "type": "patchouli:crafting",
+      "recipe": "powah:crafting/energy_discharger_blazing",
+      "title": "Blazing"
+    },
+    {
+      "type": "patchouli:crafting",
+      "recipe": "powah:crafting/energy_discharger_niotic",
+      "title": "Niotic"
+    },
+    {
+      "type": "patchouli:crafting",
+      "recipe": "powah:crafting/energy_discharger_spirited",
+      "title": "Spirited"
+    },
+    {
+      "type": "patchouli:crafting",
+      "recipe": "powah:crafting/energy_discharger_nitro",
+      "title": "Nitro"
     }
   ]
 }

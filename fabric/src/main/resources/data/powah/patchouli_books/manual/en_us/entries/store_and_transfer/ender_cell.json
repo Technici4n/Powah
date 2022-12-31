@@ -5,9 +5,45 @@
   "sortnum": 4,
   "pages": [
     {
-      "type": "patchouli:text",
+      "type": "patchouli:spotlight",
       "title": "Ender Cell",
-      "text": "An Ender Cell provides energy (FE) storage and transfer without cables and across dimensions using the $(l:store_and_transfer/ender_network)Ender Network$(l). There are 7 tiers of Ender Cells and higher tiers give access to more channels. $(p) The Ender Network has 8 channels to store and transfer energy. Channels can't store or transfer energy until you add capacity to them with an $(l:store_and_transfer/energy_cell)Energy Cell$(/l) or a $(l:store_and_transfer/battery)Battery$(/l). You add capacity to a channel by right-clicking an Ender Cell and shift-clicking an Energy Cell or a Battery in your inventory. The capacity of the Energy Cell or a Battery will be permanently added to the selected channel, any energy in the item will be added to the channel, and the item will be consumed."
+      "item": "powah:ender_cell_basic",
+      "text": "An Ender Cell provides energy (FE) storage and transfer without cables and across dimensions using the $(l:store_and_transfer/ender_network)Ender Network$(/l). There are 7 tiers of Ender Cells with increasing max I/O rates and access to more channels on the Ender Network. $(p) The Ender Network has 12 channels to store and transfer energy. Channels can't store or transfer energy until you add capacity to them with an $(l:store_and_transfer/energy_cell)Energy Cell$(/l) or a $(l:store_and_transfer/battery)Battery$(/l). You add capacity to a channel by right-clicking an Ender Cell and shift-clicking an Energy Cell or a Battery in your inventory. The capacity of the Energy Cell or a Battery will be permanently added to the selected channel, any energy in the item will be added to the channel, and the item will be consumed."
+    },
+    {
+      "type": "patchouli:crafting",
+      "recipe": "powah:crafting/ender_cell_starter",
+      "title": "Starter"
+    },
+    {
+      "type": "patchouli:crafting",
+      "recipe": "powah:crafting/ender_cell_basic",
+      "title": "Basic"
+    },
+    {
+      "type": "patchouli:crafting",
+      "recipe": "powah:crafting/ender_cell_hardened",
+      "title": "Hardened"
+    },
+    {
+      "type": "patchouli:crafting",
+      "recipe": "powah:crafting/ender_cell_blazing",
+      "title": "Blazing"
+    },
+    {
+      "type": "patchouli:crafting",
+      "recipe": "powah:crafting/ender_cell_niotic",
+      "title": "Niotic"
+    },
+    {
+      "type": "patchouli:crafting",
+      "recipe": "powah:crafting/ender_cell_spirited",
+      "title": "Spirited"
+    },
+    {
+      "type": "patchouli:crafting",
+      "recipe": "powah:crafting/ender_cell_nitro",
+      "title": "Nitro"
     }
   ]
 }

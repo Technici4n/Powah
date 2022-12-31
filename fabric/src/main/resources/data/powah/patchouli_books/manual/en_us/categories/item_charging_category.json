@@ -1,6 +1,6 @@
 {
   "name": "Item charging",
-  "description": "The Player Transmitter, Energy Hopper, and Energy Discharger allow you to charge and discharge items from Powah and other mods. The Player Transmitter has cable-less power transfer, even across dimensions! The other items are used to craft these machines.",
+  "description": "The Player Transmitter, Energy Hopper, and Energy Discharger allow you to charge and discharge items from Powah and other mods. The Player Transmitter has cable-less power transfer, even across dimensions! The other items in this category are used to craft these devices.",
   "icon": "powah:player_transmitter_basic",
   "sortnum": 5
 }

@@ -5,9 +5,45 @@
   "sortnum": 2,
   "pages": [
     {
-      "type": "patchouli:text",
+      "type": "patchouli:spotlight",
       "title": "Energy Cell",
-      "text": "An Energy Cell stores energy (FE) for use later. They are used to store excess energy from generators. They can also be used to add capacity to a channel on the Ender Network. Read about Ender Cells to learn more."
+      "item": "powah:energy_cell_basic",
+      "text": "An Energy Cell stores energy (FE) for use later. They are used to store excess energy from generators. They can also be used to add capacity to a channel on the$(l:store_and_transfer/ender_network) Ender Network$(/l). $(p)There are 7 tiers of Energy Cells with increasing storage capacity and max I/O rates."
+    },
+    {
+      "type": "patchouli:crafting",
+      "recipe": "powah:crafting/energy_cell_starter",
+      "title": "Starter"
+    },
+    {
+      "type": "patchouli:crafting",
+      "recipe": "powah:crafting/energy_cell_basic",
+      "title": "Basic"
+    },
+    {
+      "type": "patchouli:crafting",
+      "recipe": "powah:crafting/energy_cell_hardened",
+      "title": "Hardened"
+    },
+    {
+      "type": "patchouli:crafting",
+      "recipe": "powah:crafting/energy_cell_blazing",
+      "title": "Blazing"
+    },
+    {
+      "type": "patchouli:crafting",
+      "recipe": "powah:crafting/energy_cell_niotic",
+      "title": "Niotic"
+    },
+    {
+      "type": "patchouli:crafting",
+      "recipe": "powah:crafting/energy_cell_spirited",
+      "title": "Spirited"
+    },
+    {
+      "type": "patchouli:crafting",
+      "recipe": "powah:crafting/energy_cell_nitro",
+      "title": "Nitro"
     }
   ]
 }

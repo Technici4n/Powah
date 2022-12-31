@@ -1,0 +1,35 @@
+{
+  "name": "Dielectric components",
+  "icon": "powah:dielectric_paste",
+  "category": "powah:materials_category",
+  "sortnum": 0,
+  "pages": [
+    {
+      "type": "patchouli:crafting",
+      "title": "Dielectric Paste",
+      "recipe": "powah:crafting/dielectric_paste",
+      "recipe2": "powah:crafting/dielectric_paste_2",
+      "text": ""
+    },
+    {
+      "type": "patchouli:crafting",
+      "title": "Dielectric Rod",
+      "recipe": "powah:crafting/dielectric_rod",
+      "recipe2": "powah:crafting/dielectric_rod_2",
+      "text": ""
+    },
+    {
+      "type": "patchouli:crafting",
+      "title": "Dielectric Rod",
+      "recipe": "powah:crafting/dielectric_rod_h",
+      "recipe2": "powah:crafting/dielectric_rod_h_2",
+      "text": ""
+    },
+    {
+      "type": "patchouli:crafting",
+      "title": "Dielectric Casing",
+      "recipe": "powah:crafting/dielectric_casing",
+      "text": ""
+    }
+  ]
+}

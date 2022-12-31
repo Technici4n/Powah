@@ -1,0 +1,18 @@
+{
+  "name": "Niotic Crystal",
+  "icon": "powah:crystal_niotic",
+  "category": "powah:materials_category",
+  "sortnum": 1,
+  "pages": [
+    {
+      "type": "patchouli:spotlight",
+      "title": "Niotic Crystal",
+      "item": "powah:crystal_niotic",
+      "text": "Niotic Crystal is made my Energizing one diamond. It is used to create Niotic devices."
+    },
+    {
+      "type": "patchouli:crafting",
+      "recipe": "powah:crafting/niotic_crystal_block"
+    }
+  ]
+}

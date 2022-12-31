@@ -5,8 +5,9 @@
   "sortnum": 0,
   "pages": [
     {
-      "type": "patchouli:text",
+      "type": "patchouli:spotlight",
       "title": "Player Aerial Pearl",
+      "item": "powah:player_aerial_pearl",
       "text": "A Player Aerial Pearl used to craft the Player Transmitter. First, you need a craft an Aerial Pearl and turn it into a PLayer Aerial Pearl."
     },
     {

@@ -1,0 +1,54 @@
+{
+  "name": "Capacitors",
+  "icon": "powah:capacitor_basic",
+  "category": "powah:materials_category",
+  "sortnum": 1,
+  "pages": [
+    {
+      "type": "patchouli:spotlight",
+      "title": "Battery",
+      "item": "powah:capacitor_basic",
+      "text": "Capacitors."
+    },
+    {
+      "type": "patchouli:crafting",
+      "recipe": "powah:crafting/capacitor_basic_tiny",
+      "title": "Basic (Tiny)"
+    },
+    {
+      "type": "patchouli:crafting",
+      "recipe": "powah:crafting/capacitor_basic",
+      "title": "Basic"
+    },
+    {
+      "type": "patchouli:crafting",
+      "recipe": "powah:crafting/capacitor_basic_large",
+      "title": "Basic (Large)"
+    },
+    {
+      "type": "patchouli:crafting",
+      "recipe": "powah:crafting/capacitor_hardened",
+      "title": "Hardened"
+    },
+    {
+      "type": "patchouli:crafting",
+      "recipe": "powah:crafting/capacitor_blazing",
+      "title": "Blazing"
+    },
+    {
+      "type": "patchouli:crafting",
+      "recipe": "powah:crafting/capacitor_niotic",
+      "title": "Niotic"
+    },
+    {
+      "type": "patchouli:crafting",
+      "recipe": "powah:crafting/capacitor_spirited",
+      "title": "Spirited"
+    },
+    {
+      "type": "patchouli:crafting",
+      "recipe": "powah:crafting/capacitor_nitro",
+      "title": "Nitro"
+    }
+  ]
+}

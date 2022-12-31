@@ -5,8 +5,9 @@
   "sortnum": 2,
   "pages": [
     {
-      "type": "patchouli:text",
+      "type": "patchouli:spotlight",
       "title": "Furnator",
+      "item": "powah:furnator_basic",
       "text": "A Furnator generates energy (FE) from solid Furnace fuel like coal and wood. Higher tiers generate more FE per tick (FE/t), have a higher energy output, and burn fuel faster."
     },
     {

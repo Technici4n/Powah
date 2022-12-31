@@ -1,11 +1,12 @@
 {
   "name": "Wrench",
   "icon": "powah:wrench",
-  "category": "powah:materials_and_components_category",
+  "category": "powah:materials_category",
   "sortnum": 0,
   "pages": [
     {
-      "type": "patchouli:text",
+      "type": "patchouli:spotlight",
+      "item": "powah:wrench",
       "title": "Wrench",
       "text": "Wrench has 3 modes: Config, Rotate, and Link. $(li)Config Mode: Change Energy Cables I/O configuration, such as receive and extract. $(li)Link Mode: Link an Energizing Orb to Energizing Rods. $(li)Rotate Mode: Rotate blocks horizontally."
     },
