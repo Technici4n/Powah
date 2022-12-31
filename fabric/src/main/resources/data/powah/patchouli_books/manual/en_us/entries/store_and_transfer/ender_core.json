@@ -1,0 +1,13 @@
+{
+  "name": "Ender Core",
+  "icon": "powah:ender_core",
+  "category": "powah:store_and_transfer_category",
+  "sortnum": 4,
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "title": "Ender Core",
+      "text": "a"
+    }
+  ]
+}

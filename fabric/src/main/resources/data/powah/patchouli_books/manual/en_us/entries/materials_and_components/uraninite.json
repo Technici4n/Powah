@@ -1,0 +1,13 @@
+{
+  "name": "Uraninite Ore",
+  "icon": "powah:uraninite_ore",
+  "category": "powah:materials_and_components_category",
+  "sortnum": 0,
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "title": "Uraninite Ore",
+      "text": "Uraninite Ore is found underground and is used to create and fuel Reactors. There are multiple tiers of Uraninite Ore: $(li)poor is below level 64 $(li)normal is below level 20 $(li)dense is below level 0. $(p)Uraninite Ore is found in 1 to 5 block veins. An iron or better pickaxe is required to mine it and will produce Raw Uranitie. Raw Uranite must be Energized to turn it into Uranite which can be used to craft other items and fuel a Reactor. $(p)Energizing Uraninite Ore will directly produce Uraninite and it will produce more Uraninite than mining Uranitie Ore with a Fortune 3 Pickaxe."
+    }
+  ]
+}

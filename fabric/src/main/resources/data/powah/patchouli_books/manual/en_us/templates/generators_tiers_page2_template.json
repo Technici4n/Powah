@@ -1,0 +1,52 @@
+{
+  "components": [
+    {
+      "type": "patchouli:item",
+      "item": "powah:ender_cell_blazing",
+      "x": 0,
+      "y": -5
+    },
+    {
+      "type": "patchouli:text",
+      "text": "$(bold)Blazing $(clear) $(br)Stored: 1k FE/t $(br)Max extract: 1 $(br)Generates: 1",
+      "x": 20,
+      "y": -5
+    },
+    {
+      "type": "patchouli:item",
+      "item": "powah:ender_cell_niotic",
+      "x": 0,
+      "y": 35
+    },
+    {
+      "type": "patchouli:text",
+      "text": "$(bold)Niotic $(clear) $(br)Stored: 1k FE/t $(br)Max extract: 1 $(br)Generates: 1",
+      "x": 20,
+      "y": 35
+    },
+    {
+      "type": "patchouli:item",
+      "item": "powah:ender_cell_spirited",
+      "x": 0,
+      "y": 75
+    },
+    {
+      "type": "patchouli:text",
+      "text": "$(bold)Spirited $(clear) $(br)Stored: 1k FE/t $(br)Max extract: 1 $(br)Generates: 1",
+      "x": 20,
+      "y": 75
+    },
+    {
+      "type": "patchouli:item",
+      "item": "powah:ender_cell_nitro",
+      "x": 0,
+      "y": 115
+    },
+    {
+      "type": "patchouli:text",
+      "text": "$(bold)Nitro $(clear) $(br)Stored: 1k FE/t $(br)Max extract: 1 $(br)Generates: 1",
+      "x": 20,
+      "y": 115
+    }
+  ]
+}

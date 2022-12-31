@@ -1,0 +1,13 @@
+{
+  "name": "Thermo Generator",
+  "icon": "powah:thermo_generator_basic",
+  "category": "powah:generators_category",
+  "sortnum": 4,
+  "pages": [
+    "These two pages are equivalent",
+    {
+      "type": "patchouli:text",
+      "text": "A Thermo Generator generates energy (FE) when placed on top of a high temp fluid or block, like lava or magma blocks. It requires a fluid coolant like water. Coolant can be added using a bucket or a fluid pipe from another mod."
+    }
+  ]
+}

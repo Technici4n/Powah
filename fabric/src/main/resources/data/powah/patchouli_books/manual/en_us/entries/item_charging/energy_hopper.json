@@ -1,0 +1,18 @@
+{
+  "name": "Energy Hopper",
+  "icon": "powah:energy_hopper_basic",
+  "category": "powah:item_charging_category",
+  "sortnum": 7,
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "title": "Energy Hopper",
+      "text": "An Energy Hopper charges items, including items from other mods, when they are placed inside an adjacent inventory like a chest, barrel, or inventory from another mod. The Energy Hopper is directional and must point toward the inventory."
+    },
+    {
+      "type": "patchouli:crafting",
+      "recipe": "powah:crafting/binding_card",
+      "text": "A Blank Card is required to craft a Binding Card. The next page has the recipe."
+    }
+  ]
+}

@@ -1,0 +1,13 @@
+{
+  "name": "Dry Ice",
+  "icon": "powah:dry_ice",
+  "category": "powah:materials_and_components_category",
+  "sortnum": 0,
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "title": "Dry Ice",
+      "text": "Dry Ice is used to cool reactors. It is found underground (below level 64) or it can be made by Energizing two blue ice."
+    }
+  ]
+}

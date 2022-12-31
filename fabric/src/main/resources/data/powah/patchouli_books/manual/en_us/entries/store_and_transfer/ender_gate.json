@@ -1,0 +1,13 @@
+{
+  "name": "Ender Gate",
+  "icon": "powah:ender_gate_basic",
+  "category": "powah:store_and_transfer_category",
+  "sortnum": 5,
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "title": "Ender Gate",
+      "text": "An Ender Gate transfers energy (FE) between the adjacent block and a channel on the Ender Network. You can not upgrade the Ender Network using an Ender Gate, but you can using an Ender Cell."
+    }
+  ]
+}

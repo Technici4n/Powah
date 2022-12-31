@@ -1,0 +1,18 @@
+{
+  "name": "Player Aerial Pearl",
+  "icon": "powah:player_aerial_pearl",
+  "category": "powah:item_charging_category",
+  "sortnum": 0,
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "title": "Player Aerial Pearl",
+      "text": "A Player Aerial Pearl used to craft the Player Transmitter. First, you need a craft an Aerial Pearl and turn it into a PLayer Aerial Pearl."
+    },
+    {
+      "type": "patchouli:crafting",
+      "recipe": "powah:crafting/aerial_pearl",
+      "text": "Turn this into a Player Aerial Pearl by right-clicking on a Zombie or Husk."
+    }
+  ]
+}

@@ -35,6 +35,7 @@
     "minecraft": "~1.19.1",
     "architectury": ">=6.2.43",
     "team_reborn_energy": ">=2.2.0",
-    "cloth-config": "*"
+    "cloth-config": "*",
+    "patchouli": "1.19.2-76-FABRIC"
   }
 }

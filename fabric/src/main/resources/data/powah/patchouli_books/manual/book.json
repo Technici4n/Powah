@@ -1,0 +1,8 @@
+{
+  "name": "Powah",
+  "landing_text": "Powah is a tech mod that provides ways to generate, store, and transfer energy. $(p) It can provide energy to many other mods, such as Applied Energistics 2, Tech Reborn, Modern Industrialization, and others.",
+  "version": 1,
+  "book_texture": "patchouli:textures/gui/book_gray.png",
+  "model": "patchouli:book_gray",
+  "show_progress": false
+}

@@ -1,0 +1,51 @@
+{
+  "components": [
+    {
+      "type": "patchouli:header",
+      "text": "Ender Cell Tiers",
+      "x": -1,
+      "y": -1
+    },
+    {
+      "type": "patchouli:separator",
+      "x": -1,
+      "y": -1
+    },
+    {
+      "type": "patchouli:item",
+      "item": "powah:ender_cell_starter",
+      "x": 0,
+      "y": 25
+    },
+    {
+      "type": "patchouli:text",
+      "text": "$(bold)Starter $(clear) $(br)Stored: 1k FE/t $(br)Max extract: 1 $(br)Generates: 1",
+      "x": 20,
+      "y": 25
+    },
+    {
+      "type": "patchouli:item",
+      "item": "powah:ender_cell_basic",
+      "x": 0,
+      "y": 65
+    },
+    {
+      "type": "patchouli:text",
+      "text": "$(bold)Basic $(clear) $(br)Stored: 1k FE/t $(br)Max extract: 1 $(br)Generates: 1",
+      "x": 20,
+      "y": 65
+    },
+    {
+      "type": "patchouli:item",
+      "item": "powah:ender_cell_hardened",
+      "x": 0,
+      "y": 105
+    },
+    {
+      "type": "patchouli:text",
+      "text": "$(bold)Hardened $(clear) $(br)Stored: 1k FE/t $(br)Max extract: 1 $(br)Generates: 1",
+      "x": 20,
+      "y": 105
+    }
+  ]
+}

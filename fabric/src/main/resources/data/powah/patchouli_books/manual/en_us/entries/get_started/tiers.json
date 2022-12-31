@@ -1,0 +1,13 @@
+{
+  "name": "Tiers",
+  "icon": "powah:battery",
+  "category": "powah:get_started_category",
+  "sortnum": 1,
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "title": "Tiers",
+      "text": "a"
+    }
+  ]
+}

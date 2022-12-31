@@ -1,0 +1,13 @@
+{
+  "name": "Energy Discharger",
+  "icon": "powah:energy_discharger_basic",
+  "category": "powah:item_charging_category",
+  "sortnum": 8,
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "title": "Energy Discharger",
+      "text": "An Energy Discharger drains energy (FE) out of charged items like $(l:materials_and_components/batteries)Batteries$(l). The drained energy is stored in the Energy Discharger and can be extracted at any time."
+    }
+  ]
+}

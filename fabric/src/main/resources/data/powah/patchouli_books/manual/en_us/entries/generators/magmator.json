@@ -1,0 +1,13 @@
+{
+  "name": "Magmator",
+  "icon": "powah:magmator_basic",
+  "category": "powah:generators_category",
+  "sortnum": 3,
+  "pages": [
+    "These two pages are equivalent",
+    {
+      "type": "patchouli:text",
+      "text": "A Magmator generates energy (FE) from high temp fluids like lava. Higher tiers generate more FE per tick (FE/t), have a higher energy output, and burn fuel faster."
+    }
+  ]
+}

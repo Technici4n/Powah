@@ -1,0 +1,13 @@
+{
+  "name": "Energy Cable",
+  "icon": "powah:energy_cable_basic",
+  "category": "powah:store_and_transfer_category",
+  "sortnum": 1,
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "title": "Energy Cable",
+      "text": "An Energy Cable is used to transfer energy (FE) between machines. You can change the transfer mode by right-clicking a cable using <powah:wrench> with Config mode selected."
+    }
+  ]
+}

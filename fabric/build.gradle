@@ -15,6 +15,10 @@ configurations {
     developmentFabric.extendsFrom common
 }
 
+repositories {
+    maven { url 'https://maven.blamejared.com' } //Patchouli
+}
+
 dependencies {
     modImplementation "net.fabricmc:fabric-loader:${rootProject.fabric_loader_version}"
     modApi "net.fabricmc.fabric-api:fabric-api:${rootProject.fabric_api_version}"
@@ -42,6 +46,8 @@ dependencies {
         // The transitive deps are not remapped by JEI and largely include the same classes
         exclude group: "mezz.jei"
     }
+
+    modImplementation "vazkii.patchouli:Patchouli:${project.patchouli_version}"
 
     common(project(path: ":common", configuration: "namedElements")) { transitive false }
     shadowCommon(project(path: ":common", configuration: "transformProductionFabric")) { transitive false }

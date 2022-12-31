@@ -1,0 +1,13 @@
+{
+  "name": "Energy Cell",
+  "icon": "powah:energy_cell_basic",
+  "category": "powah:store_and_transfer_category",
+  "sortnum": 2,
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "title": "Energy Cell",
+      "text": "An Energy Cell stores energy (FE) for use later. They are used to store excess energy from generators. They can also be used to add capacity to a channel on the Ender Network. Read about Ender Cells to learn more."
+    }
+  ]
+}

@@ -1,0 +1,13 @@
+{
+  "name": "Charged snowball",
+  "icon": "powah:charged_snowball",
+  "category": "powah:materials_and_components_category",
+  "sortnum": 0,
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "title": "Charged snowball",
+      "text": "Throwing a Charged Snowball will cause a bolt of lightning to spawn when hitting the ground or a mob. It is obtained by Energizing a snowball using an Energizing Orb and Energizing Rods."
+    }
+  ]
+}

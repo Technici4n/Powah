@@ -1,0 +1,13 @@
+{
+  "name": "Ender Network",
+  "icon": "powah:ender_cell_basic",
+  "category": "powah:store_and_transfer_category",
+  "sortnum": 4,
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "title": "Ender Network",
+      "text": "An Ender Cell allows cable-less energy (FE) transfer from anywhere in the world using the Ender Network. Ender Cells are connected to the Ender Network and channels are used to transfer energy. Channels start without any capacity and can't transfer energy until they have capacity. You add capacity to a channel by right-clicking an Ender Cell and shift-clicking an Energy Cell or Battery in your inventory. The capacity of the Energy Cell or Battery will be permanently added to the selected channel and the item will be consumed. Also, any energy in the item will be added to the channel. Higher tiers of Ender Cells have access to more channels."
+    }
+  ]
+}
