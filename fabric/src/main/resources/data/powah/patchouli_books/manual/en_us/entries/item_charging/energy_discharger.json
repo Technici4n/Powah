@@ -2,7 +2,7 @@
   "name": "Energy Discharger",
   "icon": "powah:energy_discharger_basic",
   "category": "powah:item_charging_category",
-  "sortnum": 8,
+  "sortnum": 4,
   "pages": [
     {
       "type": "patchouli:spotlight",

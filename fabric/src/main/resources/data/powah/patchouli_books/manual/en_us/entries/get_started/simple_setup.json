@@ -1,0 +1,13 @@
+{
+  "name": "Simple setup",
+  "icon": "powah:energy_cell_basic",
+  "category": "powah:get_started_category",
+  "sortnum": 2,
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "title": "Simple setup",
+      "text": "This setup will have multiple generators, at least one Energy Cell to store excess energy, and Energy Cables to connect all the devices. It will also have an $(l:energizing/energizing_orb)Energizing Orb$(/l) and $(l:energizing/energizing_rod)Energizing Rods$(/l) to create higher tier materials."
+    }
+  ]
+}

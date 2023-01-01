@@ -8,7 +8,7 @@
       "type": "patchouli:spotlight",
       "title": "Magmator",
       "item": "powah:magmator_spirited",
-      "text": "A Magmator generates energy (FE) from high temp fluids like lava. The fuild is slowly consumed. It can be added with a bucket or a fluid pipe from another mod. Higher tiers generate more FE per tick (FE/t), have a higher energy output, and burn fuel faster. $(p)Magmators have the same stats as Furnators."
+      "text": "A Magmator generates energy (FE) from high temp fluids like lava. The fluid is consumed over time. It can be added with a bucket or a fluid pipe from another mod. Higher tiers generate more FE per tick (FE/t) and consume fuel faster. $(p)Magmators have the same stats as Furnators."
     },
     {
       "type": "patchouli:crafting",

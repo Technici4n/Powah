@@ -1,6 +1,6 @@
 {
   "name": "Energizing",
-  "description": "An Energizing Orb is used to Energize items and turn them into something new. It's used to create Energized Steel, various crystals, and other materials. Energizing requires at least one Energizing Rod within a 9x9 range of one or more Energizing Rods. $(p)An Energizing Orb and Energizing Rods will automatically link to each other when they are in range. You can use the $(l:materials/wrench)Wrench $(/l)in Link mode to view the link and manually link. $(p)Materials won't Energize if you place more than the required number of materials for a recipe.",
+  "description": "An Energizing Orb is used to Energize items and turn them into something new, such as Energized Steel or various crystals. Energizing requires at least one Energizing Orb within a 9x9 range of one or more Energizing Rods. $(p)An Energizing Orb and Energizing Rods will automatically link to each other when they are in range. You can use the $(l:materials/wrench)Wrench $(/l)in Link mode to view the link and manually link. $(p)Materials won't Energize if you place more than the required number of materials for a recipe.",
   "icon": "powah:energizing_orb",
   "sortnum": 4
 }

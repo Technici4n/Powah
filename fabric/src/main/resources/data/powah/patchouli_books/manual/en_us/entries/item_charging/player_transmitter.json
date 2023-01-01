@@ -2,7 +2,7 @@
   "name": "Player Transmitter",
   "icon": "powah:player_transmitter_basic",
   "category": "powah:item_charging_category",
-  "sortnum": 6,
+  "sortnum": 2,
   "pages": [
     {
       "type": "patchouli:spotlight",

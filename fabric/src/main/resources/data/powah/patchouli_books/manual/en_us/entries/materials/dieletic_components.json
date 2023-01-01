@@ -5,6 +5,11 @@
   "sortnum": 2,
   "pages": [
     {
+      "type": "patchouli:text",
+      "title": "Dielectric components",
+      "text": "Dielectric components are a common crafting materials used for almost every device. They components are: $(li)Dielectric Paste $(li)Dielectric Rods $(li)Dielectric Casing"
+    },
+    {
       "type": "patchouli:crafting",
       "title": "Dielectric Paste",
       "recipe": "powah:crafting/dielectric_paste",

@@ -1,0 +1,31 @@
+{
+  "components": [
+    {
+      "type": "patchouli:header",
+      "text": "Reactor fuel",
+      "x": -1,
+      "y": -1
+    },
+    {
+      "type": "patchouli:separator",
+      "x": -1,
+      "y": -1
+    },
+    {
+      "type": "patchouli:image",
+      "image": "powah:textures/gui/book/images/reactor_gui.png",
+      "x": 0,
+      "y": 25,
+      "width": 412,
+      "height": 144,
+      "texture_width": 412,
+      "texture_height": 144
+    },
+    {
+      "type": "patchouli:text",
+      "text": "A Reactor heats up when it generates energy, which causes it to consume Uraninite faster and generate fewer FE per tick (FE/t). You can reduce heat by adding a fluid coolant like water. In addition, you can add solid coolants, like snow or ice, to further reduce the heat. Keep the reactor buffer full of fuel for better production. More information is on the next page. Carbon materials like coal and wood will improve Uraninite fuel efficiency and add +180 C of heat. Redstone will speed up energy generation, increase fuel consumption, and add +120 C of heat. A Reactor will stop when it is full of energy. It will resume energy generation when it has less than 70% of its energy capacity, if Auto Mode is on.",
+      "x": 20,
+      "y": 25
+    }
+  ]
+}

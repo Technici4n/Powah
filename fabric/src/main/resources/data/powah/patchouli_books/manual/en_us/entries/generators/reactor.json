@@ -8,13 +8,10 @@
       "type": "patchouli:spotlight",
       "title": "Reactor",
       "item": "powah:reactor_spirited",
-      "text": "A Reactor generates energy (FE) from Uraninite and has 10x the energy storage, max extract, and generation speed of Furnators and Magmators. It is a multi-block that needs a 3x3x4 area and 36 Reactor blocks in your hand to place it. It will build itself automatically after the first block is placed."
+      "text": "A Reactor generates energy (FE) from Uraninite and has 10x the energy storage, max extract, and generation speed of Furnators and Magmators. It is a multi-block that needs a 3x3x4 area and 36 Reactor blocks in your hand to place it. It will build itself automatically after the first block is placed. A Reactor will stop when it is full of energy. It will resume energy generation when it has less than 70% of its energy capacity, if Auto Mode is on."
     },
     {
-      "type": "patchouli:image",
-      "title": "Reactor Fuel",
-      "images": ["powah:textures/gui/book/images/reactor_gui.png"],
-      "text": "A Reactor heats up when it generates energy, which causes it to consume Uraninite faster and generate fewer FE per tick (FE/t). You can reduce heat by adding a fluid coolant like water. In addition, you can add solid coolants, like snow or ice, to further reduce the heat. Keep the reactor buffer full of fuel for better production. More information is on the next page. Carbon materials like coal and wood will improve Uraninite fuel efficiency and add +180 C of heat. Redstone will speed up energy generation, increase fuel consumption, and add +120 C of heat. A Reactor will stop when it is full of energy. It will resume energy generation when it has less than 70% of its energy capacity, if Auto Mode is on."
+      "type": "powah:small_image_template"
     },
     {
       "type": "patchouli:crafting",

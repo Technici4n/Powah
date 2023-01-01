@@ -8,7 +8,7 @@
       "type": "patchouli:spotlight",
       "title": "Battery",
       "item": "powah:battery_basic",
-      "text": "Batteries charge items in a player's inventory, including items from other mods. They can also be used to add capacity to a channel on the Ender Network. Read about Ender Cells to learn more. $(p)There are 7 tiers of Batteries with increasing storage capacity and max I/O rates."
+      "text": "Batteries charge items in a player's inventory, including items from other mods. They can also be used to add capacity to a channel on the $(l:store_and_transfer:ender_network)Ender Network$(/l). $(p)There are 7 tiers of Batteries with increasing storage capacity and max I/O rates."
     },
     {
       "type": "patchouli:crafting",

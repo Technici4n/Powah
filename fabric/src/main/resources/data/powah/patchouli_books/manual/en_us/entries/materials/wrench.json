@@ -8,7 +8,7 @@
       "type": "patchouli:spotlight",
       "item": "powah:wrench",
       "title": "Wrench",
-      "text": "Wrench has 3 modes: Config, Rotate, and Link. $(li)Config Mode: Change Energy Cables I/O configuration, such as receive and extract. $(li)Link Mode: Link an Energizing Orb to Energizing Rods. $(li)Rotate Mode: Rotate blocks horizontally."
+      "text": "Wrench has 3 modes: $(li)Config: Change Energy Cables I/O configuration, such as receive and extract. $(li)Link: Link an Energizing Orb to Energizing Rods. $(li)Rotate: Rotate blocks horizontally."
     },
     {
       "type": "patchouli:crafting",

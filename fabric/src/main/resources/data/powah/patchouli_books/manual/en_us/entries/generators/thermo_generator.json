@@ -8,7 +8,21 @@
       "type": "patchouli:spotlight",
       "title": "Thermo Generator",
       "item": "powah:thermo_generator_spirited",
-      "text": "A Thermo Generator generates energy (FE) when placed on top of a high temp fluid or block, like lava or magma blocks. It requires a fluid coolant, like water. The coolant is slowly consumed. It can be added with a bucket or a fluid pipe from another mod. $(p)Thermo Generators have the same stats as Solar Panels."
+      "text": "A Thermo Generator generates energy (FE) when placed on top of a high temp fluid or block, like lava or magma blocks. It requires a fluid coolant, like water. The coolant is consumed over time. It can be added with a bucket or a fluid pipe from another mod. Higher tiers generate more FE per tick (FE/t). $(p)Thermo Generators have the same stats as Solar Panels."
+    },
+    {
+      "type": "patchouli:multiblock",
+      "multiblock": {
+        "mapping": {
+          "T": "powah:thermo_generator_basic",
+          "M": "minecraft:magma_block",
+          "L": "minecraft:lava"
+        },
+        "pattern": [
+          [ "T", "0", "T" ],
+          [ "M", " ", "L" ]
+        ]
+      }
     },
     {
       "type": "patchouli:crafting",

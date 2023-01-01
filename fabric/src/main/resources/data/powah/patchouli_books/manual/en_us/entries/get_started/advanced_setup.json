@@ -1,0 +1,13 @@
+{
+  "name": "Advanced setup",
+  "icon": "powah:energy_cell_basic",
+  "category": "powah:get_started_category",
+  "sortnum": 3,
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "title": "Advanced setup",
+      "text": "This setup will have everything from the simple setup and add power transfer without cables! It will use the $(l:store_and_transfer/ender_network)Ender Network$(/l) to transfer power without cables and have a $(l:item_charging/player_transmitter)Player Transmitter $(/l)to charge items your wearing, holding, and are in your inventory. $(p)You will likely use a Reactor for energy generation to power all your devices from Powah and other mods."
+    }
+  ]
+}

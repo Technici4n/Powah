@@ -8,7 +8,7 @@
       "type": "patchouli:spotlight",
       "title": "Energy Cell",
       "item": "powah:energy_cell_basic",
-      "text": "An Energy Cell stores energy (FE) for use later. They are used to store excess energy from generators. They can also be used to add capacity to a channel on the Ender Network via a $(l:store_and_transfer/ender_cell)Ender Cell$(/l). $(p)There are 7 tiers of Energy Cells with increasing storage capacity and Max I/O rates."
+      "text": "An Energy Cell stores energy (FE) to use later, such as excess energy from Generators. They can also be used to add capacity to a channel on the $(l:store_and_transfer:ender_network)Ender Network$(/l) via a $(l:store_and_transfer/ender_cell)Ender Cell$(/l). $(p)There are 7 tiers of Energy Cells with increasing storage capacity and Max I/O rates."
     },
     {
       "type": "patchouli:crafting",

@@ -1,0 +1,13 @@
+{
+  "name": "First setup",
+  "icon": "powah:energy_cell_starter",
+  "category": "powah:get_started_category",
+  "sortnum": 1,
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "title": "First setup",
+      "text": "The simplest setup is to put a Generator next to a device that requires power. These can be devices from Powah or other mods."
+    }
+  ]
+}

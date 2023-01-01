@@ -2,13 +2,13 @@
   "name": "Energy Hopper",
   "icon": "powah:energy_hopper_basic",
   "category": "powah:item_charging_category",
-  "sortnum": 7,
+  "sortnum": 3,
   "pages": [
     {
       "type": "patchouli:spotlight",
       "title": "Energy Hopper",
       "item": "powah:energy_hopper_basic",
-      "text": "An Energy Hopper charges items, including items from other mods, when they are placed inside an adjacent inventory like a chest, barrel, or inventory from another mod. The Energy Hopper is directional and must point toward the inventory. $(p)There are 7 tiers of Energy Hoppers with increasing storage capacity and max I/O rates."
+      "text": "An Energy Hopper charges items when they are placed inside an adjacent inventory like a chest, barrel, or inventory from another mod. The Energy Hopper is directional and must point toward the inventory. $(p)There are 7 tiers of Energy Hoppers with increasing storage capacity and max I/O rates."
     },
     {
       "type": "patchouli:crafting",

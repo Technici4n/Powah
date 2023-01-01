@@ -8,7 +8,7 @@
       "type": "patchouli:spotlight",
       "title": "Solar Panel",
       "item": "powah:solar_panel_spirited",
-      "text": "A Solar Panel generates energy (FE) when exposed to sunlight. Higher tiers generate more FE per tick (FE/t). Any block above the Solar Panel that stops light will stop energy generation unless you add a $(l:store_and_transfer/lens_of_ender)Lens of Ender $(/l)to  the Solar Panel. $(p)Solar Panels have the same stats as Thermo Generators."
+      "text": "A Solar Panel generates energy (FE) when exposed to sunlight. Any block above the Solar Panel that stops light will stop energy generation unless you add a $(l:materials/lens_of_ender)Lens of Ender $(/l)to  the Solar Panel. Higher tiers generate more FE per tick (FE/t). $(p)Solar Panels have the same stats as Thermo Generators."
     },
     {
       "type": "patchouli:crafting",

@@ -2,7 +2,7 @@
   "name": "Binding Card",
   "icon": "powah:binding_card",
   "category": "powah:item_charging_category",
-  "sortnum": 0,
+  "sortnum": 5,
   "pages": [
     {
       "type": "patchouli:spotlight",

@@ -2,13 +2,13 @@
   "name": "Binding Card (Dimensional)",
   "icon": "powah:binding_card_dim",
   "category": "powah:item_charging_category",
-  "sortnum": 0,
+  "sortnum": 6,
   "pages": [
     {
       "type": "patchouli:spotlight",
       "title": "Binding Card (Dimensional)",
       "item": "powah:binding_card_dim",
-      "text": "A Binding Card (Dimensional) is used to link a player with a $(l:item_charging/player_transmitter)Player Transmitter$(/l) to provide cable-less charging across dimension. For example, a Player Transmitter can be in the Overworld and still charge items in your inventory when you're in the Nether. $(p)A Binding Card (Dimensional) is created by holding a (l:item_charging/binding_card)Binding Card$(/l) and right-clicking an Enderman or Endermite. $(p)A Binding Card (Dimensional) must be linked to a player before it is add to the Player Transmitter. Hold the Binding Card (Dimensional) and right-click to bind it to you."
+      "text": "A Binding Card (Dimensional) is used to link a player with a $(l:item_charging/player_transmitter)Player Transmitter$(/l) to provide cable-less charging across dimension. For example, a Player Transmitter can be in the Overworld and still charge items in your inventory when you're in the Nether. $(p)A Binding Card (Dimensional) is created by holding a $(l:item_charging/binding_card)Binding Card$(/l) and right-clicking an Enderman or Endermite. $(p)A Binding Card (Dimensional) must be linked to a player before it is add to the Player Transmitter. Hold the Binding Card (Dimensional) and right-click to bind it to you."
     },
     {
       "type": "patchouli:crafting",

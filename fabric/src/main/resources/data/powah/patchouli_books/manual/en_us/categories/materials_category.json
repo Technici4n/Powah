@@ -1,6 +1,6 @@
 {
   "name": "Materials and items",
-  "description": "Materials are used to craft, cool, and enhance the devices in Powah. Some materials are created by $(l:materials/energizing)Energizing $(/l)items such as Blaze Rods and Emeralds. $(p)The $(l:materials/wrench)wrench $(/l) is used to rotate, configure, and link devices.",
+  "description": "Materials are used to craft, cool, and enhance devices. Some materials are created by $(l:energizing/energizing_orb)Energizing $(/l)items, such as Blaze Rods and Emeralds. $(p)The $(l:materials/wrench)wrench $(/l)is used to rotate, configure, and link devices.",
   "icon": "powah:capacitor_basic",
   "sortnum": 5
 }

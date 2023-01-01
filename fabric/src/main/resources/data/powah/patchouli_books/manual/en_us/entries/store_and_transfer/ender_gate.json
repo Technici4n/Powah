@@ -8,7 +8,7 @@
       "type": "patchouli:spotlight",
       "title": "Ender Gate",
       "item": "powah:ender_gate_basic",
-      "text": "An Ender Gate transfers energy (FE) between the attached block and a channel on the Ender Network. You can not upgrade the Ender Network using an Ender Gate, but you can using an $(l:store_and_transfer/ender_cell)Ender Cell$(/l). $(p)There are 7 tiers of Ender Gates with increasing Max I/O rates."
+      "text": "An Ender Gate transfers energy (FE) between the attached block and a channel on the $(l:store_and_transfer:ender_network)Ender Network$(/l). You can not upgrade the Ender Network using an Ender Gate, but you can update it using an $(l:store_and_transfer/ender_cell)Ender Cell$(/l). $(p)There are 7 tiers of Ender Gates with increasing Max I/O rates and access to more channels on the Ender Network."
     },
     {
       "type": "patchouli:crafting",
