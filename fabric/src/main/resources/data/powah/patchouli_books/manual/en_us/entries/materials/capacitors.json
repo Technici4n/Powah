@@ -2,13 +2,13 @@
   "name": "Capacitors",
   "icon": "powah:capacitor_basic",
   "category": "powah:materials_category",
-  "sortnum": 1,
+  "sortnum": 3,
   "pages": [
     {
       "type": "patchouli:spotlight",
-      "title": "Battery",
+      "title": "Capacitors",
       "item": "powah:capacitor_basic",
-      "text": "Capacitors."
+      "text": "Capacitors are a common crafting ingredient and come in multiple sizes and tiers."
     },
     {
       "type": "patchouli:crafting",

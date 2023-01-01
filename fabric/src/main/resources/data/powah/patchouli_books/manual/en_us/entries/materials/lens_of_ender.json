@@ -1,14 +1,14 @@
 {
   "name": "Lens of Ender",
   "icon": "powah:lens_of_ender",
-  "category": "powah:store_and_transfer_category",
-  "sortnum": 0,
+  "category": "powah:materials_category",
+  "sortnum": 11,
   "pages": [
     {
       "type": "patchouli:spotlight",
       "title": "Lens of Ender",
       "item": "powah:lens_of_ender",
-      "text": "A Lens of Ender can be added to a Solar Panel to generate energy even if blocks are above the Solar Panel. It created by crafting a Photoelectric Pane and right-clicking it on an Enderman or Endermite."
+      "text": "A Lens of Ender can be added to a Solar Panel to generate energy even if blocks are above the Solar Panel. Right-click a Solar Panel with a Lens of Ender in your hand to add it to the Solar Panel. $(p)A Lens of Ender is created by crafting a Photoelectric Pane and right-clicking it on an Enderman or Endermite. "
     },
     {
       "type": "patchouli:crafting",

@@ -2,7 +2,7 @@
   "name": "Nitro Crystal",
   "icon": "powah:crystal_nitro",
   "category": "powah:materials_category",
-  "sortnum": 1,
+  "sortnum": 8,
   "pages": [
     {
       "type": "patchouli:spotlight",

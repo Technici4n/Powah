@@ -1,6 +1,6 @@
 {
-  "name": "Store and transfer",
-  "description": "Test",
+  "name": "Storage and transfer",
+  "description": "These devices store and transfer energy from Generators. Cables and Energy Cells are the primary way to transfer and store energy. Batteries provide portable energy storage. $(p)The Ender Network stores and transfers energy without cables! An Ender Network is made up of Ender Cells and Ender Gates.",
   "icon": "powah:energy_cell_basic",
-  "sortnum": 2
+  "sortnum": 3
 }

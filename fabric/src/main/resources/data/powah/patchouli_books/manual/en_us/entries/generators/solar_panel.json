@@ -1,13 +1,56 @@
 {
   "name": "Solar Panel",
-  "icon": "powah:solar_panel_basic",
+  "icon": "powah:solar_panel_spirited",
   "category": "powah:generators_category",
   "sortnum": 1,
   "pages": [
-    "These two pages are equivalent",
     {
-      "type": "patchouli:text",
-      "text": "A Solar Panel generates energy (FE) when exposed to sunlight. Higher tiers generate more FE per tick (FE/t). Any block above the Solar Panel that stops light will stop energy generation."
+      "type": "patchouli:spotlight",
+      "title": "Solar Panel",
+      "item": "powah:solar_panel_spirited",
+      "text": "A Solar Panel generates energy (FE) when exposed to sunlight. Higher tiers generate more FE per tick (FE/t). Any block above the Solar Panel that stops light will stop energy generation unless you add a $(l:store_and_transfer/lens_of_ender)Lens of Ender $(/l)to  the Solar Panel. $(p)Solar Panels have the same stats as Thermo Generators."
+    },
+    {
+      "type": "patchouli:crafting",
+      "recipe": "powah:crafting/solar_panel_starter",
+      "title": "Starter",
+      "text": "$(br)Stored: 1k $(br)Max Extract: 4 FE/t $(br)Generates: 1 FE/t"
+    },
+    {
+      "type": "patchouli:crafting",
+      "recipe": "powah:crafting/solar_panel_basic",
+      "title": "Basic",
+      "text": "$(br)Stored: 4k $(br)Max Extract: 16 FE/t $(br)Generates: 3 FE/t"
+    },
+    {
+      "type": "patchouli:crafting",
+      "recipe": "powah:crafting/solar_panel_hardened",
+      "title": "Hardened",
+      "text": "$(br)Stored: 10k $(br)Max Extract: 40 FE/t $(br)Generates: 5 FE/t"
+    },
+    {
+      "type": "patchouli:crafting",
+      "recipe": "powah:crafting/solar_panel_blazing",
+      "title": "Blazing",
+      "text": "$(br)Stored: 40k $(br)Max Extract: 160 FE/t $(br)Generates: 10 FE/t"
+    },
+    {
+      "type": "patchouli:crafting",
+      "recipe": "powah:crafting/solar_panel_niotic",
+      "title": "Niotic",
+      "text": "$(br)Stored: 100k $(br)Max Extract: 400 FE/t $(br)Generates: 20 FE/t"
+    },
+    {
+      "type": "patchouli:crafting",
+      "recipe": "powah:crafting/solar_panel_spirited",
+      "title": "Spirited",
+      "text": "$(br)Stored: 400k $(br)Max Extract: 1.6k FE/t $(br)Generates: 40 FE/t"
+    },
+    {
+      "type": "patchouli:crafting",
+      "recipe": "powah:crafting/solar_panel_nitro",
+      "title": "Nitro",
+      "text": "$(br)Stored: 2M $(br)Max Extract: 8k FE/t $(br)Generates: 100 FE/t"
     }
   ]
 }

@@ -1,56 +1,56 @@
 {
   "name": "Magmator",
-  "icon": "powah:magmator_basic",
+  "icon": "powah:magmator_spirited",
   "category": "powah:generators_category",
-  "sortnum": 3,
+  "sortnum": 4,
   "pages": [
     {
       "type": "patchouli:spotlight",
       "title": "Magmator",
-      "item": "powah:magmator_basic",
-      "text": "A Magmator generates energy (FE) from high temp fluids like lava. Higher tiers generate more FE per tick (FE/t), have a higher energy output, and burn fuel faster."
+      "item": "powah:magmator_spirited",
+      "text": "A Magmator generates energy (FE) from high temp fluids like lava. The fuild is slowly consumed. It can be added with a bucket or a fluid pipe from another mod. Higher tiers generate more FE per tick (FE/t), have a higher energy output, and burn fuel faster. $(p)Magmators have the same stats as Furnators."
     },
     {
       "type": "patchouli:crafting",
       "recipe": "powah:crafting/magmator_starter",
       "title": "Starter",
-      "text": "$(br)Capacity: 1k FE/t $(br)Max I/O: 1 $(br)Generates: 1"
+      "text": "$(br)Stored: 1k $(br)Max Extract: 4 FE/t $(br)Generates: 1 FE/t"
     },
     {
       "type": "patchouli:crafting",
       "recipe": "powah:crafting/magmator_basic",
       "title": "Basic",
-      "text": "$(br)Capacity: 1k FE/t $(br)Max I/O: 1 $(br)Generates: 1"
+      "text": "$(br)Stored: 4k $(br)Max Extract: 16 FE/t $(br)Generates: 4 FE/t"
     },
     {
       "type": "patchouli:crafting",
       "recipe": "powah:crafting/magmator_hardened",
       "title": "Hardened",
-      "text": "$(br)Capacity: 1k FE/t $(br)Max I/O: 1 $(br)Generates: 1"
+      "text": "$(br)Stored: 10k $(br)Max Extract: 40 FE/t $(br)Generates: 10 FE/t"
     },
     {
       "type": "patchouli:crafting",
       "recipe": "powah:crafting/magmator_blazing",
       "title": "Blazing",
-      "text": "$(br)Capacity: 1k FE/t $(br)Max I/O: 1 $(br)Generates: 1"
+      "text": "$(br)Stored: 40k $(br)Max Extract: 160 FE/t $(br)Generates: 40 FE/t"
     },
     {
       "type": "patchouli:crafting",
       "recipe": "powah:crafting/magmator_niotic",
       "title": "Niotic",
-      "text": "$(br)Capacity: 1k FE/t $(br)Max I/O: 1 $(br)Generates: 1"
+      "text": "$(br)Stored: 100k $(br)Max Extract: 400 FE/t $(br)Generates: 100 FE/t"
     },
     {
       "type": "patchouli:crafting",
       "recipe": "powah:crafting/magmator_spirited",
       "title": "Spirited",
-      "text": "$(br)Capacity: 1k FE/t $(br)Max I/O: 1 $(br)Generates: 1"
+      "text": "$(br)Stored: 400k $(br)Max Extract: 1.6k FE/t $(br)Generates: 400 FE/t"
     },
     {
       "type": "patchouli:crafting",
       "recipe": "powah:crafting/magmator_nitro",
       "title": "Nitro",
-      "text": "$(br)Capacity: 1k FE/t $(br)Max I/O: 1 $(br)Generates: 1"
+      "text": "$(br)Stored: 2M $(br)Max Extract: 8k FE/t $(br)Generates: 2k FE/t"
     }
   ]
 }

@@ -13,7 +13,7 @@
     {
       "type": "patchouli:crafting",
       "recipe": "powah:crafting/aerial_pearl",
-      "text": "Turn this into a Player Aerial Pearl by right-clicking on a Zombie or Husk."
+      "text": "Turn this into a Player Aerial Pearl by right-clicking it on a Zombie or Husk."
     }
   ]
 }

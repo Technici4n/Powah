@@ -1,7 +1,7 @@
 {
   "name": "Battery",
   "icon": "powah:battery_basic",
-  "category": "powah:store_and_transfer_category",
+  "category": "powah:item_charging_category",
   "sortnum": 1,
   "pages": [
     {
@@ -13,22 +13,26 @@
     {
       "type": "patchouli:crafting",
       "recipe": "powah:crafting/battery_starter",
-      "title": "Starter"
+      "title": "Starter",
+      "text": "$(br)Stored: 40k $(br)Max I/O: 40 FE/t"
     },
     {
       "type": "patchouli:crafting",
       "recipe": "powah:crafting/battery_basic",
-      "title": "Basic"
+      "title": "Basic",
+      "text": "$(br)Stored: 160k $(br)Max I/O: 160 FE/t"
     },
     {
       "type": "patchouli:crafting",
       "recipe": "powah:crafting/battery_hardened",
-      "title": "Hardened"
+      "title": "Hardened",
+      "text": "$(br)Stored: 400k $(br)Max I/O: 400 FE/t"
     },
     {
       "type": "patchouli:crafting",
       "recipe": "powah:crafting/battery_blazing",
-      "title": "Blazing"
+      "title": "Blazing",
+      "text": "$(br)Stored: 1.6M $(br)Max I/O: 1.6k FE/t"
     },
     {
       "type": "patchouli:crafting",

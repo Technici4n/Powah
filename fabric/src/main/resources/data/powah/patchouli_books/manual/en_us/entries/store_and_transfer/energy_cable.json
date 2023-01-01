@@ -8,41 +8,41 @@
       "type": "patchouli:spotlight",
       "title": "Energy Cable",
       "item": "powah:energy_cable_basic",
-      "text": "An Energy Cable is used to transfer energy (FE) between machines. You can change the transfer mode by right-clicking a cable using <powah:wrench> with Config mode selected. $(p)There are 7 tiers of Ender Cells with increasing max I/O rates."
+      "text": "An Energy Cable is used to transfer energy (FE) between machines. You can change the transfer mode by right-clicking a cable using a $(l:materials/wrench)Wrench $(/l)with the Config Mode selected. $(p)There are 7 tiers of Energy Cables with increasing Max I/O rates."
     },
     {
       "type": "patchouli:crafting",
-      "recipe": "powah:crafting/energy_cable_starter",
+      "recipe": "powah:crafting/cable_starter",
       "title": "Starter"
     },
     {
       "type": "patchouli:crafting",
-      "recipe": "powah:crafting/energy_cable_basic",
+      "recipe": "powah:crafting/cable_basic",
       "title": "Basic"
     },
     {
       "type": "patchouli:crafting",
-      "recipe": "powah:crafting/energy_cable_hardened",
+      "recipe": "powah:crafting/cable_hardened",
       "title": "Hardened"
     },
     {
       "type": "patchouli:crafting",
-      "recipe": "powah:crafting/energy_cable_blazing",
+      "recipe": "powah:crafting/cable_blazing",
       "title": "Blazing"
     },
     {
       "type": "patchouli:crafting",
-      "recipe": "powah:crafting/energy_cable_niotic",
+      "recipe": "powah:crafting/cable_niotic",
       "title": "Niotic"
     },
     {
       "type": "patchouli:crafting",
-      "recipe": "powah:crafting/energy_cable_spirited",
+      "recipe": "powah:crafting/cable_spirited",
       "title": "Spirited"
     },
     {
       "type": "patchouli:crafting",
-      "recipe": "powah:crafting/energy_cable_nitro",
+      "recipe": "powah:crafting/cable_nitro",
       "title": "Nitro"
     }
   ]

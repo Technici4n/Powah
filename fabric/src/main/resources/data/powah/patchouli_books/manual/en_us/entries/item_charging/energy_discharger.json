@@ -13,37 +13,44 @@
     {
       "type": "patchouli:crafting",
       "recipe": "powah:crafting/energy_discharger_starter",
-      "title": "Starter"
+      "title": "Starter",
+      "text": "$(br)Stored: 40k $(br)Max Extract: 40 FE/t"
     },
     {
       "type": "patchouli:crafting",
       "recipe": "powah:crafting/energy_discharger_basic",
-      "title": "Basic"
+      "title": "Basic",
+      "text": "$(br)Stored: 160k $(br)Max Extract: 160 FE/t"
     },
     {
       "type": "patchouli:crafting",
       "recipe": "powah:crafting/energy_discharger_hardened",
-      "title": "Hardened"
+      "title": "Hardened",
+      "text": "$(br)Stored: 400k $(br)Max Extract: 400 FE/t"
     },
     {
       "type": "patchouli:crafting",
       "recipe": "powah:crafting/energy_discharger_blazing",
-      "title": "Blazing"
+      "title": "Blazing",
+      "text": "$(br)Stored: 1.6M $(br)Max Extract: 1.6k FE/t"
     },
     {
       "type": "patchouli:crafting",
       "recipe": "powah:crafting/energy_discharger_niotic",
-      "title": "Niotic"
+      "title": "Niotic",
+      "text": "$(br)Stored: 4M $(br)Max Extract: 4k FE/t"
     },
     {
       "type": "patchouli:crafting",
       "recipe": "powah:crafting/energy_discharger_spirited",
-      "title": "Spirited"
+      "title": "Spirited",
+      "text": "$(br)Stored: 16M $(br)Max Extract: 16k FE/t"
     },
     {
       "type": "patchouli:crafting",
       "recipe": "powah:crafting/energy_discharger_nitro",
-      "title": "Nitro"
+      "title": "Nitro",
+      "text": "$(br)Stored: 80M $(br)Max Extract: 80k FE/t"
     }
   ]
 }

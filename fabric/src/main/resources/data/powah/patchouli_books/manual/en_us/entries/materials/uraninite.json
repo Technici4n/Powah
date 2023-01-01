@@ -2,7 +2,7 @@
   "name": "Uraninite Ore",
   "icon": "powah:uraninite_ore",
   "category": "powah:materials_category",
-  "sortnum": 0,
+  "sortnum": 9,
   "pages": [
     {
       "type": "patchouli:spotlight",
@@ -14,7 +14,7 @@
       "type": "patchouli:spotlight",
       "title": "Raw Uraninite",
       "item": "powah:uraninite_raw",
-      "text": "Raw Uraninite can be smelted, blasted, or Energized to turn it into Uraninite."
+      "text": "Raw Uraninite can be smelted or blasted to create one Uraninite. It can be Energized create two Uraninite."
     },
     {
       "type": "patchouli:spotlight",

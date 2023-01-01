@@ -1,0 +1,18 @@
+{
+  "name": "Energizing Orb",
+  "icon": "powah:energizing_orb",
+  "category": "powah:energizing_category",
+  "sortnum": 1,
+  "pages": [
+    {
+      "type": "patchouli:spotlight",
+      "title": "Energizing Orb",
+      "item": "powah:energizing_orb",
+      "text": "An Energizing Orb is used to Energize materials. It doesn't require energy. materials are placed on it by right-click the Energizing Orb with a material in your hand. $(p)Items will Energize faster if more and higher tier Energizing Rods are linked to an Energizing Orb."
+    },
+    {
+      "type": "patchouli:image",
+      "images": ["powah:textures/gui/book/images/energizing.png"]
+    }
+  ]
+}

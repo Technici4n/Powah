@@ -2,7 +2,7 @@
   "name": "Energized Steel",
   "icon": "powah:steel_energized",
   "category": "powah:materials_category",
-  "sortnum": 1,
+  "sortnum": 4,
   "pages": [
     {
       "type": "patchouli:spotlight",

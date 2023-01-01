@@ -1,0 +1,14 @@
+{
+  "name": "Ender Core",
+  "icon": "powah:ender_core",
+  "category": "powah:materials_category",
+  "sortnum": 20,
+  "pages": [
+    {
+      "type": "patchouli:spotlight",
+      "title": "Ender Core",
+      "item": "powah:ender_core",
+      "text": "An Ender Core is used to craft Ender Gates and Ender Cells. It's created by Energizing an one Eye of Ender, one Dielectric Casing, and one Basic Capacitor (Tiny)."
+    }
+  ]
+}

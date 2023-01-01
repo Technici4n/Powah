@@ -2,7 +2,7 @@
   "name": "Dielectric components",
   "icon": "powah:dielectric_paste",
   "category": "powah:materials_category",
-  "sortnum": 0,
+  "sortnum": 2,
   "pages": [
     {
       "type": "patchouli:crafting",

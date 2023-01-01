@@ -1,6 +1,6 @@
 {
-  "name": "Materials",
-  "description": "Test",
-  "icon": "powah:uraninite_ore",
-  "sortnum": 4
+  "name": "Materials and items",
+  "description": "Materials are used to craft, cool, and enhance the devices in Powah. Some materials are created by $(l:materials/energizing)Energizing $(/l)items such as Blaze Rods and Emeralds. $(p)The $(l:materials/wrench)wrench $(/l) is used to rotate, configure, and link devices.",
+  "icon": "powah:capacitor_basic",
+  "sortnum": 5
 }

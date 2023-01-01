@@ -13,37 +13,44 @@
     {
       "type": "patchouli:crafting",
       "recipe": "powah:crafting/player_tranmitter_starter",
-      "title": "Starter"
+      "title": "Starter",
+      "text": "$(br)Stored: 40k $(br)Max I/O: 40 FE/t"
     },
     {
       "type": "patchouli:crafting",
       "recipe": "powah:crafting/player_tranmitter_basic",
-      "title": "Basic"
+      "title": "Basic",
+      "text": "$(br)Stored: 160k $(br)Max I/O: 160 FE/t"
     },
     {
       "type": "patchouli:crafting",
       "recipe": "powah:crafting/player_tranmitter_hardened",
-      "title": "Hardened"
+      "title": "Hardened",
+      "text": "$(br)Stored: 400k $(br)Max I/O: 400 FE/t"
     },
     {
       "type": "patchouli:crafting",
       "recipe": "powah:crafting/player_tranmitter_blazing",
-      "title": "Blazing"
+      "title": "Blazing",
+      "text": "$(br)Stored: 1.6M $(br)Max I/O: 1.6k FE/t"
     },
     {
       "type": "patchouli:crafting",
       "recipe": "powah:crafting/player_tranmitter_niotic",
-      "title": "Niotic"
+      "title": "Niotic",
+      "text": "$(br)Stored: 4M $(br)Max I/O: 4k FE/t"
     },
     {
       "type": "patchouli:crafting",
       "recipe": "powah:crafting/player_tranmitter_spirited",
-      "title": "Spirited"
+      "title": "Spirited",
+      "text": "$(br)Stored: 16M $(br)Max I/O: 16k FE/t"
     },
     {
       "type": "patchouli:crafting",
       "recipe": "powah:crafting/player_tranmitter_nitro",
-      "title": "Nitro"
+      "title": "Nitro",
+      "text": "$(br)Stored: 80M $(br)Max I/O: 80k FE/t"
     }
   ]
 }

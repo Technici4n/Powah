@@ -2,7 +2,7 @@
   "name": "Blazing Crystal",
   "icon": "powah:crystal_blazing",
   "category": "powah:materials_category",
-  "sortnum": 2,
+  "sortnum": 5,
   "pages": [
     {
       "type": "patchouli:spotlight",

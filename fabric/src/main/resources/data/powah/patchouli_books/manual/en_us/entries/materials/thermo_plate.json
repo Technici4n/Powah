@@ -2,11 +2,11 @@
   "name": "Thermo Plate",
   "icon": "powah:thermoelectric_plate",
   "category": "powah:materials_category",
-  "sortnum": 0,
+  "sortnum": 20,
   "pages": [
     {
       "type": "patchouli:crafting",
-      "recipe": "powah:thermoelectric_plate",
+      "recipe": "powah:crafting/thermoelectric_plate",
       "text": "A Thermo Plate is used to craft a Thermo Generator."
     }
   ]

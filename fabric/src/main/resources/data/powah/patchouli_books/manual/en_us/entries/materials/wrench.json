@@ -2,7 +2,7 @@
   "name": "Wrench",
   "icon": "powah:wrench",
   "category": "powah:materials_category",
-  "sortnum": 0,
+  "sortnum": 1,
   "pages": [
     {
       "type": "patchouli:spotlight",

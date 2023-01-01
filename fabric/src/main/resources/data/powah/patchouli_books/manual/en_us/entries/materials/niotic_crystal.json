@@ -2,7 +2,7 @@
   "name": "Niotic Crystal",
   "icon": "powah:crystal_niotic",
   "category": "powah:materials_category",
-  "sortnum": 1,
+  "sortnum": 6,
   "pages": [
     {
       "type": "patchouli:spotlight",

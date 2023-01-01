@@ -1,20 +1,56 @@
 {
   "name": "Furnator",
-  "icon": "powah:furnator_basic",
+  "icon": "powah:furnator_spirited",
   "category": "powah:generators_category",
-  "sortnum": 2,
+  "sortnum": 3,
   "pages": [
     {
       "type": "patchouli:spotlight",
       "title": "Furnator",
-      "item": "powah:furnator_basic",
-      "text": "A Furnator generates energy (FE) from solid Furnace fuel like coal and wood. Higher tiers generate more FE per tick (FE/t), have a higher energy output, and burn fuel faster."
+      "item": "powah:furnator_spirited",
+      "text": "A Furnator generates energy (FE) from solid Furnace fuel like coal and wood. Higher tiers generate more FE per tick (FE/t), have a higher energy output, and burn fuel faster. $(p)Furnators have the same stats as Magmators."
     },
     {
-      "type": "powah:generators_tiers_page1_template"
+      "type": "patchouli:crafting",
+      "recipe": "powah:crafting/furnator_starter",
+      "title": "Starter",
+      "text": "$(br)Stored: 1k $(br)Max Extract: 4 FE/t $(br)Generates: 1 FE/t"
     },
     {
-      "type": "powah:generators_tiers_page2_template"
+      "type": "patchouli:crafting",
+      "recipe": "powah:crafting/furnator_basic",
+      "title": "Basic",
+      "text": "$(br)Stored: 4k $(br)Max Extract: 16 FE/t $(br)Generates: 4 FE/t"
+    },
+    {
+      "type": "patchouli:crafting",
+      "recipe": "powah:crafting/furnator_hardened",
+      "title": "Hardened",
+      "text": "$(br)Stored: 10k $(br)Max Extract: 40 FE/t $(br)Generates: 10 FE/t"
+    },
+    {
+      "type": "patchouli:crafting",
+      "recipe": "powah:crafting/furnator_blazing",
+      "title": "Blazing",
+      "text": "$(br)Stored: 40k $(br)Max Extract: 160 FE/t $(br)Generates: 40 FE/t"
+    },
+    {
+      "type": "patchouli:crafting",
+      "recipe": "powah:crafting/furnator_niotic",
+      "title": "Niotic",
+      "text": "$(br)Stored: 100k $(br)Max Extract: 400 FE/t $(br)Generates: 100 FE/t"
+    },
+    {
+      "type": "patchouli:crafting",
+      "recipe": "powah:crafting/furnator_spirited",
+      "title": "Spirited",
+      "text": "$(br)Stored: 400k $(br)Max Extract: 1.6k FE/t $(br)Generates: 400 FE/t"
+    },
+    {
+      "type": "patchouli:crafting",
+      "recipe": "powah:crafting/furnator_nitro",
+      "title": "Nitro",
+      "text": "$(br)Stored: 2M $(br)Max Extract: 8k FE/t $(br)Generates: 2k FE/t"
     }
   ]
 }

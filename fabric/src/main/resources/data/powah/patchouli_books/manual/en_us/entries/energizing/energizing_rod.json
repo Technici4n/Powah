@@ -1,54 +1,54 @@
 {
-  "name": "Energy Hopper",
-  "icon": "powah:energy_hopper_basic",
-  "category": "powah:item_charging_category",
-  "sortnum": 7,
+  "name": "Energizing Rod",
+  "icon": "powah:energizing_rod_basic",
+  "category": "powah:energizing_category",
+  "sortnum": 2,
   "pages": [
     {
       "type": "patchouli:spotlight",
-      "title": "Energy Hopper",
-      "item": "powah:energy_hopper_basic",
-      "text": "An Energy Hopper charges items, including items from other mods, when they are placed inside an adjacent inventory like a chest, barrel, or inventory from another mod. The Energy Hopper is directional and must point toward the inventory. $(p)There are 7 tiers of Energy Hoppers with increasing storage capacity and max I/O rates."
+      "title": "Energizing Rod",
+      "item": "powah:energizing_rod_basic",
+      "text": "An Energizing Rod is used with an Energizing Orb to Energize items. Items will Energize faster if more and higher tier Energizing Rods are linked to an Energizing Orb. $(p)There are 7 tiers of Energizing Rods with increasing storage capacity and Max I/O rates."
     },
     {
       "type": "patchouli:crafting",
-      "recipe": "powah:crafting/energy_hopper_starter",
+      "recipe": "powah:crafting/energizing_rod_starter",
       "title": "Starter",
       "text": "$(br)Stored: 40k $(br)Max I/O: 40 FE/t"
     },
     {
       "type": "patchouli:crafting",
-      "recipe": "powah:crafting/energy_hopper_basic",
+      "recipe": "powah:crafting/energizing_rod_basic",
       "title": "Basic",
       "text": "$(br)Stored: 160k $(br)Max I/O: 160 FE/t"
     },
     {
       "type": "patchouli:crafting",
-      "recipe": "powah:crafting/energy_hopper_hardened",
+      "recipe": "powah:crafting/energizing_rod_hardened",
       "title": "Hardened",
       "text": "$(br)Stored: 400k $(br)Max I/O: 400 FE/t"
     },
     {
       "type": "patchouli:crafting",
-      "recipe": "powah:crafting/energy_hopper_blazing",
+      "recipe": "powah:crafting/energizing_rod_blazing",
       "title": "Blazing",
       "text": "$(br)Stored: 1.6M $(br)Max I/O: 1.6k FE/t"
     },
     {
       "type": "patchouli:crafting",
-      "recipe": "powah:crafting/energy_hopper_niotic",
+      "recipe": "powah:crafting/energizing_rod_niotic",
       "title": "Niotic",
       "text": "$(br)Stored: 4M $(br)Max I/O: 4k FE/t"
     },
     {
       "type": "patchouli:crafting",
-      "recipe": "powah:crafting/energy_hopper_spirited",
+      "recipe": "powah:crafting/energizing_rod_spirited",
       "title": "Spirited",
       "text": "$(br)Stored: 16M $(br)Max I/O: 16k FE/t"
     },
     {
       "type": "patchouli:crafting",
-      "recipe": "powah:crafting/energy_hopper_nitro",
+      "recipe": "powah:crafting/energizing_rod_nitro",
       "title": "Nitro",
       "text": "$(br)Stored: 80M $(br)Max I/O: 80k FE/t"
     }

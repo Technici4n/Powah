@@ -2,7 +2,7 @@
   "name": "Spirited Crystal",
   "icon": "powah:crystal_spirited",
   "category": "powah:materials_category",
-  "sortnum": 1,
+  "sortnum": 7,
   "pages": [
     {
       "type": "patchouli:spotlight",

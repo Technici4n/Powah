@@ -1,13 +1,56 @@
 {
   "name": "Thermo Generator",
-  "icon": "powah:thermo_generator_basic",
+  "icon": "powah:thermo_generator_spirited",
   "category": "powah:generators_category",
-  "sortnum": 4,
+  "sortnum": 2,
   "pages": [
-    "These two pages are equivalent",
     {
-      "type": "patchouli:text",
-      "text": "A Thermo Generator generates energy (FE) when placed on top of a high temp fluid or block, like lava or magma blocks. It requires a fluid coolant like water. Coolant can be added using a bucket or a fluid pipe from another mod."
+      "type": "patchouli:spotlight",
+      "title": "Thermo Generator",
+      "item": "powah:thermo_generator_spirited",
+      "text": "A Thermo Generator generates energy (FE) when placed on top of a high temp fluid or block, like lava or magma blocks. It requires a fluid coolant, like water. The coolant is slowly consumed. It can be added with a bucket or a fluid pipe from another mod. $(p)Thermo Generators have the same stats as Solar Panels."
+    },
+    {
+      "type": "patchouli:crafting",
+      "recipe": "powah:crafting/thermo_generator_starter",
+      "title": "Starter",
+      "text": "$(br)Stored: 1k $(br)Max Extract: 4 FE/t $(br)Generates: 1 FE/t"
+    },
+    {
+      "type": "patchouli:crafting",
+      "recipe": "powah:crafting/thermo_generator_basic",
+      "title": "Basic",
+      "text": "$(br)Stored: 4k $(br)Max Extract: 16 FE/t $(br)Generates: 3 FE/t"
+    },
+    {
+      "type": "patchouli:crafting",
+      "recipe": "powah:crafting/thermo_generator_hardened",
+      "title": "Hardened",
+      "text": "$(br)Stored: 10k $(br)Max Extract: 40 FE/t $(br)Generates: 5 FE/t"
+    },
+    {
+      "type": "patchouli:crafting",
+      "recipe": "powah:crafting/thermo_generator_blazing",
+      "title": "Blazing",
+      "text": "$(br)Stored: 40k $(br)Max Extract: 160 FE/t $(br)Generates: 10 FE/t"
+    },
+    {
+      "type": "patchouli:crafting",
+      "recipe": "powah:crafting/thermo_generator_niotic",
+      "title": "Niotic",
+      "text": "$(br)Stored: 100k $(br)Max Extract: 400 FE/t $(br)Generates: 20 FE/t"
+    },
+    {
+      "type": "patchouli:crafting",
+      "recipe": "powah:crafting/thermo_generator_spirited",
+      "title": "Spirited",
+      "text": "$(br)Stored: 400k $(br)Max Extract: 1.6k FE/t $(br)Generates: 40 FE/t"
+    },
+    {
+      "type": "patchouli:crafting",
+      "recipe": "powah:crafting/thermo_generator_nitro",
+      "title": "Nitro",
+      "text": "$(br)Stored: 2M $(br)Max Extract: 8k FE/t $(br)Generates: 100 FE/t"
     }
   ]
 }

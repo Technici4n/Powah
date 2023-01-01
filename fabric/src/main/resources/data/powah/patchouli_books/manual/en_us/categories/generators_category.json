@@ -1,6 +1,6 @@
 {
   "name": "Generators",
-  "description": "Give me dat energy",
-  "icon": "powah:magmator_basic",
-  "sortnum": 1
+  "description": "Generators are devices that generate energy. Solar Panels and Thermo Generators generate the least energy but require little or no interaction. Furnators and Magmators generate more energy, but consume fuel. Reactors generate the most energy but require multiple types of fuel and coolant to generate at their full potential. $(p)Each device has multiple tiers with the storage capacity, extraction rate, and generation rate increasing with each tier.",
+  "icon": "powah:reactor_spirited",
+  "sortnum": 2
 }

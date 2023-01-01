@@ -2,7 +2,7 @@
   "name": "Charged snowball",
   "icon": "powah:charged_snowball",
   "category": "powah:materials_category",
-  "sortnum": 0,
+  "sortnum": 20,
   "pages": [
     {
       "type": "patchouli:spotlight",
