@@ -4,6 +4,7 @@ import dev.emi.trinkets.api.TrinketComponent;
 import dev.emi.trinkets.api.TrinketsApi;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import net.fabricmc.fabric.api.tag.convention.v1.ConventionalBiomeTags;
 import net.fabricmc.fabric.api.transfer.v1.context.ContainerItemContext;
 import net.fabricmc.fabric.api.transfer.v1.fluid.FluidStorage;
@@ -256,7 +257,7 @@ public class FabricEnvHandler implements EnvHandler {
 		if (FabricLoader.getInstance().isModLoaded("trinkets")) {
 			final TrinketComponent trinketComponent = TrinketsApi.getTrinketComponent(player).orElse(null);
 			if (trinketComponent != null) {
-				trinketComponent.getInventory().forEach(($, map) -> map.forEach(($$, container) -> {
+				trinketComponent.getInventory().forEach((String $, Map<String, ? extends Container> map) -> map.forEach((String $$, Container container) -> {
 					list.addAll(InventoryStorage.of(container, null).getSlots());
 				}));
 			}
