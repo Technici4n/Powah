@@ -1,5 +1,9 @@
 package owmii.powah.fabric;
 
+import dev.emi.trinkets.api.TrinketComponent;
+import dev.emi.trinkets.api.TrinketsApi;
+import java.util.ArrayList;
+import java.util.List;
 import net.fabricmc.fabric.api.tag.convention.v1.ConventionalBiomeTags;
 import net.fabricmc.fabric.api.transfer.v1.context.ContainerItemContext;
 import net.fabricmc.fabric.api.transfer.v1.fluid.FluidStorage;
@@ -13,6 +17,7 @@ import net.fabricmc.fabric.api.transfer.v1.storage.StorageUtil;
 import net.fabricmc.fabric.api.transfer.v1.storage.base.SingleSlotStorage;
 import net.fabricmc.fabric.api.transfer.v1.transaction.Transaction;
 import net.fabricmc.fabric.api.transfer.v1.transaction.TransactionContext;
+import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.Registry;
@@ -246,7 +251,16 @@ public class FabricEnvHandler implements EnvHandler {
 
 	@Override
 	public long chargeItemsInPlayerInv(Player player, long maxPerSlot, long maxTotal, Predicate<ItemStack> allowStack) {
-		return chargeItemsInContainer(player.getInventory(), maxPerSlot, maxTotal, allowStack);
+		final List<SingleSlotStorage<ItemVariant>> list = new ArrayList<>(InventoryStorage.of(player.getInventory(), null).getSlots());
+		if (FabricLoader.getInstance().isModLoaded("trinkets")) {
+			final TrinketComponent trinketComponent = TrinketsApi.getTrinketComponent(player).orElse(null);
+			if (trinketComponent != null) {
+				trinketComponent.getInventory().forEach(($, map) -> map.forEach(($$, container) -> {
+					list.addAll(InventoryStorage.of(container, null).getSlots());
+				}));
+			}
+		}
+		return transferSlotList(EnergyStorage::insert, list, maxPerSlot, maxTotal, allowStack);
 	}
 
 	@Override
