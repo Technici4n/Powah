@@ -11,6 +11,7 @@ import net.fabricmc.fabric.api.transfer.v1.fluid.FluidVariant;
 import net.fabricmc.fabric.api.transfer.v1.item.InventoryStorage;
 import net.fabricmc.fabric.api.transfer.v1.item.ItemStorage;
 import net.fabricmc.fabric.api.transfer.v1.item.ItemVariant;
+import net.fabricmc.fabric.api.transfer.v1.item.PlayerInventoryStorage;
 import net.fabricmc.fabric.api.transfer.v1.storage.Storage;
 import net.fabricmc.fabric.api.transfer.v1.storage.StoragePreconditions;
 import net.fabricmc.fabric.api.transfer.v1.storage.StorageUtil;
@@ -251,7 +252,7 @@ public class FabricEnvHandler implements EnvHandler {
 
 	@Override
 	public long chargeItemsInPlayerInv(Player player, long maxPerSlot, long maxTotal, Predicate<ItemStack> allowStack) {
-		final List<SingleSlotStorage<ItemVariant>> list = new ArrayList<>(InventoryStorage.of(player.getInventory(), null).getSlots());
+		final List<SingleSlotStorage<ItemVariant>> list = new ArrayList<>(PlayerInventoryStorage.of(player).getSlots());
 		if (FabricLoader.getInstance().isModLoaded("trinkets")) {
 			final TrinketComponent trinketComponent = TrinketsApi.getTrinketComponent(player).orElse(null);
 			if (trinketComponent != null) {
