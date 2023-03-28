@@ -15,6 +15,18 @@ configurations {
     developmentFabric.extendsFrom common
 }
 
+// For trinkets
+repositories {
+    maven {
+        name = "TerraformersMC"
+        url = "https://maven.terraformersmc.com/"
+    }
+    maven {
+        name = "Ladysnake Libs"
+        url = "https://ladysnake.jfrog.io/artifactory/mods"
+    }
+}
+
 dependencies {
     modImplementation "net.fabricmc:fabric-loader:${rootProject.fabric_loader_version}"
     modApi "net.fabricmc.fabric-api:fabric-api:${rootProject.fabric_api_version}"
@@ -42,6 +54,8 @@ dependencies {
         // The transitive deps are not remapped by JEI and largely include the same classes
         exclude group: "mezz.jei"
     }
+
+    modCompileOnly "dev.emi:trinkets:${project.trinkets_version}"
 
     common(project(path: ":common", configuration: "namedElements")) { transitive false }
     shadowCommon(project(path: ":common", configuration: "transformProductionFabric")) { transitive false }
