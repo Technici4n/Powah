@@ -20,7 +20,7 @@ import net.minecraft.world.level.block.state.properties.DirectionProperty;
 import net.minecraft.world.level.block.state.properties.Property;
 import net.minecraft.world.phys.Vec3;
 import owmii.powah.block.ender.EnderGateBlock;
-import owmii.powah.lib.block.AbstractBlock;
+import owmii.powah.lib.block.AbstractEnergyBlock;
 import owmii.powah.lib.client.handler.IHudItem;
 import owmii.powah.lib.item.ItemBase;
 import owmii.powah.lib.logistics.energy.SideConfig;
@@ -76,9 +76,9 @@ public class WrenchItem extends ItemBase implements IHudItem, IWrench {
 //                }
             }
             if (getWrenchMode(stack).rotate()
-                    // Don't rotate blocks from Vanilla/other mods (introduces complexity we don't want to deal with, for example wall torches)
-                    && state.getBlock() instanceof AbstractBlock<?, ?>
-                    // Also don't rotate ender gates, for similar reasons
+                    // Only rotate Powah machines
+                    && state.getBlock() instanceof AbstractEnergyBlock<?,?>
+                    // Don't rotate ender gates (would need to check if the destination has something we can connect to)
                     && !(state.getBlock() instanceof EnderGateBlock)) {
                 final BlockState rotatedState = rotateState(state);
                 if (!state.equals(rotatedState)) {

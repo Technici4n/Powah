@@ -14,7 +14,8 @@ import net.minecraft.world.phys.BlockHitResult;
 import org.jetbrains.annotations.Nullable;
 import owmii.powah.EnvHandler;
 import owmii.powah.Powah;
-import owmii.powah.lib.block.AbstractBlock;
+import owmii.powah.block.energizing.EnergizingOrbBlock;
+import owmii.powah.lib.block.AbstractEnergyBlock;
 import owmii.powah.lib.item.ItemBase;
 
 public class PowahFabric implements ModInitializer {
@@ -49,7 +50,7 @@ public class PowahFabric implements ModInitializer {
 		}
 		var pos = hitResult.getBlockPos();
 		var state = world.getBlockState(pos);
-		if (state.getBlock() instanceof AbstractBlock<?, ?>) {
+		if (state.getBlock() instanceof AbstractEnergyBlock<?,?> || state.getBlock() instanceof EnergizingOrbBlock) {
 			var entity = world.getBlockEntity(pos);
 			world.setBlockAndUpdate(pos, Blocks.AIR.defaultBlockState());
 			if (!player.isCreative()) {
