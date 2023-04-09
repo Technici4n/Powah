@@ -35,6 +35,7 @@ public class ITags {
         public static final TagKey<Item> URANINITE_BLOCK = tag("uraninite_blocks");
         public static final TagKey<Item> URANINITE_RAW = tag("raw_uraninite_ores");
         public static final TagKey<Item> QUARTZ_BLOCKS = tag("quartz_blocks"); // TODO PR TO FABRIC
+        public static final TagKey<Item> WRENCHES = tag("wrenches");
 
         private static TagKey<Item> tag(String name) {
             return TagKey.create(Registry.ITEM_REGISTRY, new ResourceLocation("c", name));

@@ -76,6 +76,8 @@ public class TagsProvider {
             tag(Tags.Items.INGOTS).add(Itms.ENERGIZED_STEEL.get());
             tag(Tags.Items.GEMS).add(Itms.BLAZING_CRYSTAL.get(), Itms.NIOTIC_CRYSTAL.get(), Itms.SPIRITED_CRYSTAL.get(), Itms.NITRO_CRYSTAL.get());
 
+            tag(ITags.Items.WRENCHES).add(Itms.WRENCH.get());
+
             // Platform abstractions!
             tag(ITags.ItemAbstractions.GLASS).addTag(Tags.Items.GLASS);
             tag(ITags.ItemAbstractions.GLASS_PANES).addTag(Tags.Items.GLASS_PANES);

@@ -5,6 +5,7 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
+import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.InteractionResultHolder;
@@ -15,7 +16,11 @@ import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.state.properties.DirectionProperty;
+import net.minecraft.world.level.block.state.properties.Property;
 import net.minecraft.world.phys.Vec3;
+import owmii.powah.block.ender.EnderGateBlock;
+import owmii.powah.lib.block.AbstractBlock;
 import owmii.powah.lib.client.handler.IHudItem;
 import owmii.powah.lib.item.ItemBase;
 import owmii.powah.lib.logistics.energy.SideConfig;
@@ -33,6 +38,8 @@ public class WrenchItem extends ItemBase implements IHudItem, IWrench {
     public WrenchItem(Properties properties) {
         super(properties);
     }
+
+    private static final Direction[] DIRECTIONS = Direction.values();
 
     @Override
     public InteractionResult onItemUseFirst(ItemStack stack, Level world, BlockPos pos, Player player, InteractionHand hand, Direction side, Vec3 hit) {
@@ -68,8 +75,44 @@ public class WrenchItem extends ItemBase implements IHudItem, IWrench {
 //                    }
 //                }
             }
+            if (getWrenchMode(stack).rotate()
+                    // Don't rotate blocks from Vanilla/other mods (introduces complexity we don't want to deal with, for example wall torches)
+                    && state.getBlock() instanceof AbstractBlock<?, ?>
+                    // Also don't rotate ender gates, for similar reasons
+                    && !(state.getBlock() instanceof EnderGateBlock)) {
+                final BlockState rotatedState = rotateState(state);
+                if (!state.equals(rotatedState)) {
+                    world.setBlockAndUpdate(pos, rotatedState);
+                    world.playSound(player, pos, rotatedState.getBlock().getSoundType(rotatedState).getPlaceSound(), SoundSource.BLOCKS, 1F, 1F);
+                    return InteractionResult.sidedSuccess(world.isClientSide);
+                }
+            }
         }
         return super.onItemUseFirst(stack, world, pos, player, hand, side, hit);
+    }
+
+    private BlockState rotateState(BlockState state) {
+        for (Property<?> property : state.getProperties()) {
+            if (property.getName().equals("facing") && property instanceof DirectionProperty dirProp) {
+                final Direction current = state.getValue(dirProp);
+                Direction rotated = nextDirection(current);
+
+                // if the rotation isn't valid, try the next rotation
+                while (!property.getPossibleValues().contains(rotated)) {
+                    rotated = nextDirection(rotated);
+                    // give up if we went all the way around
+                    if (rotated == current) {
+                        return state;
+                    }
+                }
+                return state.setValue(dirProp, rotated);
+            }
+        }
+        return state;
+    }
+
+    private static Direction nextDirection(Direction dir) {
+        return DIRECTIONS[(dir.ordinal() + 1) % DIRECTIONS.length];
     }
 
     @Override

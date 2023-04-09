@@ -37,6 +37,7 @@ import owmii.powah.block.Tier;
 import owmii.powah.block.cable.CableTile;
 import owmii.powah.block.reactor.ReactorPartTile;
 import owmii.powah.fabric.block.FabricCableTile;
+import owmii.powah.fabric.data.ITags;
 import owmii.powah.fabric.transfer.EnergyItemWrapper;
 import owmii.powah.fabric.transfer.EnergyParticipant;
 import owmii.powah.fabric.transfer.InventoryWrapper;
@@ -202,6 +203,11 @@ public class FabricEnvHandler implements EnvHandler {
 	@Override
 	public InventoryWrapper createInvWrapper(Inventory inventory) {
 		return new InventoryWrapper(inventory);
+	}
+
+	@Override
+	public boolean isWrench(ItemStack stack) {
+		return stack.is(ITags.Items.WRENCHES);
 	}
 
 	@Override

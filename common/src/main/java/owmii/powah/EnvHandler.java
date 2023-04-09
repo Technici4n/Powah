@@ -48,6 +48,7 @@ public interface EnvHandler {
 	void registerTransfer();
 	// items
 	Object createInvWrapper(Inventory inventory);
+	boolean isWrench(ItemStack stack);
 	// fluids
 	Object createTankWrapper(Tank tank);
 	boolean interactWithTank(Player player, InteractionHand hand, Tank tank);
