@@ -35,11 +35,11 @@ import java.util.List;
 import java.util.Optional;
 
 public class WrenchItem extends ItemBase implements IHudItem, IWrench {
+    private static final Direction[] DIRECTIONS = Direction.values();
+
     public WrenchItem(Properties properties) {
         super(properties);
     }
-
-    private static final Direction[] DIRECTIONS = Direction.values();
 
     @Override
     public InteractionResult onItemUseFirst(ItemStack stack, Level world, BlockPos pos, Player player, InteractionHand hand, Direction side, Vec3 hit) {
