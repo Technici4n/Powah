@@ -51,6 +51,10 @@ public class Builder {
                 while (itr.hasNext()) {
                     BlockPos pos = itr.next();
                     BlockState state = this.reactor.getBlock().defaultBlockState();
+                    if (!world.getBlockState(pos).getMaterial().isReplaceable()) {
+                        this.demolish(world);
+                        return false;
+                    }
                     world.setBlock(pos, state.setValue(ReactorBlock.CORE, false), 3);
                     BlockEntity tileEntity = world.getBlockEntity(pos);
                     if (tileEntity instanceof ReactorPartTile) {
@@ -95,6 +99,7 @@ public class Builder {
     public void demolish(Level world) {
         List<BlockPos> list = getPosList();
         list.add(this.reactor.getBlockPos());
+        list.removeAll(this.queue);
         int count = 0;
         for (BlockPos blockPos : list) {
             if (world.getBlockState(blockPos).getBlock().equals(this.reactor.getBlock())) {
