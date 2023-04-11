@@ -20,9 +20,8 @@ public class PowahFabric implements ModInitializer {
 		SharedConstants.CHECK_DATA_FIXER_SCHEMA = checkDataFixer;
 
 		UseBlockCallback.EVENT.register((player, world, hand, hitResult) -> {
-			InteractionResult removeWithWrench = Wrench.removeWithWrench(player, world, hand, hitResult);
-			if (removeWithWrench != null) {
-				return removeWithWrench;
+			if (Wrench.removeWithWrench(player, world, hand, hitResult)) {
+				return InteractionResult.sidedSuccess(world.isClientSide);
 			}
 
 			var stack = player.getItemInHand(hand);

@@ -1,6 +1,7 @@
 package owmii.powah.forge;
 
 import dev.architectury.platform.forge.EventBuses;
+import net.minecraft.world.InteractionResult;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.eventbus.api.Event;
@@ -25,10 +26,9 @@ public class PowahForge {
 			if (event.getUseBlock() == Event.Result.DENY) {
 				return;
 			}
-			var result = Wrench.removeWithWrench(event.getEntity(), event.getLevel(), event.getHand(), event.getHitVec());
-			if (result != null) {
+			if (Wrench.removeWithWrench(event.getEntity(), event.getLevel(), event.getHand(), event.getHitVec())) {
 				event.setCanceled(true);
-				event.setCancellationResult(result);
+				event.setCancellationResult(InteractionResult.sidedSuccess(event.getLevel().isClientSide));
 			}
 		});
 
