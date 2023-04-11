@@ -47,7 +47,7 @@ public class AbstractEnderTile<B extends AbstractEnergyBlock<EnderConfig, B>> ex
 
     @Override
     public CompoundTag writeStorable(CompoundTag nbt) {
-        this.channel.writ(nbt, "channel");
+        this.channel.write(nbt, "channel");
         if (this.owner != null) {
             nbt.putUUID("owner_id", this.owner.getId());
             nbt.putString("owner_name", this.owner.getName());
