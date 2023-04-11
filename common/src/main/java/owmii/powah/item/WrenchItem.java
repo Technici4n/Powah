@@ -19,6 +19,7 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.DirectionProperty;
 import net.minecraft.world.level.block.state.properties.Property;
 import net.minecraft.world.phys.Vec3;
+import owmii.powah.block.energizing.EnergizingOrbBlock;
 import owmii.powah.lib.block.AbstractEnergyBlock;
 import owmii.powah.lib.client.handler.IHudItem;
 import owmii.powah.lib.item.ItemBase;
@@ -45,10 +46,9 @@ public class WrenchItem extends ItemBase implements IHudItem, IWrench {
         if (player.isShiftKeyDown()) return InteractionResult.PASS;
         BlockEntity te = world.getBlockEntity(pos);
         BlockState state = world.getBlockState(pos);
-        if (state.getBlock() instanceof IWrenchable) {
-            if (((IWrenchable) state.getBlock()).onWrench(state, world, pos, player, hand, side, getWrenchMode(stack), hit)) {
-                return InteractionResult.SUCCESS;
-            }
+        if (state.getBlock() instanceof IWrenchable iWrenchable
+            && iWrenchable.onWrench(state, world, pos, player, hand, side, getWrenchMode(stack), hit)) {
+            return InteractionResult.SUCCESS;
         } else {
             if (!world.isClientSide && getWrenchMode(stack).config()) {
                 if (te instanceof CableTile) {
@@ -76,7 +76,7 @@ public class WrenchItem extends ItemBase implements IHudItem, IWrench {
             }
             if (getWrenchMode(stack).rotate()
                     // Only rotate Powah machines
-                    && state.getBlock() instanceof AbstractEnergyBlock<?,?>) {
+                    && (state.getBlock() instanceof AbstractEnergyBlock<?,?> || state.getBlock() instanceof EnergizingOrbBlock)) {
                 final BlockState rotatedState = rotateState(world, state, pos);
                 if (!state.equals(rotatedState)) {
                     world.setBlockAndUpdate(pos, rotatedState);
