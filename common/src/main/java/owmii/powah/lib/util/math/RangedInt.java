@@ -29,7 +29,7 @@ public class RangedInt {
         return this;
     }
 
-    public CompoundTag writ(CompoundTag nbt, String key) {
+    public CompoundTag write(CompoundTag nbt, String key) {
         nbt.putInt(key, this.value);
         return nbt;
     }

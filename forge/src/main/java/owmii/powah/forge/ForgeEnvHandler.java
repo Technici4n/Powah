@@ -218,11 +218,17 @@ public class ForgeEnvHandler implements EnvHandler {
 									return new IEnergyStorage() {
 										@Override
 										public int receiveEnergy(int i, boolean bl) {
+											if (info.capacity() == 0 || !energyItem.canReceive()) {
+												return 0;
+											}
 											return Ints.saturatedCast(energyItem.receiveEnergy(i, bl));
 										}
 
 										@Override
 										public int extractEnergy(int i, boolean bl) {
+											if (!energyItem.canExtract()) {
+												return 0;
+											}
 											return Ints.saturatedCast(energyItem.extractEnergy(i, bl));
 										}
 
