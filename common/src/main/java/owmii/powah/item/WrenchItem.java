@@ -19,7 +19,6 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.DirectionProperty;
 import net.minecraft.world.level.block.state.properties.Property;
 import net.minecraft.world.phys.Vec3;
-import owmii.powah.block.ender.EnderGateBlock;
 import owmii.powah.lib.block.AbstractEnergyBlock;
 import owmii.powah.lib.client.handler.IHudItem;
 import owmii.powah.lib.item.ItemBase;
@@ -77,10 +76,8 @@ public class WrenchItem extends ItemBase implements IHudItem, IWrench {
             }
             if (getWrenchMode(stack).rotate()
                     // Only rotate Powah machines
-                    && state.getBlock() instanceof AbstractEnergyBlock<?,?>
-                    // Don't rotate ender gates (would need to check if the destination has something we can connect to)
-                    && !(state.getBlock() instanceof EnderGateBlock)) {
-                final BlockState rotatedState = rotateState(state);
+                    && state.getBlock() instanceof AbstractEnergyBlock<?,?>) {
+                final BlockState rotatedState = rotateState(world, state, pos);
                 if (!state.equals(rotatedState)) {
                     world.setBlockAndUpdate(pos, rotatedState);
                     world.playSound(player, pos, rotatedState.getBlock().getSoundType(rotatedState).getPlaceSound(), SoundSource.BLOCKS, 1F, 1F);
@@ -91,14 +88,14 @@ public class WrenchItem extends ItemBase implements IHudItem, IWrench {
         return super.onItemUseFirst(stack, world, pos, player, hand, side, hit);
     }
 
-    private BlockState rotateState(BlockState state) {
+    private BlockState rotateState(Level world, BlockState state, BlockPos pos) {
         for (Property<?> property : state.getProperties()) {
             if (property.getName().equals("facing") && property instanceof DirectionProperty dirProp) {
                 final Direction current = state.getValue(dirProp);
                 Direction rotated = nextDirection(current);
 
                 // if the rotation isn't valid, try the next rotation
-                while (!property.getPossibleValues().contains(rotated)) {
+                while (!property.getPossibleValues().contains(rotated) || !state.setValue(dirProp, rotated).canSurvive(world, pos)) {
                     rotated = nextDirection(rotated);
                     // give up if we went all the way around
                     if (rotated == current) {
