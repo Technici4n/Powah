@@ -6,6 +6,7 @@ import net.minecraft.client.renderer.BlockEntityWithoutLevelRenderer;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.ContainerHelper;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.CreativeModeTab;
@@ -49,8 +50,8 @@ public class ReactorItem extends EnergyBlockItem<GeneratorConfig, ReactorBlock> 
         net.minecraft.world.entity.player.Player player = context.getPlayer();
         if (player == null || Player.isFake(player)) return InteractionResult.FAIL;
         ItemStack stack = context.getItemInHand();
-        if (stack.getCount() < 36 && !player.isCreative()) {
-            player.displayClientMessage(Component.translatable("chat.powah.not.enough.blocks", "" + ChatFormatting.YELLOW + (36 - stack.getCount()) + ChatFormatting.RED).withStyle(ChatFormatting.RED), true);
+        if (player.getInventory().countItem(stack.getItem()) < 36 && !player.isCreative()) {
+            player.displayClientMessage(Component.translatable("chat.powah.not.enough.blocks", "" + ChatFormatting.YELLOW + (36 - player.getInventory().countItem(stack.getItem())) + ChatFormatting.RED).withStyle(ChatFormatting.RED), true);
             return InteractionResult.FAIL;
         }
         BlockPos pos = context.getClickedPos();
@@ -64,7 +65,17 @@ public class ReactorItem extends EnergyBlockItem<GeneratorConfig, ReactorBlock> 
         List<LivingEntity> entities = context.getLevel().getEntitiesOfClass(LivingEntity.class, new AABB(pos).inflate(1.0D, 3.0D, 1.0D));
         if (!entities.isEmpty()) return InteractionResult.FAIL;
 
-        stack.shrink(35);
+        if (stack.getCount() < 36) {
+            int held = stack.getCount();
+            stack.setCount(0);
+            final int taken = ContainerHelper.clearOrCountMatchingItems(player.getInventory(), s -> s.is(this), 36 - held, false);
+            if (taken + held != 36) {
+                throw new IllegalStateException();
+            }
+            stack.setCount(1);
+        } else {
+            stack.shrink(35);
+        }
         ALLOW_PLACEMENT.set(true);
         try {
             return super.place(context);

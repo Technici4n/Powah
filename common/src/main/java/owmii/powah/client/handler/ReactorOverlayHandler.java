@@ -37,7 +37,7 @@ public class ReactorOverlayHandler {
 			ItemStack stack = player.getItemInHand(hand);
 			if (stack.getItem() instanceof ReactorItem) {
 				flag = true;
-				if (stack.getCount() >= 36) {
+				if (player.getInventory().countItem(stack.getItem()) >= 36) {
 					flag1 = true;
 					break;
 				}
