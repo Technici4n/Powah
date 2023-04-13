@@ -59,7 +59,7 @@ public class SolarTile extends AbstractEnergyProvider<SolarBlock> implements IIn
                 }
             }
             if (!this.energy.isFull()) {
-                if ((this.canSeeSky || this.hasLensOfEnder) && (!world.dimensionType().hasSkyLight() || world.getSkyDarken() >= 4)) {
+                if ((this.canSeeSky || this.hasLensOfEnder) && (world.dimensionType().hasSkyLight() && world.getSkyDarken() < 4) {
                     this.energy.produce(getGeneration());
                     flag = true;
                 }
