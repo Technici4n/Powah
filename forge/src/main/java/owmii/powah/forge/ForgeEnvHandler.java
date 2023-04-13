@@ -48,6 +48,7 @@ import owmii.powah.block.reactor.ReactorPartTile;
 import owmii.powah.client.render.tile.ReactorItemRenderer;
 import owmii.powah.forge.block.ForgeCableTile;
 import owmii.powah.forge.compat.curios.CuriosCompat;
+import owmii.powah.forge.data.ITags;
 import owmii.powah.item.ItemGroups;
 import owmii.powah.lib.block.AbstractEnergyStorage;
 import owmii.powah.lib.block.IBlock;
@@ -298,6 +299,11 @@ public class ForgeEnvHandler implements EnvHandler {
 				return inventory.isItemValid(i, arg);
 			}
 		};
+	}
+
+	@Override
+	public boolean isWrench(ItemStack stack) {
+		return stack.is(ITags.Items.WRENCHES);
 	}
 
 	@Override

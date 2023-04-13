@@ -5,6 +5,7 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
+import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.InteractionResultHolder;
@@ -15,7 +16,11 @@ import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.state.properties.DirectionProperty;
+import net.minecraft.world.level.block.state.properties.Property;
 import net.minecraft.world.phys.Vec3;
+import owmii.powah.block.energizing.EnergizingOrbBlock;
+import owmii.powah.lib.block.AbstractEnergyBlock;
 import owmii.powah.lib.client.handler.IHudItem;
 import owmii.powah.lib.item.ItemBase;
 import owmii.powah.lib.logistics.energy.SideConfig;
@@ -30,6 +35,8 @@ import java.util.List;
 import java.util.Optional;
 
 public class WrenchItem extends ItemBase implements IHudItem, IWrench {
+    private static final Direction[] DIRECTIONS = Direction.values();
+
     public WrenchItem(Properties properties) {
         super(properties);
     }
@@ -39,10 +46,9 @@ public class WrenchItem extends ItemBase implements IHudItem, IWrench {
         if (player.isShiftKeyDown()) return InteractionResult.PASS;
         BlockEntity te = world.getBlockEntity(pos);
         BlockState state = world.getBlockState(pos);
-        if (state.getBlock() instanceof IWrenchable) {
-            if (((IWrenchable) state.getBlock()).onWrench(state, world, pos, player, hand, side, getWrenchMode(stack), hit)) {
-                return InteractionResult.SUCCESS;
-            }
+        if (state.getBlock() instanceof IWrenchable iWrenchable
+            && iWrenchable.onWrench(state, world, pos, player, hand, side, getWrenchMode(stack), hit)) {
+            return InteractionResult.SUCCESS;
         } else {
             if (!world.isClientSide && getWrenchMode(stack).config()) {
                 if (te instanceof CableTile) {
@@ -68,8 +74,42 @@ public class WrenchItem extends ItemBase implements IHudItem, IWrench {
 //                    }
 //                }
             }
+            if (getWrenchMode(stack).rotate()
+                    // Only rotate Powah machines
+                    && (state.getBlock() instanceof AbstractEnergyBlock<?,?> || state.getBlock() instanceof EnergizingOrbBlock)) {
+                final BlockState rotatedState = rotateState(world, state, pos);
+                if (!state.equals(rotatedState)) {
+                    world.setBlockAndUpdate(pos, rotatedState);
+                    world.playSound(player, pos, rotatedState.getBlock().getSoundType(rotatedState).getPlaceSound(), SoundSource.BLOCKS, 1F, 1F);
+                    return InteractionResult.sidedSuccess(world.isClientSide);
+                }
+            }
         }
         return super.onItemUseFirst(stack, world, pos, player, hand, side, hit);
+    }
+
+    private BlockState rotateState(Level world, BlockState state, BlockPos pos) {
+        for (Property<?> property : state.getProperties()) {
+            if (property.getName().equals("facing") && property instanceof DirectionProperty dirProp) {
+                final Direction current = state.getValue(dirProp);
+                Direction rotated = nextDirection(current);
+
+                // if the rotation isn't valid, try the next rotation
+                while (!property.getPossibleValues().contains(rotated) || !state.setValue(dirProp, rotated).canSurvive(world, pos)) {
+                    rotated = nextDirection(rotated);
+                    // give up if we went all the way around
+                    if (rotated == current) {
+                        return state;
+                    }
+                }
+                return state.setValue(dirProp, rotated);
+            }
+        }
+        return state;
+    }
+
+    private static Direction nextDirection(Direction dir) {
+        return DIRECTIONS[(dir.ordinal() + 1) % DIRECTIONS.length];
     }
 
     @Override

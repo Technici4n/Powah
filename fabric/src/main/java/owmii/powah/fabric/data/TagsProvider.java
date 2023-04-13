@@ -77,6 +77,8 @@ public class TagsProvider {
             // TODO PR TO FABRIC
             //tag(ConventionalItemTags.INGOTS).add(Itms.ENERGIZED_STEEL.get());
             //tag(ConventionalItemTags.GEMS).add(Itms.BLAZING_CRYSTAL.get(), Itms.NIOTIC_CRYSTAL.get(), Itms.SPIRITED_CRYSTAL.get(), Itms.NITRO_CRYSTAL.get());
+
+            tag(ITags.Items.WRENCHES).add(Itms.WRENCH.get());
         }
     }
 }
