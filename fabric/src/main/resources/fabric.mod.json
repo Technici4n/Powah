@@ -27,6 +27,9 @@
     "jei_mod_plugin": ["owmii.powah.compat.jei.PowahJEIPlugin"],
     "rei_client": [
       "owmii.powah.fabric.compat.rei.PowahREIPlugin"
+    ],
+    "emi": [
+      "owmii.powah.fabric.compat.emi.PowahEMIPlugin"
     ]
   },
   "depends": {
