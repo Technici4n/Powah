@@ -42,9 +42,10 @@ dependencies {
     //modCompileOnly "me.shedaniel:RoughlyEnoughItems-api-fabric:${rootProject.rei_version}"
     modCompileOnly "me.shedaniel:RoughlyEnoughItems-fabric:${rootProject.rei_version}"
 
-    // Choose REI or JEI
+    // Choose REI, JEI or EMI
     modRuntimeOnly "me.shedaniel:RoughlyEnoughItems-fabric:${rootProject.rei_version}"
     //modRuntimeOnly("mezz.jei:jei-${project.jei_minecraft_release}-fabric:${project.jei_version}")
+    //modRuntimeOnly "dev.emi:emi:${project.emi_version}"
 
     include modApi('teamreborn:energy:2.2.0') {
         exclude(group: "net.fabricmc.fabric-api")
@@ -54,6 +55,8 @@ dependencies {
         // The transitive deps are not remapped by JEI and largely include the same classes
         exclude group: "mezz.jei"
     }
+
+    modCompileOnly "dev.emi:emi:${project.emi_version}:api"
 
     modCompileOnly "dev.emi:trinkets:${project.trinkets_version}"
 
