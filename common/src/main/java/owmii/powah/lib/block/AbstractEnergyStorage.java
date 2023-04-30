@@ -1,9 +1,9 @@
 package owmii.powah.lib.block;
 
+import javax.annotation.Nullable;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
@@ -17,12 +17,8 @@ import owmii.powah.lib.logistics.energy.SideConfig;
 import owmii.powah.lib.registry.IVariant;
 import owmii.powah.lib.util.Util;
 
-import javax.annotation.Nullable;
-import java.util.List;
-import java.util.stream.Collectors;
-import java.util.stream.IntStream;
-
-public abstract class AbstractEnergyStorage<C extends IEnergyConfig<Tier>, B extends AbstractEnergyBlock<C, B>> extends AbstractTickableTile<Tier, B> implements IRedstoneInteract {
+public abstract class AbstractEnergyStorage<C extends IEnergyConfig<Tier>, B extends AbstractEnergyBlock<C, B>> extends AbstractTickableTile<Tier, B>
+        implements IRedstoneInteract {
     protected final SideConfig sideConfig = new SideConfig(this);
     protected final Energy energy = Energy.create(0);
 
@@ -107,7 +103,8 @@ public abstract class AbstractEnergyStorage<C extends IEnergyConfig<Tier>, B ext
     }
 
     public long extractEnergy(long maxExtract, boolean simulate, @Nullable Direction side) {
-        if (!canExtractEnergy(side)) return 0;
+        if (!canExtractEnergy(side))
+            return 0;
         final Energy energy = getEnergy();
         long extracted = Math.min(energy.getStored(), Math.min(energy.getMaxExtract(), maxExtract));
         if (!simulate && extracted > 0) {
@@ -118,7 +115,8 @@ public abstract class AbstractEnergyStorage<C extends IEnergyConfig<Tier>, B ext
     }
 
     public long receiveEnergy(long maxReceive, boolean simulate, @Nullable Direction side) {
-        if (!canReceiveEnergy(side)) return 0;
+        if (!canReceiveEnergy(side))
+            return 0;
         final Energy energy = getEnergy();
         long received = Math.min(energy.getEmpty(), Math.min(energy.getMaxReceive(), maxReceive));
         if (!simulate && received > 0) {

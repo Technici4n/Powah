@@ -1,14 +1,5 @@
 package owmii.powah.block.transmitter;
 
-import owmii.powah.Powah;
-import owmii.powah.config.v2.types.ChargingConfig;
-import owmii.powah.lib.block.AbstractEnergyBlock;
-import owmii.powah.lib.block.AbstractTileEntity;
-import owmii.powah.lib.item.EnergyBlockItem;
-import owmii.powah.lib.logistics.inventory.AbstractContainer;
-import owmii.powah.block.Tier;
-import owmii.powah.inventory.PlayerTransmitterContainer;
-
 import javax.annotation.Nullable;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -33,11 +24,21 @@ import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
+import owmii.powah.Powah;
+import owmii.powah.block.Tier;
+import owmii.powah.config.v2.types.ChargingConfig;
+import owmii.powah.inventory.PlayerTransmitterContainer;
+import owmii.powah.lib.block.AbstractEnergyBlock;
+import owmii.powah.lib.block.AbstractTileEntity;
+import owmii.powah.lib.item.EnergyBlockItem;
+import owmii.powah.lib.logistics.inventory.AbstractContainer;
 
 public class PlayerTransmitterBlock extends AbstractEnergyBlock<ChargingConfig, PlayerTransmitterBlock> {
     public static final BooleanProperty TOP = BooleanProperty.create("top");
-    public static final VoxelShape TOP_SHAPE = Shapes.or(box(6, 8, 6, 10, 12, 10), box(7, 4.5D, 7, 9, 8, 9), box(4, 0.5D, 4, 12, 1.5D, 12), box(4, 2D, 4, 12, 3D, 12), box(4, 3.5D, 4, 12, 4.5D, 12), box(1, -15, 1, 15, -1, 15), box(4, -1, 4, 12, 0, 12));
-    public static final VoxelShape BOTTOM_SHAPE = Shapes.or(box(6, 24, 6, 10, 28, 10), box(7, 20.5, 7, 9, 24, 9), box(4, 16.5, 4, 12, 17.5, 12), box(4, 18.0, 4, 12, 19.0, 12), box(4, 3.5D + 16, 4, 12, 20.5, 12), box(1, 1, 1, 15, 15, 15), box(4, 15, 4, 12, 16, 12));
+    public static final VoxelShape TOP_SHAPE = Shapes.or(box(6, 8, 6, 10, 12, 10), box(7, 4.5D, 7, 9, 8, 9), box(4, 0.5D, 4, 12, 1.5D, 12),
+            box(4, 2D, 4, 12, 3D, 12), box(4, 3.5D, 4, 12, 4.5D, 12), box(1, -15, 1, 15, -1, 15), box(4, -1, 4, 12, 0, 12));
+    public static final VoxelShape BOTTOM_SHAPE = Shapes.or(box(6, 24, 6, 10, 28, 10), box(7, 20.5, 7, 9, 24, 9), box(4, 16.5, 4, 12, 17.5, 12),
+            box(4, 18.0, 4, 12, 19.0, 12), box(4, 3.5D + 16, 4, 12, 20.5, 12), box(1, 1, 1, 15, 15, 15), box(4, 15, 4, 12, 16, 12));
 
     public PlayerTransmitterBlock(Properties properties, Tier variant) {
         super(properties, variant);
@@ -86,10 +87,12 @@ public class PlayerTransmitterBlock extends AbstractEnergyBlock<ChargingConfig, 
     }
 
     @Override
-    public BlockState updateShape(BlockState state, Direction facing, BlockState facingState, LevelAccessor world, BlockPos currentPos, BlockPos facingPos) {
+    public BlockState updateShape(BlockState state, Direction facing, BlockState facingState, LevelAccessor world, BlockPos currentPos,
+            BlockPos facingPos) {
         BlockState bottomState = world.getBlockState(currentPos.below());
         BlockState topState = world.getBlockState(currentPos.above());
-        if (!state.getValue(TOP) && !(topState.getBlock() instanceof PlayerTransmitterBlock) || state.getValue(TOP) && !(bottomState.getBlock() instanceof PlayerTransmitterBlock)) {
+        if (!state.getValue(TOP) && !(topState.getBlock() instanceof PlayerTransmitterBlock)
+                || state.getValue(TOP) && !(bottomState.getBlock() instanceof PlayerTransmitterBlock)) {
             world.setBlock(currentPos, Blocks.AIR.defaultBlockState(), 3);
             return Blocks.AIR.defaultBlockState();
         } else {
@@ -107,8 +110,8 @@ public class PlayerTransmitterBlock extends AbstractEnergyBlock<ChargingConfig, 
 
     @Override
     public boolean canSurvive(BlockState state, LevelReader world, BlockPos pos) {
-        return state.getValue(TOP) ? super.canSurvive(state, world, pos) :
-                (world.isEmptyBlock(pos.above()) || world.getBlockState(pos.above()).getBlock() == this);
+        return state.getValue(TOP) ? super.canSurvive(state, world, pos)
+                : (world.isEmptyBlock(pos.above()) || world.getBlockState(pos.above()).getBlock() == this);
     }
 
     @Override

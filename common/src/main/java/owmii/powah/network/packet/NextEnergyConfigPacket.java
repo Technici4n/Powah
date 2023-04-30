@@ -18,7 +18,7 @@ public class NextEnergyConfigPacket implements IPacket {
         this.pos = pos;
     }
 
-    public NextEnergyConfigPacket (FriendlyByteBuf buffer) {
+    public NextEnergyConfigPacket(FriendlyByteBuf buffer) {
         this(buffer.readInt(), buffer.readBlockPos());
     }
 
@@ -33,8 +33,10 @@ public class NextEnergyConfigPacket implements IPacket {
         if (player instanceof ServerPlayer) {
             BlockEntity tileEntity = player.level.getBlockEntity(pos);
             if (tileEntity instanceof AbstractEnergyStorage storage) {
-                if (mode > 5) storage.getSideConfig().nextTypeAll();
-                else storage.getSideConfig().nextType(Direction.from3DDataValue(mode));
+                if (mode > 5)
+                    storage.getSideConfig().nextTypeAll();
+                else
+                    storage.getSideConfig().nextType(Direction.from3DDataValue(mode));
                 storage.sync();
             }
         }

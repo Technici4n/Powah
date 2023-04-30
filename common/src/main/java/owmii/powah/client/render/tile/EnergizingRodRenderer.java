@@ -17,13 +17,13 @@ import net.minecraft.util.Mth;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.phys.Vec3;
-import owmii.powah.lib.client.renderer.tile.AbstractTileRenderer;
-import owmii.powah.lib.client.util.RenderTypes;
-import owmii.powah.lib.util.math.V3d;
 import owmii.powah.Powah;
 import owmii.powah.api.wrench.IWrench;
 import owmii.powah.block.energizing.EnergizingOrbTile;
 import owmii.powah.block.energizing.EnergizingRodTile;
+import owmii.powah.lib.client.renderer.tile.AbstractTileRenderer;
+import owmii.powah.lib.client.util.RenderTypes;
+import owmii.powah.lib.util.math.V3d;
 
 public class EnergizingRodRenderer extends AbstractTileRenderer<EnergizingRodTile> {
     public static final ResourceLocation BEAM_TEXTURE = new ResourceLocation(Powah.MOD_ID, "textures/model/tile/beam.png");
@@ -34,7 +34,8 @@ public class EnergizingRodRenderer extends AbstractTileRenderer<EnergizingRodTil
     }
 
     @Override
-    public void render(EnergizingRodTile te, float pt, PoseStack matrix, MultiBufferSource rtb, Minecraft mc, ClientLevel world, LocalPlayer player, int light, int ov) {
+    public void render(EnergizingRodTile te, float pt, PoseStack matrix, MultiBufferSource rtb, Minecraft mc, ClientLevel world, LocalPlayer player,
+            int light, int ov) {
 
         boolean flag = false;
 
@@ -107,6 +108,7 @@ public class EnergizingRodRenderer extends AbstractTileRenderer<EnergizingRodTil
     }
 
     private void pos(VertexConsumer builder, Matrix4f matrix4f, Matrix3f matrix3f, float x, float y, float z, int r, int g, int b, float u, float v) {
-        builder.vertex(matrix4f, x, y, z).color(r, g, b, 255).uv(u, v).overlayCoords(OverlayTexture.NO_OVERLAY).uv2(15728880 / 2).normal(matrix3f, 0.0F, 1.0F, 0.0F).endVertex();
+        builder.vertex(matrix4f, x, y, z).color(r, g, b, 255).uv(u, v).overlayCoords(OverlayTexture.NO_OVERLAY).uv2(15728880 / 2)
+                .normal(matrix3f, 0.0F, 1.0F, 0.0F).endVertex();
     }
 }

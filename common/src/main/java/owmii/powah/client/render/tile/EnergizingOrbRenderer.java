@@ -1,5 +1,9 @@
 package owmii.powah.client.render.tile;
 
+import com.mojang.blaze3d.vertex.PoseStack;
+import com.mojang.math.Vector3f;
+import java.util.ArrayList;
+import java.util.List;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.client.player.LocalPlayer;
@@ -8,17 +12,12 @@ import net.minecraft.client.renderer.block.model.ItemTransforms;
 import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.phys.Vec3;
+import owmii.powah.block.energizing.EnergizingOrbTile;
+import owmii.powah.client.model.OrbModel;
+import owmii.powah.client.model.PowahLayerDefinitions;
 import owmii.powah.lib.client.renderer.tile.AbstractTileRenderer;
 import owmii.powah.lib.logistics.inventory.Inventory;
 import owmii.powah.lib.util.math.V3d;
-import owmii.powah.block.energizing.EnergizingOrbTile;
-import owmii.powah.client.model.OrbModel;
-import com.mojang.blaze3d.vertex.PoseStack;
-import com.mojang.math.Vector3f;
-import owmii.powah.client.model.PowahLayerDefinitions;
-
-import java.util.ArrayList;
-import java.util.List;
 
 public class EnergizingOrbRenderer extends AbstractTileRenderer<EnergizingOrbTile> {
     private final OrbModel model;
@@ -29,7 +28,8 @@ public class EnergizingOrbRenderer extends AbstractTileRenderer<EnergizingOrbTil
     }
 
     @Override
-    public void render(EnergizingOrbTile te, float pt, PoseStack matrix, MultiBufferSource rtb, Minecraft mc, ClientLevel world, LocalPlayer player, int light, int ov) {
+    public void render(EnergizingOrbTile te, float pt, PoseStack matrix, MultiBufferSource rtb, Minecraft mc, ClientLevel world, LocalPlayer player,
+            int light, int ov) {
         Inventory inv = te.getInventory();
         if (!inv.isEmpty()) {
             float ticks = (te.ticks + pt) / 200.0F;

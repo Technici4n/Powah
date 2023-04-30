@@ -1,12 +1,11 @@
 package owmii.powah.fabric.compat.rei.energizing;
 
+import java.util.List;
 import me.shedaniel.rei.api.common.category.CategoryIdentifier;
 import me.shedaniel.rei.api.common.display.Display;
 import me.shedaniel.rei.api.common.entry.EntryIngredient;
 import me.shedaniel.rei.api.common.util.EntryIngredients;
 import owmii.powah.block.energizing.EnergizingRecipe;
-
-import java.util.List;
 
 public class EnergizingDisplay implements Display {
     private final List<EntryIngredient> inputs, output;

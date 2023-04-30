@@ -9,11 +9,11 @@ import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
 import net.minecraft.resources.ResourceLocation;
-import owmii.powah.client.model.CubeModel;
-import owmii.powah.lib.client.renderer.tile.AbstractTileRenderer;
 import owmii.powah.Powah;
 import owmii.powah.block.reactor.ReactorPartTile;
+import owmii.powah.client.model.CubeModel;
 import owmii.powah.client.model.PowahLayerDefinitions;
+import owmii.powah.lib.client.renderer.tile.AbstractTileRenderer;
 
 public class ReactorPartRenderer extends AbstractTileRenderer<ReactorPartTile> {
     private final CubeModel reactorPartModel;
@@ -24,12 +24,15 @@ public class ReactorPartRenderer extends AbstractTileRenderer<ReactorPartTile> {
     }
 
     @Override
-    public void render(ReactorPartTile te, float pt, PoseStack matrix, MultiBufferSource rtb, Minecraft mc, ClientLevel world, LocalPlayer player, int light, int ov) {
-        if (te.isBuilt()) return;
+    public void render(ReactorPartTile te, float pt, PoseStack matrix, MultiBufferSource rtb, Minecraft mc, ClientLevel world, LocalPlayer player,
+            int light, int ov) {
+        if (te.isBuilt())
+            return;
         matrix.pushPose();
         matrix.translate(0.5, 0.5, 0.5);
         matrix.scale(1.0f, -1.0f, -1.0f);
-        VertexConsumer buffer = rtb.getBuffer(reactorPartModel.renderType(new ResourceLocation(Powah.MOD_ID, "textures/model/tile/reactor_block_" + te.getVariant().getName() + ".png")));
+        VertexConsumer buffer = rtb.getBuffer(reactorPartModel
+                .renderType(new ResourceLocation(Powah.MOD_ID, "textures/model/tile/reactor_block_" + te.getVariant().getName() + ".png")));
         reactorPartModel.renderToBuffer(matrix, buffer, light, ov, 1.0F, 1.0F, 1.0F, 1.0F);
         matrix.popPose();
     }

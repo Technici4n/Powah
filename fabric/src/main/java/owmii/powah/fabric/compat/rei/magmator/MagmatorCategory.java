@@ -1,5 +1,7 @@
 package owmii.powah.fabric.compat.rei.magmator;
 
+import java.util.ArrayList;
+import java.util.List;
 import me.shedaniel.math.Point;
 import me.shedaniel.math.Rectangle;
 import me.shedaniel.rei.api.client.gui.Renderer;
@@ -14,9 +16,6 @@ import net.minecraft.resources.ResourceLocation;
 import owmii.powah.Powah;
 import owmii.powah.block.Blcks;
 import owmii.powah.block.Tier;
-
-import java.util.ArrayList;
-import java.util.List;
 
 public class MagmatorCategory implements DisplayCategory<MagmatorDisplay> {
     public static final ResourceLocation GUI_BACK = new ResourceLocation(Powah.MOD_ID, "textures/gui/jei/misc.png");
@@ -42,7 +41,6 @@ public class MagmatorCategory implements DisplayCategory<MagmatorDisplay> {
     public int getDisplayWidth(MagmatorDisplay display) {
         return 168;
     }
-
 
     @Override
     public int getDisplayHeight() {

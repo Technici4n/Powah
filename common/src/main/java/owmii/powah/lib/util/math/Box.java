@@ -84,68 +84,67 @@ public class Box {
         return this;
     }
 
-
     public double get(Direction direction) {
         switch (direction) {
-            case DOWN:
-                return getDown();
-            case UP:
-                return getUp();
-            case NORTH:
-                return getNorth();
-            case SOUTH:
-                return getSouth();
-            case WEST:
-                return getWest();
-            default:
-                return getEast();
+        case DOWN:
+            return getDown();
+        case UP:
+            return getUp();
+        case NORTH:
+            return getNorth();
+        case SOUTH:
+            return getSouth();
+        case WEST:
+            return getWest();
+        default:
+            return getEast();
         }
     }
 
     public Box add(Direction direction, double value) {
         switch (direction) {
-            case DOWN:
-                down(value);
-                break;
-            case UP:
-                up(value);
-                break;
-            case NORTH:
-                north(value);
-                break;
-            case SOUTH:
-                south(value);
-                break;
-            case WEST:
-                west(value);
-                break;
-            case EAST:
-                east(value);
-                break;
+        case DOWN:
+            down(value);
+            break;
+        case UP:
+            up(value);
+            break;
+        case NORTH:
+            north(value);
+            break;
+        case SOUTH:
+            south(value);
+            break;
+        case WEST:
+            west(value);
+            break;
+        case EAST:
+            east(value);
+            break;
         }
         return this;
     }
 
     public Box set(Direction direction, double value) {
         switch (direction) {
-            case DOWN:
-                setDown(value);
-                break;
-            case UP:
-                setUp(value);
-                break;
-            case NORTH:
-                setNorth(value);
-                break;
-            case SOUTH:
-                setSouth(value);
-                break;
-            case WEST:
-                setWest(value);
-                break;
-            case EAST:
-                setEast(value);
-                break;
+        case DOWN:
+            setDown(value);
+            break;
+        case UP:
+            setUp(value);
+            break;
+        case NORTH:
+            setNorth(value);
+            break;
+        case SOUTH:
+            setSouth(value);
+            break;
+        case WEST:
+            setWest(value);
+            break;
+        case EAST:
+            setEast(value);
+            break;
         }
         return this;
     }

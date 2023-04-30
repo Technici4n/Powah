@@ -6,14 +6,14 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
+import owmii.powah.api.PowahAPI;
+import owmii.powah.block.Tier;
+import owmii.powah.block.Tiles;
 import owmii.powah.lib.block.AbstractEnergyProvider;
 import owmii.powah.lib.block.IInventoryHolder;
 import owmii.powah.lib.block.ITankHolder;
 import owmii.powah.lib.logistics.energy.Energy;
 import owmii.powah.lib.logistics.fluid.Tank;
-import owmii.powah.api.PowahAPI;
-import owmii.powah.block.Tier;
-import owmii.powah.block.Tiles;
 import owmii.powah.lib.util.Util;
 
 public class MagmatorTile extends AbstractEnergyProvider<MagmatorBlock> implements IInventoryHolder, ITankHolder {
@@ -73,7 +73,7 @@ public class MagmatorTile extends AbstractEnergyProvider<MagmatorBlock> implemen
             if (this.burning != flag) {
                 this.burning = flag;
                 sync(4);
-            }//TODO
+            } // TODO
         }
         return chargeItems(1) + extractFromSides(world) > 0 ? 10 : -1;
     }

@@ -1,6 +1,11 @@
 package owmii.powah.lib.block;
 
+import static net.minecraft.world.level.block.state.properties.BlockStateProperties.*;
+
 import dev.architectury.registry.menu.MenuRegistry;
+import java.util.HashMap;
+import java.util.Map;
+import javax.annotation.Nullable;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.network.FriendlyByteBuf;
@@ -20,7 +25,6 @@ import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.EntityBlock;
 import net.minecraft.world.level.block.Mirror;
 import net.minecraft.world.level.block.Rotation;
 import net.minecraft.world.level.block.SimpleWaterloggedBlock;
@@ -37,12 +41,6 @@ import net.minecraft.world.phys.shapes.VoxelShape;
 import owmii.powah.lib.logistics.inventory.AbstractContainer;
 import owmii.powah.lib.registry.IVariant;
 import owmii.powah.lib.registry.IVariantEntry;
-
-import javax.annotation.Nullable;
-import java.util.HashMap;
-import java.util.Map;
-
-import static net.minecraft.world.level.block.state.properties.BlockStateProperties.*;
 
 public class AbstractBlock<V extends IVariant, B extends AbstractBlock<V, B>> extends Block implements IVariantEntry<V, B>, IBlock<V, B> {
     public static final VoxelShape SEMI_FULL_SHAPE = box(0.01D, 0.01D, 0.01D, 15.99D, 15.99D, 15.99D);
@@ -125,7 +123,8 @@ public class AbstractBlock<V extends IVariant, B extends AbstractBlock<V, B>> ex
     }
 
     @Override
-    public BlockState updateShape(BlockState state, Direction facing, BlockState facingState, LevelAccessor world, BlockPos currentPos, BlockPos facingPos) {
+    public BlockState updateShape(BlockState state, Direction facing, BlockState facingState, LevelAccessor world, BlockPos currentPos,
+            BlockPos facingPos) {
         if (this instanceof SimpleWaterloggedBlock && state.getValue(WATERLOGGED))
             world.scheduleTick(currentPos, Fluids.WATER, Fluids.WATER.getTickDelay(world));
         if (!state.canSurvive(world, currentPos)) {
@@ -188,7 +187,8 @@ public class AbstractBlock<V extends IVariant, B extends AbstractBlock<V, B>> ex
         return null;
     }
 
-    protected void additionalGuiData(FriendlyByteBuf buffer, BlockState state, Level world, BlockPos pos, Player player, InteractionHand hand, BlockHitResult result) {
+    protected void additionalGuiData(FriendlyByteBuf buffer, BlockState state, Level world, BlockPos pos, Player player, InteractionHand hand,
+            BlockHitResult result) {
     }
 
     @Override
@@ -273,20 +273,22 @@ public class AbstractBlock<V extends IVariant, B extends AbstractBlock<V, B>> ex
         return null;
     }
 
-    /* TODO ARCH - not essential (what the hell is this even?)
-    @Override
-    public BlockState rotate(BlockState state, LevelAccessor world, BlockPos pos, Rotation direction) {
-        if (!getFacing().equals(Facing.NONE)) {
-            for (Rotation rotation : Rotation.values()) {
-                if (!rotation.equals(Rotation.NONE)) {
-                    if (canSurvive(super.rotate(state, world, pos, rotation), world, pos)) {
-                        return super.rotate(state, world, pos, rotation);
-                    }
-                }
-            }
-        }
-        return state;
-    }
+    /*
+     * TODO ARCH - not essential (what the hell is this even?)
+     * 
+     * @Override
+     * public BlockState rotate(BlockState state, LevelAccessor world, BlockPos pos, Rotation direction) {
+     * if (!getFacing().equals(Facing.NONE)) {
+     * for (Rotation rotation : Rotation.values()) {
+     * if (!rotation.equals(Rotation.NONE)) {
+     * if (canSurvive(super.rotate(state, world, pos, rotation), world, pos)) {
+     * return super.rotate(state, world, pos, rotation);
+     * }
+     * }
+     * }
+     * }
+     * return state;
+     * }
      */
 
     @Override
@@ -318,12 +320,17 @@ public class AbstractBlock<V extends IVariant, B extends AbstractBlock<V, B>> ex
 
     @Override
     protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
-        if (getFacing().equals(Facing.ALL) || getFacing().equals(Facing.HORIZONTAL)) builder.add(FACING);
-        if (this instanceof SimpleWaterloggedBlock) builder.add(WATERLOGGED);
-        if (hasLitProp()) builder.add(LIT);
+        if (getFacing().equals(Facing.ALL) || getFacing().equals(Facing.HORIZONTAL))
+            builder.add(FACING);
+        if (this instanceof SimpleWaterloggedBlock)
+            builder.add(WATERLOGGED);
+        if (hasLitProp())
+            builder.add(LIT);
     }
 
     protected enum Facing {
-        HORIZONTAL, ALL, NONE
+        HORIZONTAL,
+        ALL,
+        NONE
     }
 }

@@ -8,13 +8,13 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.LiquidBlock;
 import net.minecraft.world.level.block.state.BlockState;
+import owmii.powah.api.PowahAPI;
+import owmii.powah.block.Tier;
+import owmii.powah.block.Tiles;
 import owmii.powah.lib.block.AbstractEnergyProvider;
 import owmii.powah.lib.block.IInventoryHolder;
 import owmii.powah.lib.block.ITankHolder;
 import owmii.powah.lib.logistics.energy.Energy;
-import owmii.powah.api.PowahAPI;
-import owmii.powah.block.Tier;
-import owmii.powah.block.Tiles;
 import owmii.powah.lib.util.Util;
 
 public class ThermoTile extends AbstractEnergyProvider<ThermoBlock> implements IInventoryHolder, ITankHolder {

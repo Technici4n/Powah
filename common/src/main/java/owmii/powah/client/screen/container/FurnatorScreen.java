@@ -2,20 +2,19 @@ package owmii.powah.client.screen.container;
 
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
-import owmii.powah.lib.client.screen.container.AbstractEnergyScreen;
-import owmii.powah.lib.client.util.Text;
-import owmii.powah.lib.logistics.energy.Energy;
-import owmii.powah.lib.util.Ticker;
-import owmii.powah.lib.util.Util;
-import owmii.powah.block.furnator.FurnatorTile;
-import owmii.powah.client.screen.Textures;
-import owmii.powah.inventory.FurnatorContainer;
-
 import java.util.ArrayList;
 import java.util.List;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.player.Inventory;
+import owmii.powah.block.furnator.FurnatorTile;
+import owmii.powah.client.screen.Textures;
+import owmii.powah.inventory.FurnatorContainer;
+import owmii.powah.lib.client.screen.container.AbstractEnergyScreen;
+import owmii.powah.lib.client.util.Text;
+import owmii.powah.lib.logistics.energy.Energy;
+import owmii.powah.lib.util.Ticker;
+import owmii.powah.lib.util.Util;
 
 public class FurnatorScreen extends AbstractEnergyScreen<FurnatorTile, FurnatorContainer> {
     private final Ticker heat = new Ticker(20);
@@ -53,9 +52,16 @@ public class FurnatorScreen extends AbstractEnergyScreen<FurnatorTile, FurnatorC
         if (Textures.FURNATOR_GAUGE.isMouseOver(this.leftPos + 5, this.topPos + 5, mouseX, mouseY)) {
             List<Component> list = new ArrayList<>();
             Energy energy = this.te.getEnergy();
-            list.add(Component.translatable("info.lollipop.stored").withStyle(ChatFormatting.GRAY).append(Text.COLON).append(Component.translatable("info.lollipop.fe.stored", Util.addCommas(energy.getStored()), Util.numFormat(energy.getCapacity())).withStyle(ChatFormatting.DARK_GRAY)));
-            list.add(Component.translatable("info.lollipop.generates").withStyle(ChatFormatting.GRAY).append(Text.COLON).append(Component.literal(Util.numFormat(this.te.getGeneration())).append(Component.translatable("info.lollipop.fe.pet.tick")).withStyle(ChatFormatting.DARK_GRAY)));
-            list.add(Component.translatable("info.lollipop.max.extract").withStyle(ChatFormatting.GRAY).append(Text.COLON).append(Component.literal(Util.numFormat(energy.getMaxExtract())).append(Component.translatable("info.lollipop.fe.pet.tick")).withStyle(ChatFormatting.DARK_GRAY)));
+            list.add(Component.translatable("info.lollipop.stored").withStyle(ChatFormatting.GRAY).append(Text.COLON)
+                    .append(Component
+                            .translatable("info.lollipop.fe.stored", Util.addCommas(energy.getStored()), Util.numFormat(energy.getCapacity()))
+                            .withStyle(ChatFormatting.DARK_GRAY)));
+            list.add(Component.translatable("info.lollipop.generates").withStyle(ChatFormatting.GRAY).append(Text.COLON)
+                    .append(Component.literal(Util.numFormat(this.te.getGeneration())).append(Component.translatable("info.lollipop.fe.pet.tick"))
+                            .withStyle(ChatFormatting.DARK_GRAY)));
+            list.add(Component.translatable("info.lollipop.max.extract").withStyle(ChatFormatting.GRAY).append(Text.COLON)
+                    .append(Component.literal(Util.numFormat(energy.getMaxExtract())).append(Component.translatable("info.lollipop.fe.pet.tick"))
+                            .withStyle(ChatFormatting.DARK_GRAY)));
             renderComponentTooltip(matrix, list, mouseX, mouseY);
         }
         if (Textures.FURNATOR_CARBON_GAUGE.isMouseOver(this.leftPos + 110, this.topPos + 18, mouseX, mouseY)) {

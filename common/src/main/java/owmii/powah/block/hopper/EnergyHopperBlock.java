@@ -1,27 +1,22 @@
 package owmii.powah.block.hopper;
 
+import javax.annotation.Nullable;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
-import net.minecraft.world.Container;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.Item;
-import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.phys.BlockHitResult;
 import owmii.powah.Powah;
+import owmii.powah.block.Tier;
 import owmii.powah.config.v2.types.ChargingConfig;
+import owmii.powah.inventory.EnergyHopperContainer;
 import owmii.powah.lib.block.AbstractEnergyBlock;
 import owmii.powah.lib.block.AbstractTileEntity;
 import owmii.powah.lib.item.EnergyBlockItem;
-import owmii.powah.lib.logistics.energy.Energy;
 import owmii.powah.lib.logistics.inventory.AbstractContainer;
-import owmii.powah.block.Tier;
-import owmii.powah.inventory.EnergyHopperContainer;
-
-import javax.annotation.Nullable;
 
 public class EnergyHopperBlock extends AbstractEnergyBlock<ChargingConfig, EnergyHopperBlock> {
     public EnergyHopperBlock(Properties properties, Tier variant) {

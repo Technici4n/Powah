@@ -2,12 +2,6 @@ package owmii.powah.block.ender;
 
 import com.google.common.base.Preconditions;
 import com.google.common.collect.ImmutableList;
-import net.minecraft.server.MinecraftServer;
-import net.minecraft.server.level.ServerLevel;
-import net.minecraft.world.level.Level;
-import owmii.powah.lib.block.IOwnable;
-import owmii.powah.lib.logistics.energy.Energy;
-
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
@@ -16,7 +10,12 @@ import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
+import net.minecraft.server.MinecraftServer;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.world.level.Level;
 import net.minecraft.world.level.saveddata.SavedData;
+import owmii.powah.lib.block.IOwnable;
+import owmii.powah.lib.logistics.energy.Energy;
 
 public class EnderNetwork extends SavedData {
     // Client-side instance.

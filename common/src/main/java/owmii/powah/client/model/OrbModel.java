@@ -8,10 +8,10 @@ import net.minecraft.client.model.geom.builders.LayerDefinition;
 import net.minecraft.client.model.geom.builders.MeshDefinition;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.resources.ResourceLocation;
-import owmii.powah.lib.client.util.RenderTypes;
 import owmii.powah.Powah;
 import owmii.powah.block.energizing.EnergizingOrbTile;
 import owmii.powah.client.render.tile.EnergizingOrbRenderer;
+import owmii.powah.lib.client.util.RenderTypes;
 
 public class OrbModel extends AbstractModel<EnergizingOrbTile, EnergizingOrbRenderer> {
     private static final String CUBE = "cube";

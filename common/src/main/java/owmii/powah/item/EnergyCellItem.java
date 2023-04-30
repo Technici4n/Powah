@@ -1,16 +1,15 @@
 package owmii.powah.item;
 
+import javax.annotation.Nullable;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Rarity;
-import owmii.powah.config.v2.types.EnergyConfig;
-import owmii.powah.lib.item.EnergyBlockItem;
-import owmii.powah.lib.logistics.energy.Energy;
 import owmii.powah.api.energy.endernetwork.IEnderExtender;
 import owmii.powah.block.Tier;
 import owmii.powah.block.energycell.EnergyCellBlock;
-
-import javax.annotation.Nullable;
+import owmii.powah.config.v2.types.EnergyConfig;
+import owmii.powah.lib.item.EnergyBlockItem;
+import owmii.powah.lib.logistics.energy.Energy;
 
 public class EnergyCellItem extends EnergyBlockItem<EnergyConfig, EnergyCellBlock> implements IEnderExtender {
     public EnergyCellItem(EnergyCellBlock block, Properties properties, @Nullable CreativeModeTab group) {

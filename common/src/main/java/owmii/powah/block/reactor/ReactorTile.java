@@ -3,6 +3,7 @@ package owmii.powah.block.reactor;
 import dev.architectury.fluid.FluidStack;
 import dev.architectury.hooks.item.ItemStackHooks;
 import dev.architectury.registry.fuel.FuelRegistry;
+import javax.annotation.Nullable;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
@@ -15,18 +16,16 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.AABB;
 import org.apache.commons.lang3.tuple.Pair;
 import owmii.powah.EnvHandler;
+import owmii.powah.api.PowahAPI;
+import owmii.powah.block.Tier;
+import owmii.powah.block.Tiles;
+import owmii.powah.item.Itms;
 import owmii.powah.lib.block.AbstractEnergyProvider;
 import owmii.powah.lib.block.IInventoryHolder;
 import owmii.powah.lib.block.ITankHolder;
 import owmii.powah.lib.logistics.energy.Energy;
 import owmii.powah.lib.logistics.fluid.Tank;
 import owmii.powah.lib.util.Ticker;
-import owmii.powah.api.PowahAPI;
-import owmii.powah.block.Tier;
-import owmii.powah.block.Tiles;
-import owmii.powah.item.Itms;
-
-import javax.annotation.Nullable;
 
 public class ReactorTile extends AbstractEnergyProvider<ReactorBlock> implements IInventoryHolder, ITankHolder {
     private final Builder builder = new Builder(this);
@@ -109,7 +108,8 @@ public class ReactorTile extends AbstractEnergyProvider<ReactorBlock> implements
 
     @Override
     protected int postTick(Level world) {
-        if (isRemote() || !this.builder.isDone(world)) return -1;
+        if (isRemote() || !this.builder.isDone(world))
+            return -1;
         long extracted = chargeItems(1);
         boolean flag = false;
         boolean flag2 = false;
@@ -141,7 +141,8 @@ public class ReactorTile extends AbstractEnergyProvider<ReactorBlock> implements
         for (Direction direction : Direction.values()) {
             if (canExtractEnergy(direction)) {
                 long amount = Math.min(getEnergyTransfer(), getEnergy().getStored());
-                BlockPos pos = this.worldPosition.relative(direction, direction.getAxis().isHorizontal() ? 2 : direction.equals(Direction.UP) ? 4 : 1);
+                BlockPos pos = this.worldPosition.relative(direction,
+                        direction.getAxis().isHorizontal() ? 2 : direction.equals(Direction.UP) ? 4 : 1);
                 long received = EnvHandler.INSTANCE.pushEnergy(world, pos, direction.getOpposite(), amount);
                 extracted += extractEnergy((int) received, false, direction);
             }
@@ -184,7 +185,8 @@ public class ReactorTile extends AbstractEnergyProvider<ReactorBlock> implements
         if (this.running) {
             double d1 = 1.0D + (this.variant.ordinal() * 0.25D);
             return (1.0D + this.variant.ordinal() * 0.25D) * calc();
-        } else return 0.0D;
+        } else
+            return 0.0D;
     }
 
     public double calc() {
@@ -266,7 +268,8 @@ public class ReactorTile extends AbstractEnergyProvider<ReactorBlock> implements
                     flag = true;
                 }
             }
-        } else this.redstoneTemp = 0;
+        } else
+            this.redstoneTemp = 0;
         return flag;
     }
 
@@ -292,7 +295,8 @@ public class ReactorTile extends AbstractEnergyProvider<ReactorBlock> implements
                     this.carbon.setMax(0);
                 }
             }
-        } else this.carbonTemp = 0;
+        } else
+            this.carbonTemp = 0;
         return flag;
     }
 
@@ -328,7 +332,6 @@ public class ReactorTile extends AbstractEnergyProvider<ReactorBlock> implements
         }
     }
 
-
     public boolean isBuilt() {
         return this.builder.built;
     }
@@ -349,7 +352,8 @@ public class ReactorTile extends AbstractEnergyProvider<ReactorBlock> implements
         } else if (slot == 4) {
             Pair<Integer, Integer> coolant = PowahAPI.getSolidCoolant(stack.getItem());
             return coolant.getLeft() > 0 && coolant.getRight() < 2;
-        } else return Energy.chargeable(stack);
+        } else
+            return Energy.chargeable(stack);
     }
 
     @Override

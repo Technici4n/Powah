@@ -1,5 +1,7 @@
 package owmii.powah.fabric.compat.rei.energizing;
 
+import java.util.ArrayList;
+import java.util.List;
 import me.shedaniel.math.Point;
 import me.shedaniel.math.Rectangle;
 import me.shedaniel.rei.api.client.gui.Renderer;
@@ -15,9 +17,6 @@ import net.minecraft.resources.ResourceLocation;
 import owmii.powah.Powah;
 import owmii.powah.block.Blcks;
 import owmii.powah.lib.util.Util;
-
-import java.util.ArrayList;
-import java.util.List;
 
 public class EnergizingCategory implements DisplayCategory<EnergizingDisplay> {
     public static final ResourceLocation GUI_BACK = new ResourceLocation(Powah.MOD_ID, "textures/gui/jei/energizing.png");
@@ -62,9 +61,9 @@ public class EnergizingCategory implements DisplayCategory<EnergizingDisplay> {
         int size = display.getInputEntries().size();
         for (int i = 0; i < size; i++) {
             widgets.add(Widgets.createSlot(new Point(origin.x + (i * 20) + 4, origin.y + 5))
-                .disableBackground()
-                .markInput()
-                .entries(display.getInputEntries().get(i)));
+                    .disableBackground()
+                    .markInput()
+                    .entries(display.getInputEntries().get(i)));
         }
         widgets.add(Widgets.createSlot(new Point(origin.x + 137, origin.y + 5))
                 .disableBackground()
@@ -72,7 +71,8 @@ public class EnergizingCategory implements DisplayCategory<EnergizingDisplay> {
                 .entries(display.getOutputEntries().get(0)));
         widgets.add(Widgets.createDrawableWidget((helper, matrices, mouseX, mouseY, delta) -> {
             Minecraft minecraft = Minecraft.getInstance();
-            minecraft.font.draw(matrices, I18n.get("info.lollipop.fe", Util.addCommas(display.getEnergy())), origin.x + 2.0F, origin.y + 29.0F, 0x444444);
+            minecraft.font.draw(matrices, I18n.get("info.lollipop.fe", Util.addCommas(display.getEnergy())), origin.x + 2.0F, origin.y + 29.0F,
+                    0x444444);
         }));
         return widgets;
     }

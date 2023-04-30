@@ -4,12 +4,12 @@ import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.player.Inventory;
-import owmii.powah.lib.client.screen.container.AbstractEnergyScreen;
-import owmii.powah.lib.logistics.energy.Energy;
-import owmii.powah.lib.util.Util;
 import owmii.powah.block.transmitter.PlayerTransmitterTile;
 import owmii.powah.client.screen.Textures;
 import owmii.powah.inventory.PlayerTransmitterContainer;
+import owmii.powah.lib.client.screen.container.AbstractEnergyScreen;
+import owmii.powah.lib.logistics.energy.Energy;
+import owmii.powah.lib.util.Util;
 
 public class PlayerTransmitterScreen extends AbstractEnergyScreen<PlayerTransmitterTile, PlayerTransmitterContainer> {
     public PlayerTransmitterScreen(PlayerTransmitterContainer container, Inventory inv, Component title) {

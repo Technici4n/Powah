@@ -1,16 +1,7 @@
 package owmii.powah.block.ender;
 
-import net.minecraft.core.BlockPos;
-import owmii.powah.Powah;
-import owmii.powah.config.v2.types.EnderConfig;
-import owmii.powah.lib.block.AbstractEnergyBlock;
-import owmii.powah.lib.block.AbstractTileEntity;
-import owmii.powah.lib.item.EnergyBlockItem;
-import owmii.powah.lib.logistics.inventory.AbstractContainer;
-import owmii.powah.block.Tier;
-import owmii.powah.inventory.EnderCellContainer;
-
 import javax.annotation.Nullable;
+import net.minecraft.core.BlockPos;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.Item;
@@ -18,6 +9,14 @@ import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.BlockHitResult;
+import owmii.powah.Powah;
+import owmii.powah.block.Tier;
+import owmii.powah.config.v2.types.EnderConfig;
+import owmii.powah.inventory.EnderCellContainer;
+import owmii.powah.lib.block.AbstractEnergyBlock;
+import owmii.powah.lib.block.AbstractTileEntity;
+import owmii.powah.lib.item.EnergyBlockItem;
+import owmii.powah.lib.logistics.inventory.AbstractContainer;
 
 public class EnderCellBlock extends AbstractEnergyBlock<EnderConfig, EnderCellBlock> {
     public EnderCellBlock(Properties properties, Tier variant) {

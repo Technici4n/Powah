@@ -1,5 +1,6 @@
 package owmii.powah.lib.item;
 
+import javax.annotation.Nullable;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.CreativeModeTab;
@@ -10,8 +11,6 @@ import owmii.powah.lib.block.IBlock;
 import owmii.powah.lib.data.ItemModelType;
 import owmii.powah.lib.registry.IVariant;
 import owmii.powah.lib.registry.IVariantEntry;
-
-import javax.annotation.Nullable;
 
 public class ItemBlock<V extends IVariant, B extends Block & IBlock<V, B>> extends BlockItem implements IItem, IVariantEntry<V, B> {
     private final B block;

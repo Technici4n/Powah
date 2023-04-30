@@ -18,7 +18,8 @@ public class ItemBase extends Item implements IItem {
 
     @Override
     public InteractionResult useOn(UseOnContext context) {
-        return context.getPlayer() != null ? onItemUse(context.getLevel(), context.getClickedPos(), context.getPlayer(), context.getHand(), context.getClickedFace(), context.getClickLocation()) : super.useOn(context);
+        return context.getPlayer() != null ? onItemUse(context.getLevel(), context.getClickedPos(), context.getPlayer(), context.getHand(),
+                context.getClickedFace(), context.getClickLocation()) : super.useOn(context);
     }
 
     public InteractionResult onItemUse(Level world, BlockPos pos, Player player, InteractionHand hand, Direction side, Vec3 hit) {
@@ -27,13 +28,15 @@ public class ItemBase extends Item implements IItem {
 
     public InteractionResult onItemUseFirst(ItemStack stack, UseOnContext context) {
         if (context.getPlayer() != null) {
-            return onItemUseFirst(stack, context.getLevel(), context.getClickedPos(), context.getPlayer(), context.getHand(), context.getClickedFace(), context.getClickLocation());
+            return onItemUseFirst(stack, context.getLevel(), context.getClickedPos(), context.getPlayer(), context.getHand(),
+                    context.getClickedFace(), context.getClickLocation());
         } else {
             return InteractionResult.PASS;
         }
     }
 
-    public InteractionResult onItemUseFirst(ItemStack stack, Level world, BlockPos pos, Player player, InteractionHand hand, Direction side, Vec3 hit) {
+    public InteractionResult onItemUseFirst(ItemStack stack, Level world, BlockPos pos, Player player, InteractionHand hand, Direction side,
+            Vec3 hit) {
         return InteractionResult.PASS;
     }
 }

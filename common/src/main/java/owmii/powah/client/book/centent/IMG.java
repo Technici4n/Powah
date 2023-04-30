@@ -1,7 +1,7 @@
 package owmii.powah.client.book.centent;
 
-import owmii.powah.lib.client.screen.Texture;
 import owmii.powah.Powah;
+import owmii.powah.lib.client.screen.Texture;
 
 public class IMG {
     private static final Texture.Builder BUILDER = new Texture.Builder(Powah.MOD_ID);

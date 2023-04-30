@@ -1,7 +1,5 @@
 package owmii.powah.block.reactor;
 
-import owmii.powah.lib.util.NBT;
-
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Iterator;
@@ -16,6 +14,7 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
+import owmii.powah.lib.util.NBT;
 
 public class Builder {
     private final ReactorTile reactor;
@@ -27,7 +26,6 @@ public class Builder {
     public Builder(ReactorTile reactor) {
         this.reactor = reactor;
     }
-
 
     public void read(CompoundTag nbt) {
         this.built = nbt.getBoolean("built");
@@ -44,7 +42,8 @@ public class Builder {
     }
 
     public boolean isDone(Level world) {
-        if (this.built) return true;
+        if (this.built)
+            return true;
         else if (!this.queue.isEmpty()) {
             if (this.delay-- <= 0) {
                 Iterator<BlockPos> itr = this.queue.iterator();
@@ -69,7 +68,8 @@ public class Builder {
             }
         } else {
             for (Direction side : Direction.values()) {
-                if (side.equals(Direction.DOWN)) continue;
+                if (side.equals(Direction.DOWN))
+                    continue;
                 BlockPos pos = this.reactor.getBlockPos().relative(side).above(side.equals(Direction.UP) ? 2 : 0);
                 BlockEntity tileEntity = world.getBlockEntity(pos);
                 if (tileEntity instanceof ReactorPartTile part) {

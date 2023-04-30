@@ -1,14 +1,7 @@
 package owmii.powah.block.ender;
 
-import owmii.powah.Powah;
-import owmii.powah.config.v2.types.EnderConfig;
-import owmii.powah.lib.block.AbstractEnergyBlock;
-import owmii.powah.lib.block.AbstractTileEntity;
-import owmii.powah.lib.item.EnergyBlockItem;
-import owmii.powah.lib.logistics.inventory.AbstractContainer;
-import owmii.powah.block.Tier;
-import owmii.powah.inventory.EnderCellContainer;
-
+import java.util.HashMap;
+import java.util.Map;
 import javax.annotation.Nullable;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -22,8 +15,14 @@ import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
-import java.util.HashMap;
-import java.util.Map;
+import owmii.powah.Powah;
+import owmii.powah.block.Tier;
+import owmii.powah.config.v2.types.EnderConfig;
+import owmii.powah.inventory.EnderCellContainer;
+import owmii.powah.lib.block.AbstractEnergyBlock;
+import owmii.powah.lib.block.AbstractTileEntity;
+import owmii.powah.lib.item.EnergyBlockItem;
+import owmii.powah.lib.logistics.inventory.AbstractContainer;
 
 public class EnderGateBlock extends AbstractEnergyBlock<EnderConfig, EnderGateBlock> {
     private static final Map<Direction, VoxelShape> SHAPES = new HashMap<>();

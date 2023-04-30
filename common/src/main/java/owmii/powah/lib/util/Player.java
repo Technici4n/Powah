@@ -1,16 +1,15 @@
 package owmii.powah.lib.util;
 
 import dev.architectury.hooks.level.entity.PlayerHooks;
+import java.util.Optional;
+import java.util.UUID;
+import java.util.stream.Stream;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import owmii.powah.lib.item.Stacks;
-
-import java.util.Optional;
-import java.util.UUID;
-import java.util.stream.Stream;
 
 public class Player {
     public static boolean isFake(net.minecraft.world.entity.player.Player player) {

@@ -5,13 +5,12 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
 import owmii.powah.EnvHandler;
+import owmii.powah.block.Tier;
+import owmii.powah.block.Tiles;
 import owmii.powah.config.v2.types.EnergyConfig;
 import owmii.powah.lib.block.AbstractEnergyStorage;
 import owmii.powah.lib.block.IInventoryHolder;
 import owmii.powah.lib.logistics.Transfer;
-import owmii.powah.lib.logistics.energy.Energy;
-import owmii.powah.block.Tier;
-import owmii.powah.block.Tiles;
 
 public class EnergyDischargerTile extends AbstractEnergyStorage<EnergyConfig, EnergyDischargerBlock> implements IInventoryHolder {
     public EnergyDischargerTile(BlockPos pos, BlockState state, Tier variant) {

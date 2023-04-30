@@ -5,14 +5,14 @@ import dev.emi.emi.api.stack.EmiIngredient;
 import dev.emi.emi.api.stack.EmiStack;
 import dev.emi.emi.api.widget.TextWidget;
 import dev.emi.emi.api.widget.WidgetHolder;
+import java.util.List;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import owmii.powah.Powah;
 
-import java.util.List;
-
 public abstract class PowahInfoEmiRecipe implements EmiRecipe {
     public static final ResourceLocation GUI_BACK = new ResourceLocation(Powah.MOD_ID, "textures/gui/jei/misc.png");
+
     @Override
     public int getDisplayWidth() {
         return 130;
@@ -34,6 +34,7 @@ public abstract class PowahInfoEmiRecipe implements EmiRecipe {
     }
 
     protected abstract EmiIngredient getInput();
+
     protected abstract Component getInfoText();
 
     @Override

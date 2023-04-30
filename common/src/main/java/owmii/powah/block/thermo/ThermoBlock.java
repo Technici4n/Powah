@@ -1,5 +1,6 @@
 package owmii.powah.block.thermo;
 
+import javax.annotation.Nullable;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
@@ -13,15 +14,13 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.BlockHitResult;
 import owmii.powah.EnvHandler;
 import owmii.powah.Powah;
+import owmii.powah.block.Tier;
 import owmii.powah.config.v2.types.GeneratorConfig;
+import owmii.powah.inventory.ThermoContainer;
 import owmii.powah.lib.block.AbstractGeneratorBlock;
 import owmii.powah.lib.block.AbstractTileEntity;
 import owmii.powah.lib.item.EnergyBlockItem;
 import owmii.powah.lib.logistics.inventory.AbstractContainer;
-import owmii.powah.block.Tier;
-import owmii.powah.inventory.ThermoContainer;
-
-import javax.annotation.Nullable;
 
 public class ThermoBlock extends AbstractGeneratorBlock<ThermoBlock> {
     public ThermoBlock(Properties properties, Tier variant) {
@@ -45,7 +44,8 @@ public class ThermoBlock extends AbstractGeneratorBlock<ThermoBlock> {
     }
 
     @Override
-    public InteractionResult use(BlockState state, Level world, BlockPos pos, Player player, InteractionHand hand, BlockHitResult blockRayTraceResult) {
+    public InteractionResult use(BlockState state, Level world, BlockPos pos, Player player, InteractionHand hand,
+            BlockHitResult blockRayTraceResult) {
         BlockEntity tile = world.getBlockEntity(pos);
         if (tile instanceof ThermoTile genTile) {
             if (EnvHandler.INSTANCE.interactWithTank(player, hand, genTile.getTank())) {

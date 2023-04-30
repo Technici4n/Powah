@@ -2,6 +2,10 @@ package owmii.powah.lib.client.screen.widget;
 
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.function.Consumer;
+import javax.annotation.Nullable;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
 import net.minecraft.client.gui.components.Button;
@@ -16,11 +20,6 @@ import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.item.ItemStack;
 import owmii.powah.lib.client.screen.Texture;
-
-import javax.annotation.Nullable;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.function.Consumer;
 
 public class IconButton extends Button {
     protected final Minecraft mc = Minecraft.getInstance();
@@ -83,7 +82,8 @@ public class IconButton extends Button {
                 int width = f.width(s);
                 TextColor c = getMessage().getStyle().getColor();
                 int color = c == null ? 0x555555 : c.getValue();
-                f.draw(matrix, s, this.xOffset + this.x + 0.5F + this.width / 2.0F - width / 2.0F, this.yOffset + this.y + this.height / 2.0F - 4, color);
+                f.draw(matrix, s, this.xOffset + this.x + 0.5F + this.width / 2.0F - width / 2.0F, this.yOffset + this.y + this.height / 2.0F - 4,
+                        color);
             }
             if (!this.stack.isEmpty()) {
                 var globalStack = RenderSystem.getModelViewStack();

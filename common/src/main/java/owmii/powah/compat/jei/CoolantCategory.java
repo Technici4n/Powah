@@ -2,6 +2,9 @@ package owmii.powah.compat.jei;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 import dev.architectury.fluid.FluidStack;
+import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.List;
 import mezz.jei.api.constants.VanillaTypes;
 import mezz.jei.api.gui.builder.IRecipeLayoutBuilder;
 import mezz.jei.api.gui.drawable.IDrawable;
@@ -22,10 +25,6 @@ import net.minecraft.world.item.Items;
 import net.minecraft.world.level.material.Fluid;
 import owmii.powah.Powah;
 import owmii.powah.api.PowahAPI;
-
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.List;
 
 public class CoolantCategory implements IRecipeCategory<CoolantCategory.Recipe> {
     public static final RecipeType<Recipe> TYPE = RecipeType.create(Powah.MOD_ID, "coolant", Recipe.class);
@@ -68,7 +67,8 @@ public class CoolantCategory implements IRecipeCategory<CoolantCategory.Recipe> 
     @Override
     public void draw(Recipe recipe, IRecipeSlotsView recipeSlotsView, PoseStack matrix, double mouseX, double mouseY) {
         Minecraft minecraft = Minecraft.getInstance();
-        minecraft.font.draw(matrix, I18n.get("info.lollipop.temperature") + ": " + I18n.get("info.lollipop.temperature.c", "" + ChatFormatting.DARK_AQUA + recipe.coldness), 30.0F, 9.0F, 0x444444);
+        minecraft.font.draw(matrix, I18n.get("info.lollipop.temperature") + ": "
+                + I18n.get("info.lollipop.temperature.c", "" + ChatFormatting.DARK_AQUA + recipe.coldness), 30.0F, 9.0F, 0x444444);
     }
 
     public static List<Recipe> getRecipes() {

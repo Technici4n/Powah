@@ -4,12 +4,12 @@ import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.player.Inventory;
-import owmii.powah.lib.client.screen.container.AbstractEnergyScreen;
-import owmii.powah.lib.logistics.energy.Energy;
-import owmii.powah.lib.util.Util;
 import owmii.powah.block.discharger.EnergyDischargerTile;
 import owmii.powah.client.screen.Textures;
 import owmii.powah.inventory.DischargerContainer;
+import owmii.powah.lib.client.screen.container.AbstractEnergyScreen;
+import owmii.powah.lib.logistics.energy.Energy;
+import owmii.powah.lib.util.Util;
 
 public class DischargerScreen extends AbstractEnergyScreen<EnergyDischargerTile, DischargerContainer> {
     public DischargerScreen(DischargerContainer container, Inventory inv, Component title) {

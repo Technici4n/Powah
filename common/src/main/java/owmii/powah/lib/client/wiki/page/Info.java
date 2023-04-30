@@ -1,5 +1,8 @@
 package owmii.powah.lib.client.wiki.page;
 
+import com.mojang.blaze3d.vertex.PoseStack;
+import java.util.ArrayList;
+import java.util.List;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.gui.Font;
 import net.minecraft.core.Registry;
@@ -14,9 +17,6 @@ import owmii.powah.lib.client.util.Text;
 import owmii.powah.lib.client.wiki.Entry;
 import owmii.powah.lib.client.wiki.Page;
 import owmii.powah.lib.client.wiki.Section;
-import com.mojang.blaze3d.vertex.PoseStack;
-import java.util.ArrayList;
-import java.util.List;
 
 public class Info extends Page {
     private final List<Component> cache = new ArrayList<>();

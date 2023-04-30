@@ -1,11 +1,10 @@
 package owmii.powah.client.screen;
 
-import owmii.powah.lib.client.screen.Texture;
-import owmii.powah.lib.logistics.Transfer;
-import owmii.powah.Powah;
-
 import java.util.HashMap;
 import java.util.Map;
+import owmii.powah.Powah;
+import owmii.powah.lib.client.screen.Texture;
+import owmii.powah.lib.logistics.Transfer;
 
 public class Textures {
     private static final Texture.Builder BUILDER = new Texture.Builder(Powah.MOD_ID);

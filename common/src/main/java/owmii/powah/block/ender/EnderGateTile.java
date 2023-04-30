@@ -1,14 +1,13 @@
 package owmii.powah.block.ender;
 
-import net.minecraft.core.BlockPos;
-import net.minecraft.world.level.block.state.BlockState;
-import owmii.powah.block.Tier;
-import owmii.powah.block.Tiles;
-
 import javax.annotation.Nullable;
+import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
+import owmii.powah.block.Tier;
+import owmii.powah.block.Tiles;
 
 public class EnderGateTile extends AbstractEnderTile<EnderGateBlock> {
     public EnderGateTile(BlockPos pos, BlockState state, Tier variant) {

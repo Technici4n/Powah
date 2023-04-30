@@ -1,21 +1,20 @@
 package owmii.powah.block.solar;
 
-import net.minecraft.core.BlockPos;
-import owmii.powah.lib.block.AbstractEnergyProvider;
-import owmii.powah.lib.block.IInventoryHolder;
-import owmii.powah.lib.logistics.energy.Energy;
-import owmii.powah.lib.util.Misc;
-import owmii.powah.block.Tier;
-import owmii.powah.block.Tiles;
-import owmii.powah.item.Itms;
-
 import javax.annotation.Nullable;
+import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
+import owmii.powah.block.Tier;
+import owmii.powah.block.Tiles;
+import owmii.powah.item.Itms;
+import owmii.powah.lib.block.AbstractEnergyProvider;
+import owmii.powah.lib.block.IInventoryHolder;
+import owmii.powah.lib.logistics.energy.Energy;
+import owmii.powah.lib.util.Misc;
 
 public class SolarTile extends AbstractEnergyProvider<SolarBlock> implements IInventoryHolder {
     public static final String CAN_SEE_SKY = "can_see_sky";
@@ -48,7 +47,8 @@ public class SolarTile extends AbstractEnergyProvider<SolarBlock> implements IIn
 
     @Override
     protected int postTick(Level world) {
-        if (isRemote()) return -1;
+        if (isRemote())
+            return -1;
         boolean flag = chargeItems(1) + extractFromSides(world) > 0;
         if (checkRedstone()) {
             if (!this.hasLensOfEnder && this.ticks % 40L == 0L) {

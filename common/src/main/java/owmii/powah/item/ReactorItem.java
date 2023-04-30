@@ -1,33 +1,25 @@
 package owmii.powah.item;
 
+import java.util.List;
+import java.util.function.Consumer;
+import java.util.stream.Collectors;
+import javax.annotation.Nullable;
 import net.minecraft.ChatFormatting;
-import net.minecraft.client.Minecraft;
-import net.minecraft.client.renderer.BlockEntityWithoutLevelRenderer;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.ContainerHelper;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.context.BlockPlaceContext;
-import net.minecraft.world.item.context.UseOnContext;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.AABB;
 import owmii.powah.EnvHandler;
+import owmii.powah.block.reactor.ReactorBlock;
 import owmii.powah.config.v2.types.GeneratorConfig;
 import owmii.powah.lib.item.EnergyBlockItem;
 import owmii.powah.lib.util.Player;
-import owmii.powah.Powah;
-import owmii.powah.block.Tier;
-import owmii.powah.block.reactor.ReactorBlock;
-import owmii.powah.client.render.tile.ReactorItemRenderer;
-
-import javax.annotation.Nullable;
-import java.util.List;
-import java.util.function.Consumer;
-import java.util.stream.Collectors;
 
 public class ReactorItem extends EnergyBlockItem<GeneratorConfig, ReactorBlock> {
     /**
@@ -46,12 +38,17 @@ public class ReactorItem extends EnergyBlockItem<GeneratorConfig, ReactorBlock> 
 
     @Override
     public InteractionResult place(BlockPlaceContext context) {
-        if (!context.canPlace()) return InteractionResult.FAIL;
+        if (!context.canPlace())
+            return InteractionResult.FAIL;
         net.minecraft.world.entity.player.Player player = context.getPlayer();
-        if (player == null || Player.isFake(player)) return InteractionResult.FAIL;
+        if (player == null || Player.isFake(player))
+            return InteractionResult.FAIL;
         ItemStack stack = context.getItemInHand();
         if (player.getInventory().countItem(stack.getItem()) < 36 && !player.isCreative()) {
-            player.displayClientMessage(Component.translatable("chat.powah.not.enough.blocks", "" + ChatFormatting.YELLOW + (36 - player.getInventory().countItem(stack.getItem())) + ChatFormatting.RED).withStyle(ChatFormatting.RED), true);
+            player.displayClientMessage(Component
+                    .translatable("chat.powah.not.enough.blocks",
+                            "" + ChatFormatting.YELLOW + (36 - player.getInventory().countItem(stack.getItem())) + ChatFormatting.RED)
+                    .withStyle(ChatFormatting.RED), true);
             return InteractionResult.FAIL;
         }
         BlockPos pos = context.getClickedPos();
@@ -60,10 +57,12 @@ public class ReactorItem extends EnergyBlockItem<GeneratorConfig, ReactorBlock> 
                 .collect(Collectors.toList());
 
         for (BlockPos blockPos : list) {
-            if (!context.getLevel().getBlockState(blockPos).getMaterial().isReplaceable()) return InteractionResult.FAIL;
+            if (!context.getLevel().getBlockState(blockPos).getMaterial().isReplaceable())
+                return InteractionResult.FAIL;
         }
         List<LivingEntity> entities = context.getLevel().getEntitiesOfClass(LivingEntity.class, new AABB(pos).inflate(1.0D, 3.0D, 1.0D));
-        if (!entities.isEmpty()) return InteractionResult.FAIL;
+        if (!entities.isEmpty())
+            return InteractionResult.FAIL;
 
         if (!player.isCreative()) {
             if (stack.getCount() < 36) {

@@ -1,21 +1,12 @@
 package owmii.powah.block.furnator;
 
-import net.minecraft.util.RandomSource;
-import owmii.powah.Powah;
-import owmii.powah.config.v2.types.GeneratorConfig;
-import owmii.powah.lib.block.AbstractGeneratorBlock;
-import owmii.powah.lib.block.AbstractTileEntity;
-import owmii.powah.lib.item.EnergyBlockItem;
-import owmii.powah.lib.logistics.inventory.AbstractContainer;
-import owmii.powah.block.Tier;
-import owmii.powah.inventory.FurnatorContainer;
-
 import javax.annotation.Nullable;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.Item;
@@ -25,7 +16,14 @@ import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.phys.BlockHitResult;
-import java.util.Random;
+import owmii.powah.Powah;
+import owmii.powah.block.Tier;
+import owmii.powah.config.v2.types.GeneratorConfig;
+import owmii.powah.inventory.FurnatorContainer;
+import owmii.powah.lib.block.AbstractGeneratorBlock;
+import owmii.powah.lib.block.AbstractTileEntity;
+import owmii.powah.lib.item.EnergyBlockItem;
+import owmii.powah.lib.logistics.inventory.AbstractContainer;
 
 public class FurnatorBlock extends AbstractGeneratorBlock<FurnatorBlock> implements SimpleWaterloggedBlock {
     public FurnatorBlock(Properties properties, Tier variant) {

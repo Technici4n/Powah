@@ -1,5 +1,9 @@
 package owmii.powah.client.model;
 
+import com.mojang.blaze3d.vertex.PoseStack;
+import com.mojang.blaze3d.vertex.VertexConsumer;
+import java.util.HashMap;
+import java.util.Map;
 import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.client.model.geom.PartPose;
 import net.minecraft.client.model.geom.builders.CubeListBuilder;
@@ -12,15 +16,10 @@ import net.minecraft.core.Direction;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import owmii.powah.EnvHandler;
-import owmii.powah.lib.logistics.Transfer;
-import owmii.powah.lib.logistics.energy.Energy;
 import owmii.powah.Powah;
 import owmii.powah.block.cable.CableTile;
 import owmii.powah.client.render.tile.CableRenderer;
-import com.mojang.blaze3d.vertex.PoseStack;
-import com.mojang.blaze3d.vertex.VertexConsumer;
-import java.util.HashMap;
-import java.util.Map;
+import owmii.powah.lib.logistics.Transfer;
 
 public class CableModel extends AbstractModel<CableTile, CableRenderer> {
     private static final String NORTH = "north";
@@ -35,7 +34,7 @@ public class CableModel extends AbstractModel<CableTile, CableRenderer> {
     private static final String DOWN_PLATE = "down_plate";
     private static final String UP = "up";
     private static final String UP_PLATE = "up_plate";
-    
+
     private final ModelPart north;
     private final ModelPart northPlate;
     private final ModelPart south;
@@ -99,13 +98,15 @@ public class CableModel extends AbstractModel<CableTile, CableRenderer> {
 
     @Override
     public void render(CableTile te, CableRenderer renderer, PoseStack matrix, MultiBufferSource rtb, int light, int ov) {
-        if (te.getLevel() == null) return;
+        if (te.getLevel() == null)
+            return;
         final Direction[] flags = new Direction[6];
         for (Direction side : te.energySides) {
             final BlockPos pos = te.getBlockPos().relative(side);
             final BlockEntity tile = te.getLevel().getBlockEntity(pos);
             final Transfer config = te.getSideConfig().getType(side);
-            if (!(tile instanceof CableTile) && EnvHandler.INSTANCE.hasEnergy(te.getLevel(), pos, side.getOpposite()) && (config.canExtract || config.canReceive)) {
+            if (!(tile instanceof CableTile) && EnvHandler.INSTANCE.hasEnergy(te.getLevel(), pos, side.getOpposite())
+                    && (config.canExtract || config.canReceive)) {
                 flags[side.get3DDataValue()] = side;
             }
         }

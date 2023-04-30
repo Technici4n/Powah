@@ -1,16 +1,15 @@
 package owmii.powah.lib.client.wiki.page;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.function.Consumer;
+import javax.annotation.Nullable;
+import net.minecraft.world.level.ItemLike;
 import owmii.powah.lib.client.screen.Texture;
 import owmii.powah.lib.client.wiki.Entry;
 import owmii.powah.lib.client.wiki.Icon;
 import owmii.powah.lib.client.wiki.Page;
 import owmii.powah.lib.client.wiki.Section;
-
-import javax.annotation.Nullable;
-import net.minecraft.world.level.ItemLike;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.function.Consumer;
 
 public class EntriesPage extends Page {
     protected final List<Entry> entries = new ArrayList<>();

@@ -2,6 +2,9 @@ package owmii.powah.fabric.compat.rei;
 
 import dev.architectury.fluid.FluidStack;
 import dev.architectury.hooks.fluid.LiquidBlockHooks;
+import java.util.*;
+import java.util.stream.Collectors;
+import javax.annotation.Nullable;
 import me.shedaniel.rei.api.client.registry.entry.EntryRegistry;
 import me.shedaniel.rei.api.common.category.CategoryIdentifier;
 import me.shedaniel.rei.api.common.display.Display;
@@ -17,10 +20,6 @@ import net.minecraft.world.level.block.LiquidBlock;
 import net.minecraft.world.level.material.Fluid;
 import owmii.powah.Powah;
 import owmii.powah.api.PowahAPI;
-
-import javax.annotation.Nullable;
-import java.util.*;
-import java.util.stream.Collectors;
 
 public class HeatSourceDisplay implements Display {
 
@@ -77,7 +76,8 @@ public class HeatSourceDisplay implements Display {
 
             Collection<FluidStack> allIngredients = EntryRegistry.getInstance().getEntryStacks()
                     .filter(stack -> Objects.equals(stack.getType(), VanillaEntryTypes.FLUID))
-                    .<FluidStack>map(EntryStack::castValue).toList();;
+                    .<FluidStack>map(EntryStack::castValue).toList();
+            ;
 
             allIngredients.forEach(fluidStack -> {
                 if (!fluidStack.isEmpty()) {
@@ -125,7 +125,8 @@ public class HeatSourceDisplay implements Display {
 
         @Override
         public String toString() {
-            return "HeatSourceRecipe{" + Registry.BLOCK.getKey(block) + (fluid != null ? " (fluid " + Registry.FLUID.getKey(fluid) + ")" : "") + " -> " + heat + "}";
+            return "HeatSourceRecipe{" + Registry.BLOCK.getKey(block) + (fluid != null ? " (fluid " + Registry.FLUID.getKey(fluid) + ")" : "")
+                    + " -> " + heat + "}";
         }
     }
 }

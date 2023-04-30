@@ -14,7 +14,8 @@ public class Properties {
     }
 
     public static Block.Properties deepslate() {
-        return BlockBehaviour.Properties.of(Material.STONE).color(MaterialColor.DEEPSLATE).strength(4.5f, 3.0f).sound(SoundType.DEEPSLATE).requiresCorrectToolForDrops();
+        return BlockBehaviour.Properties.of(Material.STONE).color(MaterialColor.DEEPSLATE).strength(4.5f, 3.0f).sound(SoundType.DEEPSLATE)
+                .requiresCorrectToolForDrops();
     }
 
     public static Block.Properties wood(float hardness, float resistance) {

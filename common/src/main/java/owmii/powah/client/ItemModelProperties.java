@@ -2,7 +2,6 @@ package owmii.powah.client;
 
 import dev.architectury.registry.item.ItemPropertiesRegistry;
 import net.minecraft.client.multiplayer.ClientLevel;
-import net.minecraft.client.renderer.item.ItemProperties;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.LivingEntity;

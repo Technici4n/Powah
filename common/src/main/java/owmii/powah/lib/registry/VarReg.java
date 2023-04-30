@@ -1,7 +1,6 @@
 package owmii.powah.lib.registry;
 
 import dev.architectury.registry.registries.DeferredRegister;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedHashMap;

@@ -5,8 +5,8 @@ import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
-import owmii.powah.network.IPacket;
 import owmii.powah.block.ender.AbstractEnderTile;
+import owmii.powah.network.IPacket;
 
 public class SetChannelPacket implements IPacket {
     private final BlockPos pos;

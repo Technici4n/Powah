@@ -2,6 +2,10 @@ package owmii.powah.compat.jei;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 import dev.architectury.fluid.FluidStack;
+import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.List;
+import javax.annotation.Nullable;
 import mezz.jei.api.constants.VanillaTypes;
 import mezz.jei.api.gui.builder.IRecipeLayoutBuilder;
 import mezz.jei.api.gui.drawable.IDrawable;
@@ -23,11 +27,6 @@ import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.material.Fluid;
 import owmii.powah.Powah;
 import owmii.powah.api.PowahAPI;
-
-import javax.annotation.Nullable;
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.List;
 
 public class HeatSourceCategory implements IRecipeCategory<HeatSourceCategory.Recipe> {
     public static final RecipeType<Recipe> TYPE = RecipeType.create(Powah.MOD_ID, "heat_source", Recipe.class);

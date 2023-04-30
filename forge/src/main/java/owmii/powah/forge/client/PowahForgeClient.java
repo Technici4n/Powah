@@ -8,17 +8,17 @@ import owmii.powah.client.PowahClient;
 import owmii.powah.client.handler.ReactorOverlayHandler;
 
 public class PowahForgeClient {
-	public static void init() {
-		var modEventBus = FMLJavaModLoadingContext.get().getModEventBus();
+    public static void init() {
+        var modEventBus = FMLJavaModLoadingContext.get().getModEventBus();
 
-		modEventBus.addListener(PowahForgeClient::clientSetup);
+        modEventBus.addListener(PowahForgeClient::clientSetup);
 
-		PowahClient.init();
+        PowahClient.init();
 
-		MinecraftForge.EVENT_BUS.addListener((RenderLevelLastEvent event) -> ReactorOverlayHandler.onRenderLast(event.getPoseStack()));
-	}
+        MinecraftForge.EVENT_BUS.addListener((RenderLevelLastEvent event) -> ReactorOverlayHandler.onRenderLast(event.getPoseStack()));
+    }
 
-	public static void clientSetup(FMLClientSetupEvent event) {
-		event.enqueueWork(PowahClient::clientSetup);
-	}
+    public static void clientSetup(FMLClientSetupEvent event) {
+        event.enqueueWork(PowahClient::clientSetup);
+    }
 }

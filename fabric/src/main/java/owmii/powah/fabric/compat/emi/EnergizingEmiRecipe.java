@@ -5,6 +5,7 @@ import dev.emi.emi.api.recipe.EmiRecipeCategory;
 import dev.emi.emi.api.stack.EmiIngredient;
 import dev.emi.emi.api.stack.EmiStack;
 import dev.emi.emi.api.widget.WidgetHolder;
+import java.util.List;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import org.jetbrains.annotations.Nullable;
@@ -12,14 +13,13 @@ import owmii.powah.Powah;
 import owmii.powah.block.energizing.EnergizingRecipe;
 import owmii.powah.lib.util.Util;
 
-import java.util.List;
-
 public class EnergizingEmiRecipe implements EmiRecipe {
     public static final ResourceLocation GUI_BACK = new ResourceLocation(Powah.MOD_ID, "textures/gui/jei/energizing.png");
 
     private final EnergizingRecipe recipe;
     private final List<EmiIngredient> inputs;
     private final EmiStack output;
+
     public EnergizingEmiRecipe(EnergizingRecipe recipe) {
         this.recipe = recipe;
 

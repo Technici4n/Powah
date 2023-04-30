@@ -22,5 +22,6 @@ public abstract class AbstractTileRenderer<T extends AbstractTileEntity<?, ?>> i
         }
     }
 
-    public abstract void render(T te, float pt, PoseStack matrix, MultiBufferSource rtb, Minecraft mc, ClientLevel world, LocalPlayer player, int light, int ov);
+    public abstract void render(T te, float pt, PoseStack matrix, MultiBufferSource rtb, Minecraft mc, ClientLevel world, LocalPlayer player,
+            int light, int ov);
 }

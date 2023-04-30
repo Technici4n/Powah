@@ -1,5 +1,6 @@
 package owmii.powah.lib.block;
 
+import javax.annotation.Nullable;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.Item;
@@ -13,8 +14,6 @@ import net.minecraft.world.level.block.state.BlockState;
 import owmii.powah.lib.item.ItemBlock;
 import owmii.powah.lib.registry.IVariant;
 import owmii.powah.lib.registry.IVariantEntry;
-
-import javax.annotation.Nullable;
 
 public interface IBlock<V extends IVariant, B extends Block & IBlock<V, B>> extends IVariantEntry<V, B>, EntityBlock {
     @SuppressWarnings("unchecked")
@@ -31,7 +30,7 @@ public interface IBlock<V extends IVariant, B extends Block & IBlock<V, B>> exte
     @Nullable
     @Override
     default <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level level, BlockState state, BlockEntityType<T> blockEntityType) {
-        if (newBlockEntity(BlockPos.ZERO, state) instanceof AbstractTickableTile<?,?>) {
+        if (newBlockEntity(BlockPos.ZERO, state) instanceof AbstractTickableTile<?, ?>) {
             return (l, p, s, be) -> ((AbstractTickableTile<?, ?>) be).tick();
         }
         return null;

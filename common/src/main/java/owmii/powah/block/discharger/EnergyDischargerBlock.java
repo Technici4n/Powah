@@ -1,23 +1,22 @@
 package owmii.powah.block.discharger;
 
-import net.minecraft.core.BlockPos;
-import owmii.powah.Powah;
-import owmii.powah.config.v2.types.EnergyConfig;
-import owmii.powah.lib.block.AbstractEnergyBlock;
-import owmii.powah.lib.block.AbstractTileEntity;
-import owmii.powah.lib.item.EnergyBlockItem;
-import owmii.powah.lib.logistics.Transfer;
-import owmii.powah.lib.logistics.inventory.AbstractContainer;
-import owmii.powah.block.Tier;
-import owmii.powah.inventory.DischargerContainer;
-
 import javax.annotation.Nullable;
+import net.minecraft.core.BlockPos;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.BlockHitResult;
+import owmii.powah.Powah;
+import owmii.powah.block.Tier;
+import owmii.powah.config.v2.types.EnergyConfig;
+import owmii.powah.inventory.DischargerContainer;
+import owmii.powah.lib.block.AbstractEnergyBlock;
+import owmii.powah.lib.block.AbstractTileEntity;
+import owmii.powah.lib.item.EnergyBlockItem;
+import owmii.powah.lib.logistics.Transfer;
+import owmii.powah.lib.logistics.inventory.AbstractContainer;
 
 public class EnergyDischargerBlock extends AbstractEnergyBlock<EnergyConfig, EnergyDischargerBlock> {
     public EnergyDischargerBlock(Properties properties, Tier variant) {

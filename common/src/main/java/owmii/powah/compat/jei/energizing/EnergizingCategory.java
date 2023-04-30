@@ -12,16 +12,13 @@ import mezz.jei.api.recipe.RecipeType;
 import mezz.jei.api.recipe.category.IRecipeCategory;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.resources.language.I18n;
-import net.minecraft.core.NonNullList;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.crafting.Ingredient;
-import org.jetbrains.annotations.Nullable;
-import owmii.powah.lib.util.Util;
 import owmii.powah.Powah;
 import owmii.powah.block.Blcks;
 import owmii.powah.block.energizing.EnergizingRecipe;
+import owmii.powah.lib.util.Util;
 
 public class EnergizingCategory implements IRecipeCategory<EnergizingRecipe> {
     public static final RecipeType<EnergizingRecipe> TYPE = RecipeType.create(Powah.MOD_ID, "energizing", EnergizingRecipe.class);
@@ -61,11 +58,11 @@ public class EnergizingCategory implements IRecipeCategory<EnergizingRecipe> {
         int size = ingredients.size();
         for (int i = 0; i < size; i++) {
             builder.addSlot(RecipeIngredientRole.INPUT, (i * 20) + 4, 5)
-                            .addIngredients(ingredients.get(i));
+                    .addIngredients(ingredients.get(i));
         }
 
         builder.addSlot(RecipeIngredientRole.OUTPUT, 137, 5)
-                        .addItemStack(recipe.getResultItem());
+                .addItemStack(recipe.getResultItem());
     }
 
     @Override

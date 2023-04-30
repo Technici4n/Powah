@@ -10,6 +10,5 @@ import owmii.powah.block.Tier;
 public class ItemGroups {
     public static final CreativeModeTab MAIN = CreativeTabRegistry.create(
             Powah.id("tab"),
-            () -> new ItemStack(Blcks.ENERGY_CELL.get(Tier.BLAZING))
-    );
+            () -> new ItemStack(Blcks.ENERGY_CELL.get(Tier.BLAZING)));
 }

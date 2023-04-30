@@ -110,8 +110,7 @@ public class V3d extends Vec3 {
         return new V3d(
                 bb.minX + (bb.maxX - bb.minX) * 0.5D,
                 bb.minY + (bb.maxY - bb.minY) * 0.5D,
-                bb.minZ + (bb.maxZ - bb.minZ) * 0.5D
-        );
+                bb.minZ + (bb.maxZ - bb.minZ) * 0.5D);
     }
 
     public V3d centerU() {

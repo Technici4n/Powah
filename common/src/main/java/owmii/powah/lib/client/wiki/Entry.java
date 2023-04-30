@@ -1,16 +1,14 @@
 package owmii.powah.lib.client.wiki;
 
-import javax.annotation.Nullable;
-
-import net.minecraft.core.Registry;
-import net.minecraft.world.item.Item;
-import net.minecraft.world.item.ItemStack;
-import owmii.powah.lib.registry.VarReg;
-import owmii.powah.Powah;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Consumer;
+import javax.annotation.Nullable;
+import net.minecraft.core.Registry;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import owmii.powah.Powah;
+import owmii.powah.lib.registry.VarReg;
 
 public class Entry {
     private final List<Section> sections = new ArrayList<>();
@@ -41,7 +39,8 @@ public class Entry {
             if (name.isEmpty() && !stack.isEmpty()) {
                 this.name = stack.getDescriptionId();
                 this.stackName = true;
-            } else this.name = name;
+            } else
+                this.name = name;
         }
     }
 

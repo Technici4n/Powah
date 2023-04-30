@@ -2,6 +2,8 @@ package owmii.powah.lib.client.wiki.page.panel;
 
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
+import java.util.List;
+import java.util.Objects;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
 import net.minecraft.core.Registry;
@@ -9,6 +11,7 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.ItemLike;
+import owmii.powah.Powah;
 import owmii.powah.lib.client.screen.Texture;
 import owmii.powah.lib.client.screen.widget.IconButton;
 import owmii.powah.lib.client.screen.wiki.WikiScreen;
@@ -16,10 +19,6 @@ import owmii.powah.lib.client.util.MC;
 import owmii.powah.lib.client.wiki.Section;
 import owmii.powah.lib.registry.IVariantEntry;
 import owmii.powah.lib.registry.VarReg;
-import owmii.powah.Powah;
-
-import java.util.List;
-import java.util.Objects;
 
 public class ItemPanel<T extends ItemLike> extends Panel {
     private final ItemLike[] items;
@@ -54,7 +53,8 @@ public class ItemPanel<T extends ItemLike> extends Panel {
             if (item instanceof IVariantEntry variantEntry) {
                 id = new ResourceLocation(id.getNamespace(), id.getPath().replace("_" + variantEntry.getVariant().getName(), ""));
             }
-            return VarReg.getSiblingIds(Objects.requireNonNull(id).getPath()).stream().map(rl -> Registry.ITEM.get(Powah.id(rl))).toArray(ItemLike[]::new);
+            return VarReg.getSiblingIds(Objects.requireNonNull(id).getPath()).stream().map(rl -> Registry.ITEM.get(Powah.id(rl)))
+                    .toArray(ItemLike[]::new);
         }
     }
 

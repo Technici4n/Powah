@@ -1,19 +1,7 @@
 package owmii.powah.lib.block;
 
-import owmii.powah.EnvHandler;
-import owmii.powah.api.energy.IEnergyConnector;
-import owmii.powah.block.Tier;
-import owmii.powah.config.IConfigHolder;
-import owmii.powah.lib.client.util.Text;
-import owmii.powah.lib.client.wiki.page.panel.InfoBox;
-import owmii.powah.config.IEnergyConfig;
-import owmii.powah.lib.item.EnergyBlockItem;
-import owmii.powah.lib.item.IEnergyItemProvider;
-import owmii.powah.lib.logistics.Transfer;
-import owmii.powah.lib.logistics.energy.Energy;
-import owmii.powah.lib.registry.IVariant;
-import owmii.powah.lib.util.Util;
-
+import java.awt.*;
+import java.util.List;
 import javax.annotation.Nullable;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
@@ -29,12 +17,22 @@ import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
+import owmii.powah.EnvHandler;
+import owmii.powah.api.energy.IEnergyConnector;
+import owmii.powah.block.Tier;
+import owmii.powah.config.IConfigHolder;
+import owmii.powah.config.IEnergyConfig;
+import owmii.powah.lib.client.util.Text;
+import owmii.powah.lib.client.wiki.page.panel.InfoBox;
+import owmii.powah.lib.item.EnergyBlockItem;
+import owmii.powah.lib.item.IEnergyItemProvider;
+import owmii.powah.lib.logistics.Transfer;
+import owmii.powah.lib.logistics.energy.Energy;
+import owmii.powah.lib.registry.IVariant;
+import owmii.powah.lib.util.Util;
 
-
-import java.awt.*;
-import java.util.List;
-
-public abstract class AbstractEnergyBlock<C extends IEnergyConfig<Tier>, B extends AbstractEnergyBlock<C, B>> extends AbstractBlock<Tier, B> implements IConfigHolder<Tier, C>, InfoBox.IInfoBoxHolder, IEnergyItemProvider {
+public abstract class AbstractEnergyBlock<C extends IEnergyConfig<Tier>, B extends AbstractEnergyBlock<C, B>> extends AbstractBlock<Tier, B>
+        implements IConfigHolder<Tier, C>, InfoBox.IInfoBoxHolder, IEnergyItemProvider {
     public AbstractEnergyBlock(Properties properties) {
         this(properties, IVariant.getEmpty());
     }
@@ -99,7 +97,10 @@ public abstract class AbstractEnergyBlock<C extends IEnergyConfig<Tier>, B exten
 
     public void addEnergyInfo(ItemStack stack, Energy.Item storage, List<Component> tooltip) {
         if (storage.getCapacity() > 0)
-            tooltip.add(Component.translatable("info.lollipop.stored").withStyle(ChatFormatting.GRAY).append(Text.COLON).append(Component.translatable("info.lollipop.fe.stored", Util.addCommas(storage.getStored()), Util.numFormat(storage.getCapacity())).withStyle(ChatFormatting.DARK_GRAY)));
+            tooltip.add(Component.translatable("info.lollipop.stored").withStyle(ChatFormatting.GRAY).append(Text.COLON)
+                    .append(Component
+                            .translatable("info.lollipop.fe.stored", Util.addCommas(storage.getStored()), Util.numFormat(storage.getCapacity()))
+                            .withStyle(ChatFormatting.DARK_GRAY)));
     }
 
     public void addEnergyTransferInfo(ItemStack stack, Energy.Item storage, List<Component> tooltip) {
@@ -107,12 +108,18 @@ public abstract class AbstractEnergyBlock<C extends IEnergyConfig<Tier>, B exten
         long re = storage.getMaxReceive();
         if (ext + re > 0) {
             if (ext == re) {
-                tooltip.add(Component.translatable("info.lollipop.max.io").withStyle(ChatFormatting.GRAY).append(Text.COLON).append(Component.literal(Util.numFormat(ext)).append(Component.translatable("info.lollipop.fe.pet.tick")).withStyle(ChatFormatting.DARK_GRAY)));
+                tooltip.add(Component.translatable("info.lollipop.max.io").withStyle(ChatFormatting.GRAY).append(Text.COLON)
+                        .append(Component.literal(Util.numFormat(ext)).append(Component.translatable("info.lollipop.fe.pet.tick"))
+                                .withStyle(ChatFormatting.DARK_GRAY)));
             } else {
                 if (ext > 0)
-                    tooltip.add(Component.translatable("info.lollipop.max.extract").withStyle(ChatFormatting.GRAY).append(Text.COLON).append(Component.literal(Util.numFormat(ext)).append(Component.translatable("info.lollipop.fe.pet.tick")).withStyle(ChatFormatting.DARK_GRAY)));
+                    tooltip.add(Component.translatable("info.lollipop.max.extract").withStyle(ChatFormatting.GRAY).append(Text.COLON)
+                            .append(Component.literal(Util.numFormat(ext)).append(Component.translatable("info.lollipop.fe.pet.tick"))
+                                    .withStyle(ChatFormatting.DARK_GRAY)));
                 if (re > 0)
-                    tooltip.add(Component.translatable("info.lollipop.max.receive").withStyle(ChatFormatting.GRAY).append(Text.COLON).append(Component.literal(Util.numFormat(re)).append(Component.translatable("info.lollipop.fe.pet.tick")).withStyle(ChatFormatting.DARK_GRAY)));
+                    tooltip.add(Component.translatable("info.lollipop.max.receive").withStyle(ChatFormatting.GRAY).append(Text.COLON)
+                            .append(Component.literal(Util.numFormat(re)).append(Component.translatable("info.lollipop.fe.pet.tick"))
+                                    .withStyle(ChatFormatting.DARK_GRAY)));
             }
         }
     }
@@ -125,8 +132,10 @@ public abstract class AbstractEnergyBlock<C extends IEnergyConfig<Tier>, B exten
         Energy.ifPresent(stack, storage -> {
             if (storage != null) {
                 if (storage.getMaxEnergyStored() > 0)
-                    box.set(Component.translatable("info.lollipop.capacity"), Component.translatable("info.lollipop.fe", Util.addCommas(storage.getCapacity())));
-                box.set(Component.translatable("info.lollipop.max.io"), Component.translatable("info.lollipop.fe.pet.tick", Util.addCommas(storage.getMaxExtract())));
+                    box.set(Component.translatable("info.lollipop.capacity"),
+                            Component.translatable("info.lollipop.fe", Util.addCommas(storage.getCapacity())));
+                box.set(Component.translatable("info.lollipop.max.io"),
+                        Component.translatable("info.lollipop.fe.pet.tick", Util.addCommas(storage.getMaxExtract())));
             }
         });
         return box;

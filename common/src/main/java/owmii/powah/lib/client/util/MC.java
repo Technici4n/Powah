@@ -1,12 +1,11 @@
 package owmii.powah.lib.client.util;
 
 import dev.architectury.event.events.client.ClientTickEvent;
+import java.util.Optional;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
-
-import java.util.Optional;
 
 public class MC {
     public static long ticks;

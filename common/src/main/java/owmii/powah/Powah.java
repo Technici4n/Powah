@@ -1,21 +1,19 @@
 package owmii.powah;
 
-import me.shedaniel.autoconfig.AutoConfig;
 import me.shedaniel.autoconfig.ConfigHolder;
-import me.shedaniel.autoconfig.serializer.JanksonConfigSerializer;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.block.Blocks;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import owmii.powah.config.v2.PowahConfig;
-import owmii.powah.network.Network;
 import owmii.powah.api.PowahAPI;
 import owmii.powah.block.Blcks;
 import owmii.powah.block.Tiles;
+import owmii.powah.config.v2.PowahConfig;
 import owmii.powah.entity.Entities;
 import owmii.powah.inventory.Containers;
 import owmii.powah.item.Itms;
+import owmii.powah.network.Network;
 import owmii.powah.recipe.Recipes;
 
 public class Powah {
