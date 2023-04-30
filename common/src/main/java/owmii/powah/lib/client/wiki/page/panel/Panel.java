@@ -1,9 +1,8 @@
 package owmii.powah.lib.client.wiki.page.panel;
 
+import javax.annotation.Nullable;
 import owmii.powah.lib.client.wiki.Page;
 import owmii.powah.lib.client.wiki.Section;
-
-import javax.annotation.Nullable;
 
 public class Panel extends Page {
     public Panel(Section parent) {

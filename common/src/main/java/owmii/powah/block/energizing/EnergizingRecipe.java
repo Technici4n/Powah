@@ -3,6 +3,11 @@ package owmii.powah.block.energizing;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParseException;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
+import java.util.stream.IntStream;
+import javax.annotation.Nullable;
 import net.minecraft.core.NonNullList;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.resources.ResourceLocation;
@@ -17,12 +22,6 @@ import net.minecraft.world.level.Level;
 import owmii.powah.Powah;
 import owmii.powah.lib.logistics.inventory.RecipeWrapper;
 import owmii.powah.recipe.Recipes;
-
-import javax.annotation.Nullable;
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
-import java.util.stream.IntStream;
 
 public class EnergizingRecipe implements Recipe<RecipeWrapper> {
     public static final ResourceLocation ID = new ResourceLocation(Powah.MOD_ID, "energizing");

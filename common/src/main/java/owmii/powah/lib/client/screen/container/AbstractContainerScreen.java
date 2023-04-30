@@ -2,6 +2,9 @@ package owmii.powah.lib.client.screen.container;
 
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
+import java.util.ArrayList;
+import java.util.List;
+import javax.annotation.Nullable;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.components.AbstractWidget;
 import net.minecraft.client.renderer.Rect2i;
@@ -12,10 +15,6 @@ import net.minecraft.world.inventory.Slot;
 import owmii.powah.lib.client.screen.Texture;
 import owmii.powah.lib.logistics.inventory.AbstractContainer;
 import owmii.powah.lib.logistics.inventory.slot.ITexturedSlot;
-
-import javax.annotation.Nullable;
-import java.util.ArrayList;
-import java.util.List;
 
 public class AbstractContainerScreen<C extends AbstractContainer> extends net.minecraft.client.gui.screens.inventory.AbstractContainerScreen<C> {
     protected final Minecraft mc = Minecraft.getInstance();

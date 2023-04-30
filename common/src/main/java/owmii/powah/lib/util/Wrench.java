@@ -22,7 +22,7 @@ public final class Wrench {
         }
         var pos = hitResult.getBlockPos();
         var state = world.getBlockState(pos);
-        if (state.getBlock() instanceof AbstractEnergyBlock<?,?> || state.getBlock() instanceof EnergizingOrbBlock) {
+        if (state.getBlock() instanceof AbstractEnergyBlock<?, ?> || state.getBlock() instanceof EnergizingOrbBlock) {
             var entity = world.getBlockEntity(pos);
             world.setBlockAndUpdate(pos, Blocks.AIR.defaultBlockState());
             if (!player.isCreative()) {

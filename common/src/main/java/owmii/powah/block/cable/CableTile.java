@@ -1,6 +1,8 @@
 package owmii.powah.block.cable;
 
 import com.google.common.collect.Iterables;
+import java.util.EnumSet;
+import javax.annotation.Nullable;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
@@ -13,10 +15,6 @@ import owmii.powah.block.Tiles;
 import owmii.powah.config.v2.types.CableConfig;
 import owmii.powah.lib.block.AbstractEnergyStorage;
 import owmii.powah.lib.block.IInventoryHolder;
-
-import javax.annotation.Nullable;
-import java.util.EnumSet;
-import java.util.Set;
 
 public abstract class CableTile extends AbstractEnergyStorage<CableConfig, CableBlock> implements IInventoryHolder {
 

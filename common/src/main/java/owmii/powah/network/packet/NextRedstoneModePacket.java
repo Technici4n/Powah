@@ -25,7 +25,6 @@ public class NextRedstoneModePacket implements IPacket {
         buffer.writeBlockPos(pos);
     }
 
-
     @Override
     public void handle(Player player) {
         if (player instanceof ServerPlayer) {

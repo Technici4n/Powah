@@ -1,6 +1,5 @@
 package owmii.powah.lib.client.screen;
 
-import com.mojang.blaze3d.platform.InputConstants;
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.components.AbstractWidget;
@@ -35,20 +34,22 @@ public class ScreenBase extends Screen {
         }
     }
 
-    /* TODO ARCH - unclear
-    @Override
-    public boolean keyPressed(int keyCode, int scanCode, int modifiers) {
-        if (super.keyPressed(keyCode, scanCode, modifiers)) {
-            return true;
-        } else {
-            InputConstants.Key code = InputConstants.getKey(keyCode, scanCode);
-            if (keyCode == 256 || Minecraft.getInstance().options.keyInventory.isActiveAndMatches(code)) {
-                onClose();
-                return true;
-            }
-        }
-        return false;
-    }
+    /*
+     * TODO ARCH - unclear
+     * 
+     * @Override
+     * public boolean keyPressed(int keyCode, int scanCode, int modifiers) {
+     * if (super.keyPressed(keyCode, scanCode, modifiers)) {
+     * return true;
+     * } else {
+     * InputConstants.Key code = InputConstants.getKey(keyCode, scanCode);
+     * if (keyCode == 256 || Minecraft.getInstance().options.keyInventory.isActiveAndMatches(code)) {
+     * onClose();
+     * return true;
+     * }
+     * }
+     * return false;
+     * }
      */
 
     @Override

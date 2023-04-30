@@ -1,14 +1,12 @@
 package owmii.powah.lib.util;
 
+import java.util.Collection;
+import java.util.UUID;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
 import net.minecraft.nbt.NbtUtils;
 import net.minecraft.nbt.Tag;
-import net.minecraft.world.item.ItemStack;
-
-import java.util.Collection;
-import java.util.UUID;
 
 public class NBT {
     public static final String TAG_STORABLE_STACK = "powah_tile_data"; // TODO ARCH: cleanup, probably?

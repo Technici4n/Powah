@@ -5,12 +5,12 @@ import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.resources.language.I18n;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.player.Inventory;
-import owmii.powah.lib.client.screen.container.AbstractEnergyScreen;
-import owmii.powah.lib.logistics.energy.Energy;
-import owmii.powah.lib.util.Util;
 import owmii.powah.block.energycell.EnergyCellTile;
 import owmii.powah.client.screen.Textures;
 import owmii.powah.inventory.EnergyCellContainer;
+import owmii.powah.lib.client.screen.container.AbstractEnergyScreen;
+import owmii.powah.lib.logistics.energy.Energy;
+import owmii.powah.lib.util.Util;
 
 public class EnergyCellScreen extends AbstractEnergyScreen<EnergyCellTile, EnergyCellContainer> {
     public EnergyCellScreen(EnergyCellContainer container, Inventory inv, Component title) {

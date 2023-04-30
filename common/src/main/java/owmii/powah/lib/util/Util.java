@@ -1,17 +1,16 @@
 package owmii.powah.lib.util;
 
 import dev.architectury.fluid.FluidStack;
-import net.minecraft.ChatFormatting;
-import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.MutableComponent;
-import owmii.powah.lib.logistics.fluid.Tank;
-
 import java.text.NumberFormat;
 import java.util.Arrays;
 import java.util.Locale;
 import java.util.Map;
 import java.util.NavigableMap;
 import java.util.TreeMap;
+import net.minecraft.ChatFormatting;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.MutableComponent;
+import owmii.powah.lib.logistics.fluid.Tank;
 
 public class Util {
     public static boolean anyMatch(int[] arr, int value) {
@@ -60,8 +59,7 @@ public class Util {
     public static MutableComponent formatTankContent(long amount, long capacity) {
         return Component.translatable("info.lollipop.mb.stored",
                 Util.addCommas(amountToMillibuckets(amount)),
-                Util.numFormat(amountToMillibuckets(capacity))
-        ).withStyle(ChatFormatting.DARK_GRAY);
+                Util.numFormat(amountToMillibuckets(capacity))).withStyle(ChatFormatting.DARK_GRAY);
     }
 
     /**
@@ -82,9 +80,12 @@ public class Util {
 
     @SuppressWarnings("IntegerDivisionInFloatingPointContext")
     public static String numFormat(long value) {
-        if (value == Long.MIN_VALUE) return numFormat(Long.MIN_VALUE + 1);
-        if (value < 0) return "-" + numFormat(-value);
-        if (value < 1000) return Long.toString(value);
+        if (value == Long.MIN_VALUE)
+            return numFormat(Long.MIN_VALUE + 1);
+        if (value < 0)
+            return "-" + numFormat(-value);
+        if (value < 1000)
+            return Long.toString(value);
 
         Map.Entry<Long, String> e = SUFFIXES.floorEntry(value);
         Long divideBy = e.getKey();

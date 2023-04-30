@@ -1,18 +1,15 @@
 package owmii.powah.lib.logistics.energy;
 
+import java.util.Optional;
+import java.util.function.Consumer;
+import javax.annotation.Nullable;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.item.ItemStack;
 import owmii.powah.lib.item.EnergyBlockItem;
 import owmii.powah.lib.item.IEnergyContainingItem;
 import owmii.powah.lib.util.NBT;
-import owmii.powah.lib.util.Player;
 import owmii.powah.lib.util.Stack;
 import owmii.powah.lib.util.Util;
-
-import javax.annotation.Nullable;
-import java.util.Optional;
-import java.util.function.Consumer;
-import java.util.function.Predicate;
 
 public class Energy {
     public static final Energy EMPTY = Energy.create(0);

@@ -6,13 +6,13 @@ import net.minecraft.client.resources.language.I18n;
 import net.minecraft.core.Direction;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.player.Inventory;
+import owmii.powah.block.cable.CableTile;
+import owmii.powah.client.screen.Textures;
+import owmii.powah.inventory.CableContainer;
 import owmii.powah.lib.client.screen.container.AbstractEnergyScreen;
 import owmii.powah.lib.client.screen.widget.IconButton;
 import owmii.powah.network.Network;
 import owmii.powah.network.packet.NextEnergyConfigPacket;
-import owmii.powah.block.cable.CableTile;
-import owmii.powah.client.screen.Textures;
-import owmii.powah.inventory.CableContainer;
 
 public class CableScreen extends AbstractEnergyScreen<CableTile, CableContainer> {
     private IconButton configButton = IconButton.EMPTY;
@@ -27,13 +27,15 @@ public class CableScreen extends AbstractEnergyScreen<CableTile, CableContainer>
     protected void init() {
         super.init();
 
-        this.configButton = addRenderableWidget(new IconButton(this.leftPos + 5, this.topPos + 5, Textures.CABLE_CONFIG.get(this.te.getSideConfig().getType(this.side)), button -> {
-            Network.toServer(new NextEnergyConfigPacket(this.side.get3DDataValue(), this.te.getBlockPos()));
-            this.te.getSideConfig().nextType(this.side);
-        }, this).setTooltip(tooltip -> {
-            tooltip.add(Component.translatable("info.lollipop.side." + this.side.getSerializedName(), ChatFormatting.DARK_GRAY).withStyle(ChatFormatting.GRAY));
-            tooltip.add(this.te.getSideConfig().getType(this.side).getDisplayName2());
-        }));
+        this.configButton = addRenderableWidget(
+                new IconButton(this.leftPos + 5, this.topPos + 5, Textures.CABLE_CONFIG.get(this.te.getSideConfig().getType(this.side)), button -> {
+                    Network.toServer(new NextEnergyConfigPacket(this.side.get3DDataValue(), this.te.getBlockPos()));
+                    this.te.getSideConfig().nextType(this.side);
+                }, this).setTooltip(tooltip -> {
+                    tooltip.add(Component.translatable("info.lollipop.side." + this.side.getSerializedName(), ChatFormatting.DARK_GRAY)
+                            .withStyle(ChatFormatting.GRAY));
+                    tooltip.add(this.te.getSideConfig().getType(this.side).getDisplayName2());
+                }));
     }
 
     @Override

@@ -24,7 +24,7 @@ public enum Tier implements IVariant<Tier> {
     }
 
     public static Tier[] getNormalVariants() {
-        return new Tier[]{STARTER, BASIC, HARDENED, BLAZING, NIOTIC, SPIRITED, NITRO};
+        return new Tier[] { STARTER, BASIC, HARDENED, BLAZING, NIOTIC, SPIRITED, NITRO };
     }
 
     public int getColor() {

@@ -10,11 +10,11 @@ import net.minecraft.client.model.geom.builders.MeshDefinition;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.resources.ResourceLocation;
-import owmii.powah.lib.client.util.Render;
 import owmii.powah.Powah;
 import owmii.powah.block.Tier;
 import owmii.powah.block.reactor.ReactorTile;
 import owmii.powah.client.render.tile.ReactorRenderer;
+import owmii.powah.lib.client.util.Render;
 
 public class ReactorModel extends AbstractModel<ReactorTile, ReactorRenderer> {
     private static final String REACTOR = "reactor";
@@ -53,7 +53,8 @@ public class ReactorModel extends AbstractModel<ReactorTile, ReactorRenderer> {
         }
 
         if (te.getVariant() != Tier.STARTER) {
-            VertexConsumer buffer_type = rtb.getBuffer(renderType(new ResourceLocation(Powah.MOD_ID, "textures/model/tile/reactor_" + te.getVariant().getName() + ".png")));
+            VertexConsumer buffer_type = rtb
+                    .getBuffer(renderType(new ResourceLocation(Powah.MOD_ID, "textures/model/tile/reactor_" + te.getVariant().getName() + ".png")));
             this.reactor.render(matrix, buffer_type, light, ov);
         }
     }

@@ -1,5 +1,7 @@
 package owmii.powah.lib.client.screen.wiki;
 
+import com.mojang.blaze3d.vertex.PoseStack;
+import javax.annotation.Nullable;
 import net.minecraft.world.item.ItemStack;
 import owmii.powah.lib.client.screen.ScreenBase;
 import owmii.powah.lib.client.screen.Texture;
@@ -9,8 +11,6 @@ import owmii.powah.lib.client.wiki.Entry;
 import owmii.powah.lib.client.wiki.Page;
 import owmii.powah.lib.client.wiki.Section;
 import owmii.powah.lib.client.wiki.page.panel.Panel;
-import com.mojang.blaze3d.vertex.PoseStack;
-import javax.annotation.Nullable;
 
 public class WikiScreen extends ScreenBase {
     private final Entry entry;
@@ -83,7 +83,8 @@ public class WikiScreen extends ScreenBase {
     public static void open(Entry entry) {
         if (last != null && false) {
             MC.open(last);
-        } else MC.open(new WikiScreen(entry.getSections().get(0)));
+        } else
+            MC.open(new WikiScreen(entry.getSections().get(0)));
     }
 
     public Page getPage() {

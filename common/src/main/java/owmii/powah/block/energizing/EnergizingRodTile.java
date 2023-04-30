@@ -1,22 +1,21 @@
 package owmii.powah.block.energizing;
 
-import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.phys.AABB;
-import owmii.powah.Powah;
-import owmii.powah.config.v2.types.EnergyConfig;
-import owmii.powah.lib.block.AbstractEnergyStorage;
-import owmii.powah.lib.util.NBT;
-import owmii.powah.lib.util.Ticker;
-import owmii.powah.block.Tier;
-import owmii.powah.block.Tiles;
-
 import javax.annotation.Nullable;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
+import net.minecraft.world.phys.AABB;
+import owmii.powah.Powah;
+import owmii.powah.block.Tier;
+import owmii.powah.block.Tiles;
+import owmii.powah.config.v2.types.EnergyConfig;
+import owmii.powah.lib.block.AbstractEnergyStorage;
+import owmii.powah.lib.util.NBT;
+import owmii.powah.lib.util.Ticker;
 
 public class EnergizingRodTile extends AbstractEnergyStorage<EnergyConfig, EnergizingRodBlock> {
     private BlockPos orbPos = BlockPos.ZERO;

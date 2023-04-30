@@ -1,5 +1,8 @@
 package owmii.powah.item;
 
+import java.util.List;
+import java.util.Optional;
+import javax.annotation.Nullable;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -19,20 +22,16 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.DirectionProperty;
 import net.minecraft.world.level.block.state.properties.Property;
 import net.minecraft.world.phys.Vec3;
-import owmii.powah.block.energizing.EnergizingOrbBlock;
-import owmii.powah.lib.block.AbstractEnergyBlock;
-import owmii.powah.lib.client.handler.IHudItem;
-import owmii.powah.lib.item.ItemBase;
-import owmii.powah.lib.logistics.energy.SideConfig;
 import owmii.powah.api.wrench.IWrench;
 import owmii.powah.api.wrench.IWrenchable;
 import owmii.powah.api.wrench.WrenchMode;
 import owmii.powah.block.cable.CableBlock;
 import owmii.powah.block.cable.CableTile;
-
-import javax.annotation.Nullable;
-import java.util.List;
-import java.util.Optional;
+import owmii.powah.block.energizing.EnergizingOrbBlock;
+import owmii.powah.lib.block.AbstractEnergyBlock;
+import owmii.powah.lib.client.handler.IHudItem;
+import owmii.powah.lib.item.ItemBase;
+import owmii.powah.lib.logistics.energy.SideConfig;
 
 public class WrenchItem extends ItemBase implements IHudItem, IWrench {
     private static final Direction[] DIRECTIONS = Direction.values();
@@ -42,12 +41,14 @@ public class WrenchItem extends ItemBase implements IHudItem, IWrench {
     }
 
     @Override
-    public InteractionResult onItemUseFirst(ItemStack stack, Level world, BlockPos pos, Player player, InteractionHand hand, Direction side, Vec3 hit) {
-        if (player.isShiftKeyDown()) return InteractionResult.PASS;
+    public InteractionResult onItemUseFirst(ItemStack stack, Level world, BlockPos pos, Player player, InteractionHand hand, Direction side,
+            Vec3 hit) {
+        if (player.isShiftKeyDown())
+            return InteractionResult.PASS;
         BlockEntity te = world.getBlockEntity(pos);
         BlockState state = world.getBlockState(pos);
         if (state.getBlock() instanceof IWrenchable iWrenchable
-            && iWrenchable.onWrench(state, world, pos, player, hand, side, getWrenchMode(stack), hit)) {
+                && iWrenchable.onWrench(state, world, pos, player, hand, side, getWrenchMode(stack), hit)) {
             return InteractionResult.SUCCESS;
         } else {
             if (!world.isClientSide && getWrenchMode(stack).config()) {
@@ -55,7 +56,7 @@ public class WrenchItem extends ItemBase implements IHudItem, IWrench {
                     CableTile cable = (CableTile) te;
                     if (stack.getItem() instanceof WrenchItem) {
                         Optional<Direction> sides = CableBlock.getHitSide(hit, pos);
-                        boolean[] flag = {false};
+                        boolean[] flag = { false };
                         sides.ifPresent(direction -> {
                             SideConfig config = cable.getSideConfig();
                             config.nextType(direction);
@@ -76,7 +77,7 @@ public class WrenchItem extends ItemBase implements IHudItem, IWrench {
             }
             if (getWrenchMode(stack).rotate()
                     // Only rotate Powah machines
-                    && (state.getBlock() instanceof AbstractEnergyBlock<?,?> || state.getBlock() instanceof EnergizingOrbBlock)) {
+                    && (state.getBlock() instanceof AbstractEnergyBlock<?, ?> || state.getBlock() instanceof EnergizingOrbBlock)) {
                 final BlockState rotatedState = rotateState(world, state, pos);
                 if (!state.equals(rotatedState)) {
                     world.setBlockAndUpdate(pos, rotatedState);
@@ -117,7 +118,10 @@ public class WrenchItem extends ItemBase implements IHudItem, IWrench {
         ItemStack stack = playerIn.getItemInHand(handIn);
         if (playerIn.isShiftKeyDown()) {
             nextWrenchMode(stack);
-            playerIn.displayClientMessage(Component.translatable("info.powah.wrench.mode." + getWrenchMode(stack).name().toLowerCase(), ChatFormatting.YELLOW).withStyle(ChatFormatting.GRAY), true);
+            playerIn.displayClientMessage(
+                    Component.translatable("info.powah.wrench.mode." + getWrenchMode(stack).name().toLowerCase(), ChatFormatting.YELLOW)
+                            .withStyle(ChatFormatting.GRAY),
+                    true);
             return InteractionResultHolder.success(stack);
         }
         return super.use(worldIn, playerIn, handIn);
@@ -125,14 +129,17 @@ public class WrenchItem extends ItemBase implements IHudItem, IWrench {
 
     @Override
     public void appendHoverText(ItemStack stack, @Nullable Level worldIn, List<Component> tooltip, TooltipFlag flagIn) {
-        tooltip.add(Component.translatable("info.powah.wrench.mode." + getWrenchMode(stack).name().toLowerCase(), ChatFormatting.YELLOW).withStyle(ChatFormatting.GRAY));
+        tooltip.add(Component.translatable("info.powah.wrench.mode." + getWrenchMode(stack).name().toLowerCase(), ChatFormatting.YELLOW)
+                .withStyle(ChatFormatting.GRAY));
     }
 
     @Override
     public void inventoryTick(ItemStack stack, Level worldIn, Entity entityIn, int itemSlot, boolean isSelected) {
         if (entityIn instanceof Player) {
             Player player = (Player) entityIn;
-            oneTimeInfo(player, stack, Component.translatable("info.powah.wrench.mode." + getWrenchMode(stack).name().toLowerCase(), ChatFormatting.YELLOW).withStyle(ChatFormatting.GRAY));
+            oneTimeInfo(player, stack,
+                    Component.translatable("info.powah.wrench.mode." + getWrenchMode(stack).name().toLowerCase(), ChatFormatting.YELLOW)
+                            .withStyle(ChatFormatting.GRAY));
         }
     }
 

@@ -2,6 +2,10 @@ package owmii.powah.network;
 
 import dev.architectury.networking.NetworkManager;
 import io.netty.buffer.Unpooled;
+import java.lang.reflect.Constructor;
+import java.util.ArrayList;
+import java.util.IdentityHashMap;
+import java.util.List;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
@@ -11,11 +15,6 @@ import owmii.powah.network.packet.NextEnergyConfigPacket;
 import owmii.powah.network.packet.NextRedstoneModePacket;
 import owmii.powah.network.packet.SetChannelPacket;
 import owmii.powah.network.packet.SwitchGenModePacket;
-
-import java.lang.reflect.Constructor;
-import java.util.ArrayList;
-import java.util.IdentityHashMap;
-import java.util.List;
 
 public final class Network {
     private static final ResourceLocation PACKET_ID = Powah.id("packet");

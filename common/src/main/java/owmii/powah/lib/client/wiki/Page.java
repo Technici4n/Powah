@@ -1,5 +1,9 @@
 package owmii.powah.lib.client.wiki;
 
+import com.mojang.blaze3d.vertex.PoseStack;
+import java.util.List;
+import java.util.Objects;
+import javax.annotation.Nullable;
 import net.minecraft.client.gui.Font;
 import net.minecraft.network.chat.Component;
 import owmii.powah.lib.client.screen.Texture;
@@ -7,11 +11,6 @@ import owmii.powah.lib.client.screen.widget.IconButton;
 import owmii.powah.lib.client.screen.wiki.WikiScreen;
 import owmii.powah.lib.client.util.MC;
 import owmii.powah.lib.client.wiki.page.panel.Panel;
-
-import javax.annotation.Nullable;
-import com.mojang.blaze3d.vertex.PoseStack;
-import java.util.List;
-import java.util.Objects;
 
 public class Page {
     private final String name;
@@ -37,9 +36,11 @@ public class Page {
                     Entry currEntry = screen.getEntry().getParent();
                     if (currEntry != null) {
                         boolean b = currEntry.equals(catEntry);
-                        screen.addButton2(new IconButton(x + (b ? 0 : 2), 10 + y + (i * 28), catEntry.getStack(), Texture.WIKI_TABS.get(b), button -> {
-                            MC.open(new WikiScreen(catEntry.getSections(0)));
-                        }, screen).xOffset(b ? -2.0F : 0.5F).setTooltip(tooltip -> tooltip.add(Component.translatable(catEntry.getTransKey()))));
+                        screen.addButton2(
+                                new IconButton(x + (b ? 0 : 2), 10 + y + (i * 28), catEntry.getStack(), Texture.WIKI_TABS.get(b), button -> {
+                                    MC.open(new WikiScreen(catEntry.getSections(0)));
+                                }, screen).xOffset(b ? -2.0F : 0.5F)
+                                        .setTooltip(tooltip -> tooltip.add(Component.translatable(catEntry.getTransKey()))));
                     }
                 }
             }

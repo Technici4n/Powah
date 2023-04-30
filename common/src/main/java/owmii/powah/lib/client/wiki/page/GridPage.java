@@ -30,7 +30,8 @@ public class GridPage extends EntriesPage {
                     screen.addButton2(new IconButton(27 + x + 13 + j * 29, 17 + y + 13 + i * 29, e.getStack(), Texture.WIKI_FRM, button -> {
                         MC.open(new WikiScreen(e.getSections(0)));
                     }, screen).setTooltip(tooltip -> tooltip.add(Component.translatable(e.getTransKey()))));
-                } else break;
+                } else
+                    break;
             }
         }
     }

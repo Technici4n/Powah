@@ -1,5 +1,7 @@
 package owmii.powah.fabric.compat.rei;
 
+import java.util.ArrayList;
+import java.util.List;
 import me.shedaniel.math.Point;
 import me.shedaniel.math.Rectangle;
 import me.shedaniel.rei.api.client.gui.Renderer;
@@ -15,9 +17,6 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.block.Blocks;
 import owmii.powah.Powah;
-
-import java.util.ArrayList;
-import java.util.List;
 
 public class HeatSourceCategory implements DisplayCategory<HeatSourceDisplay> {
     public static final ResourceLocation GUI_BACK = new ResourceLocation(Powah.MOD_ID, "textures/gui/jei/misc.png");
@@ -65,7 +64,8 @@ public class HeatSourceCategory implements DisplayCategory<HeatSourceDisplay> {
                 .entries(display.getInputEntries().get(0)));
         widgets.add(Widgets.createDrawableWidget((helper, matrices, mouseX, mouseY, delta) -> {
             Minecraft minecraft = Minecraft.getInstance();
-            minecraft.font.draw(matrices, ChatFormatting.DARK_GRAY + I18n.get("info.lollipop.temperature") + ": " + ChatFormatting.RESET + I18n.get("info.lollipop.temperature.c", display.getHeat()), origin.x + 30.0F, origin.y + 9.0F, 0xc43400);
+            minecraft.font.draw(matrices, ChatFormatting.DARK_GRAY + I18n.get("info.lollipop.temperature") + ": " + ChatFormatting.RESET
+                    + I18n.get("info.lollipop.temperature.c", display.getHeat()), origin.x + 30.0F, origin.y + 9.0F, 0xc43400);
         }));
         return widgets;
     }

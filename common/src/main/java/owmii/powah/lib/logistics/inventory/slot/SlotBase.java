@@ -1,11 +1,10 @@
 package owmii.powah.lib.logistics.inventory.slot;
 
+import javax.annotation.Nonnull;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import owmii.powah.lib.logistics.inventory.Inventory;
 import owmii.powah.lib.logistics.inventory.ItemStackHandler;
-
-import javax.annotation.Nonnull;
 
 public class SlotBase extends SlotItemHandler {
     private boolean enabled = true;
@@ -18,7 +17,8 @@ public class SlotBase extends SlotItemHandler {
     public boolean mayPickup(Player player) {
         if (this.getItemHandler() instanceof Inventory) {
             return !((Inventory) getItemHandler()).extractItemFromSlot(index, 1, true).isEmpty();
-        } else return super.mayPickup(player);
+        } else
+            return super.mayPickup(player);
     }
 
     @Nonnull
@@ -26,7 +26,8 @@ public class SlotBase extends SlotItemHandler {
     public ItemStack remove(int amount) {
         if (this.getItemHandler() instanceof Inventory) {
             return ((Inventory) getItemHandler()).extractItemFromSlot(index, amount, false);
-        } else return super.remove(amount);
+        } else
+            return super.remove(amount);
     }
 
     @Override

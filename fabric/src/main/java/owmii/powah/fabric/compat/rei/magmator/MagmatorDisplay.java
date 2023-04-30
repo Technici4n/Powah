@@ -1,6 +1,8 @@
 package owmii.powah.fabric.compat.rei.magmator;
 
 import dev.architectury.hooks.fluid.FluidBucketHooks;
+import java.util.*;
+import java.util.stream.Collectors;
 import me.shedaniel.rei.api.client.registry.entry.EntryRegistry;
 import me.shedaniel.rei.api.common.category.CategoryIdentifier;
 import me.shedaniel.rei.api.common.display.Display;
@@ -15,9 +17,6 @@ import net.minecraft.world.item.Items;
 import net.minecraft.world.level.material.Fluid;
 import owmii.powah.api.PowahAPI;
 
-import java.util.*;
-import java.util.stream.Collectors;
-
 public class MagmatorDisplay implements Display {
     private final List<EntryIngredient> inputs;
 
@@ -26,8 +25,7 @@ public class MagmatorDisplay implements Display {
     public MagmatorDisplay(Recipe recipe) {
         this.inputs = List.of(
                 EntryIngredients.of(recipe.getFluid()),
-                !Items.BUCKET.equals(recipe.getBucket()) ? EntryIngredients.of(recipe.getBucket()) : EntryIngredient.of()
-        );
+                !Items.BUCKET.equals(recipe.getBucket()) ? EntryIngredients.of(recipe.getBucket()) : EntryIngredient.of());
         this.heat = recipe.getHeat();
     }
 
@@ -66,7 +64,8 @@ public class MagmatorDisplay implements Display {
                 }
             });
 
-            List<Fluid> fluids = PowahAPI.MAGMATIC_FLUIDS.keySet().stream().flatMap(f -> Registry.FLUID.getOptional(f).stream()).collect(Collectors.toCollection(ArrayList::new));
+            List<Fluid> fluids = PowahAPI.MAGMATIC_FLUIDS.keySet().stream().flatMap(f -> Registry.FLUID.getOptional(f).stream())
+                    .collect(Collectors.toCollection(ArrayList::new));
             recipes.forEach(recipe -> {
                 fluids.remove(recipe.fluid);
             });

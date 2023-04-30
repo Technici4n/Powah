@@ -1,18 +1,17 @@
 package owmii.powah.lib.logistics.energy;
 
+import static owmii.powah.lib.logistics.Transfer.ALL;
+import static owmii.powah.lib.logistics.Transfer.NONE;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import javax.annotation.Nullable;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.Tag;
 import owmii.powah.lib.block.AbstractEnergyStorage;
 import owmii.powah.lib.logistics.Transfer;
-
-import javax.annotation.Nullable;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-
-import static owmii.powah.lib.logistics.Transfer.ALL;
-import static owmii.powah.lib.logistics.Transfer.NONE;
 
 public class SideConfig {
     private final Transfer[] transfers = new Transfer[6];

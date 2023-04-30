@@ -6,6 +6,7 @@ import dev.emi.emi.api.stack.EmiIngredient;
 import dev.emi.emi.api.stack.EmiStack;
 import dev.emi.emi.api.widget.TextWidget;
 import dev.emi.emi.api.widget.WidgetHolder;
+import java.util.List;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
@@ -13,13 +14,12 @@ import net.minecraft.world.item.Item;
 import org.jetbrains.annotations.Nullable;
 import owmii.powah.Powah;
 
-import java.util.List;
-
 public class SolidCoolantEmiRecipe implements EmiRecipe {
     public static final ResourceLocation GUI_BACK = new ResourceLocation(Powah.MOD_ID, "textures/gui/jei/misc.png");
     private final EmiIngredient input;
     private final int amount;
     private final int coldness;
+
     public SolidCoolantEmiRecipe(Item item, int amount, int coldness) {
         this.input = EmiStack.of(item);
         this.amount = amount;
@@ -65,7 +65,8 @@ public class SolidCoolantEmiRecipe implements EmiRecipe {
                 .verticalAlign(TextWidget.Alignment.CENTER);
         widgets.addText(Component.translatable("info.lollipop.temperature").append(": ")
                 .append(Component.translatable("info.lollipop.temperature.c", coldness)
-                        .withStyle(ChatFormatting.DARK_AQUA)), 27, 17, 0x444444, false)
+                        .withStyle(ChatFormatting.DARK_AQUA)),
+                27, 17, 0x444444, false)
                 .verticalAlign(TextWidget.Alignment.CENTER);
     }
 }

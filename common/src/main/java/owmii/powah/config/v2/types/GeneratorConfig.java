@@ -5,30 +5,30 @@ import owmii.powah.config.IEnergyConfig;
 import owmii.powah.config.v2.values.TieredEnergyValues;
 
 public class GeneratorConfig implements IEnergyConfig<Tier> {
-	public TieredEnergyValues capacities;
-	public TieredEnergyValues transfer_rates;
-	public TieredEnergyValues generation_rates;
+    public TieredEnergyValues capacities;
+    public TieredEnergyValues transfer_rates;
+    public TieredEnergyValues generation_rates;
 
-	private GeneratorConfig() {
-	}
+    private GeneratorConfig() {
+    }
 
-	public GeneratorConfig(TieredEnergyValues capacities, TieredEnergyValues transfer_rates, TieredEnergyValues generation_rates) {
-		this.capacities = capacities;
-		this.transfer_rates = transfer_rates;
-		this.generation_rates = generation_rates;
-	}
+    public GeneratorConfig(TieredEnergyValues capacities, TieredEnergyValues transfer_rates, TieredEnergyValues generation_rates) {
+        this.capacities = capacities;
+        this.transfer_rates = transfer_rates;
+        this.generation_rates = generation_rates;
+    }
 
-	@Override
-	public long getCapacity(Tier variant) {
-		return capacities.get(variant);
-	}
+    @Override
+    public long getCapacity(Tier variant) {
+        return capacities.get(variant);
+    }
 
-	@Override
-	public long getTransfer(Tier variant) {
-		return transfer_rates.get(variant);
-	}
+    @Override
+    public long getTransfer(Tier variant) {
+        return transfer_rates.get(variant);
+    }
 
-	public long getGeneration(Tier variant) {
-		return generation_rates.get(variant);
-	}
+    public long getGeneration(Tier variant) {
+        return generation_rates.get(variant);
+    }
 }

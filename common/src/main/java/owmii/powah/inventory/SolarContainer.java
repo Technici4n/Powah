@@ -2,8 +2,8 @@ package owmii.powah.inventory;
 
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.world.entity.player.Inventory;
-import owmii.powah.lib.logistics.inventory.AbstractEnergyContainer;
 import owmii.powah.block.solar.SolarTile;
+import owmii.powah.lib.logistics.inventory.AbstractEnergyContainer;
 
 public class SolarContainer extends AbstractEnergyContainer<SolarTile> {
     public SolarContainer(int id, Inventory inventory, FriendlyByteBuf buffer) {

@@ -1,5 +1,7 @@
 package owmii.powah.lib.client.wiki.page.panel;
 
+import com.mojang.blaze3d.vertex.PoseStack;
+import java.util.List;
 import net.minecraft.client.gui.Font;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.ItemLike;
@@ -7,8 +9,6 @@ import owmii.powah.lib.client.screen.Texture;
 import owmii.powah.lib.client.screen.wiki.WikiScreen;
 import owmii.powah.lib.client.util.Text;
 import owmii.powah.lib.client.wiki.Section;
-import com.mojang.blaze3d.vertex.PoseStack;
-import java.util.List;
 
 public class EnergyPanel<T extends ItemLike> extends ItemPanel<T> {
     public EnergyPanel(Section parent) {

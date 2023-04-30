@@ -3,13 +3,12 @@ package owmii.powah.client.particle;
 import com.mojang.blaze3d.platform.GlStateManager;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.VertexConsumer;
+import javax.annotation.Nullable;
 import net.minecraft.client.Camera;
 import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.client.particle.*;
 import net.minecraft.core.particles.SimpleParticleType;
 import net.minecraft.util.Mth;
-
-import javax.annotation.Nullable;
 
 public class EnergizingParticle extends TextureSheetParticle {
     protected EnergizingParticle(ClientLevel world, double x, double y, double z) {
@@ -53,7 +52,8 @@ public class EnergizingParticle extends TextureSheetParticle {
 
         @Nullable
         @Override
-        public Particle createParticle(SimpleParticleType typeIn, ClientLevel worldIn, double x, double y, double z, double xSpeed, double ySpeed, double zSpeed) {
+        public Particle createParticle(SimpleParticleType typeIn, ClientLevel worldIn, double x, double y, double z, double xSpeed, double ySpeed,
+                double zSpeed) {
             EnergizingParticle particle = new EnergizingParticle(worldIn, x, y, z);
             particle.pickSprite(this.spriteSet);
             return particle;

@@ -1,11 +1,11 @@
 package owmii.powah.lib.logistics;
 
-import javax.annotation.Nullable;
-import net.minecraft.core.Direction;
 import java.util.Arrays;
 import java.util.EnumMap;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
+import javax.annotation.Nullable;
+import net.minecraft.core.Direction;
 
 /**
  * Used for storing a value for null and all the directions.
@@ -25,12 +25,13 @@ public final class SidedStorage<T> {
     public static <T> SidedStorage<T> create(SideSupplier<T> supplier) {
         return new SidedStorage<>(
                 supplier.get(null),
-                Arrays.stream(Direction.values()).collect(Collectors.toMap(side -> side, supplier::get, (a, b) -> b, () -> new EnumMap<>(Direction.class)))
-        );
+                Arrays.stream(Direction.values())
+                        .collect(Collectors.toMap(side -> side, supplier::get, (a, b) -> b, () -> new EnumMap<>(Direction.class))));
     }
 
     public T get(@Nullable Direction side) {
-        if (side == null) return nullValue;
+        if (side == null)
+            return nullValue;
         return sidedValues.get(side);
     }
 

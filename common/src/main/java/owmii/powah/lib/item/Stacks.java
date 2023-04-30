@@ -1,13 +1,12 @@
 package owmii.powah.lib.item;
 
 import com.google.common.collect.Lists;
-import org.apache.commons.lang3.Validate;
-
+import java.util.Arrays;
+import java.util.List;
 import javax.annotation.Nullable;
 import net.minecraft.core.NonNullList;
 import net.minecraft.world.item.ItemStack;
-import java.util.Arrays;
-import java.util.List;
+import org.apache.commons.lang3.Validate;
 
 public class Stacks extends NonNullList<ItemStack> {
     protected Stacks(List<ItemStack> delegateIn, @Nullable ItemStack listType) {

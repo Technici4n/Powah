@@ -1,7 +1,7 @@
 package owmii.powah.lib.block;
 
+import javax.annotation.Nullable;
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
 import net.minecraft.server.level.ServerLevel;
@@ -18,8 +18,6 @@ import owmii.powah.lib.logistics.inventory.Inventory;
 import owmii.powah.lib.registry.IVariant;
 import owmii.powah.lib.util.NBT;
 import owmii.powah.lib.util.Stack;
-
-import javax.annotation.Nullable;
 
 @SuppressWarnings("unchecked")
 public class AbstractTileEntity<V extends IVariant, B extends AbstractBlock<V, B>> extends BlockEntity implements IBlockEntity, IRedstoneInteract {
@@ -211,7 +209,8 @@ public class AbstractTileEntity<V extends IVariant, B extends AbstractBlock<V, B
 
     public boolean checkRedstone() {
         boolean power = this.level != null && this.level.getBestNeighborSignal(this.worldPosition) > 0;
-        return Redstone.IGNORE.equals(getRedstoneMode()) || power && Redstone.ON.equals(getRedstoneMode()) || !power && Redstone.OFF.equals(getRedstoneMode());
+        return Redstone.IGNORE.equals(getRedstoneMode()) || power && Redstone.ON.equals(getRedstoneMode())
+                || !power && Redstone.OFF.equals(getRedstoneMode());
     }
 
     public void sync() {

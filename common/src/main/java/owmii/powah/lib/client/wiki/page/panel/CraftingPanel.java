@@ -2,6 +2,8 @@ package owmii.powah.lib.client.wiki.page.panel;
 
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
+import java.util.ArrayList;
+import java.util.List;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
 import net.minecraft.core.NonNullList;
@@ -15,9 +17,6 @@ import owmii.powah.lib.client.screen.widget.IconButton;
 import owmii.powah.lib.client.screen.wiki.WikiScreen;
 import owmii.powah.lib.client.util.MC;
 import owmii.powah.lib.client.wiki.Section;
-
-import java.util.ArrayList;
-import java.util.List;
 
 public class CraftingPanel<T extends ItemLike> extends ItemPanel<T> {
     private int currRecipe;
@@ -75,7 +74,8 @@ public class CraftingPanel<T extends ItemLike> extends ItemPanel<T> {
         if (0 <= this.currRecipe && this.currRecipe < getRecipe().size()) {
             NonNullList<Ingredient> ingredients = NonNullList.withSize(9, Ingredient.EMPTY);
             NonNullList<Ingredient> ingredients1 = getRecipe().get(this.currRecipe).getIngredients();
-            for (int i = 0; i < ingredients1.size(); i++) ingredients.set(i, ingredients1.get(i));
+            for (int i = 0; i < ingredients1.size(); i++)
+                ingredients.set(i, ingredients1.get(i));
             if (!ingredients.isEmpty()) {
                 for (int i = 0; i < 3; ++i) {
                     for (int j = 0; j < 3; ++j) {

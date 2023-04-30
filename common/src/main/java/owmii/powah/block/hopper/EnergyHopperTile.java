@@ -9,11 +9,11 @@ import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import owmii.powah.EnvHandler;
+import owmii.powah.block.Tier;
+import owmii.powah.block.Tiles;
 import owmii.powah.config.v2.types.ChargingConfig;
 import owmii.powah.lib.block.AbstractEnergyStorage;
 import owmii.powah.lib.block.IInventoryHolder;
-import owmii.powah.block.Tier;
-import owmii.powah.block.Tiles;
 
 public class EnergyHopperTile extends AbstractEnergyStorage<ChargingConfig, EnergyHopperBlock> implements IInventoryHolder {
     public EnergyHopperTile(BlockPos pos, BlockState state, Tier variant) {

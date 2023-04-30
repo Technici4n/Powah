@@ -1,13 +1,13 @@
 package owmii.powah.lib.client.screen;
 
 import com.mojang.blaze3d.systems.RenderSystem;
+import com.mojang.blaze3d.vertex.PoseStack;
+import java.util.HashMap;
+import java.util.Map;
 import net.minecraft.client.gui.GuiComponent;
 import net.minecraft.resources.ResourceLocation;
 import owmii.powah.lib.logistics.Redstone;
 import owmii.powah.lib.logistics.Transfer;
-import com.mojang.blaze3d.vertex.PoseStack;
-import java.util.HashMap;
-import java.util.Map;
 
 public class Texture extends GuiComponent {
     private static final Builder BUILDER = new Builder("lollipop");

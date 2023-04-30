@@ -5,6 +5,7 @@ import java.lang.annotation.RetentionPolicy;
 
 @Retention(RetentionPolicy.RUNTIME)
 public @interface LongRange {
-	long min();
-	long max();
+    long min();
+
+    long max();
 }

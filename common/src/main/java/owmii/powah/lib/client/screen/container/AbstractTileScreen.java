@@ -11,7 +11,8 @@ import owmii.powah.lib.logistics.inventory.AbstractTileContainer;
 import owmii.powah.network.Network;
 import owmii.powah.network.packet.NextRedstoneModePacket;
 
-public class AbstractTileScreen<T extends AbstractTileEntity<?, ?> & IInventoryHolder, C extends AbstractTileContainer<T>> extends AbstractContainerScreen<C> {
+public class AbstractTileScreen<T extends AbstractTileEntity<?, ?> & IInventoryHolder, C extends AbstractTileContainer<T>>
+        extends AbstractContainerScreen<C> {
     protected final T te;
     protected IconButton redStoneButton = IconButton.EMPTY;
 
@@ -22,10 +23,11 @@ public class AbstractTileScreen<T extends AbstractTileEntity<?, ?> & IInventoryH
 
     protected void addRedstoneButton(int x, int y) {
         if (hasRedstone()) {
-            this.redStoneButton = addRenderableWidget(new IconButton(this.leftPos + this.imageWidth + x + 2, this.topPos + y + 3, Texture.REDSTONE.get(this.te.getRedstoneMode()), b -> {
-                Network.toServer(new NextRedstoneModePacket(this.te.getBlockPos()));
-                this.te.setRedstoneMode(this.te.getRedstoneMode().next());
-            }, this).setTooltip(tooltip -> tooltip.add(this.te.getRedstoneMode().getDisplayName())));
+            this.redStoneButton = addRenderableWidget(new IconButton(this.leftPos + this.imageWidth + x + 2, this.topPos + y + 3,
+                    Texture.REDSTONE.get(this.te.getRedstoneMode()), b -> {
+                        Network.toServer(new NextRedstoneModePacket(this.te.getBlockPos()));
+                        this.te.setRedstoneMode(this.te.getRedstoneMode().next());
+                    }, this).setTooltip(tooltip -> tooltip.add(this.te.getRedstoneMode().getDisplayName())));
         }
     }
 
@@ -41,11 +43,11 @@ public class AbstractTileScreen<T extends AbstractTileEntity<?, ?> & IInventoryH
     protected void drawBackground(PoseStack matrix, float partialTicks, int mouseX, int mouseY) {
         super.drawBackground(matrix, partialTicks, mouseX, mouseY);
         if (hasRedstone()) {
-            Texture.REDSTONE_BTN_BG.draw(matrix, this.redStoneButton.x - 2, this.redStoneButton.y - 4); //TODO
+            Texture.REDSTONE_BTN_BG.draw(matrix, this.redStoneButton.x - 2, this.redStoneButton.y - 4); // TODO
         }
     }
 
-    protected boolean hasRedstone() { //TODO invert
+    protected boolean hasRedstone() { // TODO invert
         return true;
     }
 }

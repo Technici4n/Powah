@@ -1,22 +1,19 @@
 package owmii.powah.lib.logistics.inventory;
 
+import java.util.ArrayList;
+import java.util.List;
+import javax.annotation.Nullable;
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.util.Mth;
 import net.minecraft.world.Containers;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.block.entity.BlockEntity;
 import owmii.powah.EnvHandler;
 import owmii.powah.lib.block.AbstractTileEntity;
 import owmii.powah.lib.block.IInventoryHolder;
 import owmii.powah.lib.item.Stacks;
 import owmii.powah.lib.util.Util;
-
-import javax.annotation.Nullable;
-import java.util.ArrayList;
-import java.util.List;
 
 public class Inventory extends ItemStackHandler {
     @Nullable
@@ -62,7 +59,8 @@ public class Inventory extends ItemStackHandler {
     }
 
     public void deserializeNBT(CompoundTag nbt) {
-        if (isBlank()) return;
+        if (isBlank())
+            return;
         nbt.putInt("Size", getSlots());
         super.deserializeNBT(nbt);
     }
@@ -256,7 +254,8 @@ public class Inventory extends ItemStackHandler {
         if (stack.isEmpty())
             return stack;
         for (int i = 0; i < getSlots(); i++) {
-            if (Util.anyMatch(ex, i)) continue;
+            if (Util.anyMatch(ex, i))
+                continue;
             stack = insertItem(i, stack, simulate);
             if (stack.isEmpty()) {
                 return ItemStack.EMPTY;

@@ -1,5 +1,7 @@
 package owmii.powah.block.reactor;
 
+import java.util.List;
+import javax.annotation.Nullable;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
@@ -20,7 +22,10 @@ import net.minecraft.world.level.block.state.properties.BooleanProperty;
 import net.minecraft.world.phys.BlockHitResult;
 import owmii.powah.EnvHandler;
 import owmii.powah.Powah;
+import owmii.powah.block.Tier;
 import owmii.powah.config.v2.types.GeneratorConfig;
+import owmii.powah.inventory.ReactorContainer;
+import owmii.powah.item.ReactorItem;
 import owmii.powah.lib.block.AbstractGeneratorBlock;
 import owmii.powah.lib.block.AbstractTileEntity;
 import owmii.powah.lib.client.util.Text;
@@ -29,12 +34,6 @@ import owmii.powah.lib.item.EnergyBlockItem;
 import owmii.powah.lib.logistics.energy.Energy;
 import owmii.powah.lib.logistics.inventory.AbstractContainer;
 import owmii.powah.lib.util.Util;
-import owmii.powah.block.Tier;
-import owmii.powah.inventory.ReactorContainer;
-import owmii.powah.item.ReactorItem;
-
-import javax.annotation.Nullable;
-import java.util.List;
 
 public class ReactorBlock extends AbstractGeneratorBlock<ReactorBlock> {
     public static final BooleanProperty CORE = BooleanProperty.create("core");
@@ -119,15 +118,20 @@ public class ReactorBlock extends AbstractGeneratorBlock<ReactorBlock> {
 
     @Override
     public void additionalEnergyInfo(ItemStack stack, Energy.Item energy, List<Component> tooltip) {
-        tooltip.add(Component.translatable("info.powah.generation.factor").withStyle(ChatFormatting.GRAY).append(Text.COLON).append(Component.literal(Util.numFormat(getConfig().getGeneration(this.variant))).append(Component.translatable("info.lollipop.fe.pet.tick")).withStyle(ChatFormatting.DARK_GRAY)));
+        tooltip.add(Component.translatable("info.powah.generation.factor").withStyle(ChatFormatting.GRAY).append(Text.COLON)
+                .append(Component.literal(Util.numFormat(getConfig().getGeneration(this.variant)))
+                        .append(Component.translatable("info.lollipop.fe.pet.tick")).withStyle(ChatFormatting.DARK_GRAY)));
     }
 
     @Override
     public InfoBox getInfoBox(ItemStack stack, InfoBox box) {
         Energy.ifPresent(stack, energy -> {
-            box.set(Component.translatable("info.lollipop.capacity"), Component.translatable("info.lollipop.fe", Util.addCommas(energy.getCapacity())));
-            box.set(Component.translatable("info.powah.generation.factor"), Component.translatable("info.lollipop.fe.pet.tick", Util.addCommas(getConfig().getGeneration(this.variant))));
-            box.set(Component.translatable("info.lollipop.max.extract"), Component.translatable("info.lollipop.fe.pet.tick", Util.addCommas(energy.getMaxExtract())));
+            box.set(Component.translatable("info.lollipop.capacity"),
+                    Component.translatable("info.lollipop.fe", Util.addCommas(energy.getCapacity())));
+            box.set(Component.translatable("info.powah.generation.factor"),
+                    Component.translatable("info.lollipop.fe.pet.tick", Util.addCommas(getConfig().getGeneration(this.variant))));
+            box.set(Component.translatable("info.lollipop.max.extract"),
+                    Component.translatable("info.lollipop.fe.pet.tick", Util.addCommas(energy.getMaxExtract())));
         });
         return box;
     }

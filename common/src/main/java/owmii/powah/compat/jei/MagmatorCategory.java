@@ -2,6 +2,9 @@ package owmii.powah.compat.jei;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 import dev.architectury.fluid.FluidStack;
+import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.List;
 import mezz.jei.api.constants.VanillaTypes;
 import mezz.jei.api.gui.builder.IRecipeLayoutBuilder;
 import mezz.jei.api.gui.drawable.IDrawable;
@@ -21,10 +24,6 @@ import owmii.powah.Powah;
 import owmii.powah.api.PowahAPI;
 import owmii.powah.block.Blcks;
 import owmii.powah.block.Tier;
-
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.List;
 
 public class MagmatorCategory implements IRecipeCategory<MagmatorCategory.Recipe> {
     public static final RecipeType<Recipe> TYPE = RecipeType.create(Powah.MOD_ID, "magmatic", Recipe.class);

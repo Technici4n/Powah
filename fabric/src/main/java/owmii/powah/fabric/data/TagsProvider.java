@@ -27,11 +27,12 @@ public class TagsProvider {
             tag(ITags.Blocks.ICES_DRY).add(Blcks.DRY_ICE.get());
 
             tag(ITags.Blocks.URANINITE_ORE).add(Blcks.URANINITE_ORE.get()).add(Blcks.URANINITE_ORE_POOR.get()).add(Blcks.URANINITE_ORE_DENSE.get());
-            tag(ITags.Blocks.URANINITE_ORE).add(Blcks.DEEPSLATE_URANINITE_ORE.get()).add(Blcks.DEEPSLATE_URANINITE_ORE_POOR.get()).add(Blcks.DEEPSLATE_URANINITE_ORE_DENSE.get());
+            tag(ITags.Blocks.URANINITE_ORE).add(Blcks.DEEPSLATE_URANINITE_ORE.get()).add(Blcks.DEEPSLATE_URANINITE_ORE_POOR.get())
+                    .add(Blcks.DEEPSLATE_URANINITE_ORE_DENSE.get());
             tag(ConventionalBlockTags.ORES).addTag(ITags.Blocks.URANINITE_ORE);
 
             // TODO PR TO FABRIC
-            //tag(STORAGE_BLOCKS).add(Blcks.URANINITE.get());
+            // tag(STORAGE_BLOCKS).add(Blcks.URANINITE.get());
             tag(ITags.Blocks.URANINITE_BLOCK).add(Blcks.URANINITE.get());
 
             // All of our blocks are mineable with a pickaxe
@@ -60,23 +61,26 @@ public class TagsProvider {
             tag(ITags.Items.ICES).addTag(ITags.Items.ICES_DRY);
             tag(ITags.Items.ICES_DRY).add(Blcks.DRY_ICE.get().asItem());
 
-            tag(ITags.Items.URANINITE_ORE).add(Blcks.URANINITE_ORE.get().asItem()).add(Blcks.URANINITE_ORE_POOR.get().asItem()).add(Blcks.URANINITE_ORE_DENSE.get().asItem());
-            tag(ITags.Items.URANINITE_ORE).add(Blcks.DEEPSLATE_URANINITE_ORE.get().asItem()).add(Blcks.DEEPSLATE_URANINITE_ORE_POOR.get().asItem()).add(Blcks.DEEPSLATE_URANINITE_ORE_DENSE.get().asItem());
+            tag(ITags.Items.URANINITE_ORE).add(Blcks.URANINITE_ORE.get().asItem()).add(Blcks.URANINITE_ORE_POOR.get().asItem())
+                    .add(Blcks.URANINITE_ORE_DENSE.get().asItem());
+            tag(ITags.Items.URANINITE_ORE).add(Blcks.DEEPSLATE_URANINITE_ORE.get().asItem()).add(Blcks.DEEPSLATE_URANINITE_ORE_POOR.get().asItem())
+                    .add(Blcks.DEEPSLATE_URANINITE_ORE_DENSE.get().asItem());
             tag(ConventionalItemTags.ORES).addTag(ITags.Items.URANINITE_ORE);
 
             // TODO PR TO FABRIC
-            //tag(ConventionalItemTags.STORAGE_BLOCKS).add(Blcks.URANINITE.get().asItem());
+            // tag(ConventionalItemTags.STORAGE_BLOCKS).add(Blcks.URANINITE.get().asItem());
             tag(ITags.Items.URANINITE_BLOCK).add(Blcks.URANINITE.get().asItem());
             // TODO PR TO FABRIC
             tag(ITags.Items.QUARTZ_BLOCKS).add(net.minecraft.world.item.Items.QUARTZ);
 
             tag(ITags.Items.URANINITE_RAW).add(Itms.URANINITE_RAW.get());
             // TODO PR TO FABRIC
-            //tag(ConventionalItemTags.RAW_ORES).addTag(ITags.Items.URANINITE_RAW);
+            // tag(ConventionalItemTags.RAW_ORES).addTag(ITags.Items.URANINITE_RAW);
 
             // TODO PR TO FABRIC
-            //tag(ConventionalItemTags.INGOTS).add(Itms.ENERGIZED_STEEL.get());
-            //tag(ConventionalItemTags.GEMS).add(Itms.BLAZING_CRYSTAL.get(), Itms.NIOTIC_CRYSTAL.get(), Itms.SPIRITED_CRYSTAL.get(), Itms.NITRO_CRYSTAL.get());
+            // tag(ConventionalItemTags.INGOTS).add(Itms.ENERGIZED_STEEL.get());
+            // tag(ConventionalItemTags.GEMS).add(Itms.BLAZING_CRYSTAL.get(), Itms.NIOTIC_CRYSTAL.get(), Itms.SPIRITED_CRYSTAL.get(),
+            // Itms.NITRO_CRYSTAL.get());
 
             tag(ITags.Items.WRENCHES).add(Itms.WRENCH.get());
         }

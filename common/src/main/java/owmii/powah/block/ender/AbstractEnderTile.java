@@ -1,19 +1,8 @@
 package owmii.powah.block.ender;
 
 import com.mojang.authlib.GameProfile;
-import net.minecraft.core.BlockPos;
-import owmii.powah.block.Tier;
-import owmii.powah.config.v2.types.EnderConfig;
-import owmii.powah.lib.block.AbstractEnergyBlock;
-import owmii.powah.lib.block.AbstractEnergyStorage;
-import owmii.powah.lib.block.IInventoryHolder;
-import owmii.powah.lib.block.IOwnable;
-import owmii.powah.lib.logistics.energy.Energy;
-import owmii.powah.lib.util.Player;
-import owmii.powah.lib.util.math.RangedInt;
-import owmii.powah.api.energy.endernetwork.IEnderExtender;
-
 import javax.annotation.Nullable;
+import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.server.level.ServerPlayer;
@@ -24,8 +13,19 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
+import owmii.powah.api.energy.endernetwork.IEnderExtender;
+import owmii.powah.block.Tier;
+import owmii.powah.config.v2.types.EnderConfig;
+import owmii.powah.lib.block.AbstractEnergyBlock;
+import owmii.powah.lib.block.AbstractEnergyStorage;
+import owmii.powah.lib.block.IInventoryHolder;
+import owmii.powah.lib.block.IOwnable;
+import owmii.powah.lib.logistics.energy.Energy;
+import owmii.powah.lib.util.Player;
+import owmii.powah.lib.util.math.RangedInt;
 
-public class AbstractEnderTile<B extends AbstractEnergyBlock<EnderConfig, B>> extends AbstractEnergyStorage<EnderConfig, B> implements IOwnable, IInventoryHolder {
+public class AbstractEnderTile<B extends AbstractEnergyBlock<EnderConfig, B>> extends AbstractEnergyStorage<EnderConfig, B>
+        implements IOwnable, IInventoryHolder {
     private final RangedInt channel = new RangedInt(12);
 
     @Nullable
@@ -175,7 +175,8 @@ public class AbstractEnderTile<B extends AbstractEnergyBlock<EnderConfig, B>> ex
             if (stack.getItem() instanceof IEnderExtender extender) {
                 long l = extender.getExtendedCapacity(stack);
                 return l > 0 && l + getEnergy().getCapacity() <= Energy.MAX;
-            } else return false;
+            } else
+                return false;
         }
         return Energy.chargeable(stack);
     }

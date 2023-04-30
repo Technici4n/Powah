@@ -2,9 +2,9 @@ package owmii.powah.inventory;
 
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.world.entity.player.Inventory;
+import owmii.powah.block.energycell.EnergyCellTile;
 import owmii.powah.lib.logistics.inventory.AbstractEnergyContainer;
 import owmii.powah.lib.logistics.inventory.slot.SlotBase;
-import owmii.powah.block.energycell.EnergyCellTile;
 
 public class EnergyCellContainer extends AbstractEnergyContainer<EnergyCellTile> {
     public EnergyCellContainer(int id, Inventory inventory, FriendlyByteBuf buffer) {

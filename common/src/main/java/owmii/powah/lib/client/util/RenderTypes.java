@@ -17,15 +17,16 @@ public class RenderTypes extends RenderType {
         RenderSystem.defaultBlendFunc();
     });
 
-    protected static final RenderStateShard.TransparencyStateShard BLENDED_NO_DEPT = new RenderStateShard.TransparencyStateShard("blended_no_dept", () -> {
-        RenderSystem.enableBlend();
-        RenderSystem.depthMask(false);
-        RenderSystem.blendFunc(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE);
-    }, () -> {
-        RenderSystem.disableBlend();
-        RenderSystem.depthMask(true);
-        RenderSystem.defaultBlendFunc();
-    });
+    protected static final RenderStateShard.TransparencyStateShard BLENDED_NO_DEPT = new RenderStateShard.TransparencyStateShard("blended_no_dept",
+            () -> {
+                RenderSystem.enableBlend();
+                RenderSystem.depthMask(false);
+                RenderSystem.blendFunc(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE);
+            }, () -> {
+                RenderSystem.disableBlend();
+                RenderSystem.depthMask(true);
+                RenderSystem.defaultBlendFunc();
+            });
 
     public static RenderType entityBlendedNoDept(ResourceLocation location) {
         return makeBlendNoDept(location, true);

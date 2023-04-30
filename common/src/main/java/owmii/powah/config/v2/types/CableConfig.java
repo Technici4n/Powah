@@ -5,22 +5,22 @@ import owmii.powah.config.IEnergyConfig;
 import owmii.powah.config.v2.values.TieredEnergyValues;
 
 public class CableConfig implements IEnergyConfig<Tier> {
-	public TieredEnergyValues transfer_rates;
+    public TieredEnergyValues transfer_rates;
 
-	private CableConfig() {
-	}
+    private CableConfig() {
+    }
 
-	public CableConfig(TieredEnergyValues transfer_rates) {
-		this.transfer_rates = transfer_rates;
-	}
+    public CableConfig(TieredEnergyValues transfer_rates) {
+        this.transfer_rates = transfer_rates;
+    }
 
-	@Override
-	public long getCapacity(Tier variant) {
-		return 0;
-	}
+    @Override
+    public long getCapacity(Tier variant) {
+        return 0;
+    }
 
-	@Override
-	public long getTransfer(Tier variant) {
-		return transfer_rates.get(variant);
-	}
+    @Override
+    public long getTransfer(Tier variant) {
+        return transfer_rates.get(variant);
+    }
 }

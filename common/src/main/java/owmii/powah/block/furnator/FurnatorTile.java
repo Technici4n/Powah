@@ -7,14 +7,13 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
-import owmii.powah.EnvHandler;
 import owmii.powah.Powah;
+import owmii.powah.block.Tier;
+import owmii.powah.block.Tiles;
 import owmii.powah.lib.block.AbstractEnergyProvider;
 import owmii.powah.lib.block.IInventoryHolder;
 import owmii.powah.lib.logistics.energy.Energy;
 import owmii.powah.lib.util.Ticker;
-import owmii.powah.block.Tier;
-import owmii.powah.block.Tiles;
 
 public class FurnatorTile extends AbstractEnergyProvider<FurnatorBlock> implements IInventoryHolder {
     protected final Ticker carbon = Ticker.empty();

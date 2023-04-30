@@ -1,13 +1,12 @@
 package owmii.powah.lib.client.wiki.page.panel;
 
-import owmii.powah.lib.client.util.Text;
-
+import java.util.LinkedHashMap;
 import javax.annotation.Nullable;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.network.chat.Style;
 import net.minecraft.world.item.ItemStack;
-import java.util.LinkedHashMap;
+import owmii.powah.lib.client.util.Text;
 
 public class InfoBox {
     private final LinkedHashMap<MutableComponent, MutableComponent> lines = new LinkedHashMap<>();

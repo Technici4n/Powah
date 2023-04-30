@@ -1,5 +1,7 @@
 package owmii.powah.fabric.compat.rei;
 
+import java.util.ArrayList;
+import java.util.List;
 import me.shedaniel.math.Point;
 import me.shedaniel.math.Rectangle;
 import me.shedaniel.rei.api.client.gui.Renderer;
@@ -15,9 +17,6 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import owmii.powah.Powah;
 import owmii.powah.block.Blcks;
-
-import java.util.ArrayList;
-import java.util.List;
 
 public class SolidCoolantCategory implements DisplayCategory<SolidCoolantDisplay> {
     public static final ResourceLocation GUI_BACK = new ResourceLocation(Powah.MOD_ID, "textures/gui/jei/misc.png");
@@ -65,8 +64,12 @@ public class SolidCoolantCategory implements DisplayCategory<SolidCoolantDisplay
                 .entries(display.getInputEntries().get(0)));
         widgets.add(Widgets.createDrawableWidget((helper, matrices, mouseX, mouseY, delta) -> {
             Minecraft minecraft = Minecraft.getInstance();
-            minecraft.font.draw(matrices, I18n.get("info.lollipop.amount") + ": " + I18n.get("info.lollipop.mb", display.getAmount()), origin.x + 30.0F, origin.y + 3.0F, 0x444444);
-            minecraft.font.draw(matrices, I18n.get("info.lollipop.temperature") + ": " + I18n.get("info.lollipop.temperature.c", "" + ChatFormatting.DARK_AQUA + display.getColdness()), origin.x + 30.0F, origin.y + 15.0F, 0x444444);
+            minecraft.font.draw(matrices, I18n.get("info.lollipop.amount") + ": " + I18n.get("info.lollipop.mb", display.getAmount()),
+                    origin.x + 30.0F, origin.y + 3.0F, 0x444444);
+            minecraft.font.draw(matrices,
+                    I18n.get("info.lollipop.temperature") + ": "
+                            + I18n.get("info.lollipop.temperature.c", "" + ChatFormatting.DARK_AQUA + display.getColdness()),
+                    origin.x + 30.0F, origin.y + 15.0F, 0x444444);
         }));
 
         return widgets;

@@ -1,15 +1,15 @@
 package owmii.powah.lib.client.util;
 
-import net.minecraft.client.renderer.texture.TextureAtlasSprite;
-import net.minecraft.core.Direction;
-import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.block.state.properties.BlockStateProperties;
-import owmii.powah.lib.util.math.V3d;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import com.mojang.math.Matrix4f;
 import java.util.HashSet;
 import java.util.Set;
+import net.minecraft.client.renderer.texture.TextureAtlasSprite;
+import net.minecraft.core.Direction;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.state.properties.BlockStateProperties;
+import owmii.powah.lib.util.math.V3d;
 
 public class Cube {
     private final PoseStack matrix;
@@ -98,50 +98,80 @@ public class Cube {
         boolean isAll = this.sides.isEmpty();
 
         if (isAll || this.sides.contains(Side.UP)) {
-            this.builder.vertex(matrix4f, (float) this.pos.x() - d, (float) this.pos.y() + d, (float) this.pos.z() + d).color(this.r, this.g, this.b, this.a).uv(sprite.getU0(), sprite.getV0()).uv2(this.light).endVertex();
-            this.builder.vertex(matrix4f, (float) this.pos.x() + d, (float) this.pos.y() + d, (float) this.pos.z() + d).color(this.r, this.g, this.b, this.a).uv(sprite.getU1(), sprite.getV0()).uv2(this.light).endVertex();
-            this.builder.vertex(matrix4f, (float) this.pos.x() + d, (float) this.pos.y() + d, (float) this.pos.z() - d).color(this.r, this.g, this.b, this.a).uv(sprite.getU1(), sprite.getV1()).uv2(this.light).endVertex();
-            this.builder.vertex(matrix4f, (float) this.pos.x() - d, (float) this.pos.y() + d, (float) this.pos.z() - d).color(this.r, this.g, this.b, this.a).uv(sprite.getU0(), sprite.getV1()).uv2(this.light).endVertex();
+            this.builder.vertex(matrix4f, (float) this.pos.x() - d, (float) this.pos.y() + d, (float) this.pos.z() + d)
+                    .color(this.r, this.g, this.b, this.a).uv(sprite.getU0(), sprite.getV0()).uv2(this.light).endVertex();
+            this.builder.vertex(matrix4f, (float) this.pos.x() + d, (float) this.pos.y() + d, (float) this.pos.z() + d)
+                    .color(this.r, this.g, this.b, this.a).uv(sprite.getU1(), sprite.getV0()).uv2(this.light).endVertex();
+            this.builder.vertex(matrix4f, (float) this.pos.x() + d, (float) this.pos.y() + d, (float) this.pos.z() - d)
+                    .color(this.r, this.g, this.b, this.a).uv(sprite.getU1(), sprite.getV1()).uv2(this.light).endVertex();
+            this.builder.vertex(matrix4f, (float) this.pos.x() - d, (float) this.pos.y() + d, (float) this.pos.z() - d)
+                    .color(this.r, this.g, this.b, this.a).uv(sprite.getU0(), sprite.getV1()).uv2(this.light).endVertex();
         }
 
         if (isAll || this.sides.contains(Side.DOWN)) {
-            this.builder.vertex(matrix4f, (float) this.pos.x() - d, (float) this.pos.y() - d, (float) this.pos.z() - d).color(this.r, this.g, this.b, this.a).uv(sprite.getU0(), sprite.getV0()).uv2(this.light).endVertex();
-            this.builder.vertex(matrix4f, (float) this.pos.x() + d, (float) this.pos.y() - d, (float) this.pos.z() - d).color(this.r, this.g, this.b, this.a).uv(sprite.getU1(), sprite.getV0()).uv2(this.light).endVertex();
-            this.builder.vertex(matrix4f, (float) this.pos.x() + d, (float) this.pos.y() - d, (float) this.pos.z() + d).color(this.r, this.g, this.b, this.a).uv(sprite.getU1(), sprite.getV1()).uv2(this.light).endVertex();
-            this.builder.vertex(matrix4f, (float) this.pos.x() - d, (float) this.pos.y() - d, (float) this.pos.z() + d).color(this.r, this.g, this.b, this.a).uv(sprite.getU0(), sprite.getV1()).uv2(this.light).endVertex();
+            this.builder.vertex(matrix4f, (float) this.pos.x() - d, (float) this.pos.y() - d, (float) this.pos.z() - d)
+                    .color(this.r, this.g, this.b, this.a).uv(sprite.getU0(), sprite.getV0()).uv2(this.light).endVertex();
+            this.builder.vertex(matrix4f, (float) this.pos.x() + d, (float) this.pos.y() - d, (float) this.pos.z() - d)
+                    .color(this.r, this.g, this.b, this.a).uv(sprite.getU1(), sprite.getV0()).uv2(this.light).endVertex();
+            this.builder.vertex(matrix4f, (float) this.pos.x() + d, (float) this.pos.y() - d, (float) this.pos.z() + d)
+                    .color(this.r, this.g, this.b, this.a).uv(sprite.getU1(), sprite.getV1()).uv2(this.light).endVertex();
+            this.builder.vertex(matrix4f, (float) this.pos.x() - d, (float) this.pos.y() - d, (float) this.pos.z() + d)
+                    .color(this.r, this.g, this.b, this.a).uv(sprite.getU0(), sprite.getV1()).uv2(this.light).endVertex();
         }
 
         if (isAll || this.sides.contains(Side.NORTH)) {
-            this.builder.vertex(matrix4f, (float) this.pos.x() + d, (float) this.pos.y() - d, (float) this.pos.z() + d).color(this.r, this.g, this.b, this.a).uv(sprite.getU0(), sprite.getV0()).uv2(this.light).endVertex();
-            this.builder.vertex(matrix4f, (float) this.pos.x() + d, (float) this.pos.y() + d, (float) this.pos.z() + d).color(this.r, this.g, this.b, this.a).uv(sprite.getU0(), sprite.getV1()).uv2(this.light).endVertex();
-            this.builder.vertex(matrix4f, (float) this.pos.x() - d, (float) this.pos.y() + d, (float) this.pos.z() + d).color(this.r, this.g, this.b, this.a).uv(sprite.getU1(), sprite.getV1()).uv2(this.light).endVertex();
-            this.builder.vertex(matrix4f, (float) this.pos.x() - d, (float) this.pos.y() - d, (float) this.pos.z() + d).color(this.r, this.g, this.b, this.a).uv(sprite.getU1(), sprite.getV0()).uv2(this.light).endVertex();
+            this.builder.vertex(matrix4f, (float) this.pos.x() + d, (float) this.pos.y() - d, (float) this.pos.z() + d)
+                    .color(this.r, this.g, this.b, this.a).uv(sprite.getU0(), sprite.getV0()).uv2(this.light).endVertex();
+            this.builder.vertex(matrix4f, (float) this.pos.x() + d, (float) this.pos.y() + d, (float) this.pos.z() + d)
+                    .color(this.r, this.g, this.b, this.a).uv(sprite.getU0(), sprite.getV1()).uv2(this.light).endVertex();
+            this.builder.vertex(matrix4f, (float) this.pos.x() - d, (float) this.pos.y() + d, (float) this.pos.z() + d)
+                    .color(this.r, this.g, this.b, this.a).uv(sprite.getU1(), sprite.getV1()).uv2(this.light).endVertex();
+            this.builder.vertex(matrix4f, (float) this.pos.x() - d, (float) this.pos.y() - d, (float) this.pos.z() + d)
+                    .color(this.r, this.g, this.b, this.a).uv(sprite.getU1(), sprite.getV0()).uv2(this.light).endVertex();
         }
 
         if (isAll || this.sides.contains(Side.SOUTH)) {
-            this.builder.vertex(matrix4f, (float) this.pos.x() - d, (float) this.pos.y() - d, (float) this.pos.z() - d).color(this.r, this.g, this.b, this.a).uv(sprite.getU0(), sprite.getV0()).uv2(this.light).endVertex();
-            this.builder.vertex(matrix4f, (float) this.pos.x() - d, (float) this.pos.y() + d, (float) this.pos.z() - d).color(this.r, this.g, this.b, this.a).uv(sprite.getU0(), sprite.getV1()).uv2(this.light).endVertex();
-            this.builder.vertex(matrix4f, (float) this.pos.x() + d, (float) this.pos.y() + d, (float) this.pos.z() - d).color(this.r, this.g, this.b, this.a).uv(sprite.getU1(), sprite.getV1()).uv2(this.light).endVertex();
-            this.builder.vertex(matrix4f, (float) this.pos.x() + d, (float) this.pos.y() - d, (float) this.pos.z() - d).color(this.r, this.g, this.b, this.a).uv(sprite.getU1(), sprite.getV0()).uv2(this.light).endVertex();
+            this.builder.vertex(matrix4f, (float) this.pos.x() - d, (float) this.pos.y() - d, (float) this.pos.z() - d)
+                    .color(this.r, this.g, this.b, this.a).uv(sprite.getU0(), sprite.getV0()).uv2(this.light).endVertex();
+            this.builder.vertex(matrix4f, (float) this.pos.x() - d, (float) this.pos.y() + d, (float) this.pos.z() - d)
+                    .color(this.r, this.g, this.b, this.a).uv(sprite.getU0(), sprite.getV1()).uv2(this.light).endVertex();
+            this.builder.vertex(matrix4f, (float) this.pos.x() + d, (float) this.pos.y() + d, (float) this.pos.z() - d)
+                    .color(this.r, this.g, this.b, this.a).uv(sprite.getU1(), sprite.getV1()).uv2(this.light).endVertex();
+            this.builder.vertex(matrix4f, (float) this.pos.x() + d, (float) this.pos.y() - d, (float) this.pos.z() - d)
+                    .color(this.r, this.g, this.b, this.a).uv(sprite.getU1(), sprite.getV0()).uv2(this.light).endVertex();
         }
 
         if (isAll || this.sides.contains(Side.WEST)) {
-            this.builder.vertex(matrix4f, (float) this.pos.x() - d, (float) this.pos.y() - d, (float) this.pos.z() + d).color(this.r, this.g, this.b, this.a).uv(sprite.getU1(), sprite.getV0()).uv2(this.light).endVertex();
-            this.builder.vertex(matrix4f, (float) this.pos.x() - d, (float) this.pos.y() + d, (float) this.pos.z() + d).color(this.r, this.g, this.b, this.a).uv(sprite.getU1(), sprite.getV1()).uv2(this.light).endVertex();
-            this.builder.vertex(matrix4f, (float) this.pos.x() - d, (float) this.pos.y() + d, (float) this.pos.z() - d).color(this.r, this.g, this.b, this.a).uv(sprite.getU0(), sprite.getV1()).uv2(this.light).endVertex();
-            this.builder.vertex(matrix4f, (float) this.pos.x() - d, (float) this.pos.y() - d, (float) this.pos.z() - d).color(this.r, this.g, this.b, this.a).uv(sprite.getU0(), sprite.getV0()).uv2(this.light).endVertex();
+            this.builder.vertex(matrix4f, (float) this.pos.x() - d, (float) this.pos.y() - d, (float) this.pos.z() + d)
+                    .color(this.r, this.g, this.b, this.a).uv(sprite.getU1(), sprite.getV0()).uv2(this.light).endVertex();
+            this.builder.vertex(matrix4f, (float) this.pos.x() - d, (float) this.pos.y() + d, (float) this.pos.z() + d)
+                    .color(this.r, this.g, this.b, this.a).uv(sprite.getU1(), sprite.getV1()).uv2(this.light).endVertex();
+            this.builder.vertex(matrix4f, (float) this.pos.x() - d, (float) this.pos.y() + d, (float) this.pos.z() - d)
+                    .color(this.r, this.g, this.b, this.a).uv(sprite.getU0(), sprite.getV1()).uv2(this.light).endVertex();
+            this.builder.vertex(matrix4f, (float) this.pos.x() - d, (float) this.pos.y() - d, (float) this.pos.z() - d)
+                    .color(this.r, this.g, this.b, this.a).uv(sprite.getU0(), sprite.getV0()).uv2(this.light).endVertex();
         }
 
         if (isAll || this.sides.contains(Side.EAST)) {
-            this.builder.vertex(matrix4f, (float) this.pos.x() + d, (float) this.pos.y() - d, (float) this.pos.z() - d).color(this.r, this.g, this.b, this.a).uv(sprite.getU1(), sprite.getV0()).uv2(this.light).endVertex();
-            this.builder.vertex(matrix4f, (float) this.pos.x() + d, (float) this.pos.y() + d, (float) this.pos.z() - d).color(this.r, this.g, this.b, this.a).uv(sprite.getU1(), sprite.getV1()).uv2(this.light).endVertex();
-            this.builder.vertex(matrix4f, (float) this.pos.x() + d, (float) this.pos.y() + d, (float) this.pos.z() + d).color(this.r, this.g, this.b, this.a).uv(sprite.getU0(), sprite.getV1()).uv2(this.light).endVertex();
-            this.builder.vertex(matrix4f, (float) this.pos.x() + d, (float) this.pos.y() - d, (float) this.pos.z() + d).color(this.r, this.g, this.b, this.a).uv(sprite.getU0(), sprite.getV0()).uv2(this.light).endVertex();
+            this.builder.vertex(matrix4f, (float) this.pos.x() + d, (float) this.pos.y() - d, (float) this.pos.z() - d)
+                    .color(this.r, this.g, this.b, this.a).uv(sprite.getU1(), sprite.getV0()).uv2(this.light).endVertex();
+            this.builder.vertex(matrix4f, (float) this.pos.x() + d, (float) this.pos.y() + d, (float) this.pos.z() - d)
+                    .color(this.r, this.g, this.b, this.a).uv(sprite.getU1(), sprite.getV1()).uv2(this.light).endVertex();
+            this.builder.vertex(matrix4f, (float) this.pos.x() + d, (float) this.pos.y() + d, (float) this.pos.z() + d)
+                    .color(this.r, this.g, this.b, this.a).uv(sprite.getU0(), sprite.getV1()).uv2(this.light).endVertex();
+            this.builder.vertex(matrix4f, (float) this.pos.x() + d, (float) this.pos.y() - d, (float) this.pos.z() + d)
+                    .color(this.r, this.g, this.b, this.a).uv(sprite.getU0(), sprite.getV0()).uv2(this.light).endVertex();
         }
     }
 
     public enum Side {
-        ALL, DOWN, UP, NORTH, SOUTH, WEST, EAST;
+        ALL,
+        DOWN,
+        UP,
+        NORTH,
+        SOUTH,
+        WEST,
+        EAST;
 
         public static Side from(Direction side) {
             return values()[side.ordinal() + 1];

@@ -1,15 +1,7 @@
 package owmii.powah.block.solar;
 
-import owmii.powah.Powah;
-import owmii.powah.config.v2.types.GeneratorConfig;
-import owmii.powah.lib.block.AbstractGeneratorBlock;
-import owmii.powah.lib.block.AbstractTileEntity;
-import owmii.powah.lib.item.EnergyBlockItem;
-import owmii.powah.lib.logistics.energy.Energy;
-import owmii.powah.lib.logistics.inventory.AbstractContainer;
-import owmii.powah.block.Tier;
-import owmii.powah.inventory.SolarContainer;
-
+import java.util.ArrayList;
+import java.util.List;
 import javax.annotation.Nullable;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -31,8 +23,14 @@ import net.minecraft.world.level.material.Fluids;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
-import java.util.ArrayList;
-import java.util.List;
+import owmii.powah.Powah;
+import owmii.powah.block.Tier;
+import owmii.powah.config.v2.types.GeneratorConfig;
+import owmii.powah.inventory.SolarContainer;
+import owmii.powah.lib.block.AbstractGeneratorBlock;
+import owmii.powah.lib.block.AbstractTileEntity;
+import owmii.powah.lib.item.EnergyBlockItem;
+import owmii.powah.lib.logistics.inventory.AbstractContainer;
 
 public class SolarBlock extends AbstractGeneratorBlock<SolarBlock> implements SimpleWaterloggedBlock {
     protected static final VoxelShape SHAPE = box(0.0D, 0.0D, 0.0D, 16.0D, 1.0D, 16.0D);
@@ -77,7 +75,8 @@ public class SolarBlock extends AbstractGeneratorBlock<SolarBlock> implements Si
     }
 
     @Override
-    public BlockState updateShape(BlockState state, Direction facing, BlockState facingState, LevelAccessor world, BlockPos currentPos, BlockPos facingPos) {
+    public BlockState updateShape(BlockState state, Direction facing, BlockState facingState, LevelAccessor world, BlockPos currentPos,
+            BlockPos facingPos) {
         return createState(world, currentPos);
     }
 
@@ -114,10 +113,14 @@ public class SolarBlock extends AbstractGeneratorBlock<SolarBlock> implements Si
 
     public List<Direction> getConnectedSides(BlockState state) {
         List<Direction> list = new ArrayList<>();
-        if (!state.getValue(NORTH)) list.add(Direction.NORTH);
-        if (!state.getValue(SOUTH)) list.add(Direction.SOUTH);
-        if (!state.getValue(WEST)) list.add(Direction.WEST);
-        if (!state.getValue(EAST)) list.add(Direction.EAST);
+        if (!state.getValue(NORTH))
+            list.add(Direction.NORTH);
+        if (!state.getValue(SOUTH))
+            list.add(Direction.SOUTH);
+        if (!state.getValue(WEST))
+            list.add(Direction.WEST);
+        if (!state.getValue(EAST))
+            list.add(Direction.EAST);
         return list;
     }
 }

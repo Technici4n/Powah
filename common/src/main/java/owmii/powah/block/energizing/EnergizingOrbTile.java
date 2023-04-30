@@ -1,5 +1,7 @@
 package owmii.powah.block.energizing;
 
+import java.util.Optional;
+import javax.annotation.Nullable;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
@@ -8,16 +10,13 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.phys.Vec3;
+import owmii.powah.block.Tiles;
 import owmii.powah.lib.block.AbstractTickableTile;
 import owmii.powah.lib.block.IInventoryHolder;
 import owmii.powah.lib.logistics.energy.Energy;
 import owmii.powah.lib.logistics.inventory.RecipeWrapper;
 import owmii.powah.lib.registry.IVariant;
-import owmii.powah.block.Tiles;
 import owmii.powah.recipe.Recipes;
-
-import javax.annotation.Nullable;
-import java.util.Optional;
 
 public class EnergizingOrbTile extends AbstractTickableTile<IVariant.Single, EnergizingOrbBlock> implements IInventoryHolder {
     private final Energy buffer = Energy.create(0);
@@ -85,7 +84,8 @@ public class EnergizingOrbTile extends AbstractTickableTile<IVariant.Single, Ene
 
     private void checkRecipe() {
         if (this.level != null && !isRemote()) {
-            Optional<EnergizingRecipe> recipe = this.level.getRecipeManager().getRecipeFor(Recipes.ENERGIZING.get(), new RecipeWrapper(getInventory()), this.level);
+            Optional<EnergizingRecipe> recipe = this.level.getRecipeManager().getRecipeFor(Recipes.ENERGIZING.get(),
+                    new RecipeWrapper(getInventory()), this.level);
             if (recipe.isPresent()) {
                 this.recipe = recipe.get();
                 this.buffer.setCapacity(this.recipe.getEnergy());

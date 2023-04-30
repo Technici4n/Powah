@@ -1,7 +1,12 @@
 package owmii.powah.block.energizing;
 
+import static net.minecraft.world.phys.shapes.Shapes.join;
+
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
+import java.util.List;
+import java.util.stream.Collectors;
+import javax.annotation.Nullable;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.ChatFormatting;
@@ -27,21 +32,15 @@ import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.Vec3;
 import net.minecraft.world.phys.shapes.BooleanOp;
 import owmii.powah.Powah;
+import owmii.powah.api.wrench.IWrenchable;
+import owmii.powah.api.wrench.WrenchMode;
+import owmii.powah.item.WrenchItem;
 import owmii.powah.lib.block.AbstractBlock;
 import owmii.powah.lib.client.handler.IHud;
 import owmii.powah.lib.logistics.inventory.Inventory;
 import owmii.powah.lib.registry.IVariant;
 import owmii.powah.lib.util.Util;
 import owmii.powah.lib.util.math.V3d;
-import owmii.powah.api.wrench.IWrenchable;
-import owmii.powah.api.wrench.WrenchMode;
-import owmii.powah.item.WrenchItem;
-
-import javax.annotation.Nullable;
-import java.util.List;
-import java.util.stream.Collectors;
-
-import static net.minecraft.world.phys.shapes.Shapes.join;
 
 public class EnergizingOrbBlock extends AbstractBlock<IVariant.Single, EnergizingOrbBlock> implements SimpleWaterloggedBlock, IWrenchable, IHud {
 
@@ -51,7 +50,8 @@ public class EnergizingOrbBlock extends AbstractBlock<IVariant.Single, Energizin
         this.shapes.put(Direction.UP, join(box(3.5D, 11.0D, 3.5D, 12.5D, 1.77D, 12.5D), box(2.5D, 15.0D, 2.5D, 13.5D, 16.0D, 13.5D), BooleanOp.OR));
         this.shapes.put(Direction.DOWN, join(box(3.5D, 14.23D, 3.5D, 12.5D, 5.0D, 12.5D), box(2.5D, 0.0D, 2.5D, 13.5D, 1.0D, 13.5D), BooleanOp.OR));
         this.shapes.put(Direction.NORTH, join(box(3.5D, 3.5D, 14.23D, 12.5D, 12.5D, 5.0D), box(2.5D, 2.5D, 0.0D, 13.5D, 13.5D, 1.0D), BooleanOp.OR));
-        this.shapes.put(Direction.SOUTH, join(box(3.5D, 3.5D, 11.0D, 12.5D, 12.5D, 1.77D), box(2.5D, 2.5D, 15.0D, 13.5D, 13.5D, 16.0D), BooleanOp.OR));
+        this.shapes.put(Direction.SOUTH,
+                join(box(3.5D, 3.5D, 11.0D, 12.5D, 12.5D, 1.77D), box(2.5D, 2.5D, 15.0D, 13.5D, 13.5D, 16.0D), BooleanOp.OR));
         this.shapes.put(Direction.WEST, join(box(14.23D, 3.5D, 3.5D, 5.0D, 12.5D, 12.5D), box(0.0D, 2.5D, 2.5D, 1.0D, 13.5D, 13.5D), BooleanOp.OR));
         this.shapes.put(Direction.EAST, join(box(11.0D, 3.5D, 3.5D, 1.77D, 12.5D, 12.5D), box(15.0D, 2.5D, 2.5D, 16.0D, 13.5D, 13.5D), BooleanOp.OR));
     }
@@ -71,7 +71,7 @@ public class EnergizingOrbBlock extends AbstractBlock<IVariant.Single, Energizin
             Inventory inv = orb.getInventory();
             ItemStack output = inv.getStackInSlot(0);
             ItemStack off = player.getOffhandItem();
-            //  if (!(off.getItem() instanceof IWrench && ((IWrench) off.getItem()).getWrenchMode(off).link())) {
+            // if (!(off.getItem() instanceof IWrench && ((IWrench) off.getItem()).getWrenchMode(off).link())) {
             if (held.isEmpty() || !output.isEmpty()) {
                 if (!world.isClientSide) {
                     player.getInventory().placeItemBackInInventory(inv.removeNext());
@@ -145,7 +145,8 @@ public class EnergizingOrbBlock extends AbstractBlock<IVariant.Single, Energizin
 
     public void search(Level worldIn, BlockPos pos) {
         int range = Powah.config().general.energizing_range;
-        List<BlockPos> list = BlockPos.betweenClosedStream(pos.offset(-range, -range, -range), pos.offset(range, range, range)).map(BlockPos::immutable).filter(pos1 -> !pos.equals(pos1)).collect(Collectors.toList());
+        List<BlockPos> list = BlockPos.betweenClosedStream(pos.offset(-range, -range, -range), pos.offset(range, range, range))
+                .map(BlockPos::immutable).filter(pos1 -> !pos.equals(pos1)).collect(Collectors.toList());
         list.stream().filter(p -> worldIn.isLoaded(pos)).forEach(pos1 -> {
             BlockEntity tileEntity1 = worldIn.getBlockEntity(pos1);
             if (tileEntity1 instanceof EnergizingRodTile) {
@@ -157,7 +158,8 @@ public class EnergizingOrbBlock extends AbstractBlock<IVariant.Single, Energizin
     }
 
     @Override
-    public boolean onWrench(BlockState state, Level world, BlockPos pos, Player player, InteractionHand hand, Direction side, WrenchMode mode, Vec3 hit) {
+    public boolean onWrench(BlockState state, Level world, BlockPos pos, Player player, InteractionHand hand, Direction side, WrenchMode mode,
+            Vec3 hit) {
         if (mode.link()) {
             ItemStack stack = player.getItemInHand(hand);
             if (stack.getItem() instanceof WrenchItem wrench) {
@@ -171,9 +173,11 @@ public class EnergizingOrbBlock extends AbstractBlock<IVariant.Single, Energizin
                             V3d v3d = V3d.from(rodPos);
                             if ((int) v3d.distance(pos) <= Powah.config().general.energizing_range) {
                                 rod.setOrbPos(pos);
-                                player.displayClientMessage(Component.translatable("chat.powah.wrench.link.done").withStyle(ChatFormatting.GOLD), true);
+                                player.displayClientMessage(Component.translatable("chat.powah.wrench.link.done").withStyle(ChatFormatting.GOLD),
+                                        true);
                             } else {
-                                player.displayClientMessage(Component.translatable("chat.powah.wrench.link.fail").withStyle(ChatFormatting.RED), true);
+                                player.displayClientMessage(Component.translatable("chat.powah.wrench.link.fail").withStyle(ChatFormatting.RED),
+                                        true);
                             }
                         }
                         nbt.remove("RodPos");
@@ -190,7 +194,8 @@ public class EnergizingOrbBlock extends AbstractBlock<IVariant.Single, Energizin
 
     @Override
     @Environment(EnvType.CLIENT)
-    public boolean renderHud(PoseStack matrix, BlockState state, Level world, BlockPos pos, Player player, BlockHitResult result, @Nullable BlockEntity te) {
+    public boolean renderHud(PoseStack matrix, BlockState state, Level world, BlockPos pos, Player player, BlockHitResult result,
+            @Nullable BlockEntity te) {
         if (te instanceof EnergizingOrbTile orb) {
             if (orb.getBuffer().getCapacity() > 0) {
                 RenderSystem.getModelViewStack().pushPose();
@@ -200,7 +205,8 @@ public class EnergizingOrbBlock extends AbstractBlock<IVariant.Single, Energizin
                 int x = mc.getWindow().getGuiScaledWidth() / 2;
                 int y = mc.getWindow().getGuiScaledHeight();
                 String s = "" + ChatFormatting.GREEN + orb.getBuffer().getPercent() + "%";
-                String s1 = ChatFormatting.GRAY + I18n.get("info.lollipop.fe.stored", Util.addCommas(orb.getBuffer().getEnergyStored()), Util.numFormat(orb.getBuffer().getCapacity()));
+                String s1 = ChatFormatting.GRAY + I18n.get("info.lollipop.fe.stored", Util.addCommas(orb.getBuffer().getEnergyStored()),
+                        Util.numFormat(orb.getBuffer().getCapacity()));
                 font.drawShadow(matrix, s, x - (font.width(s) / 2.0f), y - 90, 0xffffff);
                 font.drawShadow(matrix, s1, x - (font.width(s1) / 2.0f), y - 75, 0xffffff);
                 RenderSystem.disableBlend();

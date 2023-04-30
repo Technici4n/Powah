@@ -1,6 +1,8 @@
 package owmii.powah.fabric.compat.rei;
 
 import dev.architectury.hooks.fluid.FluidBucketHooks;
+import java.util.*;
+import java.util.stream.Collectors;
 import me.shedaniel.rei.api.client.registry.entry.EntryRegistry;
 import me.shedaniel.rei.api.common.category.CategoryIdentifier;
 import me.shedaniel.rei.api.common.display.Display;
@@ -16,9 +18,6 @@ import net.minecraft.world.item.MobBucketItem;
 import net.minecraft.world.level.material.Fluid;
 import owmii.powah.api.PowahAPI;
 
-import java.util.*;
-import java.util.stream.Collectors;
-
 public class CoolantDisplay implements Display {
 
     private final List<EntryIngredient> inputs;
@@ -27,9 +26,8 @@ public class CoolantDisplay implements Display {
     public CoolantDisplay(Recipe recipe) {
         this.inputs = List.of(
                 EntryIngredients.of(recipe.getFluid()),
-                !Items.BUCKET.equals(recipe.bucket) ? EntryIngredients.of(recipe.getBucket()) : EntryIngredient.of()
-        );
-       this.coldness = recipe.getColdness();
+                !Items.BUCKET.equals(recipe.bucket) ? EntryIngredients.of(recipe.getBucket()) : EntryIngredient.of());
+        this.coldness = recipe.getColdness();
     }
 
     @Override
@@ -67,7 +65,8 @@ public class CoolantDisplay implements Display {
                 }
             });
 
-            List<Fluid> fluids = PowahAPI.COOLANT_FLUIDS.keySet().stream().flatMap(f -> Registry.FLUID.getOptional(f).stream()).collect(Collectors.toCollection(ArrayList::new));
+            List<Fluid> fluids = PowahAPI.COOLANT_FLUIDS.keySet().stream().flatMap(f -> Registry.FLUID.getOptional(f).stream())
+                    .collect(Collectors.toCollection(ArrayList::new));
             recipes.forEach(recipe -> {
                 fluids.remove(recipe.fluid);
             });

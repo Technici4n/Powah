@@ -16,7 +16,8 @@ public interface IInventoryHolder {
     Inventory getInventory();
 
     default void shrink(int[] slots, int amount) {
-        for (int i : slots) shrink(i, amount);
+        for (int i : slots)
+            shrink(i, amount);
     }
 
     default ItemStack shrink(int slot, int amount) {

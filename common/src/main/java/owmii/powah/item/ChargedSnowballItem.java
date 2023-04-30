@@ -9,8 +9,8 @@ import net.minecraft.world.InteractionResultHolder;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
-import owmii.powah.lib.item.ItemBase;
 import owmii.powah.entity.ChargedSnowballEntity;
+import owmii.powah.lib.item.ItemBase;
 
 public class ChargedSnowballItem extends ItemBase {
     public ChargedSnowballItem(Properties properties) {
@@ -24,7 +24,8 @@ public class ChargedSnowballItem extends ItemBase {
             itemstack.shrink(1);
         }
 
-        worldIn.playSound(null, playerIn.getX(), playerIn.getY(), playerIn.getZ(), SoundEvents.SNOWBALL_THROW, SoundSource.NEUTRAL, 0.5F, 0.4F / (playerIn.getRandom().nextFloat() * 0.4F + 0.8F));
+        worldIn.playSound(null, playerIn.getX(), playerIn.getY(), playerIn.getZ(), SoundEvents.SNOWBALL_THROW, SoundSource.NEUTRAL, 0.5F,
+                0.4F / (playerIn.getRandom().nextFloat() * 0.4F + 0.8F));
         if (!worldIn.isClientSide) {
             ChargedSnowballEntity entity = new ChargedSnowballEntity(worldIn, playerIn);
             entity.setItem(itemstack);

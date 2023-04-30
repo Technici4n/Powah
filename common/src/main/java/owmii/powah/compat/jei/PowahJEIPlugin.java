@@ -11,11 +11,11 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
-import owmii.powah.lib.util.Recipe;
 import owmii.powah.Powah;
 import owmii.powah.block.Blcks;
 import owmii.powah.compat.jei.energizing.EnergizingCategory;
 import owmii.powah.item.Itms;
+import owmii.powah.lib.util.Recipe;
 import owmii.powah.recipe.Recipes;
 
 @JeiPlugin
@@ -55,13 +55,15 @@ public class PowahJEIPlugin implements IModPlugin {
         registration.addRecipes(HeatSourceCategory.TYPE, HeatSourceCategory.getRecipes());
 
         if (Powah.config().general.player_aerial_pearl)
-            registration.addIngredientInfo(new ItemStack(Itms.PLAYER_AERIAL_PEARL.get()), VanillaTypes.ITEM_STACK, Component.translatable("jei.powah.player_aerial_pearl"));
+            registration.addIngredientInfo(new ItemStack(Itms.PLAYER_AERIAL_PEARL.get()), VanillaTypes.ITEM_STACK,
+                    Component.translatable("jei.powah.player_aerial_pearl"));
         if (Powah.config().general.dimensional_binding_card)
-            registration.addIngredientInfo(new ItemStack(Itms.BINDING_CARD_DIM.get()), VanillaTypes.ITEM_STACK, Component.translatable("jei.powah.binding_card_dim"));
+            registration.addIngredientInfo(new ItemStack(Itms.BINDING_CARD_DIM.get()), VanillaTypes.ITEM_STACK,
+                    Component.translatable("jei.powah.binding_card_dim"));
         if (Powah.config().general.lens_of_ender)
-            registration.addIngredientInfo(new ItemStack(Itms.LENS_OF_ENDER.get()), VanillaTypes.ITEM_STACK, Component.translatable("jei.powah.lens_of_ender"));
+            registration.addIngredientInfo(new ItemStack(Itms.LENS_OF_ENDER.get()), VanillaTypes.ITEM_STACK,
+                    Component.translatable("jei.powah.lens_of_ender"));
     }
-
 
     @Override
     public ResourceLocation getPluginUid() {

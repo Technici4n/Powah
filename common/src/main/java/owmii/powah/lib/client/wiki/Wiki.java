@@ -2,6 +2,9 @@ package owmii.powah.lib.client.wiki;
 
 import dev.architectury.event.events.client.ClientRecipeUpdateEvent;
 import dev.architectury.platform.Platform;
+import java.util.*;
+import java.util.function.Consumer;
+import javax.annotation.Nullable;
 import net.minecraft.core.Registry;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Recipe;
@@ -11,10 +14,6 @@ import org.apache.commons.lang3.time.StopWatch;
 import org.apache.logging.log4j.Marker;
 import org.apache.logging.log4j.MarkerManager;
 import owmii.powah.Powah;
-
-import javax.annotation.Nullable;
-import java.util.*;
-import java.util.function.Consumer;
 
 public class Wiki {
     public static final Marker MARKER = new MarkerManager.Log4jMarker("Wiki");

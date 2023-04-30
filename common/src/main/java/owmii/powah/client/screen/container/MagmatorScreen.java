@@ -3,25 +3,22 @@ package owmii.powah.client.screen.container;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
 import dev.architectury.hooks.fluid.FluidStackHooks;
+import java.util.ArrayList;
+import java.util.List;
 import net.minecraft.ChatFormatting;
-import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.network.chat.Component;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.inventory.InventoryMenu;
+import owmii.powah.api.PowahAPI;
+import owmii.powah.block.magmator.MagmatorTile;
+import owmii.powah.client.screen.Textures;
+import owmii.powah.inventory.MagmatorContainer;
 import owmii.powah.lib.client.screen.container.AbstractEnergyScreen;
 import owmii.powah.lib.client.util.Draw;
 import owmii.powah.lib.client.util.Text;
 import owmii.powah.lib.logistics.energy.Energy;
 import owmii.powah.lib.util.Ticker;
 import owmii.powah.lib.util.Util;
-import owmii.powah.api.PowahAPI;
-import owmii.powah.block.magmator.MagmatorTile;
-import owmii.powah.client.screen.Textures;
-import owmii.powah.inventory.MagmatorContainer;
-
-import java.util.ArrayList;
-import java.util.List;
 
 public class MagmatorScreen extends AbstractEnergyScreen<MagmatorTile, MagmatorContainer> {
     private final Ticker heat = new Ticker(20);
@@ -74,9 +71,16 @@ public class MagmatorScreen extends AbstractEnergyScreen<MagmatorTile, MagmatorC
         if (Textures.FURNATOR_GAUGE.isMouseOver(this.leftPos + 5, this.topPos + 5, mouseX, mouseY)) {
             List<Component> list = new ArrayList<>();
             Energy energy = this.te.getEnergy();
-            list.add(Component.translatable("info.lollipop.stored").withStyle(ChatFormatting.GRAY).append(Text.COLON).append(Component.translatable("info.lollipop.fe.stored", Util.addCommas(energy.getStored()), Util.numFormat(energy.getCapacity())).withStyle(ChatFormatting.DARK_GRAY)));
-            list.add(Component.translatable("info.lollipop.generates").withStyle(ChatFormatting.GRAY).append(Text.COLON).append(Component.literal(Util.numFormat(this.te.getGeneration())).append(Component.translatable("info.lollipop.fe.pet.tick")).withStyle(ChatFormatting.DARK_GRAY)));
-            list.add(Component.translatable("info.lollipop.max.extract").withStyle(ChatFormatting.GRAY).append(Text.COLON).append(Component.literal(Util.numFormat(energy.getMaxExtract())).append(Component.translatable("info.lollipop.fe.pet.tick")).withStyle(ChatFormatting.DARK_GRAY)));
+            list.add(Component.translatable("info.lollipop.stored").withStyle(ChatFormatting.GRAY).append(Text.COLON)
+                    .append(Component
+                            .translatable("info.lollipop.fe.stored", Util.addCommas(energy.getStored()), Util.numFormat(energy.getCapacity()))
+                            .withStyle(ChatFormatting.DARK_GRAY)));
+            list.add(Component.translatable("info.lollipop.generates").withStyle(ChatFormatting.GRAY).append(Text.COLON)
+                    .append(Component.literal(Util.numFormat(this.te.getGeneration())).append(Component.translatable("info.lollipop.fe.pet.tick"))
+                            .withStyle(ChatFormatting.DARK_GRAY)));
+            list.add(Component.translatable("info.lollipop.max.extract").withStyle(ChatFormatting.GRAY).append(Text.COLON)
+                    .append(Component.literal(Util.numFormat(energy.getMaxExtract())).append(Component.translatable("info.lollipop.fe.pet.tick"))
+                            .withStyle(ChatFormatting.DARK_GRAY)));
             renderComponentTooltip(matrix, list, mouseX, mouseY);
         }
 
@@ -84,11 +88,16 @@ public class MagmatorScreen extends AbstractEnergyScreen<MagmatorTile, MagmatorC
         if (isMouseOver(mouseX - 157, mouseY - 5, 14, 65)) {
             List<Component> list = new ArrayList<>();
             if (!tank.isEmpty()) {
-                list.add(Component.translatable("info.lollipop.fluid").withStyle(ChatFormatting.GRAY).append(Text.COLON).append(FluidStackHooks.getName(tank.getFluid()).plainCopy().withStyle(ChatFormatting.GOLD)));
-                list.add(Component.translatable("info.lollipop.stored").withStyle(ChatFormatting.GRAY).append(Text.COLON).append(Util.formatTankContent(tank)));
-                list.add(Component.translatable("info.lollipop.Gain").withStyle(ChatFormatting.GRAY).append(Text.COLON).append(Component.translatable("info.lollipop.fe.per.mb", PowahAPI.getMagmaticFluidHeat(tank.getFluid().getFluid()), "100").withStyle(ChatFormatting.DARK_GRAY)));
+                list.add(Component.translatable("info.lollipop.fluid").withStyle(ChatFormatting.GRAY).append(Text.COLON)
+                        .append(FluidStackHooks.getName(tank.getFluid()).plainCopy().withStyle(ChatFormatting.GOLD)));
+                list.add(Component.translatable("info.lollipop.stored").withStyle(ChatFormatting.GRAY).append(Text.COLON)
+                        .append(Util.formatTankContent(tank)));
+                list.add(Component.translatable("info.lollipop.Gain").withStyle(ChatFormatting.GRAY).append(Text.COLON)
+                        .append(Component.translatable("info.lollipop.fe.per.mb", PowahAPI.getMagmaticFluidHeat(tank.getFluid().getFluid()), "100")
+                                .withStyle(ChatFormatting.DARK_GRAY)));
             } else {
-                list.add(Component.translatable("info.lollipop.fluid").withStyle(ChatFormatting.GRAY).append(Text.COLON).append(Component.literal("---").withStyle(ChatFormatting.DARK_GRAY)));
+                list.add(Component.translatable("info.lollipop.fluid").withStyle(ChatFormatting.GRAY).append(Text.COLON)
+                        .append(Component.literal("---").withStyle(ChatFormatting.DARK_GRAY)));
             }
             renderComponentTooltip(matrix, list, mouseX, mouseY);
         }

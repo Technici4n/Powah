@@ -2,9 +2,9 @@ package owmii.powah.inventory;
 
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.world.entity.player.Inventory;
+import owmii.powah.block.discharger.EnergyDischargerTile;
 import owmii.powah.lib.logistics.inventory.AbstractEnergyContainer;
 import owmii.powah.lib.logistics.inventory.slot.SlotBase;
-import owmii.powah.block.discharger.EnergyDischargerTile;
 
 public class DischargerContainer extends AbstractEnergyContainer<EnergyDischargerTile> {
     public DischargerContainer(int id, Inventory inventory, FriendlyByteBuf buffer) {

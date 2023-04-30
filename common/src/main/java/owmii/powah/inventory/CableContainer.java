@@ -3,8 +3,8 @@ package owmii.powah.inventory;
 import net.minecraft.core.Direction;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.world.entity.player.Inventory;
-import owmii.powah.lib.logistics.inventory.AbstractEnergyContainer;
 import owmii.powah.block.cable.CableTile;
+import owmii.powah.lib.logistics.inventory.AbstractEnergyContainer;
 
 public class CableContainer extends AbstractEnergyContainer<CableTile> {
     private Direction side = Direction.NORTH;

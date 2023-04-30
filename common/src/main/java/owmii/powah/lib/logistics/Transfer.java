@@ -1,10 +1,9 @@
 package owmii.powah.lib.logistics;
 
-import owmii.powah.lib.client.util.Text;
-
 import java.util.Locale;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
+import owmii.powah.lib.client.util.Text;
 
 public enum Transfer {
     ALL(true, true, ChatFormatting.DARK_GRAY),
@@ -25,8 +24,10 @@ public enum Transfer {
     public Transfer next(Transfer type) {
         if (ALL.equals(type)) {
             int i = ordinal();
-            if (i < 3) i++;
-            else i = 0;
+            if (i < 3)
+                i++;
+            else
+                i = 0;
             return values()[i];
         } else if (EXTRACT.equals(type)) {
             return !NONE.equals(this) ? NONE : EXTRACT;

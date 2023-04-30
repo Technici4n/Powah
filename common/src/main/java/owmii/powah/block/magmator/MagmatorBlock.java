@@ -1,5 +1,6 @@
 package owmii.powah.block.magmator;
 
+import javax.annotation.Nullable;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
@@ -13,17 +14,13 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.BlockHitResult;
 import owmii.powah.EnvHandler;
 import owmii.powah.Powah;
-import owmii.powah.config.v2.PowahConfig;
-import owmii.powah.config.v2.types.EnergyConfig;
+import owmii.powah.block.Tier;
 import owmii.powah.config.v2.types.GeneratorConfig;
+import owmii.powah.inventory.MagmatorContainer;
 import owmii.powah.lib.block.AbstractGeneratorBlock;
 import owmii.powah.lib.block.AbstractTileEntity;
 import owmii.powah.lib.item.EnergyBlockItem;
 import owmii.powah.lib.logistics.inventory.AbstractContainer;
-import owmii.powah.block.Tier;
-import owmii.powah.inventory.MagmatorContainer;
-
-import javax.annotation.Nullable;
 
 public class MagmatorBlock extends AbstractGeneratorBlock<MagmatorBlock> {
     public MagmatorBlock(Properties properties, Tier variant) {

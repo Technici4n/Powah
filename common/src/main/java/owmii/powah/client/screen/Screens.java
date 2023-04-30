@@ -1,11 +1,10 @@
 package owmii.powah.client.screen;
 
 import dev.architectury.registry.menu.MenuRegistry;
-import net.minecraft.client.gui.screens.MenuScreens;
-import owmii.powah.lib.client.screen.wiki.WikiScreen;
 import owmii.powah.client.book.PowahBook;
 import owmii.powah.client.screen.container.*;
 import owmii.powah.inventory.Containers;
+import owmii.powah.lib.client.screen.wiki.WikiScreen;
 
 public class Screens {
     public static void register() {

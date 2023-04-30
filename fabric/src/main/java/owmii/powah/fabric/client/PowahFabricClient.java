@@ -15,29 +15,29 @@ import owmii.powah.item.ReactorItem;
 import owmii.powah.lib.block.AbstractBlock;
 
 public class PowahFabricClient implements ClientModInitializer {
-	@Override
-	public void onInitializeClient() {
-		PowahClient.init();
-		PowahClient.clientSetup();
+    @Override
+    public void onInitializeClient() {
+        PowahClient.init();
+        PowahClient.clientSetup();
 
-		var reactorRenderer = new ReactorItemRenderer();
-		Blcks.REACTOR.getAll().forEach(block -> {
-			var item = (ReactorItem) Registry.ITEM.get(Registry.BLOCK.getKey(block));
-			BuiltinItemRendererRegistry.INSTANCE.register(item, reactorRenderer::renderByItem);
-		});
+        var reactorRenderer = new ReactorItemRenderer();
+        Blcks.REACTOR.getAll().forEach(block -> {
+            var item = (ReactorItem) Registry.ITEM.get(Registry.BLOCK.getKey(block));
+            BuiltinItemRendererRegistry.INSTANCE.register(item, reactorRenderer::renderByItem);
+        });
 
-		WorldRenderEvents.LAST.register(context -> {
-			ReactorOverlayHandler.onRenderLast(context.matrixStack());
-		});
+        WorldRenderEvents.LAST.register(context -> {
+            ReactorOverlayHandler.onRenderLast(context.matrixStack());
+        });
 
-		ClientPickBlockGatherCallback.EVENT.register((player, result) -> {
-			if (result instanceof BlockHitResult bhr) {
-				var level = player.level;
-				if (level.getBlockState(bhr.getBlockPos()).getBlock() instanceof AbstractBlock<?,?> abstractBlock) {
-					return abstractBlock.getCloneItemStack(level, bhr.getBlockPos());
-				}
-			}
-			return ItemStack.EMPTY;
-		});
-	}
+        ClientPickBlockGatherCallback.EVENT.register((player, result) -> {
+            if (result instanceof BlockHitResult bhr) {
+                var level = player.level;
+                if (level.getBlockState(bhr.getBlockPos()).getBlock() instanceof AbstractBlock<?, ?>abstractBlock) {
+                    return abstractBlock.getCloneItemStack(level, bhr.getBlockPos());
+                }
+            }
+            return ItemStack.EMPTY;
+        });
+    }
 }

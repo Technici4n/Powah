@@ -6,16 +6,15 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
+import owmii.powah.api.energy.endernetwork.IEnderExtender;
+import owmii.powah.block.ender.AbstractEnderTile;
+import owmii.powah.client.screen.Textures;
+import owmii.powah.inventory.EnderCellContainer;
 import owmii.powah.lib.client.screen.Texture;
 import owmii.powah.lib.client.screen.container.AbstractEnergyScreen;
 import owmii.powah.lib.client.screen.widget.IconButton;
 import owmii.powah.lib.logistics.energy.Energy;
 import owmii.powah.lib.util.Util;
-import owmii.powah.Powah;
-import owmii.powah.api.energy.endernetwork.IEnderExtender;
-import owmii.powah.block.ender.AbstractEnderTile;
-import owmii.powah.client.screen.Textures;
-import owmii.powah.inventory.EnderCellContainer;
 import owmii.powah.network.Network;
 import owmii.powah.network.packet.SetChannelPacket;
 
@@ -32,10 +31,11 @@ public class EnderCellScreen extends AbstractEnergyScreen<AbstractEnderTile<?>, 
         super.init();
         for (int i = 0; i < this.iconButtons.length; i++) {
             int channel = i;
-            this.iconButtons[i] = addRenderableWidget(new IconButton(this.leftPos + 5 + i * 14, this.topPos + 55, i == this.te.getChannel().get() ? Textures.ENDER_CELL_BTN_0 : Textures.ENDER_CELL_BTN_1, button -> {
-                Network.toServer(new SetChannelPacket(this.te.getBlockPos(), channel));
-                this.te.getChannel().set(channel);
-            }, this));
+            this.iconButtons[i] = addRenderableWidget(new IconButton(this.leftPos + 5 + i * 14, this.topPos + 55,
+                    i == this.te.getChannel().get() ? Textures.ENDER_CELL_BTN_0 : Textures.ENDER_CELL_BTN_1, button -> {
+                        Network.toServer(new SetChannelPacket(this.te.getBlockPos(), channel));
+                        this.te.getChannel().set(channel);
+                    }, this));
         }
     }
 

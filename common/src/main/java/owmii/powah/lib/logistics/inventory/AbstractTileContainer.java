@@ -1,9 +1,5 @@
 package owmii.powah.lib.logistics.inventory;
 
-import net.minecraft.world.level.block.Blocks;
-import owmii.powah.lib.block.AbstractTileEntity;
-import owmii.powah.lib.block.IInventoryHolder;
-
 import javax.annotation.Nullable;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.FriendlyByteBuf;
@@ -12,8 +8,11 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.MenuType;
 import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
+import owmii.powah.lib.block.AbstractTileEntity;
+import owmii.powah.lib.block.IInventoryHolder;
 
 public abstract class AbstractTileContainer<T extends AbstractTileEntity<?, ?> & IInventoryHolder> extends AbstractContainer {
     public final T te;

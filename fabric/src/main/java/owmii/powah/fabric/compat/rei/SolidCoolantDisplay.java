@@ -1,5 +1,6 @@
 package owmii.powah.fabric.compat.rei;
 
+import java.util.*;
 import me.shedaniel.rei.api.client.registry.entry.EntryRegistry;
 import me.shedaniel.rei.api.common.category.CategoryIdentifier;
 import me.shedaniel.rei.api.common.display.Display;
@@ -11,8 +12,6 @@ import net.minecraft.core.Registry;
 import net.minecraft.world.item.ItemStack;
 import org.apache.commons.lang3.tuple.Pair;
 import owmii.powah.api.PowahAPI;
-
-import java.util.*;
 
 public class SolidCoolantDisplay implements Display {
 

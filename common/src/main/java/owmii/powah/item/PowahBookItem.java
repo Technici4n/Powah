@@ -6,8 +6,8 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Rarity;
 import net.minecraft.world.level.Level;
-import owmii.powah.lib.item.ItemBase;
 import owmii.powah.client.screen.Screens;
+import owmii.powah.lib.item.ItemBase;
 
 public class PowahBookItem extends ItemBase {
     public PowahBookItem(Properties properties) {
