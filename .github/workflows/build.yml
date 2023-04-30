@@ -31,5 +31,10 @@ jobs:
       - name: Upload artifacts
         uses: actions/upload-artifact@v2
         with:
-          name: powah ${{ steps.var.outputs.commit_hash }}
-          path: build/libs
+          name: powah ${{ steps.var.outputs.commit_hash }} [FABRIC]
+          path: fabric/build/libs/Powah-git-${{ steps.var.outputs.commit_hash }}.jar
+      - name: Upload artifacts
+        uses: actions/upload-artifact@v2
+        with:
+          name: powah ${{ steps.var.outputs.commit_hash }} [FORGE]
+          path: forge/build/libs/Powah-git-${{ steps.var.outputs.commit_hash }}.jar
