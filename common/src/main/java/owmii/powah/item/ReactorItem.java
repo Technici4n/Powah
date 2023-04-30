@@ -65,17 +65,20 @@ public class ReactorItem extends EnergyBlockItem<GeneratorConfig, ReactorBlock> 
         List<LivingEntity> entities = context.getLevel().getEntitiesOfClass(LivingEntity.class, new AABB(pos).inflate(1.0D, 3.0D, 1.0D));
         if (!entities.isEmpty()) return InteractionResult.FAIL;
 
-        if (stack.getCount() < 36) {
-            int held = stack.getCount();
-            stack.setCount(0);
-            final int taken = ContainerHelper.clearOrCountMatchingItems(player.getInventory(), s -> s.is(this), 36 - held, false);
-            if (taken + held != 36) {
-                throw new IllegalStateException();
+        if (!player.isCreative()) {
+            if (stack.getCount() < 36) {
+                int held = stack.getCount();
+                stack.setCount(0);
+                final int taken = ContainerHelper.clearOrCountMatchingItems(player.getInventory(), s -> s.is(this), 36 - held, false);
+                if (taken + held != 36) {
+                    throw new IllegalStateException();
+                }
+                stack.setCount(1);
+            } else {
+                stack.shrink(35);
             }
-            stack.setCount(1);
-        } else {
-            stack.shrink(35);
         }
+
         ALLOW_PLACEMENT.set(true);
         try {
             return super.place(context);
