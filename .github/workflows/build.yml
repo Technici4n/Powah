@@ -1,0 +1,35 @@
+name: Build on push
+
+on: [push, pull_request]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - id: var
+        name: Setup variables
+        run: echo ::set-output name=commit_hash::${GITHUB_SHA:0:7}
+      - uses: actions/checkout@v2
+      - name: Set up JDK 17
+        uses: actions/setup-java@v1
+        with:
+          java-version: 17
+      - name: Grant execute permission for gradlew
+        run: chmod +x gradlew
+      - name: Use gradle cache for faster builds
+        uses: actions/cache@v1
+        with:
+          path: ~/.gradle/caches
+          key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle') }}
+      - name: Validate AW
+        run: ./gradlew validateAccessWidener
+      - name: Build with Gradle
+        run: ./gradlew build
+        env:
+          POWAH_VERSION: vgit-${{ steps.var.outputs.commit_hash }}
+      - name: Upload artifacts
+        uses: actions/upload-artifact@v2
+        with:
+          name: powah ${{ steps.var.outputs.commit_hash }}
+          path: build/libs
