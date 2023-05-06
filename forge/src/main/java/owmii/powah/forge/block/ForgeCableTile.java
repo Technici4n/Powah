@@ -31,7 +31,7 @@ public class ForgeCableTile extends CableTile {
             if (amount <= 0)
                 break;
             if (!cable.energySides.isEmpty() && cable.isActive()) {
-                received += ((ForgeCableTile) cable).pushEnergy(maxReceive, simulate, direction, this);
+                received += ((ForgeCableTile) cable).pushEnergy(amount, simulate, direction, this);
             }
         }
 
