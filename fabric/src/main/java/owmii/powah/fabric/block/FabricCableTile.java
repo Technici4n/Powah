@@ -35,7 +35,7 @@ public class FabricCableTile extends CableTile {
             if (amount <= 0)
                 break;
             if (!cable.energySides.isEmpty() && cable.isActive()) {
-                received += ((FabricCableTile) cable).pushEnergy(maxReceive, transaction, direction, this);
+                received += ((FabricCableTile) cable).pushEnergy(amount, transaction, direction, this);
             }
         }
 
