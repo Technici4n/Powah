@@ -1,3 +1,10 @@
+repositories {
+    maven {
+        name = "TerraformersMC"
+        url = "https://maven.terraformersmc.com/"
+    }
+}
+
 dependencies {
     // We depend on fabric loader here to use the fabric @Environment annotations and get the mixin dependencies
     // Do NOT use other classes from fabric loader
@@ -7,6 +14,9 @@ dependencies {
     modImplementation "me.shedaniel.cloth:cloth-config:${rootProject.cloth_config_version}"
 
     modCompileOnly "mezz.jei:jei-${project.jei_minecraft_release}-common-api:${project.jei_version}"
+
+    // Architectury
+    modCompileOnly "dev.emi:emi-xplat-intermediary:${emi_version}:api"
 }
 
 architectury {

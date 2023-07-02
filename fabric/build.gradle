@@ -56,8 +56,6 @@ dependencies {
         exclude group: "mezz.jei"
     }
 
-    modCompileOnly "dev.emi:emi:${project.emi_version}:api"
-
     modCompileOnly "dev.emi:trinkets:${project.trinkets_version}"
 
     common(project(path: ":common", configuration: "namedElements")) { transitive false }
