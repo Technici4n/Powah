@@ -3,19 +3,10 @@ package owmii.powah.fabric.data;
 import net.fabricmc.fabric.api.datagen.v1.DataGeneratorEntrypoint;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataGenerator;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricDynamicRegistryProvider;
-import net.minecraft.Util;
 import net.minecraft.core.HolderLookup;
-import net.minecraft.core.RegistryAccess;
 import net.minecraft.core.RegistrySetBuilder;
-import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.core.registries.Registries;
-import net.minecraft.data.DataProvider;
-import net.minecraft.data.PackOutput;
-import net.minecraft.data.registries.VanillaRegistries;
 import owmii.powah.world.gen.Features;
-
-import java.util.concurrent.CompletableFuture;
-import java.util.function.BiFunction;
 
 public class DataEvents implements DataGeneratorEntrypoint {
     @Override

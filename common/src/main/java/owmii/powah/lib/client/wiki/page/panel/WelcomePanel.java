@@ -1,6 +1,7 @@
 package owmii.powah.lib.client.wiki.page.panel;
 
 import com.mojang.blaze3d.systems.RenderSystem;
+import java.util.List;
 import net.minecraft.Util;
 import net.minecraft.client.gui.Font;
 import net.minecraft.client.gui.GuiGraphics;
@@ -12,8 +13,6 @@ import owmii.powah.lib.client.screen.widget.IconButton;
 import owmii.powah.lib.client.screen.wiki.WikiScreen;
 import owmii.powah.lib.client.util.MC;
 import owmii.powah.lib.client.wiki.Section;
-
-import java.util.List;
 
 public class WelcomePanel extends Panel {
     private IconButton twitter = IconButton.EMPTY;

@@ -1,5 +1,9 @@
 package owmii.powah.forge.data;
 
+import static net.minecraftforge.common.Tags.Blocks.ORES;
+import static net.minecraftforge.common.Tags.Blocks.STORAGE_BLOCKS;
+
+import java.util.concurrent.CompletableFuture;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.data.PackOutput;
@@ -12,11 +16,6 @@ import net.minecraftforge.common.data.ExistingFileHelper;
 import owmii.powah.Powah;
 import owmii.powah.block.Blcks;
 import owmii.powah.item.Itms;
-
-import java.util.concurrent.CompletableFuture;
-
-import static net.minecraftforge.common.Tags.Blocks.ORES;
-import static net.minecraftforge.common.Tags.Blocks.STORAGE_BLOCKS;
 
 public class TagsProvider {
     public static class Blocks extends BlockTagsProvider {
@@ -54,7 +53,8 @@ public class TagsProvider {
     }
 
     public static class Items extends ItemTagsProvider {
-        public Items(PackOutput output, CompletableFuture<HolderLookup.Provider> provider, CompletableFuture<TagLookup<Block>> blockTagProvider, ExistingFileHelper existingFileHelper) {
+        public Items(PackOutput output, CompletableFuture<HolderLookup.Provider> provider, CompletableFuture<TagLookup<Block>> blockTagProvider,
+                ExistingFileHelper existingFileHelper) {
             super(output, provider, blockTagProvider, Powah.MOD_ID, existingFileHelper);
         }
 

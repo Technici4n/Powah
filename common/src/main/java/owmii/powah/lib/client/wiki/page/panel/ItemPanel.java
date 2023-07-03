@@ -1,10 +1,8 @@
 package owmii.powah.lib.client.wiki.page.panel;
 
 import com.mojang.blaze3d.systems.RenderSystem;
-
 import java.util.List;
 import java.util.Objects;
-import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.core.registries.BuiltInRegistries;

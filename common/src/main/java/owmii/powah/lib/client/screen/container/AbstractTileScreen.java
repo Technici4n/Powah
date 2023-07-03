@@ -1,5 +1,6 @@
 package owmii.powah.lib.client.screen.container;
 
+import java.util.List;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.player.Inventory;
@@ -10,8 +11,6 @@ import owmii.powah.lib.client.screen.widget.IconButton;
 import owmii.powah.lib.logistics.inventory.AbstractTileContainer;
 import owmii.powah.network.Network;
 import owmii.powah.network.packet.NextRedstoneModePacket;
-
-import java.util.List;
 
 public class AbstractTileScreen<T extends AbstractTileEntity<?, ?> & IInventoryHolder, C extends AbstractTileContainer<T>>
         extends AbstractContainerScreen<C> {

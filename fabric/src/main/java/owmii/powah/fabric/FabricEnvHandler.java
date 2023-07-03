@@ -54,7 +54,6 @@ import owmii.powah.lib.block.ITankHolder;
 import owmii.powah.lib.item.IEnergyContainingItem;
 import owmii.powah.lib.logistics.fluid.Tank;
 import owmii.powah.lib.logistics.inventory.Inventory;
-import owmii.powah.world.gen.Features;
 import team.reborn.energy.api.EnergyStorage;
 import team.reborn.energy.api.EnergyStorageUtil;
 import team.reborn.energy.api.base.DelegatingEnergyStorage;

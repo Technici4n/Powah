@@ -1,7 +1,6 @@
 package owmii.powah.item;
 
 import javax.annotation.Nullable;
-
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.ItemStack;

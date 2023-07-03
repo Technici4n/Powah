@@ -1,5 +1,6 @@
 package owmii.powah.lib.logistics.inventory;
 
+import java.util.List;
 import javax.annotation.Nullable;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.world.entity.player.Inventory;
@@ -10,8 +11,6 @@ import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import owmii.powah.lib.logistics.inventory.slot.SlotItemHandler;
-
-import java.util.List;
 
 public abstract class AbstractContainer extends AbstractContainerMenu {
     public final Player player;

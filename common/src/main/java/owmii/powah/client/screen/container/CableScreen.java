@@ -1,5 +1,6 @@
 package owmii.powah.client.screen.container;
 
+import java.util.List;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.resources.language.I18n;
@@ -13,8 +14,6 @@ import owmii.powah.lib.client.screen.container.AbstractEnergyScreen;
 import owmii.powah.lib.client.screen.widget.IconButton;
 import owmii.powah.network.Network;
 import owmii.powah.network.packet.NextEnergyConfigPacket;
-
-import java.util.List;
 
 public class CableScreen extends AbstractEnergyScreen<CableTile, CableContainer> {
     private IconButton configButton = IconButton.EMPTY;
@@ -34,10 +33,9 @@ public class CableScreen extends AbstractEnergyScreen<CableTile, CableContainer>
                     Network.toServer(new NextEnergyConfigPacket(this.side.get3DDataValue(), this.te.getBlockPos()));
                     this.te.getSideConfig().nextType(this.side);
                 }, this).setTooltipSupplier(() -> List.of(
-                    Component.translatable("info.lollipop.side." + this.side.getSerializedName(), ChatFormatting.DARK_GRAY)
-                            .withStyle(ChatFormatting.GRAY),
-                    this.te.getSideConfig().getType(this.side).getDisplayName2()
-                )));
+                        Component.translatable("info.lollipop.side." + this.side.getSerializedName(), ChatFormatting.DARK_GRAY)
+                                .withStyle(ChatFormatting.GRAY),
+                        this.te.getSideConfig().getType(this.side).getDisplayName2())));
     }
 
     @Override

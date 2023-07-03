@@ -2,8 +2,6 @@ package owmii.powah.block;
 
 import dev.architectury.registry.registries.DeferredRegister;
 import java.util.function.Supplier;
-import net.minecraft.core.Registry;
-import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.world.level.block.Block;
 import owmii.powah.Powah;

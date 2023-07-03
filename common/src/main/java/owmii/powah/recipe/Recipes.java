@@ -2,7 +2,6 @@ package owmii.powah.recipe;
 
 import dev.architectury.registry.registries.DeferredRegister;
 import java.util.function.Supplier;
-import net.minecraft.core.Registry;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.item.crafting.RecipeType;

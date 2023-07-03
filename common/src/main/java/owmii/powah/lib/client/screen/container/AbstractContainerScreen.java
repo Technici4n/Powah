@@ -1,13 +1,11 @@
 package owmii.powah.lib.client.screen.container;
 
 import com.mojang.blaze3d.systems.RenderSystem;
-
 import java.util.ArrayList;
 import java.util.List;
 import javax.annotation.Nullable;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
-import net.minecraft.client.gui.components.AbstractWidget;
 import net.minecraft.client.renderer.Rect2i;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
@@ -84,7 +82,7 @@ public class AbstractContainerScreen<C extends AbstractContainer> extends net.mi
     }
 
     public void renderSlot(GuiGraphics gui, Slot slot) {
-        if (slot instanceof ITexturedSlot<?> base) {
+        if (slot instanceof ITexturedSlot<?>base) {
             int x = slot.x;
             int y = slot.y;
             base.getBackground2().draw(gui, x, y);

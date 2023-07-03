@@ -63,7 +63,7 @@ public class MagmatorCategory implements DisplayCategory<MagmatorDisplay> {
                 .entries(display.getInputEntries().get(0)));
         widgets.add(Widgets.createDrawableWidget((gui, mouseX, mouseY, delta) -> {
             Minecraft minecraft = Minecraft.getInstance();
-             gui.drawString(minecraft.font, display.getHeat() + " FE/100 mb", origin.x + 27, origin.y + 9, 0x444444, false);
+            gui.drawString(minecraft.font, display.getHeat() + " FE/100 mb", origin.x + 27, origin.y + 9, 0x444444, false);
         }));
         return widgets;
     }

@@ -1,22 +1,17 @@
 package owmii.powah.fabric.data;
 
-import net.fabricmc.fabric.api.datagen.v1.FabricDataGenerator;
+import java.util.concurrent.CompletableFuture;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricTagProvider;
 import net.fabricmc.fabric.api.tag.convention.v1.ConventionalBlockTags;
 import net.fabricmc.fabric.api.tag.convention.v1.ConventionalItemTags;
 import net.minecraft.core.HolderLookup;
-import net.minecraft.core.Registry;
 import net.minecraft.core.registries.BuiltInRegistries;
-import net.minecraft.core.registries.Registries;
-import net.minecraft.data.PackOutput;
 import net.minecraft.tags.BlockTags;
 import org.jetbrains.annotations.Nullable;
 import owmii.powah.Powah;
 import owmii.powah.block.Blcks;
 import owmii.powah.item.Itms;
-
-import java.util.concurrent.CompletableFuture;
 
 public class TagsProvider {
     public static class Blocks extends FabricTagProvider.BlockTagProvider {
@@ -35,7 +30,8 @@ public class TagsProvider {
             getOrCreateTagBuilder(ITags.Blocks.ICES).addTag(ITags.Blocks.ICES_DRY);
             getOrCreateTagBuilder(ITags.Blocks.ICES_DRY).add(Blcks.DRY_ICE.get());
 
-            getOrCreateTagBuilder(ITags.Blocks.URANINITE_ORE).add(Blcks.URANINITE_ORE.get()).add(Blcks.URANINITE_ORE_POOR.get()).add(Blcks.URANINITE_ORE_DENSE.get());
+            getOrCreateTagBuilder(ITags.Blocks.URANINITE_ORE).add(Blcks.URANINITE_ORE.get()).add(Blcks.URANINITE_ORE_POOR.get())
+                    .add(Blcks.URANINITE_ORE_DENSE.get());
             getOrCreateTagBuilder(ITags.Blocks.URANINITE_ORE).add(Blcks.DEEPSLATE_URANINITE_ORE.get()).add(Blcks.DEEPSLATE_URANINITE_ORE_POOR.get())
                     .add(Blcks.DEEPSLATE_URANINITE_ORE_DENSE.get());
             getOrCreateTagBuilder(ConventionalBlockTags.ORES).addTag(ITags.Blocks.URANINITE_ORE);
@@ -56,7 +52,8 @@ public class TagsProvider {
     }
 
     public static class Items extends FabricTagProvider.ItemTagProvider {
-        public Items(FabricDataOutput output, CompletableFuture<HolderLookup.Provider> completableFuture, @Nullable BlockTagProvider blockTagProvider) {
+        public Items(FabricDataOutput output, CompletableFuture<HolderLookup.Provider> completableFuture,
+                @Nullable BlockTagProvider blockTagProvider) {
             super(output, completableFuture, blockTagProvider);
         }
 
@@ -72,7 +69,8 @@ public class TagsProvider {
 
             getOrCreateTagBuilder(ITags.Items.URANINITE_ORE).add(Blcks.URANINITE_ORE.get().asItem()).add(Blcks.URANINITE_ORE_POOR.get().asItem())
                     .add(Blcks.URANINITE_ORE_DENSE.get().asItem());
-            getOrCreateTagBuilder(ITags.Items.URANINITE_ORE).add(Blcks.DEEPSLATE_URANINITE_ORE.get().asItem()).add(Blcks.DEEPSLATE_URANINITE_ORE_POOR.get().asItem())
+            getOrCreateTagBuilder(ITags.Items.URANINITE_ORE).add(Blcks.DEEPSLATE_URANINITE_ORE.get().asItem())
+                    .add(Blcks.DEEPSLATE_URANINITE_ORE_POOR.get().asItem())
                     .add(Blcks.DEEPSLATE_URANINITE_ORE_DENSE.get().asItem());
             getOrCreateTagBuilder(ConventionalItemTags.ORES).addTag(ITags.Items.URANINITE_ORE);
 
@@ -88,7 +86,8 @@ public class TagsProvider {
 
             // TODO PR TO FABRIC
             // getOrCreateTagBuilder(ConventionalItemTags.INGOTS).add(Itms.ENERGIZED_STEEL.get());
-            // getOrCreateTagBuilder(ConventionalItemTags.GEMS).add(Itms.BLAZING_CRYSTAL.get(), Itms.NIOTIC_CRYSTAL.get(), Itms.SPIRITED_CRYSTAL.get(),
+            // getOrCreateTagBuilder(ConventionalItemTags.GEMS).add(Itms.BLAZING_CRYSTAL.get(), Itms.NIOTIC_CRYSTAL.get(),
+            // Itms.SPIRITED_CRYSTAL.get(),
             // Itms.NITRO_CRYSTAL.get());
 
             getOrCreateTagBuilder(ITags.Items.WRENCHES).add(Itms.WRENCH.get());

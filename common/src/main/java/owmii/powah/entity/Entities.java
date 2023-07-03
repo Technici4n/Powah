@@ -2,7 +2,6 @@ package owmii.powah.entity;
 
 import dev.architectury.registry.registries.DeferredRegister;
 import java.util.function.Supplier;
-import net.minecraft.core.Registry;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.MobCategory;

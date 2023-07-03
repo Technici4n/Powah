@@ -5,11 +5,8 @@ import dev.architectury.platform.Platform;
 import java.util.*;
 import java.util.function.Consumer;
 import javax.annotation.Nullable;
-
 import net.minecraft.client.Minecraft;
-import net.minecraft.core.Registry;
 import net.minecraft.core.registries.BuiltInRegistries;
-import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Recipe;
 import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraft.world.level.ItemLike;

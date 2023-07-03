@@ -1,9 +1,8 @@
 package owmii.powah.forge.compat.curios;
 
+import java.util.concurrent.CompletableFuture;
 import javax.annotation.Nullable;
-
 import net.minecraft.core.HolderLookup;
-import net.minecraft.data.DataGenerator;
 import net.minecraft.data.PackOutput;
 import net.minecraft.data.tags.ItemTagsProvider;
 import net.minecraft.resources.ResourceLocation;
@@ -16,14 +15,12 @@ import owmii.powah.Powah;
 import owmii.powah.item.Itms;
 import top.theillusivec4.curios.api.CuriosApi;
 
-import java.util.concurrent.CompletableFuture;
-
 public class CurioTagsProvider extends ItemTagsProvider {
 
     public CurioTagsProvider(PackOutput output,
-                             CompletableFuture<HolderLookup.Provider> providerFuture,
-                             CompletableFuture<TagLookup<Block>> blockLookup,
-                             @Nullable ExistingFileHelper existingFileHelper) {
+            CompletableFuture<HolderLookup.Provider> providerFuture,
+            CompletableFuture<TagLookup<Block>> blockLookup,
+            @Nullable ExistingFileHelper existingFileHelper) {
         super(output, providerFuture, blockLookup, Powah.MOD_ID, existingFileHelper);
     }
 

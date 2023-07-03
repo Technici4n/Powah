@@ -1,6 +1,10 @@
 package owmii.powah.forge.data;
 
-import net.minecraft.data.PackOutput;
+import java.util.IdentityHashMap;
+import java.util.Map;
+import java.util.Set;
+import java.util.function.BiConsumer;
+import java.util.function.Function;
 import net.minecraft.data.loot.BlockLootSubProvider;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.flag.FeatureFlagSet;
@@ -13,12 +17,6 @@ import net.minecraft.world.level.storage.loot.functions.SetItemCountFunction;
 import net.minecraft.world.level.storage.loot.providers.number.ConstantValue;
 import owmii.powah.block.Blcks;
 import owmii.powah.item.Itms;
-
-import java.util.IdentityHashMap;
-import java.util.Map;
-import java.util.Set;
-import java.util.function.BiConsumer;
-import java.util.function.Function;
 
 // TODO: find a clean way to share with fabric, for now we just copy/paste generated files over to fabric :/
 public class LootTableGenerator extends BlockLootSubProvider {

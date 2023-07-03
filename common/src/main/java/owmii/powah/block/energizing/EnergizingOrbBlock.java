@@ -3,7 +3,6 @@ package owmii.powah.block.energizing;
 import static net.minecraft.world.phys.shapes.Shapes.join;
 
 import com.mojang.blaze3d.systems.RenderSystem;
-
 import java.util.List;
 import java.util.stream.Collectors;
 import javax.annotation.Nullable;
@@ -196,7 +195,7 @@ public class EnergizingOrbBlock extends AbstractBlock<IVariant.Single, Energizin
     @Override
     @Environment(EnvType.CLIENT)
     public boolean renderHud(GuiGraphics gui, BlockState state, Level world, BlockPos pos, Player player, BlockHitResult result,
-                             @Nullable BlockEntity te) {
+            @Nullable BlockEntity te) {
         if (te instanceof EnergizingOrbTile orb) {
             if (orb.getBuffer().getCapacity() > 0) {
                 RenderSystem.getModelViewStack().pushPose();

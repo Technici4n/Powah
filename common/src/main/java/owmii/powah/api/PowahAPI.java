@@ -2,7 +2,6 @@ package owmii.powah.api;
 
 import java.util.HashMap;
 import java.util.Map;
-import net.minecraft.core.Registry;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.ItemLike;

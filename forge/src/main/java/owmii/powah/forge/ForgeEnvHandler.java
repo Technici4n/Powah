@@ -9,7 +9,6 @@ import java.util.stream.IntStream;
 import net.minecraft.client.renderer.BlockEntityWithoutLevelRenderer;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
-import net.minecraft.core.Registry;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.tags.BiomeTags;
@@ -61,7 +60,6 @@ import owmii.powah.lib.logistics.energy.Energy;
 import owmii.powah.lib.logistics.fluid.Tank;
 import owmii.powah.lib.logistics.inventory.Inventory;
 import owmii.powah.lib.util.Util;
-import owmii.powah.world.gen.Features;
 
 public class ForgeEnvHandler implements EnvHandler {
     private final IEventBus modEventBus = FMLJavaModLoadingContext.get().getModEventBus();

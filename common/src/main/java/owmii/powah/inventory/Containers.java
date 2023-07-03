@@ -3,7 +3,6 @@ package owmii.powah.inventory;
 import dev.architectury.registry.menu.MenuRegistry;
 import dev.architectury.registry.registries.DeferredRegister;
 import java.util.function.Supplier;
-import net.minecraft.core.Registry;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.world.inventory.MenuType;
 import owmii.powah.Powah;

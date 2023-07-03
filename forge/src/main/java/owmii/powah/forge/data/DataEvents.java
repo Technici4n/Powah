@@ -1,5 +1,9 @@
 package owmii.powah.forge.data;
 
+import java.util.List;
+import java.util.Set;
+import java.util.concurrent.CompletableFuture;
+import java.util.function.BiFunction;
 import net.minecraft.Util;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.core.RegistryAccess;
@@ -10,18 +14,12 @@ import net.minecraft.data.DataProvider;
 import net.minecraft.data.PackOutput;
 import net.minecraft.data.loot.LootTableProvider;
 import net.minecraft.data.registries.VanillaRegistries;
-import net.minecraft.world.level.storage.loot.BuiltInLootTables;
 import net.minecraft.world.level.storage.loot.parameters.LootContextParamSets;
 import net.minecraftforge.common.data.DatapackBuiltinEntriesProvider;
 import net.minecraftforge.data.event.GatherDataEvent;
 import owmii.powah.Powah;
 import owmii.powah.forge.compat.curios.CurioTagsProvider;
 import owmii.powah.world.gen.Features;
-
-import java.util.List;
-import java.util.Set;
-import java.util.concurrent.CompletableFuture;
-import java.util.function.BiFunction;
 
 public class DataEvents {
     public static void gatherData(GatherDataEvent event) {
@@ -38,7 +36,8 @@ public class DataEvents {
                 packOutput -> new TagsProvider.Items(packOutput, registries, blockTagsProvider.contentsGetter(),
                         existingFileHelper));
 
-        pack.addProvider(packOutput -> new CurioTagsProvider(packOutput, registries, blockTagsProvider.contentsGetter(), event.getExistingFileHelper()));
+        pack.addProvider(
+                packOutput -> new CurioTagsProvider(packOutput, registries, blockTagsProvider.contentsGetter(), event.getExistingFileHelper()));
         pack.addProvider(DataEvents::createLoot);
         pack.addProvider(output -> new DatapackBuiltinEntriesProvider(output, registries, Set.of(Powah.MOD_ID)));
     }
@@ -47,8 +46,7 @@ public class DataEvents {
         return new LootTableProvider(
                 output,
                 Set.of(),
-                List.of(new LootTableProvider.SubProviderEntry(LootTableGenerator::new, LootContextParamSets.BLOCK))
-        );
+                List.of(new LootTableProvider.SubProviderEntry(LootTableGenerator::new, LootContextParamSets.BLOCK)));
     }
 
     private static <T extends DataProvider> DataProvider.Factory<T> bindRegistries(

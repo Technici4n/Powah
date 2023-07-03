@@ -37,12 +37,10 @@ public class ReactorScreen extends AbstractEnergyScreen<ReactorTile, ReactorCont
                     Network.toServer(new SwitchGenModePacket(this.te.getBlockPos()));
                     this.te.setGenModeOn(!this.te.isGenModeOn());
                 }, this).setTooltipSupplier(() -> List.of(
-                    Component.translatable("info.powah.gen.mode").withStyle(ChatFormatting.GRAY).append(Text.COLON)
-                            .append(Component.translatable("info.lollipop." + (this.te.isGenModeOn() ? "on" : "off"))
-                                    .withStyle(this.te.isGenModeOn() ? ChatFormatting.GREEN : ChatFormatting.RED)),
-                    Component.translatable("info.powah.gen.mode.desc").withStyle(ChatFormatting.DARK_GRAY)
-                    )
-                ));
+                        Component.translatable("info.powah.gen.mode").withStyle(ChatFormatting.GRAY).append(Text.COLON)
+                                .append(Component.translatable("info.lollipop." + (this.te.isGenModeOn() ? "on" : "off"))
+                                        .withStyle(this.te.isGenModeOn() ? ChatFormatting.GREEN : ChatFormatting.RED)),
+                        Component.translatable("info.powah.gen.mode.desc").withStyle(ChatFormatting.DARK_GRAY))));
     }
 
     @Override

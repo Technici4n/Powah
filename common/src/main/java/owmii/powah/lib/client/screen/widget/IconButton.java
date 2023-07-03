@@ -1,5 +1,8 @@
 package owmii.powah.lib.client.screen.widget;
 
+import java.util.List;
+import java.util.function.Supplier;
+import javax.annotation.Nullable;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
 import net.minecraft.client.gui.GuiGraphics;
@@ -15,10 +18,6 @@ import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.item.ItemStack;
 import owmii.powah.lib.client.screen.Texture;
-
-import javax.annotation.Nullable;
-import java.util.List;
-import java.util.function.Supplier;
 
 public class IconButton extends Button {
     protected final Minecraft mc = Minecraft.getInstance();
@@ -87,8 +86,7 @@ public class IconButton extends Button {
                     Math.round(this.xOffset + this.getX() + 0.5F + this.width / 2.0F - width / 2.0F),
                     Math.round(this.yOffset + this.getY() + this.height / 2.0F - 4),
                     color,
-                    false
-            );
+                    false);
         }
         if (!this.stack.isEmpty()) {
             int x = (int) Math.round(this.xOffset + this.getX() - 8.0D + this.width / 2.0F);
@@ -108,8 +106,8 @@ public class IconButton extends Button {
                 .reduce(
                         (component, component2) -> component.copy()
                                 .append("\n")
-                                .append(component2)
-                ).map(Tooltip::create).orElse(null);
+                                .append(component2))
+                .map(Tooltip::create).orElse(null);
     }
 
     public void blit(GuiGraphics gui, Texture texture, int x, int y) {

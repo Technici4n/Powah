@@ -12,7 +12,6 @@ import me.shedaniel.rei.api.common.entry.EntryIngredient;
 import me.shedaniel.rei.api.common.entry.EntryStack;
 import me.shedaniel.rei.api.common.entry.type.VanillaEntryTypes;
 import me.shedaniel.rei.api.common.util.EntryIngredients;
-import net.minecraft.core.Registry;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.ItemStack;
@@ -126,7 +125,8 @@ public class HeatSourceDisplay implements Display {
 
         @Override
         public String toString() {
-            return "HeatSourceRecipe{" + BuiltInRegistries.BLOCK.getKey(block) + (fluid != null ? " (fluid " + BuiltInRegistries.FLUID.getKey(fluid) + ")" : "")
+            return "HeatSourceRecipe{" + BuiltInRegistries.BLOCK.getKey(block)
+                    + (fluid != null ? " (fluid " + BuiltInRegistries.FLUID.getKey(fluid) + ")" : "")
                     + " -> " + heat + "}";
         }
     }

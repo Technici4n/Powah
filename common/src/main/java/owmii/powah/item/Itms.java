@@ -2,8 +2,6 @@ package owmii.powah.item;
 
 import dev.architectury.registry.registries.DeferredRegister;
 import java.util.function.Supplier;
-import net.minecraft.core.Registry;
-import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.world.item.Item;
 import owmii.powah.Powah;
@@ -14,8 +12,10 @@ import owmii.powah.lib.registry.VarReg;
 public class Itms {
     public static final DeferredRegister<Item> DR = DeferredRegister.create(Powah.MOD_ID, Registries.ITEM);
 
-    public static final Supplier<Item> BOOK = DR.register("book", () -> new PowahBookItem(new Item.Properties().arch$tab(ItemGroups.MAIN_KEY).stacksTo(1)));
-    public static final Supplier<Item> WRENCH = DR.register("wrench", () -> new WrenchItem(new Item.Properties().arch$tab(ItemGroups.MAIN_KEY).stacksTo(1)));
+    public static final Supplier<Item> BOOK = DR.register("book",
+            () -> new PowahBookItem(new Item.Properties().arch$tab(ItemGroups.MAIN_KEY).stacksTo(1)));
+    public static final Supplier<Item> WRENCH = DR.register("wrench",
+            () -> new WrenchItem(new Item.Properties().arch$tab(ItemGroups.MAIN_KEY).stacksTo(1)));
     public static final Supplier<Item> CAPACITOR_BASIC_TINY = DR.register("capacitor_basic_tiny",
             () -> new CapacitorItem(new Item.Properties().arch$tab(ItemGroups.MAIN_KEY)));
     public static final Supplier<Item> CAPACITOR_BASIC = DR.register("capacitor_basic",
@@ -38,7 +38,8 @@ public class Itms {
             () -> new AerialPearlItem(new Item.Properties().arch$tab(ItemGroups.MAIN_KEY)));
     public static final Supplier<Item> PLAYER_AERIAL_PEARL = DR.register("player_aerial_pearl",
             () -> new AerialPearlItem(new Item.Properties().arch$tab(ItemGroups.MAIN_KEY)));
-    public static final Supplier<Item> BLANK_CARD = DR.register("blank_card", () -> new ItemBase(new Item.Properties().arch$tab(ItemGroups.MAIN_KEY)));
+    public static final Supplier<Item> BLANK_CARD = DR.register("blank_card",
+            () -> new ItemBase(new Item.Properties().arch$tab(ItemGroups.MAIN_KEY)));
     public static final Supplier<Item> BINDING_CARD = DR.register("binding_card",
             () -> new BindingCardItem(new Item.Properties().arch$tab(ItemGroups.MAIN_KEY).stacksTo(1), false));
     public static final Supplier<Item> BINDING_CARD_DIM = DR.register("binding_card_dim",
@@ -51,7 +52,8 @@ public class Itms {
             () -> new ItemBase(new Item.Properties().arch$tab(ItemGroups.MAIN_KEY)));
     public static final Supplier<Item> DIELECTRIC_PASTE = DR.register("dielectric_paste",
             () -> new ItemBase(new Item.Properties().arch$tab(ItemGroups.MAIN_KEY)));
-    public static final Supplier<Item> DIELECTRIC_ROD = DR.register("dielectric_rod", () -> new ItemBase(new Item.Properties().arch$tab(ItemGroups.MAIN_KEY)));
+    public static final Supplier<Item> DIELECTRIC_ROD = DR.register("dielectric_rod",
+            () -> new ItemBase(new Item.Properties().arch$tab(ItemGroups.MAIN_KEY)));
     public static final Supplier<Item> DIELECTRIC_ROD_HORIZONTAL = DR.register("dielectric_rod_horizontal",
             () -> new ItemBase(new Item.Properties().arch$tab(ItemGroups.MAIN_KEY)));
     public static final Supplier<Item> DIELECTRIC_CASING = DR.register("dielectric_casing",
@@ -60,14 +62,18 @@ public class Itms {
             () -> new ItemBase(new Item.Properties().arch$tab(ItemGroups.MAIN_KEY)));
     public static final Supplier<Item> BLAZING_CRYSTAL = DR.register("crystal_blazing",
             () -> new ItemBase(new Item.Properties().arch$tab(ItemGroups.MAIN_KEY)));
-    public static final Supplier<Item> NIOTIC_CRYSTAL = DR.register("crystal_niotic", () -> new ItemBase(new Item.Properties().arch$tab(ItemGroups.MAIN_KEY)));
+    public static final Supplier<Item> NIOTIC_CRYSTAL = DR.register("crystal_niotic",
+            () -> new ItemBase(new Item.Properties().arch$tab(ItemGroups.MAIN_KEY)));
     public static final Supplier<Item> SPIRITED_CRYSTAL = DR.register("crystal_spirited",
             () -> new ItemBase(new Item.Properties().arch$tab(ItemGroups.MAIN_KEY)));
-    public static final Supplier<Item> NITRO_CRYSTAL = DR.register("crystal_nitro", () -> new ItemBase(new Item.Properties().arch$tab(ItemGroups.MAIN_KEY)));
-    public static final Supplier<Item> ENDER_CORE = DR.register("ender_core", () -> new ItemBase(new Item.Properties().arch$tab(ItemGroups.MAIN_KEY)));
+    public static final Supplier<Item> NITRO_CRYSTAL = DR.register("crystal_nitro",
+            () -> new ItemBase(new Item.Properties().arch$tab(ItemGroups.MAIN_KEY)));
+    public static final Supplier<Item> ENDER_CORE = DR.register("ender_core",
+            () -> new ItemBase(new Item.Properties().arch$tab(ItemGroups.MAIN_KEY)));
     public static final Supplier<Item> CHARGED_SNOWBALL = DR.register("charged_snowball",
             () -> new ChargedSnowballItem(new Item.Properties().arch$tab(ItemGroups.MAIN_KEY).stacksTo(16)));
     public static final Supplier<Item> URANINITE_RAW = DR.register("uraninite_raw",
             () -> new UraniniteItem(new Item.Properties().arch$tab(ItemGroups.MAIN_KEY)));
-    public static final Supplier<Item> URANINITE = DR.register("uraninite", () -> new UraniniteItem(new Item.Properties().arch$tab(ItemGroups.MAIN_KEY)));
+    public static final Supplier<Item> URANINITE = DR.register("uraninite",
+            () -> new UraniniteItem(new Item.Properties().arch$tab(ItemGroups.MAIN_KEY)));
 }

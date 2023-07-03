@@ -1,7 +1,6 @@
 package owmii.powah.lib.client.screen.container;
 
 import com.google.common.collect.Lists;
-
 import java.util.List;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.gui.GuiGraphics;
@@ -54,9 +53,7 @@ public class AbstractEnergyScreen<T extends AbstractEnergyStorage<?, ?> & IInven
                             Component.translatable("info.lollipop.facing").append(Text.COLON).withStyle(ChatFormatting.GRAY)
                                     .append(Component.translatable("info.lollipop.side." + side.getSerializedName())
                                             .withStyle(ChatFormatting.DARK_GRAY)),
-                            this.te.getSideConfig().getType(side).getDisplayName()
-                        )
-                    ));
+                            this.te.getSideConfig().getType(side).getDisplayName())));
         }
 
         this.configButtonAll = addRenderableWidget(
@@ -64,10 +61,9 @@ public class AbstractEnergyScreen<T extends AbstractEnergyStorage<?, ?> & IInven
                     Network.toServer(new NextEnergyConfigPacket(6, this.te.getBlockPos()));
                     this.te.getSideConfig().nextTypeAll();
                 }, this).setTooltipSupplier(() -> List.of(
-                    Component.translatable("info.lollipop.facing").append(Text.COLON).withStyle(ChatFormatting.GRAY)
-                            .append(Component.translatable("info.lollipop.all").withStyle(ChatFormatting.DARK_GRAY)),
-                    this.te.getSideConfig().getType(Direction.UP).getDisplayName()
-                )));
+                        Component.translatable("info.lollipop.facing").append(Text.COLON).withStyle(ChatFormatting.GRAY)
+                                .append(Component.translatable("info.lollipop.all").withStyle(ChatFormatting.DARK_GRAY)),
+                        this.te.getSideConfig().getType(Direction.UP).getDisplayName())));
     }
 
     @Override

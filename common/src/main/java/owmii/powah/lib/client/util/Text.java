@@ -10,7 +10,6 @@ import net.minecraft.network.chat.FormattedText;
 import net.minecraft.network.chat.Style;
 import net.minecraft.network.chat.TextColor;
 import net.minecraft.util.FormattedCharSequence;
-import org.joml.Matrix4f;
 
 public class Text {
     public static final Component EMPTY = Component.empty();
