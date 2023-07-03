@@ -5,6 +5,7 @@ import net.fabricmc.fabric.api.client.rendering.v1.BuiltinItemRendererRegistry;
 import net.fabricmc.fabric.api.client.rendering.v1.WorldRenderEvents;
 import net.fabricmc.fabric.api.event.client.player.ClientPickBlockGatherCallback;
 import net.minecraft.core.Registry;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.phys.BlockHitResult;
 import owmii.powah.block.Blcks;
@@ -22,7 +23,7 @@ public class PowahFabricClient implements ClientModInitializer {
 
         var reactorRenderer = new ReactorItemRenderer();
         Blcks.REACTOR.getAll().forEach(block -> {
-            var item = (ReactorItem) Registry.ITEM.get(Registry.BLOCK.getKey(block));
+            var item = (ReactorItem) BuiltInRegistries.ITEM.get(BuiltInRegistries.BLOCK.getKey(block));
             BuiltinItemRendererRegistry.INSTANCE.register(item, reactorRenderer::renderByItem);
         });
 
@@ -32,7 +33,7 @@ public class PowahFabricClient implements ClientModInitializer {
 
         ClientPickBlockGatherCallback.EVENT.register((player, result) -> {
             if (result instanceof BlockHitResult bhr) {
-                var level = player.level;
+                var level = player.level();
                 if (level.getBlockState(bhr.getBlockPos()).getBlock() instanceof AbstractBlock<?, ?>abstractBlock) {
                     return abstractBlock.getCloneItemStack(level, bhr.getBlockPos());
                 }

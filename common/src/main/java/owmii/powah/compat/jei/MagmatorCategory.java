@@ -15,7 +15,9 @@ import mezz.jei.api.recipe.RecipeIngredientRole;
 import mezz.jei.api.recipe.RecipeType;
 import mezz.jei.api.recipe.category.IRecipeCategory;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.core.Registry;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
@@ -65,14 +67,14 @@ public class MagmatorCategory implements IRecipeCategory<MagmatorCategory.Recipe
     }
 
     @Override
-    public void draw(Recipe recipe, IRecipeSlotsView recipeSlotsView, PoseStack matrix, double mouseX, double mouseY) {
+    public void draw(Recipe recipe, IRecipeSlotsView recipeSlotsView, GuiGraphics guiGraphics, double mouseX, double mouseY) {
         Minecraft minecraft = Minecraft.getInstance();
-        minecraft.font.draw(matrix, recipe.heat + " FE/100 mb", 27.0F, 9.0F, 0x444444);
+        guiGraphics.drawString(minecraft.font, recipe.heat + " FE/100 mb", 27, 9, 0x444444, false);
     }
 
     public static List<Recipe> getRecipes() {
         List<Recipe> recipes = new ArrayList<>();
-        for (var entry : Registry.FLUID.entrySet()) {
+        for (var entry : BuiltInRegistries.FLUID.entrySet()) {
             var fluidId = entry.getKey().location();
             var heat = PowahAPI.MAGMATIC_FLUIDS.get(fluidId);
             if (heat != null) {

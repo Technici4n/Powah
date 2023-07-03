@@ -106,7 +106,7 @@ public class EnergizingOrbTile extends AbstractTickableTile<IVariant.Single, Ene
             if (this.recipe != null) {
                 this.buffer.produce(filled);
                 if (this.buffer.isFull()) {
-                    ItemStack stack = this.recipe.getResultItem();
+                    ItemStack stack = this.recipe.getResultItem(level.registryAccess());
                     this.inv.clear();
                     this.inv.setStackInSlot(0, stack.copy());
                     this.buffer.setCapacity(0);

@@ -1,6 +1,6 @@
 package owmii.powah.lib.client.screen.container;
 
-import com.mojang.blaze3d.vertex.PoseStack;
+import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.player.Inventory;
 import owmii.powah.lib.block.AbstractTileEntity;
@@ -10,6 +10,8 @@ import owmii.powah.lib.client.screen.widget.IconButton;
 import owmii.powah.lib.logistics.inventory.AbstractTileContainer;
 import owmii.powah.network.Network;
 import owmii.powah.network.packet.NextRedstoneModePacket;
+
+import java.util.List;
 
 public class AbstractTileScreen<T extends AbstractTileEntity<?, ?> & IInventoryHolder, C extends AbstractTileContainer<T>>
         extends AbstractContainerScreen<C> {
@@ -27,7 +29,7 @@ public class AbstractTileScreen<T extends AbstractTileEntity<?, ?> & IInventoryH
                     Texture.REDSTONE.get(this.te.getRedstoneMode()), b -> {
                         Network.toServer(new NextRedstoneModePacket(this.te.getBlockPos()));
                         this.te.setRedstoneMode(this.te.getRedstoneMode().next());
-                    }, this).setTooltip(tooltip -> tooltip.add(this.te.getRedstoneMode().getDisplayName())));
+                    }, this).setTooltipSupplier(() -> List.of(this.te.getRedstoneMode().getDisplayName())));
         }
     }
 
@@ -40,10 +42,10 @@ public class AbstractTileScreen<T extends AbstractTileEntity<?, ?> & IInventoryH
     }
 
     @Override
-    protected void drawBackground(PoseStack matrix, float partialTicks, int mouseX, int mouseY) {
-        super.drawBackground(matrix, partialTicks, mouseX, mouseY);
+    protected void drawBackground(GuiGraphics guiGraphics, float partialTicks, int mouseX, int mouseY) {
+        super.drawBackground(guiGraphics, partialTicks, mouseX, mouseY);
         if (hasRedstone()) {
-            Texture.REDSTONE_BTN_BG.draw(matrix, this.redStoneButton.x - 2, this.redStoneButton.y - 4); // TODO
+            Texture.REDSTONE_BTN_BG.draw(guiGraphics, this.redStoneButton.getX() - 2, this.redStoneButton.getY() - 4); // TODO
         }
     }
 

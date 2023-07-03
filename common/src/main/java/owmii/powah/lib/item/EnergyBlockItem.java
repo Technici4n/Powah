@@ -1,6 +1,8 @@
 package owmii.powah.lib.item;
 
 import javax.annotation.Nullable;
+
+import net.minecraft.resources.ResourceKey;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.ItemStack;
 import owmii.powah.block.Tier;
@@ -11,7 +13,7 @@ import owmii.powah.lib.logistics.Transfer;
 
 public class EnergyBlockItem<C extends IEnergyConfig<Tier>, B extends AbstractEnergyBlock<C, B>> extends ItemBlock<Tier, B>
         implements InfoBox.IInfoBoxHolder, IEnergyItemProvider, IEnergyContainingItem {
-    public EnergyBlockItem(B block, Properties builder, @Nullable CreativeModeTab group) {
+    public EnergyBlockItem(B block, Properties builder, @Nullable ResourceKey<CreativeModeTab> group) {
         super(block, builder, group);
     }
 

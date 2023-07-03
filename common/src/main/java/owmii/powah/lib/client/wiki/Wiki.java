@@ -5,7 +5,10 @@ import dev.architectury.platform.Platform;
 import java.util.*;
 import java.util.function.Consumer;
 import javax.annotation.Nullable;
+
+import net.minecraft.client.Minecraft;
 import net.minecraft.core.Registry;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Recipe;
 import net.minecraft.world.item.crafting.RecipeType;
@@ -72,20 +75,22 @@ public class Wiki {
 
     static {
         ClientRecipeUpdateEvent.EVENT.register(recipeManager -> {
+            var registryAccess = Minecraft.getInstance().level.registryAccess();
+
             StopWatch watch = StopWatch.createStarted();
             Powah.LOGGER.info(MARKER, "Started wikis recipes collecting...");
             WIKIS.forEach((s, wiki) -> {
-                Registry.ITEM.stream().filter(i -> Registry.ITEM.getKey(i).getNamespace().equals(Powah.MOD_ID)).forEach(item -> {
+                BuiltInRegistries.ITEM.stream().filter(i -> BuiltInRegistries.ITEM.getKey(i).getNamespace().equals(Powah.MOD_ID)).forEach(item -> {
                     List<Recipe<?>> crafting = new ArrayList<>();
                     recipeManager.getAllRecipesFor(RecipeType.CRAFTING).forEach(recipe -> {
-                        if (recipe.getResultItem().sameItem(new ItemStack(item))) {
+                        if (recipe.getResultItem(registryAccess).is(item)) {
                             crafting.add(recipe);
                         }
                     });
                     wiki.crafting.put(item, crafting);
                     List<Recipe<?>> smelting = new ArrayList<>();
                     recipeManager.getAllRecipesFor(RecipeType.CRAFTING).forEach(recipe -> {
-                        if (recipe.getResultItem().sameItem(new ItemStack(item))) {
+                        if (recipe.getResultItem(registryAccess).is(item)) {
                             smelting.add(recipe);
                         }
                     });

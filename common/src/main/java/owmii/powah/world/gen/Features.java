@@ -1,12 +1,13 @@
 package owmii.powah.world.gen;
 
-import java.util.List;
-import java.util.function.Function;
-import java.util.function.Supplier;
 import net.minecraft.core.Holder;
-import net.minecraft.data.BuiltinRegistries;
-import net.minecraft.data.worldgen.features.OreFeatures;
+import net.minecraft.core.Registry;
+import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.core.registries.Registries;
+import net.minecraft.data.worldgen.BootstapContext;
 import net.minecraft.data.worldgen.placement.OrePlacements;
+import net.minecraft.resources.ResourceKey;
+import net.minecraft.tags.BlockTags;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.levelgen.VerticalAnchor;
 import net.minecraft.world.level.levelgen.feature.ConfiguredFeature;
@@ -14,35 +15,72 @@ import net.minecraft.world.level.levelgen.feature.Feature;
 import net.minecraft.world.level.levelgen.feature.configurations.OreConfiguration;
 import net.minecraft.world.level.levelgen.placement.HeightRangePlacement;
 import net.minecraft.world.level.levelgen.placement.PlacedFeature;
+import net.minecraft.world.level.levelgen.structure.templatesystem.TagMatchTest;
 import owmii.powah.Powah;
 import owmii.powah.block.Blcks;
 import owmii.powah.config.v2.PowahConfig;
 
-public class Features {
-    public static final Holder<PlacedFeature> DRY_ICE = register("dry_ice", Blcks.DRY_ICE, Blcks.DRY_ICE, 17, wg -> wg.dry_ice_veins_per_chunk, 64);
-    public static final Holder<PlacedFeature> URANINITE_POOR = register("uraninite_ore_poor", Blcks.URANINITE_ORE_POOR,
-            Blcks.DEEPSLATE_URANINITE_ORE_POOR, 5, wg -> wg.poor_uraninite_veins_per_chunk, 64);
-    public static final Holder<PlacedFeature> URANINITE = register("uraninite_ore", Blcks.URANINITE_ORE, Blcks.DEEPSLATE_URANINITE_ORE, 4,
-            wg -> wg.uraninite_veins_per_chunk, 20);
-    public static final Holder<PlacedFeature> URANINITE_DENSE = register("uraninite_ore_dense", Blcks.URANINITE_ORE_DENSE,
-            Blcks.DEEPSLATE_URANINITE_ORE_DENSE, 3, wg -> wg.dense_uraninite_veins_per_chunk, 0);
+import java.util.List;
+import java.util.function.Function;
+import java.util.function.Supplier;
 
-    public static void init() {
-        // init static
+public class Features {
+    public static final ResourceKey<PlacedFeature> PLACED_DRY_ICE = ResourceKey.create(Registries.PLACED_FEATURE, Powah.id("dry_ice"));
+    public static final ResourceKey<PlacedFeature> PLACED_URANINITE_POOR = ResourceKey.create(Registries.PLACED_FEATURE, Powah.id("uraninite_ore_poor"));
+    public static final ResourceKey<PlacedFeature> PLACED_URANINITE = ResourceKey.create(Registries.PLACED_FEATURE, Powah.id("uraninite_ore"));
+    public static final ResourceKey<PlacedFeature> PLACED_URANINITE_DENSE = ResourceKey.create(Registries.PLACED_FEATURE, Powah.id("uraninite_ore_dense"));
+
+
+    public static final ResourceKey<ConfiguredFeature<?,?>> DRY_ICE = ResourceKey.create(Registries.CONFIGURED_FEATURE, Powah.id("dry_ice"));
+    public static final ResourceKey<ConfiguredFeature<?,?>> URANINITE_POOR = ResourceKey.create(Registries.CONFIGURED_FEATURE, Powah.id("uraninite_ore_poor"));
+    public static final ResourceKey<ConfiguredFeature<?,?>> URANINITE = ResourceKey.create(Registries.CONFIGURED_FEATURE, Powah.id("uraninite_ore"));
+    public static final ResourceKey<ConfiguredFeature<?,?>> URANINITE_DENSE = ResourceKey.create(Registries.CONFIGURED_FEATURE, Powah.id("uraninite_ore_dense"));
+
+    public static void initConfiguredFeatures(BootstapContext<ConfiguredFeature<?,?>> bootstrap) {
+
+        registerConfiguredFeature(bootstrap, DRY_ICE, Blcks.DRY_ICE, Blcks.DRY_ICE, 17);
+        registerConfiguredFeature(bootstrap, URANINITE_POOR, Blcks.URANINITE_ORE_POOR,
+                Blcks.DEEPSLATE_URANINITE_ORE_POOR, 5);
+        registerConfiguredFeature(bootstrap, URANINITE, Blcks.URANINITE_ORE, Blcks.DEEPSLATE_URANINITE_ORE, 4
+        );
+        registerConfiguredFeature(bootstrap, URANINITE_DENSE, Blcks.URANINITE_ORE_DENSE,
+                Blcks.DEEPSLATE_URANINITE_ORE_DENSE, 3);
+
     }
 
-    private static Holder<PlacedFeature> register(String name, Supplier<Block> block, Supplier<Block> deepslateBlock, int amountPerVein,
-            Function<PowahConfig.WorldGen, Integer> veinsPerChunk, int maxY) {
-        var id = Powah.id(name);
+    public static void initPlacedFeatures(BootstapContext<PlacedFeature> bootstrap) {
+
+        registerPlacedFeature(bootstrap, PLACED_DRY_ICE, DRY_ICE, wg -> wg.dry_ice_veins_per_chunk, 64);
+        registerPlacedFeature(bootstrap, PLACED_URANINITE_POOR, URANINITE_POOR,
+                wg -> wg.poor_uraninite_veins_per_chunk, 64);
+        registerPlacedFeature(bootstrap, PLACED_URANINITE, URANINITE,
+                wg -> wg.uraninite_veins_per_chunk, 20);
+        registerPlacedFeature(bootstrap, PLACED_URANINITE_DENSE, URANINITE_DENSE,
+                wg -> wg.dense_uraninite_veins_per_chunk, 0);
+
+    }
+
+    private static void registerConfiguredFeature(BootstapContext<ConfiguredFeature<?,?>> bootstrap,
+                                                  ResourceKey<ConfiguredFeature<?,?>> key,
+                                                  Supplier<Block> block, Supplier<Block> deepslateBlock, int amountPerVein) {
         var target = List.of(
-                OreConfiguration.target(OreFeatures.STONE_ORE_REPLACEABLES, block.get().defaultBlockState()),
-                OreConfiguration.target(OreFeatures.DEEPSLATE_ORE_REPLACEABLES, deepslateBlock.get().defaultBlockState()));
+                OreConfiguration.target(new TagMatchTest(BlockTags.STONE_ORE_REPLACEABLES), block.get().defaultBlockState()),
+                OreConfiguration.target(new TagMatchTest(BlockTags.DEEPSLATE_ORE_REPLACEABLES), deepslateBlock.get().defaultBlockState()));
         var conf = new ConfiguredFeature<>(Feature.ORE, new OreConfiguration(target, amountPerVein));
-        var confHolder = BuiltinRegistries.register(BuiltinRegistries.CONFIGURED_FEATURE, id, conf);
-        var placed = new PlacedFeature(Holder.hackyErase(confHolder),
+         bootstrap.register(key, conf);
+    }
+
+    private static void registerPlacedFeature(BootstapContext<PlacedFeature> bootstrap,
+                                              ResourceKey<PlacedFeature> key,
+                                              ResourceKey<ConfiguredFeature<?,?>> configuredId,
+                                              Function<PowahConfig.WorldGen, Integer> veinsPerChunk, int maxY) {
+        var configuredFeature = bootstrap.lookup(Registries.CONFIGURED_FEATURE).get(configuredId)
+                .orElseThrow();
+
+        var placed = new PlacedFeature(configuredFeature,
                 OrePlacements.commonOrePlacement(
                         veinsPerChunk.apply(Powah.config().worldgen),
                         HeightRangePlacement.uniform(VerticalAnchor.bottom(), VerticalAnchor.absolute(maxY))));
-        return BuiltinRegistries.register(BuiltinRegistries.PLACED_FEATURE, id, placed);
+        bootstrap.register(key, placed);
     }
 }

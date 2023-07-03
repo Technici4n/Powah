@@ -1,6 +1,6 @@
 package owmii.powah.forge.client;
 
-import net.minecraftforge.client.event.RenderLevelLastEvent;
+import net.minecraftforge.client.event.RenderLevelStageEvent;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
@@ -15,7 +15,11 @@ public class PowahForgeClient {
 
         PowahClient.init();
 
-        MinecraftForge.EVENT_BUS.addListener((RenderLevelLastEvent event) -> ReactorOverlayHandler.onRenderLast(event.getPoseStack()));
+        MinecraftForge.EVENT_BUS.addListener((RenderLevelStageEvent event) -> {
+            if (event.getStage() == RenderLevelStageEvent.Stage.AFTER_LEVEL) {
+                ReactorOverlayHandler.onRenderLast(event.getPoseStack());
+            }
+        });
     }
 
     public static void clientSetup(FMLClientSetupEvent event) {

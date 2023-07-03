@@ -4,12 +4,12 @@ import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
 import java.util.HashMap;
 import java.util.Map;
-import net.minecraft.client.gui.GuiComponent;
+import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.resources.ResourceLocation;
 import owmii.powah.lib.logistics.Redstone;
 import owmii.powah.lib.logistics.Transfer;
 
-public class Texture extends GuiComponent {
+public class Texture {
     private static final Builder BUILDER = new Builder("lollipop");
     public static final Texture EMPTY = BUILDER.make("empty", 0, 0, 0, 0);
 
@@ -76,19 +76,18 @@ public class Texture extends GuiComponent {
         this.th = th;
     }
 
-    public void drawScalableW(PoseStack matrix, float size, int x, int y) {
-        scaleW((int) (size * this.width)).draw(matrix, x, y);
+    public void drawScalableW(GuiGraphics gui, float size, int x, int y) {
+        scaleW((int) (size * this.width)).draw(gui, x, y);
     }
 
-    public void drawScalableH(PoseStack matrix, float size, int x, int y) {
+    public void drawScalableH(GuiGraphics gui, float size, int x, int y) {
         int i = (int) (size * this.height);
-        scaleH(i).moveV(this.height - i).draw(matrix, x, y + this.height - i);
+        scaleH(i).moveV(this.height - i).draw(gui, x, y + this.height - i);
     }
 
-    public void draw(PoseStack matrix, int x, int y) {
+    public void draw(GuiGraphics gui, int x, int y) {
         if (!isEmpty()) {
-            bindTexture(getLocation());
-            blit(matrix, x, y, getU(), getV(), getWidth(), getHeight(), this.tw, this.th);
+            gui.blit(getLocation(), x, y, getU(), getV(), getWidth(), getHeight(), this.tw, this.th);
         }
     }
 

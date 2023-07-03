@@ -31,7 +31,7 @@ public class NextEnergyConfigPacket implements IPacket {
     @Override
     public void handle(Player player) {
         if (player instanceof ServerPlayer) {
-            BlockEntity tileEntity = player.level.getBlockEntity(pos);
+            BlockEntity tileEntity = player.level().getBlockEntity(pos);
             if (tileEntity instanceof AbstractEnergyStorage storage) {
                 if (mode > 5)
                     storage.getSideConfig().nextTypeAll();

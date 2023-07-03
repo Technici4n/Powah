@@ -2,6 +2,7 @@ package owmii.powah.lib.util;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Registry;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.Entity;
@@ -32,7 +33,7 @@ public class Stack {
     }
 
     public static boolean equals(ItemStack stack, ItemStack other) {
-        return !stack.isEmpty() && stack.sameItem(other) && ItemStack.tagMatches(stack, other);
+        return !stack.isEmpty() && ItemStack.isSameItemSameTags(stack, other);
     }
 
     public static boolean isFull(ItemStack stack) {
@@ -75,7 +76,7 @@ public class Stack {
 
     @SuppressWarnings("ConstantConditions")
     public static ResourceLocation location(ItemLike provider) {
-        return Registry.ITEM.getKey(provider.asItem());
+        return BuiltInRegistries.ITEM.getKey(provider.asItem());
     }
 
     public static boolean orEquals(ItemStack stack, ItemStack... stacks) {
@@ -88,7 +89,7 @@ public class Stack {
     }
 
     public static void drop(Entity entity, ItemStack stack) {
-        drop(entity.level, entity.position().add(0.0D, 0.3D, 0.0D), stack);
+        drop(entity.level(), entity.position().add(0.0D, 0.3D, 0.0D), stack);
     }
 
     public static void drop(Level world, BlockPos pos, ItemStack stack) {

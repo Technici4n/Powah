@@ -7,7 +7,7 @@ import net.minecraft.core.Direction;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraftforge.energy.CapabilityEnergy;
+import net.minecraftforge.common.capabilities.ForgeCapabilities;
 import owmii.powah.block.Tier;
 import owmii.powah.block.cable.CableTile;
 
@@ -64,7 +64,7 @@ public class ForgeCableTile extends CableTile {
 
     private long receive(Level level, BlockPos pos, Direction side, long amount, boolean simulate) {
         var tile = level.getBlockEntity(pos);
-        var energy = tile != null ? tile.getCapability(CapabilityEnergy.ENERGY, side).orElse(null) : null;
+        var energy = tile != null ? tile.getCapability(ForgeCapabilities.ENERGY, side).orElse(null) : null;
         return energy != null ? energy.receiveEnergy(Ints.saturatedCast(amount), simulate) : 0;
     }
 }

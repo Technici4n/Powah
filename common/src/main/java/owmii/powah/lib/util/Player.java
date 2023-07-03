@@ -38,7 +38,7 @@ public class Player {
 
     public static ItemStack getItem(net.minecraft.world.entity.player.Player player, ItemStack stack) {
         for (ItemStack stack1 : invStacks(player)) {
-            if (stack1.sameItem(stack)) {
+            if (ItemStack.isSameItem(stack1, stack)) {
                 return stack1;
             }
         }

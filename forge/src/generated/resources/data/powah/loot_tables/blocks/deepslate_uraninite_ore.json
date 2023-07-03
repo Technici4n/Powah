@@ -24,7 +24,7 @@
                   }
                 }
               ],
-              "name": "powah:deepslate_uraninite_ore"
+              "name": "minecraft:air"
             },
             {
               "type": "minecraft:item",
@@ -50,5 +50,6 @@
       ],
       "rolls": 1.0
     }
-  ]
+  ],
+  "random_sequence": "powah:blocks/deepslate_uraninite_ore"
 }

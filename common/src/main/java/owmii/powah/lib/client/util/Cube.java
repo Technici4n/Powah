@@ -2,13 +2,13 @@ package owmii.powah.lib.client.util;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
-import com.mojang.math.Matrix4f;
 import java.util.HashSet;
 import java.util.Set;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.core.Direction;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
+import org.joml.Matrix4f;
 import owmii.powah.lib.util.math.V3d;
 
 public class Cube {
@@ -94,7 +94,7 @@ public class Cube {
 
     public void draw(TextureAtlasSprite sprite) {
         final float d = (float) (this.size / 2.0d);
-        Matrix4f matrix4f = this.matrix.last().pose();
+        var matrix4f = this.matrix.last().pose();
         boolean isAll = this.sides.isEmpty();
 
         if (isAll || this.sides.contains(Side.UP)) {

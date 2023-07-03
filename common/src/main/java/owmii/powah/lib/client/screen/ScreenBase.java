@@ -1,7 +1,7 @@
 package owmii.powah.lib.client.screen;
 
-import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.AbstractWidget;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.network.chat.Component;
@@ -19,19 +19,6 @@ public class ScreenBase extends Screen {
         super.init();
         this.x = (this.width - this.w) / 2;
         this.y = (this.height - this.h) / 2;
-    }
-
-    @Override
-    public void render(PoseStack matrix, int mx, int my, float pt) {
-        super.render(matrix, mx, my, pt);
-        for (var widget : renderables) {
-            if (getFocused() != null && getFocused() != widget) {
-                continue;
-            }
-            if (widget instanceof AbstractWidget aw && aw.isHoveredOrFocused()) {
-                aw.renderToolTip(matrix, mx, my);
-            }
-        }
     }
 
     /*

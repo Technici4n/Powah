@@ -1,6 +1,8 @@
 package owmii.powah.item;
 
 import javax.annotation.Nullable;
+
+import net.minecraft.resources.ResourceKey;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Rarity;
@@ -12,7 +14,7 @@ import owmii.powah.lib.item.EnergyBlockItem;
 import owmii.powah.lib.logistics.energy.Energy;
 
 public class EnergyCellItem extends EnergyBlockItem<EnergyConfig, EnergyCellBlock> implements IEnderExtender {
-    public EnergyCellItem(EnergyCellBlock block, Properties properties, @Nullable CreativeModeTab group) {
+    public EnergyCellItem(EnergyCellBlock block, Properties properties, @Nullable ResourceKey<CreativeModeTab> group) {
         super(block, properties, group);
     }
 

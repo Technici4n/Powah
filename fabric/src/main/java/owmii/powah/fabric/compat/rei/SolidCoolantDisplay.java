@@ -9,6 +9,7 @@ import me.shedaniel.rei.api.common.entry.EntryStack;
 import me.shedaniel.rei.api.common.entry.type.VanillaEntryTypes;
 import me.shedaniel.rei.api.common.util.EntryIngredients;
 import net.minecraft.core.Registry;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.world.item.ItemStack;
 import org.apache.commons.lang3.tuple.Pair;
 import owmii.powah.api.PowahAPI;
@@ -55,7 +56,7 @@ public class SolidCoolantDisplay implements Display {
                     .<ItemStack>map(EntryStack::castValue).toList();
             List<Recipe> recipes = new ArrayList<>();
             allItemStacks.forEach(stack -> {
-                if (PowahAPI.SOLID_COOLANTS.containsKey(Registry.ITEM.getKey(stack.getItem()))) {
+                if (PowahAPI.SOLID_COOLANTS.containsKey(BuiltInRegistries.ITEM.getKey(stack.getItem()))) {
                     Pair<Integer, Integer> pr = PowahAPI.getSolidCoolant(stack.getItem());
                     recipes.add(new Recipe(stack, pr.getLeft(), pr.getRight()));
                 }

@@ -1,10 +1,11 @@
 package owmii.powah.client.screen.container;
 
 import com.mojang.blaze3d.systems.RenderSystem;
-import com.mojang.blaze3d.vertex.PoseStack;
+
 import java.util.ArrayList;
 import java.util.List;
 import net.minecraft.ChatFormatting;
+import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.player.Inventory;
 import owmii.powah.block.furnator.FurnatorTile;
@@ -37,18 +38,18 @@ public class FurnatorScreen extends AbstractEnergyScreen<FurnatorTile, FurnatorC
     }
 
     @Override
-    protected void drawBackground(PoseStack matrix, float partialTicks, int mouseX, int mouseY) {
-        super.drawBackground(matrix, partialTicks, mouseX, mouseY);
-        Textures.FURNATOR_GAUGE.drawScalableH(matrix, this.te.getEnergy().subSized(), this.leftPos + 5, this.topPos + 5);
-        Textures.FURNATOR_CARBON_GAUGE.drawScalableH(matrix, this.te.getCarbon().subSized(), this.leftPos + 110, this.topPos + 18);
+    protected void drawBackground(GuiGraphics guiGraphics, float partialTicks, int mouseX, int mouseY) {
+        super.drawBackground(guiGraphics, partialTicks, mouseX, mouseY);
+        Textures.FURNATOR_GAUGE.drawScalableH(guiGraphics, this.te.getEnergy().subSized(), this.leftPos + 5, this.topPos + 5);
+        Textures.FURNATOR_CARBON_GAUGE.drawScalableH(guiGraphics, this.te.getCarbon().subSized(), this.leftPos + 110, this.topPos + 18);
         RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, this.heat.subSized());
-        Textures.FURNATOR_BUFFER.draw(matrix, this.leftPos + 94, this.topPos + 43);
+        Textures.FURNATOR_BUFFER.draw(guiGraphics, this.leftPos + 94, this.topPos + 43);
         RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
     }
 
     @Override
-    protected void renderTooltip(PoseStack matrix, int mouseX, int mouseY) {
-        super.renderTooltip(matrix, mouseX, mouseY);
+    protected void renderTooltip(GuiGraphics gui, int mouseX, int mouseY) {
+        super.renderTooltip(gui, mouseX, mouseY);
         if (Textures.FURNATOR_GAUGE.isMouseOver(this.leftPos + 5, this.topPos + 5, mouseX, mouseY)) {
             List<Component> list = new ArrayList<>();
             Energy energy = this.te.getEnergy();
@@ -62,12 +63,12 @@ public class FurnatorScreen extends AbstractEnergyScreen<FurnatorTile, FurnatorC
             list.add(Component.translatable("info.lollipop.max.extract").withStyle(ChatFormatting.GRAY).append(Text.COLON)
                     .append(Component.literal(Util.numFormat(energy.getMaxExtract())).append(Component.translatable("info.lollipop.fe.pet.tick"))
                             .withStyle(ChatFormatting.DARK_GRAY)));
-            renderComponentTooltip(matrix, list, mouseX, mouseY);
+            gui.renderComponentTooltip(font, list, mouseX, mouseY);
         }
         if (Textures.FURNATOR_CARBON_GAUGE.isMouseOver(this.leftPos + 110, this.topPos + 18, mouseX, mouseY)) {
             List<Component> list = new ArrayList<>();
             list.add(Component.translatable("info.powah.carbon").withStyle(ChatFormatting.DARK_GRAY));
-            renderComponentTooltip(matrix, list, mouseX, mouseY);
+            gui.renderComponentTooltip(font, list, mouseX, mouseY);
         }
     }
 }

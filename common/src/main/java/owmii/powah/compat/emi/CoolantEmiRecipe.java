@@ -1,4 +1,4 @@
-package owmii.powah.fabric.compat.emi;
+package owmii.powah.compat.emi;
 
 import dev.emi.emi.api.recipe.EmiRecipeCategory;
 import dev.emi.emi.api.stack.EmiIngredient;

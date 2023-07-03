@@ -1,12 +1,12 @@
 package owmii.powah.lib.block;
 
-import java.awt.*;
 import java.util.List;
 import javax.annotation.Nullable;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.network.chat.Component;
+import net.minecraft.resources.ResourceKey;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
@@ -43,7 +43,7 @@ public abstract class AbstractEnergyBlock<C extends IEnergyConfig<Tier>, B exten
 
     @Override
     @SuppressWarnings("unchecked")
-    public EnergyBlockItem getBlockItem(Item.Properties properties, @Nullable CreativeModeTab group) {
+    public EnergyBlockItem getBlockItem(Item.Properties properties, @Nullable ResourceKey<CreativeModeTab> group) {
         return new EnergyBlockItem(this, properties, group);
     }
 

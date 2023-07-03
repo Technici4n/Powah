@@ -12,7 +12,8 @@ accessible field net/minecraft/world/entity/monster/Creeper swell I
 accessible method net/minecraft/server/level/ServerPlayer onEffectRemoved (Lnet/minecraft/world/effect/MobEffectInstance;)V
 
 # AbstractContainerScreen
-extendable method net/minecraft/client/gui/screens/inventory/AbstractContainerScreen renderSlot (Lcom/mojang/blaze3d/vertex/PoseStack;Lnet/minecraft/world/inventory/Slot;)V
+extendable method net/minecraft/client/gui/screens/inventory/AbstractContainerScreen renderSlot (Lnet/minecraft/client/gui/GuiGraphics;Lnet/minecraft/world/inventory/Slot;)V
+accessible field net/minecraft/world/inventory/AbstractContainerMenu stateId I
 
 # Worldgen
 accessible method net/minecraft/data/worldgen/placement/OrePlacements commonOrePlacement (ILnet/minecraft/world/level/levelgen/placement/PlacementModifier;)Ljava/util/List;

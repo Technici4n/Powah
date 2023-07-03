@@ -1,12 +1,13 @@
 package owmii.powah.lib.client.wiki.page.panel;
 
 import com.mojang.blaze3d.systems.RenderSystem;
-import com.mojang.blaze3d.vertex.PoseStack;
+
 import java.util.List;
 import java.util.Objects;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
-import net.minecraft.core.Registry;
+import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
@@ -49,11 +50,11 @@ public class ItemPanel<T extends ItemLike> extends Panel {
         if (item.equals(Items.AIR)) {
             return new ItemLike[0];
         } else {
-            var id = Registry.ITEM.getKey(item.asItem());
+            var id = BuiltInRegistries.ITEM.getKey(item.asItem());
             if (item instanceof IVariantEntry variantEntry) {
                 id = new ResourceLocation(id.getNamespace(), id.getPath().replace("_" + variantEntry.getVariant().getName(), ""));
             }
-            return VarReg.getSiblingIds(Objects.requireNonNull(id).getPath()).stream().map(rl -> Registry.ITEM.get(Powah.id(rl)))
+            return VarReg.getSiblingIds(Objects.requireNonNull(id).getPath()).stream().map(rl -> BuiltInRegistries.ITEM.get(Powah.id(rl)))
                     .toArray(ItemLike[]::new);
         }
     }
@@ -86,22 +87,23 @@ public class ItemPanel<T extends ItemLike> extends Panel {
     }
 
     @Override
-    public void render(PoseStack matrix, int x, int y, int mx, int my, float pt, Font font, WikiScreen screen) {
+    public void render(GuiGraphics gui, int x, int y, int mx, int my, float pt, Font font, WikiScreen screen) {
         ItemStack stack = new ItemStack(getItem());
         if (Texture.WIKI_BIG_FRM.isMouseOver(x + 161 / 2 - 42 / 2, y + 10, mx, my)) {
             screen.hoveredStack = stack;
         }
-        var globalStack = RenderSystem.getModelViewStack();
-        globalStack.pushPose();
-        globalStack.translate(x + 4 + 161 / 2.0F - 42 / 2.0F, y + 4 + 10, 0);
+        var poseStack = gui.pose();
+        poseStack.pushPose();
+        poseStack.translate(x + 4 + 161 / 2.0F - 42 / 2.0F, y + 4 + 10, 0);
         RenderSystem.applyModelViewMatrix();
-        Texture.WIKI_BIG_FRM.draw(matrix, -4, -4);
-        globalStack.scale(2.1f, 2.1f, 1);
-        Minecraft.getInstance().getItemRenderer().renderAndDecorateItem(stack, 0, 0);
-        globalStack.popPose();
+        Texture.WIKI_BIG_FRM.draw(gui, -4, -4);
+        poseStack.scale(2.1f, 2.1f, 1);
+        gui.renderFakeItem(stack, 0, 0);
+        gui.renderItemDecorations(font, stack, 0, 0);
+        poseStack.popPose();
         RenderSystem.applyModelViewMatrix();
         String s = stack.getHoverName().getString();
-        font.draw(matrix, s, x + 161 / 2.0F - font.width(s) / 2.0F, y + 61, 0x2D3F48);
+        gui.drawString(font, s, Math.round(x + 161 / 2.0F - font.width(s) / 2.0F), y + 61, 0x2D3F48, false);
     }
 
     @Override

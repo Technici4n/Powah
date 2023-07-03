@@ -1,11 +1,11 @@
 package owmii.powah.client.screen.container;
 
 import com.mojang.blaze3d.systems.RenderSystem;
-import com.mojang.blaze3d.vertex.PoseStack;
 import dev.architectury.hooks.fluid.FluidStackHooks;
 import java.util.ArrayList;
 import java.util.List;
 import net.minecraft.ChatFormatting;
+import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.inventory.InventoryMenu;
@@ -36,12 +36,13 @@ public class ReactorScreen extends AbstractEnergyScreen<ReactorTile, ReactorCont
                 new IconButton(this.leftPos - 11, this.topPos + 10, Textures.REACTOR_GEN_MODE.get(this.te.isGenModeOn()), b -> {
                     Network.toServer(new SwitchGenModePacket(this.te.getBlockPos()));
                     this.te.setGenModeOn(!this.te.isGenModeOn());
-                }, this).setTooltip(tooltip -> {
-                    tooltip.add(Component.translatable("info.powah.gen.mode").withStyle(ChatFormatting.GRAY).append(Text.COLON)
+                }, this).setTooltipSupplier(() -> List.of(
+                    Component.translatable("info.powah.gen.mode").withStyle(ChatFormatting.GRAY).append(Text.COLON)
                             .append(Component.translatable("info.lollipop." + (this.te.isGenModeOn() ? "on" : "off"))
-                                    .withStyle(this.te.isGenModeOn() ? ChatFormatting.GREEN : ChatFormatting.RED)));
-                    tooltip.add(Component.translatable("info.powah.gen.mode.desc").withStyle(ChatFormatting.DARK_GRAY));
-                }));
+                                    .withStyle(this.te.isGenModeOn() ? ChatFormatting.GREEN : ChatFormatting.RED)),
+                    Component.translatable("info.powah.gen.mode.desc").withStyle(ChatFormatting.DARK_GRAY)
+                    )
+                ));
     }
 
     @Override
@@ -51,16 +52,16 @@ public class ReactorScreen extends AbstractEnergyScreen<ReactorTile, ReactorCont
     }
 
     @Override
-    protected void drawBackground(PoseStack matrix, float partialTicks, int mouseX, int mouseY) {
-        super.drawBackground(matrix, partialTicks, mouseX, mouseY);
-        Textures.REACTOR_GAUGE.drawScalableH(matrix, this.te.getEnergy().subSized(), this.leftPos + 5, this.topPos + 5);
-        Textures.REACTOR_GAUGE_URN.drawScalableH(matrix, this.te.fuel.subSized(), this.leftPos + 103, this.topPos + 13);
-        Textures.REACTOR_GAUGE_CARBON.drawScalableH(matrix, this.te.carbon.subSized(), this.leftPos + 51, this.topPos + 6);
-        Textures.REACTOR_GAUGE_REDSTONE.drawScalableH(matrix, this.te.redstone.subSized(), this.leftPos + 51, this.topPos + 52);
-        Textures.REACTOR_GAUGE_COOLANT.drawScalableH(matrix, this.te.solidCoolant.subSized(), this.leftPos + 140, this.topPos + 52);
-        Textures.REACTOR_GAUGE_TEMP.drawScalableH(matrix, this.te.temp.subSized(), this.leftPos + 114, this.topPos + 28);
+    protected void drawBackground(GuiGraphics guiGraphics, float partialTicks, int mouseX, int mouseY) {
+        super.drawBackground(guiGraphics, partialTicks, mouseX, mouseY);
+        Textures.REACTOR_GAUGE.drawScalableH(guiGraphics, this.te.getEnergy().subSized(), this.leftPos + 5, this.topPos + 5);
+        Textures.REACTOR_GAUGE_URN.drawScalableH(guiGraphics, this.te.fuel.subSized(), this.leftPos + 103, this.topPos + 13);
+        Textures.REACTOR_GAUGE_CARBON.drawScalableH(guiGraphics, this.te.carbon.subSized(), this.leftPos + 51, this.topPos + 6);
+        Textures.REACTOR_GAUGE_REDSTONE.drawScalableH(guiGraphics, this.te.redstone.subSized(), this.leftPos + 51, this.topPos + 52);
+        Textures.REACTOR_GAUGE_COOLANT.drawScalableH(guiGraphics, this.te.solidCoolant.subSized(), this.leftPos + 140, this.topPos + 52);
+        Textures.REACTOR_GAUGE_TEMP.drawScalableH(guiGraphics, this.te.temp.subSized(), this.leftPos + 114, this.topPos + 28);
 
-        Textures.REACTOR_GEN_MODE_BG.draw(matrix, this.modeButton.x - 4, this.modeButton.y - 4);
+        Textures.REACTOR_GEN_MODE_BG.draw(guiGraphics, this.modeButton.getX() - 4, this.modeButton.getY() - 4);
 
         var tank = this.te.getTank();
         if (!tank.isEmpty()) {
@@ -80,8 +81,8 @@ public class ReactorScreen extends AbstractEnergyScreen<ReactorTile, ReactorCont
     }
 
     @Override
-    protected void renderTooltip(PoseStack matrix, int mouseX, int mouseY) {
-        super.renderTooltip(matrix, mouseX, mouseY);
+    protected void renderTooltip(GuiGraphics gui, int mouseX, int mouseY) {
+        super.renderTooltip(gui, mouseX, mouseY);
         if (Textures.REACTOR_GAUGE.isMouseOver(this.leftPos + 5, this.topPos + 5, mouseX, mouseY)) {
             List<Component> list = new ArrayList<>();
             Energy energy = this.te.getEnergy();
@@ -102,13 +103,13 @@ public class ReactorScreen extends AbstractEnergyScreen<ReactorTile, ReactorCont
                     .append(Component.literal(Util.numFormat(energy.getMaxExtract())).append(Component.translatable("info.lollipop.fe.pet.tick"))
                             .withStyle(ChatFormatting.DARK_GRAY)));
 
-            renderComponentTooltip(matrix, list, mouseX, mouseY);
+            gui.renderComponentTooltip(font, list, mouseX, mouseY);
         }
 
         if (Textures.REACTOR_GAUGE_TEMP.isMouseOver(this.leftPos + 114, this.topPos + 28, mouseX, mouseY)) {
             List<Component> list = new ArrayList<>();
             list.add(Component.literal(ChatFormatting.GRAY + String.format("%.1f", this.te.temp.getTicks()) + " C"));
-            renderComponentTooltip(matrix, list, mouseX, mouseY);
+            gui.renderComponentTooltip(font, list, mouseX, mouseY);
         }
 
         if (Textures.REACTOR_GAUGE_URN.isMouseOver(this.leftPos + 103, this.topPos + 13, mouseX, mouseY)) {
@@ -120,7 +121,7 @@ public class ReactorScreen extends AbstractEnergyScreen<ReactorTile, ReactorCont
             list.add(Component.translatable("info.lollipop.using").withStyle(ChatFormatting.GRAY).append(Text.COLON)
                     .append(Component.literal(ChatFormatting.GREEN + String.format("%.4f", this.te.calcConsumption()))
                             .append(Component.translatable("info.lollipop.mb.pet.tick")).withStyle(ChatFormatting.DARK_GRAY)));
-            renderComponentTooltip(matrix, list, mouseX, mouseY);
+            gui.renderComponentTooltip(font, list, mouseX, mouseY);
         }
 
         if (Textures.REACTOR_GAUGE_CARBON.isMouseOver(this.leftPos + 51, this.topPos + 6, mouseX, mouseY)) {
@@ -133,7 +134,7 @@ public class ReactorScreen extends AbstractEnergyScreen<ReactorTile, ReactorCont
             list.add(Component.empty());
             list.add(Component.translatable("enchantment.minecraft.efficiency").withStyle(ChatFormatting.DARK_AQUA));
             list.add(Component.literal(ChatFormatting.DARK_RED + (b ? "+0 C" : "+180 C")));
-            renderComponentTooltip(matrix, list, mouseX, mouseY);
+            gui.renderComponentTooltip(font, list, mouseX, mouseY);
         }
 
         if (Textures.REACTOR_GAUGE_REDSTONE.isMouseOver(this.leftPos + 51, this.topPos + 52, mouseX, mouseY)) {
@@ -147,7 +148,7 @@ public class ReactorScreen extends AbstractEnergyScreen<ReactorTile, ReactorCont
             list.add(Component.translatable("info.powah.production").withStyle(ChatFormatting.DARK_AQUA));
             list.add(Component.translatable("info.powah.fuel.consumption").withStyle(ChatFormatting.DARK_RED));
             list.add(Component.literal(ChatFormatting.DARK_RED + (b ? "+0 C" : "+120 C")));
-            renderComponentTooltip(matrix, list, mouseX, mouseY);
+            gui.renderComponentTooltip(font, list, mouseX, mouseY);
         }
 
         if (Textures.REACTOR_GAUGE_COOLANT.isMouseOver(this.leftPos + 140, this.topPos + 52, mouseX, mouseY)) {
@@ -157,7 +158,7 @@ public class ReactorScreen extends AbstractEnergyScreen<ReactorTile, ReactorCont
                     .append(Component.translatable("info.lollipop.mb.stored", String.format("%.1f", this.te.solidCoolant.getTicks()),
                             String.format("%.1f", this.te.solidCoolant.getMax())).withStyle(ChatFormatting.DARK_GRAY)));
             list.add(Component.literal("" + ChatFormatting.AQUA + this.te.solidCoolantTemp + " C"));
-            renderComponentTooltip(matrix, list, mouseX, mouseY);
+            gui.renderComponentTooltip(font, list, mouseX, mouseY);
         }
 
         var tank = this.te.getTank();
@@ -177,7 +178,7 @@ public class ReactorScreen extends AbstractEnergyScreen<ReactorTile, ReactorCont
                 list.add(Component.translatable("info.lollipop.fluid").withStyle(ChatFormatting.GRAY).append(Text.COLON)
                         .append(Component.literal("---").withStyle(ChatFormatting.DARK_GRAY)));
             }
-            renderComponentTooltip(matrix, list, mouseX, mouseY);
+            gui.renderComponentTooltip(font, list, mouseX, mouseY);
         }
     }
 }

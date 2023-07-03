@@ -2,9 +2,7 @@ package owmii.powah.client.render.tile;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
-import com.mojang.math.Matrix3f;
-import com.mojang.math.Matrix4f;
-import com.mojang.math.Vector3f;
+import com.mojang.math.Axis;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.client.player.LocalPlayer;
@@ -17,6 +15,8 @@ import net.minecraft.util.Mth;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.phys.Vec3;
+import org.joml.Matrix3f;
+import org.joml.Matrix4f;
 import owmii.powah.Powah;
 import owmii.powah.api.wrench.IWrench;
 import owmii.powah.block.energizing.EnergizingOrbTile;
@@ -66,8 +66,8 @@ public class EnergizingRodRenderer extends AbstractTileRenderer<EnergizingRodTil
             float f5 = (float) Math.acos(Mth.clamp(vec3d2.y, -1.0, 1.0));
             float f6 = (float) Mth.atan2(vec3d2.z, vec3d2.x);
 
-            matrix.mulPose(Vector3f.YP.rotationDegrees((((float) Math.PI / 2F) - f6) * (180F / (float) Math.PI)));
-            matrix.mulPose(Vector3f.XP.rotationDegrees(f5 * (180F / (float) Math.PI)));
+            matrix.mulPose(Axis.YP.rotationDegrees((((float) Math.PI / 2F) - f6) * (180F / (float) Math.PI)));
+            matrix.mulPose(Axis.XP.rotationDegrees(f5 * (180F / (float) Math.PI)));
 
             float d1 = f2 * 0.0F;
 
@@ -85,8 +85,8 @@ public class EnergizingRodRenderer extends AbstractTileRenderer<EnergizingRodTil
             float d23 = (float) (d0 * 5.05D + d22);
             VertexConsumer builder = rtb.getBuffer(RENDER_TYPE);
             PoseStack.Pose last = matrix.last();
-            Matrix4f matrix4f = last.pose();
-            Matrix3f matrix3f = last.normal();
+            var matrix4f = last.pose();
+            var matrix3f = last.normal();
 
             int color = te.getVariant().getColor();
             int r = 0xFF & (color >> 16);

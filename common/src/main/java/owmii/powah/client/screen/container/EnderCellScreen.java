@@ -1,7 +1,7 @@
 package owmii.powah.client.screen.container;
 
 import com.mojang.blaze3d.systems.RenderSystem;
-import com.mojang.blaze3d.vertex.PoseStack;
+import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.inventory.Slot;
@@ -48,36 +48,36 @@ public class EnderCellScreen extends AbstractEnergyScreen<AbstractEnderTile<?>, 
     }
 
     @Override
-    protected void drawBackground(PoseStack matrix, float partialTicks, int mouseX, int mouseY) {
-        super.drawBackground(matrix, partialTicks, mouseX, mouseY);
-        Textures.ENDER_CELL_GAUGE.drawScalableW(matrix, this.te.getEnergy().subSized(), this.leftPos + 31, this.topPos + 6);
+    protected void drawBackground(GuiGraphics guiGraphics, float partialTicks, int mouseX, int mouseY) {
+        super.drawBackground(guiGraphics, partialTicks, mouseX, mouseY);
+        Textures.ENDER_CELL_GAUGE.drawScalableW(guiGraphics, this.te.getEnergy().subSized(), this.leftPos + 31, this.topPos + 6);
     }
 
     @Override
-    protected void drawForeground(PoseStack matrix, int mouseX, int mouseY) {
-        super.drawForeground(matrix, mouseX, mouseY);
-        matrix.pushPose();
+    protected void drawForeground(GuiGraphics gui, int mouseX, int mouseY) {
+        super.drawForeground(gui, mouseX, mouseY);
+        gui.pose().pushPose();
         RenderSystem.enableBlend();
         int a = (int) (255.0D * 0.45D) << 24;
         Energy e = this.te.getEnergy();
         String s = Util.addCommas(e.getStored()) + "/" + Util.numFormat(e.getCapacity()) + " FE";
-        this.font.draw(matrix, s, 38, 13.0F, a + 0x4affde);
-        this.font.draw(matrix, Util.numFormat(e.getMaxExtract()) + " FE/t", 38, 27.0F, a + 0x4affde);
+        gui.drawString(this.font, s, 38, 13, a + 0x4affde, false);
+        gui.drawString(this.font, Util.numFormat(e.getMaxExtract()) + " FE/t", 38, 27, a + 0x4affde, false);
 
-        matrix.scale(0.5F, 0.5F, 1.0F);
+        gui.pose().scale(0.5F, 0.5F, 1.0F);
         for (int i = 1; i < 13; i++) {
-            float f = i > 9 ? -2 : 0;
+            var f = i > 9 ? -2 : 0;
             if (i > 1)
-                matrix.translate(14F, 0.0F, 0.0F);
-            this.font.draw(matrix, "" + i, 19F + (i * 14) - 14 + f, 119F, i <= this.te.getMaxChannels() ? 0x3e8087 : a + 0x3e8087);
+                gui.pose().translate(14F, 0.0F, 0.0F);
+            gui.drawString(this.font, "" + i, 19 + (i * 14) - 14 + f, 119, i <= this.te.getMaxChannels() ? 0x3e8087 : a + 0x3e8087, false);
         }
 
         RenderSystem.disableBlend();
-        matrix.popPose();
+        gui.pose().popPose();
     }
 
     @Override
-    public void renderSlot(PoseStack matrix, Slot slot) {
+    public void renderSlot(GuiGraphics matrix, Slot slot) {
         ItemStack stack = slot.getItem();
         if (this.te.isExtender() && stack.getItem() instanceof IEnderExtender && hasShiftDown()) {
             Energy energy = this.te.getEnergy();

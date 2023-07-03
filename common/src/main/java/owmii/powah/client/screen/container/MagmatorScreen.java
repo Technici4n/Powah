@@ -1,11 +1,11 @@
 package owmii.powah.client.screen.container;
 
 import com.mojang.blaze3d.systems.RenderSystem;
-import com.mojang.blaze3d.vertex.PoseStack;
 import dev.architectury.hooks.fluid.FluidStackHooks;
 import java.util.ArrayList;
 import java.util.List;
 import net.minecraft.ChatFormatting;
+import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.inventory.InventoryMenu;
@@ -41,11 +41,11 @@ public class MagmatorScreen extends AbstractEnergyScreen<MagmatorTile, MagmatorC
     }
 
     @Override
-    protected void drawBackground(PoseStack matrix, float partialTicks, int mouseX, int mouseY) {
-        super.drawBackground(matrix, partialTicks, mouseX, mouseY);
-        Textures.FURNATOR_GAUGE.drawScalableH(matrix, this.te.getEnergy().subSized(), this.leftPos + 5, this.topPos + 5);
+    protected void drawBackground(GuiGraphics guiGraphics, float partialTicks, int mouseX, int mouseY) {
+        super.drawBackground(guiGraphics, partialTicks, mouseX, mouseY);
+        Textures.FURNATOR_GAUGE.drawScalableH(guiGraphics, this.te.getEnergy().subSized(), this.leftPos + 5, this.topPos + 5);
         RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, this.heat.subSized());
-        Textures.MAGMATOR_BUFFER.draw(matrix, this.leftPos + 83, this.topPos + 29);
+        Textures.MAGMATOR_BUFFER.draw(guiGraphics, this.leftPos + 83, this.topPos + 29);
         RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
 
         var tank = this.te.getTank();
@@ -66,8 +66,8 @@ public class MagmatorScreen extends AbstractEnergyScreen<MagmatorTile, MagmatorC
     }
 
     @Override
-    protected void renderTooltip(PoseStack matrix, int mouseX, int mouseY) {
-        super.renderTooltip(matrix, mouseX, mouseY);
+    protected void renderTooltip(GuiGraphics gui, int mouseX, int mouseY) {
+        super.renderTooltip(gui, mouseX, mouseY);
         if (Textures.FURNATOR_GAUGE.isMouseOver(this.leftPos + 5, this.topPos + 5, mouseX, mouseY)) {
             List<Component> list = new ArrayList<>();
             Energy energy = this.te.getEnergy();
@@ -81,7 +81,7 @@ public class MagmatorScreen extends AbstractEnergyScreen<MagmatorTile, MagmatorC
             list.add(Component.translatable("info.lollipop.max.extract").withStyle(ChatFormatting.GRAY).append(Text.COLON)
                     .append(Component.literal(Util.numFormat(energy.getMaxExtract())).append(Component.translatable("info.lollipop.fe.pet.tick"))
                             .withStyle(ChatFormatting.DARK_GRAY)));
-            renderComponentTooltip(matrix, list, mouseX, mouseY);
+            gui.renderComponentTooltip(font, list, mouseX, mouseY);
         }
 
         var tank = this.te.getTank();
@@ -99,7 +99,7 @@ public class MagmatorScreen extends AbstractEnergyScreen<MagmatorTile, MagmatorC
                 list.add(Component.translatable("info.lollipop.fluid").withStyle(ChatFormatting.GRAY).append(Text.COLON)
                         .append(Component.literal("---").withStyle(ChatFormatting.DARK_GRAY)));
             }
-            renderComponentTooltip(matrix, list, mouseX, mouseY);
+            gui.renderComponentTooltip(font, list, mouseX, mouseY);
         }
     }
 }

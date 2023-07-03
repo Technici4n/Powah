@@ -69,10 +69,10 @@ public class EnergizingCategory implements DisplayCategory<EnergizingDisplay> {
                 .disableBackground()
                 .markOutput()
                 .entries(display.getOutputEntries().get(0)));
-        widgets.add(Widgets.createDrawableWidget((helper, matrices, mouseX, mouseY, delta) -> {
+        widgets.add(Widgets.createDrawableWidget((gui, mouseX, mouseY, delta) -> {
             Minecraft minecraft = Minecraft.getInstance();
-            minecraft.font.draw(matrices, I18n.get("info.lollipop.fe", Util.addCommas(display.getEnergy())), origin.x + 2.0F, origin.y + 29.0F,
-                    0x444444);
+             gui.drawString(minecraft.font, I18n.get("info.lollipop.fe", Util.addCommas(display.getEnergy())), origin.x + 2, origin.y + 29,
+                    0x444444, false);
         }));
         return widgets;
     }

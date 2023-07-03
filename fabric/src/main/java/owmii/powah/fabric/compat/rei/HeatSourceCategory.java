@@ -62,10 +62,10 @@ public class HeatSourceCategory implements DisplayCategory<HeatSourceDisplay> {
                 .disableBackground()
                 .markInput()
                 .entries(display.getInputEntries().get(0)));
-        widgets.add(Widgets.createDrawableWidget((helper, matrices, mouseX, mouseY, delta) -> {
+        widgets.add(Widgets.createDrawableWidget((gui, mouseX, mouseY, delta) -> {
             Minecraft minecraft = Minecraft.getInstance();
-            minecraft.font.draw(matrices, ChatFormatting.DARK_GRAY + I18n.get("info.lollipop.temperature") + ": " + ChatFormatting.RESET
-                    + I18n.get("info.lollipop.temperature.c", display.getHeat()), origin.x + 30.0F, origin.y + 9.0F, 0xc43400);
+            gui.drawString(minecraft.font, ChatFormatting.DARK_GRAY + I18n.get("info.lollipop.temperature") + ": " + ChatFormatting.RESET
+                    + I18n.get("info.lollipop.temperature.c", display.getHeat()), origin.x + 30, origin.y + 9, 0xc43400, false);
         }));
         return widgets;
     }

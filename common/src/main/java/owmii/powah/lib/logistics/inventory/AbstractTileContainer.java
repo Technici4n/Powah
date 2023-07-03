@@ -39,7 +39,7 @@ public abstract class AbstractTileContainer<T extends AbstractTileEntity<?, ?> &
 
     @SuppressWarnings("unchecked")
     protected static <T extends AbstractTileEntity<?, ?>> T getInventory(Player player, BlockPos pos) {
-        BlockEntity tile = player.level.getBlockEntity(pos);
+        BlockEntity tile = player.level().getBlockEntity(pos);
         if (tile instanceof AbstractTileEntity<?, ?>)
             return (T) tile;
         // What the hell is this?

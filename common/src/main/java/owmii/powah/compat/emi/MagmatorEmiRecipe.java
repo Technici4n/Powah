@@ -1,23 +1,25 @@
-package owmii.powah.fabric.compat.emi;
+package owmii.powah.compat.emi;
 
 import dev.emi.emi.api.recipe.EmiRecipeCategory;
 import dev.emi.emi.api.stack.EmiIngredient;
+import dev.emi.emi.api.stack.EmiStack;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.level.material.Fluid;
 import org.jetbrains.annotations.Nullable;
 
-public class HeatSourceEmiRecipe extends PowahInfoEmiRecipe {
-    private final EmiIngredient input;
+public class MagmatorEmiRecipe extends PowahInfoEmiRecipe {
     private final int heat;
+    private final EmiIngredient input;
 
-    public HeatSourceEmiRecipe(EmiIngredient input, int heat) {
-        this.input = input;
+    public MagmatorEmiRecipe(Fluid fluid, int heat) {
         this.heat = heat;
+        this.input = EmiStack.of(fluid);
     }
 
     @Override
     public EmiRecipeCategory getCategory() {
-        return PowahEMIPlugin.HEAT_SOURCE_CATEGORY;
+        return PowahEMIPlugin.MAGMATOR_CATEGORY;
     }
 
     @Override
@@ -32,9 +34,6 @@ public class HeatSourceEmiRecipe extends PowahInfoEmiRecipe {
 
     @Override
     protected Component getInfoText() {
-        return Component.translatable("info.lollipop.temperature")
-                .append(": ")
-                .append(Component.translatable("info.lollipop.temperature.c", heat)
-                        .withStyle(s -> s.withColor(0xc43400)));
+        return Component.literal(heat + " FE/100 mb");
     }
 }

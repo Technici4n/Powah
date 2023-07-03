@@ -3,7 +3,7 @@ package owmii.powah.block.energizing;
 import static net.minecraft.world.phys.shapes.Shapes.join;
 
 import com.mojang.blaze3d.systems.RenderSystem;
-import com.mojang.blaze3d.vertex.PoseStack;
+
 import java.util.List;
 import java.util.stream.Collectors;
 import javax.annotation.Nullable;
@@ -12,6 +12,7 @@ import net.fabricmc.api.Environment;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
+import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.resources.language.I18n;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -194,8 +195,8 @@ public class EnergizingOrbBlock extends AbstractBlock<IVariant.Single, Energizin
 
     @Override
     @Environment(EnvType.CLIENT)
-    public boolean renderHud(PoseStack matrix, BlockState state, Level world, BlockPos pos, Player player, BlockHitResult result,
-            @Nullable BlockEntity te) {
+    public boolean renderHud(GuiGraphics gui, BlockState state, Level world, BlockPos pos, Player player, BlockHitResult result,
+                             @Nullable BlockEntity te) {
         if (te instanceof EnergizingOrbTile orb) {
             if (orb.getBuffer().getCapacity() > 0) {
                 RenderSystem.getModelViewStack().pushPose();
@@ -207,8 +208,8 @@ public class EnergizingOrbBlock extends AbstractBlock<IVariant.Single, Energizin
                 String s = "" + ChatFormatting.GREEN + orb.getBuffer().getPercent() + "%";
                 String s1 = ChatFormatting.GRAY + I18n.get("info.lollipop.fe.stored", Util.addCommas(orb.getBuffer().getEnergyStored()),
                         Util.numFormat(orb.getBuffer().getCapacity()));
-                font.drawShadow(matrix, s, x - (font.width(s) / 2.0f), y - 90, 0xffffff);
-                font.drawShadow(matrix, s1, x - (font.width(s1) / 2.0f), y - 75, 0xffffff);
+                gui.drawString(font, s, Math.round(x - (font.width(s) / 2.0f)), y - 90, 0xffffff);
+                gui.drawString(font, s1, Math.round(x - (font.width(s1) / 2.0f)), y - 75, 0xffffff);
                 RenderSystem.disableBlend();
                 RenderSystem.getModelViewStack().popPose();
             }

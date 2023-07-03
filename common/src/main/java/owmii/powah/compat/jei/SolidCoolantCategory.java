@@ -15,8 +15,10 @@ import mezz.jei.api.recipe.category.IRecipeCategory;
 import mezz.jei.api.runtime.IIngredientManager;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.resources.language.I18n;
 import net.minecraft.core.Registry;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
@@ -63,18 +65,18 @@ public class SolidCoolantCategory implements IRecipeCategory<SolidCoolantCategor
     }
 
     @Override
-    public void draw(Recipe recipe, IRecipeSlotsView recipeSlotsView, PoseStack matrix, double mouseX, double mouseY) {
+    public void draw(Recipe recipe, IRecipeSlotsView recipeSlotsView, GuiGraphics guiGraphics, double mouseX, double mouseY) {
         Minecraft minecraft = Minecraft.getInstance();
-        minecraft.font.draw(matrix, I18n.get("info.lollipop.amount") + ": " + I18n.get("info.lollipop.mb", recipe.amount), 30.0F, 3.0F, 0x444444);
-        minecraft.font.draw(matrix, I18n.get("info.lollipop.temperature") + ": "
-                + I18n.get("info.lollipop.temperature.c", "" + ChatFormatting.DARK_AQUA + recipe.coldness), 30.0F, 15.0F, 0x444444);
+        guiGraphics.drawString(minecraft.font, I18n.get("info.lollipop.amount") + ": " + I18n.get("info.lollipop.mb", recipe.amount), 30, 3, 0x444444, false);
+        guiGraphics.drawString(minecraft.font, I18n.get("info.lollipop.temperature") + ": "
+                + I18n.get("info.lollipop.temperature.c", "" + ChatFormatting.DARK_AQUA + recipe.coldness), 30, 15, 0x444444, false);
     }
 
     public static List<Recipe> getRecipes(IIngredientManager ingredientManager) {
 
         List<Recipe> recipes = new ArrayList<>();
         for (var stack : ingredientManager.getAllIngredients(VanillaTypes.ITEM_STACK)) {
-            var id = Registry.ITEM.getKey(stack.getItem());
+            var id = BuiltInRegistries.ITEM.getKey(stack.getItem());
 
             var coolantInfo = PowahAPI.SOLID_COOLANTS.get(id);
             if (coolantInfo != null) {

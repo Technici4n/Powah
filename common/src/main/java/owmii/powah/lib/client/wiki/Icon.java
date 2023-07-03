@@ -1,6 +1,6 @@
 package owmii.powah.lib.client.wiki;
 
-import com.mojang.blaze3d.vertex.PoseStack;
+import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.ItemLike;
 import owmii.powah.lib.client.screen.Texture;
@@ -24,9 +24,9 @@ public class Icon {
         this.texture = texture;
     }
 
-    public void draw(PoseStack matrix, int x, int y) {
+    public void draw(GuiGraphics gui, int x, int y) {
         if (this.type == 1) {
-            this.texture.draw(matrix, x, y);
+            this.texture.draw(gui, x, y);
         } else {
 
         }

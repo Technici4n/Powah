@@ -2,6 +2,7 @@ package owmii.powah.lib.item;
 
 import javax.annotation.Nullable;
 import net.minecraft.network.chat.Component;
+import net.minecraft.resources.ResourceKey;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.ItemStack;
@@ -16,8 +17,8 @@ public class ItemBlock<V extends IVariant, B extends Block & IBlock<V, B>> exten
     private final B block;
 
     @SuppressWarnings("ConstantConditions")
-    public ItemBlock(B block, Properties builder, @Nullable CreativeModeTab group) {
-        super(block, builder.tab(group));
+    public ItemBlock(B block, Properties builder, @Nullable ResourceKey<CreativeModeTab> group) {
+        super(block, builder.arch$tab(group));
         this.block = block;
     }
 

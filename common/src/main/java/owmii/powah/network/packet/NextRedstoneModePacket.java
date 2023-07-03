@@ -28,7 +28,7 @@ public class NextRedstoneModePacket implements IPacket {
     @Override
     public void handle(Player player) {
         if (player instanceof ServerPlayer) {
-            BlockEntity tileEntity = player.level.getBlockEntity(pos);
+            BlockEntity tileEntity = player.level().getBlockEntity(pos);
             if (tileEntity instanceof AbstractTileEntity ate) {
                 if (tileEntity instanceof IRedstoneInteract ri) {
                     ri.nextRedstoneMode();

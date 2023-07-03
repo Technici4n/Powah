@@ -1,10 +1,10 @@
 package owmii.powah.lib.client.wiki;
 
-import com.mojang.blaze3d.vertex.PoseStack;
 import java.util.List;
 import java.util.Objects;
 import javax.annotation.Nullable;
 import net.minecraft.client.gui.Font;
+import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.network.chat.Component;
 import owmii.powah.lib.client.screen.Texture;
 import owmii.powah.lib.client.screen.widget.IconButton;
@@ -40,7 +40,7 @@ public class Page {
                                 new IconButton(x + (b ? 0 : 2), 10 + y + (i * 28), catEntry.getStack(), Texture.WIKI_TABS.get(b), button -> {
                                     MC.open(new WikiScreen(catEntry.getSections(0)));
                                 }, screen).xOffset(b ? -2.0F : 0.5F)
-                                        .setTooltip(tooltip -> tooltip.add(Component.translatable(catEntry.getTransKey()))));
+                                        .setTooltip(Component.translatable(catEntry.getTransKey())));
                     }
                 }
             }
@@ -73,7 +73,7 @@ public class Page {
         this.navPrev.visible = this.prev != null;
     }
 
-    public void render(PoseStack matrix, int x, int y, int mx, int my, float pt, Font font, WikiScreen screen) {
+    public void render(GuiGraphics gui, int x, int y, int mx, int my, float pt, Font font, WikiScreen screen) {
     }
 
     public boolean mouseScrolled(double mouseX, double mouseY, double i) {

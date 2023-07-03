@@ -9,6 +9,7 @@ import java.util.List;
 import java.util.stream.IntStream;
 import javax.annotation.Nullable;
 import net.minecraft.core.NonNullList;
+import net.minecraft.core.RegistryAccess;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.GsonHelper;
@@ -66,7 +67,7 @@ public class EnergizingRecipe implements Recipe<RecipeWrapper> {
     }
 
     @Override
-    public ItemStack assemble(RecipeWrapper inv) {
+    public ItemStack assemble(RecipeWrapper inv, RegistryAccess registry) {
         return this.output.copy();
     }
 
@@ -75,8 +76,12 @@ public class EnergizingRecipe implements Recipe<RecipeWrapper> {
         return true;
     }
 
-    @Override
     public ItemStack getResultItem() {
+        return output;
+    }
+
+    @Override
+    public ItemStack getResultItem(RegistryAccess registryAccess) {
         return this.output;
     }
 

@@ -4,11 +4,12 @@ import dev.architectury.registry.menu.MenuRegistry;
 import dev.architectury.registry.registries.DeferredRegister;
 import java.util.function.Supplier;
 import net.minecraft.core.Registry;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.world.inventory.MenuType;
 import owmii.powah.Powah;
 
 public class Containers {
-    public static final DeferredRegister<MenuType<?>> DR = DeferredRegister.create(Powah.MOD_ID, Registry.MENU_REGISTRY);
+    public static final DeferredRegister<MenuType<?>> DR = DeferredRegister.create(Powah.MOD_ID, Registries.MENU);
 
     public static final Supplier<MenuType<EnergyCellContainer>> ENERGY_CELL = DR.register("energy_cell",
             () -> MenuRegistry.ofExtended(EnergyCellContainer::create));

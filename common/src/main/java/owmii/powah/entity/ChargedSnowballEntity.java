@@ -3,6 +3,7 @@ package owmii.powah.entity;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.damagesource.DamageSources;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LightningBolt;
@@ -36,21 +37,21 @@ public class ChargedSnowballEntity extends ThrowableItemProjectile {
         if (result.getType() == HitResult.Type.ENTITY) {
             Entity entity = ((EntityHitResult) result).getEntity();
             int i = entity instanceof Blaze ? 3 : 0;
-            entity.hurt(DamageSource.thrown(this, getOwner()), (float) i);
+            entity.hurt(level().damageSources().thrown(this, getOwner()), (float) i);
 
         }
 
-        if (this.level instanceof ServerLevel) {
-            LightningBolt lightningboltentity = EntityType.LIGHTNING_BOLT.create(this.level);
+        if (level() instanceof ServerLevel) {
+            LightningBolt lightningboltentity = EntityType.LIGHTNING_BOLT.create(level());
             if (lightningboltentity != null) {
                 lightningboltentity.moveTo(Vec3.atBottomCenterOf(blockPosition()));
                 lightningboltentity.setCause(getOwner() instanceof ServerPlayer sp ? sp : null);
-                this.level.addFreshEntity(lightningboltentity);
+                level().addFreshEntity(lightningboltentity);
             }
         }
 
-        if (!this.level.isClientSide) {
-            this.level.broadcastEntityEvent(this, (byte) 3);
+        if (!level().isClientSide) {
+            level().broadcastEntityEvent(this, (byte) 3);
             this.discard();
         }
     }

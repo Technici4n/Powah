@@ -26,6 +26,7 @@ import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.Registry;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.Container;
 import net.minecraft.world.InteractionHand;
@@ -61,10 +62,10 @@ import team.reborn.energy.api.base.DelegatingEnergyStorage;
 public class FabricEnvHandler implements EnvHandler {
     @Override
     public void setupBlockItems() {
-        for (var block : Registry.BLOCK) {
+        for (var block : BuiltInRegistries.BLOCK) {
             if (block instanceof IBlock<?, ?>iBlock) {
-                var blockItem = iBlock.getBlockItem(new Item.Properties(), ItemGroups.MAIN);
-                Registry.register(Registry.ITEM, Registry.BLOCK.getKey(block), blockItem);
+                var blockItem = iBlock.getBlockItem(new Item.Properties(), ItemGroups.MAIN_KEY);
+                Registry.register(BuiltInRegistries.ITEM, BuiltInRegistries.BLOCK.getKey(block), blockItem);
             }
         }
     }
@@ -72,7 +73,6 @@ public class FabricEnvHandler implements EnvHandler {
     @Override
     public void registerWorldgen() {
         EnvHandler.super.registerWorldgen();
-        Features.init();
     }
 
     @Override
@@ -218,7 +218,7 @@ public class FabricEnvHandler implements EnvHandler {
     public boolean interactWithTank(Player player, InteractionHand hand, Tank tank) {
         var handStorage = Objects.requireNonNullElse(
                 (player.getAbilities().instabuild
-                        ? ContainerItemContext.withInitial(player.getItemInHand(hand))
+                        ? ContainerItemContext.withConstant(player.getItemInHand(hand))
                         : ContainerItemContext.ofPlayerHand(player, hand))
                                 .find(FluidStorage.ITEM),
                 Storage.<FluidVariant>empty());

@@ -1,12 +1,12 @@
 package owmii.powah.lib.util.math;
 
-import com.mojang.math.Vector3f;
 import java.util.ArrayList;
 import java.util.List;
 import net.minecraft.core.BlockPos;
 import net.minecraft.util.Mth;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
+import org.joml.Vector3f;
 
 public class V3d extends Vec3 {
 
@@ -194,7 +194,4 @@ public class V3d extends Vec3 {
         return ZERO;
     }
 
-    public BlockPos toPos() {
-        return new BlockPos(this);
-    }
 }

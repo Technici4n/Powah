@@ -12,6 +12,7 @@ import owmii.powah.block.Tiles;
 import owmii.powah.config.v2.PowahConfig;
 import owmii.powah.entity.Entities;
 import owmii.powah.inventory.Containers;
+import owmii.powah.item.ItemGroups;
 import owmii.powah.item.Itms;
 import owmii.powah.network.Network;
 import owmii.powah.recipe.Recipes;
@@ -38,6 +39,7 @@ public class Powah {
         Entities.DR.register();
         Recipes.DR_SERIALIZER.register();
         Recipes.DR_TYPE.register();
+        ItemGroups.DR.register();
 
         EnvHandler.INSTANCE.registerWorldgen();
         EnvHandler.INSTANCE.registerTransfer();

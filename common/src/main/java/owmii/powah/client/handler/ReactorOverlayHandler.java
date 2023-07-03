@@ -49,7 +49,7 @@ public class ReactorOverlayHandler {
             return;
         HitResult result = mc.hitResult;
         if (result instanceof BlockHitResult br) {
-            boolean isReplaceable = mc.level.getBlockState(br.getBlockPos()).getMaterial().isReplaceable()
+            boolean isReplaceable = mc.level.getBlockState(br.getBlockPos()).canBeReplaced()
                     && !mc.level.isEmptyBlock(br.getBlockPos());
             if (mc.level.isEmptyBlock(br.getBlockPos()) || !isReplaceable && !br.getDirection().equals(Direction.UP))
                 return;
@@ -61,7 +61,7 @@ public class ReactorOverlayHandler {
                 color = 0xcf040e;
             if (color != 0xcf040e) {
                 for (BlockPos blockPos : list) {
-                    if (!mc.level.getBlockState(blockPos).getMaterial().isReplaceable()) {
+                    if (!mc.level.getBlockState(blockPos).canBeReplaced()) {
                         color = 0xcf040e;
                         break;
                     }

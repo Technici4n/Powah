@@ -1,11 +1,12 @@
 package owmii.powah.lib.client.screen.container;
 
 import com.mojang.blaze3d.systems.RenderSystem;
-import com.mojang.blaze3d.vertex.PoseStack;
+
 import java.util.ArrayList;
 import java.util.List;
 import javax.annotation.Nullable;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.AbstractWidget;
 import net.minecraft.client.renderer.Rect2i;
 import net.minecraft.network.chat.Component;
@@ -51,63 +52,50 @@ public class AbstractContainerScreen<C extends AbstractContainer> extends net.mi
     }
 
     @Override
-    public void render(PoseStack matrix, int mouseX, int mouseY, float partialTicks) {
-        renderBackground(matrix);
-        super.render(matrix, mouseX, mouseY, partialTicks);
-        renderTooltip(matrix, mouseX, mouseY);
+    public void render(GuiGraphics gui, int mouseX, int mouseY, float partialTicks) {
+        renderBackground(gui);
+        super.render(gui, mouseX, mouseY, partialTicks);
+        renderTooltip(gui, mouseX, mouseY);
     }
 
     @Override
-    protected void renderBg(PoseStack matrix, float partialTicks, int mouseX, int mouseY) {
-        drawBackground(matrix, partialTicks, mouseX, mouseY);
+    protected void renderBg(GuiGraphics gui, float partialTicks, int mouseX, int mouseY) {
+        drawBackground(gui, partialTicks, mouseX, mouseY);
     }
 
     @Override
-    protected void renderLabels(PoseStack matrix, int mouseX, int mouseY) {
-        drawForeground(matrix, mouseX, mouseY);
+    protected void renderLabels(GuiGraphics gui, int mouseX, int mouseY) {
+        drawForeground(gui, mouseX, mouseY);
     }
 
-    @Override
-    protected void renderTooltip(PoseStack matrix, int mouseX, int mouseY) {
-        super.renderTooltip(matrix, mouseX, mouseY);
-        for (var iWidget : this.renderables) {
-            if (iWidget instanceof AbstractWidget widget && widget.isHoveredOrFocused()) {
-                widget.renderToolTip(matrix, mouseX, mouseY);
-                return;
-            }
-        }
-    }
-
-    protected void drawBackground(PoseStack matrix, float partialTicks, int mouseX, int mouseY) {
+    protected void drawBackground(GuiGraphics gui, float partialTicks, int mouseX, int mouseY) {
         RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
-        this.backGround.draw(matrix, this.leftPos, this.topPos);
+        this.backGround.draw(gui, this.leftPos, this.topPos);
     }
 
-    protected void drawForeground(PoseStack matrix, int mouseX, int mouseY) {
-        drawTitle(matrix, 0, 0);
+    protected void drawForeground(GuiGraphics gui, int mouseX, int mouseY) {
+        drawTitle(gui, 0, 0);
     }
 
-    protected void drawTitle(PoseStack matrix, int x, int y) {
+    protected void drawTitle(GuiGraphics gui, int x, int y) {
         String title = this.title.getString();
         int width = this.font.width(title);
-        this.font.drawShadow(matrix, title, x + this.imageWidth / 2 - width / 2, y - 14.0F, 0x999999);
+        gui.drawString(this.font, title, x + this.imageWidth / 2 - width / 2, y - 14, 0x999999);
     }
 
-    @Override
-    public void renderSlot(PoseStack matrixStack, Slot slot) {
-        if (slot instanceof ITexturedSlot) {
-            ITexturedSlot base = (ITexturedSlot) slot;
+    public void renderSlot(GuiGraphics gui, Slot slot) {
+        if (slot instanceof ITexturedSlot<?> base) {
             int x = slot.x;
             int y = slot.y;
-            base.getBackground2().draw(matrixStack, x, y);
+            base.getBackground2().draw(gui, x, y);
             if (!slot.hasItem()) {
                 RenderSystem.enableBlend();
                 RenderSystem.enableBlend();
-                base.getOverlay().draw(matrixStack, x, y);
+                base.getOverlay().draw(gui, x, y);
                 RenderSystem.disableBlend();
             }
         }
-        super.renderSlot(matrixStack, slot);
+        super.renderSlot(gui, slot);
     }
 
     public void bindTexture(ResourceLocation guiTexture) {

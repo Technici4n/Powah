@@ -1,7 +1,8 @@
 package owmii.powah.lib.client.screen.wiki;
 
-import com.mojang.blaze3d.vertex.PoseStack;
 import javax.annotation.Nullable;
+
+import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.world.item.ItemStack;
 import owmii.powah.lib.client.screen.ScreenBase;
 import owmii.powah.lib.client.screen.Texture;
@@ -46,16 +47,16 @@ public class WikiScreen extends ScreenBase {
     }
 
     @Override
-    public void render(PoseStack matrix, int mx, int my, float pt) {
-        renderBackground(matrix);
+    public void render(GuiGraphics gui, int mx, int my, float pt) {
+        renderBackground(gui);
         this.hoveredStack = ItemStack.EMPTY;
-        Texture.WIKI_BG_0.draw(matrix, this.x + 28, this.y);
-        Texture.WIKI_BG_1.draw(matrix, this.x + 28 + Texture.WIKI_BG_0.getWidth(), this.y);
-        this.page.render(matrix, this.x + 31, this.y + 3, mx, my, pt, this.font, this);
-        this.panel.render(matrix, this.x + 246, this.y + 3, mx, my, pt, this.font, this);
-        super.render(matrix, mx, my, pt);
+        Texture.WIKI_BG_0.draw(gui, this.x + 28, this.y);
+        Texture.WIKI_BG_1.draw(gui, this.x + 28 + Texture.WIKI_BG_0.getWidth(), this.y);
+        this.page.render(gui, this.x + 31, this.y + 3, mx, my, pt, this.font, this);
+        this.panel.render(gui, this.x + 246, this.y + 3, mx, my, pt, this.font, this);
+        super.render(gui, mx, my, pt);
         if (!this.hoveredStack.isEmpty()) {
-            renderTooltip(matrix, this.hoveredStack, mx, my);
+            gui.renderTooltip(font, this.hoveredStack, mx, my);
         }
     }
 

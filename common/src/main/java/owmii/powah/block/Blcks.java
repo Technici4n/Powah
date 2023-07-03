@@ -3,6 +3,8 @@ package owmii.powah.block;
 import dev.architectury.registry.registries.DeferredRegister;
 import java.util.function.Supplier;
 import net.minecraft.core.Registry;
+import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.world.level.block.Block;
 import owmii.powah.Powah;
 import owmii.powah.block.cable.CableBlock;
@@ -24,7 +26,7 @@ import owmii.powah.lib.block.Properties;
 import owmii.powah.lib.registry.VarReg;
 
 public class Blcks {
-    public static final DeferredRegister<Block> DR = DeferredRegister.create(Powah.MOD_ID, Registry.BLOCK_REGISTRY);
+    public static final DeferredRegister<Block> DR = DeferredRegister.create(Powah.MOD_ID, Registries.BLOCK);
 
     public static final VarReg<Tier, Block> ENERGY_CELL = new VarReg<>(DR, "energy_cell",
             variant -> new EnergyCellBlock(Properties.metalNoSolid(2.0f, 20.0f), variant), Tier.values());

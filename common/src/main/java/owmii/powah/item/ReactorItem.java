@@ -7,6 +7,7 @@ import javax.annotation.Nullable;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
+import net.minecraft.resources.ResourceKey;
 import net.minecraft.world.ContainerHelper;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.LivingEntity;
@@ -27,7 +28,7 @@ public class ReactorItem extends EnergyBlockItem<GeneratorConfig, ReactorBlock> 
      */
     private final ThreadLocal<Boolean> ALLOW_PLACEMENT = ThreadLocal.withInitial(() -> false);
 
-    public ReactorItem(ReactorBlock block, Properties properties, @Nullable CreativeModeTab group) {
+    public ReactorItem(ReactorBlock block, Properties properties, @Nullable ResourceKey<CreativeModeTab> group) {
         super(block, properties, group);
     }
 
@@ -57,7 +58,7 @@ public class ReactorItem extends EnergyBlockItem<GeneratorConfig, ReactorBlock> 
                 .collect(Collectors.toList());
 
         for (BlockPos blockPos : list) {
-            if (!context.getLevel().getBlockState(blockPos).getMaterial().isReplaceable())
+            if (!context.getLevel().getBlockState(blockPos).canBeReplaced())
                 return InteractionResult.FAIL;
         }
         List<LivingEntity> entities = context.getLevel().getEntitiesOfClass(LivingEntity.class, new AABB(pos).inflate(1.0D, 3.0D, 1.0D));

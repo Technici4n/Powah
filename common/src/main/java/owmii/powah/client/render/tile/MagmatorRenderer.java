@@ -33,7 +33,7 @@ public class MagmatorRenderer extends AbstractTileRenderer<MagmatorTile> {
                 float green = (color >> 8 & 0xFF) / 255.0F;
                 float blue = (color & 0xFF) / 255.0F;
                 RenderSystem.setShaderColor(red, green, blue, 1);
-                VertexConsumer buffer = rtb.getBuffer(RenderType.text(sprite.atlas().location()));
+                VertexConsumer buffer = rtb.getBuffer(RenderType.text(sprite.atlasLocation()));
                 matrix.pushPose();
                 float fill = (tank.getFluidAmount() * (0.45F)) / tank.getCapacity();
                 matrix.translate(0.1875f, 0.51D + fill, 0.1875f);

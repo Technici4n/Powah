@@ -15,7 +15,7 @@ import owmii.powah.lib.client.handler.IHudItem;
 
 public class HudHandler {
     public static void register() {
-        ClientGuiEvent.RENDER_HUD.register((matrices, tickDelta) -> {
+        ClientGuiEvent.RENDER_HUD.register((gui, tickDelta) -> {
             Minecraft mc = Minecraft.getInstance();
             if (mc.screen == null) {
                 Player player = mc.player;
@@ -26,7 +26,7 @@ public class HudHandler {
                         BlockPos pos = result.getBlockPos();
                         BlockState state = world.getBlockState(pos);
                         if (state.getBlock() instanceof IHud) {
-                            ((IHud) state.getBlock()).renderHud(matrices, state, world, pos, player, result, world.getBlockEntity(pos));
+                            ((IHud) state.getBlock()).renderHud(gui, state, world, pos, player, result, world.getBlockEntity(pos));
                         }
                         for (InteractionHand hand : InteractionHand.values()) {
                             ItemStack stack = player.getItemInHand(hand);

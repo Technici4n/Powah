@@ -1,4 +1,4 @@
-package owmii.powah.fabric.compat.emi;
+package owmii.powah.compat.emi;
 
 import dev.emi.emi.api.EmiPlugin;
 import dev.emi.emi.api.EmiRegistry;
@@ -6,7 +6,8 @@ import dev.emi.emi.api.recipe.EmiInfoRecipe;
 import dev.emi.emi.api.recipe.EmiRecipeCategory;
 import dev.emi.emi.api.stack.EmiStack;
 import java.util.List;
-import net.minecraft.core.Registry;
+
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.BlockItem;
@@ -80,7 +81,7 @@ public class PowahEMIPlugin implements EmiPlugin {
         RecipeManager manager = registry.getRecipeManager();
         manager.getAllRecipesFor(Recipes.ENERGIZING.get()).forEach(r -> registry.addRecipe(new EnergizingEmiRecipe(r)));
 
-        Registry.FLUID.entrySet().forEach(f -> {
+        BuiltInRegistries.FLUID.entrySet().forEach(f -> {
             var fluidId = f.getKey().location();
             var magmatic_heat = PowahAPI.MAGMATIC_FLUIDS.get(fluidId);
             if (magmatic_heat != null) {
@@ -98,7 +99,7 @@ public class PowahEMIPlugin implements EmiPlugin {
             }
         });
 
-        Registry.ITEM.entrySet().forEach(i -> {
+        BuiltInRegistries.ITEM.entrySet().forEach(i -> {
             var id = i.getKey().location();
             var coolantInfo = PowahAPI.SOLID_COOLANTS.get(id);
             if (coolantInfo != null) {
@@ -107,7 +108,7 @@ public class PowahEMIPlugin implements EmiPlugin {
 
             if (i.getValue() instanceof BlockItem blockItem) {
                 var block = blockItem.getBlock();
-                var blockId = Registry.BLOCK.getKey(block);
+                var blockId = BuiltInRegistries.BLOCK.getKey(block);
                 var heat = PowahAPI.HEAT_SOURCES.getOrDefault(blockId, 0);
                 if (heat != 0) {
                     registry.addRecipe(new HeatSourceEmiRecipe(EmiStack.of(blockItem), heat));

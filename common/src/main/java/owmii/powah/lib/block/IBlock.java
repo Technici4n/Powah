@@ -2,6 +2,7 @@ package owmii.powah.lib.block;
 
 import javax.annotation.Nullable;
 import net.minecraft.core.BlockPos;
+import net.minecraft.resources.ResourceKey;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.Level;
@@ -17,7 +18,7 @@ import owmii.powah.lib.registry.IVariantEntry;
 
 public interface IBlock<V extends IVariant, B extends Block & IBlock<V, B>> extends IVariantEntry<V, B>, EntityBlock {
     @SuppressWarnings("unchecked")
-    default ItemBlock getBlockItem(Item.Properties properties, @Nullable CreativeModeTab group) {
+    default ItemBlock getBlockItem(Item.Properties properties, @Nullable ResourceKey<CreativeModeTab> group) {
         return new ItemBlock((Block) this, properties, group);
     }
 

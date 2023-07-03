@@ -3,6 +3,7 @@ package owmii.powah.api;
 import java.util.HashMap;
 import java.util.Map;
 import net.minecraft.core.Registry;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.ItemLike;
 import net.minecraft.world.level.block.Block;
@@ -36,7 +37,7 @@ public class PowahAPI {
      * @return the heat value;
      **/
     public static int getMagmaticFluidHeat(Fluid fluid) {
-        return MAGMATIC_FLUIDS.getOrDefault(Registry.FLUID.getKey(fluid), 0);
+        return MAGMATIC_FLUIDS.getOrDefault(BuiltInRegistries.FLUID.getKey(fluid), 0);
     }
 
     /**
@@ -56,7 +57,7 @@ public class PowahAPI {
      * @return the coldness value;
      **/
     public static int getCoolant(Fluid fluid) {
-        return COOLANT_FLUIDS.getOrDefault(Registry.FLUID.getKey(fluid), 0);
+        return COOLANT_FLUIDS.getOrDefault(BuiltInRegistries.FLUID.getKey(fluid), 0);
     }
 
     /**
@@ -76,7 +77,7 @@ public class PowahAPI {
      * @return the heat of the block;
      **/
     public static int getHeatSource(Block block) {
-        return HEAT_SOURCES.getOrDefault(Registry.BLOCK.getKey(block), 0);
+        return HEAT_SOURCES.getOrDefault(BuiltInRegistries.BLOCK.getKey(block), 0);
     }
 
     /**
@@ -86,7 +87,7 @@ public class PowahAPI {
      * @param cooling: the coldness of the stack.
      **/
     public static void registerSolidCoolant(ItemLike item, int size, int cooling) {
-        SOLID_COOLANTS.put(Registry.ITEM.getKey(item.asItem()), Pair.of(size, cooling));
+        SOLID_COOLANTS.put(BuiltInRegistries.ITEM.getKey(item.asItem()), Pair.of(size, cooling));
     }
 
     /**
@@ -96,6 +97,6 @@ public class PowahAPI {
      * @return the coldness value;
      **/
     public static Pair<Integer, Integer> getSolidCoolant(ItemLike item) {
-        return SOLID_COOLANTS.getOrDefault(Registry.ITEM.getKey(item.asItem()), Pair.of(0, 0));
+        return SOLID_COOLANTS.getOrDefault(BuiltInRegistries.ITEM.getKey(item.asItem()), Pair.of(0, 0));
     }
 }

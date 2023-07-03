@@ -50,7 +50,7 @@ public class Builder {
                 while (itr.hasNext()) {
                     BlockPos pos = itr.next();
                     BlockState state = this.reactor.getBlock().defaultBlockState();
-                    if (!world.getBlockState(pos).getMaterial().isReplaceable()) {
+                    if (!world.getBlockState(pos).canBeReplaced()) {
                         this.demolish(world);
                         return false;
                     }

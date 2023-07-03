@@ -2,6 +2,7 @@ package owmii.powah.block.thermo;
 
 import javax.annotation.Nullable;
 import net.minecraft.core.BlockPos;
+import net.minecraft.resources.ResourceKey;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Inventory;
@@ -33,7 +34,7 @@ public class ThermoBlock extends AbstractGeneratorBlock<ThermoBlock> {
     }
 
     @Override
-    public EnergyBlockItem getBlockItem(Item.Properties properties, @Nullable CreativeModeTab group) {
+    public EnergyBlockItem getBlockItem(Item.Properties properties, @Nullable ResourceKey<CreativeModeTab> group) {
         return super.getBlockItem(properties.stacksTo(1), group);
     }
 

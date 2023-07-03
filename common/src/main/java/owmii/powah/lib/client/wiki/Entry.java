@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.function.Consumer;
 import javax.annotation.Nullable;
 import net.minecraft.core.Registry;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import owmii.powah.Powah;
@@ -30,7 +31,7 @@ public class Entry {
     public Entry(String name, @Nullable Icon icon, Wiki wiki) {
         this.wiki = wiki;
         if (icon == null) {
-            List<Item> items = VarReg.getSiblingIds(name).stream().map(s -> Registry.ITEM.get(Powah.id(s))).toList();
+            List<Item> items = VarReg.getSiblingIds(name).stream().map(s -> BuiltInRegistries.ITEM.get(Powah.id(s))).toList();
             this.icon = items.isEmpty() ? null : new Icon(items.get(0));
             this.name = name;
         } else {

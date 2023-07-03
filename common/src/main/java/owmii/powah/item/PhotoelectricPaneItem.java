@@ -23,7 +23,7 @@ public class PhotoelectricPaneItem extends ItemBase {
     public InteractionResult interactLivingEntity(ItemStack stack, Player playerIn, LivingEntity target, InteractionHand hand) {
         if (Powah.config().general.lens_of_ender) {
             if (target.getClass() == EnderMan.class || target.getClass() == Endermite.class) {
-                if (!playerIn.level.isClientSide) {
+                if (!playerIn.level().isClientSide) {
                     ItemStack stack1 = playerIn.getItemInHand(hand);
                     if (!playerIn.isCreative()) {
                         stack1.shrink(1);

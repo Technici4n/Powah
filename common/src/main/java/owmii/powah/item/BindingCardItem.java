@@ -38,7 +38,7 @@ public class BindingCardItem extends ItemBase {
         if (Powah.config().general.dimensional_binding_card) {
             if (this == Itms.BINDING_CARD.get()) {
                 if (target.getClass() == EnderMan.class || target.getClass() == Endermite.class) {
-                    if (!playerIn.level.isClientSide) {
+                    if (!playerIn.level().isClientSide) {
                         ItemStack stack1 = playerIn.getItemInHand(hand);
                         ItemStack stack2 = new ItemStack(Itms.BINDING_CARD_DIM.get());
                         CompoundTag nbt = Stack.getTagOrEmpty(stack1);

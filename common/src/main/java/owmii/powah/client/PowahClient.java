@@ -2,7 +2,6 @@ package owmii.powah.client;
 
 import owmii.powah.client.book.PowahBook;
 import owmii.powah.client.handler.HudHandler;
-import owmii.powah.client.handler.TextureHandler;
 import owmii.powah.client.model.PowahLayerDefinitions;
 import owmii.powah.client.render.entity.EntityRenderer;
 import owmii.powah.client.render.tile.TileRenderer;
@@ -19,7 +18,6 @@ public final class PowahClient {
         TileRenderer.register();
         Screens.register();
         ItemModelProperties.register();
-        TextureHandler.register();
         PowahBook.register();
     }
 }

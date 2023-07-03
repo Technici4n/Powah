@@ -1,9 +1,10 @@
 package owmii.powah.lib.client.screen.container;
 
 import com.google.common.collect.Lists;
-import com.mojang.blaze3d.vertex.PoseStack;
+
 import java.util.List;
 import net.minecraft.ChatFormatting;
+import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.renderer.Rect2i;
 import net.minecraft.core.Direction;
 import net.minecraft.network.chat.Component;
@@ -49,23 +50,24 @@ public class AbstractEnergyScreen<T extends AbstractEnergyStorage<?, ?> & IInven
                     this.topPos + yOffset + y + 10, Texture.CONFIG.get(this.te.getSideConfig().getType(side)), button -> {
                         Network.toServer(new NextEnergyConfigPacket(id, this.te.getBlockPos()));
                         this.te.getSideConfig().nextType(side);
-                    }, this).setTooltip(tooltip -> {
-                        tooltip.add(Component.translatable("info.lollipop.facing").append(Text.COLON).withStyle(ChatFormatting.GRAY)
-                                .append(Component.translatable("info.lollipop.side." + side.getSerializedName())
-                                        .withStyle(ChatFormatting.DARK_GRAY)));
-                        tooltip.add(this.te.getSideConfig().getType(side).getDisplayName());
-                    }));
+                    }, this).setTooltipSupplier(() -> List.of(
+                            Component.translatable("info.lollipop.facing").append(Text.COLON).withStyle(ChatFormatting.GRAY)
+                                    .append(Component.translatable("info.lollipop.side." + side.getSerializedName())
+                                            .withStyle(ChatFormatting.DARK_GRAY)),
+                            this.te.getSideConfig().getType(side).getDisplayName()
+                        )
+                    ));
         }
 
         this.configButtonAll = addRenderableWidget(
                 new IconButton(this.leftPos + this.imageWidth + x + 14, this.topPos + y + 4, Texture.CONFIG_BTN, button -> {
                     Network.toServer(new NextEnergyConfigPacket(6, this.te.getBlockPos()));
                     this.te.getSideConfig().nextTypeAll();
-                }, this).setTooltip(tooltip -> {
-                    tooltip.add(Component.translatable("info.lollipop.facing").append(Text.COLON).withStyle(ChatFormatting.GRAY)
-                            .append(Component.translatable("info.lollipop.all").withStyle(ChatFormatting.DARK_GRAY)));
-                    tooltip.add(this.te.getSideConfig().getType(Direction.UP).getDisplayName());
-                }));
+                }, this).setTooltipSupplier(() -> List.of(
+                    Component.translatable("info.lollipop.facing").append(Text.COLON).withStyle(ChatFormatting.GRAY)
+                            .append(Component.translatable("info.lollipop.all").withStyle(ChatFormatting.DARK_GRAY)),
+                    this.te.getSideConfig().getType(Direction.UP).getDisplayName()
+                )));
     }
 
     @Override
@@ -84,10 +86,10 @@ public class AbstractEnergyScreen<T extends AbstractEnergyStorage<?, ?> & IInven
     }
 
     @Override
-    protected void drawBackground(PoseStack matrix, float partialTicks, int mouseX, int mouseY) {
-        super.drawBackground(matrix, partialTicks, mouseX, mouseY);
+    protected void drawBackground(GuiGraphics guiGraphics, float partialTicks, int mouseX, int mouseY) {
+        super.drawBackground(guiGraphics, partialTicks, mouseX, mouseY);
         if (hasConfigButtons()) {
-            Texture.CONFIG_BTN_BG.draw(matrix, this.configButtons[1].x - 8, this.configButtons[1].y - 4);
+            Texture.CONFIG_BTN_BG.draw(guiGraphics, this.configButtons[1].getX() - 8, this.configButtons[1].getY() - 4);
         }
     }
 
@@ -95,7 +97,7 @@ public class AbstractEnergyScreen<T extends AbstractEnergyStorage<?, ?> & IInven
     public List<Rect2i> getExtraAreas() {
         final List<Rect2i> extraAreas = super.getExtraAreas();
         if (hasConfigButtons()) {
-            extraAreas.add(toRectangle2d(this.configButtons[1].x - 8, this.configButtons[1].y - 4, Texture.CONFIG_BTN_BG));
+            extraAreas.add(toRectangle2d(this.configButtons[1].getX() - 8, this.configButtons[1].getY() - 4, Texture.CONFIG_BTN_BG));
         }
         return extraAreas;
     }

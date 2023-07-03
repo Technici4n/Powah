@@ -37,7 +37,6 @@ public class SlotItemHandler extends Slot {
         this.setChanged();
     }
 
-    @Override
     public void initialize(ItemStack stack) {
         this.getItemHandler().setStackInSlot(index, stack);
     }

@@ -17,8 +17,10 @@ import mezz.jei.api.recipe.RecipeType;
 import mezz.jei.api.recipe.category.IRecipeCategory;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.resources.language.I18n;
 import net.minecraft.core.Registry;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.BlockItem;
@@ -74,10 +76,10 @@ public class HeatSourceCategory implements IRecipeCategory<HeatSourceCategory.Re
     }
 
     @Override
-    public void draw(Recipe recipe, IRecipeSlotsView recipeSlotsView, PoseStack matrix, double mouseX, double mouseY) {
+    public void draw(Recipe recipe, IRecipeSlotsView recipeSlotsView, GuiGraphics guiGraphics, double mouseX, double mouseY) {
         Minecraft minecraft = Minecraft.getInstance();
-        minecraft.font.draw(matrix, ChatFormatting.DARK_GRAY + I18n.get("info.lollipop.temperature") + ": "
-                + ChatFormatting.RESET + I18n.get("info.lollipop.temperature.c", recipe.heat), 30.0F, 9.0F, 0xc43400);
+        guiGraphics.drawString(minecraft.font, ChatFormatting.DARK_GRAY + I18n.get("info.lollipop.temperature") + ": "
+                + ChatFormatting.RESET + I18n.get("info.lollipop.temperature.c", recipe.heat), 30, 9, 0xc43400, false);
     }
 
     public static List<Recipe> getRecipes() {
@@ -85,13 +87,13 @@ public class HeatSourceCategory implements IRecipeCategory<HeatSourceCategory.Re
 
         // Block heat sources. We iterate the item registry in search of block items, because
         // we need an item to show as the ingredient and link it as a JEI ingredient.
-        for (var item : Registry.ITEM) {
+        for (var item : BuiltInRegistries.ITEM) {
             if (!(item instanceof BlockItem blockItem)) {
                 continue;
             }
 
             var block = blockItem.getBlock();
-            var blockId = Registry.BLOCK.getKey(block);
+            var blockId = BuiltInRegistries.BLOCK.getKey(block);
             var heat = PowahAPI.HEAT_SOURCES.getOrDefault(blockId, 0);
             if (heat != 0) {
                 recipes.add(new Recipe(blockItem.getDefaultInstance(), null, heat));
@@ -99,7 +101,7 @@ public class HeatSourceCategory implements IRecipeCategory<HeatSourceCategory.Re
         }
 
         // Fluid heat sources
-        for (var entry : Registry.FLUID.entrySet()) {
+        for (var entry : BuiltInRegistries.FLUID.entrySet()) {
             var fluidId = entry.getKey().location();
             var heat = PowahAPI.HEAT_SOURCES.getOrDefault(fluidId, 0);
             if (heat != 0) {

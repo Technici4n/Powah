@@ -4,6 +4,8 @@ import dev.architectury.registry.registries.DeferredRegister;
 import java.util.List;
 import java.util.function.Supplier;
 import net.minecraft.core.Registry;
+import net.minecraft.core.RegistryAccess;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
@@ -26,7 +28,7 @@ import owmii.powah.block.thermo.ThermoTile;
 import owmii.powah.block.transmitter.PlayerTransmitterTile;
 
 public class Tiles {
-    public static final DeferredRegister<BlockEntityType<?>> DR = DeferredRegister.create(Powah.MOD_ID, Registry.BLOCK_ENTITY_TYPE_REGISTRY);
+    public static final DeferredRegister<BlockEntityType<?>> DR = DeferredRegister.create(Powah.MOD_ID, Registries.BLOCK_ENTITY_TYPE);
 
     private static <BE extends BlockEntity> Supplier<BlockEntityType<BE>> register(String path, BlockEntityType.BlockEntitySupplier<BE> supplier,
             Supplier<List<Block>> blocks) {

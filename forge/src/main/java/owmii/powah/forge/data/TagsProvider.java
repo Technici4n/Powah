@@ -1,27 +1,31 @@
 package owmii.powah.forge.data;
 
-import static net.minecraftforge.common.Tags.Blocks.ORES;
-import static net.minecraftforge.common.Tags.Blocks.STORAGE_BLOCKS;
-
-import net.minecraft.core.Registry;
-import net.minecraft.data.DataGenerator;
-import net.minecraft.data.tags.BlockTagsProvider;
+import net.minecraft.core.HolderLookup;
+import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.data.PackOutput;
 import net.minecraft.data.tags.ItemTagsProvider;
 import net.minecraft.tags.BlockTags;
+import net.minecraft.world.level.block.Block;
 import net.minecraftforge.common.Tags;
+import net.minecraftforge.common.data.BlockTagsProvider;
 import net.minecraftforge.common.data.ExistingFileHelper;
 import owmii.powah.Powah;
 import owmii.powah.block.Blcks;
 import owmii.powah.item.Itms;
 
+import java.util.concurrent.CompletableFuture;
+
+import static net.minecraftforge.common.Tags.Blocks.ORES;
+import static net.minecraftforge.common.Tags.Blocks.STORAGE_BLOCKS;
+
 public class TagsProvider {
     public static class Blocks extends BlockTagsProvider {
-        public Blocks(DataGenerator generatorIn, String modId, ExistingFileHelper existingFileHelper) {
-            super(generatorIn, modId, existingFileHelper);
+        public Blocks(PackOutput output, CompletableFuture<HolderLookup.Provider> lookupProvider, ExistingFileHelper existingFileHelper) {
+            super(output, lookupProvider, Powah.MOD_ID, existingFileHelper);
         }
 
         @Override
-        protected void addTags() {
+        protected void addTags(HolderLookup.Provider provider) {
             // Remove non-dry ice if Forge handles them in the future
             tag(ITags.Blocks.ICES).addTag(ITags.Blocks.ICES_ICE).addTag(ITags.Blocks.ICES_PACKED).addTag(ITags.Blocks.ICES_BLUE);
             tag(ITags.Blocks.ICES_ICE).add(net.minecraft.world.level.block.Blocks.ICE);
@@ -39,8 +43,8 @@ public class TagsProvider {
             tag(ITags.Blocks.URANINITE_BLOCK).add(Blcks.URANINITE.get());
 
             // All of our blocks are mineable with a pickaxe
-            for (var block : Registry.BLOCK) {
-                if (Registry.BLOCK.getKey(block).getNamespace().equals(Powah.MOD_ID)) {
+            for (var block : BuiltInRegistries.BLOCK) {
+                if (BuiltInRegistries.BLOCK.getKey(block).getNamespace().equals(Powah.MOD_ID)) {
                     tag(BlockTags.MINEABLE_WITH_PICKAXE).add(block);
                 }
             }
@@ -50,12 +54,12 @@ public class TagsProvider {
     }
 
     public static class Items extends ItemTagsProvider {
-        public Items(DataGenerator dataGenerator, BlockTagsProvider blockTagProvider, String modId, ExistingFileHelper existingFileHelper) {
-            super(dataGenerator, blockTagProvider, modId, existingFileHelper);
+        public Items(PackOutput output, CompletableFuture<HolderLookup.Provider> provider, CompletableFuture<TagLookup<Block>> blockTagProvider, ExistingFileHelper existingFileHelper) {
+            super(output, provider, blockTagProvider, Powah.MOD_ID, existingFileHelper);
         }
 
         @Override
-        protected void addTags() {
+        protected void addTags(HolderLookup.Provider arg) {
             // Remove non-dry ice if Forge handles them in the future
             tag(ITags.Items.ICES).addTag(ITags.Items.ICES_ICE).addTag(ITags.Items.ICES_PACKED).addTag(ITags.Items.ICES_BLUE);
             tag(ITags.Items.ICES_ICE).add(net.minecraft.world.item.Items.ICE);

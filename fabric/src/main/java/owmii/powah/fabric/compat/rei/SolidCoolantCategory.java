@@ -62,14 +62,14 @@ public class SolidCoolantCategory implements DisplayCategory<SolidCoolantDisplay
                 .disableBackground()
                 .markInput()
                 .entries(display.getInputEntries().get(0)));
-        widgets.add(Widgets.createDrawableWidget((helper, matrices, mouseX, mouseY, delta) -> {
+        widgets.add(Widgets.createDrawableWidget((gui, mouseX, mouseY, delta) -> {
             Minecraft minecraft = Minecraft.getInstance();
-            minecraft.font.draw(matrices, I18n.get("info.lollipop.amount") + ": " + I18n.get("info.lollipop.mb", display.getAmount()),
-                    origin.x + 30.0F, origin.y + 3.0F, 0x444444);
-            minecraft.font.draw(matrices,
+            gui.drawString(minecraft.font, I18n.get("info.lollipop.amount") + ": " + I18n.get("info.lollipop.mb", display.getAmount()),
+                    origin.x + 30, origin.y + 3, 0x444444, false);
+            gui.drawString(minecraft.font,
                     I18n.get("info.lollipop.temperature") + ": "
                             + I18n.get("info.lollipop.temperature.c", "" + ChatFormatting.DARK_AQUA + display.getColdness()),
-                    origin.x + 30.0F, origin.y + 15.0F, 0x444444);
+                    origin.x + 30, origin.y + 15, 0x444444, false);
         }));
 
         return widgets;

@@ -1,11 +1,11 @@
 package owmii.powah.lib.client.wiki.page;
 
-import com.mojang.blaze3d.vertex.PoseStack;
 import java.util.ArrayList;
 import java.util.List;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.gui.Font;
-import net.minecraft.core.Registry;
+import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.resources.ResourceLocation;
@@ -101,7 +101,7 @@ public class Info extends Page {
             for (int j = 0; j < words.length; j++) {
                 String w = words[j];
                 if (w.startsWith("<") && w.contains(":") && w.endsWith(">")) {
-                    Item item = Registry.ITEM.get(new ResourceLocation(w.substring(1, w.length() - 1)));
+                    Item item = BuiltInRegistries.ITEM.get(new ResourceLocation(w.substring(1, w.length() - 1)));
                     ft = ft.append(new ItemStack(item).getHoverName().plainCopy().withStyle(ChatFormatting.BLUE)).append(" ");
                 } else {
                     ft = ft.append(w).append(" ");
@@ -113,9 +113,9 @@ public class Info extends Page {
     }
 
     @Override
-    public void render(PoseStack matrix, int x, int y, int mx, int my, float pt, Font font, WikiScreen screen) {
+    public void render(GuiGraphics gui, int x, int y, int mx, int my, float pt, Font font, WikiScreen screen) {
         if (!this.img.isEmpty()) {
-            this.img.draw(matrix, x + 3, y + 3);
+            this.img.draw(gui, x + 3, y + 3);
             y += this.img.getHeight() + 2;
         }
         for (int i = 0; i < this.cache.size(); i++) {

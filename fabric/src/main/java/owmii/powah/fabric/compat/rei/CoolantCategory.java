@@ -62,12 +62,12 @@ public class CoolantCategory implements DisplayCategory<CoolantDisplay> {
                 .disableBackground()
                 .markInput()
                 .entries(display.getInputEntries().get(0)));
-        widgets.add(Widgets.createDrawableWidget((helper, matrices, mouseX, mouseY, delta) -> {
+        widgets.add(Widgets.createDrawableWidget((gui, mouseX, mouseY, delta) -> {
             Minecraft minecraft = Minecraft.getInstance();
-            minecraft.font.draw(matrices,
+            gui.drawString(minecraft.font,
                     I18n.get("info.lollipop.temperature") + ": "
                             + I18n.get("info.lollipop.temperature.c", "" + ChatFormatting.DARK_AQUA + display.getColdness()),
-                    origin.x + 30.0F, origin.y + 9.0F, 0x444444);
+                    origin.x + 30, origin.y + 9, 0x444444, false);
         }));
         return widgets;
     }

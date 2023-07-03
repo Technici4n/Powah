@@ -3,7 +3,7 @@ package owmii.powah.world.gen;
 import static owmii.powah.world.gen.Features.*;
 
 import dev.architectury.registry.level.biome.BiomeModifications;
-import net.minecraft.core.Registry;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.levelgen.GenerationStep;
@@ -12,7 +12,7 @@ import owmii.powah.Powah;
 
 public class WorldGen {
 
-    private static final TagKey<Biome> DRY_ICE_BIOME = TagKey.create(Registry.BIOME_REGISTRY, Powah.id("has_dry_ice"));
+    private static final TagKey<Biome> DRY_ICE_BIOME = TagKey.create(Registries.BIOME, Powah.id("has_dry_ice"));
 
     public static void init() {
         BiomeModifications.addProperties((ctx, mut) -> {
@@ -20,12 +20,12 @@ public class WorldGen {
                 return;
             }
 
-            mut.getGenerationProperties().addFeature(GenerationStep.Decoration.UNDERGROUND_ORES, URANINITE_POOR);
-            mut.getGenerationProperties().addFeature(GenerationStep.Decoration.UNDERGROUND_ORES, URANINITE);
-            mut.getGenerationProperties().addFeature(GenerationStep.Decoration.UNDERGROUND_ORES, URANINITE_DENSE);
+            mut.getGenerationProperties().addFeature(GenerationStep.Decoration.UNDERGROUND_ORES, PLACED_URANINITE_POOR);
+            mut.getGenerationProperties().addFeature(GenerationStep.Decoration.UNDERGROUND_ORES, PLACED_URANINITE);
+            mut.getGenerationProperties().addFeature(GenerationStep.Decoration.UNDERGROUND_ORES, PLACED_URANINITE_DENSE);
 
             if (ctx.hasTag(DRY_ICE_BIOME)) {
-                mut.getGenerationProperties().addFeature(GenerationStep.Decoration.UNDERGROUND_ORES, DRY_ICE);
+                mut.getGenerationProperties().addFeature(GenerationStep.Decoration.UNDERGROUND_ORES, PLACED_DRY_ICE);
             }
         });
     }

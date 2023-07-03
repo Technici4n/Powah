@@ -9,6 +9,9 @@ import net.minecraft.world.inventory.MenuType;
 import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
+import owmii.powah.lib.logistics.inventory.slot.SlotItemHandler;
+
+import java.util.List;
 
 public abstract class AbstractContainer extends AbstractContainerMenu {
     public final Player player;
@@ -21,11 +24,26 @@ public abstract class AbstractContainer extends AbstractContainerMenu {
     public AbstractContainer(@Nullable MenuType<?> type, int id, Inventory inventory) {
         super(type, id);
         this.player = inventory.player;
-        this.world = this.player.level;
+        this.world = this.player.level();
         init(inventory);
     }
 
     protected void init(Inventory inventory) {
+    }
+
+    @Override
+    public void initializeContents(int stateId, List<ItemStack> items, ItemStack carried) {
+        for (int i = 0; i < items.size(); ++i) {
+            var slot = this.getSlot(i);
+            if (slot instanceof SlotItemHandler slotIh) {
+                slotIh.initialize(items.get(i));
+            } else {
+                slot.set(items.get(i));
+            }
+        }
+
+        this.setCarried(carried);
+        this.stateId = stateId;
     }
 
     protected void addPlayerInventory(Inventory playerInventory, int x, int y, int yDif) {

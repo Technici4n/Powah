@@ -2,10 +2,9 @@ package owmii.powah.lib.client.util;
 
 import com.mojang.blaze3d.vertex.BufferBuilder;
 import com.mojang.blaze3d.vertex.DefaultVertexFormat;
-import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.Tesselator;
 import com.mojang.blaze3d.vertex.VertexFormat;
-import com.mojang.math.Matrix4f;
+import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import owmii.powah.lib.logistics.energy.Energy;
 
@@ -58,14 +57,14 @@ public class Draw {
         }
     }
 
-    public static void drawTexturedModalRect(PoseStack poseStack, int x, int y, int u, int v, int width, int height, float zLevel) {
+    public static void drawTexturedModalRect(GuiGraphics gui, int x, int y, int u, int v, int width, int height, float zLevel) {
         final float uScale = 1f / 0x100;
         final float vScale = 1f / 0x100;
 
         Tesselator tessellator = Tesselator.getInstance();
         BufferBuilder wr = tessellator.getBuilder();
         wr.begin(VertexFormat.Mode.QUADS, DefaultVertexFormat.POSITION_TEX);
-        Matrix4f matrix = poseStack.last().pose();
+        var matrix = gui.pose().last().pose();
         wr.vertex(matrix, x, y + height, zLevel).uv(u * uScale, ((v + height) * vScale)).endVertex();
         wr.vertex(matrix, x + width, y + height, zLevel).uv((u + width) * uScale, ((v + height) * vScale)).endVertex();
         wr.vertex(matrix, x + width, y, zLevel).uv((u + width) * uScale, (v * vScale)).endVertex();

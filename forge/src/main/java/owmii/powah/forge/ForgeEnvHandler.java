@@ -10,6 +10,8 @@ import net.minecraft.client.renderer.BlockEntityWithoutLevelRenderer;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.Registry;
+import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.tags.BiomeTags;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.Container;
@@ -24,19 +26,17 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.client.extensions.common.IClientItemExtensions;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.capabilities.Capability;
+import net.minecraftforge.common.capabilities.ForgeCapabilities;
 import net.minecraftforge.common.capabilities.ICapabilityProvider;
 import net.minecraftforge.common.util.LazyOptional;
-import net.minecraftforge.energy.CapabilityEnergy;
 import net.minecraftforge.energy.IEnergyStorage;
 import net.minecraftforge.event.AttachCapabilitiesEvent;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.FluidUtil;
-import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
 import net.minecraftforge.fluids.capability.IFluidHandler;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
-import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegisterEvent;
@@ -69,12 +69,12 @@ public class ForgeEnvHandler implements EnvHandler {
     @Override
     public void setupBlockItems() {
         modEventBus.addListener((RegisterEvent event) -> {
-            if (event.getRegistryKey() == Registry.ITEM_REGISTRY) {
+            if (event.getRegistryKey() == Registries.ITEM) {
                 var registry = event.getForgeRegistry();
                 for (var block : ForgeRegistries.BLOCKS.getValues()) {
                     if (block instanceof IBlock<?, ?>iBlock) {
-                        var blockItem = iBlock.getBlockItem(new Item.Properties(), ItemGroups.MAIN);
-                        var name = Registry.BLOCK.getKey(block);
+                        var blockItem = iBlock.getBlockItem(new Item.Properties(), ItemGroups.MAIN_KEY);
+                        var name = BuiltInRegistries.BLOCK.getKey(block);
                         registry.register(name, blockItem);
                     }
                 }
@@ -85,11 +85,6 @@ public class ForgeEnvHandler implements EnvHandler {
     @Override
     public void registerWorldgen() {
         EnvHandler.super.registerWorldgen();
-        modEventBus.addListener((RegisterEvent event) -> {
-            if (event.getRegistryKey() == Registry.FEATURE_REGISTRY) {
-                Features.init();
-            }
-        });
     }
 
     @Override
@@ -122,7 +117,7 @@ public class ForgeEnvHandler implements EnvHandler {
                     @Override
                     public <T> LazyOptional<T> getCapability(@NotNull Capability<T> cap, @Nullable Direction side) {
                         if (reactorPart.core().isPresent()) {
-                            if (cap != CapabilityEnergy.ENERGY || reactorPart.isExtractor()) {
+                            if (cap != ForgeCapabilities.ENERGY || reactorPart.isExtractor()) {
                                 return reactorPart.core().get().getCapability(cap, side);
                             }
                         }
@@ -135,7 +130,7 @@ public class ForgeEnvHandler implements EnvHandler {
                     @NotNull
                     @Override
                     public <T> LazyOptional<T> getCapability(@NotNull Capability<T> capability, @Nullable Direction side) {
-                        if (capability == CapabilityEnergy.ENERGY) {
+                        if (capability == ForgeCapabilities.ENERGY) {
                             if (energyStorage.isEnergyPresent(side)) {
                                 return LazyOptional.of(() -> new IEnergyStorage() {
                                     @Override
@@ -179,7 +174,7 @@ public class ForgeEnvHandler implements EnvHandler {
                     @NotNull
                     @Override
                     public <T> LazyOptional<T> getCapability(@NotNull Capability<T> capability, @Nullable Direction side) {
-                        if (capability == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY) {
+                        if (capability == ForgeCapabilities.ITEM_HANDLER) {
                             var inv = holder.getInventory();
                             if (!inv.isBlank()) {
                                 return LazyOptional.of(inv::getPlatformWrapper).cast();
@@ -194,7 +189,7 @@ public class ForgeEnvHandler implements EnvHandler {
                     @NotNull
                     @Override
                     public <T> LazyOptional<T> getCapability(@NotNull Capability<T> capability, @Nullable Direction arg) {
-                        if (capability == CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY) {
+                        if (capability == ForgeCapabilities.FLUID_HANDLER) {
                             return LazyOptional.of(holder.getTank()::getPlatformWrapper).cast();
                         }
                         return LazyOptional.empty();
@@ -208,7 +203,7 @@ public class ForgeEnvHandler implements EnvHandler {
                     @NotNull
                     @Override
                     public <T> LazyOptional<T> getCapability(@NotNull Capability<T> cap, @Nullable Direction arg) {
-                        if (cap == CapabilityEnergy.ENERGY) {
+                        if (cap == ForgeCapabilities.ENERGY) {
                             var info = eci.getEnergyInfo();
                             if (info != null) {
                                 return LazyOptional.of(() -> {
@@ -353,19 +348,19 @@ public class ForgeEnvHandler implements EnvHandler {
 
     @Override
     public boolean canDischarge(ItemStack stack) {
-        return stack.getCapability(CapabilityEnergy.ENERGY).map(s -> s.canExtract() && s.getEnergyStored() > 0).orElse(false);
+        return stack.getCapability(ForgeCapabilities.ENERGY).map(s -> s.canExtract() && s.getEnergyStored() > 0).orElse(false);
     }
 
     @Override
     public boolean hasEnergy(Level level, BlockPos pos, Direction side) {
         var be = level.getBlockEntity(pos);
-        return be != null && be.getCapability(CapabilityEnergy.ENERGY, side).isPresent();
+        return be != null && be.getCapability(ForgeCapabilities.ENERGY, side).isPresent();
     }
 
     @Override
     public long pushEnergy(Level level, BlockPos pos, Direction side, long howMuch) {
         var be = level.getBlockEntity(pos);
-        var handler = be != null ? be.getCapability(CapabilityEnergy.ENERGY, side).orElse(null) : null;
+        var handler = be != null ? be.getCapability(ForgeCapabilities.ENERGY, side).orElse(null) : null;
         return handler != null ? handler.receiveEnergy(Ints.saturatedCast(howMuch), false) : 0;
     }
 
@@ -410,7 +405,7 @@ public class ForgeEnvHandler implements EnvHandler {
         for (ItemStack stack : stacks) {
             if (stack.isEmpty())
                 continue;
-            var cap = stack.getCapability(CapabilityEnergy.ENERGY).orElse(EmptyEnergyStorage.INSTANCE);
+            var cap = stack.getCapability(ForgeCapabilities.ENERGY).orElse(EmptyEnergyStorage.INSTANCE);
             charged += op.perform(cap, Ints.saturatedCast(Math.min(maxPerStack, maxTotal - charged)), false);
         }
         return charged;

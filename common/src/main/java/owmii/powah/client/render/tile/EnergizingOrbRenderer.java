@@ -1,15 +1,17 @@
 package owmii.powah.client.render.tile;
 
 import com.mojang.blaze3d.vertex.PoseStack;
-import com.mojang.math.Vector3f;
 import java.util.ArrayList;
 import java.util.List;
+
+import com.mojang.math.Axis;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.block.model.ItemTransforms;
 import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
+import net.minecraft.world.item.ItemDisplayContext;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.phys.Vec3;
 import owmii.powah.block.energizing.EnergizingOrbTile;
@@ -37,9 +39,9 @@ public class EnergizingOrbRenderer extends AbstractTileRenderer<EnergizingOrbTil
             if (!output.isEmpty()) {
                 matrix.pushPose();
                 matrix.translate(0.5D, 0.6D, 0.5D);
-                matrix.mulPose(Vector3f.YP.rotationDegrees(-ticks * 360.0F));
+                matrix.mulPose(Axis.YP.rotationDegrees(-ticks * 360.0F));
                 matrix.scale(0.35F, 0.35F, 0.35F);
-                mc.getItemRenderer().renderStatic(output, ItemTransforms.TransformType.FIXED, light, ov, matrix, rtb, 0);
+                mc.getItemRenderer().renderStatic(output, ItemDisplayContext.FIXED, light, ov, matrix, rtb, world, 0);
                 matrix.popPose();
             } else {
                 List<ItemStack> stacks = new ArrayList<>(inv.getNonEmptyStacks());
@@ -55,8 +57,8 @@ public class EnergizingOrbRenderer extends AbstractTileRenderer<EnergizingOrbTil
                             matrix.translate(v3d1.x + 0.5D, v3d1.y + 0.6D, v3d1.z + 0.5D);
                         }
                         matrix.scale(0.35F, 0.35F, 0.35F);
-                        matrix.mulPose(Vector3f.YP.rotationDegrees(-ticks * 360.0F));
-                        mc.getItemRenderer().renderStatic(stack, ItemTransforms.TransformType.FIXED, light, ov, matrix, rtb, 0);
+                        matrix.mulPose(Axis.YP.rotationDegrees(-ticks * 360.0F));
+                        mc.getItemRenderer().renderStatic(stack, ItemDisplayContext.FIXED, light, ov, matrix, rtb, world, 0);
                         matrix.popPose();
                     }
                 }

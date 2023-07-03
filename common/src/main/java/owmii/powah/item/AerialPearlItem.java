@@ -27,7 +27,7 @@ public class AerialPearlItem extends ItemBase {
                 if (target.getClass() == Zombie.class
                         || target.getClass() == ZombieVillager.class
                         || target.getClass() == Husk.class) {
-                    if (!playerIn.level.isClientSide) {
+                    if (!playerIn.level().isClientSide) {
                         ItemStack stack1 = playerIn.getItemInHand(hand);
                         ItemStackHooks.giveItem((ServerPlayer) playerIn, new ItemStack(Itms.PLAYER_AERIAL_PEARL.get()));
                         target.playSound(SoundEvents.ZOMBIE_DEATH, 0.5F, 1.0F);

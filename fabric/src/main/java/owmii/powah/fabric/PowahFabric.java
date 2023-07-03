@@ -26,7 +26,7 @@ public class PowahFabric implements ModInitializer {
 
             var stack = player.getItemInHand(hand);
             if (stack.getItem() instanceof ItemBase itemBase) {
-                return itemBase.onItemUseFirst(stack, player.level, hitResult.getBlockPos(), player, hand, hitResult.getDirection(),
+                return itemBase.onItemUseFirst(stack, player.level(), hitResult.getBlockPos(), player, hand, hitResult.getDirection(),
                         hitResult.getLocation());
             }
             return InteractionResult.PASS;
