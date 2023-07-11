@@ -43,9 +43,9 @@ dependencies {
     modCompileOnly "me.shedaniel:RoughlyEnoughItems-fabric:${rootProject.rei_version}"
 
     // Choose REI, JEI or EMI
-    modRuntimeOnly "me.shedaniel:RoughlyEnoughItems-fabric:${rootProject.rei_version}"
+    //modRuntimeOnly "me.shedaniel:RoughlyEnoughItems-fabric:${rootProject.rei_version}"
     //modRuntimeOnly("mezz.jei:jei-${project.jei_minecraft_release}-fabric:${project.jei_version}")
-    //modRuntimeOnly "dev.emi:emi:${project.emi_version}"
+    modRuntimeOnly "dev.emi:emi-fabric:${project.emi_version}"
 
     include modApi('teamreborn:energy:2.2.0') {
         exclude(group: "net.fabricmc.fabric-api")

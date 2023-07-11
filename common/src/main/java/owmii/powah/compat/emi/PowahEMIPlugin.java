@@ -1,10 +1,12 @@
 package owmii.powah.compat.emi;
 
+import dev.emi.emi.api.EmiEntrypoint;
 import dev.emi.emi.api.EmiPlugin;
 import dev.emi.emi.api.EmiRegistry;
 import dev.emi.emi.api.recipe.EmiInfoRecipe;
 import dev.emi.emi.api.recipe.EmiRecipeCategory;
 import dev.emi.emi.api.stack.EmiStack;
+import dev.emi.emi.api.widget.Bounds;
 import java.util.List;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.network.chat.Component;
@@ -18,8 +20,10 @@ import owmii.powah.api.PowahAPI;
 import owmii.powah.block.Blcks;
 import owmii.powah.block.Tier;
 import owmii.powah.item.Itms;
+import owmii.powah.lib.client.screen.container.AbstractContainerScreen;
 import owmii.powah.recipe.Recipes;
 
+@EmiEntrypoint
 public class PowahEMIPlugin implements EmiPlugin {
     public static final EmiRecipeCategory MAGMATOR_CATEGORY = new EmiRecipeCategory(new ResourceLocation(Powah.MOD_ID, "magmatic"),
             EmiStack.of(Blcks.MAGMATOR.get(Tier.BASIC))) {
@@ -125,5 +129,12 @@ public class PowahEMIPlugin implements EmiPlugin {
             registry.addRecipe(new EmiInfoRecipe(List.of(EmiStack.of(Itms.LENS_OF_ENDER.get())),
                     List.of(Component.translatable("jei.powah.lens_of_ender")), null));
 
+        registry.addGenericExclusionArea((screen, consumer) -> {
+            if (screen instanceof AbstractContainerScreen<?>containerScreen) {
+                for (var area : containerScreen.getExtraAreas()) {
+                    consumer.accept(new Bounds(area.getX(), area.getY(), area.getWidth(), area.getHeight()));
+                }
+            }
+        });
     }
 }
