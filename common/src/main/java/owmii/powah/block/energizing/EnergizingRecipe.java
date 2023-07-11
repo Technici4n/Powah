@@ -109,6 +109,11 @@ public class EnergizingRecipe implements Recipe<RecipeWrapper> {
         return this.ingredients;
     }
 
+    @Override
+    public boolean isSpecial() {
+        return true;
+    }
+
     public static class Serializer implements RecipeSerializer<EnergizingRecipe> {
         @Override
         public EnergizingRecipe fromJson(ResourceLocation recipeId, JsonObject json) {
