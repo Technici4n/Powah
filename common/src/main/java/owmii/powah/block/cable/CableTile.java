@@ -10,6 +10,7 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.ChunkPos;
 import net.minecraft.world.level.block.state.BlockState;
+import org.apache.commons.lang3.mutable.MutableBoolean;
 import owmii.powah.block.Tier;
 import owmii.powah.block.Tiles;
 import owmii.powah.config.v2.types.CableConfig;
@@ -26,6 +27,11 @@ public abstract class CableTile extends AbstractEnergyStorage<CableConfig, Cable
     public final EnumSet<Direction> energySides = EnumSet.noneOf(Direction.class);
     @Nullable
     CableNet net = null;
+    /**
+     * True when energy is being inserted into the network.
+     * Must be called after {@link #getCables()} to make sure that it is up-to-date for the network.
+     */
+    protected MutableBoolean netInsertionGuard = new MutableBoolean(false);
     protected int startIndex = 0;
 
     public CableTile(BlockPos pos, BlockState state, Tier variant) {

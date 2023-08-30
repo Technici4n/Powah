@@ -22,20 +22,30 @@ public class ForgeCableTile extends CableTile {
             return 0;
         long received = 0;
         var cables = getCables();
-        if (!simulate) {
-            startIndex++; // round robin!
-        }
 
-        for (var cable : cables) {
-            long amount = maxReceive - received;
-            if (amount <= 0)
-                break;
-            if (!cable.energySides.isEmpty() && cable.isActive()) {
-                received += ((ForgeCableTile) cable).pushEnergy(amount, simulate, direction, this);
+        var insertionGuard = this.netInsertionGuard;
+        if (insertionGuard.isTrue())
+            return 0;
+        insertionGuard.setTrue();
+
+        try {
+            if (!simulate) {
+                startIndex++; // round robin!
             }
-        }
 
-        return received;
+            for (var cable : cables) {
+                long amount = maxReceive - received;
+                if (amount <= 0)
+                    break;
+                if (!cable.energySides.isEmpty() && cable.isActive()) {
+                    received += ((ForgeCableTile) cable).pushEnergy(amount, simulate, direction, this);
+                }
+            }
+
+            return received;
+        } finally {
+            insertionGuard.setFalse();
+        }
     }
 
     private long pushEnergy(long maxReceive, boolean simulate, @Nullable Direction direction, CableTile cable) {

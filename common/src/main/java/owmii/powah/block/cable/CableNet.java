@@ -11,6 +11,7 @@ import java.util.WeakHashMap;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.world.level.Level;
+import org.apache.commons.lang3.mutable.MutableBoolean;
 
 class CableNet {
     private static final Map<Level, Map<BlockPos, CableTile>> loadedCables = new WeakHashMap<>();
@@ -75,9 +76,11 @@ class CableNet {
             }
         }
 
+        var insertionGuard = new MutableBoolean();
         var net = new CableNet(new ArrayList<>(cables));
         for (var tile : net.cableList) {
             tile.net = net;
+            tile.netInsertionGuard = insertionGuard;
         }
     }
 
