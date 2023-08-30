@@ -24,22 +24,32 @@ public class FabricCableTile extends CableTile {
             return 0;
         long received = 0;
         var cables = getCables();
-        int tickCount = ((ServerLevel) getLevel()).getServer().getTickCount();
-        if (lastBump != tickCount) {
-            lastBump = tickCount;
-            startIndex++; // round robin!
-        }
 
-        for (var cable : cables) {
-            long amount = maxReceive - received;
-            if (amount <= 0)
-                break;
-            if (!cable.energySides.isEmpty() && cable.isActive()) {
-                received += ((FabricCableTile) cable).pushEnergy(amount, transaction, direction, this);
+        var insertionGuard = this.netInsertionGuard;
+        if (insertionGuard.isTrue())
+            return 0;
+        insertionGuard.setTrue();
+
+        try {
+            int tickCount = ((ServerLevel) getLevel()).getServer().getTickCount();
+            if (lastBump != tickCount) {
+                lastBump = tickCount;
+                startIndex++; // round robin!
             }
-        }
 
-        return received;
+            for (var cable : cables) {
+                long amount = maxReceive - received;
+                if (amount <= 0)
+                    break;
+                if (!cable.energySides.isEmpty() && cable.isActive()) {
+                    received += ((FabricCableTile) cable).pushEnergy(amount, transaction, direction, this);
+                }
+            }
+
+            return received;
+        } finally {
+            insertionGuard.setFalse();
+        }
     }
 
     private long pushEnergy(long maxReceive, TransactionContext transaction, @Nullable Direction direction, CableTile cable) {
