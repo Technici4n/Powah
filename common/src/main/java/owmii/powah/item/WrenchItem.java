@@ -120,8 +120,8 @@ public class WrenchItem extends ItemBase implements IHudItem, IWrench {
             nextWrenchMode(stack);
             playerIn.displayClientMessage(
                     Component.translatable("info.powah.wrench.mode",
-                        Component.translatable("info.powah.wrench.mode." + getWrenchMode(stack).name().toLowerCase())
-                                .withStyle(ChatFormatting.YELLOW)),
+                            Component.translatable("info.powah.wrench.mode." + getWrenchMode(stack).name().toLowerCase())
+                                    .withStyle(ChatFormatting.YELLOW)),
                     true);
             return InteractionResultHolder.success(stack);
         }
