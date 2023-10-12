@@ -91,7 +91,6 @@ public abstract class AbstractEnergyBlock<C extends IEnergyConfig<Tier>, B exten
             addEnergyInfo(stack, energy, tooltip);
             addEnergyTransferInfo(stack, energy, tooltip);
             additionalEnergyInfo(stack, energy, tooltip);
-            tooltip.add(Component.empty());
         });
     }
 
