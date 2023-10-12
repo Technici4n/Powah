@@ -109,16 +109,16 @@ public abstract class AbstractEnergyBlock<C extends IEnergyConfig<Tier>, B exten
         if (ext + re > 0) {
             if (ext == re) {
                 tooltip.add(Component.translatable("info.lollipop.max.io").withStyle(ChatFormatting.GRAY).append(Text.COLON)
-                        .append(Component.literal(Util.numFormat(ext)).append(Component.translatable("info.lollipop.fe.pet.tick"))
+                        .append(Component.translatable("info.lollipop.fe.pet.tick", Util.numFormat(ext))
                                 .withStyle(ChatFormatting.DARK_GRAY)));
             } else {
                 if (ext > 0)
                     tooltip.add(Component.translatable("info.lollipop.max.extract").withStyle(ChatFormatting.GRAY).append(Text.COLON)
-                            .append(Component.literal(Util.numFormat(ext)).append(Component.translatable("info.lollipop.fe.pet.tick"))
+                            .append(Component.translatable("info.lollipop.fe.pet.tick", Util.numFormat(ext))
                                     .withStyle(ChatFormatting.DARK_GRAY)));
                 if (re > 0)
                     tooltip.add(Component.translatable("info.lollipop.max.receive").withStyle(ChatFormatting.GRAY).append(Text.COLON)
-                            .append(Component.literal(Util.numFormat(re)).append(Component.translatable("info.lollipop.fe.pet.tick"))
+                            .append(Component.translatable("info.lollipop.fe.pet.tick", Util.numFormat(re))
                                     .withStyle(ChatFormatting.DARK_GRAY)));
             }
         }
