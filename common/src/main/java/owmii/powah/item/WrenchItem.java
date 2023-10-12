@@ -119,8 +119,9 @@ public class WrenchItem extends ItemBase implements IHudItem, IWrench {
         if (playerIn.isShiftKeyDown()) {
             nextWrenchMode(stack);
             playerIn.displayClientMessage(
-                    Component.translatable("info.powah.wrench.mode." + getWrenchMode(stack).name().toLowerCase(), ChatFormatting.YELLOW)
-                            .withStyle(ChatFormatting.GRAY),
+                    Component.translatable("info.powah.wrench.mode",
+                        Component.translatable("info.powah.wrench.mode." + getWrenchMode(stack).name().toLowerCase())
+                                .withStyle(ChatFormatting.YELLOW)),
                     true);
             return InteractionResultHolder.success(stack);
         }
@@ -129,8 +130,9 @@ public class WrenchItem extends ItemBase implements IHudItem, IWrench {
 
     @Override
     public void appendHoverText(ItemStack stack, @Nullable Level worldIn, List<Component> tooltip, TooltipFlag flagIn) {
-        tooltip.add(Component.translatable("info.powah.wrench.mode." + getWrenchMode(stack).name().toLowerCase(), ChatFormatting.YELLOW)
-                .withStyle(ChatFormatting.GRAY));
+        tooltip.add(Component.translatable("info.powah.wrench.mode",
+                Component.translatable("info.powah.wrench.mode." + getWrenchMode(stack).name().toLowerCase())
+                        .withStyle(ChatFormatting.YELLOW)));
     }
 
     @Override
@@ -138,8 +140,9 @@ public class WrenchItem extends ItemBase implements IHudItem, IWrench {
         if (entityIn instanceof Player) {
             Player player = (Player) entityIn;
             oneTimeInfo(player, stack,
-                    Component.translatable("info.powah.wrench.mode." + getWrenchMode(stack).name().toLowerCase(), ChatFormatting.YELLOW)
-                            .withStyle(ChatFormatting.GRAY));
+                    Component.translatable("info.powah.wrench.mode",
+                            Component.translatable("info.powah.wrench.mode." + getWrenchMode(stack).name().toLowerCase())
+                                    .withStyle(ChatFormatting.YELLOW)));
         }
     }
 
