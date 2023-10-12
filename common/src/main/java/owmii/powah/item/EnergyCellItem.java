@@ -18,11 +18,6 @@ public class EnergyCellItem extends EnergyBlockItem<EnergyConfig, EnergyCellBloc
     }
 
     @Override
-    public Info getEnergyInfo() {
-        return null;
-    }
-
-    @Override
     public Rarity getRarity(ItemStack stack) {
         if (getVariant().equals(Tier.CREATIVE)) {
             return Rarity.EPIC;
