@@ -1,6 +1,5 @@
 package owmii.powah.lib.block;
 
-import javax.annotation.Nullable;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
@@ -11,6 +10,7 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
+import org.jetbrains.annotations.Nullable;
 import owmii.powah.lib.logistics.IRedstoneInteract;
 import owmii.powah.lib.logistics.Redstone;
 import owmii.powah.lib.logistics.fluid.Tank;

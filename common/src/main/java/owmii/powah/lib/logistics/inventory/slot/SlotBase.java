@@ -1,8 +1,8 @@
 package owmii.powah.lib.logistics.inventory.slot;
 
-import javax.annotation.Nonnull;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
+import org.jetbrains.annotations.NotNull;
 import owmii.powah.lib.logistics.inventory.Inventory;
 import owmii.powah.lib.logistics.inventory.ItemStackHandler;
 
@@ -21,7 +21,7 @@ public class SlotBase extends SlotItemHandler {
             return super.mayPickup(player);
     }
 
-    @Nonnull
+    @NotNull
     @Override
     public ItemStack remove(int amount) {
         if (this.getItemHandler() instanceof Inventory) {

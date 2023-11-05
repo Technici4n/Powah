@@ -2,7 +2,6 @@ package owmii.powah.lib.client.screen.widget;
 
 import java.util.List;
 import java.util.function.Supplier;
-import javax.annotation.Nullable;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
 import net.minecraft.client.gui.GuiGraphics;
@@ -17,6 +16,7 @@ import net.minecraft.network.chat.TextColor;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.item.ItemStack;
+import org.jetbrains.annotations.Nullable;
 import owmii.powah.lib.client.screen.Texture;
 
 public class IconButton extends Button {

@@ -1,13 +1,13 @@
 package owmii.powah.fabric.block;
 
 import java.util.Objects;
-import javax.annotation.Nullable;
 import net.fabricmc.fabric.api.transfer.v1.transaction.TransactionContext;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
+import org.jetbrains.annotations.Nullable;
 import owmii.powah.block.Tier;
 import owmii.powah.block.cable.CableTile;
 import team.reborn.energy.api.EnergyStorage;

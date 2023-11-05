@@ -1,11 +1,11 @@
 package owmii.powah.lib.client.wiki.page.panel;
 
 import java.util.LinkedHashMap;
-import javax.annotation.Nullable;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.network.chat.Style;
 import net.minecraft.world.item.ItemStack;
+import org.jetbrains.annotations.Nullable;
 import owmii.powah.lib.client.util.Text;
 
 public class InfoBox {

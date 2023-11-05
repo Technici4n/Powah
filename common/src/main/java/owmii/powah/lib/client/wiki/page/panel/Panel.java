@@ -1,6 +1,6 @@
 package owmii.powah.lib.client.wiki.page.panel;
 
-import javax.annotation.Nullable;
+import org.jetbrains.annotations.Nullable;
 import owmii.powah.lib.client.wiki.Page;
 import owmii.powah.lib.client.wiki.Section;
 

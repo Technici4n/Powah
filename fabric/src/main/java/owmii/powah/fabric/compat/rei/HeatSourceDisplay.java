@@ -4,7 +4,6 @@ import dev.architectury.fluid.FluidStack;
 import dev.architectury.hooks.fluid.LiquidBlockHooks;
 import java.util.*;
 import java.util.stream.Collectors;
-import javax.annotation.Nullable;
 import me.shedaniel.rei.api.client.registry.entry.EntryRegistry;
 import me.shedaniel.rei.api.common.category.CategoryIdentifier;
 import me.shedaniel.rei.api.common.display.Display;
@@ -18,6 +17,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.LiquidBlock;
 import net.minecraft.world.level.material.Fluid;
+import org.jetbrains.annotations.Nullable;
 import owmii.powah.Powah;
 import owmii.powah.api.PowahAPI;
 

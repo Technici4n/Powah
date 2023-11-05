@@ -1,12 +1,12 @@
 package owmii.powah.lib.item;
 
-import javax.annotation.Nullable;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.Block;
+import org.jetbrains.annotations.Nullable;
 import owmii.powah.lib.block.AbstractBlock;
 import owmii.powah.lib.block.IBlock;
 import owmii.powah.lib.data.ItemModelType;
