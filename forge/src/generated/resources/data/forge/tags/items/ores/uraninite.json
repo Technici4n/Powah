@@ -1,10 +1,10 @@
 {
   "values": [
-    "minecraft:air",
-    "minecraft:air",
-    "minecraft:air",
-    "minecraft:air",
-    "minecraft:air",
-    "minecraft:air"
+    "powah:uraninite_ore",
+    "powah:uraninite_ore_poor",
+    "powah:uraninite_ore_dense",
+    "powah:deepslate_uraninite_ore",
+    "powah:deepslate_uraninite_ore_poor",
+    "powah:deepslate_uraninite_ore_dense"
   ]
 }
