@@ -1,8 +1,8 @@
 package owmii.powah.lib.block;
 
 import com.mojang.authlib.GameProfile;
-import javax.annotation.Nullable;
 import net.minecraft.world.entity.player.Player;
+import org.jetbrains.annotations.Nullable;
 
 public interface IOwnable {
     @Nullable

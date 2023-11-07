@@ -6,10 +6,10 @@ import static owmii.powah.lib.logistics.Transfer.NONE;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import javax.annotation.Nullable;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.Tag;
+import org.jetbrains.annotations.Nullable;
 import owmii.powah.lib.block.AbstractEnergyStorage;
 import owmii.powah.lib.logistics.Transfer;
 

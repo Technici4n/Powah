@@ -1,9 +1,9 @@
 package owmii.powah.lib.item;
 
-import javax.annotation.Nullable;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.ItemStack;
+import org.jetbrains.annotations.Nullable;
 import owmii.powah.block.Tier;
 import owmii.powah.config.IEnergyConfig;
 import owmii.powah.lib.block.AbstractEnergyBlock;

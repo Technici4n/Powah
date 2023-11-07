@@ -3,10 +3,10 @@ package owmii.powah.lib.client.wiki;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Consumer;
-import javax.annotation.Nullable;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
+import org.jetbrains.annotations.Nullable;
 import owmii.powah.Powah;
 import owmii.powah.lib.registry.VarReg;
 

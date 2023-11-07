@@ -1,7 +1,6 @@
 package owmii.powah.block.cable;
 
 import java.util.*;
-import javax.annotation.Nullable;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.network.FriendlyByteBuf;
@@ -28,6 +27,7 @@ import net.minecraft.world.phys.Vec3;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
+import org.jetbrains.annotations.Nullable;
 import owmii.powah.EnvHandler;
 import owmii.powah.Powah;
 import owmii.powah.api.energy.IEnergyConnector;

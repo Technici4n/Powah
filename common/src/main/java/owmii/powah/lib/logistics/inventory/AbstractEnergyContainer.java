@@ -1,9 +1,9 @@
 package owmii.powah.lib.logistics.inventory;
 
-import javax.annotation.Nullable;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.inventory.MenuType;
+import org.jetbrains.annotations.Nullable;
 import owmii.powah.lib.block.AbstractTileEntity;
 import owmii.powah.lib.block.IInventoryHolder;
 

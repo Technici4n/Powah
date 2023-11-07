@@ -4,7 +4,6 @@ import dev.architectury.event.events.client.ClientRecipeUpdateEvent;
 import dev.architectury.platform.Platform;
 import java.util.*;
 import java.util.function.Consumer;
-import javax.annotation.Nullable;
 import net.minecraft.client.Minecraft;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.world.item.crafting.Recipe;
@@ -13,6 +12,7 @@ import net.minecraft.world.level.ItemLike;
 import org.apache.commons.lang3.time.StopWatch;
 import org.apache.logging.log4j.Marker;
 import org.apache.logging.log4j.MarkerManager;
+import org.jetbrains.annotations.Nullable;
 import owmii.powah.Powah;
 
 public class Wiki {

@@ -1,8 +1,8 @@
 package owmii.powah.lib.client.screen.wiki;
 
-import javax.annotation.Nullable;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.world.item.ItemStack;
+import org.jetbrains.annotations.Nullable;
 import owmii.powah.lib.client.screen.ScreenBase;
 import owmii.powah.lib.client.screen.Texture;
 import owmii.powah.lib.client.util.MC;

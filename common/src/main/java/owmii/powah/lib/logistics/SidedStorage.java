@@ -4,8 +4,8 @@ import java.util.Arrays;
 import java.util.EnumMap;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
-import javax.annotation.Nullable;
 import net.minecraft.core.Direction;
+import org.jetbrains.annotations.Nullable;
 
 /**
  * Used for storing a value for null and all the directions.
