@@ -83,11 +83,9 @@ public class BindingCardItem extends ItemBase {
         CompoundTag nbt = stack.getTag();
         if (nbt == null) {
             tooltip.add(Component.translatable("info.powah.click.to.bind").withStyle(ChatFormatting.DARK_GRAY));
-            tooltip.add(Component.empty());
         } else if (nbt.hasUUID("bound_player_id")) {
             tooltip.add(Component.translatable("info.lollipop.owner", ChatFormatting.YELLOW + nbt.getString("bound_player_name"))
                     .withStyle(ChatFormatting.GRAY));
-            tooltip.add(Component.empty());
         }
     }
 

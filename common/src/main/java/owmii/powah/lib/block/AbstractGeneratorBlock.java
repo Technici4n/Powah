@@ -24,8 +24,8 @@ public abstract class AbstractGeneratorBlock<B extends AbstractGeneratorBlock<B>
     @Override
     public void additionalEnergyInfo(ItemStack stack, Energy.Item energy, List<Component> tooltip) {
         tooltip.add(Component.translatable("info.lollipop.generates").withStyle(ChatFormatting.GRAY).append(Text.COLON)
-                .append(Component.literal(Util.numFormat(getConfig().getGeneration(this.variant)))
-                        .append(Component.translatable("info.lollipop.fe.pet.tick")).withStyle(ChatFormatting.DARK_GRAY)));
+                .append(Component.translatable("info.lollipop.fe.pet.tick", Util.numFormat(getConfig().getGeneration(this.variant)))
+                        .withStyle(ChatFormatting.DARK_GRAY)));
     }
 
     @Override

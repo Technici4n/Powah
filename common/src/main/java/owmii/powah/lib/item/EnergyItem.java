@@ -47,7 +47,6 @@ public abstract class EnergyItem<V extends Enum<V> & IVariant<V>, C extends IEne
                                 .withStyle(ChatFormatting.DARK_GRAY)));
                 tooltip.add(Component.translatable("info.lollipop.max.io").withStyle(ChatFormatting.GRAY).append(Text.COLON).append(Component
                         .translatable("info.lollipop.fe.pet.tick", Util.numFormat(energy.getMaxExtract())).withStyle(ChatFormatting.DARK_GRAY)));
-                tooltip.add(Component.empty());
             }
         });
     }
