@@ -8,6 +8,7 @@ import dev.emi.emi.api.widget.WidgetHolder;
 import java.util.List;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.item.crafting.RecipeHolder;
 import org.jetbrains.annotations.Nullable;
 import owmii.powah.Powah;
 import owmii.powah.block.energizing.EnergizingRecipe;
@@ -16,15 +17,15 @@ import owmii.powah.lib.util.Util;
 public class EnergizingEmiRecipe implements EmiRecipe {
     public static final ResourceLocation GUI_BACK = new ResourceLocation(Powah.MOD_ID, "textures/gui/jei/energizing.png");
 
-    private final EnergizingRecipe recipe;
+    private final RecipeHolder<EnergizingRecipe> recipe;
     private final List<EmiIngredient> inputs;
     private final EmiStack output;
 
-    public EnergizingEmiRecipe(EnergizingRecipe recipe) {
+    public EnergizingEmiRecipe(RecipeHolder<EnergizingRecipe> recipe) {
         this.recipe = recipe;
 
-        inputs = recipe.getIngredients().stream().map(EmiIngredient::of).toList();
-        output = EmiStack.of(recipe.getResultItem());
+        inputs = recipe.value().getIngredients().stream().map(EmiIngredient::of).toList();
+        output = EmiStack.of(recipe.value().getResultItem());
     }
 
     @Override
@@ -34,7 +35,7 @@ public class EnergizingEmiRecipe implements EmiRecipe {
 
     @Override
     public @Nullable ResourceLocation getId() {
-        return recipe.getId();
+        return recipe.id();
     }
 
     @Override
@@ -67,6 +68,6 @@ public class EnergizingEmiRecipe implements EmiRecipe {
         widgets.addSlot(output, 134, 1)
                 .drawBack(false)
                 .recipeContext(this);
-        widgets.addText(Component.translatable("info.lollipop.fe", Util.addCommas(recipe.getEnergy())), 1, 23, 0x444444, false);
+        widgets.addText(Component.translatable("info.lollipop.fe", Util.addCommas(recipe.value().getScaledEnergy())), 1, 23, 0x444444, false);
     }
 }

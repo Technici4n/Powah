@@ -76,7 +76,7 @@ public class Page {
     public void render(GuiGraphics gui, int x, int y, int mx, int my, float pt, Font font, WikiScreen screen) {
     }
 
-    public boolean mouseScrolled(double mouseX, double mouseY, double i) {
+    public boolean mouseScrolled(double mouseX, double mouseY, double deltaX, double deltaY) {
         return false;
     }
 

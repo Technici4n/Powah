@@ -51,7 +51,7 @@ public class AbstractContainerScreen<C extends AbstractContainer> extends net.mi
 
     @Override
     public void render(GuiGraphics gui, int mouseX, int mouseY, float partialTicks) {
-        renderBackground(gui);
+        renderBackground(gui, mouseX, mouseY, partialTicks);
         super.render(gui, mouseX, mouseY, partialTicks);
         renderTooltip(gui, mouseX, mouseY);
     }

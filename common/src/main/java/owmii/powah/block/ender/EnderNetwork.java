@@ -24,6 +24,12 @@ public class EnderNetwork extends SavedData {
     private static final String NAME = "powah_network";
 
     public static final int MAX_CHANNELS = 12;
+
+    private static final Factory<EnderNetwork> DATA_FACTORY = new Factory<>(
+            EnderNetwork::new,
+            EnderNetwork::new,
+            null);
+
     private final Map<UUID, ImmutableList<Energy>> map = new HashMap<>();
 
     /**
@@ -37,7 +43,7 @@ public class EnderNetwork extends SavedData {
     public static EnderNetwork get(MinecraftServer server) {
         var overworld = server.getLevel(ServerLevel.OVERWORLD);
         Objects.requireNonNull(overworld, "Server should have an overworld.");
-        return overworld.getDataStorage().computeIfAbsent(EnderNetwork::new, EnderNetwork::new, NAME);
+        return overworld.getDataStorage().computeIfAbsent(DATA_FACTORY, NAME);
     }
 
     private EnderNetwork() {

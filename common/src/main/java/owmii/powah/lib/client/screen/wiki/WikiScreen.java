@@ -47,7 +47,7 @@ public class WikiScreen extends ScreenBase {
 
     @Override
     public void render(GuiGraphics gui, int mx, int my, float pt) {
-        renderBackground(gui);
+        renderBackground(gui, mx, my, pt);
         this.hoveredStack = ItemStack.EMPTY;
         Texture.WIKI_BG_0.draw(gui, this.x + 28, this.y);
         Texture.WIKI_BG_1.draw(gui, this.x + 28 + Texture.WIKI_BG_0.getWidth(), this.y);
@@ -60,17 +60,17 @@ public class WikiScreen extends ScreenBase {
     }
 
     @Override
-    public boolean mouseScrolled(double mouseX, double mouseY, double i) {
+    public boolean mouseScrolled(double mouseX, double mouseY, double deltaX, double deltaY) {
         if (isMouseOver(this.x + 31, this.y + 3, 212, 224, mouseX, mouseY)) {
-            if (this.page.mouseScrolled(mouseX, mouseY, i)) {
+            if (this.page.mouseScrolled(mouseX, mouseY, deltaX, deltaY)) {
                 return true;
             }
         } else if (isMouseOver(this.x + 246, this.y + 3, 161, 224, mouseX, mouseY)) {
-            if (this.panel.mouseScrolled(mouseX, mouseY, i)) {
+            if (this.panel.mouseScrolled(mouseX, mouseY, deltaX, deltaY)) {
                 return true;
             }
         }
-        return super.mouseScrolled(mouseX, mouseY, i);
+        return super.mouseScrolled(mouseX, mouseY, deltaX, deltaY);
     }
 
     @Override

@@ -79,7 +79,7 @@ allprojects {
         }
     }
 
-    if ((project.name == "fabric" || project.name == "forge") && project.version != "0.0.0") {
+    if ((project.name == "fabric" || project.name == "neoforge") && project.version != "0.0.0") {
         unifiedPublishing {
             project {
                 gameVersions = [rootProject.minecraft_version]

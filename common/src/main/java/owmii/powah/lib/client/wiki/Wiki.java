@@ -6,8 +6,10 @@ import java.util.*;
 import java.util.function.Consumer;
 import net.minecraft.client.Minecraft;
 import net.minecraft.core.registries.BuiltInRegistries;
-import net.minecraft.world.item.crafting.Recipe;
+import net.minecraft.world.item.crafting.CraftingRecipe;
+import net.minecraft.world.item.crafting.RecipeHolder;
 import net.minecraft.world.item.crafting.RecipeType;
+import net.minecraft.world.item.crafting.SmeltingRecipe;
 import net.minecraft.world.level.ItemLike;
 import org.apache.commons.lang3.time.StopWatch;
 import org.apache.logging.log4j.Marker;
@@ -19,8 +21,8 @@ public class Wiki {
     public static final Marker MARKER = new MarkerManager.Log4jMarker("Wiki");
     public static final Map<String, Wiki> WIKIS = new HashMap<>();
     private final List<Entry> categories = new ArrayList<>();
-    private final Map<ItemLike, List<Recipe<?>>> crafting = new HashMap<>();
-    private final Map<ItemLike, List<Recipe<?>>> smelting = new HashMap<>();
+    private final Map<ItemLike, List<RecipeHolder<CraftingRecipe>>> crafting = new HashMap<>();
+    private final Map<ItemLike, List<RecipeHolder<SmeltingRecipe>>> smelting = new HashMap<>();
     private final String modId;
 
     public Wiki() {
@@ -50,11 +52,11 @@ public class Wiki {
         return this.categories;
     }
 
-    public Map<ItemLike, List<Recipe<?>>> getCrafting() {
+    public Map<ItemLike, List<RecipeHolder<CraftingRecipe>>> getCrafting() {
         return this.crafting;
     }
 
-    public Map<ItemLike, List<Recipe<?>>> getSmelting() {
+    public Map<ItemLike, List<RecipeHolder<SmeltingRecipe>>> getSmelting() {
         return this.smelting;
     }
 
@@ -78,17 +80,17 @@ public class Wiki {
             Powah.LOGGER.info(MARKER, "Started wikis recipes collecting...");
             WIKIS.forEach((s, wiki) -> {
                 BuiltInRegistries.ITEM.stream().filter(i -> BuiltInRegistries.ITEM.getKey(i).getNamespace().equals(Powah.MOD_ID)).forEach(item -> {
-                    List<Recipe<?>> crafting = new ArrayList<>();
-                    recipeManager.getAllRecipesFor(RecipeType.CRAFTING).forEach(recipe -> {
-                        if (recipe.getResultItem(registryAccess).is(item)) {
-                            crafting.add(recipe);
+                    List<RecipeHolder<CraftingRecipe>> crafting = new ArrayList<>();
+                    recipeManager.getAllRecipesFor(RecipeType.CRAFTING).forEach(holder -> {
+                        if (holder.value().getResultItem(registryAccess).is(item)) {
+                            crafting.add(holder);
                         }
                     });
                     wiki.crafting.put(item, crafting);
-                    List<Recipe<?>> smelting = new ArrayList<>();
-                    recipeManager.getAllRecipesFor(RecipeType.CRAFTING).forEach(recipe -> {
-                        if (recipe.getResultItem(registryAccess).is(item)) {
-                            smelting.add(recipe);
+                    List<RecipeHolder<SmeltingRecipe>> smelting = new ArrayList<>();
+                    recipeManager.getAllRecipesFor(RecipeType.SMELTING).forEach(holder -> {
+                        if (holder.value().getResultItem(registryAccess).is(item)) {
+                            smelting.add(holder);
                         }
                     });
                     wiki.smelting.put(item, smelting);

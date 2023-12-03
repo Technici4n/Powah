@@ -105,11 +105,11 @@ public class ItemPanel<T extends ItemLike> extends Panel {
     }
 
     @Override
-    public boolean mouseScrolled(double mouseX, double mouseY, double i) {
-        if (i == -1 && this.nextItem.visible) {
+    public boolean mouseScrolled(double mouseX, double mouseY, double deltaX, double deltaY) {
+        if (deltaY == -1 && this.nextItem.visible) {
             this.nextItem.onPress();
             return true;
-        } else if (i == 1 && this.prevItem.visible) {
+        } else if (deltaY == 1 && this.prevItem.visible) {
             this.prevItem.onPress();
             return true;
         }

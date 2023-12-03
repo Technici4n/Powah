@@ -54,11 +54,6 @@ dependencies {
         exclude(group: "net.fabricmc.fabric-api")
     }
 
-    modCompileOnly("mezz.jei:jei-${project.jei_minecraft_release}-fabric:${project.jei_version}") {
-        // The transitive deps are not remapped by JEI and largely include the same classes
-        exclude group: "mezz.jei"
-    }
-
     modCompileOnly "dev.emi:trinkets:${project.trinkets_version}"
 
     common(project(path: ":common", configuration: "namedElements")) { transitive false }

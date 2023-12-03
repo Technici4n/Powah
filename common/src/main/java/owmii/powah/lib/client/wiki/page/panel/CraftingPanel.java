@@ -7,8 +7,9 @@ import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.core.NonNullList;
 import net.minecraft.util.Mth;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.crafting.CraftingRecipe;
 import net.minecraft.world.item.crafting.Ingredient;
-import net.minecraft.world.item.crafting.Recipe;
+import net.minecraft.world.item.crafting.RecipeHolder;
 import net.minecraft.world.level.ItemLike;
 import owmii.powah.lib.client.screen.Texture;
 import owmii.powah.lib.client.screen.widget.IconButton;
@@ -71,7 +72,7 @@ public class CraftingPanel<T extends ItemLike> extends ItemPanel<T> {
         super.render(gui, x, y, mx, my, pt, font, screen);
         if (0 <= this.currRecipe && this.currRecipe < getRecipe().size()) {
             NonNullList<Ingredient> ingredients = NonNullList.withSize(9, Ingredient.EMPTY);
-            NonNullList<Ingredient> ingredients1 = getRecipe().get(this.currRecipe).getIngredients();
+            NonNullList<Ingredient> ingredients1 = getRecipe().get(this.currRecipe).value().getIngredients();
             for (int i = 0; i < ingredients1.size(); i++)
                 ingredients.set(i, ingredients1.get(i));
             if (!ingredients.isEmpty()) {
@@ -107,20 +108,20 @@ public class CraftingPanel<T extends ItemLike> extends ItemPanel<T> {
     }
 
     @Override
-    public boolean mouseScrolled(double mouseX, double mouseY, double i) {
+    public boolean mouseScrolled(double mouseX, double mouseY, double deltaX, double deltaY) {
         if (mouseY > 90) {
-            if (i == -1 && this.nextRecipe.visible) {
+            if (deltaY == -1 && this.nextRecipe.visible) {
                 this.nextRecipe.onPress();
                 return true;
-            } else if (i == 1 && this.prevRecipe.visible) {
+            } else if (deltaY == 1 && this.prevRecipe.visible) {
                 this.prevRecipe.onPress();
                 return true;
             }
         }
-        return super.mouseScrolled(mouseX, mouseY, i);
+        return super.mouseScrolled(mouseX, mouseY, deltaX, deltaY);
     }
 
-    protected List<Recipe<?>> getRecipe() {
+    protected List<RecipeHolder<CraftingRecipe>> getRecipe() {
         return getWiki().getCrafting().getOrDefault(getItem(), new ArrayList<>());
     }
 }

@@ -5,6 +5,7 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.crafting.RecipeHolder;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
@@ -23,7 +24,7 @@ public class EnergizingOrbTile extends AbstractTickableTile<IVariant.Single, Ene
     private boolean containRecipe;
 
     @Nullable
-    private EnergizingRecipe recipe;
+    private RecipeHolder<EnergizingRecipe> recipe;
 
     public EnergizingOrbTile(BlockPos pos, BlockState state) {
         super(Tiles.ENERGIZING_ORB.get(), pos, state);
@@ -62,7 +63,7 @@ public class EnergizingOrbTile extends AbstractTickableTile<IVariant.Single, Ene
     }
 
     @Nullable
-    public EnergizingRecipe currRecipe() {
+    public RecipeHolder<EnergizingRecipe> currRecipe() {
         return this.recipe;
     }
 
@@ -84,12 +85,12 @@ public class EnergizingOrbTile extends AbstractTickableTile<IVariant.Single, Ene
 
     private void checkRecipe() {
         if (this.level != null && !isRemote()) {
-            Optional<EnergizingRecipe> recipe = this.level.getRecipeManager().getRecipeFor(Recipes.ENERGIZING.get(),
+            Optional<RecipeHolder<EnergizingRecipe>> recipe = this.level.getRecipeManager().getRecipeFor(Recipes.ENERGIZING.get(),
                     new RecipeWrapper(getInventory()), this.level);
             if (recipe.isPresent()) {
                 this.recipe = recipe.get();
-                this.buffer.setCapacity(this.recipe.getEnergy());
-                this.buffer.setTransfer(this.recipe.getEnergy());
+                this.buffer.setCapacity(this.recipe.value().getScaledEnergy());
+                this.buffer.setTransfer(this.recipe.value().getScaledEnergy());
             } else {
                 this.buffer.setCapacity(0);
                 this.buffer.setStored(0);
@@ -106,7 +107,7 @@ public class EnergizingOrbTile extends AbstractTickableTile<IVariant.Single, Ene
             if (this.recipe != null) {
                 this.buffer.produce(filled);
                 if (this.buffer.isFull()) {
-                    ItemStack stack = this.recipe.getResultItem(level.registryAccess());
+                    ItemStack stack = this.recipe.value().getResultItem(level.registryAccess());
                     this.inv.clear();
                     this.inv.setStackInSlot(0, stack.copy());
                     this.buffer.setCapacity(0);

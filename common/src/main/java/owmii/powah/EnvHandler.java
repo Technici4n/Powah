@@ -23,7 +23,7 @@ import owmii.powah.world.gen.WorldGen;
 public interface EnvHandler {
     EnvHandler INSTANCE = Util.make(() -> {
         try {
-            var klass = Class.forName(Platform.isForge() ? "owmii.powah.forge.ForgeEnvHandler" : "owmii.powah.fabric.FabricEnvHandler");
+            var klass = Class.forName(Platform.isNeoForge() ? "owmii.powah.forge.NeoForgeEnvHandler" : "owmii.powah.fabric.FabricEnvHandler");
             return (EnvHandler) klass.getConstructor().newInstance();
         } catch (Exception exception) {
             throw new RuntimeException("Failed to setup env handler", exception);
