@@ -1,4 +1,4 @@
-package owmii.powah.fabric.compat.rei;
+package owmii.powah.compat.rei;
 
 import me.shedaniel.rei.api.client.plugins.REIClientPlugin;
 import me.shedaniel.rei.api.client.registry.category.CategoryRegistry;
@@ -10,10 +10,10 @@ import net.minecraft.network.chat.Component;
 import owmii.powah.Powah;
 import owmii.powah.block.Blcks;
 import owmii.powah.block.energizing.EnergizingRecipe;
-import owmii.powah.fabric.compat.rei.energizing.EnergizingCategory;
-import owmii.powah.fabric.compat.rei.energizing.EnergizingDisplay;
-import owmii.powah.fabric.compat.rei.magmator.MagmatorCategory;
-import owmii.powah.fabric.compat.rei.magmator.MagmatorDisplay;
+import owmii.powah.compat.rei.energizing.EnergizingCategory;
+import owmii.powah.compat.rei.energizing.EnergizingDisplay;
+import owmii.powah.compat.rei.magmator.MagmatorCategory;
+import owmii.powah.compat.rei.magmator.MagmatorDisplay;
 import owmii.powah.item.Itms;
 import owmii.powah.lib.client.screen.container.AbstractContainerScreen;
 import owmii.powah.recipe.Recipes;

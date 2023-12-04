@@ -1,4 +1,4 @@
-package owmii.powah.fabric.compat.rei.energizing;
+package owmii.powah.compat.rei.energizing;
 
 import java.util.ArrayList;
 import java.util.List;

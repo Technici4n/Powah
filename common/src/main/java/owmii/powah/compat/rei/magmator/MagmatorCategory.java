@@ -1,4 +1,4 @@
-package owmii.powah.fabric.compat.rei;
+package owmii.powah.compat.rei.magmator;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -10,35 +10,35 @@ import me.shedaniel.rei.api.client.gui.widgets.Widgets;
 import me.shedaniel.rei.api.client.registry.display.DisplayCategory;
 import me.shedaniel.rei.api.common.category.CategoryIdentifier;
 import me.shedaniel.rei.api.common.util.EntryStacks;
-import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.resources.language.I18n;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.world.item.Items;
 import owmii.powah.Powah;
+import owmii.powah.block.Blcks;
+import owmii.powah.block.Tier;
 
-public class CoolantCategory implements DisplayCategory<CoolantDisplay> {
+public class MagmatorCategory implements DisplayCategory<MagmatorDisplay> {
     public static final ResourceLocation GUI_BACK = new ResourceLocation(Powah.MOD_ID, "textures/gui/jei/misc.png");
-    public static final CategoryIdentifier<CoolantDisplay> ID = CategoryIdentifier.of(new ResourceLocation(Powah.MOD_ID, ".coolant"));
+    public static final CategoryIdentifier<MagmatorDisplay> ID = CategoryIdentifier.of(new ResourceLocation(Powah.MOD_ID, "magmatic"));
     private final Renderer icon;
 
-    public CoolantCategory() {
-        this.icon = EntryStacks.of(Items.WATER_BUCKET);
+    public MagmatorCategory() {
+        this.icon = EntryStacks.of(Blcks.MAGMATOR.get(Tier.BASIC));
+
     }
 
     @Override
-    public CategoryIdentifier<CoolantDisplay> getCategoryIdentifier() {
+    public CategoryIdentifier<MagmatorDisplay> getCategoryIdentifier() {
         return ID;
     }
 
     @Override
     public Component getTitle() {
-        return Component.translatable("gui.powah.jei.category.coolant");
+        return Component.translatable("gui.powah.jei.category.magmatic");
     }
 
     @Override
-    public int getDisplayWidth(CoolantDisplay display) {
+    public int getDisplayWidth(MagmatorDisplay display) {
         return 168;
     }
 
@@ -53,23 +53,18 @@ public class CoolantCategory implements DisplayCategory<CoolantDisplay> {
     }
 
     @Override
-    public List<Widget> setupDisplay(CoolantDisplay display, Rectangle bounds) {
+    public List<Widget> setupDisplay(MagmatorDisplay display, Rectangle bounds) {
         List<Widget> widgets = new ArrayList<>();
         Point origin = new Point(bounds.getX() + 5, bounds.getY() + 5);
         widgets.add(Widgets.createRecipeBase(bounds));
         widgets.add(Widgets.createTexturedWidget(GUI_BACK, origin.x, origin.y + 1, 0, 0, 160, 24));
         widgets.add(Widgets.createSlot(new Point(origin.x + 4, origin.y + 5))
-                .disableBackground()
                 .markInput()
                 .entries(display.getInputEntries().get(0)));
         widgets.add(Widgets.createDrawableWidget((gui, mouseX, mouseY, delta) -> {
             Minecraft minecraft = Minecraft.getInstance();
-            gui.drawString(minecraft.font,
-                    I18n.get("info.lollipop.temperature") + ": "
-                            + I18n.get("info.lollipop.temperature.c", "" + ChatFormatting.DARK_AQUA + display.getColdness()),
-                    origin.x + 30, origin.y + 9, 0x444444, false);
+            gui.drawString(minecraft.font, display.getHeat() + " FE/100 mb", origin.x + 27, origin.y + 9, 0x444444, false);
         }));
         return widgets;
     }
-
 }

@@ -19,6 +19,14 @@ repositories {
     maven { url = "https://maven.theillusivec4.top" } //Curios
 }
 
+sourceSets {
+    main {
+        resources {
+            srcDir "src/generated/resources"
+        }
+    }
+}
+
 configurations {
     common
     shadowCommon // Don't use shadow from the shadow plugin because we don't want IDEA to index this.
@@ -35,6 +43,11 @@ dependencies {
 
     common(project(path: ":common", configuration: "namedElements")) { transitive false }
     shadowCommon(project(path: ":common", configuration: "transformProductionNeoForge")) { transitive = false }
+
+    // Uncomment when we stop depending on REI internals
+    //modCompileOnly "me.shedaniel:RoughlyEnoughItems-api-fabric:${rootProject.rei_version}"
+    modCompileOnly "me.shedaniel:RoughlyEnoughItems-api-neoforge:${rootProject.rei_version}"
+    modRuntimeOnly "me.shedaniel:RoughlyEnoughItems-neoforge:${rootProject.rei_version}"
 
     modCompileOnly "top.theillusivec4.curios:curios-neoforge:${project.curios_version}:api"
     //modRuntimeOnly "top.theillusivec4.curios:curios-forge:${project.curios_version}"

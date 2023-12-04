@@ -1,4 +1,4 @@
-package owmii.powah.fabric.compat.rei;
+package owmii.powah.compat.rei;
 
 import dev.architectury.fluid.FluidStack;
 import dev.architectury.hooks.fluid.LiquidBlockHooks;

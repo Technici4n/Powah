@@ -43,7 +43,7 @@ dependencies {
 
     // Uncomment when we stop depending on REI internals
     //modCompileOnly "me.shedaniel:RoughlyEnoughItems-api-fabric:${rootProject.rei_version}"
-    modCompileOnly "me.shedaniel:RoughlyEnoughItems-fabric:${rootProject.rei_version}"
+    modRuntimeOnly "me.shedaniel:RoughlyEnoughItems-fabric:${rootProject.rei_version}"
 
     // Choose REI, JEI or EMI
     //modRuntimeOnly "me.shedaniel:RoughlyEnoughItems-fabric:${rootProject.rei_version}"

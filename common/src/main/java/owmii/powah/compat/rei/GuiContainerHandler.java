@@ -1,4 +1,4 @@
-package owmii.powah.fabric.compat.rei;
+package owmii.powah.compat.rei;
 
 import java.util.List;
 import me.shedaniel.math.Rectangle;

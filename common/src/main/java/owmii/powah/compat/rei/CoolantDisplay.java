@@ -1,4 +1,4 @@
-package owmii.powah.fabric.compat.rei.magmator;
+package owmii.powah.compat.rei;
 
 import dev.architectury.hooks.fluid.FluidBucketHooks;
 import java.util.*;
@@ -14,23 +14,20 @@ import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.world.item.BucketItem;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
+import net.minecraft.world.item.MobBucketItem;
 import net.minecraft.world.level.material.Fluid;
 import owmii.powah.api.PowahAPI;
 
-public class MagmatorDisplay implements Display {
+public class CoolantDisplay implements Display {
+
     private final List<EntryIngredient> inputs;
+    private final int coldness;
 
-    private final int heat;
-
-    public MagmatorDisplay(Recipe recipe) {
+    public CoolantDisplay(Recipe recipe) {
         this.inputs = List.of(
                 EntryIngredients.of(recipe.getFluid()),
-                !Items.BUCKET.equals(recipe.getBucket()) ? EntryIngredients.of(recipe.getBucket()) : EntryIngredient.of());
-        this.heat = recipe.getHeat();
-    }
-
-    public int getHeat() {
-        return heat;
+                !Items.BUCKET.equals(recipe.bucket) ? EntryIngredients.of(recipe.getBucket()) : EntryIngredient.of());
+        this.coldness = recipe.getColdness();
     }
 
     @Override
@@ -44,8 +41,12 @@ public class MagmatorDisplay implements Display {
     }
 
     @Override
-    public CategoryIdentifier<?> getCategoryIdentifier() {
-        return MagmatorCategory.ID;
+    public CategoryIdentifier<CoolantDisplay> getCategoryIdentifier() {
+        return CoolantCategory.ID;
+    }
+
+    public int getColdness() {
+        return coldness;
     }
 
     public static class Maker {
@@ -56,22 +57,18 @@ public class MagmatorDisplay implements Display {
             List<Recipe> recipes = new ArrayList<>();
 
             allItemStacks.forEach(stack -> {
-                if (stack.getItem() instanceof BucketItem bucket) {
+                if (stack.getItem() instanceof BucketItem bucket && !(stack.getItem() instanceof MobBucketItem)) {
                     Fluid fluid = FluidBucketHooks.getFluid(bucket);
-                    if (PowahAPI.getMagmaticFluidHeat(fluid) != 0) {
-                        recipes.add(new Recipe(bucket, PowahAPI.getMagmaticFluidHeat(fluid)));
+                    if (PowahAPI.getCoolant(fluid) != 0) {
+                        recipes.add(new Recipe(bucket, PowahAPI.getCoolant(fluid)));
                     }
                 }
             });
 
-            List<Fluid> fluids = PowahAPI.MAGMATIC_FLUIDS.keySet().stream().flatMap(f -> BuiltInRegistries.FLUID.getOptional(f).stream())
+            List<Fluid> fluids = PowahAPI.COOLANT_FLUIDS.keySet().stream().flatMap(f -> BuiltInRegistries.FLUID.getOptional(f).stream())
                     .collect(Collectors.toCollection(ArrayList::new));
             recipes.forEach(recipe -> {
                 fluids.remove(recipe.fluid);
-            });
-
-            fluids.forEach(fluid -> {
-                recipes.add(new Recipe(fluid, PowahAPI.getMagmaticFluidHeat(fluid)));
             });
 
             return recipes;
@@ -81,18 +78,18 @@ public class MagmatorDisplay implements Display {
     public static class Recipe {
         private final Fluid fluid;
         private final BucketItem bucket;
-        private final int heat;
+        private final int coldness;
 
-        public Recipe(BucketItem bucket, int heat) {
+        public Recipe(BucketItem bucket, int coldness) {
             this.bucket = bucket;
             this.fluid = FluidBucketHooks.getFluid(bucket);
-            this.heat = heat;
+            this.coldness = coldness;
         }
 
-        public Recipe(Fluid fluid, int heat) {
+        public Recipe(Fluid fluid, int coldness) {
             this.bucket = (BucketItem) Items.BUCKET;
             this.fluid = fluid;
-            this.heat = heat;
+            this.coldness = coldness;
         }
 
         public BucketItem getBucket() {
@@ -103,8 +100,8 @@ public class MagmatorDisplay implements Display {
             return this.fluid;
         }
 
-        public int getHeat() {
-            return this.heat;
+        public int getColdness() {
+            return this.coldness;
         }
     }
 }
