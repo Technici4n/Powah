@@ -3,8 +3,7 @@ package owmii.powah.client.render.tile;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
-import dev.architectury.fluid.FluidStack;
-import dev.architectury.hooks.fluid.FluidStackHooks;
+import net.neoforged.neoforge.fluids.FluidStack;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.client.player.LocalPlayer;
@@ -12,6 +11,7 @@ import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
 import owmii.powah.block.magmator.MagmatorTile;
+import owmii.powah.client.ClientUtils;
 import owmii.powah.lib.client.renderer.tile.AbstractTileRenderer;
 import owmii.powah.lib.client.util.Render;
 
@@ -26,9 +26,9 @@ public class MagmatorRenderer extends AbstractTileRenderer<MagmatorTile> {
         var tank = te.getTank();
         if (!tank.isEmpty()) {
             FluidStack fluidStack = tank.getFluid();
-            var sprite = FluidStackHooks.getStillTexture(fluidStack);
+            var sprite = ClientUtils.getStillTexture(fluidStack);
             if (sprite != null) {
-                int color = FluidStackHooks.getColor(fluidStack);
+                int color = ClientUtils.getFluidColor(fluidStack);
                 float red = (color >> 16 & 0xFF) / 255.0F;
                 float green = (color >> 8 & 0xFF) / 255.0F;
                 float blue = (color & 0xFF) / 255.0F;

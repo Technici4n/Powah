@@ -1,8 +1,6 @@
 package owmii.powah.block.reactor;
 
-import dev.architectury.fluid.FluidStack;
-import dev.architectury.hooks.item.ItemStackHooks;
-import dev.architectury.registry.fuel.FuelRegistry;
+import net.neoforged.neoforge.common.CommonHooks;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
@@ -26,6 +24,7 @@ import owmii.powah.lib.block.ITankHolder;
 import owmii.powah.lib.logistics.energy.Energy;
 import owmii.powah.lib.logistics.fluid.Tank;
 import owmii.powah.lib.util.Ticker;
+import owmii.powah.lib.util.Util;
 
 public class ReactorTile extends AbstractEnergyProvider<ReactorBlock> implements IInventoryHolder, ITankHolder {
     private final Builder builder = new Builder(this);
@@ -50,7 +49,7 @@ public class ReactorTile extends AbstractEnergyProvider<ReactorBlock> implements
 
     public ReactorTile(BlockPos pos, BlockState state, Tier variant) {
         super(Tiles.REACTOR.get(), pos, state, variant);
-        this.tank.setCapacity(FluidStack.bucketAmount())
+        this.tank.setCapacity(Util.bucketAmount())
                 .validate(stack -> PowahAPI.getCoolant(stack.getFluid()) != 0)
                 .setChange(() -> ReactorTile.this.sync(10));
         this.inv.add(5);
@@ -278,7 +277,7 @@ public class ReactorTile extends AbstractEnergyProvider<ReactorBlock> implements
         if (this.carbon.isEmpty()) {
             ItemStack stack = this.inv.getStackInSlot(2);
             if (!stack.isEmpty()) {
-                int carbon = FuelRegistry.get(stack);
+                int carbon = CommonHooks.getBurnTime(stack, null);
                 if (carbon > 0) {
                     this.carbon.setAll(carbon);
                     this.carbonTemp = 180;
@@ -346,7 +345,7 @@ public class ReactorTile extends AbstractEnergyProvider<ReactorBlock> implements
         if (slot == 1) {
             return stack.getItem() == Itms.URANINITE.get();
         } else if (slot == 2) {
-            return FuelRegistry.get(stack) > 0 && !ItemStackHooks.hasCraftingRemainingItem(stack);
+            return CommonHooks.getBurnTime(stack, null) > 0 && !stack.hasCraftingRemainingItem();
         } else if (slot == 3) {
             return stack.getItem() == Items.REDSTONE || stack.getItem() == Items.REDSTONE_BLOCK;
         } else if (slot == 4) {

@@ -1,7 +1,5 @@
 package owmii.powah.lib.client.wiki;
 
-import dev.architectury.event.events.client.ClientRecipeUpdateEvent;
-import dev.architectury.platform.Platform;
 import java.util.*;
 import java.util.function.Consumer;
 import net.minecraft.client.Minecraft;
@@ -11,11 +9,14 @@ import net.minecraft.world.item.crafting.RecipeHolder;
 import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraft.world.item.crafting.SmeltingRecipe;
 import net.minecraft.world.level.ItemLike;
+import net.neoforged.bus.api.SubscribeEvent;
+import net.neoforged.neoforge.client.event.RecipesUpdatedEvent;
 import org.apache.commons.lang3.time.StopWatch;
 import org.apache.logging.log4j.Marker;
 import org.apache.logging.log4j.MarkerManager;
 import org.jetbrains.annotations.Nullable;
 import owmii.powah.Powah;
+import owmii.powah.lib.util.Util;
 
 public class Wiki {
     public static final Marker MARKER = new MarkerManager.Log4jMarker("Wiki");
@@ -65,39 +66,38 @@ public class Wiki {
     }
 
     public String getModName() {
-        return Platform.getMod(this.modId).getName();
+        return Util.getModName(this.modId);
     }
 
     public String getModVersion() {
-        return Platform.getMod(this.modId).getVersion();
+        return Util.getModVersion(this.modId);
     }
 
-    static {
-        ClientRecipeUpdateEvent.EVENT.register(recipeManager -> {
-            var registryAccess = Minecraft.getInstance().level.registryAccess();
+    public static void updateRecipes(RecipesUpdatedEvent event) {
+        var recipeManager = event.getRecipeManager();
+        var registryAccess = Minecraft.getInstance().level.registryAccess();
 
-            StopWatch watch = StopWatch.createStarted();
-            Powah.LOGGER.info(MARKER, "Started wikis recipes collecting...");
-            WIKIS.forEach((s, wiki) -> {
-                BuiltInRegistries.ITEM.stream().filter(i -> BuiltInRegistries.ITEM.getKey(i).getNamespace().equals(Powah.MOD_ID)).forEach(item -> {
-                    List<RecipeHolder<CraftingRecipe>> crafting = new ArrayList<>();
-                    recipeManager.getAllRecipesFor(RecipeType.CRAFTING).forEach(holder -> {
-                        if (holder.value().getResultItem(registryAccess).is(item)) {
-                            crafting.add(holder);
-                        }
-                    });
-                    wiki.crafting.put(item, crafting);
-                    List<RecipeHolder<SmeltingRecipe>> smelting = new ArrayList<>();
-                    recipeManager.getAllRecipesFor(RecipeType.SMELTING).forEach(holder -> {
-                        if (holder.value().getResultItem(registryAccess).is(item)) {
-                            smelting.add(holder);
-                        }
-                    });
-                    wiki.smelting.put(item, smelting);
+        StopWatch watch = StopWatch.createStarted();
+        Powah.LOGGER.info(MARKER, "Started wikis recipes collecting...");
+        WIKIS.forEach((s, wiki) -> {
+            BuiltInRegistries.ITEM.stream().filter(i -> BuiltInRegistries.ITEM.getKey(i).getNamespace().equals(Powah.MOD_ID)).forEach(item -> {
+                List<RecipeHolder<CraftingRecipe>> crafting = new ArrayList<>();
+                recipeManager.getAllRecipesFor(RecipeType.CRAFTING).forEach(holder -> {
+                    if (holder.value().getResultItem(registryAccess).is(item)) {
+                        crafting.add(holder);
+                    }
                 });
+                wiki.crafting.put(item, crafting);
+                List<RecipeHolder<SmeltingRecipe>> smelting = new ArrayList<>();
+                recipeManager.getAllRecipesFor(RecipeType.SMELTING).forEach(holder -> {
+                    if (holder.value().getResultItem(registryAccess).is(item)) {
+                        smelting.add(holder);
+                    }
+                });
+                wiki.smelting.put(item, smelting);
             });
-            watch.stop();
-            Powah.LOGGER.info(MARKER, "Wiki recipes collecting completed in : {} ms", watch.getTime());
         });
+        watch.stop();
+        Powah.LOGGER.info(MARKER, "Wiki recipes collecting completed in : {} ms", watch.getTime());
     }
 }

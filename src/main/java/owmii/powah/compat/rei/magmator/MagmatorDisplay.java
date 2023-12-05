@@ -1,6 +1,5 @@
 package owmii.powah.compat.rei.magmator;
 
-import dev.architectury.hooks.fluid.FluidBucketHooks;
 import java.util.*;
 import java.util.stream.Collectors;
 import me.shedaniel.rei.api.client.registry.entry.EntryRegistry;
@@ -57,7 +56,7 @@ public class MagmatorDisplay implements Display {
 
             allItemStacks.forEach(stack -> {
                 if (stack.getItem() instanceof BucketItem bucket) {
-                    Fluid fluid = FluidBucketHooks.getFluid(bucket);
+                    Fluid fluid = bucket.getFluid();
                     if (PowahAPI.getMagmaticFluidHeat(fluid) != 0) {
                         recipes.add(new Recipe(bucket, PowahAPI.getMagmaticFluidHeat(fluid)));
                     }
@@ -85,7 +84,7 @@ public class MagmatorDisplay implements Display {
 
         public Recipe(BucketItem bucket, int heat) {
             this.bucket = bucket;
-            this.fluid = FluidBucketHooks.getFluid(bucket);
+            this.fluid = bucket.getFluid();
             this.heat = heat;
         }
 

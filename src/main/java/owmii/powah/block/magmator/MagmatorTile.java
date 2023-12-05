@@ -1,6 +1,6 @@
 package owmii.powah.block.magmator;
 
-import dev.architectury.fluid.FluidStack;
+import net.neoforged.neoforge.fluids.FluidStack;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.item.ItemStack;
@@ -22,7 +22,7 @@ public class MagmatorTile extends AbstractEnergyProvider<MagmatorBlock> implemen
 
     public MagmatorTile(BlockPos pos, BlockState state, Tier variant) {
         super(Tiles.MAGMATOR.get(), pos, state, variant);
-        this.tank.setCapacity(FluidStack.bucketAmount() * 4)
+        this.tank.setCapacity(Util.bucketAmount() * 4)
                 .validate(stack -> PowahAPI.getMagmaticFluidHeat(stack.getFluid()) != 0)
                 .setChange(() -> MagmatorTile.this.sync(10));
         this.inv.add(1);

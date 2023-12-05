@@ -1,12 +1,12 @@
 package owmii.powah.block;
 
-import dev.architectury.registry.registries.DeferredRegister;
 import java.util.List;
 import java.util.function.Supplier;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
+import net.neoforged.neoforge.registries.DeferredRegister;
 import owmii.powah.EnvHandler;
 import owmii.powah.Powah;
 import owmii.powah.block.cable.CableTile;
@@ -26,7 +26,7 @@ import owmii.powah.block.thermo.ThermoTile;
 import owmii.powah.block.transmitter.PlayerTransmitterTile;
 
 public class Tiles {
-    public static final DeferredRegister<BlockEntityType<?>> DR = DeferredRegister.create(Powah.MOD_ID, Registries.BLOCK_ENTITY_TYPE);
+    public static final DeferredRegister<BlockEntityType<?>> DR = DeferredRegister.create(Registries.BLOCK_ENTITY_TYPE, Powah.MOD_ID);
 
     private static <BE extends BlockEntity> Supplier<BlockEntityType<BE>> register(String path, BlockEntityType.BlockEntitySupplier<BE> supplier,
             Supplier<List<Block>> blocks) {

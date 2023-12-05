@@ -1,137 +1,192 @@
+import com.diffplug.spotless.FormatterFunc
+import com.diffplug.spotless.FormatterStep
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 
 plugins {
-    id "architectury-plugin" version "3.4-SNAPSHOT"
-    id "dev.architectury.loom" version "1.4-SNAPSHOT" apply false
-    id "me.shedaniel.unified-publishing" version "0.1.+" apply false
-    id 'com.diffplug.spotless' version '5.14.0'
+    id "java-library"
+    id "net.neoforged.gradle.userdev"
+    id "me.shedaniel.unified-publishing"
+    id "com.diffplug.spotless"
+    id "maven-publish"
 }
 
-architectury {
-    minecraft = rootProject.minecraft_version
+repositories {
+    maven {
+        url = "https://maven.theillusivec4.top"
+        content {
+            includeGroup "top.theillusivec4.curios"
+        }
+    }
+    maven {
+        name 'modmaven'
+        url "https://modmaven.dev/"
+        content {
+            includeGroup "mezz.jei"
+        }
+    }
+    maven {
+        url "https://maven.shedaniel.me"
+        content {
+            includeGroup "me.shedaniel"
+            includeGroup "me.shedaniel.cloth"
+            includeGroup "dev.architectury"
+        }
+    }
+    maven {
+        name = "TerraformersMC"
+        url = "https://maven.terraformersmc.com/releases/"
+        content {
+            includeGroup "dev.emi"
+        }
+    }
 }
 
-subprojects {
-    apply plugin: "dev.architectury.loom"
-    apply plugin: "me.shedaniel.unified-publishing"
+apply plugin: "me.shedaniel.unified-publishing"
 
+sourceCompatibility = JavaVersion.VERSION_17
+targetCompatibility = JavaVersion.VERSION_17
+
+dependencies {
+    implementation "net.neoforged:neoforge:${project.neoforge_version}"
+
+    implementation "me.shedaniel.cloth:cloth-config-neoforge:${project.cloth_config_version}"
+
+    // Uncomment when we stop depending on REI internals
+    compileOnly "me.shedaniel:RoughlyEnoughItems-api-neoforge:${project.rei_version}"
+    compileOnly "me.shedaniel:RoughlyEnoughItems-default-plugin-neoforge:${project.rei_version}"
+//    implementation "me.shedaniel:RoughlyEnoughItems-neoforge:${project.rei_version}"
+//    compileOnly "me.shedaniel:RoughlyEnoughItems-neoforge:${project.rei_version}"
+
+    compileOnly "top.theillusivec4.curios:curios-neoforge:${project.curios_version}:api"
+    //modRuntimeOnly "top.theillusivec4.curios:curios-forge:${project.curios_version}"
+}
+
+base {
+    archivesName = project.archives_base_name
+}
+
+version = (System.getenv("POWAH_VERSION") ?: "v0.0.0").substring(1)
+group = project.maven_group
+
+java {
+    withSourcesJar()
+    toolchain {
+        languageVersion = JavaLanguageVersion.of(17)
+    }
+}
+
+tasks.withType(JavaCompile).configureEach {
+    it.options.encoding = "UTF-8"
+    it.options.release = 17
+}
+
+jar {
+    from("LICENSE") {
+        rename { "${it}_${project.archivesBaseName}" }
+    }
+}
+
+sourceSets {
+    main {
+        resources {
+            srcDir "src/generated/resources"
+        }
+    }
+}
+
+processResources {
+    inputs.property "version", project.version
+
+    filesMatching("META-INF/mods.toml") {
+        filter { line ->
+            line.replace 'version="0.0.0"', "version=\"$version\""
+        }
+    }
+}
+
+minecraft {
+    accessTransformers {
+        file('src/main/resources/META-INF/accesstransformer.cfg')
+    }
+}
+
+runs {
+    configureEach {
+        modSource project.sourceSets.main
+    }
+    client
+    server
+    data {
+        programArguments = ['--mod', 'powah',
+                            '--all',
+                            '--output', file('src/generated/resources/').absolutePath,
+                            '--existing', file('src/main/resources').absolutePath]
+    }
+}
+
+publishing {
+    publications {
+        maven(MavenPublication) {
+            artifactId = rootProject.archives_base_name
+            from components.java
+        }
+    }
+
+    // See https://docs.gradle.org/current/userguide/publishing_maven.html for information on how to set up publishing.
     repositories {
-        maven { url "https://maven.parchmentmc.org" } //Parchment
-    }
-
-    sourceCompatibility = JavaVersion.VERSION_17
-    targetCompatibility = JavaVersion.VERSION_17
-
-    loom {
-        silentMojangMappingsLicense()
-    }
-
-    dependencies {
-        minecraft "com.mojang:minecraft:${rootProject.minecraft_version}"
-        mappings(loom.layered {
-            officialMojangMappings()
-            parchment("org.parchmentmc.data:parchment-1.18.2:2022.05.22@zip")
-        })
-    }
-
-    architectury {
-        // Disable Architectury's injectables like @ExpectPlatform
-        // since we don't use them.
-        injectInjectables = false
+        // Add repositories to publish to here.
     }
 }
 
-allprojects {
-    apply plugin: "java"
-    apply plugin: "architectury-plugin"
-    apply plugin: "maven-publish"
+if (project.version != "0.0.0") {
+    unifiedPublishing {
+        project {
+            gameVersions = [project.minecraft_version]
+            gameLoaders = [project.name]
+            version = project.version + "-" + project.name
 
-    base {
-        archivesName = rootProject.archives_base_name
-    }
-
-    version = (System.getenv("POWAH_VERSION") ?: "v0.0.0").substring(1)
-    group = rootProject.maven_group
-
-    repositories {
-        maven {
-            name 'modmaven'
-            url "https://modmaven.dev/"
-            content {
-                includeGroup "mezz.jei"
+            def releaseChannel = "release"
+            def changes = System.getenv("CHANGELOG") ?: "No changelog provided?"
+            if (project.version.toLowerCase().contains("alpha")) {
+                releaseChannel = "alpha"
+                changes = "THIS IS AN ALPHA RELEASE, MAKE A BACKUP BEFORE INSTALLING AND FREQUENTLY WHILE PLAYING, AND PLEASE REPORT ANY ISSUE YOU MAY FIND ON THE ISSUE TRACKER.\n\n" + changes
+            } else if (project.version.toLowerCase().contains("beta")) {
+                releaseChannel = "beta"
+                changes = "This is a beta release. It is expected to be mostly stable, but in any case please report any issue you may find.\n\n" + changes
             }
-        }
-    }
 
-    tasks.withType(JavaCompile).configureEach {
-        it.options.encoding = "UTF-8"
-        it.options.release = 17
-    }
+            releaseType = releaseChannel
+            changelog = changes
+            displayName = String.format("[%s %s] v%s", project.name.toUpperCase(), project.minecraft_version, project.version)
 
-    java {
-        withSourcesJar()
-    }
+            mainPublication remapJar // Declares the publicated jar
 
-    jar {
-        from("LICENSE") {
-            rename { "${it}_${project.archivesBaseName}"}
-        }
-    }
-
-    if ((project.name == "fabric" || project.name == "neoforge") && project.version != "0.0.0") {
-        unifiedPublishing {
-            project {
-                gameVersions = [rootProject.minecraft_version]
-                gameLoaders = [project.name]
-                version = project.version + "-" + project.name
-
-                def releaseChannel = "release"
-                def changes = System.getenv("CHANGELOG") ?: "No changelog provided?"
-                if (project.version.toLowerCase().contains("alpha")) {
-                    releaseChannel = "alpha"
-                    changes = "THIS IS AN ALPHA RELEASE, MAKE A BACKUP BEFORE INSTALLING AND FREQUENTLY WHILE PLAYING, AND PLEASE REPORT ANY ISSUE YOU MAY FIND ON THE ISSUE TRACKER.\n\n" + changes
-                } else if (project.version.toLowerCase().contains("beta")) {
-                    releaseChannel = "beta"
-                    changes = "This is a beta release. It is expected to be mostly stable, but in any case please report any issue you may find.\n\n" + changes
+            relations {
+                depends {
+                    curseforge = "cloth-config"
+                    modrinth = "cloth-config"
                 }
+            }
 
-                releaseType = releaseChannel
-                changelog = changes
-                displayName = String.format("[%s %s] v%s", project.name.toUpperCase(), rootProject.minecraft_version, project.version)
+            var cfToken = System.getenv("CF_TOKEN")
+            if (cfToken != null) {
+                curseforge {
+                    token = cfToken
+                    id = "633483" // Required, must be a string, ID of CurseForge project
 
-                mainPublication remapJar // Declares the publicated jar
-
-                relations {
-                    depends {
-                        curseforge = "architectury-api"
-                        modrinth = "architectury-api"
-                    }
-                    depends {
-                        curseforge = "cloth-config"
-                        modrinth = "cloth-config"
+                    if (project.name == "fabric" && releaseChannel == "release") {
+                        // Use beta channel for Fabric releases on CurseForge, to separate from Forge builds
+                        releaseType = "beta"
                     }
                 }
+            }
 
-                var cfToken = System.getenv("CF_TOKEN")
-                if (cfToken != null) {
-                    curseforge {
-                        token = cfToken
-                        id = "633483" // Required, must be a string, ID of CurseForge project
-
-                        if (project.name == "fabric" && releaseChannel == "release") {
-                            // Use beta channel for Fabric releases on CurseForge, to separate from Forge builds
-                            releaseType = "beta"
-                        }
-                    }
-                }
-
-                var mrToken = System.getenv("MODRINTH_TOKEN")
-                if (mrToken != null) {
-                    modrinth {
-                        token = mrToken
-                        id = "KZO4S4DO" // Required, must be a string, ID of Modrinth project
-                    }
+            var mrToken = System.getenv("MODRINTH_TOKEN")
+            if (mrToken != null) {
+                modrinth {
+                    token = mrToken
+                    id = "KZO4S4DO" // Required, must be a string, ID of Modrinth project
                 }
             }
         }
@@ -164,9 +219,6 @@ spotless {
         addStep(JsonOrderStep.create())
     }
 }
-
-import com.diffplug.spotless.FormatterFunc
-import com.diffplug.spotless.FormatterStep
 
 final class JsonOrderStep {
     private JsonOrderStep() {}

@@ -1,7 +1,6 @@
 package owmii.powah.forge;
 
 import com.google.common.primitives.Ints;
-import dev.architectury.hooks.fluid.forge.FluidStackHooksForge;
 import java.util.ArrayList;
 import java.util.function.Consumer;
 import java.util.function.Predicate;
@@ -65,33 +64,11 @@ public class NeoForgeEnvHandler implements EnvHandler {
 
     @Override
     public void setupBlockItems() {
-        modEventBus.addListener((RegisterEvent event) -> {
-            if (event.getRegistryKey() == Registries.ITEM) {
-                for (var block : BuiltInRegistries.BLOCK) {
-                    if (block instanceof IBlock<?, ?>iBlock) {
-                        var blockItem = iBlock.getBlockItem(new Item.Properties(), ItemGroups.MAIN_KEY);
-                        var name = BuiltInRegistries.BLOCK.getKey(block);
-                        Registry.register(BuiltInRegistries.ITEM, name, blockItem);
-                    }
-                }
-            }
-        });
     }
 
     @Override
     public void registerWorldgen() {
         EnvHandler.super.registerWorldgen();
-    }
-
-    @Override
-    public void handleReactorInitClient(Consumer<?> consumer) {
-        // :help_me:
-        ((Consumer<IClientItemExtensions>) consumer).accept(new IClientItemExtensions() {
-            @Override
-            public BlockEntityWithoutLevelRenderer getCustomRenderer() {
-                return new ReactorItemRenderer();
-            }
-        });
     }
 
     @Override
@@ -305,7 +282,7 @@ public class NeoForgeEnvHandler implements EnvHandler {
             @NotNull
             @Override
             public FluidStack getFluidInTank(int i) {
-                return FluidStackHooksForge.toForge(tank.getFluidInTank(i));
+                return tank.getFluidInTank(i);
             }
 
             @Override
@@ -315,24 +292,24 @@ public class NeoForgeEnvHandler implements EnvHandler {
 
             @Override
             public boolean isFluidValid(int i, @NotNull FluidStack fluidStack) {
-                return tank.isFluidValid(i, FluidStackHooksForge.fromForge(fluidStack));
+                return tank.isFluidValid(i, fluidStack);
             }
 
             @Override
             public int fill(FluidStack fluidStack, FluidAction fluidAction) {
-                return (int) tank.fill(FluidStackHooksForge.fromForge(fluidStack), fluidAction.simulate());
+                return (int) tank.fill(fluidStack, fluidAction.simulate());
             }
 
             @NotNull
             @Override
             public FluidStack drain(FluidStack fluidStack, FluidAction fluidAction) {
-                return FluidStackHooksForge.toForge(tank.drain(FluidStackHooksForge.fromForge(fluidStack), fluidAction.simulate()));
+                return tank.drain(fluidStack, fluidAction.simulate());
             }
 
             @NotNull
             @Override
             public FluidStack drain(int i, FluidAction fluidAction) {
-                return FluidStackHooksForge.toForge(tank.drain(i, fluidAction.simulate()));
+                return tank.drain(i, fluidAction.simulate());
             }
         };
     }

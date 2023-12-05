@@ -1,18 +1,16 @@
 package owmii.powah.recipe;
 
-import dev.architectury.registry.registries.DeferredRegister;
 import java.util.function.Supplier;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.item.crafting.RecipeType;
+import net.neoforged.neoforge.registries.DeferredRegister;
 import owmii.powah.Powah;
 import owmii.powah.block.energizing.EnergizingRecipe;
 
-@SuppressWarnings("unchecked")
 public class Recipes {
-    public static final DeferredRegister<RecipeSerializer<?>> DR_SERIALIZER = DeferredRegister.create(Powah.MOD_ID,
-            Registries.RECIPE_SERIALIZER);
-    public static final DeferredRegister<RecipeType<?>> DR_TYPE = DeferredRegister.create(Powah.MOD_ID, Registries.RECIPE_TYPE);
+    public static final DeferredRegister<RecipeSerializer<?>> DR_SERIALIZER = DeferredRegister.create(Registries.RECIPE_SERIALIZER, Powah.MOD_ID);
+    public static final DeferredRegister<RecipeType<?>> DR_TYPE = DeferredRegister.create(Registries.RECIPE_TYPE, Powah.MOD_ID);
 
     public static final Supplier<EnergizingRecipe.Serializer> ENERGIZING_SERIALIZER = DR_SERIALIZER.register("energizing",
             EnergizingRecipe.Serializer::new);

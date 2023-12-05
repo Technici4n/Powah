@@ -21,13 +21,6 @@ Various ways to generate, store and transmit FE power.
     side="BOTH"
 
 [[dependencies.powah]]
-    modId="architectury"
-    mandatory=true
-    versionRange="[10.0.0,]"
-    ordering="NONE"
-    side="BOTH"
-
-[[dependencies.powah]]
     modId="cloth_config"
     mandatory=true
     versionRange="[7.0.0,]"

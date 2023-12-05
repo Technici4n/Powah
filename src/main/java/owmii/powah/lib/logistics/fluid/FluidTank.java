@@ -1,15 +1,17 @@
 package owmii.powah.lib.logistics.fluid;
 
-import dev.architectury.fluid.FluidStack;
 import java.util.function.Predicate;
+
+import com.google.common.primitives.Ints;
 import net.minecraft.nbt.CompoundTag;
+import net.neoforged.neoforge.fluids.FluidStack;
 import org.jetbrains.annotations.NotNull;
 
 public class FluidTank {
 
     protected Predicate<FluidStack> validator;
     @NotNull
-    protected FluidStack fluid = FluidStack.empty();
+    protected FluidStack fluid = FluidStack.EMPTY;
     protected long capacity;
 
     public FluidTank(long capacity) {
@@ -51,14 +53,14 @@ public class FluidTank {
     }
 
     public FluidTank readFromNBT(CompoundTag nbt) {
-        FluidStack fluid = FluidStack.read(nbt.getCompound("tank"));
+        FluidStack fluid = FluidStack.loadFluidStackFromNBT(nbt.getCompound("tank"));
         setFluid(fluid);
         return this;
     }
 
     public CompoundTag writeToNBT(CompoundTag nbt) {
         if (!fluid.isEmpty()) {
-            nbt.put("tank", fluid.write(new CompoundTag()));
+            nbt.put("tank", fluid.writeToNBT(new CompoundTag()));
         }
 
         return nbt;
@@ -99,7 +101,8 @@ public class FluidTank {
             return Math.min(capacity - fluid.getAmount(), resource.getAmount());
         }
         if (fluid.isEmpty()) {
-            fluid = resource.copyWithAmount(Math.min(capacity, resource.getAmount()));
+            fluid = resource.copy();
+            fluid.setAmount(Ints.saturatedCast(Math.min(capacity, resource.getAmount())));
             onContentsChanged();
             return fluid.getAmount();
         }
@@ -112,7 +115,7 @@ public class FluidTank {
             fluid.grow(resource.getAmount());
             filled = resource.getAmount();
         } else {
-            fluid.setAmount(capacity);
+            fluid.setAmount(Ints.saturatedCast(capacity));
         }
         if (filled > 0)
             onContentsChanged();
@@ -122,7 +125,7 @@ public class FluidTank {
     @NotNull
     public FluidStack drain(FluidStack resource, boolean simulate) {
         if (resource.isEmpty() || !resource.isFluidEqual(fluid)) {
-            return FluidStack.empty();
+            return FluidStack.EMPTY;
         }
         return drain(resource.getAmount(), simulate);
     }
@@ -133,9 +136,10 @@ public class FluidTank {
         if (fluid.getAmount() < drained) {
             drained = fluid.getAmount();
         }
-        FluidStack stack = fluid.copyWithAmount(drained);
+        FluidStack stack = fluid.copy();
+        stack.setAmount(Ints.saturatedCast(drained));
         if (!simulate && drained > 0) {
-            fluid.shrink(drained);
+            fluid.shrink(Ints.saturatedCast(drained));
             onContentsChanged();
         }
         return stack;

@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.function.Consumer;
 import java.util.stream.Collectors;
 import net.minecraft.ChatFormatting;
+import net.minecraft.client.renderer.BlockEntityWithoutLevelRenderer;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceKey;
@@ -15,9 +16,10 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.AABB;
+import net.neoforged.neoforge.client.extensions.common.IClientItemExtensions;
 import org.jetbrains.annotations.Nullable;
-import owmii.powah.EnvHandler;
 import owmii.powah.block.reactor.ReactorBlock;
+import owmii.powah.client.render.tile.ReactorItemRenderer;
 import owmii.powah.config.v2.types.GeneratorConfig;
 import owmii.powah.lib.item.EnergyBlockItem;
 import owmii.powah.lib.util.Player;
@@ -33,8 +35,13 @@ public class ReactorItem extends EnergyBlockItem<GeneratorConfig, ReactorBlock> 
     }
 
     @SuppressWarnings("unused") // overridden on Forge
-    public void initializeClient(Consumer<?> consumer) {
-        EnvHandler.INSTANCE.handleReactorInitClient(consumer);
+    public void initializeClient(Consumer<IClientItemExtensions> consumer) {
+        consumer.accept(new IClientItemExtensions() {
+            @Override
+            public BlockEntityWithoutLevelRenderer getCustomRenderer() {
+                return new ReactorItemRenderer();
+            }
+        });
     }
 
     @Override

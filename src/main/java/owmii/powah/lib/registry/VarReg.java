@@ -1,6 +1,7 @@
 package owmii.powah.lib.registry;
 
-import dev.architectury.registry.registries.DeferredRegister;
+import net.neoforged.neoforge.registries.DeferredRegister;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedHashMap;

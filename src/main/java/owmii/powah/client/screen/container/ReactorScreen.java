@@ -1,7 +1,6 @@
 package owmii.powah.client.screen.container;
 
 import com.mojang.blaze3d.systems.RenderSystem;
-import dev.architectury.hooks.fluid.FluidStackHooks;
 import java.util.ArrayList;
 import java.util.List;
 import net.minecraft.ChatFormatting;
@@ -11,6 +10,7 @@ import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.inventory.InventoryMenu;
 import owmii.powah.api.PowahAPI;
 import owmii.powah.block.reactor.ReactorTile;
+import owmii.powah.client.ClientUtils;
 import owmii.powah.client.screen.Textures;
 import owmii.powah.inventory.ReactorContainer;
 import owmii.powah.lib.client.screen.container.AbstractEnergyScreen;
@@ -64,9 +64,9 @@ public class ReactorScreen extends AbstractEnergyScreen<ReactorTile, ReactorCont
         var tank = this.te.getTank();
         if (!tank.isEmpty()) {
             var fluidStack = tank.getFluid();
-            var sprite = FluidStackHooks.getStillTexture(fluidStack);
+            var sprite = ClientUtils.getStillTexture(fluidStack);
             if (sprite != null) {
-                int color = FluidStackHooks.getColor(fluidStack);
+                int color = ClientUtils.getFluidColor(fluidStack);
                 float red = (color >> 16 & 0xFF) / 255.0F;
                 float green = (color >> 8 & 0xFF) / 255.0F;
                 float blue = (color & 0xFF) / 255.0F;
@@ -164,7 +164,7 @@ public class ReactorScreen extends AbstractEnergyScreen<ReactorTile, ReactorCont
             List<Component> list = new ArrayList<>();
             if (!tank.isEmpty()) {
                 list.add(Component.translatable("info.lollipop.coolant").withStyle(ChatFormatting.GRAY).append(Text.COLON)
-                        .append(FluidStackHooks.getName(tank.getFluid()).plainCopy().withStyle(ChatFormatting.AQUA)));
+                        .append(tank.getFluid().getDisplayName().plainCopy().withStyle(ChatFormatting.AQUA)));
                 list.add(Component.translatable("info.lollipop.stored").withStyle(ChatFormatting.GRAY).append(Text.COLON)
                         .append(Util.formatTankContent(tank)));
                 list.add(Component.translatable("info.lollipop.temperature").withStyle(ChatFormatting.GRAY).append(Text.COLON)

@@ -1,6 +1,7 @@
 package owmii.powah.lib.util;
 
-import dev.architectury.fluid.FluidStack;
+import net.neoforged.fml.ModList;
+import net.neoforged.neoforge.fluids.FluidStack;
 import java.text.NumberFormat;
 import java.util.Arrays;
 import java.util.Locale;
@@ -10,6 +11,7 @@ import java.util.TreeMap;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
+import net.neoforged.neoforgespi.language.IModInfo;
 import owmii.powah.lib.logistics.fluid.Tank;
 
 public class Util {
@@ -62,16 +64,20 @@ public class Util {
                 Util.numFormat(amountToMillibuckets(capacity))).withStyle(ChatFormatting.DARK_GRAY);
     }
 
+    public static int bucketAmount() {
+        return 1000;
+    }
+
     /**
      * Amount of fluid in one millibucket.
      * 1 on Forge.
      */
     public static int millibucketAmount() {
-        return (int) (FluidStack.bucketAmount() / 1000);
+        return (int) (Util.bucketAmount() / 1000);
     }
 
     public static long amountToMillibuckets(long amount) {
-        var result = amount * 1000 / FluidStack.bucketAmount();
+        var result = amount * 1000 / Util.bucketAmount();
         if (result == 0 && amount != 0) {
             return amount >= 0 ? 1 : -1;
         }
@@ -98,5 +104,17 @@ public class Util {
 
     public static String addCommas(long value) {
         return NumberFormat.getInstance(Locale.ROOT).format(value);
+    }
+
+    public static String getModName(String modId) {
+        return getModInfo(modId).getDisplayName();
+    }
+
+    public static String getModVersion(String modId) {
+        return getModInfo(modId).getVersion().toString();
+    }
+
+    private static IModInfo getModInfo(String modId) {
+        return ModList.get().getModContainerById(modId).get().getModInfo();
     }
 }

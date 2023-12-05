@@ -1,6 +1,5 @@
 package owmii.powah.config.v2;
 
-import dev.architectury.platform.Platform;
 import owmii.powah.config.v2.values.TieredEnergyValues;
 
 /**
@@ -9,7 +8,7 @@ import owmii.powah.config.v2.values.TieredEnergyValues;
 public class DefaultEnergies {
     // MISC
     public static long energyPerFuelTick() {
-        return Platform.isForge() ? 30 : 3;
+        return 30;
     }
 
     // SCALING VALUES
@@ -23,23 +22,23 @@ public class DefaultEnergies {
 
     // SOURCE VALUES (everything else is derived from those)
     public static double energizingRatio() {
-        return Platform.isForge() ? 1.0 : 0.05;
+        return 1.0;
     }
 
     public static TieredEnergyValues passiveProduction() {
-        return baseSlowScaling().copy(Platform.isForge() ? 20 : 1);
+        return baseSlowScaling().copy(20);
     }
 
     public static TieredEnergyValues activeProduction() {
-        return baseScaling().copy(Platform.isForge() ? 20 : 1);
+        return baseScaling().copy(20);
     }
 
     public static TieredEnergyValues reactorProduction() {
-        return baseScaling().copy(Platform.isForge() ? 250 : 10);
+        return baseScaling().copy(250);
     }
 
     public static TieredEnergyValues energizingTransfer() {
-        return baseScaling().copy(Platform.isForge() ? 100 : 5);
+        return baseScaling().copy(100);
     }
 
     // DERIVED VALUES

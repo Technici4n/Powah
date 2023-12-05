@@ -36,9 +36,9 @@ public class TagsProvider {
             tag(ITags.Blocks.URANINITE_ORE).add(Blcks.URANINITE_ORE.get()).add(Blcks.URANINITE_ORE_POOR.get()).add(Blcks.URANINITE_ORE_DENSE.get());
             tag(ITags.Blocks.URANINITE_ORE).add(Blcks.DEEPSLATE_URANINITE_ORE.get()).add(Blcks.DEEPSLATE_URANINITE_ORE_POOR.get())
                     .add(Blcks.DEEPSLATE_URANINITE_ORE_DENSE.get());
-            tag(Blocks.ORES).addTag(ITags.Blocks.URANINITE_ORE);
+            tag(ORES).addTag(ITags.Blocks.URANINITE_ORE);
 
-            tag(Blocks.STORAGE_BLOCKS).add(Blcks.URANINITE.get());
+            tag(STORAGE_BLOCKS).add(Blcks.URANINITE.get());
             tag(ITags.Blocks.URANINITE_BLOCK).add(Blcks.URANINITE.get());
 
             // All of our blocks are mineable with a pickaxe

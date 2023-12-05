@@ -1,6 +1,6 @@
 package owmii.powah.block.thermo;
 
-import dev.architectury.fluid.FluidStack;
+import net.neoforged.neoforge.fluids.FluidStack;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.item.ItemStack;
@@ -22,7 +22,7 @@ public class ThermoTile extends AbstractEnergyProvider<ThermoBlock> implements I
 
     public ThermoTile(BlockPos pos, BlockState state, Tier variant) {
         super(Tiles.THERMO_GEN.get(), pos, state, variant);
-        this.tank.setCapacity(FluidStack.bucketAmount() * 4)
+        this.tank.setCapacity(Util.bucketAmount() * 4)
                 .validate(stack -> PowahAPI.getCoolant(stack.getFluid()) != 0)
                 .setChange(() -> ThermoTile.this.sync(10));
         this.inv.add(1);

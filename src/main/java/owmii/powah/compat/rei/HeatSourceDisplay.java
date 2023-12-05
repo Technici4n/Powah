@@ -1,7 +1,6 @@
 package owmii.powah.compat.rei;
 
-import dev.architectury.fluid.FluidStack;
-import dev.architectury.hooks.fluid.LiquidBlockHooks;
+import net.neoforged.neoforge.fluids.FluidStack;
 import java.util.*;
 import java.util.stream.Collectors;
 import me.shedaniel.rei.api.client.registry.entry.EntryRegistry;
@@ -101,7 +100,7 @@ public class HeatSourceDisplay implements Display {
 
         public Recipe(Block block, int heat) {
             if (block instanceof LiquidBlock liquidBlock) {
-                this.fluid = LiquidBlockHooks.getFluid(liquidBlock);
+                this.fluid = liquidBlock.getFluid();
             } else {
                 this.fluid = null;
             }

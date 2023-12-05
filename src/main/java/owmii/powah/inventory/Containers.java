@@ -1,32 +1,32 @@
 package owmii.powah.inventory;
 
-import dev.architectury.registry.menu.MenuRegistry;
-import dev.architectury.registry.registries.DeferredRegister;
 import java.util.function.Supplier;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.world.inventory.MenuType;
+import net.neoforged.neoforge.common.extensions.IMenuTypeExtension;
+import net.neoforged.neoforge.registries.DeferredRegister;
 import owmii.powah.Powah;
 
 public class Containers {
-    public static final DeferredRegister<MenuType<?>> DR = DeferredRegister.create(Powah.MOD_ID, Registries.MENU);
+    public static final DeferredRegister<MenuType<?>> DR = DeferredRegister.create(Registries.MENU, Powah.MOD_ID);
 
     public static final Supplier<MenuType<EnergyCellContainer>> ENERGY_CELL = DR.register("energy_cell",
-            () -> MenuRegistry.ofExtended(EnergyCellContainer::create));
+            () -> IMenuTypeExtension.create(EnergyCellContainer::create));
     public static final Supplier<MenuType<EnderCellContainer>> ENDER_CELL = DR.register("ender_cell",
-            () -> MenuRegistry.ofExtended(EnderCellContainer::create));
+            () -> IMenuTypeExtension.create(EnderCellContainer::create));
     public static final Supplier<MenuType<FurnatorContainer>> FURNATOR = DR.register("furnator",
-            () -> MenuRegistry.ofExtended(FurnatorContainer::create));
+            () -> IMenuTypeExtension.create(FurnatorContainer::create));
     public static final Supplier<MenuType<MagmatorContainer>> MAGMATOR = DR.register("magmator",
-            () -> MenuRegistry.ofExtended(MagmatorContainer::create));
+            () -> IMenuTypeExtension.create(MagmatorContainer::create));
     public static final Supplier<MenuType<PlayerTransmitterContainer>> PLAYER_TRANSMITTER = DR.register("player_transmitter",
-            () -> MenuRegistry.ofExtended(PlayerTransmitterContainer::create));
+            () -> IMenuTypeExtension.create(PlayerTransmitterContainer::create));
     public static final Supplier<MenuType<EnergyHopperContainer>> ENERGY_HOPPER = DR.register("energy_hopper",
-            () -> MenuRegistry.ofExtended(EnergyHopperContainer::create));
-    public static final Supplier<MenuType<CableContainer>> CABLE = DR.register("cable", () -> MenuRegistry.ofExtended(CableContainer::create));
+            () -> IMenuTypeExtension.create(EnergyHopperContainer::create));
+    public static final Supplier<MenuType<CableContainer>> CABLE = DR.register("cable", () -> IMenuTypeExtension.create(CableContainer::create));
     public static final Supplier<MenuType<ReactorContainer>> REACTOR = DR.register("reactor",
-            () -> MenuRegistry.ofExtended(ReactorContainer::create));
-    public static final Supplier<MenuType<SolarContainer>> SOLAR = DR.register("solar", () -> MenuRegistry.ofExtended(SolarContainer::create));
-    public static final Supplier<MenuType<ThermoContainer>> THERMO = DR.register("thermo", () -> MenuRegistry.ofExtended(ThermoContainer::create));
+            () -> IMenuTypeExtension.create(ReactorContainer::create));
+    public static final Supplier<MenuType<SolarContainer>> SOLAR = DR.register("solar", () -> IMenuTypeExtension.create(SolarContainer::create));
+    public static final Supplier<MenuType<ThermoContainer>> THERMO = DR.register("thermo", () -> IMenuTypeExtension.create(ThermoContainer::create));
     public static final Supplier<MenuType<DischargerContainer>> DISCHARGER = DR.register("discharger",
-            () -> MenuRegistry.ofExtended(DischargerContainer::create));
+            () -> IMenuTypeExtension.create(DischargerContainer::create));
 }

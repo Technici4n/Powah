@@ -1,6 +1,6 @@
 package owmii.powah.client.screen;
 
-import dev.architectury.registry.menu.MenuRegistry;
+import net.minecraft.client.gui.screens.MenuScreens;
 import owmii.powah.client.book.PowahBook;
 import owmii.powah.client.screen.container.*;
 import owmii.powah.inventory.Containers;
@@ -8,17 +8,17 @@ import owmii.powah.lib.client.screen.wiki.WikiScreen;
 
 public class Screens {
     public static void register() {
-        MenuRegistry.registerScreenFactory(Containers.ENERGY_CELL.get(), EnergyCellScreen::new);
-        MenuRegistry.registerScreenFactory(Containers.ENDER_CELL.get(), EnderCellScreen::new);
-        MenuRegistry.registerScreenFactory(Containers.FURNATOR.get(), FurnatorScreen::new);
-        MenuRegistry.registerScreenFactory(Containers.MAGMATOR.get(), MagmatorScreen::new);
-        MenuRegistry.registerScreenFactory(Containers.PLAYER_TRANSMITTER.get(), PlayerTransmitterScreen::new);
-        MenuRegistry.registerScreenFactory(Containers.ENERGY_HOPPER.get(), EnergyHopperScreen::new);
-        MenuRegistry.registerScreenFactory(Containers.CABLE.get(), CableScreen::new);
-        MenuRegistry.registerScreenFactory(Containers.REACTOR.get(), ReactorScreen::new);
-        MenuRegistry.registerScreenFactory(Containers.SOLAR.get(), SolarScreen::new);
-        MenuRegistry.registerScreenFactory(Containers.THERMO.get(), ThermoScreen::new);
-        MenuRegistry.registerScreenFactory(Containers.DISCHARGER.get(), DischargerScreen::new);
+        MenuScreens.register(Containers.ENERGY_CELL.get(), EnergyCellScreen::new);
+        MenuScreens.register(Containers.ENDER_CELL.get(), EnderCellScreen::new);
+        MenuScreens.register(Containers.FURNATOR.get(), FurnatorScreen::new);
+        MenuScreens.register(Containers.MAGMATOR.get(), MagmatorScreen::new);
+        MenuScreens.register(Containers.PLAYER_TRANSMITTER.get(), PlayerTransmitterScreen::new);
+        MenuScreens.register(Containers.ENERGY_HOPPER.get(), EnergyHopperScreen::new);
+        MenuScreens.register(Containers.CABLE.get(), CableScreen::new);
+        MenuScreens.register(Containers.REACTOR.get(), ReactorScreen::new);
+        MenuScreens.register(Containers.SOLAR.get(), SolarScreen::new);
+        MenuScreens.register(Containers.THERMO.get(), ThermoScreen::new);
+        MenuScreens.register(Containers.DISCHARGER.get(), DischargerScreen::new);
     }
 
     public static void openManualScreen() {

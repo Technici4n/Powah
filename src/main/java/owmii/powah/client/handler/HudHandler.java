@@ -1,6 +1,5 @@
 package owmii.powah.client.handler;
 
-import dev.architectury.event.events.client.ClientGuiEvent;
 import net.minecraft.client.Minecraft;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.InteractionHand;
@@ -10,12 +9,15 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.HitResult;
+import net.neoforged.neoforge.client.event.RenderGuiEvent;
+import net.neoforged.neoforge.common.NeoForge;
 import owmii.powah.lib.client.handler.IHud;
 import owmii.powah.lib.client.handler.IHudItem;
 
 public class HudHandler {
     public static void register() {
-        ClientGuiEvent.RENDER_HUD.register((gui, tickDelta) -> {
+        NeoForge.EVENT_BUS.addListener((RenderGuiEvent.Post event) -> {
+            var gui = event.getGuiGraphics();
             Minecraft mc = Minecraft.getInstance();
             if (mc.screen == null) {
                 Player player = mc.player;

@@ -1,9 +1,8 @@
 package owmii.powah;
 
-import dev.architectury.platform.Platform;
 import java.util.function.Consumer;
 import java.util.function.Predicate;
-import net.minecraft.Util;
+
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.tags.TagKey;
@@ -16,19 +15,13 @@ import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.block.state.BlockState;
 import owmii.powah.block.Tier;
 import owmii.powah.block.cable.CableTile;
+import owmii.powah.forge.NeoForgeEnvHandler;
 import owmii.powah.lib.logistics.fluid.Tank;
 import owmii.powah.lib.logistics.inventory.Inventory;
 import owmii.powah.world.gen.WorldGen;
 
 public interface EnvHandler {
-    EnvHandler INSTANCE = Util.make(() -> {
-        try {
-            var klass = Class.forName(Platform.isNeoForge() ? "owmii.powah.forge.NeoForgeEnvHandler" : "owmii.powah.fabric.FabricEnvHandler");
-            return (EnvHandler) klass.getConstructor().newInstance();
-        } catch (Exception exception) {
-            throw new RuntimeException("Failed to setup env handler", exception);
-        }
-    });
+    EnvHandler INSTANCE = new NeoForgeEnvHandler();
 
     // INIT
     void setupBlockItems();
@@ -38,9 +31,6 @@ public interface EnvHandler {
     }
 
     void scheduleCommonSetup(Runnable runnable);
-
-    // MISC PLATFORM STUFF
-    void handleReactorInitClient(Consumer<?> consumer);
 
     // MISC ABSTRACTIONS
     TagKey<Biome> getOverworldBiomeTag();
