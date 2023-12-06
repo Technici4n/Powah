@@ -4,7 +4,6 @@ import java.util.Collection;
 import java.util.List;
 import me.shedaniel.rei.api.common.plugins.REIPluginProvider;
 import me.shedaniel.rei.forge.REIPluginLoaderClient;
-import owmii.powah.compat.rei.PowahREIPlugin;
 
 @REIPluginLoaderClient
 public class PowahREIPluginProvider implements REIPluginProvider<PowahREIPlugin> {

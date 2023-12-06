@@ -3,7 +3,7 @@ A tech mod that has Various ways to generate, store and transmit Forge Energy, f
 
 [Please join the AE2 Discord for support, in the `#powah` channel.](https://discord.gg/Zd6t9ka7ne)
 
-Powah! was originally created by owmii for Forge 1.14-1.16, and is now being maintained by Technici4n for Neoforge since 1.20.2.
+Powah! was originally created by owmii for Forge 1.14-1.16, and is now being maintained by Technici4n, for Fabric and Forge between 1.17 and 1.20.1, and for Neoforge since 1.20.2.
 
 This is allowed by the LGPL license used by Powah!.
 
