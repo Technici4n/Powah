@@ -1,4 +1,4 @@
-package owmii.powah.forge;
+package owmii.powah;
 
 import java.util.ArrayList;
 import java.util.List;

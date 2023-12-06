@@ -1,4 +1,4 @@
-package owmii.powah.forge.data;
+package owmii.powah.data;
 
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.BlockTags;

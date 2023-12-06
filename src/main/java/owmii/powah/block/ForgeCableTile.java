@@ -1,4 +1,4 @@
-package owmii.powah.forge.block;
+package owmii.powah.block;
 
 import com.google.common.primitives.Ints;
 import net.minecraft.core.BlockPos;
@@ -8,7 +8,6 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
 import net.neoforged.neoforge.common.capabilities.Capabilities;
 import org.jetbrains.annotations.Nullable;
-import owmii.powah.block.Tier;
 import owmii.powah.block.cable.CableTile;
 
 public class ForgeCableTile extends CableTile {

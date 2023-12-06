@@ -1,8 +1,8 @@
-package owmii.powah.forge.compat.curios;
+package owmii.powah.compat.curios;
 
 import net.minecraft.world.item.ItemStack;
 import net.neoforged.neoforge.common.NeoForge;
-import owmii.powah.forge.ChargeableItemsEvent;
+import owmii.powah.ChargeableItemsEvent;
 import top.theillusivec4.curios.api.CuriosApi;
 
 public class CuriosCompat {

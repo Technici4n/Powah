@@ -1,4 +1,4 @@
-package owmii.powah.forge;
+package owmii.powah;
 
 import com.google.common.primitives.Ints;
 import java.util.ArrayList;
@@ -29,13 +29,11 @@ import net.neoforged.neoforge.fluids.capability.IFluidHandler;
 import net.neoforged.neoforge.items.IItemHandler;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import owmii.powah.EnvHandler;
-import owmii.powah.Powah;
 import owmii.powah.block.Tier;
 import owmii.powah.block.cable.CableTile;
 import owmii.powah.block.reactor.ReactorPartTile;
-import owmii.powah.forge.block.ForgeCableTile;
-import owmii.powah.forge.data.ITags;
+import owmii.powah.block.ForgeCableTile;
+import owmii.powah.data.ITags;
 import owmii.powah.lib.block.AbstractEnergyStorage;
 import owmii.powah.lib.block.IInventoryHolder;
 import owmii.powah.lib.block.ITankHolder;

@@ -1,4 +1,4 @@
-package owmii.powah.forge.data;
+package owmii.powah.data;
 
 import java.util.IdentityHashMap;
 import java.util.Map;

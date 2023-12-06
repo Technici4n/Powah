@@ -1,4 +1,4 @@
-package owmii.powah.forge.data;
+package owmii.powah.data;
 
 import static net.neoforged.neoforge.common.Tags.Blocks.ORES;
 import static net.neoforged.neoforge.common.Tags.Blocks.STORAGE_BLOCKS;

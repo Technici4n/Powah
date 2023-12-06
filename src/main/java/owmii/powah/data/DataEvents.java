@@ -1,4 +1,4 @@
-package owmii.powah.forge.data;
+package owmii.powah.data;
 
 import java.util.List;
 import java.util.Set;
@@ -11,7 +11,7 @@ import net.neoforged.neoforge.common.data.DatapackBuiltinEntriesProvider;
 import net.neoforged.neoforge.data.event.GatherDataEvent;
 import net.neoforged.neoforge.registries.NeoForgeRegistries;
 import owmii.powah.Powah;
-import owmii.powah.forge.compat.curios.CurioTagsProvider;
+import owmii.powah.compat.curios.CurioTagsProvider;
 import owmii.powah.world.gen.Features;
 
 public class DataEvents {

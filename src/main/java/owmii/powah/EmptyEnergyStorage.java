@@ -1,4 +1,4 @@
-package owmii.powah.forge;
+package owmii.powah;
 
 import net.neoforged.neoforge.energy.IEnergyStorage;
 

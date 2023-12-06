@@ -1,4 +1,4 @@
-package owmii.powah.forge.compat.rei;
+package owmii.powah.compat.rei;
 
 import java.util.Collection;
 import java.util.List;

@@ -1,4 +1,4 @@
-package owmii.powah.forge.compat.curios;
+package owmii.powah.compat.curios;
 
 import java.util.concurrent.CompletableFuture;
 import net.minecraft.core.HolderLookup;
