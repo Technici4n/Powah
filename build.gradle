@@ -160,7 +160,7 @@ if (project.version != "0.0.0") {
             changelog = changes
             displayName = String.format("[%s %s] v%s", project.name.toUpperCase(), project.minecraft_version, project.version)
 
-            mainPublication remapJar // Declares the publicated jar
+            mainPublication jar // Declares the publicated jar
 
             relations {
                 depends {
