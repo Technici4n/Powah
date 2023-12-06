@@ -1,7 +1,5 @@
 package owmii.powah.lib.registry;
 
-import net.neoforged.neoforge.registries.DeferredRegister;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
@@ -9,6 +7,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.function.IntFunction;
 import java.util.function.Supplier;
+import net.neoforged.neoforge.registries.DeferredRegister;
 
 public class VarReg<V extends Enum<V> & IVariant<V>, E> {
     private static final Map<String, List<String>> ALL_VARIANTS = new HashMap<>();

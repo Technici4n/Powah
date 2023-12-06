@@ -1,15 +1,21 @@
 package owmii.powah.network;
 
-import dev.architectury.networking.NetworkManager;
 import io.netty.buffer.Unpooled;
-import java.lang.reflect.Constructor;
 import java.util.ArrayList;
 import java.util.IdentityHashMap;
 import java.util.List;
+import java.util.function.Function;
+import net.minecraft.client.Minecraft;
 import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.network.protocol.Packet;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.server.level.ServerPlayer;
-import net.minecraft.world.entity.player.Player;
+import net.minecraft.server.RunningOnDifferentThreadException;
+import net.neoforged.bus.api.SubscribeEvent;
+import net.neoforged.neoforge.network.INetworkDirection;
+import net.neoforged.neoforge.network.NetworkEvent;
+import net.neoforged.neoforge.network.NetworkRegistry;
+import net.neoforged.neoforge.network.PlayNetworkDirection;
+import net.neoforged.neoforge.network.event.EventNetworkChannel;
 import owmii.powah.Powah;
 import owmii.powah.network.packet.NextEnergyConfigPacket;
 import owmii.powah.network.packet.NextRedstoneModePacket;
@@ -17,57 +23,64 @@ import owmii.powah.network.packet.SetChannelPacket;
 import owmii.powah.network.packet.SwitchGenModePacket;
 
 public final class Network {
-    private static final ResourceLocation PACKET_ID = Powah.id("packet");
+    private static final ResourceLocation CHANNEL = Powah.id("packet");
     private static int nextId = 0;
-    private static final List<Constructor<? extends IPacket>> decoders = new ArrayList<>();
+    private static final List<Function<FriendlyByteBuf, ? extends IPacket>> decoders = new ArrayList<>();
     private static final IdentityHashMap<Class<?>, Integer> packetIds = new IdentityHashMap<>();
 
-    public static <T extends IPacket> void register(Class<T> packetClass) {
-        Constructor<T> ctor = null;
-        try {
-            ctor = packetClass.getConstructor(FriendlyByteBuf.class);
-            decoders.add(ctor);
-            packetIds.put(packetClass, nextId);
-            nextId++;
-        } catch (NoSuchMethodException e) {
-            throw new RuntimeException("Failed to register packet", e);
-        }
+    public static <T extends IPacket> void register(Class<T> packetClass, Function<FriendlyByteBuf, T> decoder) {
+        decoders.add(decoder);
+        packetIds.put(packetClass, nextId);
+        nextId++;
     }
 
     public static void register() {
-        NetworkManager.registerReceiver(NetworkManager.Side.C2S, PACKET_ID, (buf, ctx) -> {
-            int packetId = buf.readVarInt();
+        EventNetworkChannel ec = NetworkRegistry.ChannelBuilder.named(CHANNEL)
+                .networkProtocolVersion(() -> "1")
+                .clientAcceptedVersions(s -> true)
+                .serverAcceptedVersions(s -> true)
+                .eventNetworkChannel();
+        ec.registerObject(new Network());
 
-            try {
-                var packet = decoders.get(packetId).newInstance(buf);
-                ctx.queue(() -> {
-                    packet.handle(ctx.getPlayer());
-                });
-            } catch (ReflectiveOperationException e) {
-                throw new RuntimeException("Failed to construct packet of type " + packetId, e);
-            }
-        });
-
-        register(NextEnergyConfigPacket.class);
-        register(NextRedstoneModePacket.class);
-        register(SetChannelPacket.class);
-        register(SwitchGenModePacket.class);
+        register(NextEnergyConfigPacket.class, NextEnergyConfigPacket::new);
+        register(NextRedstoneModePacket.class, NextRedstoneModePacket::new);
+        register(SetChannelPacket.class, SetChannelPacket::new);
+        register(SwitchGenModePacket.class, SwitchGenModePacket::new);
     }
 
-    private static FriendlyByteBuf encodePacket(IPacket packet) {
-        var buf = new FriendlyByteBuf(Unpooled.buffer());
-        buf.writeVarInt(packetIds.get(packet.getClass()));
-        packet.encode(buf);
-        return buf;
+    @SubscribeEvent
+    public void serverPacket(final NetworkEvent.ClientCustomPayloadEvent ev) {
+        try {
+            var ctx = ev.getSource();
+            ctx.setPacketHandled(true);
+            var packet = deserializePacket(ev.getPayload());
+            var player = ctx.getSender();
+            if (player == null) {
+                throw new IllegalStateException("Cannot handle a C2S packet without a player");
+            }
+            ctx.enqueueWork(() -> packet.handle(player));
+        } catch (final RunningOnDifferentThreadException ignored) {
+
+        }
+    }
+
+    private IPacket deserializePacket(FriendlyByteBuf payload) {
+        int packetId = payload.readVarInt();
+        return decoders.get(packetId).apply(payload);
     }
 
     public static void toServer(IPacket msg) {
-        NetworkManager.sendToServer(PACKET_ID, encodePacket(msg));
+        var packet = encodePacket(msg, PlayNetworkDirection.PLAY_TO_SERVER);
+        Minecraft.getInstance().getConnection().send(packet);
     }
 
-    public static void toClient(IPacket msg, Player player) {
-        if (player instanceof ServerPlayer serverPlayer) {
-            NetworkManager.sendToPlayer(serverPlayer, PACKET_ID, encodePacket(msg));
-        }
+    private static Packet<?> encodePacket(IPacket packet, PlayNetworkDirection direction) {
+        var buf = new FriendlyByteBuf(Unpooled.buffer());
+        buf.writeVarInt(packetIds.get(packet.getClass()));
+        packet.encode(buf);
+
+        return direction.buildPacket(
+                new INetworkDirection.PacketData(buf, 0), CHANNEL);
     }
+
 }

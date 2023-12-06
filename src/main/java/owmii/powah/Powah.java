@@ -28,7 +28,7 @@ import owmii.powah.entity.Entities;
 import owmii.powah.forge.compat.curios.CuriosCompat;
 import owmii.powah.forge.data.DataEvents;
 import owmii.powah.inventory.Containers;
-import owmii.powah.item.ItemGroups;
+import owmii.powah.item.CreativeTabs;
 import owmii.powah.item.Itms;
 import owmii.powah.lib.block.IBlock;
 import owmii.powah.lib.util.Wrench;
@@ -60,9 +60,8 @@ public class Powah {
         Entities.DR.register(modEventBus);
         Recipes.DR_SERIALIZER.register(modEventBus);
         Recipes.DR_TYPE.register(modEventBus);
-        ItemGroups.DR.register(modEventBus);
+        CreativeTabs.DR.register(modEventBus);
 
-        EnvHandler.INSTANCE.registerWorldgen();
         EnvHandler.INSTANCE.registerTransfer();
         Network.register();
 
@@ -104,8 +103,8 @@ public class Powah {
         modEventBus.addListener((RegisterEvent event) -> {
             if (event.getRegistryKey() == Registries.ITEM) {
                 for (var block : BuiltInRegistries.BLOCK) {
-                    if (block instanceof IBlock<?, ?> iBlock) {
-                        var blockItem = iBlock.getBlockItem(new Item.Properties(), ItemGroups.MAIN_KEY);
+                    if (block instanceof IBlock<?, ?>iBlock) {
+                        var blockItem = iBlock.getBlockItem(new Item.Properties(), CreativeTabs.MAIN_KEY);
                         var name = BuiltInRegistries.BLOCK.getKey(block);
                         Registry.register(BuiltInRegistries.ITEM, name, blockItem);
                     }

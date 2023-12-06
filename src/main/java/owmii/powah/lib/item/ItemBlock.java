@@ -15,17 +15,17 @@ import owmii.powah.lib.registry.IVariantEntry;
 
 public class ItemBlock<V extends IVariant, B extends Block & IBlock<V, B>> extends BlockItem implements IItem, IVariantEntry<V, B> {
     private final B block;
-    private final ResourceKey<CreativeModeTab> group;
+    private final ResourceKey<CreativeModeTab> creativeTab;
 
     @SuppressWarnings("ConstantConditions")
-    public ItemBlock(B block, Properties builder, @Nullable ResourceKey<CreativeModeTab> group) {
+    public ItemBlock(B block, Properties builder, @Nullable ResourceKey<CreativeModeTab> creativeTab) {
         super(block, builder);
         this.block = block;
-        this.group = group;
+        this.creativeTab = creativeTab;
     }
 
-    public ResourceKey<CreativeModeTab> getGroup() {
-        return group;
+    public ResourceKey<CreativeModeTab> getCreativeTab() {
+        return creativeTab;
     }
 
     @Override

@@ -88,7 +88,7 @@ public class Inventory extends ItemStackHandler {
     public Stacks canPut(Stacks outputs, Stacks slots) {
         Inventory inv = new Inventory(Stacks.from(slots).copy());
         for (ItemStack stack : outputs) {
-            if (!ItemHandlerHelper.insertItem(inv, stack.copy(), false).isEmpty()) {
+            if (!ItemStackHandlerHelper.insertItem(inv, stack.copy(), false).isEmpty()) {
                 return Stacks.create();
             }
         }

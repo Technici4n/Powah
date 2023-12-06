@@ -1,11 +1,12 @@
 package owmii.powah.lib.client.util;
 
-import dev.architectury.event.events.client.ClientTickEvent;
 import java.util.Optional;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
+import net.neoforged.bus.api.SubscribeEvent;
+import net.neoforged.neoforge.event.TickEvent;
 
 public class MC {
     public static long ticks;
@@ -26,9 +27,10 @@ public class MC {
         return Minecraft.getInstance();
     }
 
-    static {
-        ClientTickEvent.CLIENT_POST.register(mc -> {
+    @SubscribeEvent
+    public static void onTick(TickEvent.ClientTickEvent e) {
+        if (e.phase == TickEvent.Phase.END) {
             ticks++;
-        });
+        }
     }
 }

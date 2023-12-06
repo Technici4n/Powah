@@ -2,30 +2,20 @@ package owmii.powah.forge;
 
 import com.google.common.primitives.Ints;
 import java.util.ArrayList;
-import java.util.function.Consumer;
 import java.util.function.Predicate;
 import java.util.stream.IntStream;
-import net.minecraft.client.renderer.BlockEntityWithoutLevelRenderer;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
-import net.minecraft.core.Registry;
-import net.minecraft.core.registries.BuiltInRegistries;
-import net.minecraft.core.registries.Registries;
-import net.minecraft.tags.BiomeTags;
-import net.minecraft.tags.TagKey;
 import net.minecraft.world.Container;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.neoforged.fml.javafmlmod.FMLJavaModLoadingContext;
-import net.neoforged.neoforge.client.extensions.common.IClientItemExtensions;
 import net.neoforged.neoforge.common.NeoForge;
 import net.neoforged.neoforge.common.capabilities.Capabilities;
 import net.neoforged.neoforge.common.capabilities.Capability;
@@ -37,7 +27,6 @@ import net.neoforged.neoforge.fluids.FluidStack;
 import net.neoforged.neoforge.fluids.FluidUtil;
 import net.neoforged.neoforge.fluids.capability.IFluidHandler;
 import net.neoforged.neoforge.items.IItemHandler;
-import net.neoforged.neoforge.registries.RegisterEvent;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import owmii.powah.EnvHandler;
@@ -45,12 +34,9 @@ import owmii.powah.Powah;
 import owmii.powah.block.Tier;
 import owmii.powah.block.cable.CableTile;
 import owmii.powah.block.reactor.ReactorPartTile;
-import owmii.powah.client.render.tile.ReactorItemRenderer;
 import owmii.powah.forge.block.ForgeCableTile;
 import owmii.powah.forge.data.ITags;
-import owmii.powah.item.ItemGroups;
 import owmii.powah.lib.block.AbstractEnergyStorage;
-import owmii.powah.lib.block.IBlock;
 import owmii.powah.lib.block.IInventoryHolder;
 import owmii.powah.lib.block.ITankHolder;
 import owmii.powah.lib.item.IEnergyContainingItem;
@@ -64,16 +50,6 @@ public class NeoForgeEnvHandler implements EnvHandler {
 
     @Override
     public void setupBlockItems() {
-    }
-
-    @Override
-    public void registerWorldgen() {
-        EnvHandler.super.registerWorldgen();
-    }
-
-    @Override
-    public TagKey<Biome> getOverworldBiomeTag() {
-        return BiomeTags.IS_OVERWORLD;
     }
 
     @Override

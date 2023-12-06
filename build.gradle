@@ -55,8 +55,8 @@ dependencies {
     // Uncomment when we stop depending on REI internals
     compileOnly "me.shedaniel:RoughlyEnoughItems-api-neoforge:${project.rei_version}"
     compileOnly "me.shedaniel:RoughlyEnoughItems-default-plugin-neoforge:${project.rei_version}"
-//    implementation "me.shedaniel:RoughlyEnoughItems-neoforge:${project.rei_version}"
-//    compileOnly "me.shedaniel:RoughlyEnoughItems-neoforge:${project.rei_version}"
+    implementation "me.shedaniel:RoughlyEnoughItems-neoforge:${project.rei_version}"
+    implementation "dev.architectury:architectury-neoforge:10.0.16"
 
     compileOnly "top.theillusivec4.curios:curios-neoforge:${project.curios_version}:api"
     //modRuntimeOnly "top.theillusivec4.curios:curios-forge:${project.curios_version}"

@@ -60,7 +60,7 @@ public class ItemStackHandler {
         int limit = getStackLimit(slot, stack);
 
         if (!existing.isEmpty()) {
-            if (!ItemHandlerHelper.canItemStacksStack(stack, existing))
+            if (!ItemStackHandlerHelper.canItemStacksStack(stack, existing))
                 return stack;
 
             limit -= existing.getCount();
@@ -73,14 +73,14 @@ public class ItemStackHandler {
 
         if (!simulate) {
             if (existing.isEmpty()) {
-                this.stacks.set(slot, reachedLimit ? ItemHandlerHelper.copyStackWithSize(stack, limit) : stack);
+                this.stacks.set(slot, reachedLimit ? ItemStackHandlerHelper.copyStackWithSize(stack, limit) : stack);
             } else {
                 existing.grow(reachedLimit ? limit : stack.getCount());
             }
             onContentsChanged(slot);
         }
 
-        return reachedLimit ? ItemHandlerHelper.copyStackWithSize(stack, stack.getCount() - limit) : ItemStack.EMPTY;
+        return reachedLimit ? ItemStackHandlerHelper.copyStackWithSize(stack, stack.getCount() - limit) : ItemStack.EMPTY;
     }
 
     @NotNull
@@ -107,11 +107,11 @@ public class ItemStackHandler {
             }
         } else {
             if (!simulate) {
-                this.stacks.set(slot, ItemHandlerHelper.copyStackWithSize(existing, existing.getCount() - toExtract));
+                this.stacks.set(slot, ItemStackHandlerHelper.copyStackWithSize(existing, existing.getCount() - toExtract));
                 onContentsChanged(slot);
             }
 
-            return ItemHandlerHelper.copyStackWithSize(existing, toExtract);
+            return ItemStackHandlerHelper.copyStackWithSize(existing, toExtract);
         }
     }
 

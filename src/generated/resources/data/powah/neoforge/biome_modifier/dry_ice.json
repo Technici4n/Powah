@@ -1,0 +1,6 @@
+{
+  "type": "neoforge:add_features",
+  "biomes": "#powah:has_dry_ice",
+  "features": "powah:dry_ice",
+  "step": "underground_ores"
+}

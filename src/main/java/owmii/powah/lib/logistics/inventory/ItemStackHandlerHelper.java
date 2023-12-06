@@ -3,7 +3,7 @@ package owmii.powah.lib.logistics.inventory;
 import net.minecraft.world.item.ItemStack;
 import org.jetbrains.annotations.NotNull;
 
-public class ItemHandlerHelper {
+public class ItemStackHandlerHelper {
     @NotNull
     public static ItemStack insertItem(ItemStackHandler dest, @NotNull ItemStack stack, boolean simulate) {
         if (stack.isEmpty())

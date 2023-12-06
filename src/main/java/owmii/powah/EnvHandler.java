@@ -1,24 +1,19 @@
 package owmii.powah;
 
-import java.util.function.Consumer;
 import java.util.function.Predicate;
-
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
-import net.minecraft.tags.TagKey;
 import net.minecraft.world.Container;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.block.state.BlockState;
 import owmii.powah.block.Tier;
 import owmii.powah.block.cable.CableTile;
 import owmii.powah.forge.NeoForgeEnvHandler;
 import owmii.powah.lib.logistics.fluid.Tank;
 import owmii.powah.lib.logistics.inventory.Inventory;
-import owmii.powah.world.gen.WorldGen;
 
 public interface EnvHandler {
     EnvHandler INSTANCE = new NeoForgeEnvHandler();
@@ -26,14 +21,9 @@ public interface EnvHandler {
     // INIT
     void setupBlockItems();
 
-    default void registerWorldgen() {
-        WorldGen.init();
-    }
-
     void scheduleCommonSetup(Runnable runnable);
 
     // MISC ABSTRACTIONS
-    TagKey<Biome> getOverworldBiomeTag();
 
     // TRANSFER
     void registerTransfer();

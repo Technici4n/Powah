@@ -1,5 +1,7 @@
 package owmii.powah.item;
 
+import java.util.stream.Collectors;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceKey;
@@ -10,16 +12,15 @@ import net.neoforged.neoforge.registries.DeferredRegister;
 import owmii.powah.Powah;
 import owmii.powah.block.Blcks;
 import owmii.powah.block.Tier;
+import owmii.powah.lib.item.ItemBlock;
 
-import java.util.stream.Collectors;
-
-public class ItemGroups {
+public class CreativeTabs {
     public static ResourceKey<CreativeModeTab> MAIN_KEY = ResourceKey.create(Registries.CREATIVE_MODE_TAB, Powah.id("tab"));
 
     public static final DeferredRegister<CreativeModeTab> DR = DeferredRegister.create(Registries.CREATIVE_MODE_TAB, Powah.MOD_ID);
 
     static {
-        DR.register("tab", () -> CreativeModeTab.builder()
+        DR.register(MAIN_KEY.location().getPath(), () -> CreativeModeTab.builder()
                 .title(Component.translatable("itemGroup.powah.tab"))
                 .icon(() -> new ItemStack(Blcks.ENERGY_CELL.get(Tier.BLAZING)))
                 .displayItems((params, output) -> {
@@ -55,6 +56,15 @@ public class ItemGroups {
                     output.accept(Itms.CHARGED_SNOWBALL.get());
                     output.accept(Itms.URANINITE_RAW.get());
                     output.accept(Itms.URANINITE.get());
+
+                    for (var item : BuiltInRegistries.ITEM) {
+                        if (item instanceof ItemBlock<?, ?>powahItem) {
+                            if (powahItem.getCreativeTab() == MAIN_KEY) {
+                                output.accept(item);
+                            }
+                        }
+
+                    }
                 })
                 .build());
     }

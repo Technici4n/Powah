@@ -11,7 +11,7 @@ import net.minecraft.world.level.ItemLike;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
 import owmii.powah.lib.item.Stacks;
-import owmii.powah.lib.logistics.inventory.ItemHandlerHelper;
+import owmii.powah.lib.logistics.inventory.ItemStackHandlerHelper;
 
 public class Stack {
     public static Stacks copy(Stacks stacks) {
@@ -27,7 +27,7 @@ public class Stack {
     }
 
     public static boolean canMergeInSlot(ItemStack inSlot, ItemStack stack) {
-        return !stack.isEmpty() && (inSlot.isEmpty() || ItemHandlerHelper.canItemStacksStack(inSlot, stack)
+        return !stack.isEmpty() && (inSlot.isEmpty() || ItemStackHandlerHelper.canItemStacksStack(inSlot, stack)
                 && inSlot.getCount() + stack.getCount() <= inSlot.getMaxStackSize());
     }
 

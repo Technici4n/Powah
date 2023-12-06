@@ -1,8 +1,7 @@
 package owmii.powah.lib.logistics.fluid;
 
-import java.util.function.Predicate;
-
 import com.google.common.primitives.Ints;
+import java.util.function.Predicate;
 import net.minecraft.nbt.CompoundTag;
 import net.neoforged.neoforge.fluids.FluidStack;
 import org.jetbrains.annotations.NotNull;

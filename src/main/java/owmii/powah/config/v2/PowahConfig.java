@@ -27,8 +27,6 @@ import owmii.powah.config.v2.values.TieredChannelValues;
 
 @Config(name = "powah")
 public class PowahConfig implements ConfigData {
-    @Comment("World generation config options.")
-    public final WorldGen worldgen = new WorldGen();
     @Comment("Other general config options.")
     public final General general = new General();
     @Comment("Configuration of energy values for generators.")
@@ -64,15 +62,6 @@ public class PowahConfig implements ConfigData {
         @Comment("Multiplier to the required energy applied after an energizing recipe is read.\nUse this to adjust the cost of ALL energizing recipes.")
         @DoubleRange(min = 0.001, max = 1000)
         public double energizing_energy_ratio = energizingRatio();
-    }
-
-    public static class WorldGen {
-        @Comment("Enable this to disable worldgen entirely. If true, the other options have no effect.")
-        public boolean disable_all = false;
-        public int poor_uraninite_veins_per_chunk = 8;
-        public int uraninite_veins_per_chunk = 6;
-        public int dense_uraninite_veins_per_chunk = 3;
-        public int dry_ice_veins_per_chunk = 9;
     }
 
     public static class Generators {

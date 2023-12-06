@@ -1,6 +1,6 @@
 package owmii.powah.compat.rei;
 
-import net.neoforged.neoforge.fluids.FluidStack;
+import dev.architectury.hooks.fluid.forge.FluidStackHooksForge;
 import java.util.*;
 import java.util.stream.Collectors;
 import me.shedaniel.rei.api.client.registry.entry.EntryRegistry;
@@ -16,6 +16,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.LiquidBlock;
 import net.minecraft.world.level.material.Fluid;
+import net.neoforged.neoforge.fluids.FluidStack;
 import org.jetbrains.annotations.Nullable;
 import owmii.powah.Powah;
 import owmii.powah.api.PowahAPI;
@@ -74,8 +75,10 @@ public class HeatSourceDisplay implements Display {
             });
 
             Collection<FluidStack> allIngredients = EntryRegistry.getInstance().getEntryStacks()
-                    .filter(stack -> Objects.equals(stack.getType(), VanillaEntryTypes.FLUID))
-                    .<FluidStack>map(EntryStack::castValue).toList();
+                    .filter(stack -> Objects.equals(stack.getType(), VanillaEntryTypes.FLUID)).<dev.architectury.fluid.FluidStack>map(
+                            EntryStack::castValue)
+                    .map(FluidStackHooksForge::toForge)
+                    .toList();
             ;
 
             allIngredients.forEach(fluidStack -> {

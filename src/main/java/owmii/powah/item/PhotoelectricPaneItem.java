@@ -1,7 +1,5 @@
 package owmii.powah.item;
 
-import dev.architectury.hooks.item.ItemStackHooks;
-import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
@@ -11,6 +9,7 @@ import net.minecraft.world.entity.monster.EnderMan;
 import net.minecraft.world.entity.monster.Endermite;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
+import net.neoforged.neoforge.items.ItemHandlerHelper;
 import owmii.powah.Powah;
 import owmii.powah.lib.item.ItemBase;
 
@@ -28,7 +27,7 @@ public class PhotoelectricPaneItem extends ItemBase {
                     if (!playerIn.isCreative()) {
                         stack1.shrink(1);
                     }
-                    ItemStackHooks.giveItem((ServerPlayer) playerIn, new ItemStack(Itms.LENS_OF_ENDER.get()));
+                    ItemHandlerHelper.giveItemToPlayer(playerIn, new ItemStack(Itms.LENS_OF_ENDER.get()));
                     target.playSound(SoundEvents.ENDERMAN_DEATH, 0.5F, 1.0F);
                     target.remove(Entity.RemovalReason.KILLED);
                 }

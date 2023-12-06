@@ -1,7 +1,5 @@
 package owmii.powah.lib.util;
 
-import net.neoforged.fml.ModList;
-import net.neoforged.neoforge.fluids.FluidStack;
 import java.text.NumberFormat;
 import java.util.Arrays;
 import java.util.Locale;
@@ -11,6 +9,7 @@ import java.util.TreeMap;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
+import net.neoforged.fml.ModList;
 import net.neoforged.neoforgespi.language.IModInfo;
 import owmii.powah.lib.logistics.fluid.Tank;
 
