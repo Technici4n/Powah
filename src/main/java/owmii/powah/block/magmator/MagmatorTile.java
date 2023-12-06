@@ -6,6 +6,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
 import net.neoforged.neoforge.fluids.FluidStack;
+import net.neoforged.neoforge.fluids.capability.IFluidHandler;
 import owmii.powah.api.PowahAPI;
 import owmii.powah.block.Tier;
 import owmii.powah.block.Tiles;
@@ -14,7 +15,7 @@ import owmii.powah.lib.block.IInventoryHolder;
 import owmii.powah.lib.block.ITankHolder;
 import owmii.powah.lib.logistics.energy.Energy;
 import owmii.powah.lib.logistics.fluid.Tank;
-import owmii.powah.lib.util.Util;
+import owmii.powah.util.Util;
 
 public class MagmatorTile extends AbstractEnergyProvider<MagmatorBlock> implements IInventoryHolder, ITankHolder {
     protected final Energy buffer = Energy.create(0);
@@ -23,7 +24,7 @@ public class MagmatorTile extends AbstractEnergyProvider<MagmatorBlock> implemen
     public MagmatorTile(BlockPos pos, BlockState state, Tier variant) {
         super(Tiles.MAGMATOR.get(), pos, state, variant);
         this.tank.setCapacity(Util.bucketAmount() * 4)
-                .validate(stack -> PowahAPI.getMagmaticFluidHeat(stack.getFluid()) != 0)
+                .setValidator(stack -> PowahAPI.getMagmaticFluidHeat(stack.getFluid()) != 0)
                 .setChange(() -> MagmatorTile.this.sync(10));
         this.inv.add(1);
     }
@@ -54,11 +55,11 @@ public class MagmatorTile extends AbstractEnergyProvider<MagmatorBlock> implemen
                 FluidStack fluid = this.tank.getFluid();
                 int fluidHeat = PowahAPI.getMagmaticFluidHeat(fluid.getFluid());
                 if (fluidHeat > 0) {
-                    var amountPerDrain = 100L * Util.millibucketAmount();
-                    long minStored = Math.min(this.tank.getFluidAmount(), amountPerDrain);
-                    this.buffer.setStored(minStored * fluidHeat / amountPerDrain);
-                    this.buffer.setCapacity(minStored * fluidHeat / amountPerDrain);
-                    this.tank.drain(minStored, false);
+                    var amountPerDrain = 100 * Util.millibucketAmount();
+                    var minStored = Math.min(this.tank.getFluidAmount(), amountPerDrain);
+                    this.buffer.setStored((long) minStored * fluidHeat / amountPerDrain);
+                    this.buffer.setCapacity((long) minStored * fluidHeat / amountPerDrain);
+                    this.tank.drain(minStored, IFluidHandler.FluidAction.EXECUTE);
                 }
             }
 

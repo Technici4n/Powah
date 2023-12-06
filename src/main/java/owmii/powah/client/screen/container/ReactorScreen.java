@@ -18,9 +18,9 @@ import owmii.powah.lib.client.screen.widget.IconButton;
 import owmii.powah.lib.client.util.Draw;
 import owmii.powah.lib.client.util.Text;
 import owmii.powah.lib.logistics.energy.Energy;
-import owmii.powah.lib.util.Util;
 import owmii.powah.network.Network;
 import owmii.powah.network.packet.SwitchGenModePacket;
+import owmii.powah.util.Util;
 
 public class ReactorScreen extends AbstractEnergyScreen<ReactorTile, ReactorContainer> {
     private IconButton modeButton = IconButton.EMPTY;

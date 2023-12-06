@@ -21,8 +21,8 @@ import owmii.powah.lib.block.AbstractEnergyStorage;
 import owmii.powah.lib.block.IInventoryHolder;
 import owmii.powah.lib.block.IOwnable;
 import owmii.powah.lib.logistics.energy.Energy;
-import owmii.powah.lib.util.Player;
-import owmii.powah.lib.util.math.RangedInt;
+import owmii.powah.util.Player;
+import owmii.powah.util.math.RangedInt;
 
 public class AbstractEnderTile<B extends AbstractEnergyBlock<EnderConfig, B>> extends AbstractEnergyStorage<EnderConfig, B>
         implements IOwnable, IInventoryHolder {

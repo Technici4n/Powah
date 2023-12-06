@@ -9,7 +9,7 @@ import owmii.powah.client.screen.Textures;
 import owmii.powah.inventory.EnergyHopperContainer;
 import owmii.powah.lib.client.screen.container.AbstractEnergyScreen;
 import owmii.powah.lib.logistics.energy.Energy;
-import owmii.powah.lib.util.Util;
+import owmii.powah.util.Util;
 
 public class EnergyHopperScreen extends AbstractEnergyScreen<EnergyHopperTile, EnergyHopperContainer> {
     public EnergyHopperScreen(EnergyHopperContainer container, Inventory inv, Component title) {

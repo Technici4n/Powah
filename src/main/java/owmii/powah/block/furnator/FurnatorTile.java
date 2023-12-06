@@ -12,7 +12,7 @@ import owmii.powah.block.Tiles;
 import owmii.powah.lib.block.AbstractEnergyProvider;
 import owmii.powah.lib.block.IInventoryHolder;
 import owmii.powah.lib.logistics.energy.Energy;
-import owmii.powah.lib.util.Ticker;
+import owmii.powah.util.Ticker;
 
 public class FurnatorTile extends AbstractEnergyProvider<FurnatorBlock> implements IInventoryHolder {
     protected final Ticker carbon = Ticker.empty();

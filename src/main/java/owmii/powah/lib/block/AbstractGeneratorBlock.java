@@ -10,7 +10,7 @@ import owmii.powah.lib.client.util.Text;
 import owmii.powah.lib.client.wiki.page.panel.InfoBox;
 import owmii.powah.lib.logistics.Transfer;
 import owmii.powah.lib.logistics.energy.Energy;
-import owmii.powah.lib.util.Util;
+import owmii.powah.util.Util;
 
 public abstract class AbstractGeneratorBlock<B extends AbstractGeneratorBlock<B>> extends AbstractEnergyBlock<GeneratorConfig, B> {
     public AbstractGeneratorBlock(Properties properties) {

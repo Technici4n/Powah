@@ -9,16 +9,14 @@ import net.minecraft.world.Containers;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import org.jetbrains.annotations.Nullable;
-import owmii.powah.EnvHandler;
 import owmii.powah.lib.block.AbstractTileEntity;
 import owmii.powah.lib.block.IInventoryHolder;
 import owmii.powah.lib.item.Stacks;
-import owmii.powah.lib.util.Util;
+import owmii.powah.util.Util;
 
 public class Inventory extends ItemStackHandler {
     @Nullable
     private IInventoryHolder tile;
-    private Object platformWrapper;
 
     public Inventory(int size) {
         this(size, null);
@@ -291,12 +289,5 @@ public class Inventory extends ItemStackHandler {
         }
         f = f / (float) inv.getSlots();
         return Mth.floor(f * 14.0F) + (i > 0 ? 1 : 0);
-    }
-
-    public Object getPlatformWrapper() {
-        if (platformWrapper == null) {
-            platformWrapper = EnvHandler.INSTANCE.createInvWrapper(this);
-        }
-        return platformWrapper;
     }
 }

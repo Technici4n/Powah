@@ -21,8 +21,8 @@ import net.minecraft.world.level.Level;
 import org.jetbrains.annotations.Nullable;
 import owmii.powah.Powah;
 import owmii.powah.lib.item.ItemBase;
-import owmii.powah.lib.util.Player;
-import owmii.powah.lib.util.Stack;
+import owmii.powah.util.Player;
+import owmii.powah.util.Stack;
 
 public class BindingCardItem extends ItemBase {
     private final boolean isMultiDim;

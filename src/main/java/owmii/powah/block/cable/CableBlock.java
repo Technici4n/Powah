@@ -28,7 +28,6 @@ import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
 import org.jetbrains.annotations.Nullable;
-import owmii.powah.EnvHandler;
 import owmii.powah.Powah;
 import owmii.powah.api.energy.IEnergyConnector;
 import owmii.powah.block.Tier;
@@ -37,6 +36,7 @@ import owmii.powah.inventory.CableContainer;
 import owmii.powah.lib.block.AbstractEnergyBlock;
 import owmii.powah.lib.block.AbstractTileEntity;
 import owmii.powah.lib.logistics.inventory.AbstractContainer;
+import owmii.powah.util.EnergyUtil;
 
 public class CableBlock extends AbstractEnergyBlock<CableConfig, CableBlock> implements SimpleWaterloggedBlock, IEnergyConnector {
     public static final BooleanProperty NORTH = PipeBlock.NORTH;
@@ -63,7 +63,7 @@ public class CableBlock extends AbstractEnergyBlock<CableConfig, CableBlock> imp
     @Nullable
     @Override
     public BlockEntity newBlockEntity(BlockPos pos, BlockState state) {
-        return EnvHandler.INSTANCE.createCable(pos, state, this.variant);
+        return new CableTile(pos, state, this.variant);
     }
 
     @Override
@@ -184,7 +184,7 @@ public class CableBlock extends AbstractEnergyBlock<CableConfig, CableBlock> imp
 
     public boolean canConnectEnergy(Level world, BlockPos pos, Direction direction) {
         BlockEntity tile = world.getBlockEntity(pos.relative(direction));
-        return !(tile instanceof CableTile) && EnvHandler.INSTANCE.hasEnergy(world, pos.relative(direction), direction.getOpposite());
+        return !(tile instanceof CableTile) && EnergyUtil.hasEnergy(world, pos.relative(direction), direction.getOpposite());
     }
 
     public static Optional<Direction> getHitSide(Vec3 hit, BlockPos pos) {

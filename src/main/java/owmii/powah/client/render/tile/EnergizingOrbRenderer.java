@@ -17,7 +17,7 @@ import owmii.powah.client.model.OrbModel;
 import owmii.powah.client.model.PowahLayerDefinitions;
 import owmii.powah.lib.client.renderer.tile.AbstractTileRenderer;
 import owmii.powah.lib.logistics.inventory.Inventory;
-import owmii.powah.lib.util.math.V3d;
+import owmii.powah.util.math.V3d;
 
 public class EnergizingOrbRenderer extends AbstractTileRenderer<EnergizingOrbTile> {
     private final OrbModel model;

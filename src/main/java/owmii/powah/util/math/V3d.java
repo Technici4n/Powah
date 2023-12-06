@@ -1,4 +1,4 @@
-package owmii.powah.lib.util.math;
+package owmii.powah.util.math;
 
 import java.util.ArrayList;
 import java.util.List;

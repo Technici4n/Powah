@@ -22,7 +22,7 @@ import owmii.powah.block.reactor.ReactorBlock;
 import owmii.powah.client.render.tile.ReactorItemRenderer;
 import owmii.powah.config.v2.types.GeneratorConfig;
 import owmii.powah.lib.item.EnergyBlockItem;
-import owmii.powah.lib.util.Player;
+import owmii.powah.util.Player;
 
 public class ReactorItem extends EnergyBlockItem<GeneratorConfig, ReactorBlock> {
     /**

@@ -12,7 +12,7 @@ import owmii.powah.lib.client.util.Text;
 import owmii.powah.lib.client.wiki.page.panel.InfoBox;
 import owmii.powah.lib.logistics.energy.Energy;
 import owmii.powah.lib.registry.IVariant;
-import owmii.powah.lib.util.Util;
+import owmii.powah.util.Util;
 
 public abstract class EnergyItem<V extends Enum<V> & IVariant<V>, C extends IEnergyConfig<V>, I extends EnergyItem<V, C, I>> extends VarItem<V, I>
         implements InfoBox.IInfoBoxHolder, IEnergyItemProvider, IEnergyContainingItem {

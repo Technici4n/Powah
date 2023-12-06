@@ -7,9 +7,9 @@ import net.minecraft.world.item.ItemStack;
 import org.jetbrains.annotations.Nullable;
 import owmii.powah.lib.item.EnergyBlockItem;
 import owmii.powah.lib.item.IEnergyContainingItem;
-import owmii.powah.lib.util.NBT;
-import owmii.powah.lib.util.Stack;
-import owmii.powah.lib.util.Util;
+import owmii.powah.util.NBT;
+import owmii.powah.util.Stack;
+import owmii.powah.util.Util;
 
 public class Energy {
     public static final Energy EMPTY = Energy.create(0);

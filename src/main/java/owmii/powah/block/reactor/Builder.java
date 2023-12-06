@@ -14,7 +14,7 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
-import owmii.powah.lib.util.NBT;
+import owmii.powah.util.NBT;
 
 public class Builder {
     private final ReactorTile reactor;

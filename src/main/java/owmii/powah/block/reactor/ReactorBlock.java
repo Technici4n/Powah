@@ -20,8 +20,8 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.BooleanProperty;
 import net.minecraft.world.phys.BlockHitResult;
+import net.neoforged.neoforge.fluids.FluidUtil;
 import org.jetbrains.annotations.Nullable;
-import owmii.powah.EnvHandler;
 import owmii.powah.Powah;
 import owmii.powah.block.Tier;
 import owmii.powah.config.v2.types.GeneratorConfig;
@@ -33,8 +33,9 @@ import owmii.powah.lib.client.util.Text;
 import owmii.powah.lib.client.wiki.page.panel.InfoBox;
 import owmii.powah.lib.item.EnergyBlockItem;
 import owmii.powah.lib.logistics.energy.Energy;
+import owmii.powah.lib.logistics.fluid.Tank;
 import owmii.powah.lib.logistics.inventory.AbstractContainer;
-import owmii.powah.lib.util.Util;
+import owmii.powah.util.Util;
 
 public class ReactorBlock extends AbstractGeneratorBlock<ReactorBlock> {
     public static final BooleanProperty CORE = BooleanProperty.create("core");
@@ -75,7 +76,8 @@ public class ReactorBlock extends AbstractGeneratorBlock<ReactorBlock> {
         BlockEntity tileentity = world.getBlockEntity(pos);
         if (tileentity instanceof ReactorTile reactor) {
             if (reactor.isBuilt()) {
-                if (EnvHandler.INSTANCE.interactWithTank(player, hand, reactor.getTank())) {
+                Tank tank = reactor.getTank();
+                if (FluidUtil.interactWithFluidHandler(player, hand, tank)) {
                     reactor.sync();
                     return InteractionResult.SUCCESS;
                 }

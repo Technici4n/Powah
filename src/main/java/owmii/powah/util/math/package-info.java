@@ -1,4 +1,4 @@
 @NonnullDefault
-package owmii.powah.lib.compat;
+package owmii.powah.util.math;
 
 import org.lwjgl.system.NonnullDefault;

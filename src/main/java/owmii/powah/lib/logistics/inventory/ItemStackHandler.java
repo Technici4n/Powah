@@ -10,9 +10,10 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
 import net.minecraft.nbt.Tag;
 import net.minecraft.world.item.ItemStack;
+import net.neoforged.neoforge.items.IItemHandler;
 import org.jetbrains.annotations.NotNull;
 
-public class ItemStackHandler {
+public class ItemStackHandler implements IItemHandler {
     protected NonNullList<ItemStack> stacks;
 
     public ItemStackHandler() {
@@ -37,15 +38,18 @@ public class ItemStackHandler {
         onContentsChanged(slot);
     }
 
+    @Override
     public int getSlots() {
         return stacks.size();
     }
 
+    @Override
     public ItemStack getStackInSlot(int slot) {
         validateSlotIndex(slot);
         return this.stacks.get(slot);
     }
 
+    @Override
     public ItemStack insertItem(int slot, @NotNull ItemStack stack, boolean simulate) {
         if (stack.isEmpty())
             return ItemStack.EMPTY;
@@ -83,6 +87,7 @@ public class ItemStackHandler {
         return reachedLimit ? ItemStackHandlerHelper.copyStackWithSize(stack, stack.getCount() - limit) : ItemStack.EMPTY;
     }
 
+    @Override
     @NotNull
     public ItemStack extractItem(int slot, int amount, boolean simulate) {
         if (amount == 0)
@@ -115,6 +120,7 @@ public class ItemStackHandler {
         }
     }
 
+    @Override
     public int getSlotLimit(int slot) {
         return 64;
     }
@@ -123,6 +129,7 @@ public class ItemStackHandler {
         return Math.min(getSlotLimit(slot), stack.getMaxStackSize());
     }
 
+    @Override
     public boolean isItemValid(int slot, @NotNull ItemStack stack) {
         return true;
     }

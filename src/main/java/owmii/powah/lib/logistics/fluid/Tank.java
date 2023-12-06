@@ -3,12 +3,10 @@ package owmii.powah.lib.logistics.fluid;
 import java.util.function.Predicate;
 import net.minecraft.nbt.CompoundTag;
 import net.neoforged.neoforge.fluids.FluidStack;
-import owmii.powah.EnvHandler;
 
 public class Tank extends FluidTank {
     private Runnable changed = () -> {
     };
-    private Object platformWrapper;
 
     public Tank(int capacity) {
         this(capacity, e -> true);
@@ -28,14 +26,14 @@ public class Tank extends FluidTank {
         return compound;
     }
 
-    public Tank validate(Predicate<FluidStack> validator) {
-        this.validator = validator;
+    public Tank setValidator(Predicate<FluidStack> validator) {
+        super.setValidator(validator);
         return this;
     }
 
     @Override
-    public Tank setCapacity(long capacity) {
-        this.capacity = capacity;
+    public Tank setCapacity(int capacity) {
+        super.setCapacity(capacity);
         return this;
     }
 
@@ -55,12 +53,5 @@ public class Tank extends FluidTank {
         if (sendUpdates) {
             this.changed.run();
         }
-    }
-
-    public Object getPlatformWrapper() {
-        if (platformWrapper == null) {
-            platformWrapper = EnvHandler.INSTANCE.createTankWrapper(this);
-        }
-        return platformWrapper;
     }
 }

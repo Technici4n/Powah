@@ -10,7 +10,7 @@ import owmii.powah.client.screen.Textures;
 import owmii.powah.inventory.EnergyCellContainer;
 import owmii.powah.lib.client.screen.container.AbstractEnergyScreen;
 import owmii.powah.lib.logistics.energy.Energy;
-import owmii.powah.lib.util.Util;
+import owmii.powah.util.Util;
 
 public class EnergyCellScreen extends AbstractEnergyScreen<EnergyCellTile, EnergyCellContainer> {
     public EnergyCellScreen(EnergyCellContainer container, Inventory inv, Component title) {

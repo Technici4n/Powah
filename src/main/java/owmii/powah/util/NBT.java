@@ -1,4 +1,4 @@
-package owmii.powah.lib.util;
+package owmii.powah.util;
 
 import java.util.Collection;
 import java.util.UUID;

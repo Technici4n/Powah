@@ -9,7 +9,7 @@ import net.minecraft.world.level.block.state.BlockState;
 import owmii.powah.block.Tier;
 import owmii.powah.block.Tiles;
 import owmii.powah.lib.block.AbstractTileEntity;
-import owmii.powah.lib.util.NBT;
+import owmii.powah.util.NBT;
 
 public class ReactorPartTile extends AbstractTileEntity<Tier, ReactorBlock> {
     private BlockPos corePos = BlockPos.ZERO;

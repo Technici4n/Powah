@@ -8,7 +8,7 @@ import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.core.Direction;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
-import owmii.powah.lib.util.math.V3d;
+import owmii.powah.util.math.V3d;
 
 public class Cube {
     private final PoseStack matrix;

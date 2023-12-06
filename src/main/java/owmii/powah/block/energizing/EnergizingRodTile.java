@@ -14,8 +14,8 @@ import owmii.powah.block.Tier;
 import owmii.powah.block.Tiles;
 import owmii.powah.config.v2.types.EnergyConfig;
 import owmii.powah.lib.block.AbstractEnergyStorage;
-import owmii.powah.lib.util.NBT;
-import owmii.powah.lib.util.Ticker;
+import owmii.powah.util.NBT;
+import owmii.powah.util.Ticker;
 
 public class EnergizingRodTile extends AbstractEnergyStorage<EnergyConfig, EnergizingRodBlock> {
     private BlockPos orbPos = BlockPos.ZERO;

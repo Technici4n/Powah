@@ -8,12 +8,12 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
-import owmii.powah.EnvHandler;
 import owmii.powah.block.Tier;
 import owmii.powah.block.Tiles;
 import owmii.powah.config.v2.types.ChargingConfig;
 import owmii.powah.lib.block.AbstractEnergyStorage;
 import owmii.powah.lib.block.IInventoryHolder;
+import owmii.powah.util.ChargeUtil;
 
 public class EnergyHopperTile extends AbstractEnergyStorage<ChargingConfig, EnergyHopperBlock> implements IInventoryHolder {
     public EnergyHopperTile(BlockPos pos, BlockState state, Tier variant) {
@@ -31,7 +31,7 @@ public class EnergyHopperTile extends AbstractEnergyStorage<ChargingConfig, Ener
             Direction side = getBlockState().getValue(BlockStateProperties.FACING);
             BlockEntity tile = world.getBlockEntity(this.worldPosition.relative(side));
             if (tile instanceof Container container) {
-                extracted = EnvHandler.INSTANCE.chargeItemsInContainer(container, getConfig().charging_rates.get(this.variant), energy.getStored());
+                extracted = ChargeUtil.chargeItemsInContainer(container, getConfig().charging_rates.get(this.variant), energy.getStored());
                 energy.consume(extracted);
             }
         }

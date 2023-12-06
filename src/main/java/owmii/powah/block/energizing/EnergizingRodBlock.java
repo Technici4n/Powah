@@ -44,8 +44,8 @@ import owmii.powah.lib.block.AbstractEnergyBlock;
 import owmii.powah.lib.client.handler.IHud;
 import owmii.powah.lib.client.util.Draw;
 import owmii.powah.lib.item.EnergyBlockItem;
-import owmii.powah.lib.util.Util;
-import owmii.powah.lib.util.math.V3d;
+import owmii.powah.util.Util;
+import owmii.powah.util.math.V3d;
 
 public class EnergizingRodBlock extends AbstractEnergyBlock<EnergyConfig, EnergizingRodBlock> implements SimpleWaterloggedBlock, IWrenchable, IHud {
     public EnergizingRodBlock(Properties properties, Tier variant) {

@@ -1,28 +1,28 @@
 package owmii.powah.lib.logistics.fluid;
 
-import com.google.common.primitives.Ints;
 import java.util.function.Predicate;
 import net.minecraft.nbt.CompoundTag;
 import net.neoforged.neoforge.fluids.FluidStack;
+import net.neoforged.neoforge.fluids.capability.IFluidHandler;
 import org.jetbrains.annotations.NotNull;
 
-public class FluidTank {
+public class FluidTank implements IFluidHandler {
 
     protected Predicate<FluidStack> validator;
     @NotNull
     protected FluidStack fluid = FluidStack.EMPTY;
-    protected long capacity;
+    protected int capacity;
 
-    public FluidTank(long capacity) {
+    public FluidTank(int capacity) {
         this(capacity, e -> true);
     }
 
-    public FluidTank(long capacity, Predicate<FluidStack> validator) {
+    public FluidTank(int capacity, Predicate<FluidStack> validator) {
         this.capacity = capacity;
         this.validator = validator;
     }
 
-    public FluidTank setCapacity(long capacity) {
+    public FluidTank setCapacity(int capacity) {
         this.capacity = capacity;
         return this;
     }
@@ -38,7 +38,7 @@ public class FluidTank {
         return validator.test(stack);
     }
 
-    public long getCapacity() {
+    public int getCapacity() {
         return capacity;
     }
 
@@ -47,7 +47,7 @@ public class FluidTank {
         return fluid;
     }
 
-    public long getFluidAmount() {
+    public int getFluidAmount() {
         return fluid.getAmount();
     }
 
@@ -65,32 +65,36 @@ public class FluidTank {
         return nbt;
     }
 
+    @Override
     public int getTanks() {
 
         return 1;
     }
 
+    @Override
     @NotNull
     public FluidStack getFluidInTank(int tank) {
 
         return getFluid();
     }
 
-    public long getTankCapacity(int tank) {
-
+    @Override
+    public int getTankCapacity(int tank) {
         return getCapacity();
     }
 
+    @Override
     public boolean isFluidValid(int tank, @NotNull FluidStack stack) {
 
         return isFluidValid(stack);
     }
 
-    public long fill(FluidStack resource, boolean simulate) {
+    @Override
+    public int fill(FluidStack resource, FluidAction action) {
         if (resource.isEmpty() || !isFluidValid(resource)) {
             return 0;
         }
-        if (simulate) {
+        if (action.simulate()) {
             if (fluid.isEmpty()) {
                 return Math.min(capacity, resource.getAmount());
             }
@@ -101,44 +105,46 @@ public class FluidTank {
         }
         if (fluid.isEmpty()) {
             fluid = resource.copy();
-            fluid.setAmount(Ints.saturatedCast(Math.min(capacity, resource.getAmount())));
+            fluid.setAmount(Math.min(capacity, resource.getAmount()));
             onContentsChanged();
             return fluid.getAmount();
         }
         if (!fluid.isFluidEqual(resource)) {
             return 0;
         }
-        long filled = capacity - fluid.getAmount();
+        int filled = capacity - fluid.getAmount();
 
         if (resource.getAmount() < filled) {
             fluid.grow(resource.getAmount());
             filled = resource.getAmount();
         } else {
-            fluid.setAmount(Ints.saturatedCast(capacity));
+            fluid.setAmount(capacity);
         }
         if (filled > 0)
             onContentsChanged();
         return filled;
     }
 
+    @Override
     @NotNull
-    public FluidStack drain(FluidStack resource, boolean simulate) {
+    public FluidStack drain(FluidStack resource, FluidAction action) {
         if (resource.isEmpty() || !resource.isFluidEqual(fluid)) {
             return FluidStack.EMPTY;
         }
-        return drain(resource.getAmount(), simulate);
+        return drain(resource.getAmount(), action);
     }
 
+    @Override
     @NotNull
-    public FluidStack drain(long maxDrain, boolean simulate) {
-        long drained = maxDrain;
+    public FluidStack drain(int maxDrain, FluidAction action) {
+        int drained = maxDrain;
         if (fluid.getAmount() < drained) {
             drained = fluid.getAmount();
         }
         FluidStack stack = fluid.copy();
-        stack.setAmount(Ints.saturatedCast(drained));
-        if (!simulate && drained > 0) {
-            fluid.shrink(Ints.saturatedCast(drained));
+        stack.setAmount(drained);
+        if (!action.simulate() && drained > 0) {
+            fluid.shrink(drained);
             onContentsChanged();
         }
         return stack;
@@ -156,7 +162,7 @@ public class FluidTank {
         return fluid.isEmpty();
     }
 
-    public long getSpace() {
+    public int getSpace() {
         return Math.max(0, capacity - fluid.getAmount());
     }
 

@@ -15,7 +15,7 @@ import org.apache.logging.log4j.Marker;
 import org.apache.logging.log4j.MarkerManager;
 import org.jetbrains.annotations.Nullable;
 import owmii.powah.Powah;
-import owmii.powah.lib.util.Util;
+import owmii.powah.util.Util;
 
 public class Wiki {
     public static final Marker MARKER = new MarkerManager.Log4jMarker("Wiki");

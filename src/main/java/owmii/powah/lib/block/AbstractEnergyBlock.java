@@ -17,7 +17,6 @@ import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import org.jetbrains.annotations.Nullable;
-import owmii.powah.EnvHandler;
 import owmii.powah.api.energy.IEnergyConnector;
 import owmii.powah.block.Tier;
 import owmii.powah.config.IConfigHolder;
@@ -29,7 +28,8 @@ import owmii.powah.lib.item.IEnergyItemProvider;
 import owmii.powah.lib.logistics.Transfer;
 import owmii.powah.lib.logistics.energy.Energy;
 import owmii.powah.lib.registry.IVariant;
-import owmii.powah.lib.util.Util;
+import owmii.powah.util.EnergyUtil;
+import owmii.powah.util.Util;
 
 public abstract class AbstractEnergyBlock<C extends IEnergyConfig<Tier>, B extends AbstractEnergyBlock<C, B>> extends AbstractBlock<Tier, B>
         implements IConfigHolder<Tier, C>, InfoBox.IInfoBoxHolder, IEnergyItemProvider {
@@ -67,7 +67,7 @@ public abstract class AbstractEnergyBlock<C extends IEnergyConfig<Tier>, B exten
             Direction side = state.getValue(BlockStateProperties.FACING);
             BlockPos pos1 = pos.relative(side);
             return world.getBlockState(pos1).getBlock() instanceof IEnergyConnector ||
-                    world instanceof Level level && EnvHandler.INSTANCE.hasEnergy(level, pos1, side.getOpposite());
+                    world instanceof Level level && EnergyUtil.hasEnergy(level, pos1, side.getOpposite());
         }
         return super.canSurvive(state, world, pos);
     }

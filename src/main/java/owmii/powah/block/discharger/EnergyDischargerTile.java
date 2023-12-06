@@ -4,13 +4,13 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
-import owmii.powah.EnvHandler;
 import owmii.powah.block.Tier;
 import owmii.powah.block.Tiles;
 import owmii.powah.config.v2.types.EnergyConfig;
 import owmii.powah.lib.block.AbstractEnergyStorage;
 import owmii.powah.lib.block.IInventoryHolder;
 import owmii.powah.lib.logistics.Transfer;
+import owmii.powah.util.ChargeUtil;
 
 public class EnergyDischargerTile extends AbstractEnergyStorage<EnergyConfig, EnergyDischargerBlock> implements IInventoryHolder {
     public EnergyDischargerTile(BlockPos pos, BlockState state, Tier variant) {
@@ -27,7 +27,7 @@ public class EnergyDischargerTile extends AbstractEnergyStorage<EnergyConfig, En
         long extracted = 0;
         if (!isRemote()) {
             if (checkRedstone()) {
-                extracted = EnvHandler.INSTANCE.dischargeItemsInInventory(this.inv, getEnergyTransfer(), getEnergyCapacity() - energy.getStored());
+                extracted = ChargeUtil.dischargeItemsInInventory(this.inv, getEnergyTransfer(), getEnergyCapacity() - energy.getStored());
                 this.energy.produce(extracted);
             }
             extracted += extractFromSides(world);
@@ -47,7 +47,7 @@ public class EnergyDischargerTile extends AbstractEnergyStorage<EnergyConfig, En
 
     @Override
     public boolean canInsert(int slot, ItemStack stack) {
-        return EnvHandler.INSTANCE.canDischarge(stack);
+        return ChargeUtil.canDischarge(stack);
     }
 
     @Override

@@ -14,7 +14,7 @@ import owmii.powah.item.Itms;
 import owmii.powah.lib.block.AbstractEnergyProvider;
 import owmii.powah.lib.block.IInventoryHolder;
 import owmii.powah.lib.logistics.energy.Energy;
-import owmii.powah.lib.util.Misc;
+import owmii.powah.util.Misc;
 
 public class SolarTile extends AbstractEnergyProvider<SolarBlock> implements IInventoryHolder {
     public static final String CAN_SEE_SKY = "can_see_sky";

@@ -13,7 +13,6 @@ import net.minecraft.world.phys.AABB;
 import net.neoforged.neoforge.common.CommonHooks;
 import org.apache.commons.lang3.tuple.Pair;
 import org.jetbrains.annotations.Nullable;
-import owmii.powah.EnvHandler;
 import owmii.powah.api.PowahAPI;
 import owmii.powah.block.Tier;
 import owmii.powah.block.Tiles;
@@ -23,8 +22,9 @@ import owmii.powah.lib.block.IInventoryHolder;
 import owmii.powah.lib.block.ITankHolder;
 import owmii.powah.lib.logistics.energy.Energy;
 import owmii.powah.lib.logistics.fluid.Tank;
-import owmii.powah.lib.util.Ticker;
-import owmii.powah.lib.util.Util;
+import owmii.powah.util.EnergyUtil;
+import owmii.powah.util.Ticker;
+import owmii.powah.util.Util;
 
 public class ReactorTile extends AbstractEnergyProvider<ReactorBlock> implements IInventoryHolder, ITankHolder {
     private final Builder builder = new Builder(this);
@@ -50,7 +50,7 @@ public class ReactorTile extends AbstractEnergyProvider<ReactorBlock> implements
     public ReactorTile(BlockPos pos, BlockState state, Tier variant) {
         super(Tiles.REACTOR.get(), pos, state, variant);
         this.tank.setCapacity(Util.bucketAmount())
-                .validate(stack -> PowahAPI.getCoolant(stack.getFluid()) != 0)
+                .setValidator(stack -> PowahAPI.getCoolant(stack.getFluid()) != 0)
                 .setChange(() -> ReactorTile.this.sync(10));
         this.inv.add(5);
     }
@@ -142,7 +142,7 @@ public class ReactorTile extends AbstractEnergyProvider<ReactorBlock> implements
                 long amount = Math.min(getEnergyTransfer(), getEnergy().getStored());
                 BlockPos pos = this.worldPosition.relative(direction,
                         direction.getAxis().isHorizontal() ? 2 : direction.equals(Direction.UP) ? 4 : 1);
-                long received = EnvHandler.INSTANCE.pushEnergy(world, pos, direction.getOpposite(), amount);
+                long received = EnergyUtil.pushEnergy(world, pos, direction.getOpposite(), amount);
                 extracted += extractEnergy((int) received, false, direction);
             }
         }

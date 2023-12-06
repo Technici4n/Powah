@@ -7,14 +7,14 @@ import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
-import owmii.powah.EnvHandler;
 import owmii.powah.block.Tier;
 import owmii.powah.block.Tiles;
 import owmii.powah.config.v2.types.ChargingConfig;
 import owmii.powah.item.BindingCardItem;
 import owmii.powah.lib.block.AbstractEnergyStorage;
 import owmii.powah.lib.block.IInventoryHolder;
-import owmii.powah.lib.util.Stack;
+import owmii.powah.util.ChargeUtil;
+import owmii.powah.util.Stack;
 
 public class PlayerTransmitterTile extends AbstractEnergyStorage<ChargingConfig, PlayerTransmitterBlock> implements IInventoryHolder {
 
@@ -38,7 +38,7 @@ public class PlayerTransmitterTile extends AbstractEnergyStorage<ChargingConfig,
                     ServerPlayer player = op.get();
                     if (card.isMultiDim(stack) || player.level().dimensionType().equals(world.dimensionType())) {
                         long charging = getConfig().getChargingSpeed(this.variant);
-                        extracted = EnvHandler.INSTANCE.chargeItemsInPlayerInv(player, charging, getEnergy().getStored());
+                        extracted = ChargeUtil.chargeItemsInPlayerInv(player, charging, getEnergy().getStored());
                         energy.consume(extracted);
                     }
                 }

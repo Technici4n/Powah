@@ -14,9 +14,9 @@ import owmii.powah.lib.client.screen.Texture;
 import owmii.powah.lib.client.screen.container.AbstractEnergyScreen;
 import owmii.powah.lib.client.screen.widget.IconButton;
 import owmii.powah.lib.logistics.energy.Energy;
-import owmii.powah.lib.util.Util;
 import owmii.powah.network.Network;
 import owmii.powah.network.packet.SetChannelPacket;
+import owmii.powah.util.Util;
 
 public class EnderCellScreen extends AbstractEnergyScreen<AbstractEnderTile<?>, EnderCellContainer> {
     private final IconButton[] iconButtons;

@@ -23,7 +23,7 @@ import owmii.powah.block.energizing.EnergizingOrbTile;
 import owmii.powah.block.energizing.EnergizingRodTile;
 import owmii.powah.lib.client.renderer.tile.AbstractTileRenderer;
 import owmii.powah.lib.client.util.RenderTypes;
-import owmii.powah.lib.util.math.V3d;
+import owmii.powah.util.math.V3d;
 
 public class EnergizingRodRenderer extends AbstractTileRenderer<EnergizingRodTile> {
     public static final ResourceLocation BEAM_TEXTURE = new ResourceLocation(Powah.MOD_ID, "textures/model/tile/beam.png");

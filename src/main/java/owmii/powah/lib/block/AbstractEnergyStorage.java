@@ -7,7 +7,6 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import org.jetbrains.annotations.Nullable;
-import owmii.powah.EnvHandler;
 import owmii.powah.block.Tier;
 import owmii.powah.config.IEnergyConfig;
 import owmii.powah.lib.logistics.IRedstoneInteract;
@@ -15,7 +14,9 @@ import owmii.powah.lib.logistics.Transfer;
 import owmii.powah.lib.logistics.energy.Energy;
 import owmii.powah.lib.logistics.energy.SideConfig;
 import owmii.powah.lib.registry.IVariant;
-import owmii.powah.lib.util.Util;
+import owmii.powah.util.ChargeUtil;
+import owmii.powah.util.EnergyUtil;
+import owmii.powah.util.Util;
 
 public abstract class AbstractEnergyStorage<C extends IEnergyConfig<Tier>, B extends AbstractEnergyBlock<C, B>> extends AbstractTickableTile<Tier, B>
         implements IRedstoneInteract {
@@ -83,7 +84,7 @@ public abstract class AbstractEnergyStorage<C extends IEnergyConfig<Tier>, B ext
             for (Direction side : Direction.values()) {
                 if (canExtractEnergy(side)) {
                     long amount = Math.min(getEnergyTransfer(), getEnergy().getStored());
-                    long toExtract = EnvHandler.INSTANCE.pushEnergy(world, worldPosition.relative(side), side.getOpposite(), amount);
+                    long toExtract = EnergyUtil.pushEnergy(world, worldPosition.relative(side), side.getOpposite(), amount);
                     extracted += extractEnergy(Util.safeInt(toExtract), false, side);
                 }
             }
@@ -97,7 +98,7 @@ public abstract class AbstractEnergyStorage<C extends IEnergyConfig<Tier>, B ext
 
     protected long chargeItems(int i, int j) {
         final Energy energy = getEnergy();
-        long charged = EnvHandler.INSTANCE.chargeItemsInInventory(inv, i, j, getEnergyTransfer(), energy.getStored());
+        long charged = ChargeUtil.chargeItemsInInventory(inv, i, j, getEnergyTransfer(), energy.getStored());
         energy.consume(charged);
         return charged;
     }
@@ -169,4 +170,5 @@ public abstract class AbstractEnergyStorage<C extends IEnergyConfig<Tier>, B ext
     public SideConfig getSideConfig() {
         return this.sideConfig;
     }
+
 }

@@ -8,6 +8,7 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.LiquidBlock;
 import net.minecraft.world.level.block.state.BlockState;
 import net.neoforged.neoforge.fluids.FluidStack;
+import net.neoforged.neoforge.fluids.capability.IFluidHandler;
 import owmii.powah.api.PowahAPI;
 import owmii.powah.block.Tier;
 import owmii.powah.block.Tiles;
@@ -15,7 +16,7 @@ import owmii.powah.lib.block.AbstractEnergyProvider;
 import owmii.powah.lib.block.IInventoryHolder;
 import owmii.powah.lib.block.ITankHolder;
 import owmii.powah.lib.logistics.energy.Energy;
-import owmii.powah.lib.util.Util;
+import owmii.powah.util.Util;
 
 public class ThermoTile extends AbstractEnergyProvider<ThermoBlock> implements IInventoryHolder, ITankHolder {
     public long generating;
@@ -23,7 +24,7 @@ public class ThermoTile extends AbstractEnergyProvider<ThermoBlock> implements I
     public ThermoTile(BlockPos pos, BlockState state, Tier variant) {
         super(Tiles.THERMO_GEN.get(), pos, state, variant);
         this.tank.setCapacity(Util.bucketAmount() * 4)
-                .validate(stack -> PowahAPI.getCoolant(stack.getFluid()) != 0)
+                .setValidator(stack -> PowahAPI.getCoolant(stack.getFluid()) != 0)
                 .setChange(() -> ThermoTile.this.sync(10));
         this.inv.add(1);
     }
@@ -66,7 +67,7 @@ public class ThermoTile extends AbstractEnergyProvider<ThermoBlock> implements I
                     this.generating = (int) ((heat * Math.max(1D, (1D + fluidCooling) / 2D) * getGeneration()) / 1000.0D);
                     this.energy.produce(this.generating);
                     if (world.getGameTime() % 40 == 0L) {
-                        this.tank.drain(Util.millibucketAmount(), false);
+                        this.tank.drain(Util.millibucketAmount(), IFluidHandler.FluidAction.EXECUTE);
                     }
                 }
             }

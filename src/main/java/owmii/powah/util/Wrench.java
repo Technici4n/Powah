@@ -1,14 +1,15 @@
-package owmii.powah.lib.util;
+package owmii.powah.util;
 
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.phys.BlockHitResult;
-import owmii.powah.EnvHandler;
 import owmii.powah.block.energizing.EnergizingOrbBlock;
+import owmii.powah.data.ITags;
 import owmii.powah.lib.block.AbstractEnergyBlock;
 
 public final class Wrench {
@@ -16,8 +17,9 @@ public final class Wrench {
     }
 
     public static boolean removeWithWrench(Player player, Level world, InteractionHand hand, BlockHitResult hitResult) {
+        ItemStack stack = player.getItemInHand(hand);
         if (player.isSpectator() || !player.isShiftKeyDown() || !world.mayInteract(player, hitResult.getBlockPos())
-                || !EnvHandler.INSTANCE.isWrench(player.getItemInHand(hand))) {
+                || !stack.is(ITags.Items.WRENCHES)) {
             return false;
         }
         var pos = hitResult.getBlockPos();

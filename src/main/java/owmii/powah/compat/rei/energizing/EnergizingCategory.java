@@ -16,7 +16,7 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import owmii.powah.Powah;
 import owmii.powah.block.Blcks;
-import owmii.powah.lib.util.Util;
+import owmii.powah.util.Util;
 
 public class EnergizingCategory implements DisplayCategory<EnergizingDisplay> {
     public static final ResourceLocation GUI_BACK = new ResourceLocation(Powah.MOD_ID, "textures/gui/jei/energizing.png");

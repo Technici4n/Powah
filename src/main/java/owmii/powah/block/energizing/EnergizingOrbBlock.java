@@ -39,8 +39,8 @@ import owmii.powah.lib.block.AbstractBlock;
 import owmii.powah.lib.client.handler.IHud;
 import owmii.powah.lib.logistics.inventory.Inventory;
 import owmii.powah.lib.registry.IVariant;
-import owmii.powah.lib.util.Util;
-import owmii.powah.lib.util.math.V3d;
+import owmii.powah.util.Util;
+import owmii.powah.util.math.V3d;
 
 public class EnergizingOrbBlock extends AbstractBlock<IVariant.Single, EnergizingOrbBlock> implements SimpleWaterloggedBlock, IWrenchable, IHud {
 

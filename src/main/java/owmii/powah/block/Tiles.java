@@ -7,7 +7,6 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.neoforged.neoforge.registries.DeferredRegister;
-import owmii.powah.EnvHandler;
 import owmii.powah.Powah;
 import owmii.powah.block.cable.CableTile;
 import owmii.powah.block.discharger.EnergyDischargerTile;
@@ -40,7 +39,7 @@ public class Tiles {
     public static final Supplier<BlockEntityType<EnderGateTile>> ENDER_GATE = register("ender_gate", EnderGateTile::new,
             () -> Blcks.ENDER_GATE.getAll());
     public static final Supplier<BlockEntityType<CableTile>> CABLE = register("energy_cable",
-            (pos, state) -> EnvHandler.INSTANCE.createCable(pos, state, Tier.STARTER), () -> Blcks.ENERGY_CABLE.getAll());
+            (pos, state) -> new CableTile(pos, state, Tier.STARTER), () -> Blcks.ENERGY_CABLE.getAll());
     public static final Supplier<BlockEntityType<EnergizingOrbTile>> ENERGIZING_ORB = register("energizing_orb", EnergizingOrbTile::new,
             () -> List.of(Blcks.ENERGIZING_ORB.get()));
     public static final Supplier<BlockEntityType<EnergizingRodTile>> ENERGIZING_ROD = register("energizing_rod", EnergizingRodTile::new,

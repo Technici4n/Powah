@@ -17,8 +17,8 @@ import owmii.powah.lib.client.screen.container.AbstractEnergyScreen;
 import owmii.powah.lib.client.util.Draw;
 import owmii.powah.lib.client.util.Text;
 import owmii.powah.lib.logistics.energy.Energy;
-import owmii.powah.lib.util.Ticker;
-import owmii.powah.lib.util.Util;
+import owmii.powah.util.Ticker;
+import owmii.powah.util.Util;
 
 public class MagmatorScreen extends AbstractEnergyScreen<MagmatorTile, MagmatorContainer> {
     private final Ticker heat = new Ticker(20);

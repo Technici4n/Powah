@@ -15,11 +15,11 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.block.entity.BlockEntity;
-import owmii.powah.EnvHandler;
 import owmii.powah.Powah;
 import owmii.powah.block.cable.CableTile;
 import owmii.powah.client.render.tile.CableRenderer;
 import owmii.powah.lib.logistics.Transfer;
+import owmii.powah.util.EnergyUtil;
 
 public class CableModel extends AbstractModel<CableTile, CableRenderer> {
     private static final String NORTH = "north";
@@ -105,7 +105,7 @@ public class CableModel extends AbstractModel<CableTile, CableRenderer> {
             final BlockPos pos = te.getBlockPos().relative(side);
             final BlockEntity tile = te.getLevel().getBlockEntity(pos);
             final Transfer config = te.getSideConfig().getType(side);
-            if (!(tile instanceof CableTile) && EnvHandler.INSTANCE.hasEnergy(te.getLevel(), pos, side.getOpposite())
+            if (!(tile instanceof CableTile) && EnergyUtil.hasEnergy(te.getLevel(), pos, side.getOpposite())
                     && (config.canExtract || config.canReceive)) {
                 flags[side.get3DDataValue()] = side;
             }

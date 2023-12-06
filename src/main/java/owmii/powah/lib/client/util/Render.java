@@ -3,7 +3,7 @@ package owmii.powah.lib.client.util;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import org.joml.Matrix4f;
-import owmii.powah.lib.util.math.V3d;
+import owmii.powah.util.math.V3d;
 
 public class Render {
     public static final int MAX_LIGHT = 15728880;

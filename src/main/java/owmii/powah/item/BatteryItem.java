@@ -7,7 +7,6 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
-import owmii.powah.EnvHandler;
 import owmii.powah.Powah;
 import owmii.powah.api.energy.endernetwork.IEnderExtender;
 import owmii.powah.block.Tier;
@@ -15,6 +14,7 @@ import owmii.powah.config.IEnergyConfig;
 import owmii.powah.config.v2.types.EnergyConfig;
 import owmii.powah.lib.item.EnergyItem;
 import owmii.powah.lib.logistics.energy.Energy;
+import owmii.powah.util.ChargeUtil;
 
 public class BatteryItem extends EnergyItem<Tier, EnergyConfig, BatteryItem> implements IEnderExtender {
     public BatteryItem(Item.Properties properties, Tier variant) {
@@ -30,7 +30,7 @@ public class BatteryItem extends EnergyItem<Tier, EnergyConfig, BatteryItem> imp
     public void inventoryTick(ItemStack stack, Level world, Entity entity, int itemSlot, boolean isSelected) {
         if (entity instanceof Player player && isCharging(stack)) {
             Energy.ifPresent(stack, storage -> {
-                long charged = EnvHandler.INSTANCE.chargeItemsInPlayerInv(player, storage.getMaxExtract(), storage.getEnergyStored(),
+                long charged = ChargeUtil.chargeItemsInPlayerInv(player, storage.getMaxExtract(), storage.getEnergyStored(),
                         s -> !(s.getItem() instanceof BatteryItem));
                 storage.consume(charged);
             });
