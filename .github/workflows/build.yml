@@ -22,8 +22,6 @@ jobs:
         with:
           path: ~/.gradle/caches
           key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle') }}
-      - name: Validate AW
-        run: ./gradlew validateAccessWidener
       - name: Build with Gradle
         run: ./gradlew build
         env:
@@ -36,5 +34,5 @@ jobs:
       - name: Upload artifacts
         uses: actions/upload-artifact@v2
         with:
-          name: powah ${{ steps.var.outputs.commit_hash }} [FORGE]
-          path: forge/build/libs/Powah-git-${{ steps.var.outputs.commit_hash }}.jar
+          name: powah ${{ steps.var.outputs.commit_hash }} [NEOFORGE]
+          path: neoforge/build/libs/Powah-git-${{ steps.var.outputs.commit_hash }}.jar

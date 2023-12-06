@@ -1,5 +1,4 @@
 {
-  "replace": false,
   "values": [
     "powah:energy_cell_starter",
     "powah:energy_cell_basic",
@@ -100,6 +99,9 @@
     "powah:spirited_crystal_block",
     "powah:nitro_crystal_block",
     "powah:uraninite_block",
+    "powah:deepslate_uraninite_ore_poor",
+    "powah:deepslate_uraninite_ore",
+    "powah:deepslate_uraninite_ore_dense",
     "powah:uraninite_ore_poor",
     "powah:uraninite_ore",
     "powah:uraninite_ore_dense",

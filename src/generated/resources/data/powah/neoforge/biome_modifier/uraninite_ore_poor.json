@@ -1,0 +1,6 @@
+{
+  "type": "neoforge:add_features",
+  "biomes": "#minecraft:is_overworld",
+  "features": "powah:uraninite_ore_poor",
+  "step": "underground_ores"
+}
