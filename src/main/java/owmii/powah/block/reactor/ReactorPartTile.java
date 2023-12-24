@@ -1,5 +1,6 @@
 package owmii.powah.block.reactor;
 
+import java.util.Optional;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
@@ -17,8 +18,6 @@ import owmii.powah.block.Tier;
 import owmii.powah.block.Tiles;
 import owmii.powah.lib.block.AbstractTileEntity;
 import owmii.powah.util.NBT;
-
-import java.util.Optional;
 
 public class ReactorPartTile extends AbstractTileEntity<Tier, ReactorBlock> {
     private BlockPos corePos = BlockPos.ZERO;
