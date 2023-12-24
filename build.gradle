@@ -140,11 +140,12 @@ publishing {
 }
 
 if (project.version != "0.0.0") {
+    def loader = "neoforge"
     unifiedPublishing {
         project {
             gameVersions = [project.minecraft_version]
-            gameLoaders = [project.name]
-            version = project.version + "-" + project.name
+            gameLoaders = [loader]
+            version = project.version + "-" + loader
 
             def releaseChannel = "release"
             def changes = System.getenv("CHANGELOG") ?: "No changelog provided?"
@@ -158,7 +159,7 @@ if (project.version != "0.0.0") {
 
             releaseType = releaseChannel
             changelog = changes
-            displayName = String.format("[%s %s] v%s", project.name.toUpperCase(), project.minecraft_version, project.version)
+            displayName = String.format("[%s %s] v%s", loader.toUpperCase(), project.minecraft_version, project.version)
 
             mainPublication jar // Declares the publicated jar
 
