@@ -11,7 +11,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.ChunkPos;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
-import net.neoforged.neoforge.common.capabilities.Capabilities;
+import net.neoforged.neoforge.capabilities.Capabilities;
 import org.apache.commons.lang3.mutable.MutableBoolean;
 import org.jetbrains.annotations.Nullable;
 import owmii.powah.block.Tier;
@@ -187,8 +187,7 @@ public class CableTile extends AbstractEnergyStorage<CableConfig, CableBlock> im
     }
 
     private long receive(Level level, BlockPos pos, Direction side, long amount, boolean simulate) {
-        var tile = level.getBlockEntity(pos);
-        var energy = tile != null ? tile.getCapability(Capabilities.ENERGY, side).orElse(null) : null;
+        var energy = level.getCapability(Capabilities.EnergyStorage.BLOCK, pos, side);
         return energy != null ? energy.receiveEnergy(Ints.saturatedCast(amount), simulate) : 0;
     }
 }

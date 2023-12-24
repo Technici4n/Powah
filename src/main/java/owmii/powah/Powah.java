@@ -2,41 +2,33 @@ package owmii.powah;
 
 import com.google.common.primitives.Ints;
 import me.shedaniel.autoconfig.ConfigHolder;
-import net.minecraft.core.Direction;
+import net.minecraft.core.BlockPos;
 import net.minecraft.core.Registry;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.item.Item;
-import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.block.Blocks;
-import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.neoforged.bus.api.Event;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.fml.ModList;
 import net.neoforged.fml.common.Mod;
 import net.neoforged.fml.event.lifecycle.FMLCommonSetupEvent;
-import net.neoforged.fml.javafmlmod.FMLJavaModLoadingContext;
 import net.neoforged.fml.loading.FMLEnvironment;
+import net.neoforged.neoforge.capabilities.Capabilities;
+import net.neoforged.neoforge.capabilities.RegisterCapabilitiesEvent;
 import net.neoforged.neoforge.common.NeoForge;
-import net.neoforged.neoforge.common.capabilities.Capabilities;
-import net.neoforged.neoforge.common.capabilities.Capability;
-import net.neoforged.neoforge.common.capabilities.ICapabilityProvider;
-import net.neoforged.neoforge.common.util.LazyOptional;
 import net.neoforged.neoforge.energy.IEnergyStorage;
-import net.neoforged.neoforge.event.AttachCapabilitiesEvent;
 import net.neoforged.neoforge.event.entity.player.PlayerInteractEvent;
 import net.neoforged.neoforge.registries.RegisterEvent;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 import owmii.powah.api.PowahAPI;
 import owmii.powah.block.Blcks;
 import owmii.powah.block.Tiles;
-import owmii.powah.block.reactor.ReactorPartTile;
 import owmii.powah.compat.curios.CuriosCompat;
 import owmii.powah.config.v2.PowahConfig;
 import owmii.powah.data.DataEvents;
@@ -69,8 +61,7 @@ public class Powah {
         return CONFIG.getConfig();
     }
 
-    public Powah() {
-        var modEventBus = FMLJavaModLoadingContext.get().getModEventBus();
+    public Powah(IEventBus modEventBus) {
 
         Blcks.DR.register(modEventBus);
         Tiles.DR.register(modEventBus);
@@ -81,8 +72,8 @@ public class Powah {
         Recipes.DR_SERIALIZER.register(modEventBus);
         Recipes.DR_TYPE.register(modEventBus);
         CreativeTabs.DR.register(modEventBus);
+        modEventBus.addListener(RegisterCapabilitiesEvent.class, this::registerTransfer);
 
-        registerTransfer();
         Network.register();
 
         modEventBus.addListener((FMLCommonSetupEvent event) -> {
@@ -119,150 +110,100 @@ public class Powah {
         }
     }
 
-    private void registerTransfer() {
-        NeoForge.EVENT_BUS.addGenericListener(BlockEntity.class, (AttachCapabilitiesEvent<BlockEntity> event) -> {
-            if (event.getObject() instanceof ReactorPartTile reactorPart) {
-                event.addCapability(Powah.id("reactor_part"), new ICapabilityProvider() {
-                    @NotNull
-                    @Override
-                    public <T> LazyOptional<T> getCapability(@NotNull Capability<T> cap, @Nullable Direction side) {
-                        if (reactorPart.core().isPresent()) {
-                            if (cap != Capabilities.ENERGY || reactorPart.isExtractor()) {
-                                return reactorPart.core().get().getCapability(cap, side);
-                            }
-                        }
-                        return LazyOptional.empty();
-                    }
-                });
+    private void registerTransfer(RegisterCapabilitiesEvent event) {
+        // Special handling, since reactor parts delegate to their core
+        event.registerBlockEntity(Capabilities.EnergyStorage.BLOCK, Tiles.REACTOR_PART.get(), (reactorPart, unused) -> {
+            if (reactorPart.isExtractor()) {
+                return reactorPart.getCoreEnergyStorage();
             }
-            if (event.getObject() instanceof AbstractEnergyStorage<?, ?>energyStorage) {
-                event.addCapability(Powah.id("energy"), new ICapabilityProvider() {
-                    @NotNull
-                    @Override
-                    public <T> LazyOptional<T> getCapability(@NotNull Capability<T> capability, @Nullable Direction side) {
-                        if (capability == Capabilities.ENERGY) {
-                            if (energyStorage.isEnergyPresent(side)) {
-                                return LazyOptional.of(() -> new IEnergyStorage() {
-                                    @Override
-                                    public int extractEnergy(int maxExtract, boolean simulate) {
-                                        return Util.safeInt(energyStorage.extractEnergy(maxExtract, simulate, side));
-                                    }
-
-                                    @Override
-                                    public int getEnergyStored() {
-                                        return Util.safeInt(energyStorage.getEnergy().getStored());
-                                    }
-
-                                    @Override
-                                    public int getMaxEnergyStored() {
-                                        return Ints.saturatedCast(energyStorage.getEnergy().getMaxEnergyStored());
-                                    }
-
-                                    @Override
-                                    public int receiveEnergy(int maxReceive, boolean simulate) {
-                                        return Util.safeInt(energyStorage.receiveEnergy(maxReceive, simulate, side));
-                                    }
-
-                                    @Override
-                                    public boolean canReceive() {
-                                        return energyStorage.canReceiveEnergy(side);
-                                    }
-
-                                    @Override
-                                    public boolean canExtract() {
-                                        return energyStorage.canExtractEnergy(side);
-                                    }
-                                }).cast();
-                            }
-                        }
-                        return LazyOptional.empty();
-                    }
-                });
-            }
-            if (event.getObject() instanceof IInventoryHolder holder) {
-                event.addCapability(Powah.id("inv"), new ICapabilityProvider() {
-                    @NotNull
-                    @Override
-                    public <T> LazyOptional<T> getCapability(@NotNull Capability<T> capability, @Nullable Direction side) {
-                        if (capability == Capabilities.ITEM_HANDLER) {
-                            var inv = holder.getInventory();
-                            if (!inv.isBlank()) {
-                                return LazyOptional.of(() -> inv).cast();
-                            }
-                        }
-                        return LazyOptional.empty();
-                    }
-                });
-            }
-            if (event.getObject() instanceof ITankHolder holder) {
-                event.addCapability(Powah.id("tank"), new ICapabilityProvider() {
-                    @NotNull
-                    @Override
-                    public <T> LazyOptional<T> getCapability(@NotNull Capability<T> capability, @Nullable Direction arg) {
-                        if (capability == Capabilities.FLUID_HANDLER) {
-                            return LazyOptional.of(holder::getTank).cast();
-                        }
-                        return LazyOptional.empty();
-                    }
-                });
-            }
+            return null;
         });
-        NeoForge.EVENT_BUS.addGenericListener(ItemStack.class, (AttachCapabilitiesEvent<ItemStack> event) -> {
-            if (event.getObject().getItem() instanceof IEnergyContainingItem eci) {
-                event.addCapability(Powah.id("energy"), new ICapabilityProvider() {
-                    @NotNull
-                    @Override
-                    public <T> LazyOptional<T> getCapability(@NotNull Capability<T> cap, @Nullable Direction arg) {
-                        if (cap == Capabilities.ENERGY) {
-                            var info = eci.getEnergyInfo();
-                            if (info != null) {
-                                return LazyOptional.of(() -> {
-                                    var energyItem = new Energy.Item(event.getObject(), info);
-                                    return new IEnergyStorage() {
-                                        @Override
-                                        public int receiveEnergy(int i, boolean bl) {
-                                            if (info.capacity() == 0 || !energyItem.canReceive()) {
-                                                return 0;
-                                            }
-                                            return Ints.saturatedCast(energyItem.receiveEnergy(i, bl));
-                                        }
-
-                                        @Override
-                                        public int extractEnergy(int i, boolean bl) {
-                                            if (!energyItem.canExtract()) {
-                                                return 0;
-                                            }
-                                            return Ints.saturatedCast(energyItem.extractEnergy(i, bl));
-                                        }
-
-                                        @Override
-                                        public int getEnergyStored() {
-                                            return Ints.saturatedCast(energyItem.getEnergyStored());
-                                        }
-
-                                        @Override
-                                        public int getMaxEnergyStored() {
-                                            return Ints.saturatedCast(energyItem.getMaxEnergyStored());
-                                        }
-
-                                        @Override
-                                        public boolean canExtract() {
-                                            return energyItem.canExtract();
-                                        }
-
-                                        @Override
-                                        public boolean canReceive() {
-                                            return energyItem.canReceive();
-                                        }
-                                    };
-                                }).cast();
-                            }
-                        }
-                        return LazyOptional.empty();
-                    }
-                });
-            }
+        event.registerBlockEntity(Capabilities.ItemHandler.BLOCK, Tiles.REACTOR_PART.get(), (reactorPart, unused) -> {
+            return reactorPart.getCoreItemHandler();
         });
+        event.registerBlockEntity(Capabilities.FluidHandler.BLOCK, Tiles.REACTOR_PART.get(), (reactorPart, unused) -> {
+            return reactorPart.getCoreFluidHandler();
+        });
+
+        for (var entry : Tiles.DR.getEntries()) {
+            var be = entry.get().create(BlockPos.ZERO, Blocks.AIR.defaultBlockState());
+            if (be == null) {
+                throw new IllegalStateException("Failed to create a dummy BE for " + entry.getId());
+            }
+
+            registerBlockEntityCapability(event, entry.get(), be.getClass());
+        }
+
+        for (var entry : Itms.DR.getEntries()) {
+            if (entry.get() instanceof IEnergyContainingItem eci) {
+                event.registerItem(Capabilities.EnergyStorage.ITEM, (stack, unused) -> {
+                    var info = eci.getEnergyInfo();
+                    if (info == null) {
+                        return null;
+                    }
+
+                    var energyItem = new Energy.Item(stack, info);
+                    return energyItem.createItemCapability();
+                }, entry.get());
+            }
+        }
+    }
+
+    private static void registerBlockEntityCapability(RegisterCapabilitiesEvent event, BlockEntityType<?> beType, Class<?> beClass) {
+        if (AbstractEnergyStorage.class.isAssignableFrom(beClass)) {
+            event.registerBlockEntity(Capabilities.EnergyStorage.BLOCK, beType, (o, side) -> {
+                var energyStorage = (AbstractEnergyStorage<?, ?>) o;
+                if (!energyStorage.isEnergyPresent(side)) {
+                    return null;
+                }
+
+                return new IEnergyStorage() {
+                    @Override
+                    public int extractEnergy(int maxExtract, boolean simulate) {
+                        return Util.safeInt(energyStorage.extractEnergy(maxExtract, simulate, side));
+                    }
+
+                    @Override
+                    public int getEnergyStored() {
+                        return Util.safeInt(energyStorage.getEnergy().getStored());
+                    }
+
+                    @Override
+                    public int getMaxEnergyStored() {
+                        return Ints.saturatedCast(energyStorage.getEnergy().getMaxEnergyStored());
+                    }
+
+                    @Override
+                    public int receiveEnergy(int maxReceive, boolean simulate) {
+                        return Util.safeInt(energyStorage.receiveEnergy(maxReceive, simulate, side));
+                    }
+
+                    @Override
+                    public boolean canReceive() {
+                        return energyStorage.canReceiveEnergy(side);
+                    }
+
+                    @Override
+                    public boolean canExtract() {
+                        return energyStorage.canExtractEnergy(side);
+                    }
+                };
+            });
+        }
+        if (IInventoryHolder.class.isAssignableFrom(beClass)) {
+            event.registerBlockEntity(Capabilities.ItemHandler.BLOCK, beType, (o, direction) -> {
+                var inv = ((IInventoryHolder) o).getInventory();
+                if (!inv.isBlank()) {
+                    return inv;
+                }
+                return null;
+            });
+        }
+        if (ITankHolder.class.isAssignableFrom(beClass)) {
+            event.registerBlockEntity(Capabilities.FluidHandler.BLOCK, beType, (o, direction) -> {
+                return ((ITankHolder) o).getTank();
+            });
+        }
     }
 
     private void setupBlockItems(IEventBus modEventBus) {

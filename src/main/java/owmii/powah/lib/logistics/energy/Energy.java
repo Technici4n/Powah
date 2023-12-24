@@ -1,9 +1,11 @@
 package owmii.powah.lib.logistics.energy;
 
+import com.google.common.primitives.Ints;
 import java.util.Optional;
 import java.util.function.Consumer;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.item.ItemStack;
+import net.neoforged.neoforge.energy.IEnergyStorage;
 import org.jetbrains.annotations.Nullable;
 import owmii.powah.lib.item.EnergyBlockItem;
 import owmii.powah.lib.item.IEnergyContainingItem;
@@ -300,6 +302,47 @@ public class Energy {
         public void setStoredAndWrite(long stored) {
             setStored(stored);
             write();
+        }
+
+        public IEnergyStorage createItemCapability() {
+            var energyItem = this;
+            return new IEnergyStorage() {
+                @Override
+                public int receiveEnergy(int i, boolean bl) {
+                    if (energyItem.getCapacity() == 0 || !canReceive()) {
+                        return 0;
+                    }
+                    return Ints.saturatedCast(receiveEnergy(i, bl));
+                }
+
+                @Override
+                public int extractEnergy(int i, boolean bl) {
+                    if (!energyItem.canExtract()) {
+                        return 0;
+                    }
+                    return Ints.saturatedCast(extractEnergy(i, bl));
+                }
+
+                @Override
+                public int getEnergyStored() {
+                    return Ints.saturatedCast(energyItem.getEnergyStored());
+                }
+
+                @Override
+                public int getMaxEnergyStored() {
+                    return Ints.saturatedCast(energyItem.getMaxEnergyStored());
+                }
+
+                @Override
+                public boolean canExtract() {
+                    return energyItem.canExtract();
+                }
+
+                @Override
+                public boolean canReceive() {
+                    return energyItem.canReceive();
+                }
+            };
         }
     }
 
