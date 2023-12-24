@@ -9,7 +9,6 @@ import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.phys.AABB;
 import net.neoforged.neoforge.common.CommonHooks;
 import org.apache.commons.lang3.tuple.Pair;
 import org.jetbrains.annotations.Nullable;
@@ -381,10 +380,5 @@ public class ReactorTile extends AbstractEnergyProvider<ReactorBlock> implements
     public void setGenModeOn(boolean genModeOn) {
         this.genModeOn = genModeOn;
         sync();
-    }
-
-    // TODO Fabric: is this necessary, or does the reactor render fine without it?
-    public AABB getRenderBoundingBox() {
-        return new AABB(this.worldPosition).inflate(1.0D, 3.0D, 1.0D);
     }
 }

@@ -9,6 +9,7 @@ import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.phys.AABB;
 import owmii.powah.Powah;
 import owmii.powah.block.reactor.ReactorTile;
 import owmii.powah.client.model.CubeModel;
@@ -46,5 +47,10 @@ public class ReactorRenderer extends AbstractTileRenderer<ReactorTile> {
     @Override
     public boolean shouldRenderOffScreen(ReactorTile te) {
         return te.isBuilt();
+    }
+
+    @Override
+    public AABB getRenderBoundingBox(ReactorTile blockEntity) {
+        return new AABB(blockEntity.getBlockPos()).inflate(1.0D, 3.0D, 1.0D);
     }
 }
