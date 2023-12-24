@@ -116,18 +116,18 @@ public class PlayerTransmitterBlock extends AbstractEnergyBlock<ChargingConfig, 
     }
 
     @Override
-    public void playerWillDestroy(Level world, BlockPos pos, BlockState state, Player player) {
+    public BlockState playerWillDestroy(Level world, BlockPos pos, BlockState state, Player player) {
         if (player.isCreative()) {
             world.levelEvent(2001, pos, Block.getId(state));
-            return;
+            return state;
         }
         BlockEntity tileEntity = world.getBlockEntity(state.getValue(TOP) ? pos.below() : pos);
-        if (!world.isClientSide() && tileEntity instanceof PlayerTransmitterTile) {
-            PlayerTransmitterTile tile = (PlayerTransmitterTile) tileEntity;
+        if (!world.isClientSide() && tileEntity instanceof PlayerTransmitterTile tile) {
             ItemStack stack = tile.storeToStack(new ItemStack(this));
             popResource(world, pos, stack);
             world.levelEvent(2001, pos, Block.getId(state));
         }
+        return state;
     }
 
     @Override

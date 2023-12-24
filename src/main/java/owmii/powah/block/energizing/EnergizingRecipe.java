@@ -11,7 +11,6 @@ import net.minecraft.core.RegistryAccess;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.crafting.CraftingRecipeCodecs;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.crafting.Recipe;
 import net.minecraft.world.item.crafting.RecipeSerializer;
@@ -117,7 +116,7 @@ public class EnergizingRecipe implements Recipe<RecipeWrapper> {
                             .listOf()
                             .fieldOf("ingredients")
                             .forGetter(EnergizingRecipe::getIngredients),
-                    CraftingRecipeCodecs.ITEMSTACK_OBJECT_CODEC.fieldOf("result").forGetter(EnergizingRecipe::getResultItem))
+                    ItemStack.ITEM_WITH_COUNT_CODEC.fieldOf("result").forGetter(EnergizingRecipe::getResultItem))
                     .apply(builder, (energy, ingredients, result) -> {
                         var nnIngredients = NonNullList.<Ingredient>create();
                         nnIngredients.addAll(ingredients);

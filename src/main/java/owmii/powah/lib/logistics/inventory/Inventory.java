@@ -215,7 +215,7 @@ public class Inventory extends ItemStackHandler {
     }
 
     public boolean isBlank() {
-        return this.stacks.size() <= 0;
+        return this.stacks.isEmpty();
     }
 
     public Stacks getStacks() {

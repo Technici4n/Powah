@@ -44,9 +44,6 @@ repositories {
 
 apply plugin: "me.shedaniel.unified-publishing"
 
-sourceCompatibility = JavaVersion.VERSION_17
-targetCompatibility = JavaVersion.VERSION_17
-
 dependencies {
     implementation "net.neoforged:neoforge:${project.neoforge_version}"
 
@@ -56,10 +53,8 @@ dependencies {
     compileOnly "me.shedaniel:RoughlyEnoughItems-api-neoforge:${project.rei_version}"
     compileOnly "me.shedaniel:RoughlyEnoughItems-default-plugin-neoforge:${project.rei_version}"
     implementation "me.shedaniel:RoughlyEnoughItems-neoforge:${project.rei_version}"
-    implementation "dev.architectury:architectury-neoforge:10.0.16"
 
     compileOnly "top.theillusivec4.curios:curios-neoforge:${project.curios_version}:api"
-    //modRuntimeOnly "top.theillusivec4.curios:curios-forge:${project.curios_version}"
 }
 
 base {
@@ -78,7 +73,6 @@ java {
 
 tasks.withType(JavaCompile).configureEach {
     it.options.encoding = "UTF-8"
-    it.options.release = 17
 }
 
 jar {

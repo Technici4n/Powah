@@ -7,11 +7,10 @@ import java.util.stream.IntStream;
 import net.minecraft.world.Container;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
+import net.neoforged.neoforge.capabilities.Capabilities;
 import net.neoforged.neoforge.common.NeoForge;
-import net.neoforged.neoforge.common.capabilities.Capabilities;
 import net.neoforged.neoforge.energy.IEnergyStorage;
 import owmii.powah.ChargeableItemsEvent;
-import owmii.powah.EmptyEnergyStorage;
 import owmii.powah.lib.logistics.inventory.Inventory;
 
 /**
@@ -27,7 +26,8 @@ public final class ChargeUtil {
     }
 
     public static boolean canDischarge(ItemStack stack) {
-        return stack.getCapability(Capabilities.ENERGY).map(s -> s.canExtract() && s.getEnergyStored() > 0).orElse(false);
+        var storage = stack.getCapability(Capabilities.EnergyStorage.ITEM);
+        return storage != null && storage.canExtract() && storage.getEnergyStored() > 0;
     }
 
     public static long chargeItemsInPlayerInv(Player player, long maxPerSlot, long maxTotal, Predicate<ItemStack> allowStack) {
@@ -62,8 +62,10 @@ public final class ChargeUtil {
         for (ItemStack stack : stacks) {
             if (stack.isEmpty())
                 continue;
-            var cap = stack.getCapability(Capabilities.ENERGY).orElse(EmptyEnergyStorage.INSTANCE);
-            charged += op.perform(cap, Ints.saturatedCast(Math.min(maxPerStack, maxTotal - charged)), false);
+            var cap = stack.getCapability(Capabilities.EnergyStorage.ITEM);
+            if (cap != null) {
+                charged += op.perform(cap, Ints.saturatedCast(Math.min(maxPerStack, maxTotal - charged)), false);
+            }
         }
         return charged;
     }
