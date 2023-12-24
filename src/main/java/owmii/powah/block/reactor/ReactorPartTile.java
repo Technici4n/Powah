@@ -1,6 +1,5 @@
 package owmii.powah.block.reactor;
 
-import java.util.Optional;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
@@ -18,6 +17,8 @@ import owmii.powah.block.Tier;
 import owmii.powah.block.Tiles;
 import owmii.powah.lib.block.AbstractTileEntity;
 import owmii.powah.util.NBT;
+
+import java.util.Optional;
 
 public class ReactorPartTile extends AbstractTileEntity<Tier, ReactorBlock> {
     private BlockPos corePos = BlockPos.ZERO;
@@ -70,8 +71,9 @@ public class ReactorPartTile extends AbstractTileEntity<Tier, ReactorBlock> {
                 coreEnergyCache = BlockCapabilityCache.create(Capabilities.EnergyStorage.BLOCK, serverLevel, getCorePos(), null);
             }
             return coreEnergyCache.getCapability();
+        } else {
+            return level.getCapability(Capabilities.EnergyStorage.BLOCK, getCorePos(), null);
         }
-        return null;
     }
 
     @Nullable
@@ -81,8 +83,9 @@ public class ReactorPartTile extends AbstractTileEntity<Tier, ReactorBlock> {
                 coreItemCache = BlockCapabilityCache.create(Capabilities.ItemHandler.BLOCK, serverLevel, getCorePos(), null);
             }
             return coreItemCache.getCapability();
+        } else {
+            return level.getCapability(Capabilities.ItemHandler.BLOCK, getCorePos(), null);
         }
-        return null;
     }
 
     @Nullable
@@ -92,8 +95,9 @@ public class ReactorPartTile extends AbstractTileEntity<Tier, ReactorBlock> {
                 coreFluidCache = BlockCapabilityCache.create(Capabilities.FluidHandler.BLOCK, serverLevel, getCorePos(), null);
             }
             return coreFluidCache.getCapability();
+        } else {
+            return level.getCapability(Capabilities.FluidHandler.BLOCK, getCorePos(), null);
         }
-        return null;
     }
 
     public Optional<ReactorTile> core() {

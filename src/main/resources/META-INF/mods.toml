@@ -15,14 +15,14 @@ Various ways to generate, store and transmit FE power.
 
 [[dependencies.powah]]
     modId="neoforge"
-    mandatory=true
+    type="REQUIRED"
     versionRange="[20.2.86,)"
     ordering="NONE"
     side="BOTH"
 
 [[dependencies.powah]]
     modId="cloth_config"
-    mandatory=true
+    type="REQUIRED"
     versionRange="[7.0.0,]"
     ordering="NONE"
     side="BOTH"

@@ -137,6 +137,9 @@ public class FluidTank implements IFluidHandler {
     @Override
     @NotNull
     public FluidStack drain(int maxDrain, FluidAction action) {
+        if (fluid.isEmpty()) {
+            return FluidStack.EMPTY;
+        }
         int drained = maxDrain;
         if (fluid.getAmount() < drained) {
             drained = fluid.getAmount();
