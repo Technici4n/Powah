@@ -7,9 +7,7 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
-import net.minecraft.world.phys.AABB;
 import org.jetbrains.annotations.Nullable;
-import owmii.powah.Powah;
 import owmii.powah.block.Tier;
 import owmii.powah.block.Tiles;
 import owmii.powah.config.v2.types.EnergyConfig;
@@ -85,11 +83,6 @@ public class EnergizingRodTile extends AbstractEnergyStorage<EnergyConfig, Energ
     public void setOrbPos(BlockPos orbPos) {
         this.orbPos = orbPos;
         sync(2);
-    }
-
-    public AABB getRenderBoundingBox() {
-        int range = Powah.config().general.energizing_range;
-        return new AABB(getBlockPos()).inflate(range);
     }
 
     @Override
