@@ -3,18 +3,27 @@ package owmii.powah.compat.emi;
 import dev.emi.emi.api.EmiEntrypoint;
 import dev.emi.emi.api.EmiPlugin;
 import dev.emi.emi.api.EmiRegistry;
+import dev.emi.emi.api.recipe.EmiInfoRecipe;
 import dev.emi.emi.api.recipe.EmiRecipe;
 import dev.emi.emi.api.stack.EmiStack;
+import dev.emi.emi.api.widget.Bounds;
+import java.util.List;
+import java.util.function.Consumer;
 import java.util.function.Function;
+import net.minecraft.client.gui.screens.Screen;
+import net.minecraft.network.chat.Component;
 import net.minecraft.world.Container;
 import net.minecraft.world.item.crafting.Recipe;
 import net.minecraft.world.item.crafting.RecipeHolder;
 import net.minecraft.world.item.crafting.RecipeType;
+import owmii.powah.Powah;
 import owmii.powah.block.Blcks;
 import owmii.powah.compat.common.FluidCoolant;
 import owmii.powah.compat.common.MagmatorFuel;
 import owmii.powah.compat.common.PassiveHeatSource;
 import owmii.powah.compat.common.SolidCoolant;
+import owmii.powah.item.Itms;
+import owmii.powah.lib.client.screen.container.AbstractContainerScreen;
 import owmii.powah.recipe.Recipes;
 
 @EmiEntrypoint
@@ -50,23 +59,26 @@ public class PowahEmiPlugin implements EmiPlugin {
         SolidCoolant.getAll().forEach(recipe -> registry.addRecipe(new EmiSolidCoolantRecipe(recipe)));
         PassiveHeatSource.getAll().forEach(recipe -> registry.addRecipe(new EmiHeatSourceRecipe(recipe)));
 
-//        if (Powah.config().general.player_aerial_pearl)
-//            BuiltinClientPlugin.getInstance().registerInformation(EmiStack.of(Itms.PLAYER_AERIAL_PEARL.get()), Component.empty(), l -> {
-//                l.add(Component.translatable("jei.powah.player_aerial_pearl"));
-//                return l;
-//            });
-//        if (Powah.config().general.dimensional_binding_card)
-//            BuiltinClientPlugin.getInstance().registerInformation(EmiStack.of(Itms.BINDING_CARD_DIM.get()), Component.empty(), l -> {
-//                l.add(Component.translatable("jei.powah.binding_card_dim"));
-//                return l;
-//            });
-//        if (Powah.config().general.lens_of_ender)
-//            BuiltinClientPlugin.getInstance().registerInformation(EmiStack.of(Itms.LENS_OF_ENDER.get()), Component.empty(), l -> {
-//                l.add(Component.translatable("jei.powah.lens_of_ender"));
-//                return l;
-//            });
-//
-//        zones.register(AbstractContainerScreen.class, new GuiContainerHandler());
+        if (Powah.config().general.player_aerial_pearl) {
+            registry.addRecipe(new EmiInfoRecipe(
+                    List.of(EmiStack.of(Itms.PLAYER_AERIAL_PEARL.get())),
+                    List.of(Component.translatable("jei.powah.player_aerial_pearl")),
+                    null));
+        }
+        if (Powah.config().general.dimensional_binding_card) {
+            registry.addRecipe(new EmiInfoRecipe(
+                    List.of(EmiStack.of(Itms.BINDING_CARD_DIM.get())),
+                    List.of(Component.translatable("jei.powah.binding_card_dim")),
+                    null));
+        }
+        if (Powah.config().general.lens_of_ender) {
+            registry.addRecipe(new EmiInfoRecipe(
+                    List.of(EmiStack.of(Itms.LENS_OF_ENDER.get())),
+                    List.of(Component.translatable("jei.powah.lens_of_ender")),
+                    null));
+        }
+
+        registry.addGenericExclusionArea(PowahEmiPlugin::getExclusionAreas);
     }
 
     private static <C extends Container, T extends Recipe<C>> void adaptRecipeType(EmiRegistry registry,
@@ -78,4 +90,15 @@ public class PowahEmiPlugin implements EmiPlugin {
                 .forEach(registry::addRecipe);
     }
 
+    private static void getExclusionAreas(Screen screen, Consumer<Bounds> consumer) {
+        if (screen instanceof AbstractContainerScreen<?>containerScreen) {
+            for (var extraArea : containerScreen.getExtraAreas()) {
+                consumer.accept(new Bounds(
+                        extraArea.getX(),
+                        extraArea.getY(),
+                        extraArea.getWidth(),
+                        extraArea.getHeight()));
+            }
+        }
+    }
 }
