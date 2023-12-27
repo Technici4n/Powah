@@ -10,6 +10,10 @@ import net.minecraft.network.chat.Component;
 import owmii.powah.Powah;
 import owmii.powah.block.Blcks;
 import owmii.powah.block.energizing.EnergizingRecipe;
+import owmii.powah.compat.common.FluidCoolant;
+import owmii.powah.compat.common.MagmatorFuel;
+import owmii.powah.compat.common.PassiveHeatSource;
+import owmii.powah.compat.common.SolidCoolant;
 import owmii.powah.compat.rei.energizing.EnergizingCategory;
 import owmii.powah.compat.rei.energizing.EnergizingDisplay;
 import owmii.powah.compat.rei.magmator.MagmatorCategory;
@@ -43,10 +47,10 @@ public class PowahREIPlugin implements REIClientPlugin {
     @Override
     public void registerDisplays(DisplayRegistry registry) {
         registry.registerRecipeFiller(EnergizingRecipe.class, Recipes.ENERGIZING.get(), EnergizingDisplay::new);
-        MagmatorDisplay.Maker.getBucketRecipes().forEach(recipe -> registry.add(new MagmatorDisplay(recipe)));
-        CoolantDisplay.Maker.getBucketRecipes().forEach(recipe -> registry.add(new CoolantDisplay(recipe)));
-        SolidCoolantDisplay.Maker.getBucketRecipes().forEach(recipe -> registry.add(new SolidCoolantDisplay(recipe)));
-        HeatSourceDisplay.Maker.getBucketRecipes().forEach(recipe -> registry.add(new HeatSourceDisplay(recipe)));
+        MagmatorFuel.getAll().forEach(recipe -> registry.add(new MagmatorDisplay(recipe)));
+        FluidCoolant.getAll().forEach(recipe -> registry.add(new CoolantDisplay(recipe)));
+        SolidCoolant.getAll().forEach(recipe -> registry.add(new SolidCoolantDisplay(recipe)));
+        PassiveHeatSource.getAll().forEach(recipe -> registry.add(new HeatSourceDisplay(recipe)));
 
         if (Powah.config().general.player_aerial_pearl)
             BuiltinClientPlugin.getInstance().registerInformation(EntryStacks.of(Itms.PLAYER_AERIAL_PEARL.get()), Component.empty(), l -> {

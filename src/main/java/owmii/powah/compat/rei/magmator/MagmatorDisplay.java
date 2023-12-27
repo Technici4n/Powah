@@ -1,31 +1,27 @@
 package owmii.powah.compat.rei.magmator;
 
-import java.util.*;
-import java.util.stream.Collectors;
-import me.shedaniel.rei.api.client.registry.entry.EntryRegistry;
+import java.util.Collections;
+import java.util.List;
 import me.shedaniel.rei.api.common.category.CategoryIdentifier;
 import me.shedaniel.rei.api.common.display.Display;
 import me.shedaniel.rei.api.common.entry.EntryIngredient;
-import me.shedaniel.rei.api.common.entry.EntryStack;
-import me.shedaniel.rei.api.common.entry.type.VanillaEntryTypes;
-import me.shedaniel.rei.api.common.util.EntryIngredients;
-import net.minecraft.core.registries.BuiltInRegistries;
+import me.shedaniel.rei.api.common.util.EntryStacks;
 import net.minecraft.world.item.BucketItem;
-import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.Items;
-import net.minecraft.world.level.material.Fluid;
-import owmii.powah.api.PowahAPI;
+import owmii.powah.compat.common.MagmatorFuel;
 
 public class MagmatorDisplay implements Display {
     private final List<EntryIngredient> inputs;
 
     private final int heat;
 
-    public MagmatorDisplay(Recipe recipe) {
-        this.inputs = List.of(
-                EntryIngredients.of(recipe.getFluid()),
-                !Items.BUCKET.equals(recipe.getBucket()) ? EntryIngredients.of(recipe.getBucket()) : EntryIngredient.of());
-        this.heat = recipe.getHeat();
+    public MagmatorDisplay(MagmatorFuel recipe) {
+        var inputBuilder = EntryIngredient.builder()
+                .add(EntryStacks.of(recipe.fluid()));
+        for (BucketItem bucket : recipe.buckets()) {
+            inputBuilder.add(EntryStacks.of(bucket));
+        }
+        this.inputs = List.of(inputBuilder.build());
+        this.heat = recipe.heat();
     }
 
     public int getHeat() {
@@ -45,65 +41,5 @@ public class MagmatorDisplay implements Display {
     @Override
     public CategoryIdentifier<?> getCategoryIdentifier() {
         return MagmatorCategory.ID;
-    }
-
-    public static class Maker {
-        public static List<Recipe> getBucketRecipes() {
-            Collection<ItemStack> allItemStacks = EntryRegistry.getInstance().getEntryStacks()
-                    .filter(stack -> Objects.equals(stack.getType(), VanillaEntryTypes.ITEM))
-                    .<ItemStack>map(EntryStack::castValue).toList();
-            List<Recipe> recipes = new ArrayList<>();
-
-            allItemStacks.forEach(stack -> {
-                if (stack.getItem() instanceof BucketItem bucket) {
-                    Fluid fluid = bucket.getFluid();
-                    if (PowahAPI.getMagmaticFluidHeat(fluid) != 0) {
-                        recipes.add(new Recipe(bucket, PowahAPI.getMagmaticFluidHeat(fluid)));
-                    }
-                }
-            });
-
-            List<Fluid> fluids = PowahAPI.MAGMATIC_FLUIDS.keySet().stream().flatMap(f -> BuiltInRegistries.FLUID.getOptional(f).stream())
-                    .collect(Collectors.toCollection(ArrayList::new));
-            recipes.forEach(recipe -> {
-                fluids.remove(recipe.fluid);
-            });
-
-            fluids.forEach(fluid -> {
-                recipes.add(new Recipe(fluid, PowahAPI.getMagmaticFluidHeat(fluid)));
-            });
-
-            return recipes;
-        }
-    }
-
-    public static class Recipe {
-        private final Fluid fluid;
-        private final BucketItem bucket;
-        private final int heat;
-
-        public Recipe(BucketItem bucket, int heat) {
-            this.bucket = bucket;
-            this.fluid = bucket.getFluid();
-            this.heat = heat;
-        }
-
-        public Recipe(Fluid fluid, int heat) {
-            this.bucket = (BucketItem) Items.BUCKET;
-            this.fluid = fluid;
-            this.heat = heat;
-        }
-
-        public BucketItem getBucket() {
-            return this.bucket;
-        }
-
-        public Fluid getFluid() {
-            return this.fluid;
-        }
-
-        public int getHeat() {
-            return this.heat;
-        }
     }
 }

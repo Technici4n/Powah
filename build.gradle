@@ -49,10 +49,19 @@ dependencies {
 
     implementation "me.shedaniel.cloth:cloth-config-neoforge:${project.cloth_config_version}"
 
-    // Uncomment when we stop depending on REI internals
-    compileOnly "me.shedaniel:RoughlyEnoughItems-api-neoforge:${project.rei_version}"
-    compileOnly "me.shedaniel:RoughlyEnoughItems-default-plugin-neoforge:${project.rei_version}"
-    implementation "me.shedaniel:RoughlyEnoughItems-neoforge:${project.rei_version}"
+    // compile against provided APIs
+    compileOnly "dev.emi:emi-neoforge:${emi_version}:api"
+    if (project.runtime_itemlist_mod == "emi") {
+        runtimeOnly "dev.emi:emi-neoforge:${emi_version}"
+
+        compileOnly "me.shedaniel:RoughlyEnoughItems-neoforge:${project.rei_version}"
+    } else if (project.runtime_itemlist_mod == "rei") {
+        implementation "me.shedaniel:RoughlyEnoughItems-neoforge:${project.rei_version}"
+    } else if (project.runtime_itemlist_mod == "none") {
+        compileOnly "me.shedaniel:RoughlyEnoughItems-neoforge:${project.rei_version}"
+    } else {
+        throw new GradleException("Unknown setting for project.runtime_itemlist_mod=${project.runtime_itemlist_mod}. Supported: emi, rei and none")
+    }
 
     compileOnly "top.theillusivec4.curios:curios-neoforge:${project.curios_version}:api"
 }
