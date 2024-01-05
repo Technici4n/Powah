@@ -16,7 +16,7 @@ Various ways to generate, store and transmit FE power.
 [[dependencies.powah]]
     modId="neoforge"
     type="REQUIRED"
-    versionRange="[20.2.86,)"
+    versionRange="[20.4.77-beta,)"
     ordering="NONE"
     side="BOTH"
 
