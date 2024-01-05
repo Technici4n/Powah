@@ -73,8 +73,7 @@ public class Powah {
         Recipes.DR_TYPE.register(modEventBus);
         CreativeTabs.DR.register(modEventBus);
         modEventBus.addListener(RegisterCapabilitiesEvent.class, this::registerTransfer);
-
-        Network.register();
+        modEventBus.addListener(Network::register);
 
         modEventBus.addListener((FMLCommonSetupEvent event) -> {
             // TODO: move to config

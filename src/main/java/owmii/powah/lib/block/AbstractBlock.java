@@ -36,7 +36,6 @@ import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
-import net.neoforged.neoforge.network.NetworkHooks;
 import org.jetbrains.annotations.Nullable;
 import owmii.powah.lib.logistics.inventory.AbstractContainer;
 import owmii.powah.lib.registry.IVariant;
@@ -171,7 +170,7 @@ public class AbstractBlock<V extends IVariant, B extends AbstractBlock<V, B>> ex
             AbstractContainerMenu container = provider.createMenu(0, player.getInventory(), player);
             if (container != null) {
                 if (player instanceof ServerPlayer serverPlayer) {
-                    NetworkHooks.openScreen(serverPlayer, provider, buffer -> {
+                    serverPlayer.openMenu(provider, buffer -> {
                         buffer.writeBlockPos(pos);
                         additionalGuiData(buffer, state, world, pos, player, hand, result);
                     });
