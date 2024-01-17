@@ -92,13 +92,13 @@ public class ReactorScreen extends AbstractEnergyScreen<ReactorTile, ReactorCont
                             .translatable("info.lollipop.fe.stored", Util.addCommas(energy.getStored()), Util.numFormat(energy.getCapacity()))
                             .withStyle(ChatFormatting.DARK_GRAY)));
             list.add(Component.translatable("info.powah.generation.factor").withStyle(ChatFormatting.GRAY).append(Text.COLON)
-                    .append(Component.literal(Util.numFormat(this.te.getGeneration())).append(Component.translatable("info.lollipop.fe.pet.tick"))
+                    .append(Component.translatable("info.lollipop.fe.pet.tick", Util.numFormat(this.te.getGeneration()))
                             .withStyle(ChatFormatting.DARK_GRAY)));
             list.add(Component.translatable("info.lollipop.generating").withStyle(ChatFormatting.GRAY).append(Text.COLON)
-                    .append(Component.literal(Util.numFormat((long) this.te.calcProduction()))
-                            .append(Component.translatable("info.lollipop.fe.pet.tick")).withStyle(ChatFormatting.DARK_GRAY)));
+                    .append(Component.translatable("info.lollipop.fe.pet.tick", Util.numFormat((long) this.te.calcProduction()))
+                            .withStyle(ChatFormatting.DARK_GRAY)));
             list.add(Component.translatable("info.lollipop.max.extract").withStyle(ChatFormatting.GRAY).append(Text.COLON)
-                    .append(Component.literal(Util.numFormat(energy.getMaxExtract())).append(Component.translatable("info.lollipop.fe.pet.tick"))
+                    .append(Component.translatable("info.lollipop.fe.pet.tick", Util.numFormat(energy.getMaxExtract()))
                             .withStyle(ChatFormatting.DARK_GRAY)));
 
             gui.renderComponentTooltip(font, list, mouseX, mouseY);
@@ -117,8 +117,7 @@ public class ReactorScreen extends AbstractEnergyScreen<ReactorTile, ReactorCont
                     .append(Component.translatable("info.lollipop.mb.stored", String.format("%.0f", this.te.fuel.getTicks()),
                             String.format("%.0f", this.te.fuel.getMax())).withStyle(ChatFormatting.DARK_GRAY)));
             list.add(Component.translatable("info.lollipop.using").withStyle(ChatFormatting.GRAY).append(Text.COLON)
-                    .append(Component.literal(ChatFormatting.GREEN + String.format("%.4f", this.te.calcConsumption()))
-                            .append(Component.translatable("info.lollipop.mb.pet.tick")).withStyle(ChatFormatting.DARK_GRAY)));
+                    .append(Component.translatable("info.lollipop.mb.pet.tick", ChatFormatting.GREEN + String.format("%.4f", this.te.calcConsumption())).withStyle(ChatFormatting.DARK_GRAY)));
             gui.renderComponentTooltip(font, list, mouseX, mouseY);
         }
 
