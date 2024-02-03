@@ -57,10 +57,10 @@ public class FurnatorScreen extends AbstractEnergyScreen<FurnatorTile, FurnatorC
                             .translatable("info.lollipop.fe.stored", Util.addCommas(energy.getStored()), Util.numFormat(energy.getCapacity()))
                             .withStyle(ChatFormatting.DARK_GRAY)));
             list.add(Component.translatable("info.lollipop.generates").withStyle(ChatFormatting.GRAY).append(Text.COLON)
-                    .append(Component.literal(Util.numFormat(this.te.getGeneration())).append(Component.translatable("info.lollipop.fe.pet.tick"))
+                    .append(Component.translatable("info.lollipop.fe.pet.tick", Util.numFormat(this.te.getGeneration()))
                             .withStyle(ChatFormatting.DARK_GRAY)));
             list.add(Component.translatable("info.lollipop.max.extract").withStyle(ChatFormatting.GRAY).append(Text.COLON)
-                    .append(Component.literal(Util.numFormat(energy.getMaxExtract())).append(Component.translatable("info.lollipop.fe.pet.tick"))
+                    .append(Component.translatable("info.lollipop.fe.pet.tick", Util.numFormat(energy.getMaxExtract()))
                             .withStyle(ChatFormatting.DARK_GRAY)));
             gui.renderComponentTooltip(font, list, mouseX, mouseY);
         }
