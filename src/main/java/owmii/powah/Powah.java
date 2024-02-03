@@ -1,6 +1,5 @@
 package owmii.powah;
 
-import com.google.common.primitives.Ints;
 import me.shedaniel.autoconfig.ConfigHolder;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Registry;
@@ -21,7 +20,6 @@ import net.neoforged.fml.loading.FMLEnvironment;
 import net.neoforged.neoforge.capabilities.Capabilities;
 import net.neoforged.neoforge.capabilities.RegisterCapabilitiesEvent;
 import net.neoforged.neoforge.common.NeoForge;
-import net.neoforged.neoforge.energy.IEnergyStorage;
 import net.neoforged.neoforge.event.entity.player.PlayerInteractEvent;
 import net.neoforged.neoforge.registries.RegisterEvent;
 import org.apache.logging.log4j.LogManager;
@@ -44,7 +42,6 @@ import owmii.powah.lib.item.IEnergyContainingItem;
 import owmii.powah.lib.logistics.energy.Energy;
 import owmii.powah.network.Network;
 import owmii.powah.recipe.Recipes;
-import owmii.powah.util.Util;
 import owmii.powah.util.Wrench;
 
 @Mod(Powah.MOD_ID)
@@ -152,41 +149,7 @@ public class Powah {
         if (AbstractEnergyStorage.class.isAssignableFrom(beClass)) {
             event.registerBlockEntity(Capabilities.EnergyStorage.BLOCK, beType, (o, side) -> {
                 var energyStorage = (AbstractEnergyStorage<?, ?>) o;
-                if (!energyStorage.isEnergyPresent(side)) {
-                    return null;
-                }
-
-                return new IEnergyStorage() {
-                    @Override
-                    public int extractEnergy(int maxExtract, boolean simulate) {
-                        return Util.safeInt(energyStorage.extractEnergy(maxExtract, simulate, side));
-                    }
-
-                    @Override
-                    public int getEnergyStored() {
-                        return Util.safeInt(energyStorage.getEnergy().getStored());
-                    }
-
-                    @Override
-                    public int getMaxEnergyStored() {
-                        return Ints.saturatedCast(energyStorage.getEnergy().getMaxEnergyStored());
-                    }
-
-                    @Override
-                    public int receiveEnergy(int maxReceive, boolean simulate) {
-                        return Util.safeInt(energyStorage.receiveEnergy(maxReceive, simulate, side));
-                    }
-
-                    @Override
-                    public boolean canReceive() {
-                        return energyStorage.canReceiveEnergy(side);
-                    }
-
-                    @Override
-                    public boolean canExtract() {
-                        return energyStorage.canExtractEnergy(side);
-                    }
-                };
+                return energyStorage.getExternalStorage(side);
             });
         }
         if (IInventoryHolder.class.isAssignableFrom(beClass)) {
@@ -218,4 +181,5 @@ public class Powah {
             }
         });
     }
+
 }

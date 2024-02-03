@@ -1,11 +1,13 @@
 package owmii.powah.lib.block;
 
+import com.google.common.primitives.Ints;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
+import net.neoforged.neoforge.energy.IEnergyStorage;
 import org.jetbrains.annotations.Nullable;
 import owmii.powah.block.Tier;
 import owmii.powah.config.IEnergyConfig;
@@ -22,6 +24,7 @@ public abstract class AbstractEnergyStorage<C extends IEnergyConfig<Tier>, B ext
         implements IRedstoneInteract {
     protected final SideConfig sideConfig = new SideConfig(this);
     protected final Energy energy = Energy.create(0);
+    private final @Nullable IEnergyStorage[] externalAdapters = new IEnergyStorage[Direction.values().length + 1];
 
     public AbstractEnergyStorage(BlockEntityType<?> type, BlockPos pos, BlockState state) {
         this(type, pos, state, IVariant.getEmpty());
@@ -169,6 +172,58 @@ public abstract class AbstractEnergyStorage<C extends IEnergyConfig<Tier>, B ext
 
     public SideConfig getSideConfig() {
         return this.sideConfig;
+    }
+
+    @Nullable
+    public IEnergyStorage getExternalStorage(@Nullable Direction side) {
+        if (!isEnergyPresent(side)) {
+            return null;
+        }
+
+        int index = side != null ? side.ordinal() : Direction.values().length;
+        if (externalAdapters[index] == null) {
+            externalAdapters[index] = new ExternalAdapter(side);
+        }
+
+        return externalAdapters[index];
+    }
+
+    private final class ExternalAdapter implements IEnergyStorage {
+        private final @Nullable Direction side;
+
+        public ExternalAdapter(@Nullable Direction side) {
+            this.side = side;
+        }
+
+        @Override
+        public int extractEnergy(int maxExtract, boolean simulate) {
+            return Util.safeInt(AbstractEnergyStorage.this.extractEnergy(maxExtract, simulate, side));
+        }
+
+        @Override
+        public int getEnergyStored() {
+            return Util.safeInt(getEnergy().getStored());
+        }
+
+        @Override
+        public int getMaxEnergyStored() {
+            return Ints.saturatedCast(getEnergy().getMaxEnergyStored());
+        }
+
+        @Override
+        public int receiveEnergy(int maxReceive, boolean simulate) {
+            return Util.safeInt(AbstractEnergyStorage.this.receiveEnergy(maxReceive, simulate, side));
+        }
+
+        @Override
+        public boolean canReceive() {
+            return AbstractEnergyStorage.this.canReceiveEnergy(side);
+        }
+
+        @Override
+        public boolean canExtract() {
+            return AbstractEnergyStorage.this.canExtractEnergy(side);
+        }
     }
 
 }
