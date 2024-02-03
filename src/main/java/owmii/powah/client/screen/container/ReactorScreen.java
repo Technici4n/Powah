@@ -117,7 +117,9 @@ public class ReactorScreen extends AbstractEnergyScreen<ReactorTile, ReactorCont
                     .append(Component.translatable("info.lollipop.mb.stored", String.format("%.0f", this.te.fuel.getTicks()),
                             String.format("%.0f", this.te.fuel.getMax())).withStyle(ChatFormatting.DARK_GRAY)));
             list.add(Component.translatable("info.lollipop.using").withStyle(ChatFormatting.GRAY).append(Text.COLON)
-                    .append(Component.translatable("info.lollipop.mb.pet.tick", ChatFormatting.GREEN + String.format("%.4f", this.te.calcConsumption())).withStyle(ChatFormatting.DARK_GRAY)));
+                    .append(Component
+                            .translatable("info.lollipop.mb.pet.tick", ChatFormatting.GREEN + String.format("%.4f", this.te.calcConsumption()))
+                            .withStyle(ChatFormatting.DARK_GRAY)));
             gui.renderComponentTooltip(font, list, mouseX, mouseY);
         }
 
