@@ -1,12 +1,10 @@
 package owmii.powah.block.reactor;
 
-import java.util.List;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.crafting.RecipeHolder;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
 import net.neoforged.neoforge.common.CommonHooks;
@@ -21,8 +19,7 @@ import owmii.powah.lib.block.IInventoryHolder;
 import owmii.powah.lib.block.ITankHolder;
 import owmii.powah.lib.logistics.energy.Energy;
 import owmii.powah.lib.logistics.fluid.Tank;
-import owmii.powah.recipe.ReactorFuelRecipe;
-import owmii.powah.recipe.Recipes;
+import owmii.powah.recipe.ReactorFuel;
 import owmii.powah.util.EnergyUtil;
 import owmii.powah.util.Ticker;
 import owmii.powah.util.Util;
@@ -47,7 +44,6 @@ public class ReactorTile extends AbstractEnergyProvider<ReactorBlock> implements
     private boolean running;
     private boolean genModeOn;
     private boolean generate = true;
-    private List<ReactorFuelRecipe> reactorFuels = List.of();
 
     public ReactorTile(BlockPos pos, BlockState state, Tier variant) {
         super(Tiles.REACTOR.get(), pos, state, variant);
@@ -306,16 +302,14 @@ public class ReactorTile extends AbstractEnergyProvider<ReactorBlock> implements
 
         var stack = this.inv.getStackInSlot(1);
         if (!stack.isEmpty()) {
-            for (var recipe : this.reactorFuels) {
-                if (recipe.fuel().test(stack)) {
-                    // Try not to waste fuel
-                    if (this.fuel.isEmpty() || this.fuel.getTicks() + recipe.fuelAmount() <= this.fuel.getMax()) {
-                        this.fuel.add(recipe.fuelAmount());
-                        this.baseTemp = recipe.temperature();
-                        stack.shrink(1);
-                        flag = true;
-                    }
-                    break;
+            var fuel = ReactorFuel.getFuel(stack.getItem());
+            if (fuel != null) {
+                // Try not to waste fuel
+                if (this.fuel.isEmpty() || this.fuel.getTicks() + fuel.fuelAmount() <= this.fuel.getMax()) {
+                    this.fuel.add(fuel.fuelAmount());
+                    this.baseTemp = fuel.temperature();
+                    stack.shrink(1);
+                    flag = true;
                 }
             }
         }
@@ -348,12 +342,7 @@ public class ReactorTile extends AbstractEnergyProvider<ReactorBlock> implements
     @Override
     public boolean canInsert(int slot, ItemStack stack) {
         if (slot == 1) {
-            for (var recipe : reactorFuels) {
-                if (recipe.fuel().test(stack)) {
-                    return true;
-                }
-            }
-            return false;
+            return ReactorFuel.getFuel(stack.getItem()) != null;
         } else if (slot == 2) {
             return CommonHooks.getBurnTime(stack, null) > 0 && !stack.hasCraftingRemainingItem();
         } else if (slot == 3) {
@@ -391,14 +380,5 @@ public class ReactorTile extends AbstractEnergyProvider<ReactorBlock> implements
     public void setGenModeOn(boolean genModeOn) {
         this.genModeOn = genModeOn;
         sync();
-    }
-
-    @Override
-    public void setLevel(Level level) {
-        super.setLevel(level);
-        this.reactorFuels = level.getRecipeManager().getAllRecipesFor(Recipes.REACTOR_FUEL.get())
-                .stream()
-                .map(RecipeHolder::value)
-                .toList();
     }
 }

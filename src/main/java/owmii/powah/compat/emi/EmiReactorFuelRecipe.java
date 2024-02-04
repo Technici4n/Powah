@@ -7,13 +7,14 @@ import dev.emi.emi.api.stack.EmiStack;
 import dev.emi.emi.api.widget.WidgetHolder;
 import java.util.List;
 import net.minecraft.ChatFormatting;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.world.item.crafting.RecipeHolder;
+import net.minecraft.world.item.crafting.Ingredient;
 import org.jetbrains.annotations.Nullable;
 import owmii.powah.Powah;
 import owmii.powah.item.Itms;
-import owmii.powah.recipe.ReactorFuelRecipe;
+import owmii.powah.recipe.ReactorFuel;
 
 class EmiReactorFuelRecipe implements EmiRecipe {
     public static final ResourceLocation GUI_BACK = new ResourceLocation(Powah.MOD_ID, "textures/gui/jei/misc.png");
@@ -22,14 +23,15 @@ class EmiReactorFuelRecipe implements EmiRecipe {
             Component.translatable("gui.powah.jei.category.reactor.fuels"));
 
     private final ResourceLocation id;
-    private final ReactorFuelRecipe recipe;
+    private final ReactorFuel recipe;
 
     private final EmiIngredient input;
 
-    public EmiReactorFuelRecipe(RecipeHolder<ReactorFuelRecipe> holder) {
-        this.id = holder.id();
-        this.recipe = holder.value();
-        this.input = EmiIngredient.of(recipe.fuel());
+    public EmiReactorFuelRecipe(ResourceLocation id, ReactorFuel fuel) {
+        this.id = id;
+        this.recipe = fuel;
+        var stack = BuiltInRegistries.ITEM.get(id).getDefaultInstance();
+        this.input = EmiIngredient.of(Ingredient.of(stack));
     }
 
     @Override

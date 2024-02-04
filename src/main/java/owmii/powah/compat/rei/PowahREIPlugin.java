@@ -6,6 +6,7 @@ import me.shedaniel.rei.api.client.registry.display.DisplayRegistry;
 import me.shedaniel.rei.api.client.registry.screen.ExclusionZones;
 import me.shedaniel.rei.api.common.util.EntryStacks;
 import me.shedaniel.rei.plugin.client.BuiltinClientPlugin;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.network.chat.Component;
 import owmii.powah.Powah;
 import owmii.powah.block.Blcks;
@@ -20,7 +21,7 @@ import owmii.powah.compat.rei.magmator.MagmatorCategory;
 import owmii.powah.compat.rei.magmator.MagmatorDisplay;
 import owmii.powah.item.Itms;
 import owmii.powah.lib.client.screen.container.AbstractContainerScreen;
-import owmii.powah.recipe.ReactorFuelRecipe;
+import owmii.powah.recipe.ReactorFuel;
 import owmii.powah.recipe.Recipes;
 
 public class PowahREIPlugin implements REIClientPlugin {
@@ -50,7 +51,9 @@ public class PowahREIPlugin implements REIClientPlugin {
     @Override
     public void registerDisplays(DisplayRegistry registry) {
         registry.registerRecipeFiller(EnergizingRecipe.class, Recipes.ENERGIZING.get(), EnergizingDisplay::new);
-        registry.registerRecipeFiller(ReactorFuelRecipe.class, Recipes.REACTOR_FUEL.get(), ReactorFuelDisplay::new);
+        for (var entry : BuiltInRegistries.ITEM.getDataMap(ReactorFuel.DATA_MAP_TYPE).entrySet()) {
+            registry.add(new ReactorFuelDisplay(entry.getKey().location(), entry.getValue()));
+        }
         MagmatorFuel.getAll().forEach(recipe -> registry.add(new MagmatorDisplay(recipe)));
         FluidCoolant.getAll().forEach(recipe -> registry.add(new CoolantDisplay(recipe)));
         SolidCoolant.getAll().forEach(recipe -> registry.add(new SolidCoolantDisplay(recipe)));

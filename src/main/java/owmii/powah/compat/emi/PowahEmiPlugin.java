@@ -11,6 +11,7 @@ import java.util.List;
 import java.util.function.Consumer;
 import java.util.function.Function;
 import net.minecraft.client.gui.screens.Screen;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.Container;
 import net.minecraft.world.item.crafting.Recipe;
@@ -24,6 +25,7 @@ import owmii.powah.compat.common.PassiveHeatSource;
 import owmii.powah.compat.common.SolidCoolant;
 import owmii.powah.item.Itms;
 import owmii.powah.lib.client.screen.container.AbstractContainerScreen;
+import owmii.powah.recipe.ReactorFuel;
 import owmii.powah.recipe.Recipes;
 
 @EmiEntrypoint
@@ -55,7 +57,9 @@ public class PowahEmiPlugin implements EmiPlugin {
         });
 
         adaptRecipeType(registry, Recipes.ENERGIZING.get(), EmiEnergizingRecipe::new);
-        adaptRecipeType(registry, Recipes.REACTOR_FUEL.get(), EmiReactorFuelRecipe::new);
+        for (var entry : BuiltInRegistries.ITEM.getDataMap(ReactorFuel.DATA_MAP_TYPE).entrySet()) {
+            registry.addRecipe(new EmiReactorFuelRecipe(entry.getKey().location(), entry.getValue()));
+        }
 
         MagmatorFuel.getAll().forEach(recipe -> registry.addRecipe(new EmiMagmatorRecipe(recipe)));
         FluidCoolant.getAll().forEach(recipe -> registry.addRecipe(new EmiFluidCoolantRecipe(recipe)));

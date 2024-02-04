@@ -22,6 +22,7 @@ import net.neoforged.neoforge.capabilities.RegisterCapabilitiesEvent;
 import net.neoforged.neoforge.common.NeoForge;
 import net.neoforged.neoforge.event.entity.player.PlayerInteractEvent;
 import net.neoforged.neoforge.registries.RegisterEvent;
+import net.neoforged.neoforge.registries.datamaps.RegisterDataMapTypesEvent;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import owmii.powah.api.PowahAPI;
@@ -41,6 +42,7 @@ import owmii.powah.lib.block.ITankHolder;
 import owmii.powah.lib.item.IEnergyContainingItem;
 import owmii.powah.lib.logistics.energy.Energy;
 import owmii.powah.network.Network;
+import owmii.powah.recipe.ReactorFuel;
 import owmii.powah.recipe.Recipes;
 import owmii.powah.util.Wrench;
 
@@ -71,6 +73,7 @@ public class Powah {
         CreativeTabs.DR.register(modEventBus);
         modEventBus.addListener(RegisterCapabilitiesEvent.class, this::registerTransfer);
         modEventBus.addListener(Network::register);
+        modEventBus.addListener(this::registerDataTypeMaps);
 
         modEventBus.addListener((FMLCommonSetupEvent event) -> {
             // TODO: move to config
@@ -104,6 +107,10 @@ public class Powah {
         if (ModList.get().isLoaded("curios")) {
             CuriosCompat.init();
         }
+    }
+
+    private void registerDataTypeMaps(RegisterDataMapTypesEvent event) {
+        event.register(ReactorFuel.DATA_MAP_TYPE);
     }
 
     private void registerTransfer(RegisterCapabilitiesEvent event) {
