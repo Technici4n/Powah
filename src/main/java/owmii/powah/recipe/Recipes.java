@@ -19,4 +19,10 @@ public class Recipes {
             return EnergizingRecipe.ID.toString();
         }
     });
+
+    public static final Supplier<RecipeSerializer<ReactorFuelRecipe>> REACTOR_FUEL_SERIALIZER = DR_SERIALIZER.register(
+            ReactorFuelRecipe.TYPE_ID.getPath(),
+            () -> ReactorFuelRecipe.SERIALIZER);
+    public static final Supplier<RecipeType<ReactorFuelRecipe>> REACTOR_FUEL = DR_TYPE.register("reactor_fuel",
+            () -> RecipeType.simple(ReactorFuelRecipe.TYPE_ID));
 }

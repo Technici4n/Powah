@@ -1,0 +1,8 @@
+{
+  "type": "powah:reactor_fuel",
+  "fuel": {
+    "item": "powah:uraninite"
+  },
+  "fuelAmount": 100,
+  "temperature": 700
+}

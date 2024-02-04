@@ -39,6 +39,7 @@ public class PowahEmiPlugin implements EmiPlugin {
         registry.addCategory(EmiSolidCoolantRecipe.CATEGORY);
         registry.addCategory(EmiHeatSourceRecipe.CATEGORY);
         registry.addCategory(EmiEnergizingRecipe.CATEGORY);
+        registry.addCategory(EmiReactorFuelRecipe.CATEGORY);
 
         registry.addWorkstation(EmiEnergizingRecipe.CATEGORY, EmiStack.of(Blcks.ENERGIZING_ORB.get()));
         Blcks.ENERGIZING_ROD.getAll().forEach(block -> registry.addWorkstation(EmiEnergizingRecipe.CATEGORY, EmiStack.of(block)));
@@ -50,9 +51,11 @@ public class PowahEmiPlugin implements EmiPlugin {
         Blcks.REACTOR.getAll().forEach(block -> {
             registry.addWorkstation(EmiSolidCoolantRecipe.CATEGORY, EmiStack.of(block));
             registry.addWorkstation(EmiFluidCoolantRecipe.CATEGORY, EmiStack.of(block));
+            registry.addWorkstation(EmiReactorFuelRecipe.CATEGORY, EmiStack.of(block));
         });
 
         adaptRecipeType(registry, Recipes.ENERGIZING.get(), EmiEnergizingRecipe::new);
+        adaptRecipeType(registry, Recipes.REACTOR_FUEL.get(), EmiReactorFuelRecipe::new);
 
         MagmatorFuel.getAll().forEach(recipe -> registry.addRecipe(new EmiMagmatorRecipe(recipe)));
         FluidCoolant.getAll().forEach(recipe -> registry.addRecipe(new EmiFluidCoolantRecipe(recipe)));

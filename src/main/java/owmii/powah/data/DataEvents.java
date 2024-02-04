@@ -31,6 +31,7 @@ public class DataEvents {
         pack.addProvider(
                 packOutput -> new CurioTagsProvider(packOutput, registries, blockTagsProvider.contentsGetter(), event.getExistingFileHelper()));
         pack.addProvider(DataEvents::createLoot);
+        pack.addProvider(packOutput -> new PowahRecipeProvider(packOutput, registries));
 
         var worldgenBuilder = new RegistrySetBuilder()
                 .add(Registries.CONFIGURED_FEATURE, Features::initConfiguredFeatures)

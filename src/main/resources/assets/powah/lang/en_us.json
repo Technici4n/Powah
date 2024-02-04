@@ -114,6 +114,7 @@
     "gui.powah.jei.category.energizing": "Energizing",
     "gui.powah.jei.category.heat.sources": "Heat Sources",
     "gui.powah.jei.category.magmatic": "Magmatic Fluids",
+    "gui.powah.jei.category.reactor.fuels": "Reactor Fuels",
     "gui.powah.jei.category.solid.coolant": "Solid Coolants",
     "info.powah.carbon": "Carbon",
     "info.powah.channel": "Channel: %s",
