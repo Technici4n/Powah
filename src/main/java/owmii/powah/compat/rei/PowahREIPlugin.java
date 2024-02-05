@@ -6,6 +6,7 @@ import me.shedaniel.rei.api.client.registry.display.DisplayRegistry;
 import me.shedaniel.rei.api.client.registry.screen.ExclusionZones;
 import me.shedaniel.rei.api.common.util.EntryStacks;
 import me.shedaniel.rei.plugin.client.BuiltinClientPlugin;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.network.chat.Component;
 import owmii.powah.Powah;
 import owmii.powah.block.Blcks;
@@ -20,6 +21,7 @@ import owmii.powah.compat.rei.magmator.MagmatorCategory;
 import owmii.powah.compat.rei.magmator.MagmatorDisplay;
 import owmii.powah.item.Itms;
 import owmii.powah.lib.client.screen.container.AbstractContainerScreen;
+import owmii.powah.recipe.ReactorFuel;
 import owmii.powah.recipe.Recipes;
 
 public class PowahREIPlugin implements REIClientPlugin {
@@ -30,6 +32,7 @@ public class PowahREIPlugin implements REIClientPlugin {
         registry.add(new SolidCoolantCategory());
         registry.add(new HeatSourceCategory());
         registry.add(new EnergizingCategory());
+        registry.add(new ReactorFuelCategory());
 
         registry.addWorkstations(EnergizingCategory.ID, EntryStacks.of(Blcks.ENERGIZING_ORB.get()));
         Blcks.ENERGIZING_ROD.getAll().forEach(block -> registry.addWorkstations(EnergizingCategory.ID, EntryStacks.of(block)));
@@ -41,12 +44,16 @@ public class PowahREIPlugin implements REIClientPlugin {
         Blcks.REACTOR.getAll().forEach(block -> {
             registry.addWorkstations(SolidCoolantCategory.ID, EntryStacks.of(block));
             registry.addWorkstations(CoolantCategory.ID, EntryStacks.of(block));
+            registry.addWorkstations(ReactorFuelCategory.ID, EntryStacks.of(block));
         });
     }
 
     @Override
     public void registerDisplays(DisplayRegistry registry) {
         registry.registerRecipeFiller(EnergizingRecipe.class, Recipes.ENERGIZING.get(), EnergizingDisplay::new);
+        for (var entry : BuiltInRegistries.ITEM.getDataMap(ReactorFuel.DATA_MAP_TYPE).entrySet()) {
+            registry.add(new ReactorFuelDisplay(entry.getKey().location(), entry.getValue()));
+        }
         MagmatorFuel.getAll().forEach(recipe -> registry.add(new MagmatorDisplay(recipe)));
         FluidCoolant.getAll().forEach(recipe -> registry.add(new CoolantDisplay(recipe)));
         SolidCoolant.getAll().forEach(recipe -> registry.add(new SolidCoolantDisplay(recipe)));

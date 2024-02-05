@@ -5,22 +5,21 @@ import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
 import net.neoforged.neoforge.common.CommonHooks;
+import net.neoforged.neoforge.common.Tags;
 import org.apache.commons.lang3.tuple.Pair;
 import org.jetbrains.annotations.Nullable;
 import owmii.powah.api.PowahAPI;
 import owmii.powah.block.Tier;
 import owmii.powah.block.Tiles;
-import owmii.powah.item.Itms;
 import owmii.powah.lib.block.AbstractEnergyProvider;
 import owmii.powah.lib.block.IInventoryHolder;
 import owmii.powah.lib.block.ITankHolder;
 import owmii.powah.lib.logistics.energy.Energy;
 import owmii.powah.lib.logistics.fluid.Tank;
+import owmii.powah.recipe.ReactorFuel;
 import owmii.powah.util.EnergyUtil;
 import owmii.powah.util.Ticker;
 import owmii.powah.util.Util;
@@ -114,7 +113,7 @@ public class ReactorTile extends AbstractEnergyProvider<ReactorBlock> implements
 
         if (checkRedstone() && this.generate) {
             boolean generating = !this.energy.isFull() && !this.fuel.isEmpty();
-            boolean b0 = processFuel(world);
+            boolean b0 = processFuel();
             boolean b1 = processCarbon(world, generating);
             boolean b2 = processRedstone(world, generating);
             boolean b3 = processTemperature(world, generating);
@@ -247,9 +246,9 @@ public class ReactorTile extends AbstractEnergyProvider<ReactorBlock> implements
         boolean flag = false;
         if (this.redstone.isEmpty()) {
             ItemStack stack = this.inv.getStackInSlot(3);
-            if (stack.getItem() == Items.REDSTONE) {
+            if (stack.is(Tags.Items.DUSTS_REDSTONE)) {
                 this.redstone.setAll(18);
-            } else if (stack.getItem() == Items.REDSTONE_BLOCK) {
+            } else if (stack.is(Tags.Items.STORAGE_BLOCKS_REDSTONE)) {
                 this.redstone.setAll(162);
             }
             this.redstoneTemp = 120;
@@ -298,15 +297,20 @@ public class ReactorTile extends AbstractEnergyProvider<ReactorBlock> implements
         return flag;
     }
 
-    private boolean processFuel(Level world) {
+    private boolean processFuel() {
         boolean flag = false;
-        if (this.fuel.getTicks() <= 900) {
-            ItemStack stack = this.inv.getStackInSlot(1);
-            if (stack.getItem() == Itms.URANINITE.get()) {
-                this.fuel.add(100);
-                this.baseTemp = 700;
-                stack.shrink(1);
-                flag = true;
+
+        var stack = this.inv.getStackInSlot(1);
+        if (!stack.isEmpty()) {
+            var fuel = ReactorFuel.getFuel(stack.getItem());
+            if (fuel != null) {
+                // Try not to waste fuel
+                if (this.fuel.isEmpty() || this.fuel.getTicks() + fuel.fuelAmount() <= this.fuel.getMax()) {
+                    this.fuel.add(fuel.fuelAmount());
+                    this.baseTemp = fuel.temperature();
+                    stack.shrink(1);
+                    flag = true;
+                }
             }
         }
 
@@ -324,10 +328,6 @@ public class ReactorTile extends AbstractEnergyProvider<ReactorBlock> implements
 
     public void demolish(Level world) {
         this.builder.demolish(world);
-        while (this.fuel.getTicks() >= 100) {
-            Block.popResource(world, this.worldPosition, new ItemStack(Itms.URANINITE.get()));
-            this.fuel.back(100);
-        }
     }
 
     public boolean isBuilt() {
@@ -342,11 +342,11 @@ public class ReactorTile extends AbstractEnergyProvider<ReactorBlock> implements
     @Override
     public boolean canInsert(int slot, ItemStack stack) {
         if (slot == 1) {
-            return stack.getItem() == Itms.URANINITE.get();
+            return ReactorFuel.getFuel(stack.getItem()) != null;
         } else if (slot == 2) {
             return CommonHooks.getBurnTime(stack, null) > 0 && !stack.hasCraftingRemainingItem();
         } else if (slot == 3) {
-            return stack.getItem() == Items.REDSTONE || stack.getItem() == Items.REDSTONE_BLOCK;
+            return stack.is(Tags.Items.DUSTS_REDSTONE) || stack.is(Tags.Items.STORAGE_BLOCKS_REDSTONE);
         } else if (slot == 4) {
             Pair<Integer, Integer> coolant = PowahAPI.getSolidCoolant(stack.getItem());
             return coolant.getLeft() > 0 && coolant.getRight() < 2;
