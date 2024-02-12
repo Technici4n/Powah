@@ -53,7 +53,7 @@ public class InventoryWrapper extends CombinedStorage<ItemVariant, InventoryWrap
             StoragePreconditions.notBlankNotNegative(resource, maxAmount);
             int amount = Ints.saturatedCast(maxAmount);
 
-            if (!inventory.extractItem(slot, amount, true).isEmpty()) {
+            if (resource.matches(inventory.extractItem(slot, amount, true))) {
                 updateSnapshots(transaction);
                 inventory.setSendUpdates(false);
                 var extracted = inventory.extractItem(slot, amount, false);
@@ -94,7 +94,7 @@ public class InventoryWrapper extends CombinedStorage<ItemVariant, InventoryWrap
         protected void readSnapshot(ItemStack snapshot) {
             inventory.setSendUpdates(false);
             inventory.setStackInSlot(slot, snapshot);
-            inventory.setSendUpdates(false);
+            inventory.setSendUpdates(true);
         }
 
         @Override
