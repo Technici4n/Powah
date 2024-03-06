@@ -30,6 +30,7 @@ public class DataEvents {
 
         pack.addProvider(
                 packOutput -> new CurioTagsProvider(packOutput, registries, blockTagsProvider.contentsGetter(), event.getExistingFileHelper()));
+        pack.addProvider(RecipeProvider::new);
         pack.addProvider(DataEvents::createLoot);
 
         var worldgenBuilder = new RegistrySetBuilder()
