@@ -41,7 +41,7 @@ import owmii.powah.lib.logistics.inventory.AbstractContainer;
 import owmii.powah.lib.registry.IVariant;
 import owmii.powah.lib.registry.IVariantEntry;
 
-public class AbstractBlock<V extends IVariant, B extends AbstractBlock<V, B>> extends Block implements IVariantEntry<V, B>, IBlock<V, B> {
+public abstract class AbstractBlock<V extends IVariant, B extends AbstractBlock<V, B>> extends Block implements IVariantEntry<V, B>, IBlock<V, B> {
     public static final VoxelShape SEMI_FULL_SHAPE = box(0.01D, 0.01D, 0.01D, 15.99D, 15.99D, 15.99D);
     protected final Map<Direction, VoxelShape> shapes = new HashMap<>();
     protected final V variant;
