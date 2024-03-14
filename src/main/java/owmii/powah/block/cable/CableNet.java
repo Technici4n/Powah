@@ -48,7 +48,7 @@ class CableNet {
             var adjPos = cable.getBlockPos().relative(direction);
             var adjCable = levelMap.get(adjPos);
 
-            if (adjCable != null && adjCable.net != null) {
+            if (adjCable != null && cable.canConnectTo(adjCable) && adjCable.net != null) {
                 adjCable.net.cableList.forEach(c -> c.net = null);
             }
         }
@@ -70,7 +70,7 @@ class CableNet {
                 var adjPos = cur.getBlockPos().relative(direction);
                 var adjCable = levelMap.get(adjPos);
 
-                if (adjCable != null && cables.add(adjCable)) {
+                if (adjCable != null && cable.canConnectTo(adjCable) && cables.add(adjCable)) {
                     queue.add(adjCable);
                 }
             }

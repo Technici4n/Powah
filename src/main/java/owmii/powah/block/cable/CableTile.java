@@ -190,4 +190,8 @@ public class CableTile extends AbstractEnergyStorage<CableConfig, CableBlock> im
         var energy = level.getCapability(Capabilities.EnergyStorage.BLOCK, pos, side);
         return energy != null ? energy.receiveEnergy(Ints.saturatedCast(amount), simulate) : 0;
     }
+
+    public boolean canConnectTo(CableTile adjCable) {
+        return variant == adjCable.variant;
+    }
 }

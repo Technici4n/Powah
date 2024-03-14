@@ -184,6 +184,9 @@ public class CableBlock extends AbstractEnergyBlock<CableConfig, CableBlock> imp
 
     public boolean canConnectEnergy(Level world, BlockPos pos, Direction direction) {
         BlockEntity tile = world.getBlockEntity(pos.relative(direction));
+        // Connections between cables are handled by building energy networks (see CableNet) of the same tier
+        // Cables of different tiers cannot connect, so we have to skip cables here to avoid connecting to them
+        // via the exposed FE capability
         return !(tile instanceof CableTile) && EnergyUtil.hasEnergy(world, pos.relative(direction), direction.getOpposite());
     }
 
