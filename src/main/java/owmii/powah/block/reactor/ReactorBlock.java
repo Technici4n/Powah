@@ -76,7 +76,11 @@ public class ReactorBlock extends AbstractGeneratorBlock<ReactorBlock> {
     protected ItemInteractionResult useItemOn(ItemStack pStack, BlockState pState, Level pLevel, BlockPos pPos, Player pPlayer, InteractionHand pHand,
             BlockHitResult pHitResult) {
         BlockEntity tileentity = pLevel.getBlockEntity(pPos);
-        if (tileentity instanceof ReactorTile reactor) {
+        if (tileentity instanceof ReactorPartTile reactor) {
+            if (reactor.isBuilt() && reactor.core().isPresent()) {
+                return reactor.getBlock().useItemOn(pStack, pState, pLevel, reactor.getCorePos(), pPlayer, pHand, pHitResult);
+            }
+        } else if (tileentity instanceof ReactorTile reactor) {
             if (reactor.isBuilt()) {
                 Tank tank = reactor.getTank();
                 if (FluidUtil.interactWithFluidHandler(pPlayer, pHand, tank)) {
