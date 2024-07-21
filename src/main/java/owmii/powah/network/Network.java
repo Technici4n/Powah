@@ -5,6 +5,7 @@ import net.minecraft.server.level.ServerPlayer;
 import net.neoforged.neoforge.network.event.RegisterPayloadHandlersEvent;
 import net.neoforged.neoforge.network.handling.IPayloadContext;
 import owmii.powah.Powah;
+import owmii.powah.network.packet.InteractWithTankPacket;
 import owmii.powah.network.packet.NextEnergyConfigPacket;
 import owmii.powah.network.packet.NextRedstoneModePacket;
 import owmii.powah.network.packet.SetChannelPacket;
@@ -18,6 +19,7 @@ public final class Network {
         registrar.playToServer(NextRedstoneModePacket.TYPE, NextRedstoneModePacket.STREAM_CODEC, Network::handleServerbound);
         registrar.playToServer(SetChannelPacket.TYPE, SetChannelPacket.STREAM_CODEC, Network::handleServerbound);
         registrar.playToServer(SwitchGenModePacket.TYPE, SwitchGenModePacket.STREAM_CODEC, Network::handleServerbound);
+        registrar.playToServer(InteractWithTankPacket.TYPE, InteractWithTankPacket.STREAM_CODEC, Network::handleServerbound);
     }
 
     private static void handleServerbound(ServerboundPacket packet, IPayloadContext context) {

@@ -7,14 +7,11 @@ import net.minecraft.ChatFormatting;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.player.Inventory;
-import net.minecraft.world.inventory.InventoryMenu;
 import owmii.powah.api.PowahAPI;
 import owmii.powah.block.magmator.MagmatorTile;
-import owmii.powah.client.ClientUtils;
 import owmii.powah.client.screen.Textures;
 import owmii.powah.inventory.MagmatorContainer;
 import owmii.powah.lib.client.screen.container.AbstractEnergyScreen;
-import owmii.powah.lib.client.util.Draw;
 import owmii.powah.lib.client.util.Text;
 import owmii.powah.lib.logistics.energy.Energy;
 import owmii.powah.util.Ticker;
@@ -28,6 +25,18 @@ public class MagmatorScreen extends AbstractEnergyScreen<MagmatorTile, MagmatorC
         if (this.te.isBurning()) {
             this.heat.setTicks(20);
         }
+        addTankArea(
+                te::getTank,
+                157,
+                5,
+                14,
+                65,
+                "info.lollipop.fluid",
+                (content, lines) -> {
+                    lines.add(Component.translatable("info.lollipop.Gain").withStyle(ChatFormatting.GRAY).append(Text.COLON)
+                            .append(Component.translatable("info.lollipop.fe.per.mb", PowahAPI.getMagmaticFluidHeat(content.getFluid()), "100")
+                                    .withStyle(ChatFormatting.DARK_GRAY)));
+                });
     }
 
     @Override
@@ -47,22 +56,6 @@ public class MagmatorScreen extends AbstractEnergyScreen<MagmatorTile, MagmatorC
         RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, this.heat.subSized());
         Textures.MAGMATOR_BUFFER.draw(guiGraphics, this.leftPos + 83, this.topPos + 29);
         RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
-
-        var tank = this.te.getTank();
-        if (!tank.isEmpty()) {
-            var fluidStack = tank.getFluid();
-            var sprite = ClientUtils.getStillTexture(fluidStack);
-            if (sprite != null) {
-                int color = ClientUtils.getFluidColor(fluidStack);
-                float red = (color >> 16 & 0xFF) / 255.0F;
-                float green = (color >> 8 & 0xFF) / 255.0F;
-                float blue = (color & 0xFF) / 255.0F;
-                RenderSystem.setShaderColor(red, green, blue, 1.0F);
-                bindTexture(InventoryMenu.BLOCK_ATLAS);
-                Draw.gaugeV(sprite, this.leftPos + 157, this.topPos + 5, 14, 65, (int) tank.getCapacity(), (int) tank.getFluidAmount());
-                RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
-            }
-        }
     }
 
     @Override
@@ -81,24 +74,6 @@ public class MagmatorScreen extends AbstractEnergyScreen<MagmatorTile, MagmatorC
             list.add(Component.translatable("info.lollipop.max.extract").withStyle(ChatFormatting.GRAY).append(Text.COLON)
                     .append(Component.translatable("info.lollipop.fe.pet.tick", Util.numFormat(energy.getMaxExtract()))
                             .withStyle(ChatFormatting.DARK_GRAY)));
-            gui.renderComponentTooltip(font, list, mouseX, mouseY);
-        }
-
-        var tank = this.te.getTank();
-        if (isMouseOver(mouseX - 157, mouseY - 5, 14, 65)) {
-            List<Component> list = new ArrayList<>();
-            if (!tank.isEmpty()) {
-                list.add(Component.translatable("info.lollipop.fluid").withStyle(ChatFormatting.GRAY).append(Text.COLON)
-                        .append(tank.getFluid().getDisplayName().plainCopy().withStyle(ChatFormatting.GOLD)));
-                list.add(Component.translatable("info.lollipop.stored").withStyle(ChatFormatting.GRAY).append(Text.COLON)
-                        .append(Util.formatTankContent(tank)));
-                list.add(Component.translatable("info.lollipop.Gain").withStyle(ChatFormatting.GRAY).append(Text.COLON)
-                        .append(Component.translatable("info.lollipop.fe.per.mb", PowahAPI.getMagmaticFluidHeat(tank.getFluid().getFluid()), "100")
-                                .withStyle(ChatFormatting.DARK_GRAY)));
-            } else {
-                list.add(Component.translatable("info.lollipop.fluid").withStyle(ChatFormatting.GRAY).append(Text.COLON)
-                        .append(Component.literal("---").withStyle(ChatFormatting.DARK_GRAY)));
-            }
             gui.renderComponentTooltip(font, list, mouseX, mouseY);
         }
     }

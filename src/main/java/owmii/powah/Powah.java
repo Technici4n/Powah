@@ -12,6 +12,7 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.entity.BlockEntityType;
+import net.minecraft.world.level.material.Fluids;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.fml.ModList;
 import net.neoforged.fml.common.Mod;
@@ -80,6 +81,7 @@ public class Powah {
 
         modEventBus.addListener((FMLCommonSetupEvent event) -> {
             // TODO: move to config
+            PowahAPI.registerCoolant(BuiltInRegistries.FLUID.getKey(Fluids.WATER), 1);
             PowahAPI.registerSolidCoolant(Blocks.SNOW_BLOCK, 48, -3);
             PowahAPI.registerSolidCoolant(Items.SNOWBALL, 12, -3);
             PowahAPI.registerSolidCoolant(Blocks.ICE, 48, -5);

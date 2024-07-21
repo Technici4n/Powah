@@ -1,21 +1,17 @@
 package owmii.powah.client.screen.container;
 
-import com.mojang.blaze3d.systems.RenderSystem;
 import java.util.ArrayList;
 import java.util.List;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.player.Inventory;
-import net.minecraft.world.inventory.InventoryMenu;
 import owmii.powah.api.PowahAPI;
 import owmii.powah.block.reactor.ReactorTile;
-import owmii.powah.client.ClientUtils;
 import owmii.powah.client.screen.Textures;
 import owmii.powah.inventory.ReactorContainer;
 import owmii.powah.lib.client.screen.container.AbstractEnergyScreen;
 import owmii.powah.lib.client.screen.widget.IconButton;
-import owmii.powah.lib.client.util.Draw;
 import owmii.powah.lib.client.util.Text;
 import owmii.powah.lib.logistics.energy.Energy;
 import owmii.powah.network.Network;
@@ -27,6 +23,14 @@ public class ReactorScreen extends AbstractEnergyScreen<ReactorTile, ReactorCont
 
     public ReactorScreen(ReactorContainer container, Inventory inv, Component title) {
         super(container, inv, title, Textures.REACTOR);
+
+        addTankArea(te::getTank, 157, 5, 14, 65, "info.lollipop.coolant", (content, lines) -> {
+            lines.add(Component.translatable("info.lollipop.temperature").withStyle(ChatFormatting.GRAY).append(Text.COLON)
+                    .append(Component
+                            .translatable("info.lollipop.temperature.c",
+                                    "" + ChatFormatting.AQUA + PowahAPI.getCoolant(content.getFluid()))
+                            .withStyle(ChatFormatting.DARK_GRAY)));
+        });
     }
 
     @Override
@@ -60,22 +64,6 @@ public class ReactorScreen extends AbstractEnergyScreen<ReactorTile, ReactorCont
         Textures.REACTOR_GAUGE_TEMP.drawScalableH(guiGraphics, this.te.temp.subSized(), this.leftPos + 114, this.topPos + 28);
 
         Textures.REACTOR_GEN_MODE_BG.draw(guiGraphics, this.modeButton.getX() - 4, this.modeButton.getY() - 4);
-
-        var tank = this.te.getTank();
-        if (!tank.isEmpty()) {
-            var fluidStack = tank.getFluid();
-            var sprite = ClientUtils.getStillTexture(fluidStack);
-            if (sprite != null) {
-                int color = ClientUtils.getFluidColor(fluidStack);
-                float red = (color >> 16 & 0xFF) / 255.0F;
-                float green = (color >> 8 & 0xFF) / 255.0F;
-                float blue = (color & 0xFF) / 255.0F;
-                RenderSystem.setShaderColor(red, green, blue, 1.0F);
-                bindTexture(InventoryMenu.BLOCK_ATLAS);
-                Draw.gaugeV(sprite, this.leftPos + 157, this.topPos + 5, 14, 65, (int) tank.getCapacity(), (int) tank.getFluidAmount());
-                RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
-            }
-        }
     }
 
     @Override
@@ -157,26 +145,6 @@ public class ReactorScreen extends AbstractEnergyScreen<ReactorTile, ReactorCont
                     .append(Component.translatable("info.lollipop.mb.stored", String.format("%.1f", this.te.solidCoolant.getTicks()),
                             String.format("%.1f", this.te.solidCoolant.getMax())).withStyle(ChatFormatting.DARK_GRAY)));
             list.add(Component.literal("" + ChatFormatting.AQUA + this.te.solidCoolantTemp + " C"));
-            gui.renderComponentTooltip(font, list, mouseX, mouseY);
-        }
-
-        var tank = this.te.getTank();
-        if (isMouseOver(mouseX - 157, mouseY - 5, 14, 65)) {
-            List<Component> list = new ArrayList<>();
-            if (!tank.isEmpty()) {
-                list.add(Component.translatable("info.lollipop.coolant").withStyle(ChatFormatting.GRAY).append(Text.COLON)
-                        .append(tank.getFluid().getDisplayName().plainCopy().withStyle(ChatFormatting.AQUA)));
-                list.add(Component.translatable("info.lollipop.stored").withStyle(ChatFormatting.GRAY).append(Text.COLON)
-                        .append(Util.formatTankContent(tank)));
-                list.add(Component.translatable("info.lollipop.temperature").withStyle(ChatFormatting.GRAY).append(Text.COLON)
-                        .append(Component
-                                .translatable("info.lollipop.temperature.c",
-                                        "" + ChatFormatting.AQUA + PowahAPI.getCoolant(tank.getFluid().getFluid()))
-                                .withStyle(ChatFormatting.DARK_GRAY)));
-            } else {
-                list.add(Component.translatable("info.lollipop.fluid").withStyle(ChatFormatting.GRAY).append(Text.COLON)
-                        .append(Component.literal("---").withStyle(ChatFormatting.DARK_GRAY)));
-            }
             gui.renderComponentTooltip(font, list, mouseX, mouseY);
         }
     }
