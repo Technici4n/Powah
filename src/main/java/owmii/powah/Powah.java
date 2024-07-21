@@ -9,6 +9,8 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
+import net.minecraft.world.item.Items;
+import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.neoforged.bus.api.IEventBus;
@@ -19,16 +21,14 @@ import net.neoforged.neoforge.capabilities.RegisterCapabilitiesEvent;
 import net.neoforged.neoforge.common.NeoForge;
 import net.neoforged.neoforge.common.util.TriState;
 import net.neoforged.neoforge.event.entity.player.PlayerInteractEvent;
+import net.neoforged.neoforge.event.level.ChunkEvent;
 import net.neoforged.neoforge.registries.RegisterEvent;
 import net.neoforged.neoforge.registries.datamaps.RegisterDataMapTypesEvent;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import owmii.powah.api.FluidCoolantConfig;
-import owmii.powah.api.MagmatorFuelValue;
-import owmii.powah.api.PassiveHeatSourceConfig;
-import owmii.powah.api.SolidCoolantConfig;
 import owmii.powah.block.Blcks;
 import owmii.powah.block.Tiles;
+import owmii.powah.block.cable.CableNet;
 import owmii.powah.compat.curios.CuriosCompat;
 import owmii.powah.components.PowahComponents;
 import owmii.powah.config.v2.PowahConfig;
@@ -89,7 +89,11 @@ public class Powah {
                 event.setCancellationResult(InteractionResult.sidedSuccess(event.getLevel().isClientSide));
             }
         });
-
+        NeoForge.EVENT_BUS.addListener((ChunkEvent.Unload event) -> {
+            if (event.getLevel() instanceof Level level) {
+                CableNet.removeChunk(level, event.getChunk());
+            }
+        });
         if (ModList.get().isLoaded("curios")) {
             CuriosCompat.init();
         }
