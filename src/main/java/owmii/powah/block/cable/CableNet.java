@@ -20,8 +20,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 public class CableNet {
-    private static final Logger LOG = LoggerFactory.getLogger(CableNet.class);
-
     // Level -> ChunkPos -> BlockPos -> Tile
     private static final Map<Level, Long2ObjectMap<Long2ObjectMap<CableTile>>> loadedCables = new WeakHashMap<>();
 
@@ -39,12 +37,19 @@ public class CableNet {
     }
 
     static void removeCable(CableTile cable) {
+        // No need to repeat this if the cable isn't part of a net anyway
+        if (cable.net == null) {
+            return;
+        }
+
         var levelMap = loadedCables.get(cable.getLevel());
+        if (levelMap == null) {
+            return; // The full-chunk cleanup already took care of the entire level
+        }
         var chunkPos = ChunkPos.asLong(cable.getBlockPos());
         var chunkMap = levelMap.get(chunkPos);
         if (chunkMap == null) {
-            LOG.error("Ignoring to unload cable @ {} since chunk is already gone.", cable.getBlockPos());
-            return;
+            return; // The full-chunk cleanup already took care of the entire chunk
         }
         if (chunkMap.remove(cable.getBlockPos().asLong()) != cable) {
             throw new RuntimeException("Removed wrong cable from position %s".formatted(cable.getBlockPos()));
