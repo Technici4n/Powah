@@ -28,7 +28,7 @@ public final class PowahClient {
 
         NeoForge.EVENT_BUS.addListener((RenderLevelStageEvent event) -> {
             if (event.getStage() == RenderLevelStageEvent.Stage.AFTER_LEVEL) {
-                ReactorOverlayHandler.onRenderLast(event.getPoseStack());
+                ReactorOverlayHandler.onRenderLast(event.getPoseStack(), event.getCamera());
             }
         });
 
