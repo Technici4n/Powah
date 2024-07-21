@@ -10,7 +10,6 @@ import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
 import net.neoforged.neoforge.common.Tags;
-import org.apache.commons.lang3.tuple.Pair;
 import org.jetbrains.annotations.Nullable;
 import owmii.powah.api.PowahAPI;
 import owmii.powah.block.Tier;
@@ -49,7 +48,7 @@ public class ReactorTile extends AbstractEnergyProvider<ReactorBlock> implements
     public ReactorTile(BlockPos pos, BlockState state, Tier variant) {
         super(Tiles.REACTOR.get(), pos, state, variant);
         this.tank.setCapacity(Util.bucketAmount())
-                .setValidator(stack -> PowahAPI.getCoolant(stack.getFluid()) != 0)
+                .setValidator(stack -> PowahAPI.getCoolant(stack.getFluid()).isPresent())
                 .setChange(() -> ReactorTile.this.sync(10));
         this.inv.add(5);
     }
@@ -197,9 +196,9 @@ public class ReactorTile extends AbstractEnergyProvider<ReactorBlock> implements
         if (this.solidCoolant.isEmpty()) {
             ItemStack stack = this.inv.getStackInSlot(4);
             if (!stack.isEmpty()) {
-                Pair<Integer, Integer> coolant = PowahAPI.getSolidCoolant(stack.getItem());
-                int size = coolant.getLeft();
-                int temp = coolant.getRight();
+                var coolant = PowahAPI.getSolidCoolant(stack.getItem());
+                int size = coolant.amount();
+                int temp = coolant.temperature();
                 if (size > 0 && temp < 2) {
                     this.solidCoolant.setAll(size);
                     this.solidCoolantTemp = temp;
@@ -225,7 +224,7 @@ public class ReactorTile extends AbstractEnergyProvider<ReactorBlock> implements
         }
         double temp = Math.min(this.baseTemp + this.carbonTemp + this.redstoneTemp, this.temp.getMax());
         if (!this.tank.isEmpty()) {
-            int coldness = -PowahAPI.getCoolant(this.tank.getFluid().getFluid());
+            int coldness = -PowahAPI.getCoolant(this.tank.getFluid().getFluid()).orElse(0);
             int i = Math.abs(coldness + this.solidCoolantTemp) + 1;
             temp /= i;
             sync(5);
@@ -349,8 +348,8 @@ public class ReactorTile extends AbstractEnergyProvider<ReactorBlock> implements
         } else if (slot == 3) {
             return stack.is(Tags.Items.DUSTS_REDSTONE) || stack.is(Tags.Items.STORAGE_BLOCKS_REDSTONE);
         } else if (slot == 4) {
-            Pair<Integer, Integer> coolant = PowahAPI.getSolidCoolant(stack.getItem());
-            return coolant.getLeft() > 0 && coolant.getRight() < 2;
+            var coolant = PowahAPI.getSolidCoolant(stack.getItem());
+            return coolant.amount() > 0 && coolant.temperature() < 2;
         } else
             return Energy.chargeable(stack);
     }

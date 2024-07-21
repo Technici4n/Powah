@@ -26,10 +26,12 @@ class EmiHeatSourceRecipe implements EmiRecipe {
     public EmiHeatSourceRecipe(PassiveHeatSource recipe) {
         this.recipe = recipe;
 
-        if (recipe.fluid() == null) {
+        if (recipe.fluid() != null) {
+            input = EmiStack.of(recipe.fluid());
+        } else if (recipe.block() != null) {
             input = EmiStack.of(recipe.block());
         } else {
-            input = EmiStack.of(recipe.fluid());
+            this.input = EmiStack.EMPTY;
         }
     }
 

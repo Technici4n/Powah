@@ -57,7 +57,7 @@ public class PowahREIPlugin implements REIClientPlugin {
         MagmatorFuel.getAll().forEach(recipe -> registry.add(new MagmatorDisplay(recipe)));
         FluidCoolant.getAll().forEach(recipe -> registry.add(new CoolantDisplay(recipe)));
         SolidCoolant.getAll().forEach(recipe -> registry.add(new SolidCoolantDisplay(recipe)));
-        PassiveHeatSource.getAll().forEach(recipe -> registry.add(new HeatSourceDisplay(recipe)));
+        PassiveHeatSource.getAll().forEach(recipe -> registry.add(new PassiveHeatSourceDisplay(recipe)));
 
         if (Powah.config().general.player_aerial_pearl)
             BuiltinClientPlugin.getInstance().registerInformation(EntryStacks.of(Itms.PLAYER_AERIAL_PEARL.get()), Component.empty(), l -> {

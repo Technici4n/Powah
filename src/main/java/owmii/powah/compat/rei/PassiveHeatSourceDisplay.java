@@ -8,17 +8,19 @@ import me.shedaniel.rei.api.common.entry.EntryIngredient;
 import me.shedaniel.rei.api.common.util.EntryIngredients;
 import owmii.powah.compat.common.PassiveHeatSource;
 
-public class HeatSourceDisplay implements Display {
+public class PassiveHeatSourceDisplay implements Display {
 
     private final List<EntryIngredient> inputs;
 
     private final int heat;
 
-    public HeatSourceDisplay(PassiveHeatSource recipe) {
-        if (recipe.fluid() == null) {
+    public PassiveHeatSourceDisplay(PassiveHeatSource recipe) {
+        if (recipe.fluid() != null) {
+            inputs = List.of(EntryIngredients.of(recipe.fluid()));
+        } else if (recipe.block() != null) {
             inputs = List.of(EntryIngredients.of(recipe.block()));
         } else {
-            inputs = List.of(EntryIngredients.of(recipe.fluid()));
+            inputs = List.of();
         }
         this.heat = recipe.heat();
     }
@@ -34,7 +36,7 @@ public class HeatSourceDisplay implements Display {
     }
 
     @Override
-    public CategoryIdentifier<HeatSourceDisplay> getCategoryIdentifier() {
+    public CategoryIdentifier<PassiveHeatSourceDisplay> getCategoryIdentifier() {
         return HeatSourceCategory.ID;
     }
 

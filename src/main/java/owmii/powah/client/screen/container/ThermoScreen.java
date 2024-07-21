@@ -20,11 +20,14 @@ public class ThermoScreen extends AbstractEnergyScreen<ThermoTile, ThermoContain
         super(container, inv, title, Textures.THERMO);
 
         addTankArea(te::getTank, 157, 5, 14, 65, "info.lollipop.coolant", (content, lines) -> {
-            lines.add(Component.translatable("info.lollipop.temperature").withStyle(ChatFormatting.GRAY).append(Text.COLON)
-                    .append(Component
-                            .translatable("info.lollipop.temperature.c",
-                                    "" + ChatFormatting.AQUA + PowahAPI.getCoolant(content.getFluid()))
-                            .withStyle(ChatFormatting.DARK_GRAY)));
+            var coolant = PowahAPI.getCoolant(content.getFluid());
+            if (coolant.isPresent()) {
+                lines.add(Component.translatable("info.lollipop.temperature").withStyle(ChatFormatting.GRAY).append(Text.COLON)
+                        .append(Component
+                                .translatable("info.lollipop.temperature.c",
+                                        "" + ChatFormatting.AQUA + coolant.getAsInt())
+                                .withStyle(ChatFormatting.DARK_GRAY)));
+            }
         });
     }
 

@@ -9,14 +9,11 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
-import net.minecraft.world.item.Items;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.entity.BlockEntityType;
-import net.minecraft.world.level.material.Fluids;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.fml.ModList;
 import net.neoforged.fml.common.Mod;
-import net.neoforged.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.neoforged.neoforge.capabilities.Capabilities;
 import net.neoforged.neoforge.capabilities.RegisterCapabilitiesEvent;
 import net.neoforged.neoforge.common.NeoForge;
@@ -26,7 +23,10 @@ import net.neoforged.neoforge.registries.RegisterEvent;
 import net.neoforged.neoforge.registries.datamaps.RegisterDataMapTypesEvent;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import owmii.powah.api.PowahAPI;
+import owmii.powah.api.FluidCoolantConfig;
+import owmii.powah.api.MagmatorFuelValue;
+import owmii.powah.api.PassiveHeatSourceConfig;
+import owmii.powah.api.SolidCoolantConfig;
 import owmii.powah.block.Blcks;
 import owmii.powah.block.Tiles;
 import owmii.powah.compat.curios.CuriosCompat;
@@ -79,17 +79,6 @@ public class Powah {
         modEventBus.addListener(Network::register);
         modEventBus.addListener(this::registerDataTypeMaps);
 
-        modEventBus.addListener((FMLCommonSetupEvent event) -> {
-            // TODO: move to config
-            PowahAPI.registerCoolant(BuiltInRegistries.FLUID.getKey(Fluids.WATER), 1);
-            PowahAPI.registerSolidCoolant(Blocks.SNOW_BLOCK, 48, -3);
-            PowahAPI.registerSolidCoolant(Items.SNOWBALL, 12, -3);
-            PowahAPI.registerSolidCoolant(Blocks.ICE, 48, -5);
-            PowahAPI.registerSolidCoolant(Blocks.PACKED_ICE, 192, -8);
-            PowahAPI.registerSolidCoolant(Blocks.BLUE_ICE, 568, -17);
-            PowahAPI.registerSolidCoolant(Blcks.DRY_ICE.get(), 712, -32);
-        });
-
         modEventBus.addListener(PowahDataGenerator::gatherData);
         NeoForge.EVENT_BUS.addListener((PlayerInteractEvent.RightClickBlock event) -> {
             if (event.getUseBlock() == TriState.FALSE) {
@@ -108,6 +97,11 @@ public class Powah {
 
     private void registerDataTypeMaps(RegisterDataMapTypesEvent event) {
         event.register(ReactorFuel.DATA_MAP_TYPE);
+        event.register(SolidCoolantConfig.DATA_MAP_TYPE);
+        event.register(PassiveHeatSourceConfig.BLOCK_DATA_MAP);
+        event.register(PassiveHeatSourceConfig.FLUID_DATA_MAP);
+        event.register(FluidCoolantConfig.DATA_MAP_TYPE);
+        event.register(MagmatorFuelValue.DATA_MAP_TYPE);
     }
 
     private void registerTransfer(RegisterCapabilitiesEvent event) {

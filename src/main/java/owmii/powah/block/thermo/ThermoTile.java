@@ -25,7 +25,7 @@ public class ThermoTile extends AbstractEnergyProvider<ThermoBlock> implements I
     public ThermoTile(BlockPos pos, BlockState state, Tier variant) {
         super(Tiles.THERMO_GEN.get(), pos, state, variant);
         this.tank.setCapacity(Util.bucketAmount() * 4)
-                .setValidator(stack -> PowahAPI.getCoolant(stack.getFluid()) != 0)
+                .setValidator(stack -> PowahAPI.getCoolant(stack.getFluid()).isPresent())
                 .setChange(() -> ThermoTile.this.sync(10));
         this.inv.add(1);
     }
@@ -52,8 +52,8 @@ public class ThermoTile extends AbstractEnergyProvider<ThermoBlock> implements I
         int i = 0;
         if (!isRemote() && checkRedstone() && !this.tank.isEmpty()) {
             FluidStack fluid = this.tank.getFluid();
-            int fluidCooling = PowahAPI.getCoolant(fluid.getFluid());
-            if (fluidCooling != 0) {
+            var fluidCooling = PowahAPI.getCoolant(fluid.getFluid());
+            if (fluidCooling.isPresent()) {
                 BlockPos heatPos = this.worldPosition.below();
                 BlockState state = world.getBlockState(heatPos);
                 Block block = state.getBlock();
@@ -65,7 +65,7 @@ public class ThermoTile extends AbstractEnergyProvider<ThermoBlock> implements I
                             heat = (int) (heat / ((float) level + 1));
                         }
                     }
-                    this.generating = (int) ((heat * Math.max(1D, (1D + fluidCooling) / 2D) * getGeneration()) / 1000.0D);
+                    this.generating = (int) ((heat * Math.max(1D, (1D + fluidCooling.getAsInt()) / 2D) * getGeneration()) / 1000.0D);
                     this.energy.produce(this.generating);
                     if (world.getGameTime() % 40 == 0L) {
                         this.tank.drain(Util.millibucketAmount(), IFluidHandler.FluidAction.EXECUTE);

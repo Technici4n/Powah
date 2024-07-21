@@ -67,7 +67,7 @@ class EmiSolidCoolantRecipe implements EmiRecipe {
         widgets.addText(
                 Component.translatable("info.lollipop.amount").append(": ").append(Component.translatable("info.lollipop.mb", recipe.amount())), 30,
                 3, 0x444444, false);
-        var coloredTemperature = Component.literal(String.valueOf(recipe.coldness())).withStyle(ChatFormatting.DARK_AQUA);
+        var coloredTemperature = Component.literal(String.valueOf(recipe.temperature())).withStyle(ChatFormatting.DARK_AQUA);
         widgets.addText(Component.translatable("info.lollipop.temperature").append(": ")
                 .append(Component.translatable("info.lollipop.temperature.c", coloredTemperature)), 30, 15, 0x444444, false);
 
