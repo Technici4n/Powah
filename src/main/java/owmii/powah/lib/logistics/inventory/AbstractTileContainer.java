@@ -10,6 +10,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
+import net.neoforged.neoforge.fluids.FluidActionResult;
 import net.neoforged.neoforge.fluids.FluidUtil;
 import net.neoforged.neoforge.network.PacketDistributor;
 import org.jetbrains.annotations.Nullable;
@@ -80,9 +81,9 @@ public abstract class AbstractTileContainer<T extends AbstractTileEntity<?, ?> &
         return stack;
     }
 
-    public void interactWithTank() {
+    public void interactWithTank(boolean drain) {
         if (player.level().isClientSide()) {
-            PacketDistributor.sendToServer(new InteractWithTankPacket(containerId));
+            PacketDistributor.sendToServer(new InteractWithTankPacket(containerId, drain));
         }
 
         var carried = getCarried();
@@ -95,9 +96,16 @@ public abstract class AbstractTileContainer<T extends AbstractTileEntity<?, ?> &
             return;
         }
 
-        var result = FluidUtil.tryEmptyContainer(carried, tank, tank.getCapacity(), player, true);
-        if (!result.isSuccess()) {
+        FluidActionResult result;
+        if (drain) {
             result = FluidUtil.tryFillContainer(carried, tank, tank.getCapacity(), player, true);
+        } else {
+            result = FluidUtil.tryEmptyContainer(carried, tank, tank.getCapacity(), player, true);
+
+            // If that didn't succeed, but the held item is *empty*, try filling it
+            if (!result.isSuccess() && FluidUtil.getFluidContained(carried).isEmpty()) {
+                result = FluidUtil.tryFillContainer(carried, tank, tank.getCapacity(), player, true);
+            }
         }
         if (result.isSuccess()) {
             setCarried(result.getResult());

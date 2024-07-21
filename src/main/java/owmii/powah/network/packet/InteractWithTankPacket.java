@@ -9,7 +9,7 @@ import owmii.powah.Powah;
 import owmii.powah.lib.logistics.inventory.AbstractTileContainer;
 import owmii.powah.network.ServerboundPacket;
 
-public record InteractWithTankPacket(int containerId) implements ServerboundPacket {
+public record InteractWithTankPacket(int containerId, boolean drain) implements ServerboundPacket {
 
     @Override
     public Type<? extends CustomPacketPayload> type() {
@@ -20,12 +20,13 @@ public record InteractWithTankPacket(int containerId) implements ServerboundPack
 
     public static final StreamCodec<RegistryFriendlyByteBuf, InteractWithTankPacket> STREAM_CODEC = StreamCodec.composite(
             ByteBufCodecs.INT, InteractWithTankPacket::containerId,
+            ByteBufCodecs.BOOL, InteractWithTankPacket::drain,
             InteractWithTankPacket::new);
 
     @Override
     public void handleOnServer(ServerPlayer player) {
         if (player.containerMenu instanceof AbstractTileContainer<?> tileContainer && tileContainer.containerId == containerId) {
-            tileContainer.interactWithTank();
+            tileContainer.interactWithTank(drain);
         }
     }
 }

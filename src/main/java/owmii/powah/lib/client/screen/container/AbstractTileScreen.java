@@ -63,10 +63,12 @@ public class AbstractTileScreen<T extends AbstractTileEntity<?, ?> & IInventoryH
     @Override
     public boolean mouseClicked(double mouseX, double mouseY, int button) {
 
-        for (var tankArea : tankAreas) {
-            if (tankArea.contains(mouseX - leftPos, mouseY - topPos)) {
-                menu.interactWithTank();
-                return true;
+        if (button == 0 || button == 1) {
+            for (var tankArea : tankAreas) {
+                if (tankArea.contains(mouseX - leftPos, mouseY - topPos)) {
+                    menu.interactWithTank(button == 1);
+                    return true;
+                }
             }
         }
 
