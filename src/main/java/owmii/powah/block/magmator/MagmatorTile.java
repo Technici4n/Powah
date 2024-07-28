@@ -25,7 +25,7 @@ public class MagmatorTile extends AbstractEnergyProvider<MagmatorBlock> implemen
     public MagmatorTile(BlockPos pos, BlockState state, Tier variant) {
         super(Tiles.MAGMATOR.get(), pos, state, variant);
         this.tank.setCapacity(Util.bucketAmount() * 4)
-                .setValidator(stack -> PowahAPI.getMagmaticFluidHeat(stack.getFluid()) != 0)
+                .setValidator(stack -> PowahAPI.getMagmaticFluidEnergyProduced(stack.getFluid()) != 0)
                 .setChange(() -> MagmatorTile.this.sync(10));
         this.inv.add(1);
     }
@@ -54,12 +54,12 @@ public class MagmatorTile extends AbstractEnergyProvider<MagmatorBlock> implemen
             boolean flag = false;
             if (this.buffer.isEmpty() && !this.tank.isEmpty()) {
                 FluidStack fluid = this.tank.getFluid();
-                int fluidHeat = PowahAPI.getMagmaticFluidHeat(fluid.getFluid());
-                if (fluidHeat > 0) {
-                    var amountPerDrain = 100 * Util.millibucketAmount();
+                int energyProduced = PowahAPI.getMagmaticFluidEnergyProduced(fluid.getFluid());
+                if (energyProduced > 0) {
+                    var amountPerDrain = 100;
                     var minStored = Math.min(this.tank.getFluidAmount(), amountPerDrain);
-                    this.buffer.setStored((long) minStored * fluidHeat / amountPerDrain);
-                    this.buffer.setCapacity((long) minStored * fluidHeat / amountPerDrain);
+                    this.buffer.setStored((long) minStored * energyProduced / amountPerDrain);
+                    this.buffer.setCapacity((long) minStored * energyProduced / amountPerDrain);
                     this.tank.drain(minStored, IFluidHandler.FluidAction.EXECUTE);
                 }
             }

@@ -67,14 +67,6 @@ public class Util {
         return 1000;
     }
 
-    /**
-     * Amount of fluid in one millibucket.
-     * 1 on Forge.
-     */
-    public static int millibucketAmount() {
-        return (int) (Util.bucketAmount() / 1000);
-    }
-
     public static long amountToMillibuckets(long amount) {
         var result = amount * 1000 / Util.bucketAmount();
         if (result == 0 && amount != 0) {

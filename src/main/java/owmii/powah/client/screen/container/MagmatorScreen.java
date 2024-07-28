@@ -34,7 +34,8 @@ public class MagmatorScreen extends AbstractEnergyScreen<MagmatorTile, MagmatorC
                 "info.lollipop.fluid",
                 (content, lines) -> {
                     lines.add(Component.translatable("info.lollipop.Gain").withStyle(ChatFormatting.GRAY).append(Text.COLON)
-                            .append(Component.translatable("info.lollipop.fe.per.mb", PowahAPI.getMagmaticFluidHeat(content.getFluid()), "100")
+                            .append(Component
+                                    .translatable("info.lollipop.fe.per.mb", PowahAPI.getMagmaticFluidEnergyProduced(content.getFluid()), "100")
                                     .withStyle(ChatFormatting.DARK_GRAY)));
                 });
     }

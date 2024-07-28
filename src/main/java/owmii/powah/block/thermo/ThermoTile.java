@@ -5,8 +5,6 @@ import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.LiquidBlock;
 import net.minecraft.world.level.block.state.BlockState;
 import net.neoforged.neoforge.fluids.FluidStack;
 import net.neoforged.neoforge.fluids.capability.IFluidHandler;
@@ -56,19 +54,12 @@ public class ThermoTile extends AbstractEnergyProvider<ThermoBlock> implements I
             if (fluidCooling.isPresent()) {
                 BlockPos heatPos = this.worldPosition.below();
                 BlockState state = world.getBlockState(heatPos);
-                Block block = state.getBlock();
-                int heat = PowahAPI.getHeatSource(block);
+                int heat = PowahAPI.getHeatSource(state);
                 if (!this.energy.isFull() && heat != 0) {
-                    if (block instanceof LiquidBlock) {
-                        if (!state.getFluidState().isSource()) {
-                            int level = state.getValue(LiquidBlock.LEVEL);
-                            heat = (int) (heat / ((float) level + 1));
-                        }
-                    }
                     this.generating = (int) ((heat * Math.max(1D, (1D + fluidCooling.getAsInt()) / 2D) * getGeneration()) / 1000.0D);
                     this.energy.produce(this.generating);
                     if (world.getGameTime() % 40 == 0L) {
-                        this.tank.drain(Util.millibucketAmount(), IFluidHandler.FluidAction.EXECUTE);
+                        this.tank.drain(1, IFluidHandler.FluidAction.EXECUTE);
                     }
                 }
             }
