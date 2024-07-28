@@ -35,28 +35,29 @@ public class CableNet {
     }
 
     static void removeCable(CableTile cable) {
-        // No need to repeat this if the cable isn't part of a net anyway
-        if (cable.net == null) {
+        var level = cable.getLevel();
+        if (level == null) {
             return;
         }
 
-        var levelMap = loadedCables.get(cable.getLevel());
+        var levelMap = loadedCables.get(level);
         if (levelMap == null) {
             return; // The full-chunk cleanup already took care of the entire level
         }
-        var chunkPos = ChunkPos.asLong(cable.getBlockPos());
+        var blockPos = cable.getBlockPos();
+        var chunkPos = ChunkPos.asLong(blockPos);
         var chunkMap = levelMap.get(chunkPos);
         if (chunkMap == null) {
             return; // The full-chunk cleanup already took care of the entire chunk
         }
-        if (chunkMap.remove(cable.getBlockPos().asLong()) != cable) {
-            throw new RuntimeException("Removed wrong cable from position %s".formatted(cable.getBlockPos()));
+        if (chunkMap.remove(blockPos.asLong()) != cable) {
+            throw new RuntimeException("Removed wrong cable from position %s".formatted(blockPos));
         }
         if (chunkMap.isEmpty()) {
             levelMap.remove(chunkPos);
         }
         if (levelMap.isEmpty()) {
-            loadedCables.remove(cable.getLevel());
+            loadedCables.remove(level);
         }
 
         updateAdjacentCables(cable);
