@@ -5,9 +5,12 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
+import net.neoforged.neoforge.capabilities.BlockCapabilityCache;
+import net.neoforged.neoforge.capabilities.Capabilities;
 import net.neoforged.neoforge.energy.IEnergyStorage;
 import org.jetbrains.annotations.Nullable;
 import owmii.powah.block.Tier;
@@ -18,7 +21,6 @@ import owmii.powah.lib.logistics.energy.Energy;
 import owmii.powah.lib.logistics.energy.SideConfig;
 import owmii.powah.lib.registry.IVariant;
 import owmii.powah.util.ChargeUtil;
-import owmii.powah.util.EnergyUtil;
 import owmii.powah.util.Util;
 
 public abstract class AbstractEnergyStorage<C extends IEnergyConfig<Tier>, B extends AbstractEnergyBlock<C, B>> extends AbstractTickableTile<Tier, B>
@@ -26,6 +28,8 @@ public abstract class AbstractEnergyStorage<C extends IEnergyConfig<Tier>, B ext
     protected final SideConfig sideConfig = new SideConfig(this);
     protected final Energy energy = Energy.create(0);
     private final @Nullable IEnergyStorage[] externalAdapters = new IEnergyStorage[Direction.values().length + 1];
+    @SuppressWarnings("unchecked")
+    private final BlockCapabilityCache<IEnergyStorage, @Nullable Direction>[] capabilityCaches = new BlockCapabilityCache[6];
 
     public AbstractEnergyStorage(BlockEntityType<?> type, BlockPos pos, BlockState state) {
         this(type, pos, state, IVariant.getEmpty());
@@ -87,8 +91,13 @@ public abstract class AbstractEnergyStorage<C extends IEnergyConfig<Tier>, B ext
         if (!isRemote()) {
             for (Direction side : Direction.values()) {
                 if (canExtractEnergy(side)) {
+                    if (capabilityCaches[side.ordinal()] == null) {
+                        capabilityCaches[side.ordinal()] = BlockCapabilityCache.create(Capabilities.EnergyStorage.BLOCK, (ServerLevel) world,
+                                worldPosition.relative(side), side.getOpposite());
+                    }
                     long amount = Math.min(getEnergyTransfer(), getEnergy().getStored());
-                    long toExtract = EnergyUtil.pushEnergy(world, worldPosition.relative(side), side.getOpposite(), amount);
+                    var cap = capabilityCaches[side.ordinal()].getCapability();
+                    long toExtract = cap == null ? 0 : cap.receiveEnergy(Ints.saturatedCast(amount), false);
                     extracted += extractEnergy(Util.safeInt(toExtract), false, side);
                 }
             }
