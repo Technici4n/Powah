@@ -78,7 +78,8 @@ public class ItemStackHandler implements IItemHandler {
 
         if (!simulate) {
             if (existing.isEmpty()) {
-                this.stacks.set(slot, reachedLimit ? ItemStackHandlerHelper.copyStackWithSize(stack, limit) : stack);
+                // We must always copy the stack because onContentsChanged might change it, messing with our later use.
+                this.stacks.set(slot, reachedLimit ? ItemStackHandlerHelper.copyStackWithSize(stack, limit) : stack.copy());
             } else {
                 existing.grow(reachedLimit ? limit : stack.getCount());
             }
