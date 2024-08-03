@@ -1,5 +1,8 @@
 {
   "values": [
-    "#c:ores/uraninite"
+    "#c:ores/uraninite",
+    "#c:ores/uraninite_regular",
+    "#c:ores/uraninite_poor",
+    "#c:ores/uraninite_dense"
   ]
 }

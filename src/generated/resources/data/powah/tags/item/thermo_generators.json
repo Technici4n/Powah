@@ -1,0 +1,11 @@
+{
+  "values": [
+    "powah:thermo_generator_starter",
+    "powah:thermo_generator_basic",
+    "powah:thermo_generator_hardened",
+    "powah:thermo_generator_blazing",
+    "powah:thermo_generator_niotic",
+    "powah:thermo_generator_spirited",
+    "powah:thermo_generator_nitro"
+  ]
+}
