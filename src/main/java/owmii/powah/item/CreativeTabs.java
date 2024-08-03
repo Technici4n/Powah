@@ -1,7 +1,6 @@
 package owmii.powah.item;
 
 import java.util.stream.Collectors;
-import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceKey;
@@ -57,13 +56,12 @@ public class CreativeTabs {
                     output.accept(Itms.URANINITE_RAW.get());
                     output.accept(Itms.URANINITE.get());
 
-                    for (var item : BuiltInRegistries.ITEM) {
-                        if (item instanceof ItemBlock<?> powahItem) {
+                    for (var entry : Blcks.DR.getEntries()) {
+                        if (entry.get().asItem() instanceof ItemBlock<?> powahItem) {
                             if (powahItem.getCreativeTab() == MAIN_KEY) {
-                                output.accept(item);
+                                output.accept(powahItem);
                             }
                         }
-
                     }
                 })
                 .build());

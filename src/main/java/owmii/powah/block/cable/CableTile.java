@@ -12,7 +12,9 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.ChunkPos;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
+import net.neoforged.neoforge.capabilities.BlockCapabilityCache;
 import net.neoforged.neoforge.capabilities.Capabilities;
+import net.neoforged.neoforge.energy.IEnergyStorage;
 import org.apache.commons.lang3.mutable.MutableBoolean;
 import org.jetbrains.annotations.Nullable;
 import owmii.powah.block.Tier;
@@ -37,6 +39,8 @@ public class CableTile extends AbstractEnergyStorage<CableConfig, CableBlock> im
      */
     protected MutableBoolean netInsertionGuard = new MutableBoolean(false);
     protected int startIndex = 0;
+    @SuppressWarnings("unchecked")
+    private final BlockCapabilityCache<IEnergyStorage, @Nullable Direction>[] capabilityCaches = new BlockCapabilityCache[6];
 
     public CableTile(BlockPos pos, BlockState state, Tier variant) {
         super(Tiles.CABLE.get(), pos, state, variant);
@@ -188,7 +192,10 @@ public class CableTile extends AbstractEnergyStorage<CableConfig, CableBlock> im
     }
 
     private long receive(Level level, BlockPos pos, Direction side, long amount, boolean simulate) {
-        var energy = level.getCapability(Capabilities.EnergyStorage.BLOCK, pos, side);
+        if (capabilityCaches[side.ordinal()] == null) {
+            capabilityCaches[side.ordinal()] = BlockCapabilityCache.create(Capabilities.EnergyStorage.BLOCK, (ServerLevel) level, pos, side);
+        }
+        var energy = capabilityCaches[side.ordinal()].getCapability();
         return energy != null ? energy.receiveEnergy(Ints.saturatedCast(amount), simulate) : 0;
     }
 

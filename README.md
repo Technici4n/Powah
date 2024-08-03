@@ -1,5 +1,14 @@
 # Powah! Rearchitected
+
 A tech mod that has Various ways to generate, store and transmit Forge Energy, for Minecraft 1.18+.
+
+## Downloads
+
+[CurseForge](https://www.curseforge.com/minecraft/mc-mods/powah-rearchitected/files/all?page=1&pageSize=20)
+
+[Modrinth](https://modrinth.com/mod/powah)
+
+## Contact Us
 
 [Please join the AE2 Discord for support, in the `#powah` channel.](https://discord.gg/Zd6t9ka7ne)
 

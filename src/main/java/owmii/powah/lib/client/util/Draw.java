@@ -33,7 +33,10 @@ public class Draw {
                     buffer.addVertex(x, yy + m, 0).setUv(uMin, vMin);
                 }
             }
-            BufferUploader.drawWithShader(buffer.buildOrThrow());
+            var mesh = buffer.build();
+            if (mesh != null) {
+                BufferUploader.drawWithShader(mesh);
+            }
         }
     }
 

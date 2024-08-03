@@ -4,7 +4,7 @@ pluginManagement {
         maven { url "https://maven.architectury.dev/" }
     }
     plugins {
-        id 'net.neoforged.moddev' version '0.1.105'
+        id 'net.neoforged.moddev' version '1.0.13'
         id "me.shedaniel.unified-publishing" version "0.1.+"
         id 'com.diffplug.spotless' version '6.25.0'
     }

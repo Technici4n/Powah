@@ -1,9 +1,21 @@
 package owmii.powah.config.v2;
 
-import static owmii.powah.config.v2.DefaultEnergies.*;
+import static owmii.powah.config.v2.DefaultEnergies.activeProduction;
+import static owmii.powah.config.v2.DefaultEnergies.batteryCapacity;
+import static owmii.powah.config.v2.DefaultEnergies.batteryTransfer;
+import static owmii.powah.config.v2.DefaultEnergies.cableTransfer;
+import static owmii.powah.config.v2.DefaultEnergies.chargingTransfer;
+import static owmii.powah.config.v2.DefaultEnergies.energizingCapacity;
+import static owmii.powah.config.v2.DefaultEnergies.energizingRatio;
+import static owmii.powah.config.v2.DefaultEnergies.energizingTransfer;
+import static owmii.powah.config.v2.DefaultEnergies.energyPerFuelTick;
+import static owmii.powah.config.v2.DefaultEnergies.generatorCapacity;
+import static owmii.powah.config.v2.DefaultEnergies.generatorTransfer;
+import static owmii.powah.config.v2.DefaultEnergies.passiveProduction;
+import static owmii.powah.config.v2.DefaultEnergies.reactorCapacity;
+import static owmii.powah.config.v2.DefaultEnergies.reactorProduction;
+import static owmii.powah.config.v2.DefaultEnergies.reactorTransfer;
 
-import java.util.LinkedHashMap;
-import java.util.Map;
 import me.shedaniel.autoconfig.AutoConfig;
 import me.shedaniel.autoconfig.ConfigData;
 import me.shedaniel.autoconfig.ConfigHolder;
@@ -15,7 +27,6 @@ import me.shedaniel.cloth.clothconfig.shadowed.blue.endless.jankson.JsonPrimitiv
 import me.shedaniel.cloth.clothconfig.shadowed.blue.endless.jankson.api.DeserializationException;
 import net.minecraft.ResourceLocationException;
 import net.minecraft.resources.ResourceLocation;
-import owmii.powah.api.PowahAPI;
 import owmii.powah.config.v2.annotations.DoubleRange;
 import owmii.powah.config.v2.annotations.LongRange;
 import owmii.powah.config.v2.types.CableConfig;
@@ -42,18 +53,6 @@ public class PowahConfig implements ConfigData {
         @Comment("Enable this to get Lens Of Ender by right clicking an Enderman or Endermite with a Photoelectric Pane.")
         public boolean lens_of_ender = true;
 
-        // Note: don't use Map.of directly, otherwise jankson fails to read it because it can't edit it...
-        @Comment("List of fluids used in the Magmator.")
-        public final Map<ResourceLocation, Integer> magmatic_fluids = new LinkedHashMap<>(Map.of(
-                ResourceLocation.parse("minecraft:lava"), 10000));
-        @Comment("List of coolant fluids used in the Reactor and the Thermo Generator.")
-        public final Map<ResourceLocation, Integer> coolant_fluids = new LinkedHashMap<>(Map.of(
-                ResourceLocation.parse("minecraft:water"), 1));
-        @Comment("List of heat source blocks used under Thermo Generator.")
-        public final Map<ResourceLocation, Integer> heat_blocks = new LinkedHashMap<>(Map.of(
-                ResourceLocation.parse("minecraft:lava"), 1000,
-                ResourceLocation.parse("minecraft:magma_block"), 800,
-                ResourceLocation.parse("powah:blazing_crystal_block"), 2800));
         @Comment("Energy produced per fuel tick in the Furnator.")
         @LongRange(min = 1, max = Integer.MAX_VALUE)
         public long energy_per_fuel_tick = energyPerFuelTick();
@@ -125,16 +124,6 @@ public class PowahConfig implements ConfigData {
         } catch (ReflectiveOperationException roe) {
             throw new ValidationException("Failed to validate Powah config", roe);
         }
-        // TODO: proper validation here one day?
-
-        PowahAPI.MAGMATIC_FLUIDS.clear();
-        PowahAPI.MAGMATIC_FLUIDS.putAll(general.magmatic_fluids);
-
-        PowahAPI.COOLANT_FLUIDS.clear();
-        PowahAPI.COOLANT_FLUIDS.putAll(general.coolant_fluids);
-
-        PowahAPI.HEAT_SOURCES.clear();
-        PowahAPI.HEAT_SOURCES.putAll(general.heat_blocks);
     }
 
     private static void validateObject(Object object) throws ValidationException, ReflectiveOperationException {

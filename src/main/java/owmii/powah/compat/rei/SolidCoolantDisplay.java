@@ -17,7 +17,7 @@ public class SolidCoolantDisplay implements Display {
     public SolidCoolantDisplay(SolidCoolant recipe) {
         this.inputs = List.of(EntryIngredients.of(recipe.item()));
         this.amount = recipe.amount();
-        this.coldness = recipe.coldness();
+        this.coldness = recipe.temperature();
     }
 
     @Override

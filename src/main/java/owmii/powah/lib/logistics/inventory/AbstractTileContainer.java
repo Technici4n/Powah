@@ -10,9 +10,13 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
+import net.neoforged.neoforge.fluids.FluidActionResult;
+import net.neoforged.neoforge.fluids.FluidUtil;
+import net.neoforged.neoforge.network.PacketDistributor;
 import org.jetbrains.annotations.Nullable;
 import owmii.powah.lib.block.AbstractTileEntity;
 import owmii.powah.lib.block.IInventoryHolder;
+import owmii.powah.network.packet.InteractWithTankPacket;
 
 public abstract class AbstractTileContainer<T extends AbstractTileEntity<?, ?> & IInventoryHolder> extends AbstractContainer {
     public final T te;
@@ -43,7 +47,7 @@ public abstract class AbstractTileContainer<T extends AbstractTileEntity<?, ?> &
         if (tile instanceof AbstractTileEntity<?, ?>)
             return (T) tile;
         // What the hell is this?
-        return (T) new AbstractTileEntity(BlockEntityType.SIGN, pos, Blocks.AIR.defaultBlockState());
+        return (T) new AbstractTileEntity<>(BlockEntityType.SIGN, pos, Blocks.AIR.defaultBlockState());
     }
 
     @Override
@@ -75,5 +79,36 @@ public abstract class AbstractTileContainer<T extends AbstractTileEntity<?, ?> &
             }
         }
         return stack;
+    }
+
+    public void interactWithTank(boolean drain) {
+        if (player.level().isClientSide()) {
+            PacketDistributor.sendToServer(new InteractWithTankPacket(containerId, drain));
+        }
+
+        var carried = getCarried();
+        if (carried.isEmpty()) {
+            return;
+        }
+
+        var tank = te.getTank();
+        if (tank.getCapacity() == 0) {
+            return;
+        }
+
+        FluidActionResult result;
+        if (drain) {
+            result = FluidUtil.tryFillContainer(carried, tank, tank.getCapacity(), player, true);
+        } else {
+            result = FluidUtil.tryEmptyContainer(carried, tank, tank.getCapacity(), player, true);
+
+            // If that didn't succeed, but the held item is *empty*, try filling it
+            if (!result.isSuccess() && FluidUtil.getFluidContained(carried).isEmpty()) {
+                result = FluidUtil.tryFillContainer(carried, tank, tank.getCapacity(), player, true);
+            }
+        }
+        if (result.isSuccess()) {
+            setCarried(result.getResult());
+        }
     }
 }

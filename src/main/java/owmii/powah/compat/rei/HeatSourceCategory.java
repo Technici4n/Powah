@@ -18,9 +18,9 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.block.Blocks;
 import owmii.powah.Powah;
 
-public class HeatSourceCategory implements DisplayCategory<HeatSourceDisplay> {
+public class HeatSourceCategory implements DisplayCategory<PassiveHeatSourceDisplay> {
     public static final ResourceLocation GUI_BACK = Powah.id("textures/gui/jei/misc.png");
-    public static final CategoryIdentifier<HeatSourceDisplay> ID = CategoryIdentifier.of(Powah.id("heat.sources"));
+    public static final CategoryIdentifier<PassiveHeatSourceDisplay> ID = CategoryIdentifier.of(Powah.id("heat.sources"));
     private final Renderer icon;
 
     public HeatSourceCategory() {
@@ -28,7 +28,7 @@ public class HeatSourceCategory implements DisplayCategory<HeatSourceDisplay> {
     }
 
     @Override
-    public CategoryIdentifier<HeatSourceDisplay> getCategoryIdentifier() {
+    public CategoryIdentifier<PassiveHeatSourceDisplay> getCategoryIdentifier() {
         return ID;
     }
 
@@ -43,7 +43,7 @@ public class HeatSourceCategory implements DisplayCategory<HeatSourceDisplay> {
     }
 
     @Override
-    public int getDisplayWidth(HeatSourceDisplay display) {
+    public int getDisplayWidth(PassiveHeatSourceDisplay display) {
         return 160;
     }
 
@@ -53,7 +53,7 @@ public class HeatSourceCategory implements DisplayCategory<HeatSourceDisplay> {
     }
 
     @Override
-    public List<Widget> setupDisplay(HeatSourceDisplay display, Rectangle bounds) {
+    public List<Widget> setupDisplay(PassiveHeatSourceDisplay display, Rectangle bounds) {
         List<Widget> widgets = new ArrayList<>();
         Point origin = new Point(bounds.getX() + 5, bounds.getY() + 5);
         widgets.add(Widgets.createRecipeBase(bounds));

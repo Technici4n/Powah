@@ -18,7 +18,7 @@ public class RenderTypes extends RenderType {
         RenderSystem.defaultBlendFunc();
     });
 
-    protected static final RenderStateShard.TransparencyStateShard BLENDED_NO_DEPT = new RenderStateShard.TransparencyStateShard("blended_no_dept",
+    protected static final RenderStateShard.TransparencyStateShard BLENDED_NO_DEPT = new RenderStateShard.TransparencyStateShard("blended_no_depth",
             () -> {
                 RenderSystem.enableBlend();
                 RenderSystem.depthMask(false);
@@ -43,12 +43,12 @@ public class RenderTypes extends RenderType {
         return create("blend_bo_dept", DefaultVertexFormat.POSITION_TEX_COLOR, VertexFormat.Mode.QUADS, 256, true, true, state);
     }
 
-    public static RenderType getTextBlended(ResourceLocation locationIn) {
+    public static RenderType createReactorOverlay(ResourceLocation locationIn) {
         CompositeState state = CompositeState.builder().setTextureState(new RenderStateShard.TextureStateShard(locationIn, false, false))
-                .setShaderState(RenderStateShard.RENDERTYPE_TEXT_SHADER)
+                .setShaderState(RenderStateShard.POSITION_COLOR_TEX_LIGHTMAP_SHADER)
                 .setTransparencyState(BLENDED)
                 .setLightmapState(NO_LIGHTMAP).createCompositeState(false);
-        return create("text_blended", DefaultVertexFormat.POSITION_COLOR_TEX_LIGHTMAP, VertexFormat.Mode.QUADS, 256, false, true, state);
+        return create("powah_reactor_overlay", DefaultVertexFormat.POSITION_COLOR_TEX_LIGHTMAP, VertexFormat.Mode.QUADS, 256, false, true, state);
     }
 
     public RenderTypes(String s, VertexFormat format, VertexFormat.Mode mode, int i1, boolean b, boolean b1, Runnable runnable, Runnable runnable1) {
