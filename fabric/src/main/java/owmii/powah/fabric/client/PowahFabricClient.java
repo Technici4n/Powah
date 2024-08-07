@@ -1,6 +1,7 @@
 package owmii.powah.fabric.client;
 
 import net.fabricmc.api.ClientModInitializer;
+import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientChunkEvents;
 import net.fabricmc.fabric.api.client.rendering.v1.BuiltinItemRendererRegistry;
 import net.fabricmc.fabric.api.client.rendering.v1.WorldRenderEvents;
 import net.fabricmc.fabric.api.event.client.player.ClientPickBlockGatherCallback;
@@ -8,6 +9,7 @@ import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.phys.BlockHitResult;
 import owmii.powah.block.Blcks;
+import owmii.powah.block.cable.CableNet;
 import owmii.powah.client.PowahClient;
 import owmii.powah.client.handler.ReactorOverlayHandler;
 import owmii.powah.client.render.tile.ReactorItemRenderer;
@@ -19,6 +21,8 @@ public class PowahFabricClient implements ClientModInitializer {
     public void onInitializeClient() {
         PowahClient.init();
         PowahClient.clientSetup();
+
+        ClientChunkEvents.CHUNK_UNLOAD.register(CableNet::removeChunk);
 
         var reactorRenderer = new ReactorItemRenderer();
         Blcks.REACTOR.getAll().forEach(block -> {
