@@ -10,7 +10,6 @@ import net.minecraft.world.InteractionResult;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.fml.ModList;
@@ -127,7 +126,8 @@ public class Powah {
         });
 
         for (var entry : Tiles.DR.getEntries()) {
-            var be = entry.get().create(BlockPos.ZERO, Blocks.AIR.defaultBlockState());
+            var validBlock = entry.get().getValidBlocks().stream().iterator().next();
+            var be = entry.get().create(BlockPos.ZERO, validBlock.defaultBlockState());
             if (be == null) {
                 throw new IllegalStateException("Failed to create a dummy BE for " + entry.getId());
             }
