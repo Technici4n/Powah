@@ -12,7 +12,6 @@ import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.resources.language.I18n;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.Items;
-import net.neoforged.neoforge.fluids.FluidType;
 import owmii.powah.Powah;
 import owmii.powah.compat.common.FluidCoolant;
 
@@ -32,7 +31,7 @@ public class JeiFluidCoolantCategory extends AbstractCategory<FluidCoolant> {
     @Override
     public void setRecipe(IRecipeLayoutBuilder builder, FluidCoolant recipe, IFocusGroup focuses) {
         builder.addSlot(RecipeIngredientRole.INPUT, 4, 5)
-                .addFluidStack(recipe.fluid(), FluidType.BUCKET_VOLUME);
+                .addFluidStack(recipe.fluid());
     }
 
     @Override

@@ -11,9 +11,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.resources.language.I18n;
 import net.minecraft.network.chat.Component;
-import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.Blocks;
-import net.neoforged.neoforge.fluids.FluidType;
 import owmii.powah.Powah;
 import owmii.powah.compat.common.PassiveHeatSource;
 
@@ -35,10 +33,10 @@ public class JeiHeatSourceCategory extends AbstractCategory<PassiveHeatSource> {
         var input = builder.addSlot(RecipeIngredientRole.INPUT, 4, 5);
 
         if (recipe.block() != null) {
-            input.addItemStack(new ItemStack(recipe.block()));
+            input.addItemLike(recipe.block());
         }
         if (recipe.fluid() != null) {
-            input.addFluidStack(recipe.fluid(), FluidType.BUCKET_VOLUME);
+            input.addFluidStack(recipe.fluid());
         }
     }
 

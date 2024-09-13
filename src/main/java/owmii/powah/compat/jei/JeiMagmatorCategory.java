@@ -9,7 +9,6 @@ import mezz.jei.api.recipe.RecipeType;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.network.chat.Component;
-import net.neoforged.neoforge.fluids.FluidType;
 import owmii.powah.Powah;
 import owmii.powah.block.Blcks;
 import owmii.powah.block.Tier;
@@ -31,7 +30,7 @@ public class JeiMagmatorCategory extends AbstractCategory<MagmatorFuel> {
     @Override
     public void setRecipe(IRecipeLayoutBuilder builder, MagmatorFuel recipe, IFocusGroup focuses) {
         builder.addSlot(RecipeIngredientRole.INPUT, 4, 5)
-                .addFluidStack(recipe.fluid(), FluidType.BUCKET_VOLUME);
+                .addFluidStack(recipe.fluid());
     }
 
     @Override

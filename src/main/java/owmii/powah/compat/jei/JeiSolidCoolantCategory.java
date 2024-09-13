@@ -31,7 +31,7 @@ public class JeiSolidCoolantCategory extends AbstractCategory<SolidCoolant> {
     @Override
     public void setRecipe(IRecipeLayoutBuilder builder, SolidCoolant recipe, IFocusGroup focuses) {
         builder.addSlot(RecipeIngredientRole.INPUT, 4, 5)
-                .addItemStack(recipe.item().getDefaultInstance());
+                .addItemLike(recipe.item());
     }
 
     @Override
