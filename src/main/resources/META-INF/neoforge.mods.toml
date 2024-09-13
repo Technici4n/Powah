@@ -26,3 +26,10 @@ Various ways to generate, store and transmit FE power.
     versionRange="*"
     ordering="NONE"
     side="BOTH"
+
+[[dependencies.powah]]
+    modId="jei"
+    type="OPTIONAL"
+    versionRange="[19.18.3,)"
+    ordering="NONE"
+    side="CLIENT"

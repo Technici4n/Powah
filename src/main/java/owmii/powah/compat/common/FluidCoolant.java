@@ -1,7 +1,6 @@
 package owmii.powah.compat.common;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Comparator;
 import java.util.HashSet;
 import java.util.List;
@@ -14,7 +13,7 @@ import owmii.powah.Powah;
 import owmii.powah.api.FluidCoolantConfig;
 
 public record FluidCoolant(ResourceLocation id, Fluid fluid, Set<BucketItem> buckets, int coldness) {
-    public static Collection<FluidCoolant> getAll() {
+    public static List<FluidCoolant> getAll() {
         List<FluidCoolant> result = new ArrayList<>();
 
         var dataMap = BuiltInRegistries.FLUID.getDataMap(FluidCoolantConfig.DATA_MAP_TYPE);

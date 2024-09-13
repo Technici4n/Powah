@@ -1,8 +1,8 @@
 package owmii.powah.compat.common;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Comparator;
+import java.util.List;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.block.Block;
@@ -12,7 +12,7 @@ import owmii.powah.Powah;
 import owmii.powah.api.PassiveHeatSourceConfig;
 
 public record PassiveHeatSource(ResourceLocation id, @Nullable Block block, @Nullable Fluid fluid, int heat) {
-    public static Collection<PassiveHeatSource> getAll() {
+    public static List<PassiveHeatSource> getAll() {
         var result = new ArrayList<PassiveHeatSource>();
 
         for (var entry : BuiltInRegistries.BLOCK.getDataMap(PassiveHeatSourceConfig.BLOCK_DATA_MAP).entrySet()) {

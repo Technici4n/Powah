@@ -1,7 +1,6 @@
 package owmii.powah.compat.common;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Comparator;
 import java.util.HashSet;
 import java.util.List;
@@ -14,7 +13,7 @@ import owmii.powah.Powah;
 import owmii.powah.api.MagmatorFuelValue;
 
 public record MagmatorFuel(ResourceLocation id, Fluid fluid, Set<BucketItem> buckets, int heat) {
-    public static Collection<MagmatorFuel> getAll() {
+    public static List<MagmatorFuel> getAll() {
         List<MagmatorFuel> result = new ArrayList<>();
 
         var dataMap = BuiltInRegistries.FLUID.getDataMap(MagmatorFuelValue.DATA_MAP_TYPE);

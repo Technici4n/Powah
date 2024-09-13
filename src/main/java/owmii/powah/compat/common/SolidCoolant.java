@@ -1,7 +1,6 @@
 package owmii.powah.compat.common;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Comparator;
 import java.util.List;
 import net.minecraft.core.registries.BuiltInRegistries;
@@ -11,7 +10,7 @@ import owmii.powah.Powah;
 import owmii.powah.api.SolidCoolantConfig;
 
 public record SolidCoolant(ResourceLocation id, Item item, int amount, int temperature) {
-    public static Collection<SolidCoolant> getAll() {
+    public static List<SolidCoolant> getAll() {
         List<SolidCoolant> result = new ArrayList<>();
 
         for (var entry : BuiltInRegistries.ITEM.getDataMap(SolidCoolantConfig.DATA_MAP_TYPE).entrySet()) {
