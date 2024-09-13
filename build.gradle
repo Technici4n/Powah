@@ -70,7 +70,7 @@ dependencies {
     } else if (project.runtime_itemlist_mod == "none") {
         // none
     } else {
-        throw new GradleException("Unknown setting for project.runtime_itemlist_mod=${project.runtime_itemlist_mod}. Supported: emi, rei and none")
+        throw new GradleException("Unknown setting for project.runtime_itemlist_mod=${project.runtime_itemlist_mod}. Supported: emi, rei, jei and none")
     }
 
     compileOnly "top.theillusivec4.curios:curios-neoforge:${project.curios_version}:api"
