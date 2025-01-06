@@ -1923,7 +1923,7 @@ public class RecipeProvider extends net.minecraft.data.recipes.RecipeProvider {
         output.accept(Powah.id("energizing/spirited_crystal"),
                 new EnergizingRecipe(Itms.SPIRITED_CRYSTAL.toStack(), 1000000, List.of(Ingredient.of(Tags.Items.GEMS_EMERALD))), null);
         output.accept(Powah.id("energizing/uraninite_from_ore"),
-                new EnergizingRecipe(Itms.URANINITE.toStack(5), 50000, List.of(Ingredient.of(ITags.Items.URANINITE_ORE))), null);
+                new EnergizingRecipe(Itms.URANINITE.toStack(5), 50000, List.of(Ingredient.of(ITags.Items.URANINITE_ORE_REGULAR))), null);
         output.accept(Powah.id("energizing/uraninite_from_ore_dense"),
                 new EnergizingRecipe(Itms.URANINITE.toStack(10), 100000, List.of(Ingredient.of(ITags.Items.URANINITE_ORE_DENSE))), null);
         output.accept(Powah.id("energizing/uraninite_from_ore_poor"),

@@ -3,7 +3,7 @@
   "energy": 50000,
   "ingredients": [
     {
-      "tag": "c:ores/uraninite"
+      "tag": "c:ores/uraninite_regular"
     }
   ],
   "result": {
