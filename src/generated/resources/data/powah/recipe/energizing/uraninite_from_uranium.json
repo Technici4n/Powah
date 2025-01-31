@@ -1,0 +1,22 @@
+{
+  "neoforge:conditions": [
+    {
+      "type": "neoforge:not",
+      "value": {
+        "type": "neoforge:tag_empty",
+        "tag": "c:ingots/uranium"
+      }
+    }
+  ],
+  "type": "powah:energizing",
+  "energy": 30000,
+  "ingredients": [
+    {
+      "tag": "c:ingots/uranium"
+    }
+  ],
+  "result": {
+    "count": 1,
+    "id": "powah:uraninite"
+  }
+}

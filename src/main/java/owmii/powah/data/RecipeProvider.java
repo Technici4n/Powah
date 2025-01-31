@@ -13,6 +13,8 @@ import net.minecraft.tags.ItemTags;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.neoforged.neoforge.common.Tags;
+import net.neoforged.neoforge.common.conditions.NotCondition;
+import net.neoforged.neoforge.common.conditions.TagEmptyCondition;
 import owmii.powah.Powah;
 import owmii.powah.block.Blcks;
 import owmii.powah.block.Tier;
@@ -1930,6 +1932,9 @@ public class RecipeProvider extends net.minecraft.data.recipes.RecipeProvider {
                 new EnergizingRecipe(Itms.URANINITE.toStack(3), 25000, List.of(Ingredient.of(ITags.Items.URANINITE_ORE_POOR))), null);
         output.accept(Powah.id("energizing/uraninite_from_raw"),
                 new EnergizingRecipe(Itms.URANINITE.toStack(2), 2000, List.of(Ingredient.of(Itms.URANINITE_RAW))), null);
+        output.withConditions(new NotCondition(new TagEmptyCondition(ITags.Items.URANIUM_INGOTS)))
+                .accept(Powah.id("energizing/uraninite_from_uranium"),
+                        new EnergizingRecipe(Itms.URANINITE.toStack(), 30000, List.of(Ingredient.of(ITags.Items.URANIUM_INGOTS))), null);
     }
 
     private void smelting(RecipeOutput output) {

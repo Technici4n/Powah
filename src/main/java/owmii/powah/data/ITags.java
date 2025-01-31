@@ -58,6 +58,7 @@ public class ITags {
         public static final TagKey<Item> URANINITE_ORE_POOR = tag("ores/uraninite_poor");
         public static final TagKey<Item> URANINITE_BLOCK = tag("storage_blocks/uraninite");
         public static final TagKey<Item> URANINITE_RAW = tag("raw_materials/uraninite");
+        public static final TagKey<Item> URANIUM_INGOTS = tag("ingots/uranium");
         public static final TagKey<Item> WRENCHES = tag("tools/wrench");
         public static final TagKey<Item> QUARTZ_BLOCKS = tag("storage_blocks/quartz");
 
