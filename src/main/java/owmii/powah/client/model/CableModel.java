@@ -88,10 +88,10 @@ public class CableModel extends AbstractModel<CableTile, CableRenderer> {
     private RenderType renderType(CableTile te, Transfer transfer) {
         var variant = te.getVariant().getName();
         var texture = switch (transfer) {
-            case ALL -> Powah.id("textures/model/tile/energy_cable_%s_all.png".formatted(variant));
-            case RECEIVE -> Powah.id("textures/model/tile/energy_cable_%s_out.png".formatted(variant));
-            case EXTRACT -> Powah.id("textures/model/tile/energy_cable_%s_in.png".formatted(variant));
-            case NONE -> throw new UnsupportedOperationException();
+        case ALL -> Powah.id("textures/model/tile/energy_cable_%s_all.png".formatted(variant));
+        case RECEIVE -> Powah.id("textures/model/tile/energy_cable_%s_out.png".formatted(variant));
+        case EXTRACT -> Powah.id("textures/model/tile/energy_cable_%s_in.png".formatted(variant));
+        case NONE -> throw new UnsupportedOperationException();
         };
         return renderType(texture);
     }
