@@ -2,8 +2,6 @@ package owmii.powah.client.model;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
-import java.util.HashMap;
-import java.util.Map;
 import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.client.model.geom.PartPose;
 import net.minecraft.client.model.geom.builders.CubeListBuilder;
@@ -13,7 +11,6 @@ import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import owmii.powah.Powah;
 import owmii.powah.block.cable.CableTile;
@@ -88,12 +85,15 @@ public class CableModel extends AbstractModel<CableTile, CableRenderer> {
         return LayerDefinition.create(meshDefinition, 64, 32);
     }
 
-    private static final Map<Transfer, ResourceLocation> TEXTURES = new HashMap<>();
-
-    static {
-        TEXTURES.put(Transfer.ALL, Powah.id("textures/model/tile/energy_cable_all.png"));
-        TEXTURES.put(Transfer.RECEIVE, Powah.id("textures/model/tile/energy_cable_out.png"));
-        TEXTURES.put(Transfer.EXTRACT, Powah.id("textures/model/tile/energy_cable_in.png"));
+    private RenderType renderType(CableTile te, Transfer transfer) {
+        var variant = te.getVariant().getName();
+        var texture = switch (transfer) {
+            case ALL -> Powah.id("textures/model/tile/energy_cable_%s_all.png".formatted(variant));
+            case RECEIVE -> Powah.id("textures/model/tile/energy_cable_%s_out.png".formatted(variant));
+            case EXTRACT -> Powah.id("textures/model/tile/energy_cable_%s_in.png".formatted(variant));
+            case NONE -> throw new UnsupportedOperationException();
+        };
+        return renderType(texture);
     }
 
     @Override
@@ -114,7 +114,7 @@ public class CableModel extends AbstractModel<CableTile, CableRenderer> {
         if (flags[0] != null) {
             Transfer type = te.getSideConfig().getType(flags[0]);
             if (!type.equals(Transfer.NONE)) {
-                VertexConsumer buffer = rtb.getBuffer(renderType(TEXTURES.get(type)));
+                VertexConsumer buffer = rtb.getBuffer(renderType(te, type));
                 this.up.render(matrix, buffer, light, ov);
                 this.upPlate.render(matrix, buffer, light, ov);
             }
@@ -123,7 +123,7 @@ public class CableModel extends AbstractModel<CableTile, CableRenderer> {
         if (flags[1] != null) {
             Transfer type = te.getSideConfig().getType(flags[1]);
             if (!type.equals(Transfer.NONE)) {
-                VertexConsumer buffer = rtb.getBuffer(renderType(TEXTURES.get(type)));
+                VertexConsumer buffer = rtb.getBuffer(renderType(te, type));
                 this.down.render(matrix, buffer, light, ov);
                 this.downPlate.render(matrix, buffer, light, ov);
             }
@@ -132,7 +132,7 @@ public class CableModel extends AbstractModel<CableTile, CableRenderer> {
         if (flags[2] != null) {
             Transfer type = te.getSideConfig().getType(flags[2]);
             if (!type.equals(Transfer.NONE)) {
-                VertexConsumer buffer = rtb.getBuffer(renderType(TEXTURES.get(type)));
+                VertexConsumer buffer = rtb.getBuffer(renderType(te, type));
                 this.south.render(matrix, buffer, light, ov);
                 this.southPlate.render(matrix, buffer, light, ov);
             }
@@ -140,7 +140,7 @@ public class CableModel extends AbstractModel<CableTile, CableRenderer> {
         if (flags[3] != null) {
             Transfer type = te.getSideConfig().getType(flags[3]);
             if (!type.equals(Transfer.NONE)) {
-                VertexConsumer buffer = rtb.getBuffer(renderType(TEXTURES.get(type)));
+                VertexConsumer buffer = rtb.getBuffer(renderType(te, type));
                 this.north.render(matrix, buffer, light, ov);
                 this.northPlate.render(matrix, buffer, light, ov);
             }
@@ -149,7 +149,7 @@ public class CableModel extends AbstractModel<CableTile, CableRenderer> {
         if (flags[4] != null) {
             Transfer type = te.getSideConfig().getType(flags[4]);
             if (!type.equals(Transfer.NONE)) {
-                VertexConsumer buffer = rtb.getBuffer(renderType(TEXTURES.get(type)));
+                VertexConsumer buffer = rtb.getBuffer(renderType(te, type));
                 this.west.render(matrix, buffer, light, ov);
                 this.westPlate.render(matrix, buffer, light, ov);
             }
@@ -158,7 +158,7 @@ public class CableModel extends AbstractModel<CableTile, CableRenderer> {
         if (flags[5] != null) {
             Transfer type = te.getSideConfig().getType(flags[5]);
             if (!type.equals(Transfer.NONE)) {
-                VertexConsumer buffer = rtb.getBuffer(renderType(TEXTURES.get(type)));
+                VertexConsumer buffer = rtb.getBuffer(renderType(te, type));
                 this.east.render(matrix, buffer, light, ov);
                 this.eastPlate.render(matrix, buffer, light, ov);
             }
