@@ -6,6 +6,7 @@ import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.ItemLike;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.LiquidBlock;
 import net.minecraft.world.level.material.Fluid;
 import org.apache.commons.lang3.tuple.Pair;
 
@@ -76,7 +77,15 @@ public class PowahAPI {
      * @return the heat of the block;
      **/
     public static int getHeatSource(Block block) {
-        return HEAT_SOURCES.getOrDefault(BuiltInRegistries.BLOCK.getKey(block), 0);
+        ResourceLocation key;
+
+        //Fix for Tinker's Construct compatibility or other mods that use LiquidBlock
+        if (block instanceof LiquidBlock fluidBlock)
+            key = BuiltInRegistries.FLUID.getKey(fluidBlock.arch$getFluid());
+        else
+            key = BuiltInRegistries.BLOCK.getKey(block);
+
+        return HEAT_SOURCES.getOrDefault(key, 0);
     }
 
     /**
