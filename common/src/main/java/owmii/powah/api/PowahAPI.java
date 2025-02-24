@@ -78,15 +78,13 @@ public class PowahAPI {
      * @return the heat of the block;
      **/
     public static int getHeatSource(Block block) {
-        ResourceLocation key;
+        // Fix for Tinker's Construct compatibility or other mods that use LiquidBlock
+        if (block instanceof LiquidBlock fluidBlock) {
+            return getHeatSource(fluidBlock.arch$getFluid());
+        } else {
+            return HEAT_SOURCES.getOrDefault(BuiltInRegistries.BLOCK.getKey(block), 0);
+        }
 
-        //Fix for Tinker's Construct compatibility or other mods that use LiquidBlock
-        if (block instanceof LiquidBlock fluidBlock)
-            key = BuiltInRegistries.FLUID.getKey(fluidBlock.arch$getFluid());
-        else
-            key = BuiltInRegistries.BLOCK.getKey(block);
-
-        return HEAT_SOURCES.getOrDefault(key, 0);
     }
 
     /**
@@ -100,7 +98,6 @@ public class PowahAPI {
         return HEAT_SOURCES.getOrDefault(BuiltInRegistries.FLUID.getKey(fluid), 0);
     }
 
-
     /**
      * the heat of the heat source block/fluid block.
      *
@@ -111,7 +108,7 @@ public class PowahAPI {
         int heatFromBlock = getHeatSource(state.getBlock());
         int heatFromFluid = 0;
 
-        if(!state.getFluidState().isEmpty()) {
+        if (!state.getFluidState().isEmpty()) {
             heatFromFluid = getHeatSource(state.getFluidState().getType());
         }
 
