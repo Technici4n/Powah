@@ -19,6 +19,7 @@ import owmii.powah.lib.util.Util;
 
 public class ThermoTile extends AbstractEnergyProvider<ThermoBlock> implements IInventoryHolder, ITankHolder {
     public long generating;
+    public boolean active = false;
 
     public ThermoTile(BlockPos pos, BlockState state, Tier variant) {
         super(Tiles.THERMO_GEN.get(), pos, state, variant);
@@ -50,29 +51,38 @@ public class ThermoTile extends AbstractEnergyProvider<ThermoBlock> implements I
 
         if (!isRemote() && checkRedstone() && !this.tank.isEmpty()) {
             FluidStack fluid = this.tank.getFluid();
-            int fluidCooling = PowahAPI.getCoolant(fluid.getFluid());
-            if (fluidCooling != 0) {
-                BlockPos heatPos = this.worldPosition.below();
-                BlockState state = world.getBlockState(heatPos);
-                Block block = state.getBlock();
+            BlockPos heatPos = this.worldPosition.below();
+            BlockState state = world.getBlockState(heatPos);
+
+            if (canGenerate(state)) {
+                this.active = true;
+                int fluidCooling = PowahAPI.getCoolant(fluid.getFluid());
                 int heat = PowahAPI.getHeatSource(state);
+
                 if (!this.energy.isFull() && heat != 0) {
-                    if (block instanceof LiquidBlock fluidBlock) {
-                        if (!fluidBlock.getFluidState(state).isSource()) {
-                            int level = state.getValue(LiquidBlock.LEVEL);
-                            heat = (int) (heat / ((float) level + 1));
-                        }
+                    if (state.hasProperty(LiquidBlock.LEVEL)) {
+                        heat = (int) (heat / ((float) state.getValue(LiquidBlock.LEVEL) + 1));
                     }
+
                     this.generating = (int) ((heat * Math.max(1D, (1D + fluidCooling) / 2D) * getGeneration()) / 1000.0D);
                     this.energy.produce(this.generating);
+
                     if (world.getGameTime() % 40 == 0L) {
                         this.tank.drain(Util.millibucketAmount(), false);
                     }
                 }
+            } else if (this.active) {
+                resetGeneration();
             }
         }
 
         return flag || this.generating > 0 ? 5 : -1;
+    }
+
+    public boolean canGenerate(BlockState state) {
+        boolean coolant = !this.tank.isEmpty() && PowahAPI.getCoolant(this.tank.getFluid().getFluid()) != 0;
+        boolean heat = PowahAPI.getHeatSource(state) != 0;
+        return !isRemote() && checkRedstone() && coolant && heat;
     }
 
     @Override
@@ -98,5 +108,11 @@ public class ThermoTile extends AbstractEnergyProvider<ThermoBlock> implements I
     @Override
     public boolean canExtract(int slot, ItemStack stack) {
         return true;
+    }
+
+    public void resetGeneration() {
+        this.active = false;
+        this.generating = 0;
+        this.energy.produce(0);
     }
 }
