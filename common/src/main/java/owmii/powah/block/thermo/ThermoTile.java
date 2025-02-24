@@ -47,7 +47,7 @@ public class ThermoTile extends AbstractEnergyProvider<ThermoBlock> implements I
     @Override
     protected int postTick(Level world) {
         boolean flag = chargeItems(1) + extractFromSides(world) > 0;
-        int i = 0;
+
         if (!isRemote() && checkRedstone() && !this.tank.isEmpty()) {
             FluidStack fluid = this.tank.getFluid();
             int fluidCooling = PowahAPI.getCoolant(fluid.getFluid());
@@ -55,7 +55,7 @@ public class ThermoTile extends AbstractEnergyProvider<ThermoBlock> implements I
                 BlockPos heatPos = this.worldPosition.below();
                 BlockState state = world.getBlockState(heatPos);
                 Block block = state.getBlock();
-                int heat = PowahAPI.getHeatSource(block);
+                int heat = PowahAPI.getHeatSource(state);
                 if (!this.energy.isFull() && heat != 0) {
                     if (block instanceof LiquidBlock fluidBlock) {
                         if (!fluidBlock.getFluidState(state).isSource()) {

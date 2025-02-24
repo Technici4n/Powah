@@ -7,6 +7,7 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.ItemLike;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.LiquidBlock;
+import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.material.Fluid;
 import org.apache.commons.lang3.tuple.Pair;
 
@@ -86,6 +87,35 @@ public class PowahAPI {
             key = BuiltInRegistries.BLOCK.getKey(block);
 
         return HEAT_SOURCES.getOrDefault(key, 0);
+    }
+
+    /**
+     *
+     * the heat of the heat source block/fluid block.
+     *
+     * @param fluid: the fluid used as heat source.
+     * @return the heat of the fluid;
+     */
+    public static int getHeatSource(Fluid fluid) {
+        return HEAT_SOURCES.getOrDefault(BuiltInRegistries.FLUID.getKey(fluid), 0);
+    }
+
+
+    /**
+     * the heat of the heat source block/fluid block.
+     *
+     * @param state: the block state used as heat source.
+     * @return the heat of the block;
+     **/
+    public static int getHeatSource(BlockState state) {
+        int heatFromBlock = getHeatSource(state.getBlock());
+        int heatFromFluid = 0;
+
+        if(!state.getFluidState().isEmpty()) {
+            heatFromFluid = getHeatSource(state.getFluidState().getType());
+        }
+
+        return Math.max(heatFromBlock, heatFromFluid);
     }
 
     /**
