@@ -15,5 +15,5 @@ Boyutsal Bağlantı Kartı, bir oyuncuyu boyutlar arasında bir Oyuncu Vericisi 
 Oyuncu vericisine eklemeden önce onu kendinize bağlamanız gerekir, Bağlamak için sağ tıklayın. 
 
 <Row>
-<RecipeFor id="powah:binding_card_dim" />
+<RecipesFor id="powah:binding_card_dim" />
 </Row>

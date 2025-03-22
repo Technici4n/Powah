@@ -20,7 +20,7 @@ item_ids:
 
 當暴露在陽光下時產生(FE)能量，高等級會產生更多的FE/t，任何阻擋在上方的方塊都會使其停止運作。 
 
-|                                              | info.lollipop.capacity                                   | info.lollipop.generates                                    | info.lollipop.max.extract                             |
+|                                              | Capacity                                                 | Generates                                                  | Max Extract                                           |
 | -------------------------------------------- | -------------------------------------------------------- | ---------------------------------------------------------- | ----------------------------------------------------- |
 | <ItemLink id="powah:solar_panel_starter" />  | <powah:EnergyCapacity id="powah:solar_panel_starter" />  | <powah:EnergyGeneration id="powah:solar_panel_starter" />  | <powah:EnergyMaxIO id="powah:solar_panel_starter" />  |
 | <ItemLink id="powah:solar_panel_basic" />    | <powah:EnergyCapacity id="powah:solar_panel_basic" />    | <powah:EnergyGeneration id="powah:solar_panel_basic" />    | <powah:EnergyMaxIO id="powah:solar_panel_basic" />    |
@@ -31,11 +31,11 @@ item_ids:
 | <ItemLink id="powah:solar_panel_nitro" />    | <powah:EnergyCapacity id="powah:solar_panel_nitro" />    | <powah:EnergyGeneration id="powah:solar_panel_nitro" />    | <powah:EnergyMaxIO id="powah:solar_panel_nitro" />    |
 
 <Row>
-<RecipeFor id="powah:solar_panel_starter" />
-<RecipeFor id="powah:solar_panel_basic" />
-<RecipeFor id="powah:solar_panel_hardened" />
-<RecipeFor id="powah:solar_panel_blazing" />
-<RecipeFor id="powah:solar_panel_niotic" />
-<RecipeFor id="powah:solar_panel_spirited" />
-<RecipeFor id="powah:solar_panel_nitro" />
+<RecipesFor id="powah:solar_panel_starter" />
+<RecipesFor id="powah:solar_panel_basic" />
+<RecipesFor id="powah:solar_panel_hardened" />
+<RecipesFor id="powah:solar_panel_blazing" />
+<RecipesFor id="powah:solar_panel_niotic" />
+<RecipesFor id="powah:solar_panel_spirited" />
+<RecipesFor id="powah:solar_panel_nitro" />
 </Row>

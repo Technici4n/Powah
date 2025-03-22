@@ -19,5 +19,5 @@ Bağlantı Modu: enerji veren küre ve çubuklar gibi bağlanabilir blokları ba
 Döndür Modu: blokları yatay olarak döndürmek için kullanılır. 
 
 <Row>
-<RecipeFor id="powah:wrench" />
+<RecipesFor id="powah:wrench" />
 </Row>

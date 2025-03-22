@@ -15,5 +15,5 @@ item_ids:
 对僵尸或尸壳使用天线珍珠以获得。 
 
 <Row>
-<RecipeFor id="powah:player_aerial_pearl" />
+<RecipesFor id="powah:player_aerial_pearl" />
 </Row>

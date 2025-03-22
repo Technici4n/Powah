@@ -13,5 +13,5 @@ item_ids:
 扔出去會引起閃電。將雪球放入充能室獲得。 
 
 <Row>
-<RecipeFor id="powah:charged_snowball" />
+<RecipesFor id="powah:charged_snowball" />
 </Row>

@@ -29,11 +29,11 @@ Oyuncu envanterindeyken eşyaları şarj edin, ayrıca bir Ender Hücresi GUI'si
 | <ItemLink id="powah:battery_nitro" />    | <powah:EnergyCapacity id="powah:battery_nitro" />    | <powah:EnergyMaxIO id="powah:battery_nitro" />    |
 
 <Row>
-<RecipeFor id="powah:battery_starter" />
-<RecipeFor id="powah:battery_basic" />
-<RecipeFor id="powah:battery_hardened" />
-<RecipeFor id="powah:battery_blazing" />
-<RecipeFor id="powah:battery_niotic" />
-<RecipeFor id="powah:battery_spirited" />
-<RecipeFor id="powah:battery_nitro" />
+<RecipesFor id="powah:battery_starter" />
+<RecipesFor id="powah:battery_basic" />
+<RecipesFor id="powah:battery_hardened" />
+<RecipesFor id="powah:battery_blazing" />
+<RecipesFor id="powah:battery_niotic" />
+<RecipesFor id="powah:battery_spirited" />
+<RecipesFor id="powah:battery_nitro" />
 </Row>

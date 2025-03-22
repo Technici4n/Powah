@@ -20,7 +20,7 @@ item_ids:
 
 用於給相鄰庫存(如箱子,但不能是需要能量的庫存)中的可充能的物品充能. 
 
-|                                                | info.lollipop.capacity                                     | info.lollipop.max.io                                    |
+|                                                | Capacity                                                   | Max I/O                                                 |
 | ---------------------------------------------- | ---------------------------------------------------------- | ------------------------------------------------------- |
 | <ItemLink id="powah:energy_hopper_starter" />  | <powah:EnergyCapacity id="powah:energy_hopper_starter" />  | <powah:EnergyMaxIO id="powah:energy_hopper_starter" />  |
 | <ItemLink id="powah:energy_hopper_basic" />    | <powah:EnergyCapacity id="powah:energy_hopper_basic" />    | <powah:EnergyMaxIO id="powah:energy_hopper_basic" />    |
@@ -31,11 +31,11 @@ item_ids:
 | <ItemLink id="powah:energy_hopper_nitro" />    | <powah:EnergyCapacity id="powah:energy_hopper_nitro" />    | <powah:EnergyMaxIO id="powah:energy_hopper_nitro" />    |
 
 <Row>
-<RecipeFor id="powah:energy_hopper_starter" />
-<RecipeFor id="powah:energy_hopper_basic" />
-<RecipeFor id="powah:energy_hopper_hardened" />
-<RecipeFor id="powah:energy_hopper_blazing" />
-<RecipeFor id="powah:energy_hopper_niotic" />
-<RecipeFor id="powah:energy_hopper_spirited" />
-<RecipeFor id="powah:energy_hopper_nitro" />
+<RecipesFor id="powah:energy_hopper_starter" />
+<RecipesFor id="powah:energy_hopper_basic" />
+<RecipesFor id="powah:energy_hopper_hardened" />
+<RecipesFor id="powah:energy_hopper_blazing" />
+<RecipesFor id="powah:energy_hopper_niotic" />
+<RecipesFor id="powah:energy_hopper_spirited" />
+<RecipesFor id="powah:energy_hopper_nitro" />
 </Row>

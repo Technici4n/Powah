@@ -19,5 +19,5 @@ item_ids:
 旋轉模式: 用於水平旋轉方塊。 
 
 <Row>
-<RecipeFor id="powah:wrench" />
+<RecipesFor id="powah:wrench" />
 </Row>

@@ -15,5 +15,5 @@ Cartão de Ligação (Dimensional) é usado para conectar um jogador a um Transm
 Você precisa vinculá-lo a você antes de adicioná-lo ao Transmissor do Jogador. Clique com o botão direito para vinculá-lo. 
 
 <Row>
-<RecipeFor id="powah:binding_card_dim" />
+<RecipesFor id="powah:binding_card_dim" />
 </Row>

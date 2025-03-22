@@ -13,5 +13,5 @@ item_ids:
 Bir Güneş Paneli'ne Ender'in Lensi Uygulandığında blokların içinden görecektir. 
 
 <Row>
-<RecipeFor id="powah:lens_of_ender" />
+<RecipesFor id="powah:lens_of_ender" />
 </Row>

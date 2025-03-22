@@ -20,7 +20,7 @@ item_ids:
 
 Le panneau solaire est un générateur à FE qui génère de l'énergie lorsqu'il est exposé à la lumière du soleil, les tiers supérieurs génèrent plus de FE/t, tout bloc qui arrête la lumière au-dessus du panneau solaire arrêtera sa production. 
 
-|                                              | info.lollipop.capacity                                   | info.lollipop.generates                                    | info.lollipop.max.extract                             |
+|                                              | Capacity                                                 | Generates                                                  | Max Extract                                           |
 | -------------------------------------------- | -------------------------------------------------------- | ---------------------------------------------------------- | ----------------------------------------------------- |
 | <ItemLink id="powah:solar_panel_starter" />  | <powah:EnergyCapacity id="powah:solar_panel_starter" />  | <powah:EnergyGeneration id="powah:solar_panel_starter" />  | <powah:EnergyMaxIO id="powah:solar_panel_starter" />  |
 | <ItemLink id="powah:solar_panel_basic" />    | <powah:EnergyCapacity id="powah:solar_panel_basic" />    | <powah:EnergyGeneration id="powah:solar_panel_basic" />    | <powah:EnergyMaxIO id="powah:solar_panel_basic" />    |
@@ -31,11 +31,11 @@ Le panneau solaire est un générateur à FE qui génère de l'énergie lorsqu'i
 | <ItemLink id="powah:solar_panel_nitro" />    | <powah:EnergyCapacity id="powah:solar_panel_nitro" />    | <powah:EnergyGeneration id="powah:solar_panel_nitro" />    | <powah:EnergyMaxIO id="powah:solar_panel_nitro" />    |
 
 <Row>
-<RecipeFor id="powah:solar_panel_starter" />
-<RecipeFor id="powah:solar_panel_basic" />
-<RecipeFor id="powah:solar_panel_hardened" />
-<RecipeFor id="powah:solar_panel_blazing" />
-<RecipeFor id="powah:solar_panel_niotic" />
-<RecipeFor id="powah:solar_panel_spirited" />
-<RecipeFor id="powah:solar_panel_nitro" />
+<RecipesFor id="powah:solar_panel_starter" />
+<RecipesFor id="powah:solar_panel_basic" />
+<RecipesFor id="powah:solar_panel_hardened" />
+<RecipesFor id="powah:solar_panel_blazing" />
+<RecipesFor id="powah:solar_panel_niotic" />
+<RecipesFor id="powah:solar_panel_spirited" />
+<RecipesFor id="powah:solar_panel_nitro" />
 </Row>

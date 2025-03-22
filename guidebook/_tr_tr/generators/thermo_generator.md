@@ -31,11 +31,11 @@ Termo Jeneratör, lav gibi yüksek sıcaklıktaki bir bloğun/sıvının üzerin
 | <ItemLink id="powah:thermo_generator_nitro" />    | <powah:EnergyCapacity id="powah:thermo_generator_nitro" />    | <powah:EnergyGeneration id="powah:thermo_generator_nitro" />    | <powah:EnergyMaxIO id="powah:thermo_generator_nitro" />    |
 
 <Row>
-<RecipeFor id="powah:thermo_generator_starter" />
-<RecipeFor id="powah:thermo_generator_basic" />
-<RecipeFor id="powah:thermo_generator_hardened" />
-<RecipeFor id="powah:thermo_generator_blazing" />
-<RecipeFor id="powah:thermo_generator_niotic" />
-<RecipeFor id="powah:thermo_generator_spirited" />
-<RecipeFor id="powah:thermo_generator_nitro" />
+<RecipesFor id="powah:thermo_generator_starter" />
+<RecipesFor id="powah:thermo_generator_basic" />
+<RecipesFor id="powah:thermo_generator_hardened" />
+<RecipesFor id="powah:thermo_generator_blazing" />
+<RecipesFor id="powah:thermo_generator_niotic" />
+<RecipesFor id="powah:thermo_generator_spirited" />
+<RecipesFor id="powah:thermo_generator_nitro" />
 </Row>

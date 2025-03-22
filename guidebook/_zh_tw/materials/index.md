@@ -6,3 +6,5 @@ navigation:
 ---
 
 # 材料
+
+<SubPages />

@@ -31,11 +31,11 @@ Oyuncu Vericisi, normal bir bağlantı kartına sahip olduğunda aynı boyutta v
 | <ItemLink id="powah:player_transmitter_nitro" />    | <powah:EnergyCapacity id="powah:player_transmitter_nitro" />    | <powah:EnergyMaxIO id="powah:player_transmitter_nitro" />    |
 
 <Row>
-<RecipeFor id="powah:player_transmitter_starter" />
-<RecipeFor id="powah:player_transmitter_basic" />
-<RecipeFor id="powah:player_transmitter_hardened" />
-<RecipeFor id="powah:player_transmitter_blazing" />
-<RecipeFor id="powah:player_transmitter_niotic" />
-<RecipeFor id="powah:player_transmitter_spirited" />
-<RecipeFor id="powah:player_transmitter_nitro" />
+<RecipesFor id="powah:player_transmitter_starter" />
+<RecipesFor id="powah:player_transmitter_basic" />
+<RecipesFor id="powah:player_transmitter_hardened" />
+<RecipesFor id="powah:player_transmitter_blazing" />
+<RecipesFor id="powah:player_transmitter_niotic" />
+<RecipesFor id="powah:player_transmitter_spirited" />
+<RecipesFor id="powah:player_transmitter_nitro" />
 </Row>

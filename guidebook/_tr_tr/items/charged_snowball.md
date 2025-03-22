@@ -13,5 +13,5 @@ item_ids:
 Bir Şarjlı Kartopu fırlatmak, yere çarptığında veya mob'a çarptığında bir yıldırımın ortaya çıkmasına neden olur, bir kartopuna enerji vererek elde edilir 
 
 <Row>
-<RecipeFor id="powah:charged_snowball" />
+<RecipesFor id="powah:charged_snowball" />
 </Row>

@@ -15,5 +15,5 @@ Utilisée pour fabriquer le transmetteur joueur.
 Vous pouvez l'obtenir en utilisant une perle aérienne sur un zombie ou un zombie momifié. 
 
 <Row>
-<RecipeFor id="powah:player_aerial_pearl" />
+<RecipesFor id="powah:player_aerial_pearl" />
 </Row>

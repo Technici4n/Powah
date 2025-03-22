@@ -15,5 +15,5 @@ item_ids:
 Чтобы её получить, нажмите обычной эфирной жемчужиной по зомби или кадавру. 
 
 <Row>
-<RecipeFor id="powah:player_aerial_pearl" />
+<RecipesFor id="powah:player_aerial_pearl" />
 </Row>

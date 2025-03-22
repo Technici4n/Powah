@@ -15,5 +15,5 @@ item_ids:
 你首先需要将自己绑定与之绑定。右击以完成。 
 
 <Row>
-<RecipeFor id="powah:binding_card_dim" />
+<RecipesFor id="powah:binding_card_dim" />
 </Row>

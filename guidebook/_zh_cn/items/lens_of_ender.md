@@ -13,5 +13,5 @@ item_ids:
 右击装至太阳能板上时可以使之无视上方方块产能。 
 
 <Row>
-<RecipeFor id="powah:lens_of_ender" />
+<RecipesFor id="powah:lens_of_ender" />
 </Row>

@@ -33,11 +33,11 @@ Güç aktarmak istediğiniz Ender Hücresi'nin geçerli kapasiteye sahip aktif b
 | <ItemLink id="powah:ender_cell_nitro" />    | <powah:EnergyMaxIO id="powah:ender_cell_nitro" />    |
 
 <Row>
-<RecipeFor id="powah:ender_cell_starter" />
-<RecipeFor id="powah:ender_cell_basic" />
-<RecipeFor id="powah:ender_cell_hardened" />
-<RecipeFor id="powah:ender_cell_blazing" />
-<RecipeFor id="powah:ender_cell_niotic" />
-<RecipeFor id="powah:ender_cell_spirited" />
-<RecipeFor id="powah:ender_cell_nitro" />
+<RecipesFor id="powah:ender_cell_starter" />
+<RecipesFor id="powah:ender_cell_basic" />
+<RecipesFor id="powah:ender_cell_hardened" />
+<RecipesFor id="powah:ender_cell_blazing" />
+<RecipesFor id="powah:ender_cell_niotic" />
+<RecipesFor id="powah:ender_cell_spirited" />
+<RecipesFor id="powah:ender_cell_nitro" />
 </Row>

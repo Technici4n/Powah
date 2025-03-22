@@ -24,7 +24,7 @@ Enerjilendiren Küre, eşyalara enerji vermek için kullanılan bir bloktur, ça
 Küre enerji gerektirmez ancak çubukların çalışması için kablolara veya herhangi bir Forge Enerji (FE) bloğuna yerleştirilmesi gerekir. 
 
 <Row>
-<RecipeFor id="powah:energizing_orb" />
+<RecipesFor id="powah:energizing_orb" />
 </Row>
 |                                                 | Kapasite                                                    | Maks G/Ç                                                 |
 | ----------------------------------------------- | ----------------------------------------------------------- | -------------------------------------------------------- |
@@ -37,11 +37,11 @@ Küre enerji gerektirmez ancak çubukların çalışması için kablolara veya h
 | <ItemLink id="powah:energizing_rod_nitro" />    | <powah:EnergyCapacity id="powah:energizing_rod_nitro" />    | <powah:EnergyMaxIO id="powah:energizing_rod_nitro" />    |
 
 <Row>
-<RecipeFor id="powah:energizing_rod_starter" />
-<RecipeFor id="powah:energizing_rod_basic" />
-<RecipeFor id="powah:energizing_rod_hardened" />
-<RecipeFor id="powah:energizing_rod_blazing" />
-<RecipeFor id="powah:energizing_rod_niotic" />
-<RecipeFor id="powah:energizing_rod_spirited" />
-<RecipeFor id="powah:energizing_rod_nitro" />
+<RecipesFor id="powah:energizing_rod_starter" />
+<RecipesFor id="powah:energizing_rod_basic" />
+<RecipesFor id="powah:energizing_rod_hardened" />
+<RecipesFor id="powah:energizing_rod_blazing" />
+<RecipesFor id="powah:energizing_rod_niotic" />
+<RecipesFor id="powah:energizing_rod_spirited" />
+<RecipesFor id="powah:energizing_rod_nitro" />
 </Row>

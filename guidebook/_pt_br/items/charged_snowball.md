@@ -13,5 +13,5 @@ item_ids:
 Lançar uma Charged Snowball fará com que um raio apareça ao atingir o solo ou quando atingir o mob, obtido pela energização de uma bola de neve. 
 
 <Row>
-<RecipeFor id="powah:charged_snowball" />
+<RecipesFor id="powah:charged_snowball" />
 </Row>

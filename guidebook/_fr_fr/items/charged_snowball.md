@@ -13,5 +13,5 @@ item_ids:
 Le lancement d'une boule de neige chargée provoque la formation d'un éclair lorsqu'elle touche le sol ou un monstre, obtenu en chargeant une boule de neige. 
 
 <Row>
-<RecipeFor id="powah:charged_snowball" />
+<RecipesFor id="powah:charged_snowball" />
 </Row>

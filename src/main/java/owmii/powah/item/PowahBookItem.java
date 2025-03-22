@@ -1,15 +1,19 @@
 package owmii.powah.item;
 
+import guideme.GuidesCommon;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResultHolder;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Rarity;
 import net.minecraft.world.level.Level;
-import owmii.powah.client.screen.Screens;
+import owmii.powah.Powah;
 import owmii.powah.lib.item.ItemBase;
 
 public class PowahBookItem extends ItemBase {
+    public static final ResourceLocation GUIDE_ID = Powah.id("book");
+
     public PowahBookItem(Properties properties) {
         super(properties.rarity(Rarity.UNCOMMON));
     }
@@ -17,13 +21,7 @@ public class PowahBookItem extends ItemBase {
     @Override
     public InteractionResultHolder<ItemStack> use(Level worldIn, Player playerIn, InteractionHand handIn) {
         ItemStack stack = playerIn.getItemInHand(handIn);
-        if (worldIn.isClientSide) {
-            Screens.openManualScreen();
-//            RecipeManager manager = Minecraft.getInstance().world.getRecipeManager();
-//            System.out.println(manager.getRecipes(IRecipeType.CRAFTING).values().stream().filter(recipe -> recipe.getRecipeOutput().getItem() == Itms.DIELECTRIC_PASTE.get())
-//                    .collect(Collectors.toList()));
-
-        }
+        GuidesCommon.openGuide(playerIn, GUIDE_ID);
         return InteractionResultHolder.success(stack);
     }
 }

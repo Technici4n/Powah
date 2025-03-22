@@ -35,12 +35,12 @@ Também pode ser usado para adicionar capacidade a um canal da Rede Ender clican
 | <ItemLink id="powah:energy_cell_creative" /> | <powah:EnergyCapacity id="powah:energy_cell_creative" /> | <powah:EnergyMaxIO id="powah:energy_cell_creative" /> |
 
 <Row>
-<RecipeFor id="powah:energy_cell_starter" />
-<RecipeFor id="powah:energy_cell_basic" />
-<RecipeFor id="powah:energy_cell_hardened" />
-<RecipeFor id="powah:energy_cell_blazing" />
-<RecipeFor id="powah:energy_cell_niotic" />
-<RecipeFor id="powah:energy_cell_spirited" />
-<RecipeFor id="powah:energy_cell_nitro" />
-<RecipeFor id="powah:energy_cell_creative" />
+<RecipesFor id="powah:energy_cell_starter" />
+<RecipesFor id="powah:energy_cell_basic" />
+<RecipesFor id="powah:energy_cell_hardened" />
+<RecipesFor id="powah:energy_cell_blazing" />
+<RecipesFor id="powah:energy_cell_niotic" />
+<RecipesFor id="powah:energy_cell_spirited" />
+<RecipesFor id="powah:energy_cell_nitro" />
+<RecipesFor id="powah:energy_cell_creative" />
 </Row>

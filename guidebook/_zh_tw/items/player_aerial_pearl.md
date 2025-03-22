@@ -15,5 +15,5 @@ item_ids:
 使用天線珍珠右鍵殭屍或屍殼獲得。 
 
 <Row>
-<RecipeFor id="powah:player_aerial_pearl" />
+<RecipesFor id="powah:player_aerial_pearl" />
 </Row>

@@ -15,5 +15,5 @@ Player Aerial Pearl used to craft the player transmitter.
 You can get it by using an Aerial Pearl on a Zombie or Husk. 
 
 <Row>
-<RecipeFor id="powah:player_aerial_pearl" />
+<RecipesFor id="powah:player_aerial_pearl" />
 </Row>

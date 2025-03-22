@@ -21,7 +21,6 @@ import owmii.powah.block.Tier;
 import owmii.powah.config.IConfigHolder;
 import owmii.powah.config.IEnergyConfig;
 import owmii.powah.lib.client.util.Text;
-import owmii.powah.lib.client.wiki.page.panel.InfoBox;
 import owmii.powah.lib.item.EnergyBlockItem;
 import owmii.powah.lib.item.IEnergyItemProvider;
 import owmii.powah.lib.logistics.Transfer;
@@ -31,7 +30,7 @@ import owmii.powah.util.EnergyUtil;
 import owmii.powah.util.Util;
 
 public abstract class AbstractEnergyBlock<C extends IEnergyConfig<Tier>, B extends AbstractEnergyBlock<C, B>> extends AbstractBlock<Tier, B>
-        implements IConfigHolder<Tier, C>, InfoBox.IInfoBoxHolder, IEnergyItemProvider {
+        implements IConfigHolder<Tier, C>, IEnergyItemProvider {
     public AbstractEnergyBlock(Properties properties) {
         this(properties, IVariant.getEmpty());
     }
@@ -123,17 +122,5 @@ public abstract class AbstractEnergyBlock<C extends IEnergyConfig<Tier>, B exten
     }
 
     public void additionalEnergyInfo(ItemStack stack, Energy.Item energy, List<Component> tooltip) {
-    }
-
-    @Override
-    public InfoBox getInfoBox(ItemStack stack, InfoBox box) {
-        Energy.ifPresent(stack, storage -> {
-            if (storage.getMaxEnergyStored() > 0)
-                box.set(Component.translatable("info.lollipop.capacity"),
-                        Component.translatable("info.lollipop.fe", Util.addCommas(storage.getCapacity())));
-            box.set(Component.translatable("info.lollipop.max.io"),
-                    Component.translatable("info.lollipop.fe.pet.tick", Util.addCommas(storage.getMaxExtract())));
-        });
-        return box;
     }
 }

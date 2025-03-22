@@ -20,7 +20,7 @@ item_ids:
 
 L'entonnoir de l'End est un bloc utilisé pour charger des objets à l'intérieur d'un inventaire adjacent comme un coffre ou tout bloc avec un inventaire accessible et n'ayant pas d'énergie. 
 
-|                                                | info.lollipop.capacity                                     | info.lollipop.max.io                                    |
+|                                                | Capacity                                                   | Max I/O                                                 |
 | ---------------------------------------------- | ---------------------------------------------------------- | ------------------------------------------------------- |
 | <ItemLink id="powah:energy_hopper_starter" />  | <powah:EnergyCapacity id="powah:energy_hopper_starter" />  | <powah:EnergyMaxIO id="powah:energy_hopper_starter" />  |
 | <ItemLink id="powah:energy_hopper_basic" />    | <powah:EnergyCapacity id="powah:energy_hopper_basic" />    | <powah:EnergyMaxIO id="powah:energy_hopper_basic" />    |
@@ -31,11 +31,11 @@ L'entonnoir de l'End est un bloc utilisé pour charger des objets à l'intérieu
 | <ItemLink id="powah:energy_hopper_nitro" />    | <powah:EnergyCapacity id="powah:energy_hopper_nitro" />    | <powah:EnergyMaxIO id="powah:energy_hopper_nitro" />    |
 
 <Row>
-<RecipeFor id="powah:energy_hopper_starter" />
-<RecipeFor id="powah:energy_hopper_basic" />
-<RecipeFor id="powah:energy_hopper_hardened" />
-<RecipeFor id="powah:energy_hopper_blazing" />
-<RecipeFor id="powah:energy_hopper_niotic" />
-<RecipeFor id="powah:energy_hopper_spirited" />
-<RecipeFor id="powah:energy_hopper_nitro" />
+<RecipesFor id="powah:energy_hopper_starter" />
+<RecipesFor id="powah:energy_hopper_basic" />
+<RecipesFor id="powah:energy_hopper_hardened" />
+<RecipesFor id="powah:energy_hopper_blazing" />
+<RecipesFor id="powah:energy_hopper_niotic" />
+<RecipesFor id="powah:energy_hopper_spirited" />
+<RecipesFor id="powah:energy_hopper_nitro" />
 </Row>

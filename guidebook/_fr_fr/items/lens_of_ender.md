@@ -13,5 +13,5 @@ item_ids:
 L'application d'une lentille de l'End sur un panneau solaire lui permet de voir à travers des blocs. 
 
 <Row>
-<RecipeFor id="powah:lens_of_ender" />
+<RecipesFor id="powah:lens_of_ender" />
 </Row>

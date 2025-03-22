@@ -15,5 +15,5 @@ item_ids:
 プレイヤートランスミッターにカードを挿入する前にプレイヤーとリンクする必要があります。右クリックしてバインドします。 
 
 <Row>
-<RecipeFor id="powah:binding_card" />
+<RecipesFor id="powah:binding_card" />
 </Row>

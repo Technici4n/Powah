@@ -19,5 +19,5 @@ Modo de link: usado para vincular blocos vinculáveis como Orbe Energizante e Ha
 Modo de rotação: usado para girar blocos horizontalmente. 
 
 <Row>
-<RecipeFor id="powah:wrench" />
+<RecipesFor id="powah:wrench" />
 </Row>

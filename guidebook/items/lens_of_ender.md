@@ -13,5 +13,5 @@ item_ids:
 When Applying a Lens Of Ender to a Solar Panel will make it see through blocks. 
 
 <Row>
-<RecipeFor id="powah:lens_of_ender" />
+<RecipesFor id="powah:lens_of_ender" />
 </Row>

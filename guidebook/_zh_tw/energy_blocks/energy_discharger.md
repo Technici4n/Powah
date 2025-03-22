@@ -20,7 +20,7 @@ item_ids:
 
 用於將已充電的物品中吸取能量(FE)出來,並儲存在其庫存中.若連接線纜可導出已儲存的能量,然後再次使用. 
 
-|                                                    | info.lollipop.capacity                                         | info.lollipop.max.io                                        |
+|                                                    | Capacity                                                       | Max I/O                                                     |
 | -------------------------------------------------- | -------------------------------------------------------------- | ----------------------------------------------------------- |
 | <ItemLink id="powah:energy_discharger_starter" />  | <powah:EnergyCapacity id="powah:energy_discharger_starter" />  | <powah:EnergyMaxIO id="powah:energy_discharger_starter" />  |
 | <ItemLink id="powah:energy_discharger_basic" />    | <powah:EnergyCapacity id="powah:energy_discharger_basic" />    | <powah:EnergyMaxIO id="powah:energy_discharger_basic" />    |
@@ -31,11 +31,11 @@ item_ids:
 | <ItemLink id="powah:energy_discharger_nitro" />    | <powah:EnergyCapacity id="powah:energy_discharger_nitro" />    | <powah:EnergyMaxIO id="powah:energy_discharger_nitro" />    |
 
 <Row>
-<RecipeFor id="powah:energy_discharger_starter" />
-<RecipeFor id="powah:energy_discharger_basic" />
-<RecipeFor id="powah:energy_discharger_hardened" />
-<RecipeFor id="powah:energy_discharger_blazing" />
-<RecipeFor id="powah:energy_discharger_niotic" />
-<RecipeFor id="powah:energy_discharger_spirited" />
-<RecipeFor id="powah:energy_discharger_nitro" />
+<RecipesFor id="powah:energy_discharger_starter" />
+<RecipesFor id="powah:energy_discharger_basic" />
+<RecipesFor id="powah:energy_discharger_hardened" />
+<RecipesFor id="powah:energy_discharger_blazing" />
+<RecipesFor id="powah:energy_discharger_niotic" />
+<RecipesFor id="powah:energy_discharger_spirited" />
+<RecipesFor id="powah:energy_discharger_nitro" />
 </Row>

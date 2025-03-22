@@ -33,11 +33,11 @@ High tiers generate more FE/t and it has higher energy output, also they burn th
 | <ItemLink id="powah:furnator_nitro" />    | <powah:EnergyCapacity id="powah:furnator_nitro" />    | <powah:EnergyGeneration id="powah:furnator_nitro" />    | <powah:EnergyMaxIO id="powah:furnator_nitro" />    |
 
 <Row>
-<RecipeFor id="powah:furnator_starter" />
-<RecipeFor id="powah:furnator_basic" />
-<RecipeFor id="powah:furnator_hardened" />
-<RecipeFor id="powah:furnator_blazing" />
-<RecipeFor id="powah:furnator_niotic" />
-<RecipeFor id="powah:furnator_spirited" />
-<RecipeFor id="powah:furnator_nitro" />
+<RecipesFor id="powah:furnator_starter" />
+<RecipesFor id="powah:furnator_basic" />
+<RecipesFor id="powah:furnator_hardened" />
+<RecipesFor id="powah:furnator_blazing" />
+<RecipesFor id="powah:furnator_niotic" />
+<RecipesFor id="powah:furnator_spirited" />
+<RecipesFor id="powah:furnator_nitro" />
 </Row>

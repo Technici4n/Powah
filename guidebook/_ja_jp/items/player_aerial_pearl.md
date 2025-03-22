@@ -15,5 +15,5 @@ item_ids:
 ゾンビやハスクにエアリアルパールを使用することで手に入れることができます。 
 
 <Row>
-<RecipeFor id="powah:player_aerial_pearl" />
+<RecipesFor id="powah:player_aerial_pearl" />
 </Row>

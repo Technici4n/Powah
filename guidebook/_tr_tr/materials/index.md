@@ -6,3 +6,5 @@ navigation:
 ---
 
 # Malzemeler
+
+<SubPages />

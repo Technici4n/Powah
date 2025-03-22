@@ -23,7 +23,7 @@ item_ids:
 
 能量單元也可以用來升級一個終界網路其中一個頻道的最大儲電量(FE)，透過Shift點擊能量單元到終界單元的GUI，如果能量單元包含能量，也將應用到終界網路頻道中。 
 
-|                                              | info.lollipop.capacity                                   | info.lollipop.max.io                                  |
+|                                              | Capacity                                                 | Max I/O                                               |
 | -------------------------------------------- | -------------------------------------------------------- | ----------------------------------------------------- |
 | <ItemLink id="powah:energy_cell_starter" />  | <powah:EnergyCapacity id="powah:energy_cell_starter" />  | <powah:EnergyMaxIO id="powah:energy_cell_starter" />  |
 | <ItemLink id="powah:energy_cell_basic" />    | <powah:EnergyCapacity id="powah:energy_cell_basic" />    | <powah:EnergyMaxIO id="powah:energy_cell_basic" />    |
@@ -35,12 +35,12 @@ item_ids:
 | <ItemLink id="powah:energy_cell_creative" /> | <powah:EnergyCapacity id="powah:energy_cell_creative" /> | <powah:EnergyMaxIO id="powah:energy_cell_creative" /> |
 
 <Row>
-<RecipeFor id="powah:energy_cell_starter" />
-<RecipeFor id="powah:energy_cell_basic" />
-<RecipeFor id="powah:energy_cell_hardened" />
-<RecipeFor id="powah:energy_cell_blazing" />
-<RecipeFor id="powah:energy_cell_niotic" />
-<RecipeFor id="powah:energy_cell_spirited" />
-<RecipeFor id="powah:energy_cell_nitro" />
-<RecipeFor id="powah:energy_cell_creative" />
+<RecipesFor id="powah:energy_cell_starter" />
+<RecipesFor id="powah:energy_cell_basic" />
+<RecipesFor id="powah:energy_cell_hardened" />
+<RecipesFor id="powah:energy_cell_blazing" />
+<RecipesFor id="powah:energy_cell_niotic" />
+<RecipesFor id="powah:energy_cell_spirited" />
+<RecipesFor id="powah:energy_cell_nitro" />
+<RecipesFor id="powah:energy_cell_creative" />
 </Row>

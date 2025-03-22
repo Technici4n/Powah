@@ -15,5 +15,5 @@ Cartão de Ligação usado para vincular um jogador a um Transmissor de Jogador 
 Você precisa vinculá-lo a você antes de adicioná-lo ao Transmissor de Jogador. Clique com o botão direito para vinculá-lo. 
 
 <Row>
-<RecipeFor id="powah:binding_card" />
+<RecipesFor id="powah:binding_card" />
 </Row>

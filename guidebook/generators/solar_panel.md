@@ -31,11 +31,11 @@ The Solar Panel is an FE generator that generates energy when exposed to sunligh
 | <ItemLink id="powah:solar_panel_nitro" />    | <powah:EnergyCapacity id="powah:solar_panel_nitro" />    | <powah:EnergyGeneration id="powah:solar_panel_nitro" />    | <powah:EnergyMaxIO id="powah:solar_panel_nitro" />    |
 
 <Row>
-<RecipeFor id="powah:solar_panel_starter" />
-<RecipeFor id="powah:solar_panel_basic" />
-<RecipeFor id="powah:solar_panel_hardened" />
-<RecipeFor id="powah:solar_panel_blazing" />
-<RecipeFor id="powah:solar_panel_niotic" />
-<RecipeFor id="powah:solar_panel_spirited" />
-<RecipeFor id="powah:solar_panel_nitro" />
+<RecipesFor id="powah:solar_panel_starter" />
+<RecipesFor id="powah:solar_panel_basic" />
+<RecipesFor id="powah:solar_panel_hardened" />
+<RecipesFor id="powah:solar_panel_blazing" />
+<RecipesFor id="powah:solar_panel_niotic" />
+<RecipesFor id="powah:solar_panel_spirited" />
+<RecipesFor id="powah:solar_panel_nitro" />
 </Row>

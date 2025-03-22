@@ -13,5 +13,5 @@ item_ids:
 Throwing a Charged Snowball will cause a bolt of lightning to spawn when hitting the ground or when it hits the mob, obtained by energizing a snowball. 
 
 <Row>
-<RecipeFor id="powah:charged_snowball" />
+<RecipesFor id="powah:charged_snowball" />
 </Row>

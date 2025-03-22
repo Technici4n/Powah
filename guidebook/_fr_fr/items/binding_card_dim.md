@@ -15,5 +15,5 @@ Utilisée pour lier un joueur à un transmetteur joueur à travers les dimension
 Vous devez le lier à vous avant de l'ajouter au transmetteur joueur. Clic droit pour le lier. 
 
 <Row>
-<RecipeFor id="powah:binding_card_dim" />
+<RecipesFor id="powah:binding_card_dim" />
 </Row>

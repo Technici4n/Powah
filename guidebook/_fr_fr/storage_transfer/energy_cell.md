@@ -23,7 +23,7 @@ La cellule d'énergie est un bloc utilisé pour stocker de l'énergie (FE).
 
 Peut également être utilisé pour ajouter de la capacité à un canal du réseau de l'End en faisant clic droit avec dans une cellule de l'End. Si la cellule d'énergie contient de l'énergie, elle sera également appliquée au canal du réseau de l'End. 
 
-|                                              | info.lollipop.capacity                                   | info.lollipop.max.io                                  |
+|                                              | Capacity                                                 | Max I/O                                               |
 | -------------------------------------------- | -------------------------------------------------------- | ----------------------------------------------------- |
 | <ItemLink id="powah:energy_cell_starter" />  | <powah:EnergyCapacity id="powah:energy_cell_starter" />  | <powah:EnergyMaxIO id="powah:energy_cell_starter" />  |
 | <ItemLink id="powah:energy_cell_basic" />    | <powah:EnergyCapacity id="powah:energy_cell_basic" />    | <powah:EnergyMaxIO id="powah:energy_cell_basic" />    |
@@ -35,12 +35,12 @@ Peut également être utilisé pour ajouter de la capacité à un canal du rése
 | <ItemLink id="powah:energy_cell_creative" /> | <powah:EnergyCapacity id="powah:energy_cell_creative" /> | <powah:EnergyMaxIO id="powah:energy_cell_creative" /> |
 
 <Row>
-<RecipeFor id="powah:energy_cell_starter" />
-<RecipeFor id="powah:energy_cell_basic" />
-<RecipeFor id="powah:energy_cell_hardened" />
-<RecipeFor id="powah:energy_cell_blazing" />
-<RecipeFor id="powah:energy_cell_niotic" />
-<RecipeFor id="powah:energy_cell_spirited" />
-<RecipeFor id="powah:energy_cell_nitro" />
-<RecipeFor id="powah:energy_cell_creative" />
+<RecipesFor id="powah:energy_cell_starter" />
+<RecipesFor id="powah:energy_cell_basic" />
+<RecipesFor id="powah:energy_cell_hardened" />
+<RecipesFor id="powah:energy_cell_blazing" />
+<RecipesFor id="powah:energy_cell_niotic" />
+<RecipesFor id="powah:energy_cell_spirited" />
+<RecipesFor id="powah:energy_cell_nitro" />
+<RecipesFor id="powah:energy_cell_creative" />
 </Row>

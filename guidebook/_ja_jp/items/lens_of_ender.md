@@ -13,5 +13,5 @@ item_ids:
 ソーラーパネルにエンダーレンズを使用するとブロックを透過して発電できるようになります。 
 
 <Row>
-<RecipeFor id="powah:lens_of_ender" />
+<RecipesFor id="powah:lens_of_ender" />
 </Row>

@@ -6,3 +6,5 @@ navigation:
 ---
 
 # アイテム
+
+<SubPages />

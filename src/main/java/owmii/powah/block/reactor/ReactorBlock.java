@@ -31,7 +31,6 @@ import owmii.powah.item.ReactorItem;
 import owmii.powah.lib.block.AbstractGeneratorBlock;
 import owmii.powah.lib.block.AbstractTileEntity;
 import owmii.powah.lib.client.util.Text;
-import owmii.powah.lib.client.wiki.page.panel.InfoBox;
 import owmii.powah.lib.item.EnergyBlockItem;
 import owmii.powah.lib.logistics.energy.Energy;
 import owmii.powah.lib.logistics.fluid.Tank;
@@ -136,18 +135,5 @@ public class ReactorBlock extends AbstractGeneratorBlock<ReactorBlock> {
         tooltip.add(Component.translatable("info.powah.generation.factor").withStyle(ChatFormatting.GRAY).append(Text.COLON)
                 .append(Component.translatable("info.lollipop.fe.pet.tick", Util.numFormat(getConfig().getGeneration(this.variant)))
                         .withStyle(ChatFormatting.DARK_GRAY)));
-    }
-
-    @Override
-    public InfoBox getInfoBox(ItemStack stack, InfoBox box) {
-        Energy.ifPresent(stack, energy -> {
-            box.set(Component.translatable("info.lollipop.capacity"),
-                    Component.translatable("info.lollipop.fe", Util.addCommas(energy.getCapacity())));
-            box.set(Component.translatable("info.powah.generation.factor"),
-                    Component.translatable("info.lollipop.fe.pet.tick", Util.addCommas(getConfig().getGeneration(this.variant))));
-            box.set(Component.translatable("info.lollipop.max.extract"),
-                    Component.translatable("info.lollipop.fe.pet.tick", Util.addCommas(energy.getMaxExtract())));
-        });
-        return box;
     }
 }

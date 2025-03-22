@@ -22,7 +22,7 @@ item_ids:
 
 透過GUI選擇一個你想要活躍的頻道，你能在世界的任何地方使用終界網路裡的能量。 
 
-|                                             | info.lollipop.max.io                                 |
+|                                             | Max I/O                                              |
 | ------------------------------------------- | ---------------------------------------------------- |
 | <ItemLink id="powah:ender_cell_starter" />  | <powah:EnergyMaxIO id="powah:ender_cell_starter" />  |
 | <ItemLink id="powah:ender_cell_basic" />    | <powah:EnergyMaxIO id="powah:ender_cell_basic" />    |
@@ -33,11 +33,11 @@ item_ids:
 | <ItemLink id="powah:ender_cell_nitro" />    | <powah:EnergyMaxIO id="powah:ender_cell_nitro" />    |
 
 <Row>
-<RecipeFor id="powah:ender_cell_starter" />
-<RecipeFor id="powah:ender_cell_basic" />
-<RecipeFor id="powah:ender_cell_hardened" />
-<RecipeFor id="powah:ender_cell_blazing" />
-<RecipeFor id="powah:ender_cell_niotic" />
-<RecipeFor id="powah:ender_cell_spirited" />
-<RecipeFor id="powah:ender_cell_nitro" />
+<RecipesFor id="powah:ender_cell_starter" />
+<RecipesFor id="powah:ender_cell_basic" />
+<RecipesFor id="powah:ender_cell_hardened" />
+<RecipesFor id="powah:ender_cell_blazing" />
+<RecipesFor id="powah:ender_cell_niotic" />
+<RecipesFor id="powah:ender_cell_spirited" />
+<RecipesFor id="powah:ender_cell_nitro" />
 </Row>

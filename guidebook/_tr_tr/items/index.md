@@ -6,3 +6,5 @@ navigation:
 ---
 
 # Eşyalar
+
+<SubPages />

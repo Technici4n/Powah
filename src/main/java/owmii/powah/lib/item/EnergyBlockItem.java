@@ -7,11 +7,10 @@ import org.jetbrains.annotations.Nullable;
 import owmii.powah.block.Tier;
 import owmii.powah.config.IEnergyConfig;
 import owmii.powah.lib.block.AbstractEnergyBlock;
-import owmii.powah.lib.client.wiki.page.panel.InfoBox;
 import owmii.powah.lib.logistics.Transfer;
 
 public class EnergyBlockItem<C extends IEnergyConfig<Tier>, B extends AbstractEnergyBlock<C, B>> extends ItemBlock<B>
-        implements InfoBox.IInfoBoxHolder, IEnergyItemProvider, IEnergyContainingItem {
+        implements IEnergyItemProvider, IEnergyContainingItem {
     public EnergyBlockItem(B block, Properties builder, @Nullable ResourceKey<CreativeModeTab> group) {
         super(block, builder, group);
     }
@@ -33,11 +32,6 @@ public class EnergyBlockItem<C extends IEnergyConfig<Tier>, B extends AbstractEn
 
     public Tier getVariant() {
         return getBlock().getVariant();
-    }
-
-    @Override
-    public InfoBox getInfoBox(ItemStack stack, InfoBox box) {
-        return getBlock().getInfoBox(stack, box);
     }
 
     @Override

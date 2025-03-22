@@ -15,5 +15,5 @@ item_ids:
 Перед установкой в устройство её необходимо привязать, для этого нажмите ПКМ с ней в руке. 
 
 <Row>
-<RecipeFor id="powah:binding_card" />
+<RecipesFor id="powah:binding_card" />
 </Row>

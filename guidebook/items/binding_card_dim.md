@@ -15,5 +15,5 @@ Dimensional Binding Card used to link a player with a Player Transmitter across 
 You need to link it with you before adding it to the player transmitter, Right-click it to bind. 
 
 <Row>
-<RecipeFor id="powah:binding_card_dim" />
+<RecipesFor id="powah:binding_card_dim" />
 </Row>

@@ -6,3 +6,5 @@ navigation:
 ---
 
 # 素材
+
+<SubPages />

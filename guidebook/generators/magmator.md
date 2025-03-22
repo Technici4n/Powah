@@ -33,11 +33,11 @@ High tiers generate more FE/t and it has higher energy output, also they burn th
 | <ItemLink id="powah:magmator_nitro" />    | <powah:EnergyCapacity id="powah:magmator_nitro" />    | <powah:EnergyGeneration id="powah:magmator_nitro" />    | <powah:EnergyMaxIO id="powah:magmator_nitro" />    |
 
 <Row>
-<RecipeFor id="powah:magmator_starter" />
-<RecipeFor id="powah:magmator_basic" />
-<RecipeFor id="powah:magmator_hardened" />
-<RecipeFor id="powah:magmator_blazing" />
-<RecipeFor id="powah:magmator_niotic" />
-<RecipeFor id="powah:magmator_spirited" />
-<RecipeFor id="powah:magmator_nitro" />
+<RecipesFor id="powah:magmator_starter" />
+<RecipesFor id="powah:magmator_basic" />
+<RecipesFor id="powah:magmator_hardened" />
+<RecipesFor id="powah:magmator_blazing" />
+<RecipesFor id="powah:magmator_niotic" />
+<RecipesFor id="powah:magmator_spirited" />
+<RecipesFor id="powah:magmator_nitro" />
 </Row>

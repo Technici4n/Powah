@@ -24,7 +24,7 @@ item_ids:
 オーブは電力を使用しませんが、ロッドをケーブルまたは任意のForge Energy(FE)ブロックに設置する必要があります。 
 
 <Row>
-<RecipeFor id="powah:energizing_orb" />
+<RecipesFor id="powah:energizing_orb" />
 </Row>
 |                                                 | 容量                                                          | 最大入出力                                                    |
 | ----------------------------------------------- | ----------------------------------------------------------- | -------------------------------------------------------- |
@@ -37,11 +37,11 @@ item_ids:
 | <ItemLink id="powah:energizing_rod_nitro" />    | <powah:EnergyCapacity id="powah:energizing_rod_nitro" />    | <powah:EnergyMaxIO id="powah:energizing_rod_nitro" />    |
 
 <Row>
-<RecipeFor id="powah:energizing_rod_starter" />
-<RecipeFor id="powah:energizing_rod_basic" />
-<RecipeFor id="powah:energizing_rod_hardened" />
-<RecipeFor id="powah:energizing_rod_blazing" />
-<RecipeFor id="powah:energizing_rod_niotic" />
-<RecipeFor id="powah:energizing_rod_spirited" />
-<RecipeFor id="powah:energizing_rod_nitro" />
+<RecipesFor id="powah:energizing_rod_starter" />
+<RecipesFor id="powah:energizing_rod_basic" />
+<RecipesFor id="powah:energizing_rod_hardened" />
+<RecipesFor id="powah:energizing_rod_blazing" />
+<RecipesFor id="powah:energizing_rod_niotic" />
+<RecipesFor id="powah:energizing_rod_spirited" />
+<RecipesFor id="powah:energizing_rod_nitro" />
 </Row>

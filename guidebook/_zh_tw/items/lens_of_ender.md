@@ -13,5 +13,5 @@ item_ids:
 當安裝到到太陽能板上，陽光可穿透上方的阻擋方塊。 
 
 <Row>
-<RecipeFor id="powah:lens_of_ender" />
+<RecipesFor id="powah:lens_of_ender" />
 </Row>

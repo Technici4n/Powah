@@ -20,7 +20,7 @@ item_ids:
 
 Le transmetteur joueur est un bloc utilisé pour charger des objets dans l'inventaire d'un joueur à distance, y compris les d'armure et la deuxième main, n'importe où dans la même dimension lorsqu'il a une carte de liaison normale et à travers les dimensions lorsqu'il a une carte de liaison dimensionnelle. 
 
-|                                                     | info.lollipop.capacity                                          | info.lollipop.max.io                                         |
+|                                                     | Capacity                                                        | Max I/O                                                      |
 | --------------------------------------------------- | --------------------------------------------------------------- | ------------------------------------------------------------ |
 | <ItemLink id="powah:player_transmitter_starter" />  | <powah:EnergyCapacity id="powah:player_transmitter_starter" />  | <powah:EnergyMaxIO id="powah:player_transmitter_starter" />  |
 | <ItemLink id="powah:player_transmitter_basic" />    | <powah:EnergyCapacity id="powah:player_transmitter_basic" />    | <powah:EnergyMaxIO id="powah:player_transmitter_basic" />    |
@@ -31,11 +31,11 @@ Le transmetteur joueur est un bloc utilisé pour charger des objets dans l'inven
 | <ItemLink id="powah:player_transmitter_nitro" />    | <powah:EnergyCapacity id="powah:player_transmitter_nitro" />    | <powah:EnergyMaxIO id="powah:player_transmitter_nitro" />    |
 
 <Row>
-<RecipeFor id="powah:player_transmitter_starter" />
-<RecipeFor id="powah:player_transmitter_basic" />
-<RecipeFor id="powah:player_transmitter_hardened" />
-<RecipeFor id="powah:player_transmitter_blazing" />
-<RecipeFor id="powah:player_transmitter_niotic" />
-<RecipeFor id="powah:player_transmitter_spirited" />
-<RecipeFor id="powah:player_transmitter_nitro" />
+<RecipesFor id="powah:player_transmitter_starter" />
+<RecipesFor id="powah:player_transmitter_basic" />
+<RecipesFor id="powah:player_transmitter_hardened" />
+<RecipesFor id="powah:player_transmitter_blazing" />
+<RecipesFor id="powah:player_transmitter_niotic" />
+<RecipesFor id="powah:player_transmitter_spirited" />
+<RecipesFor id="powah:player_transmitter_nitro" />
 </Row>

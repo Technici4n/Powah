@@ -20,7 +20,7 @@ item_ids:
 
 當放置在高溫方塊/高溫流體等上方（如岩漿塊、岩漿）來產生FE能量，需要水冷卻才能運作。 
 
-|                                                   | info.lollipop.capacity                                        | info.lollipop.generates                                         | info.lollipop.max.extract                                  |
+|                                                   | Capacity                                                      | Generates                                                       | Max Extract                                                |
 | ------------------------------------------------- | ------------------------------------------------------------- | --------------------------------------------------------------- | ---------------------------------------------------------- |
 | <ItemLink id="powah:thermo_generator_starter" />  | <powah:EnergyCapacity id="powah:thermo_generator_starter" />  | <powah:EnergyGeneration id="powah:thermo_generator_starter" />  | <powah:EnergyMaxIO id="powah:thermo_generator_starter" />  |
 | <ItemLink id="powah:thermo_generator_basic" />    | <powah:EnergyCapacity id="powah:thermo_generator_basic" />    | <powah:EnergyGeneration id="powah:thermo_generator_basic" />    | <powah:EnergyMaxIO id="powah:thermo_generator_basic" />    |
@@ -31,11 +31,11 @@ item_ids:
 | <ItemLink id="powah:thermo_generator_nitro" />    | <powah:EnergyCapacity id="powah:thermo_generator_nitro" />    | <powah:EnergyGeneration id="powah:thermo_generator_nitro" />    | <powah:EnergyMaxIO id="powah:thermo_generator_nitro" />    |
 
 <Row>
-<RecipeFor id="powah:thermo_generator_starter" />
-<RecipeFor id="powah:thermo_generator_basic" />
-<RecipeFor id="powah:thermo_generator_hardened" />
-<RecipeFor id="powah:thermo_generator_blazing" />
-<RecipeFor id="powah:thermo_generator_niotic" />
-<RecipeFor id="powah:thermo_generator_spirited" />
-<RecipeFor id="powah:thermo_generator_nitro" />
+<RecipesFor id="powah:thermo_generator_starter" />
+<RecipesFor id="powah:thermo_generator_basic" />
+<RecipesFor id="powah:thermo_generator_hardened" />
+<RecipesFor id="powah:thermo_generator_blazing" />
+<RecipesFor id="powah:thermo_generator_niotic" />
+<RecipesFor id="powah:thermo_generator_spirited" />
+<RecipesFor id="powah:thermo_generator_nitro" />
 </Row>

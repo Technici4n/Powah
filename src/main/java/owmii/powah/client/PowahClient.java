@@ -16,6 +16,7 @@ import owmii.powah.client.model.PowahLayerDefinitions;
 import owmii.powah.client.render.entity.EntityRenderer;
 import owmii.powah.client.render.tile.BlockEntityRenderers;
 import owmii.powah.client.screen.Screens;
+import owmii.powah.item.PowahBookItem;
 
 @Mod(value = Powah.MOD_ID, dist = Dist.CLIENT)
 public final class PowahClient {
@@ -35,7 +36,7 @@ public final class PowahClient {
             }
         });
 
-        Guide.builder(Powah.id("guide"))
+        Guide.builder(PowahBookItem.GUIDE_ID)
                 .defaultLanguage("en_us")
                 .extension(TagCompiler.EXTENSION_POINT, new PowahTagCompiler())
                 .build();

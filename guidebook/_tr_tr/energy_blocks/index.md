@@ -6,3 +6,5 @@ navigation:
 ---
 
 # İşlevsel Bloklar
+
+<SubPages />

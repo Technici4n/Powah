@@ -19,5 +19,5 @@ item_ids:
 回転モード:ブロックを水平方向に回転するために使用されます。 
 
 <Row>
-<RecipeFor id="powah:wrench" />
+<RecipesFor id="powah:wrench" />
 </Row>

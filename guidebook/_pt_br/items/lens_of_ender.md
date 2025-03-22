@@ -13,5 +13,5 @@ item_ids:
 Ao aplicar uma Lente de Ender a um painel solar, ele verá através dos blocos. 
 
 <Row>
-<RecipeFor id="powah:lens_of_ender" />
+<RecipesFor id="powah:lens_of_ender" />
 </Row>

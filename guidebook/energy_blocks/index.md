@@ -6,3 +6,5 @@ navigation:
 ---
 
 # Functional Blocks
+
+<SubPages />

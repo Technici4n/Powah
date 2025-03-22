@@ -19,5 +19,5 @@ item_ids:
 в режиме вращения — поворачивает блоки в горизонтальной плоскости. 
 
 <Row>
-<RecipeFor id="powah:wrench" />
+<RecipesFor id="powah:wrench" />
 </Row>

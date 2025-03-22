@@ -6,3 +6,5 @@ navigation:
 ---
 
 # Stockage / Transfert
+
+<SubPages />

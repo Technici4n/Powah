@@ -15,5 +15,5 @@ La carte de liaison est utilisée pour lier un joueur avec un transmetteur joueu
 Vous devez le lier à vous avant de l'ajouter au transmetteur joueur. Clic droit pour le lier. 
 
 <Row>
-<RecipeFor id="powah:binding_card" />
+<RecipesFor id="powah:binding_card" />
 </Row>

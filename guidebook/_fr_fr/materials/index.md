@@ -6,3 +6,5 @@ navigation:
 ---
 
 # Matériaux
+
+<SubPages />

@@ -12,22 +12,6 @@ public class Texture {
     private static final Builder BUILDER = new Builder("lollipop");
     public static final Texture EMPTY = BUILDER.make("empty", 0, 0, 0, 0);
 
-    // Wiki
-    public static final Texture WIKI_BG_0 = BUILDER.make("wiki/bg_0", 256, 230, 0, 0);
-    public static final Texture WIKI_BG_1 = BUILDER.make("wiki/bg_1", 126, 230, 0, 0);
-    public static final Texture WIKI_TAB_ON = BUILDER.make("wiki/bg_1", 31, 26, 168, 0);
-    public static final Texture WIKI_TAB_OFF = BUILDER.make("wiki/bg_1", 26, 26, 168, 26);
-    public static final Map<Boolean, Texture> WIKI_TABS = new HashMap<>();
-    public static final Texture WIKI_FRM = BUILDER.make("wiki/bg_1", 24, 24, 126, 42);
-    public static final Texture WIKI_BIG_FRM = BUILDER.make("wiki/bg_1", 42, 42, 126, 0);
-    public static final Texture WIKI_RCP_FRM = BUILDER.make("wiki/bg_1", 32, 32, 199, 0);
-    public static final Texture WIKI_NEXT = BUILDER.make("wiki/bg_1", 15, 10, 150, 42);
-    public static final Texture WIKI_PREV = BUILDER.make("wiki/bg_1", 15, 10, 150, 52);
-    public static final Texture WIKI_ITM_NEXT = BUILDER.make("wiki/bg_1", 10, 18, 136, 66);
-    public static final Texture WIKI_ITM_PREV = BUILDER.make("wiki/bg_1", 10, 18, 126, 66);
-    public static final Texture WIKI_INF_LN_BG = BUILDER.make("wiki/bg_1", 143, 19, 0, 230);
-    public static final Texture WIKI_DISCORD = BUILDER.make("wiki/social/discord", 12, 12);
-
     // Misc
     public static final Texture SLOT_HIGHLIGHT_BG = BUILDER.make("container/misc", 16, 16, 0, 0);
 
@@ -177,8 +161,6 @@ public class Texture {
         REDSTONE.put(Redstone.IGNORE, REDSTONE_BTN_IGNORE);
         REDSTONE.put(Redstone.ON, REDSTONE_BTN_ON);
         REDSTONE.put(Redstone.OFF, REDSTONE_BTN_OFF);
-        WIKI_TABS.put(true, WIKI_TAB_ON);
-        WIKI_TABS.put(false, WIKI_TAB_OFF);
     }
 
     public static class Builder {

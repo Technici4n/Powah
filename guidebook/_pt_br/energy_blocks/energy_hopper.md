@@ -31,11 +31,11 @@ O Funil de Energia é um bloco usado para carregar itens carregáveis dentro de 
 | <ItemLink id="powah:energy_hopper_nitro" />    | <powah:EnergyCapacity id="powah:energy_hopper_nitro" />    | <powah:EnergyMaxIO id="powah:energy_hopper_nitro" />    |
 
 <Row>
-<RecipeFor id="powah:energy_hopper_starter" />
-<RecipeFor id="powah:energy_hopper_basic" />
-<RecipeFor id="powah:energy_hopper_hardened" />
-<RecipeFor id="powah:energy_hopper_blazing" />
-<RecipeFor id="powah:energy_hopper_niotic" />
-<RecipeFor id="powah:energy_hopper_spirited" />
-<RecipeFor id="powah:energy_hopper_nitro" />
+<RecipesFor id="powah:energy_hopper_starter" />
+<RecipesFor id="powah:energy_hopper_basic" />
+<RecipesFor id="powah:energy_hopper_hardened" />
+<RecipesFor id="powah:energy_hopper_blazing" />
+<RecipesFor id="powah:energy_hopper_niotic" />
+<RecipesFor id="powah:energy_hopper_spirited" />
+<RecipesFor id="powah:energy_hopper_nitro" />
 </Row>

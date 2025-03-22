@@ -6,3 +6,5 @@ navigation:
 ---
 
 # Предметы
+
+<SubPages />

@@ -6,3 +6,5 @@ navigation:
 ---
 
 # 發電機
+
+<SubPages />

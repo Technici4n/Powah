@@ -6,3 +6,5 @@ navigation:
 ---
 
 # ストレージ / 転送
+
+<SubPages />

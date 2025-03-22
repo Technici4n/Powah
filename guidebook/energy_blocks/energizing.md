@@ -24,7 +24,7 @@ The Energizing Orb its a block used to energize items, require at least one Ener
 The orb does not require energy but the rods must be placed on cables or any Forge Energy (FE) block to work. 
 
 <Row>
-<RecipeFor id="powah:energizing_orb" />
+<RecipesFor id="powah:energizing_orb" />
 </Row>
 |                                                 | Capacity                                                    | Max I/O                                                  |
 | ----------------------------------------------- | ----------------------------------------------------------- | -------------------------------------------------------- |
@@ -37,11 +37,11 @@ The orb does not require energy but the rods must be placed on cables or any For
 | <ItemLink id="powah:energizing_rod_nitro" />    | <powah:EnergyCapacity id="powah:energizing_rod_nitro" />    | <powah:EnergyMaxIO id="powah:energizing_rod_nitro" />    |
 
 <Row>
-<RecipeFor id="powah:energizing_rod_starter" />
-<RecipeFor id="powah:energizing_rod_basic" />
-<RecipeFor id="powah:energizing_rod_hardened" />
-<RecipeFor id="powah:energizing_rod_blazing" />
-<RecipeFor id="powah:energizing_rod_niotic" />
-<RecipeFor id="powah:energizing_rod_spirited" />
-<RecipeFor id="powah:energizing_rod_nitro" />
+<RecipesFor id="powah:energizing_rod_starter" />
+<RecipesFor id="powah:energizing_rod_basic" />
+<RecipesFor id="powah:energizing_rod_hardened" />
+<RecipesFor id="powah:energizing_rod_blazing" />
+<RecipesFor id="powah:energizing_rod_niotic" />
+<RecipesFor id="powah:energizing_rod_spirited" />
+<RecipesFor id="powah:energizing_rod_nitro" />
 </Row>

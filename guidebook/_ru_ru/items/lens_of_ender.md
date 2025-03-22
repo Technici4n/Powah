@@ -13,5 +13,5 @@ item_ids:
 После установки на солнечную панель позволяет той игнорировать блоки над ней. 
 
 <Row>
-<RecipeFor id="powah:lens_of_ender" />
+<RecipesFor id="powah:lens_of_ender" />
 </Row>

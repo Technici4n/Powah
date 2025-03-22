@@ -15,5 +15,5 @@ Bağlantı Kartı, bir oyuncuyu aynı boyuttaki bir Oyuncu Vericisi ile bağlama
 Oyuncu vericisine eklemeden önce onu kendinize bağlamanız gerekir, Bağlamak için sağ tıklayın. 
 
 <Row>
-<RecipeFor id="powah:binding_card" />
+<RecipesFor id="powah:binding_card" />
 </Row>

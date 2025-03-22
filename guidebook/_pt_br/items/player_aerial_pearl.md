@@ -15,5 +15,5 @@ Pérola Aérea de Jogador usado para construir o transmissor do jogador.
 Você pode obtê-lo usando uma Pérola Aérea em um Zumbis ou Zumbi-Múmia. 
 
 <Row>
-<RecipeFor id="powah:player_aerial_pearl" />
+<RecipesFor id="powah:player_aerial_pearl" />
 </Row>

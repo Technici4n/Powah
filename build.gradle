@@ -132,7 +132,7 @@ neoForge {
     runs {
         client {
             client()
-            systemProperty('guideme.powah.guide.sources', file('guidebook').absolutePath)
+            systemProperty('guideme.powah.book.sources', file('guidebook').absolutePath)
         }
         server {
             server()

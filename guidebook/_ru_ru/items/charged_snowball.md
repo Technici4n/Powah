@@ -13,5 +13,5 @@ item_ids:
 Создаётся путём электризации обычного снежка в зарядной сфере. После броска создаёт удар молнии в точке падения. 
 
 <Row>
-<RecipeFor id="powah:charged_snowball" />
+<RecipesFor id="powah:charged_snowball" />
 </Row>

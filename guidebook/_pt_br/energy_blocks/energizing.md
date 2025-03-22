@@ -24,7 +24,7 @@ O Orbe Energizante é um bloco usado para energizar itens, requer pelo menos uma
 O orbe não requer energia, mas as hastes devem ser colocadas em cabos ou qualquer bloco de Forge Energy (FE) para funcionar. 
 
 <Row>
-<RecipeFor id="powah:energizing_orb" />
+<RecipesFor id="powah:energizing_orb" />
 </Row>
 |                                                 | Capacidade                                                  | I/O Máximo                                               |
 | ----------------------------------------------- | ----------------------------------------------------------- | -------------------------------------------------------- |
@@ -37,11 +37,11 @@ O orbe não requer energia, mas as hastes devem ser colocadas em cabos ou qualqu
 | <ItemLink id="powah:energizing_rod_nitro" />    | <powah:EnergyCapacity id="powah:energizing_rod_nitro" />    | <powah:EnergyMaxIO id="powah:energizing_rod_nitro" />    |
 
 <Row>
-<RecipeFor id="powah:energizing_rod_starter" />
-<RecipeFor id="powah:energizing_rod_basic" />
-<RecipeFor id="powah:energizing_rod_hardened" />
-<RecipeFor id="powah:energizing_rod_blazing" />
-<RecipeFor id="powah:energizing_rod_niotic" />
-<RecipeFor id="powah:energizing_rod_spirited" />
-<RecipeFor id="powah:energizing_rod_nitro" />
+<RecipesFor id="powah:energizing_rod_starter" />
+<RecipesFor id="powah:energizing_rod_basic" />
+<RecipesFor id="powah:energizing_rod_hardened" />
+<RecipesFor id="powah:energizing_rod_blazing" />
+<RecipesFor id="powah:energizing_rod_niotic" />
+<RecipesFor id="powah:energizing_rod_spirited" />
+<RecipesFor id="powah:energizing_rod_nitro" />
 </Row>

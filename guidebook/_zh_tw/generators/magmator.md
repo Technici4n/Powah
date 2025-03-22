@@ -22,7 +22,7 @@ item_ids:
 
 高等級產生更多FE/t，同時燃料消耗得更快，單位燃料產生的能量不變。 
 
-|                                           | info.lollipop.capacity                                | info.lollipop.generates                                 | info.lollipop.max.extract                          |
+|                                           | Capacity                                              | Generates                                               | Max Extract                                        |
 | ----------------------------------------- | ----------------------------------------------------- | ------------------------------------------------------- | -------------------------------------------------- |
 | <ItemLink id="powah:magmator_starter" />  | <powah:EnergyCapacity id="powah:magmator_starter" />  | <powah:EnergyGeneration id="powah:magmator_starter" />  | <powah:EnergyMaxIO id="powah:magmator_starter" />  |
 | <ItemLink id="powah:magmator_basic" />    | <powah:EnergyCapacity id="powah:magmator_basic" />    | <powah:EnergyGeneration id="powah:magmator_basic" />    | <powah:EnergyMaxIO id="powah:magmator_basic" />    |
@@ -33,11 +33,11 @@ item_ids:
 | <ItemLink id="powah:magmator_nitro" />    | <powah:EnergyCapacity id="powah:magmator_nitro" />    | <powah:EnergyGeneration id="powah:magmator_nitro" />    | <powah:EnergyMaxIO id="powah:magmator_nitro" />    |
 
 <Row>
-<RecipeFor id="powah:magmator_starter" />
-<RecipeFor id="powah:magmator_basic" />
-<RecipeFor id="powah:magmator_hardened" />
-<RecipeFor id="powah:magmator_blazing" />
-<RecipeFor id="powah:magmator_niotic" />
-<RecipeFor id="powah:magmator_spirited" />
-<RecipeFor id="powah:magmator_nitro" />
+<RecipesFor id="powah:magmator_starter" />
+<RecipesFor id="powah:magmator_basic" />
+<RecipesFor id="powah:magmator_hardened" />
+<RecipesFor id="powah:magmator_blazing" />
+<RecipesFor id="powah:magmator_niotic" />
+<RecipesFor id="powah:magmator_spirited" />
+<RecipesFor id="powah:magmator_nitro" />
 </Row>

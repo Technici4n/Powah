@@ -24,9 +24,9 @@ L'orbe énergisant est un bloc utilisé pour énergiser des objets. Nécessite a
 L'orbe n'a pas besoin d'énergie mais les barres doivent être placées sur des câbles ou tout bloc contenant de l'énergie (FE) pour fonctionner. 
 
 <Row>
-<RecipeFor id="powah:energizing_orb" />
+<RecipesFor id="powah:energizing_orb" />
 </Row>
-|                                                 | info.lollipop.capacity                                      | info.lollipop.max.io                                     |
+|                                                 | Capacity                                                    | Max I/O                                                  |
 | ----------------------------------------------- | ----------------------------------------------------------- | -------------------------------------------------------- |
 | <ItemLink id="powah:energizing_rod_starter" />  | <powah:EnergyCapacity id="powah:energizing_rod_starter" />  | <powah:EnergyMaxIO id="powah:energizing_rod_starter" />  |
 | <ItemLink id="powah:energizing_rod_basic" />    | <powah:EnergyCapacity id="powah:energizing_rod_basic" />    | <powah:EnergyMaxIO id="powah:energizing_rod_basic" />    |
@@ -37,11 +37,11 @@ L'orbe n'a pas besoin d'énergie mais les barres doivent être placées sur des 
 | <ItemLink id="powah:energizing_rod_nitro" />    | <powah:EnergyCapacity id="powah:energizing_rod_nitro" />    | <powah:EnergyMaxIO id="powah:energizing_rod_nitro" />    |
 
 <Row>
-<RecipeFor id="powah:energizing_rod_starter" />
-<RecipeFor id="powah:energizing_rod_basic" />
-<RecipeFor id="powah:energizing_rod_hardened" />
-<RecipeFor id="powah:energizing_rod_blazing" />
-<RecipeFor id="powah:energizing_rod_niotic" />
-<RecipeFor id="powah:energizing_rod_spirited" />
-<RecipeFor id="powah:energizing_rod_nitro" />
+<RecipesFor id="powah:energizing_rod_starter" />
+<RecipesFor id="powah:energizing_rod_basic" />
+<RecipesFor id="powah:energizing_rod_hardened" />
+<RecipesFor id="powah:energizing_rod_blazing" />
+<RecipesFor id="powah:energizing_rod_niotic" />
+<RecipesFor id="powah:energizing_rod_spirited" />
+<RecipesFor id="powah:energizing_rod_nitro" />
 </Row>

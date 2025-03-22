@@ -19,5 +19,5 @@ item_ids:
 旋转模式：用于水平旋转方块。 
 
 <Row>
-<RecipeFor id="powah:wrench" />
+<RecipesFor id="powah:wrench" />
 </Row>

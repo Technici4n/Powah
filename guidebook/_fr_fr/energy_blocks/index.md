@@ -6,3 +6,5 @@ navigation:
 ---
 
 # Blocs fonctionnels
+
+<SubPages />

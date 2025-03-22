@@ -15,5 +15,5 @@ Oyuncu Hava İncisi oyuncu vericisini üretmek için kullanılır.
 Bir Zombi veya Zombi Kurusu üzerinde Hava İncisi kullanarak elde edebilirsiniz. 
 
 <Row>
-<RecipeFor id="powah:player_aerial_pearl" />
+<RecipesFor id="powah:player_aerial_pearl" />
 </Row>

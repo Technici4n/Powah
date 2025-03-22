@@ -22,7 +22,7 @@ La chaudière est un générateur à FE qui produit de l'énergie à partir de c
 
 Les tiers supérieurs génèrent plus de FE/t et ont un rendement énergétique plus élevé, ils brûlent également le combustible plus rapidement avec la même énergie gagnée par tick de combustible. 
 
-|                                           | info.lollipop.capacity                                | info.lollipop.generates                                 | info.lollipop.max.extract                          |
+|                                           | Capacity                                              | Generates                                               | Max Extract                                        |
 | ----------------------------------------- | ----------------------------------------------------- | ------------------------------------------------------- | -------------------------------------------------- |
 | <ItemLink id="powah:furnator_starter" />  | <powah:EnergyCapacity id="powah:furnator_starter" />  | <powah:EnergyGeneration id="powah:furnator_starter" />  | <powah:EnergyMaxIO id="powah:furnator_starter" />  |
 | <ItemLink id="powah:furnator_basic" />    | <powah:EnergyCapacity id="powah:furnator_basic" />    | <powah:EnergyGeneration id="powah:furnator_basic" />    | <powah:EnergyMaxIO id="powah:furnator_basic" />    |
@@ -33,11 +33,11 @@ Les tiers supérieurs génèrent plus de FE/t et ont un rendement énergétique 
 | <ItemLink id="powah:furnator_nitro" />    | <powah:EnergyCapacity id="powah:furnator_nitro" />    | <powah:EnergyGeneration id="powah:furnator_nitro" />    | <powah:EnergyMaxIO id="powah:furnator_nitro" />    |
 
 <Row>
-<RecipeFor id="powah:furnator_starter" />
-<RecipeFor id="powah:furnator_basic" />
-<RecipeFor id="powah:furnator_hardened" />
-<RecipeFor id="powah:furnator_blazing" />
-<RecipeFor id="powah:furnator_niotic" />
-<RecipeFor id="powah:furnator_spirited" />
-<RecipeFor id="powah:furnator_nitro" />
+<RecipesFor id="powah:furnator_starter" />
+<RecipesFor id="powah:furnator_basic" />
+<RecipesFor id="powah:furnator_hardened" />
+<RecipesFor id="powah:furnator_blazing" />
+<RecipesFor id="powah:furnator_niotic" />
+<RecipesFor id="powah:furnator_spirited" />
+<RecipesFor id="powah:furnator_nitro" />
 </Row>

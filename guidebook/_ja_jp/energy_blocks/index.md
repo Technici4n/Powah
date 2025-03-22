@@ -6,3 +6,5 @@ navigation:
 ---
 
 # 機能ブロック
+
+<SubPages />

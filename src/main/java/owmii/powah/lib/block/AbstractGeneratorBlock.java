@@ -7,7 +7,6 @@ import net.minecraft.world.item.ItemStack;
 import owmii.powah.block.Tier;
 import owmii.powah.config.v2.types.GeneratorConfig;
 import owmii.powah.lib.client.util.Text;
-import owmii.powah.lib.client.wiki.page.panel.InfoBox;
 import owmii.powah.lib.logistics.Transfer;
 import owmii.powah.lib.logistics.energy.Energy;
 import owmii.powah.util.Util;
@@ -31,18 +30,5 @@ public abstract class AbstractGeneratorBlock<B extends AbstractGeneratorBlock<B>
     @Override
     public Transfer getTransferType() {
         return Transfer.EXTRACT;
-    }
-
-    @Override
-    public InfoBox getInfoBox(ItemStack stack, InfoBox box) {
-        Energy.ifPresent(stack, storage -> {
-            box.set(Component.translatable("info.lollipop.capacity"),
-                    Component.translatable("info.lollipop.fe", Util.addCommas(storage.getCapacity())));
-            box.set(Component.translatable("info.lollipop.generates"),
-                    Component.translatable("info.lollipop.fe.pet.tick", Util.addCommas(getConfig().getGeneration(this.variant))));
-            box.set(Component.translatable("info.lollipop.max.extract"),
-                    Component.translatable("info.lollipop.fe.pet.tick", Util.addCommas(storage.getMaxExtract())));
-        });
-        return box;
     }
 }

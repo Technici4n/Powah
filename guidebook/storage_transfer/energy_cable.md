@@ -33,11 +33,11 @@ You can change transfer mode of by right-clicking a cable using <ItemLink id="po
 | <ItemLink id="powah:energy_cable_nitro" />    | <powah:EnergyMaxIO id="powah:energy_cable_nitro" />    |
 
 <Row>
-<RecipeFor id="powah:energy_cable_starter" />
-<RecipeFor id="powah:energy_cable_basic" />
-<RecipeFor id="powah:energy_cable_hardened" />
-<RecipeFor id="powah:energy_cable_blazing" />
-<RecipeFor id="powah:energy_cable_niotic" />
-<RecipeFor id="powah:energy_cable_spirited" />
-<RecipeFor id="powah:energy_cable_nitro" />
+<RecipesFor id="powah:energy_cable_starter" />
+<RecipesFor id="powah:energy_cable_basic" />
+<RecipesFor id="powah:energy_cable_hardened" />
+<RecipesFor id="powah:energy_cable_blazing" />
+<RecipesFor id="powah:energy_cable_niotic" />
+<RecipesFor id="powah:energy_cable_spirited" />
+<RecipesFor id="powah:energy_cable_nitro" />
 </Row>

@@ -8,13 +8,12 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
 import owmii.powah.config.IEnergyConfig;
 import owmii.powah.lib.client.util.Text;
-import owmii.powah.lib.client.wiki.page.panel.InfoBox;
 import owmii.powah.lib.logistics.energy.Energy;
 import owmii.powah.lib.registry.IVariant;
 import owmii.powah.util.Util;
 
 public abstract class EnergyItem<V extends Enum<V> & IVariant<V>, C extends IEnergyConfig<V>, I extends EnergyItem<V, C, I>> extends VarItem<V, I>
-        implements InfoBox.IInfoBoxHolder, IEnergyItemProvider, IEnergyContainingItem {
+        implements IEnergyItemProvider, IEnergyContainingItem {
     public EnergyItem(Properties properties, V variant) {
         super(properties, variant);
     }
@@ -48,16 +47,5 @@ public abstract class EnergyItem<V extends Enum<V> & IVariant<V>, C extends IEne
                         .translatable("info.lollipop.fe.pet.tick", Util.numFormat(energy.getMaxExtract())).withStyle(ChatFormatting.DARK_GRAY)));
             }
         });
-    }
-
-    @Override
-    public InfoBox getInfoBox(ItemStack stack, InfoBox box) {
-        Energy.ifPresent(stack, energy -> {
-            box.set(Component.translatable("info.lollipop.capacity"),
-                    Component.translatable("info.lollipop.fe", Util.addCommas(energy.getCapacity())));
-            box.set(Component.translatable("info.lollipop.max.io"),
-                    Component.translatable("info.lollipop.fe.pet.tick", Util.addCommas(energy.getMaxExtract())));
-        });
-        return box;
     }
 }

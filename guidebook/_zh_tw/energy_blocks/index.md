@@ -6,3 +6,5 @@ navigation:
 ---
 
 # 功能性方塊
+
+<SubPages />

@@ -13,5 +13,5 @@ item_ids:
 チャージされた雪玉の着弾地点に雷を降らせます。 
 
 <Row>
-<RecipeFor id="powah:charged_snowball" />
+<RecipesFor id="powah:charged_snowball" />
 </Row>

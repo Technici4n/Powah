@@ -19,5 +19,5 @@ Link Mode: used to link linkable blocks like energizing orb and rods.
 Rotate Mode: used to rotate blocks horizontally. 
 
 <Row>
-<RecipeFor id="powah:wrench" />
+<RecipesFor id="powah:wrench" />
 </Row>

@@ -19,5 +19,5 @@ Mode Liaison : utilisé pour lier les blocs entre eux comme les orbes et les bar
 Mode Rotation : utilisé pour tourner les blocs horizontallement. 
 
 <Row>
-<RecipeFor id="powah:wrench" />
+<RecipesFor id="powah:wrench" />
 </Row>

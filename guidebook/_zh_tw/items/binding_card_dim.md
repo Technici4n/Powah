@@ -15,5 +15,5 @@ item_ids:
 在連接玩家發信器前,需先將它與你綁定,右鍵綁定. 
 
 <Row>
-<RecipeFor id="powah:binding_card_dim" />
+<RecipesFor id="powah:binding_card_dim" />
 </Row>

@@ -13,5 +13,5 @@ item_ids:
 落地时或命中生物时会召唤闪电。充能雪球以获得。 
 
 <Row>
-<RecipeFor id="powah:charged_snowball" />
+<RecipesFor id="powah:charged_snowball" />
 </Row>

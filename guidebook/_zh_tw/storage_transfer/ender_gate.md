@@ -22,7 +22,7 @@ item_ids:
 
 與終界單元不同，你無法為它的終界網路頻道升級 
 
-|                                             | info.lollipop.max.io                                 |
+|                                             | Max I/O                                              |
 | ------------------------------------------- | ---------------------------------------------------- |
 | <ItemLink id="powah:ender_gate_starter" />  | <powah:EnergyMaxIO id="powah:ender_gate_starter" />  |
 | <ItemLink id="powah:ender_gate_basic" />    | <powah:EnergyMaxIO id="powah:ender_gate_basic" />    |
@@ -33,11 +33,11 @@ item_ids:
 | <ItemLink id="powah:ender_gate_nitro" />    | <powah:EnergyMaxIO id="powah:ender_gate_nitro" />    |
 
 <Row>
-<RecipeFor id="powah:ender_gate_starter" />
-<RecipeFor id="powah:ender_gate_basic" />
-<RecipeFor id="powah:ender_gate_hardened" />
-<RecipeFor id="powah:ender_gate_blazing" />
-<RecipeFor id="powah:ender_gate_niotic" />
-<RecipeFor id="powah:ender_gate_spirited" />
-<RecipeFor id="powah:ender_gate_nitro" />
+<RecipesFor id="powah:ender_gate_starter" />
+<RecipesFor id="powah:ender_gate_basic" />
+<RecipesFor id="powah:ender_gate_hardened" />
+<RecipesFor id="powah:ender_gate_blazing" />
+<RecipesFor id="powah:ender_gate_niotic" />
+<RecipesFor id="powah:ender_gate_spirited" />
+<RecipesFor id="powah:ender_gate_nitro" />
 </Row>

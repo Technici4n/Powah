@@ -20,7 +20,7 @@ item_ids:
 
 用於無線的方式將包包內的物品充電,包含裝備欄,副手,只要在同個維度的任何地方,有著綁定卡即可.若要跨維度則需要綁定卡(維度). 
 
-|                                                     | info.lollipop.capacity                                          | info.lollipop.max.io                                         |
+|                                                     | Capacity                                                        | Max I/O                                                      |
 | --------------------------------------------------- | --------------------------------------------------------------- | ------------------------------------------------------------ |
 | <ItemLink id="powah:player_transmitter_starter" />  | <powah:EnergyCapacity id="powah:player_transmitter_starter" />  | <powah:EnergyMaxIO id="powah:player_transmitter_starter" />  |
 | <ItemLink id="powah:player_transmitter_basic" />    | <powah:EnergyCapacity id="powah:player_transmitter_basic" />    | <powah:EnergyMaxIO id="powah:player_transmitter_basic" />    |
@@ -31,11 +31,11 @@ item_ids:
 | <ItemLink id="powah:player_transmitter_nitro" />    | <powah:EnergyCapacity id="powah:player_transmitter_nitro" />    | <powah:EnergyMaxIO id="powah:player_transmitter_nitro" />    |
 
 <Row>
-<RecipeFor id="powah:player_transmitter_starter" />
-<RecipeFor id="powah:player_transmitter_basic" />
-<RecipeFor id="powah:player_transmitter_hardened" />
-<RecipeFor id="powah:player_transmitter_blazing" />
-<RecipeFor id="powah:player_transmitter_niotic" />
-<RecipeFor id="powah:player_transmitter_spirited" />
-<RecipeFor id="powah:player_transmitter_nitro" />
+<RecipesFor id="powah:player_transmitter_starter" />
+<RecipesFor id="powah:player_transmitter_basic" />
+<RecipesFor id="powah:player_transmitter_hardened" />
+<RecipesFor id="powah:player_transmitter_blazing" />
+<RecipesFor id="powah:player_transmitter_niotic" />
+<RecipesFor id="powah:player_transmitter_spirited" />
+<RecipesFor id="powah:player_transmitter_nitro" />
 </Row>
