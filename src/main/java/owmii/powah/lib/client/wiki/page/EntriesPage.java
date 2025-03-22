@@ -18,6 +18,10 @@ public class EntriesPage extends Page {
         super(name, parent);
     }
 
+    public List<Entry> getEntries() {
+        return entries;
+    }
+
     public EntriesPage e(ItemLike provider, Consumer<Entry> consumer) {
         return e("", provider, consumer);
     }

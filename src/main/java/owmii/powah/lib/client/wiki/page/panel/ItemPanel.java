@@ -90,6 +90,10 @@ public class ItemPanel<T extends ItemLike> extends Panel {
         refresh();
     }
 
+    public ItemLike[] getItems() {
+        return items;
+    }
+
     @Override
     public void refresh() {
         super.refresh();

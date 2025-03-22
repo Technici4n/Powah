@@ -211,7 +211,7 @@
     "wiki.powah.ender_gate_0": "Transfira energia entre o bloco adjacente e a rede ender.",
     "wiki.powah.ender_gate_1": "Diferente da Célula do Ender você não pode Atualizar a rede dela.",
     "wiki.powah.energizing": "Energizante",
-    "wiki.powah.energizing_0": "O Orbe Energizante é um bloco usado para energizar itens, requer pelo menos uma Haste Energizante na faixa de% s para funcionar, a velocidade de energização depende da quantidade de hastes e do nível da haste (taxa de I/O).",
+    "wiki.powah.energizing_0": "O Orbe Energizante é um bloco usado para energizar itens, requer pelo menos uma Haste Energizante na faixa de %s para funcionar, a velocidade de energização depende da quantidade de hastes e do nível da haste (taxa de I/O).",
     "wiki.powah.energizing_1": "O orbe não requer energia, mas as hastes devem ser colocadas em cabos ou qualquer bloco de Forge Energy (FE) para funcionar.",
     "wiki.powah.energizing_2": "Ao colocar a orbe/haste no alcance, eles se vincularão automaticamente, você também pode usar o <powah:wrench> com o modo Link para reconectá-los.",
     "wiki.powah.energy_blocks": "Blocos Funcionais",

@@ -1,0 +1,43 @@
+---
+navigation:
+  title: Magmador
+  parent: generators/index.md
+  icon: powah:magmator_starter
+  position: 1
+item_ids:
+  - powah:magmator_basic
+  - powah:magmator_blazing
+  - powah:magmator_hardened
+  - powah:magmator_niotic
+  - powah:magmator_nitro
+  - powah:magmator_spirited
+  - powah:magmator_starter
+---
+
+# Magmador
+
+![](./magmator.png)
+
+O Magmador é um gerador FE que gera energia a partir de fluidos de alta temperatura como o Lava. 
+
+Os Tiers mais altos geram mais FE/t e têm maior saida de energia, além de queimarem o combustível mais rápido e com o mesmo de ganho energia por tick de combustível. 
+
+|                                           | Capacidade                                            | Gera                                                    | Extração Máxima                                    |
+| ----------------------------------------- | ----------------------------------------------------- | ------------------------------------------------------- | -------------------------------------------------- |
+| <ItemLink id="powah:magmator_starter" />  | <powah:EnergyCapacity id="powah:magmator_starter" />  | <powah:EnergyGeneration id="powah:magmator_starter" />  | <powah:EnergyMaxIO id="powah:magmator_starter" />  |
+| <ItemLink id="powah:magmator_basic" />    | <powah:EnergyCapacity id="powah:magmator_basic" />    | <powah:EnergyGeneration id="powah:magmator_basic" />    | <powah:EnergyMaxIO id="powah:magmator_basic" />    |
+| <ItemLink id="powah:magmator_hardened" /> | <powah:EnergyCapacity id="powah:magmator_hardened" /> | <powah:EnergyGeneration id="powah:magmator_hardened" /> | <powah:EnergyMaxIO id="powah:magmator_hardened" /> |
+| <ItemLink id="powah:magmator_blazing" />  | <powah:EnergyCapacity id="powah:magmator_blazing" />  | <powah:EnergyGeneration id="powah:magmator_blazing" />  | <powah:EnergyMaxIO id="powah:magmator_blazing" />  |
+| <ItemLink id="powah:magmator_niotic" />   | <powah:EnergyCapacity id="powah:magmator_niotic" />   | <powah:EnergyGeneration id="powah:magmator_niotic" />   | <powah:EnergyMaxIO id="powah:magmator_niotic" />   |
+| <ItemLink id="powah:magmator_spirited" /> | <powah:EnergyCapacity id="powah:magmator_spirited" /> | <powah:EnergyGeneration id="powah:magmator_spirited" /> | <powah:EnergyMaxIO id="powah:magmator_spirited" /> |
+| <ItemLink id="powah:magmator_nitro" />    | <powah:EnergyCapacity id="powah:magmator_nitro" />    | <powah:EnergyGeneration id="powah:magmator_nitro" />    | <powah:EnergyMaxIO id="powah:magmator_nitro" />    |
+
+<Row>
+<RecipeFor id="powah:magmator_starter" />
+<RecipeFor id="powah:magmator_basic" />
+<RecipeFor id="powah:magmator_hardened" />
+<RecipeFor id="powah:magmator_blazing" />
+<RecipeFor id="powah:magmator_niotic" />
+<RecipeFor id="powah:magmator_spirited" />
+<RecipeFor id="powah:magmator_nitro" />
+</Row>

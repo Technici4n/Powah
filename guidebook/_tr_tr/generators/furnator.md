@@ -1,0 +1,43 @@
+---
+navigation:
+  title: Furnator
+  parent: generators/index.md
+  icon: powah:furnator_starter
+  position: 0
+item_ids:
+  - powah:furnator_basic
+  - powah:furnator_blazing
+  - powah:furnator_hardened
+  - powah:furnator_niotic
+  - powah:furnator_nitro
+  - powah:furnator_spirited
+  - powah:furnator_starter
+---
+
+# Furnator
+
+![](./furnator.png)
+
+Furnator, kömür, odun vb. katı ocak yakıtlarından enerji üreten bir FE jeneratörüdür. 
+
+Yüksek kademeler daha fazla FE/t üretir ve daha yüksek enerji çıkışına sahiptir, ayrıca yakıt başına kazanılan aynı enerjiyle yakıtı daha hızlı yakarlar. 
+
+|                                           | Kapasite                                              | Üretir                                                  | Maks Çıkartılan                                    |
+| ----------------------------------------- | ----------------------------------------------------- | ------------------------------------------------------- | -------------------------------------------------- |
+| <ItemLink id="powah:furnator_starter" />  | <powah:EnergyCapacity id="powah:furnator_starter" />  | <powah:EnergyGeneration id="powah:furnator_starter" />  | <powah:EnergyMaxIO id="powah:furnator_starter" />  |
+| <ItemLink id="powah:furnator_basic" />    | <powah:EnergyCapacity id="powah:furnator_basic" />    | <powah:EnergyGeneration id="powah:furnator_basic" />    | <powah:EnergyMaxIO id="powah:furnator_basic" />    |
+| <ItemLink id="powah:furnator_hardened" /> | <powah:EnergyCapacity id="powah:furnator_hardened" /> | <powah:EnergyGeneration id="powah:furnator_hardened" /> | <powah:EnergyMaxIO id="powah:furnator_hardened" /> |
+| <ItemLink id="powah:furnator_blazing" />  | <powah:EnergyCapacity id="powah:furnator_blazing" />  | <powah:EnergyGeneration id="powah:furnator_blazing" />  | <powah:EnergyMaxIO id="powah:furnator_blazing" />  |
+| <ItemLink id="powah:furnator_niotic" />   | <powah:EnergyCapacity id="powah:furnator_niotic" />   | <powah:EnergyGeneration id="powah:furnator_niotic" />   | <powah:EnergyMaxIO id="powah:furnator_niotic" />   |
+| <ItemLink id="powah:furnator_spirited" /> | <powah:EnergyCapacity id="powah:furnator_spirited" /> | <powah:EnergyGeneration id="powah:furnator_spirited" /> | <powah:EnergyMaxIO id="powah:furnator_spirited" /> |
+| <ItemLink id="powah:furnator_nitro" />    | <powah:EnergyCapacity id="powah:furnator_nitro" />    | <powah:EnergyGeneration id="powah:furnator_nitro" />    | <powah:EnergyMaxIO id="powah:furnator_nitro" />    |
+
+<Row>
+<RecipeFor id="powah:furnator_starter" />
+<RecipeFor id="powah:furnator_basic" />
+<RecipeFor id="powah:furnator_hardened" />
+<RecipeFor id="powah:furnator_blazing" />
+<RecipeFor id="powah:furnator_niotic" />
+<RecipeFor id="powah:furnator_spirited" />
+<RecipeFor id="powah:furnator_nitro" />
+</Row>

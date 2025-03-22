@@ -1,0 +1,43 @@
+---
+navigation:
+  title: 能量线缆
+  parent: storage_transfer/index.md
+  icon: powah:energy_cable_starter
+  position: 1
+item_ids:
+  - powah:energy_cable_basic
+  - powah:energy_cable_blazing
+  - powah:energy_cable_hardened
+  - powah:energy_cable_niotic
+  - powah:energy_cable_nitro
+  - powah:energy_cable_spirited
+  - powah:energy_cable_starter
+---
+
+# 能量线缆
+
+![](./energy_cable.png)
+
+线缆可被用于转移能量。 
+
+你可以通过手持设置为配置模式的扳手右击线缆来改变其转移模式。 
+
+|                                               | 最大输入输出                                                 |
+| --------------------------------------------- | ------------------------------------------------------ |
+| <ItemLink id="powah:energy_cable_starter" />  | <powah:EnergyMaxIO id="powah:energy_cable_starter" />  |
+| <ItemLink id="powah:energy_cable_basic" />    | <powah:EnergyMaxIO id="powah:energy_cable_basic" />    |
+| <ItemLink id="powah:energy_cable_hardened" /> | <powah:EnergyMaxIO id="powah:energy_cable_hardened" /> |
+| <ItemLink id="powah:energy_cable_blazing" />  | <powah:EnergyMaxIO id="powah:energy_cable_blazing" />  |
+| <ItemLink id="powah:energy_cable_niotic" />   | <powah:EnergyMaxIO id="powah:energy_cable_niotic" />   |
+| <ItemLink id="powah:energy_cable_spirited" /> | <powah:EnergyMaxIO id="powah:energy_cable_spirited" /> |
+| <ItemLink id="powah:energy_cable_nitro" />    | <powah:EnergyMaxIO id="powah:energy_cable_nitro" />    |
+
+<Row>
+<RecipeFor id="powah:energy_cable_starter" />
+<RecipeFor id="powah:energy_cable_basic" />
+<RecipeFor id="powah:energy_cable_hardened" />
+<RecipeFor id="powah:energy_cable_blazing" />
+<RecipeFor id="powah:energy_cable_niotic" />
+<RecipeFor id="powah:energy_cable_spirited" />
+<RecipeFor id="powah:energy_cable_nitro" />
+</Row>

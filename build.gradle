@@ -47,12 +47,16 @@ repositories {
             includeGroup "dev.emi"
         }
     }
+    mavenCentral()
 }
 
 apply plugin: "me.shedaniel.unified-publishing"
 
 dependencies {
     implementation "me.shedaniel.cloth:cloth-config-neoforge:${project.cloth_config_version}"
+
+    compileOnly "org.appliedenergistics:guideme:${project.guideme_version}:api"
+    runtimeOnly "org.appliedenergistics:guideme:${project.guideme_version}"
 
     // compile against provided APIs
     compileOnly "dev.emi:emi-neoforge:${emi_version}:api"
@@ -128,6 +132,7 @@ neoForge {
     runs {
         client {
             client()
+            systemProperty('guideme.powah.guide.sources', file('guidebook').absolutePath)
         }
         server {
             server()

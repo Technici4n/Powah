@@ -80,6 +80,22 @@ public class Info extends Page {
         this.args = args;
     }
 
+    public List<Component> getCache() {
+        return cache;
+    }
+
+    public Texture getImg() {
+        return img;
+    }
+
+    public int getParagraphs() {
+        return paragraphs;
+    }
+
+    public Object[][] getArgs() {
+        return args;
+    }
+
     @Override
     public void init(int x, int y, WikiScreen screen) {
         super.init(x, y, screen);

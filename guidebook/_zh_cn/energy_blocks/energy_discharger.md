@@ -1,0 +1,41 @@
+---
+navigation:
+  title: 能量提取器
+  parent: energy_blocks/index.md
+  icon: powah:energy_discharger_starter
+  position: 3
+item_ids:
+  - powah:energy_discharger_basic
+  - powah:energy_discharger_blazing
+  - powah:energy_discharger_hardened
+  - powah:energy_discharger_niotic
+  - powah:energy_discharger_nitro
+  - powah:energy_discharger_spirited
+  - powah:energy_discharger_starter
+---
+
+# 能量提取器
+
+![](./energy_discharger.png)
+
+能量提取器可被用于提取已含能量物品中的能量并将之存储于自身的缓存中。可以用线缆将能量提取器中的能量提取以再次利用这些能量。 
+
+|                                                    | 电容                                                             | 最大输入输出                                                      |
+| -------------------------------------------------- | -------------------------------------------------------------- | ----------------------------------------------------------- |
+| <ItemLink id="powah:energy_discharger_starter" />  | <powah:EnergyCapacity id="powah:energy_discharger_starter" />  | <powah:EnergyMaxIO id="powah:energy_discharger_starter" />  |
+| <ItemLink id="powah:energy_discharger_basic" />    | <powah:EnergyCapacity id="powah:energy_discharger_basic" />    | <powah:EnergyMaxIO id="powah:energy_discharger_basic" />    |
+| <ItemLink id="powah:energy_discharger_hardened" /> | <powah:EnergyCapacity id="powah:energy_discharger_hardened" /> | <powah:EnergyMaxIO id="powah:energy_discharger_hardened" /> |
+| <ItemLink id="powah:energy_discharger_blazing" />  | <powah:EnergyCapacity id="powah:energy_discharger_blazing" />  | <powah:EnergyMaxIO id="powah:energy_discharger_blazing" />  |
+| <ItemLink id="powah:energy_discharger_niotic" />   | <powah:EnergyCapacity id="powah:energy_discharger_niotic" />   | <powah:EnergyMaxIO id="powah:energy_discharger_niotic" />   |
+| <ItemLink id="powah:energy_discharger_spirited" /> | <powah:EnergyCapacity id="powah:energy_discharger_spirited" /> | <powah:EnergyMaxIO id="powah:energy_discharger_spirited" /> |
+| <ItemLink id="powah:energy_discharger_nitro" />    | <powah:EnergyCapacity id="powah:energy_discharger_nitro" />    | <powah:EnergyMaxIO id="powah:energy_discharger_nitro" />    |
+
+<Row>
+<RecipeFor id="powah:energy_discharger_starter" />
+<RecipeFor id="powah:energy_discharger_basic" />
+<RecipeFor id="powah:energy_discharger_hardened" />
+<RecipeFor id="powah:energy_discharger_blazing" />
+<RecipeFor id="powah:energy_discharger_niotic" />
+<RecipeFor id="powah:energy_discharger_spirited" />
+<RecipeFor id="powah:energy_discharger_nitro" />
+</Row>
