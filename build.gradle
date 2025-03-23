@@ -190,6 +190,10 @@ if (project.version != "0.0.0") {
                     curseforge = "cloth-config"
                     modrinth = "cloth-config"
                 }
+                depends {
+                    curseforge = "guideme"
+                    modrinth = "guideme"
+                }
             }
 
             var cfToken = System.getenv("CF_TOKEN")

@@ -7,7 +7,6 @@ import guideme.document.flow.LytFlowParent;
 import guideme.libs.mdast.mdx.model.MdxJsxTextElement;
 import java.util.Set;
 import net.minecraft.network.chat.Component;
-import org.checkerframework.checker.units.qual.C;
 import owmii.powah.config.IEnergyConfig;
 import owmii.powah.lib.block.AbstractGeneratorBlock;
 import owmii.powah.lib.item.EnergyBlockItem;
