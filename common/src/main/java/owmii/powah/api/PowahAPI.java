@@ -6,8 +6,10 @@ import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.ItemLike;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.material.Fluid;
 import org.apache.commons.lang3.tuple.Pair;
+import owmii.powah.Powah;
 
 public class PowahAPI {
 
@@ -67,6 +69,34 @@ public class PowahAPI {
      **/
     public static void registerHeatSource(ResourceLocation block, int heat) {
         HEAT_SOURCES.put(block, heat);
+    }
+
+    /**
+     * Register a fluid as a heat source by resolving its fluid block via BuiltInRegistries.
+     *
+     * @param fluidId The fluid's ResourceLocation.
+     * @param heat    The amount of heat it provides.
+     */
+    public static void registerFluidHeatSource(ResourceLocation fluidId, int heat) {
+        Fluid fluid = BuiltInRegistries.FLUID.get(fluidId);
+        if (fluid == null) {
+            Powah.LOGGER.warn("[PowahAPI] Fluid '{}' not found in registry", fluidId);
+            return;
+        }
+
+        Block fluidBlock = fluid.defaultFluidState().createLegacyBlock().getBlock();
+        if (fluidBlock == Blocks.AIR) {
+            Powah.LOGGER.warn("[PowahAPI] Fluid '{}' has no associated block", fluidId);
+            return;
+        }
+
+        ResourceLocation blockId = BuiltInRegistries.BLOCK.getKey(fluidBlock);
+        if (blockId == null) {
+            Powah.LOGGER.warn("[PowahAPI] Block for fluid '{}' not found in registry", fluidId);
+            return;
+        }
+
+        registerHeatSource(blockId, heat);
     }
 
     /**
