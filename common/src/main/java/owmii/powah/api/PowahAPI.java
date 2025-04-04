@@ -70,7 +70,7 @@ public class PowahAPI {
     public static void registerHeatSource(ResourceLocation block, int heat) {
         Block resolved = BuiltInRegistries.BLOCK.get(block);
 
-        if (resolved == null || resolved == Blocks.AIR) {
+        if (resolved == Blocks.AIR) {
             Powah.LOGGER.warn("PowahAPI: Skipped heat source registration — block [{}] does not exist or is AIR", block);
             return;
         }
