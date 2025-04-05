@@ -17,13 +17,10 @@ jobs:
         with:
           distribution: 'microsoft'
           java-version: 17
-      - name: Grant execute permission for gradlew
-        run: chmod +x gradlew
-      - name: Use gradle cache for faster builds
-        uses: actions/cache@v1
+      - name: Setup Gradle
+        uses: gradle/actions/setup-gradle@v3
         with:
-          path: ~/.gradle/caches
-          key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle') }}
+          cache-read-only: ${{ github.ref != 'refs/heads/1.20.1' }}
       - name: Validate AW
         run: ./gradlew validateAccessWidener
       - name: Build with Gradle
