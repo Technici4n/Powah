@@ -15,8 +15,10 @@ jobs:
         with:
           distribution: 'microsoft'
           java-version: 17
-      - name: Grant execute permission for gradlew
-        run: chmod +x gradlew
+      - name: Setup Gradle
+        uses: gradle/actions/setup-gradle@v3
+        with:
+          cache-read-only: ${{ github.ref != 'refs/heads/1.20.1' }}
       - name: Build with Gradle
         env:
           POWAH_VERSION: ${{ github.event.release.tag_name }}
