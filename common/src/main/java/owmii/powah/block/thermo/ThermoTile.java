@@ -63,12 +63,18 @@ public class ThermoTile extends AbstractEnergyProvider<ThermoBlock> implements I
                             heat = (int) (heat / ((float) level + 1));
                         }
                     }
-                    this.generating = (int) ((heat * Math.max(1D, (1D + fluidCooling) / 2D) * getGeneration()) / 1000.0D);
+                    double heatRatio = heat / 1000.0D;
+                    double coolingRatio = Math.max(1D, (1D + Math.abs(fluidCooling)) / 2D);
+                    this.generating = (int) (heatRatio * coolingRatio * getGeneration());
                     this.energy.produce(this.generating);
                     if (world.getGameTime() % 40 == 0L) {
                         this.tank.drain(Util.millibucketAmount(), false);
                     }
+                } else {
+                    this.generating = 0;
                 }
+            } else {
+                this.generating = 0;
             }
         }
 
