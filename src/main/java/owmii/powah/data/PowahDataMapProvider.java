@@ -32,7 +32,7 @@ class PowahDataMapProvider extends DataMapProvider {
                 .add(Itms.URANINITE, new ReactorFuel(100, 700), false)
                 .build();
         builder(FluidCoolantConfig.DATA_MAP_TYPE)
-                .add(Tags.Fluids.WATER, new FluidCoolantConfig(1), false)
+                .add(Tags.Fluids.WATER, new FluidCoolantConfig(0), false)
                 .build();
 
         builder(SolidCoolantConfig.DATA_MAP_TYPE)

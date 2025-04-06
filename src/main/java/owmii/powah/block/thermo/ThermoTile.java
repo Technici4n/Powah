@@ -56,12 +56,24 @@ public class ThermoTile extends AbstractEnergyProvider<ThermoBlock> implements I
                 BlockState state = world.getBlockState(heatPos);
                 int heat = PowahAPI.getHeatSource(state);
                 if (!this.energy.isFull() && heat != 0) {
-                    this.generating = (int) ((heat * Math.max(1D, (1D + fluidCooling.getAsInt()) / 2D) * getGeneration()) / 1000.0D);
+                    double heatRatio = heat / 1000.0;
+                    // The formula I want is:
+                    // (water) 0 °C -> ratio of 1
+                    // (water) -10 °C -> ratio of 5
+                    // (water) -20 °C -> ratio of 10
+                    // and so on...
+                    // So we do -temperature/2 with a max to handle the 0 °C case
+                    double coolantRatio = Math.max(1D, -fluidCooling.getAsInt() / 2D);
+                    this.generating = (int) (heatRatio * coolantRatio * getGeneration());
                     this.energy.produce(this.generating);
                     if (world.getGameTime() % 40 == 0L) {
                         this.tank.drain(1, IFluidHandler.FluidAction.EXECUTE);
                     }
+                } else {
+                    this.generating = 0;
                 }
+            } else {
+                this.generating = 0;
             }
         }
 
