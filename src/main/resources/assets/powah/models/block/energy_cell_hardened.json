@@ -1,6 +1,6 @@
 {
-	"parent": "powah:block/base/energy_cell",
-	"textures": {
-		"0": "powah:block/energy_cell_hardened"
-	}
+  "parent": "powah:block/base/energy_cell",
+  "textures": {
+    "0": "powah:block/energy_cell_hardened"
+  }
 }
