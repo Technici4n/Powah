@@ -1,5 +1,5 @@
 {
-  "parent": "powah:block/base/energy_cell",
+  "parent": "powah:block/energy_cell",
   "textures": {
     "0": "powah:block/energy_cell_nitro"
   }
