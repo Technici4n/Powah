@@ -1,6 +1,6 @@
 {
-  "parent": "block/cube_all",
+  "parent": "powah:block/energy_cell",
   "textures": {
-	"all": "powah:block/energy_cell_spirited"
+	"0": "powah:block/energy_cell_spirited"
   }
 }

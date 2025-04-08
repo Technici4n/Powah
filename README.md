@@ -10,6 +10,6 @@ This is allowed by the LGPL license used by Powah!.
 ## Credits
 
 - Thanks to owmii for creating Powah, and releasing it under an open source license.
-- Thanks to Cyn for the new uraninite textures.
+- Thanks to Cyn for the new textures!
 
 <!--<a href="https://www.curseforge.com/minecraft/mc-mods/powah" target="_blank"><img src="http://cf.way2muchnoise.eu/all_352656_downloads.svg" />  </a><a href="https://www.curseforge.com/minecraft/mc-mods/powah" target="_blank"><img src="http://cf.way2muchnoise.eu/versions/352656.svg" />  </a><a href="https://discord.gg/A8TP9JY" target="_blank"><img src="https://img.shields.io/discord/461794532422582282.svg" /></a>-->
