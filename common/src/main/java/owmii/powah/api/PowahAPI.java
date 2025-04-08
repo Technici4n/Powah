@@ -6,8 +6,10 @@ import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.ItemLike;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.material.Fluid;
 import org.apache.commons.lang3.tuple.Pair;
+import owmii.powah.Powah;
 
 public class PowahAPI {
 
@@ -66,6 +68,13 @@ public class PowahAPI {
      * @param heat:  the heat of the block.
      **/
     public static void registerHeatSource(ResourceLocation block, int heat) {
+        Block resolved = BuiltInRegistries.BLOCK.get(block);
+
+        if (resolved == Blocks.AIR) {
+            Powah.LOGGER.warn("PowahAPI: Skipped heat source registration — block [{}] does not exist or is AIR", block);
+            return;
+        }
+
         HEAT_SOURCES.put(block, heat);
     }
 
