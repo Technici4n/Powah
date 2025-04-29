@@ -1,6 +1,0 @@
-{
-  "parent": "powah:block/ender_cell",
-  "textures": {
-	"1": "powah:block/ender_cell_nitro"
-  }
-}
