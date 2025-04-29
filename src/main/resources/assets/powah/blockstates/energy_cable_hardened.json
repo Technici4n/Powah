@@ -1,0 +1,42 @@
+{
+  "multipart": [
+	{
+	  "apply": {"model": "powah:block/energy_cable_hardened"}
+	}, {
+	  "when": {
+		"north": true
+	  },
+	  "apply": {"model": "powah:block/energy_cable_hardened_multipart"}
+	},
+	{
+	  "when": {
+		"east": true
+	  },
+	  "apply": {"model": "powah:block/energy_cable_hardened_multipart", "y": 90}
+	},
+	{
+	  "when": {
+		"south": true
+	  },
+	  "apply": {"model": "powah:block/energy_cable_hardened_multipart", "x": 180}
+	},
+	{
+	  "when": {
+		"west": true
+	  },
+	  "apply": {"model": "powah:block/energy_cable_hardened_multipart", "y": 270}
+	},
+	{
+	  "when": {
+		"up": true
+	  },
+	  "apply": {"model": "powah:block/energy_cable_hardened_multipart", "x": 270}
+	},
+	{
+	  "when": {
+		"down": true
+	  },
+	  "apply": {"model": "powah:block/energy_cable_hardened_multipart", "x": 90}
+	}
+  ]
+}
