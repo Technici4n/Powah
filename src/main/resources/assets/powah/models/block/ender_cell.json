@@ -2,7 +2,7 @@
   "credit": "Made by Cyn with Blockbench",
   "parent": "block/block",
   "textures": {
-	"particles": "#1"
+	"particle": "#1"
   },
   "elements": [
 	{
