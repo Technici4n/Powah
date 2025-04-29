@@ -1,0 +1,30 @@
+{
+  "variants": {
+    "facing=down": {
+      "model": "powah:block/ender_gate_starter"
+    },
+    "facing=east": {
+      "model": "powah:block/ender_gate_starter",
+      "x": 90,
+      "y": 270
+    },
+    "facing=north": {
+      "model": "powah:block/ender_gate_starter",
+      "x": 90,
+      "y": 180
+    },
+    "facing=south": {
+      "model": "powah:block/ender_gate_starter",
+      "x": 90
+    },
+    "facing=up": {
+      "model": "powah:block/ender_gate_starter",
+      "x": 180
+    },
+    "facing=west": {
+      "model": "powah:block/ender_gate_starter",
+      "x": 90,
+      "y": 90
+    }
+  }
+}
