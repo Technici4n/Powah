@@ -150,7 +150,7 @@ public class PowahStateModelsProvider extends BlockStateProvider {
     }
 
     private BlockModelBuilder tierParent(String b, Tier t, String extra) {
-        return models().withExistingParent(getPath(getBlock(b, t)), Powah.MOD_ID + ":block/" + b);
+        return models().withExistingParent(getPath(getBlock(b, t)) + extra, Powah.MOD_ID + ":block/" + b);
     }
 
     private Block getBlock(String block, Tier t) {
