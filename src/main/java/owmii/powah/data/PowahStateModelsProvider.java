@@ -16,6 +16,7 @@ import net.neoforged.neoforge.common.data.ExistingFileHelper;
 import owmii.powah.Powah;
 import owmii.powah.block.Blcks;
 import owmii.powah.block.Tier;
+import owmii.powah.block.cable.CableBlock;
 
 public class PowahStateModelsProvider extends BlockStateProvider {
 
@@ -54,8 +55,10 @@ public class PowahStateModelsProvider extends BlockStateProvider {
             enderGate(tier);
             thermoGen(tier);
             energizedRod(tier);
-            //energyCable(tier);
-           
+            // energyCable(tier); dont work atm
+            energyDischarger(tier);
+            energyHopper(tier);
+
         }
 
         // tiered blocks (starter->creative)
@@ -107,33 +110,43 @@ public class PowahStateModelsProvider extends BlockStateProvider {
     // BLOCK + "_" + tier.getName());
     // var multipart = tierParent(BLOCK, tier, "_multipart").texture("mp",
     // "powah:block/" + BLOCK + "_" + tier.getName());
-    //
     // getMultipartBuilder(getBlock(BLOCK, tier))
     // .part().modelFile(modelstatic).nextModel()
-    //
     // .addModel().condition(CableBlock.NORTH, true).end()
     // .part().modelFile(multipart).nextModel()
-    //
     // .addModel().condition(CableBlock.DOWN, true).end()
     // .part().modelFile(multipart).rotationX(90).nextModel()
-    //
     // .addModel().condition(CableBlock.SOUTH, true).end()
     // .part().modelFile(multipart).rotationX(180).nextModel()
-    //
     // .addModel().condition(CableBlock.UP, true).end()
     // .part().modelFile(multipart).rotationX(270).nextModel()
-    //
     // .addModel().condition(CableBlock.EAST, true).end()
     // .part().modelFile(multipart).rotationY(90).nextModel()
-    //
     // .addModel().condition(CableBlock.WEST, true).end()
-    // .part().modelFile(multipart).rotationY(270).nextModel()
-    //
+    // .part().modelFile(multipart).rotationY(270)
     // .build();
     // }
 
+    private void energyDischarger(Tier tier) {
+        var BLOCK = "energy_discharger";
+        directionalBlockInverse(
+                getBlock(BLOCK, tier),
+                tierParent(BLOCK, tier)
+                        .texture("side", "powah:block/" + BLOCK + "_side")
+                        .texture("comps", "powah:block/" + BLOCK + "_comps")
+                        .texture("ov", "powah:block/" + tier.getName() + "_ov"));
+    }
 
-
+    private void energyHopper(Tier tier) {
+        var BLOCK = "energy_hopper";
+        directionalBlockInverse(
+                getBlock(BLOCK, tier),
+                tierParent(BLOCK, tier)
+                        .texture("side", "powah:block/" + BLOCK + "_side")
+                        .texture("back", "powah:block/" + BLOCK + "_back")
+                        .texture("pointer", "powah:block/" + BLOCK + "_pointer")
+                        .texture("ov", "powah:block/" + tier.getName() + "_ov"));
+    }
 
     private void thermoGen(Tier tier) {
         var BLOCK = "thermo_generator";
