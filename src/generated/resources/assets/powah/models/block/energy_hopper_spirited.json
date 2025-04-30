@@ -1,0 +1,9 @@
+{
+  "parent": "powah:block/energy_hopper",
+  "textures": {
+    "back": "powah:block/energy_hopper_back",
+    "ov": "powah:block/spirited_ov",
+    "pointer": "powah:block/energy_hopper_pointer",
+    "side": "powah:block/energy_hopper_side"
+  }
+}
