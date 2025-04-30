@@ -30,7 +30,7 @@ public class PowahDataGenerator {
                 packOutput -> new TagsProvider.Items(packOutput, registries, blockTagsProvider.contentsGetter(),
                         existingFileHelper));
 
-        pack.addProvider(packOutput-> new PowahStateModelsProvider(packOutput , existingFileHelper));
+        pack.addProvider(packOutput -> new PowahStateModelsProvider(packOutput, existingFileHelper));
 
         pack.addProvider(
                 packOutput -> new CurioTagsProvider(packOutput, registries, blockTagsProvider.contentsGetter(), event.getExistingFileHelper()));
