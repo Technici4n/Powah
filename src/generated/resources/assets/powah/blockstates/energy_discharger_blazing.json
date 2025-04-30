@@ -1,0 +1,30 @@
+{
+  "variants": {
+    "facing=down": {
+      "model": "powah:block/energy_discharger_blazing"
+    },
+    "facing=east": {
+      "model": "powah:block/energy_discharger_blazing",
+      "x": 90,
+      "y": 270
+    },
+    "facing=north": {
+      "model": "powah:block/energy_discharger_blazing",
+      "x": 90,
+      "y": 180
+    },
+    "facing=south": {
+      "model": "powah:block/energy_discharger_blazing",
+      "x": 90
+    },
+    "facing=up": {
+      "model": "powah:block/energy_discharger_blazing",
+      "x": 180
+    },
+    "facing=west": {
+      "model": "powah:block/energy_discharger_blazing",
+      "x": 90,
+      "y": 90
+    }
+  }
+}
