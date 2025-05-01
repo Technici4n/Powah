@@ -5,6 +5,7 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
@@ -76,9 +77,8 @@ public class AbstractEnderTile<B extends AbstractEnergyBlock<EnderConfig, B>> ex
     public void onSlotChanged(int slot) {
         if (this.level != null && slot == 0) {
             ItemStack stack = this.inv.getStackInSlot(0);
-            if (isExtender() && stack.getItem() instanceof IEnderExtender) {
+            if (isExtender() && stack.getItem() instanceof IEnderExtender e) {
                 Energy energy = getEnergy();
-                IEnderExtender e = (IEnderExtender) stack.getItem();
                 long cap = e.getExtendedCapacity(stack);
                 long newCap = energy.getCapacity() + cap;
                 if (cap <= Energy.MAX && newCap > 0 && newCap <= Energy.MAX) {
@@ -127,8 +127,8 @@ public class AbstractEnderTile<B extends AbstractEnergyBlock<EnderConfig, B>> ex
     }
 
     public void setEnergy(Energy energy) {
-        if (!isRemote() && this.owner != null) {
-            EnderNetwork network = EnderNetwork.get(level);
+        if (level instanceof ServerLevel serverLevel && this.owner != null) {
+            EnderNetwork network = EnderNetwork.get(serverLevel);
             network.setEnergy(this.owner.getId(), this.channel.get(), energy);
         }
     }
@@ -150,10 +150,10 @@ public class AbstractEnderTile<B extends AbstractEnergyBlock<EnderConfig, B>> ex
 
     @Override
     public Energy getEnergy() {
-        if (isRemote()) {
-            return this.energy;
+        if (level instanceof ServerLevel serverLevel) {
+            return EnderNetwork.get(serverLevel).getEnergy(this, this.channel.get()).setTransfer(getEnergyTransfer());
         } else {
-            return EnderNetwork.get(level).getEnergy(this, this.channel.get()).setTransfer(getEnergyTransfer());
+            return this.energy;
         }
     }
 
