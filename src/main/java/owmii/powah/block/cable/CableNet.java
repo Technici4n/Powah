@@ -11,19 +11,23 @@ import java.util.Objects;
 import java.util.WeakHashMap;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.level.ChunkPos;
-import net.minecraft.world.level.Level;
 import net.minecraft.world.level.chunk.ChunkAccess;
 import org.apache.commons.lang3.mutable.MutableBoolean;
 import org.jetbrains.annotations.Nullable;
 
 public class CableNet {
     // Level -> ChunkPos -> BlockPos -> Tile
-    private static final Map<Level, Long2ObjectMap<Long2ObjectMap<CableTile>>> loadedCables = new WeakHashMap<>();
+    private static final Map<ServerLevel, Long2ObjectMap<Long2ObjectMap<CableTile>>> loadedCables = new WeakHashMap<>();
 
     static void addCable(CableTile cable) {
+        if (!(cable.getLevel() instanceof ServerLevel level)) {
+            return;
+        }
+
         var chunkPos = ChunkPos.asLong(cable.getBlockPos());
-        var previousCable = loadedCables.computeIfAbsent(cable.getLevel(), l -> new Long2ObjectOpenHashMap<>())
+        var previousCable = loadedCables.computeIfAbsent(level, l -> new Long2ObjectOpenHashMap<>())
                 .computeIfAbsent(chunkPos, l -> new Long2ObjectOpenHashMap<>())
                 .put(cable.getBlockPos().asLong(), cable);
 
@@ -35,8 +39,7 @@ public class CableNet {
     }
 
     static void removeCable(CableTile cable) {
-        var level = cable.getLevel();
-        if (level == null) {
+        if (!(cable.getLevel() instanceof ServerLevel level)) {
             return;
         }
 
@@ -73,7 +76,11 @@ public class CableNet {
     }
 
     static void updateAdjacentCables(CableTile cable) {
-        var levelMap = loadedCables.get(cable.getLevel());
+        if (!(cable.getLevel() instanceof ServerLevel level)) {
+            return;
+        }
+
+        var levelMap = loadedCables.get(level);
         if (levelMap == null) {
             return;
         }
@@ -89,7 +96,11 @@ public class CableNet {
     }
 
     static void calculateNetwork(CableTile cable) {
-        var levelMap = Objects.requireNonNull(loadedCables.get(cable.getLevel()), "No level map?");
+        if (!(cable.getLevel() instanceof ServerLevel level)) {
+            return;
+        }
+
+        var levelMap = Objects.requireNonNull(loadedCables.get(level), "No level map?");
 
         // Here we go again...
         var cables = new LinkedHashSet<CableTile>();
@@ -124,7 +135,7 @@ public class CableNet {
         this.cableList = cableList;
     }
 
-    public static void removeChunk(Level level, ChunkAccess chunk) {
+    public static void removeChunk(ServerLevel level, ChunkAccess chunk) {
         var levelMap = loadedCables.get(level);
         if (levelMap == null) {
             return; // No cables in this level
