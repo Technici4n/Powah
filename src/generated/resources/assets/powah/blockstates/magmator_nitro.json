@@ -1,0 +1,50 @@
+{
+  "variants": {
+    "facing=down,lit=false": {
+      "model": "powah:block/magmator_nitro",
+      "x": 270
+    },
+    "facing=down,lit=true": {
+      "model": "powah:block/magmator_nitro_on",
+      "x": 270
+    },
+    "facing=east,lit=false": {
+      "model": "powah:block/magmator_nitro",
+      "y": 90
+    },
+    "facing=east,lit=true": {
+      "model": "powah:block/magmator_nitro_on",
+      "y": 90
+    },
+    "facing=north,lit=false": {
+      "model": "powah:block/magmator_nitro"
+    },
+    "facing=north,lit=true": {
+      "model": "powah:block/magmator_nitro_on"
+    },
+    "facing=south,lit=false": {
+      "model": "powah:block/magmator_nitro",
+      "y": 180
+    },
+    "facing=south,lit=true": {
+      "model": "powah:block/magmator_nitro_on",
+      "y": 180
+    },
+    "facing=up,lit=false": {
+      "model": "powah:block/magmator_nitro",
+      "x": 90
+    },
+    "facing=up,lit=true": {
+      "model": "powah:block/magmator_nitro_on",
+      "x": 90
+    },
+    "facing=west,lit=false": {
+      "model": "powah:block/magmator_nitro",
+      "y": 270
+    },
+    "facing=west,lit=true": {
+      "model": "powah:block/magmator_nitro_on",
+      "y": 270
+    }
+  }
+}

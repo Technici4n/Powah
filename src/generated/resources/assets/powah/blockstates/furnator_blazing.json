@@ -1,0 +1,50 @@
+{
+  "variants": {
+    "facing=down,waterlogged=false": {
+      "model": "powah:block/furnator_blazing",
+      "x": 270
+    },
+    "facing=down,waterlogged=true": {
+      "model": "powah:block/furnator_blazing",
+      "x": 270
+    },
+    "facing=east,waterlogged=false": {
+      "model": "powah:block/furnator_blazing",
+      "y": 90
+    },
+    "facing=east,waterlogged=true": {
+      "model": "powah:block/furnator_blazing",
+      "y": 90
+    },
+    "facing=north,waterlogged=false": {
+      "model": "powah:block/furnator_blazing"
+    },
+    "facing=north,waterlogged=true": {
+      "model": "powah:block/furnator_blazing"
+    },
+    "facing=south,waterlogged=false": {
+      "model": "powah:block/furnator_blazing",
+      "y": 180
+    },
+    "facing=south,waterlogged=true": {
+      "model": "powah:block/furnator_blazing",
+      "y": 180
+    },
+    "facing=up,waterlogged=false": {
+      "model": "powah:block/furnator_blazing",
+      "x": 90
+    },
+    "facing=up,waterlogged=true": {
+      "model": "powah:block/furnator_blazing",
+      "x": 90
+    },
+    "facing=west,waterlogged=false": {
+      "model": "powah:block/furnator_blazing",
+      "y": 270
+    },
+    "facing=west,waterlogged=true": {
+      "model": "powah:block/furnator_blazing",
+      "y": 270
+    }
+  }
+}

@@ -1,0 +1,62 @@
+{
+  "multipart": [
+    {
+      "apply": {
+        "model": "powah:block/energy_cable_nitro"
+      }
+    },
+    {
+      "apply": {
+        "model": "powah:block/energy_cable_nitro_multipart"
+      },
+      "when": {
+        "north": "true"
+      }
+    },
+    {
+      "apply": {
+        "model": "powah:block/energy_cable_nitro_multipart",
+        "y": 90
+      },
+      "when": {
+        "east": "true"
+      }
+    },
+    {
+      "apply": {
+        "model": "powah:block/energy_cable_nitro_multipart",
+        "x": 180
+      },
+      "when": {
+        "south": "true"
+      }
+    },
+    {
+      "apply": {
+        "model": "powah:block/energy_cable_nitro_multipart",
+        "y": 270
+      },
+      "when": {
+        "west": "true"
+      }
+    },
+    {
+      "apply": {
+        "model": "powah:block/energy_cable_nitro_multipart",
+        "x": 270
+      },
+      "when": {
+        "up": "true"
+      }
+    },
+    {
+      "apply": {
+        "model": "powah:block/energy_cable_nitro_multipart",
+        "x": 90
+      },
+      "when": {
+        "down": "true"
+      }
+    }
+  ]
+}

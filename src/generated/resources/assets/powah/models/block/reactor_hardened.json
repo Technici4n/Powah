@@ -1,0 +1,6 @@
+{
+  "parent": "powah:block/reactor",
+  "textures": {
+    "particle": "powah:block/furnator_face"
+  }
+}
