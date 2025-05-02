@@ -6,10 +6,10 @@ import net.minecraft.core.Registry;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
-import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.fml.ModList;
@@ -92,7 +92,7 @@ public class Powah {
             }
         });
         NeoForge.EVENT_BUS.addListener((ChunkEvent.Unload event) -> {
-            if (event.getLevel() instanceof Level level) {
+            if (event.getLevel() instanceof ServerLevel level) {
                 CableNet.removeChunk(level, event.getChunk());
             }
         });

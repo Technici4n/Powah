@@ -10,7 +10,6 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.ChunkPos;
-import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
 import net.neoforged.neoforge.capabilities.BlockCapabilityCache;
 import net.neoforged.neoforge.capabilities.Capabilities;
@@ -137,8 +136,10 @@ public class CableTile extends AbstractEnergyStorage<CableConfig, CableBlock> im
 
     @Override
     public long receiveEnergy(long maxReceive, boolean simulate, @Nullable Direction direction) {
-        if (this.level == null || isRemote() || direction == null || !checkRedstone() || !canReceiveEnergy(direction))
+        if (!(this.level instanceof ServerLevel serverLevel) || direction == null || !checkRedstone() || !canReceiveEnergy(direction)) {
             return 0;
+        }
+
         long received = 0;
         var cables = getCables();
 
@@ -157,7 +158,7 @@ public class CableTile extends AbstractEnergyStorage<CableConfig, CableBlock> im
                 if (amount <= 0)
                     break;
                 if (!cable.energySides.isEmpty() && cable.isActive()) {
-                    received += cable.pushEnergy(amount, simulate, direction, this);
+                    received += cable.pushEnergy(serverLevel, amount, simulate, direction, this);
                 }
             }
 
@@ -167,14 +168,11 @@ public class CableTile extends AbstractEnergyStorage<CableConfig, CableBlock> im
         }
     }
 
-    private long pushEnergy(long maxReceive, boolean simulate, @Nullable Direction direction, CableTile cable) {
-        if (!(getLevel() instanceof ServerLevel serverLevel))
-            throw new RuntimeException("Expected server level");
-
+    private long pushEnergy(ServerLevel level, long maxReceive, boolean simulate, @Nullable Direction direction, CableTile cable) {
         long received = 0;
         for (int i = 0; i < 6; ++i) {
             // Shift by tick count to ensure that it distributes evenly on average
-            Direction side = Direction.from3DDataValue((i + serverLevel.getServer().getTickCount()) % 6);
+            Direction side = Direction.from3DDataValue((i + level.getServer().getTickCount()) % 6);
             if (!this.energySides.contains(side))
                 continue;
 
@@ -191,7 +189,7 @@ public class CableTile extends AbstractEnergyStorage<CableConfig, CableBlock> im
         return received;
     }
 
-    private long receive(Level level, BlockPos pos, Direction side, long amount, boolean simulate) {
+    private long receive(ServerLevel level, BlockPos pos, Direction side, long amount, boolean simulate) {
         if (capabilityCaches[side.ordinal()] == null) {
             capabilityCaches[side.ordinal()] = BlockCapabilityCache.create(Capabilities.EnergyStorage.BLOCK, (ServerLevel) level, pos, side);
         }
