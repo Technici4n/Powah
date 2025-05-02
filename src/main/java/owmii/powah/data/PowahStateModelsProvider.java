@@ -1,7 +1,7 @@
 package owmii.powah.data;
 
+import java.util.List;
 import java.util.Set;
-
 import net.minecraft.core.Direction;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.data.PackOutput;
@@ -16,7 +16,6 @@ import net.neoforged.neoforge.common.data.ExistingFileHelper;
 import owmii.powah.Powah;
 import owmii.powah.block.Blcks;
 import owmii.powah.block.Tier;
-import owmii.powah.block.cable.CableBlock;
 
 public class PowahStateModelsProvider extends BlockStateProvider {
 
@@ -46,8 +45,10 @@ public class PowahStateModelsProvider extends BlockStateProvider {
         cubeAllBlocks.forEach(b -> cubeBlock(b));
 
         // special blocks
-        directionalBlockInverse(Blcks.ENERGIZING_ORB.get(),
-                models().getExistingFile(getResource("block/energizing_orb")));
+        directionalBlockCustom(Blcks.ENERGIZING_ORB.get(),
+                models().getExistingFile(getResource("block/energizing_orb")),
+                List.of(180, 0, 90, 90, 90, 90),
+                List.of(0, 0, 0, 180, 270, 90));
 
         // tiered blocks (starter->nitro)
         for (Tier tier : Tier.getNormalVariants()) {
@@ -58,7 +59,8 @@ public class PowahStateModelsProvider extends BlockStateProvider {
             // energyCable(tier); dont work atm
             energyDischarger(tier);
             energyHopper(tier);
-
+            furnatorGen(tier);
+            magmatorGem(tier);
         }
 
         // tiered blocks (starter->creative)
@@ -81,18 +83,22 @@ public class PowahStateModelsProvider extends BlockStateProvider {
 
     private void enderGate(Tier tier) {
         var BLOCK = "ender_gate";
-        directionalBlockInverse(getBlock(BLOCK, tier),
+        directionalBlockCustom(getBlock(BLOCK, tier),
                 tierParent(BLOCK, tier)
                         .texture("gate", "powah:block/" + BLOCK)
-                        .texture("ov", "powah:block/" + tier.getName() + "_ov"));
+                        .texture("ov", "powah:block/" + tier.getName() + "_ov"),
+                List.of(270, 90, 0, 0, 0, 0),
+                List.of(0, 0, 180, 0, 90, 270));
     }
 
     private void energizedRod(Tier tier) {
         var BLOCK = "energizing_rod";
-        directionalBlockInverse(getBlock(BLOCK, tier),
+        directionalBlockCustom(getBlock(BLOCK, tier),
                 tierParent(BLOCK, tier)
                         .texture("gem", "powah:block/" + BLOCK + "_" + tier.getName() + "_gem")
-                        .texture("rod", "powah:block/" + BLOCK));
+                        .texture("rod", "powah:block/" + BLOCK),
+                List.of(180, 0, 90, 90, 90, 90),
+                List.of(0, 0, 0, 180, 270, 90));
 
     }
 
@@ -129,23 +135,65 @@ public class PowahStateModelsProvider extends BlockStateProvider {
 
     private void energyDischarger(Tier tier) {
         var BLOCK = "energy_discharger";
-        directionalBlockInverse(
+        directionalBlockCustom(
                 getBlock(BLOCK, tier),
                 tierParent(BLOCK, tier)
                         .texture("side", "powah:block/" + BLOCK + "_side")
                         .texture("comps", "powah:block/" + BLOCK + "_comps")
-                        .texture("ov", "powah:block/" + tier.getName() + "_ov"));
+                        .texture("ov", "powah:block/" + tier.getName() + "_ov"),
+                List.of(0, 0, 0, 0, 270, 90),
+                List.of(0, 180, 270, 90, 0, 0));
     }
 
     private void energyHopper(Tier tier) {
         var BLOCK = "energy_hopper";
-        directionalBlockInverse(
+        directionalBlockCustom(
                 getBlock(BLOCK, tier),
                 tierParent(BLOCK, tier)
                         .texture("side", "powah:block/" + BLOCK + "_side")
                         .texture("back", "powah:block/" + BLOCK + "_back")
                         .texture("pointer", "powah:block/" + BLOCK + "_pointer")
-                        .texture("ov", "powah:block/" + tier.getName() + "_ov"));
+                        .texture("ov", "powah:block/" + tier.getName() + "_ov"),
+                List.of(270, 90, 0, 0, 0, 0),
+                List.of(0, 0, 180, 0, 90, 270));
+    }
+
+    private void furnatorGen(Tier tier) {
+        var BLOCK = "furnator";
+        directionalBlockCustom(
+                getBlock(BLOCK, tier),
+                tierParent(BLOCK, tier)
+                        .texture("face", "powah:block/" + BLOCK + "_face")
+                        .texture("side", "powah:block/" + BLOCK + "_side")
+                        .texture("top", "powah:block/" + BLOCK + "_top")
+                        .texture("lit", "powah:block/" + BLOCK + "_unlit")
+                        .texture("ov", "powah:block/" + tier.getName() + "_ov"),
+                List.of(0, 0, 0, 0, 90, 270),
+                List.of(180, 0, 90, 270, 0, 0));
+    }
+
+    private void magmatorGem(Tier tier) {
+
+        var BLOCK = "magmator";
+
+        var Xrot = List.of(90, 270, 0, 0, 0, 0);
+        var Yrot = List.of(0, 0, 0, 180, 270, 90);
+        // u,d,s,n,e,w
+
+        getVariantBuilder(getBlock(BLOCK, tier)).forAllStates(s -> {
+            Direction dir = s.getValue(BlockStateProperties.FACING);
+            boolean lit = s.getValue(BlockStateProperties.LIT);
+            return ConfiguredModel.builder().modelFile(
+                    tierParent(BLOCK, tier, lit ? "_on" : "")
+                            .texture("face", "powah:block/" + BLOCK + "_face" + (lit ? "_lit" : "_unlit"))
+                            .texture("side", "powah:block/" + BLOCK + "_side")
+                            .texture("inside", "powah:block/" + BLOCK + "_inside")
+                            .texture("top", "powah:block/" + BLOCK + "_top")
+                            .texture("ov", "powah:block/" + tier.getName() + "_ov"))
+                    .rotationX(Xrot.get(DIRECTIONS.indexOf(dir)))
+                    .rotationY(Yrot.get(DIRECTIONS.indexOf(dir)))
+                    .build();
+        });
     }
 
     private void thermoGen(Tier tier) {
@@ -185,12 +233,24 @@ public class PowahStateModelsProvider extends BlockStateProvider {
         return ResourceLocation.fromNamespaceAndPath(Powah.MOD_ID, s);
     }
 
-    public void directionalBlockInverse(Block block, ModelFile modelFunc) {
+    private List<Direction> DIRECTIONS = List.of(
+            Direction.UP, Direction.DOWN, Direction.SOUTH,
+            Direction.NORTH, Direction.EAST, Direction.WEST);
+    private List<List<Integer>> DEFAULT_ROTATIONS = List.of(
+            List.of(0, 0, 0, 0, 0, 0),
+            List.of(0, 0, 0, 0, 0, 0));
+
+    public void directionalBlockCustom(Block block, ModelFile modelFunc) {
+        directionalBlockCustom(block, modelFunc, DEFAULT_ROTATIONS.get(0), DEFAULT_ROTATIONS.get(1));
+    }
+
+    public void directionalBlockCustom(Block block, ModelFile modelFunc, List<Integer> Xrot, List<Integer> Yrot) {
         getVariantBuilder(block).forAllStates(s -> {
             Direction dir = s.getValue(BlockStateProperties.FACING);
             return ConfiguredModel.builder().modelFile(modelFunc)
-                    .rotationX(dir == Direction.UP ? 180 : (dir.getAxis().isHorizontal() ? 90 : 0))
-                    .rotationY(dir.getAxis().isVertical() ? 0 : (int) dir.toYRot() % 360).build();
+                    .rotationX(Xrot.get(DIRECTIONS.indexOf(dir)))
+                    .rotationY(Yrot.get(DIRECTIONS.indexOf(dir)))
+                    .build();
         });
     }
 
