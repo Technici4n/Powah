@@ -16,6 +16,7 @@ import net.neoforged.neoforge.common.data.ExistingFileHelper;
 import owmii.powah.Powah;
 import owmii.powah.block.Blcks;
 import owmii.powah.block.Tier;
+import owmii.powah.block.cable.CableBlock;
 
 public class PowahStateModelsProvider extends BlockStateProvider {
 
@@ -56,7 +57,7 @@ public class PowahStateModelsProvider extends BlockStateProvider {
             enderGate(tier);
             thermoGen(tier);
             energizedRod(tier);
-            // energyCable(tier); dont work atm
+            energyCable(tier); // dont work atm
             energyDischarger(tier);
             energyHopper(tier);
             furnatorGen(tier);
@@ -110,28 +111,22 @@ public class PowahStateModelsProvider extends BlockStateProvider {
                         .texture("0", "powah:block/" + BLOCK + "_" + tier.getName()));
     }
 
-    // private void energyCable(Tier tier) {
-    // var BLOCK = "energy_cable";
-    // var modelstatic = tierParent(BLOCK, tier).texture("cable", "powah:block/" +
-    // BLOCK + "_" + tier.getName());
-    // var multipart = tierParent(BLOCK, tier, "_multipart").texture("mp",
-    // "powah:block/" + BLOCK + "_" + tier.getName());
-    // getMultipartBuilder(getBlock(BLOCK, tier))
-    // .part().modelFile(modelstatic).nextModel()
-    // .addModel().condition(CableBlock.NORTH, true).end()
-    // .part().modelFile(multipart).nextModel()
-    // .addModel().condition(CableBlock.DOWN, true).end()
-    // .part().modelFile(multipart).rotationX(90).nextModel()
-    // .addModel().condition(CableBlock.SOUTH, true).end()
-    // .part().modelFile(multipart).rotationX(180).nextModel()
-    // .addModel().condition(CableBlock.UP, true).end()
-    // .part().modelFile(multipart).rotationX(270).nextModel()
-    // .addModel().condition(CableBlock.EAST, true).end()
-    // .part().modelFile(multipart).rotationY(90).nextModel()
-    // .addModel().condition(CableBlock.WEST, true).end()
-    // .part().modelFile(multipart).rotationY(270)
-    // .build();
-    // }
+    private void energyCable(Tier tier) {
+        var BLOCK = "energy_cable";
+        var modelstatic = tierParent(BLOCK, tier).texture("cable", "powah:block/" +
+                BLOCK + "_" + tier.getName());
+        var multipart = tierParent(BLOCK, tier, "_multipart","_multipart").texture("mp",
+                "powah:block/" + BLOCK + "_" + tier.getName());
+
+        var model = getMultipartBuilder(getBlock(BLOCK, tier));
+        model.part().modelFile(modelstatic).addModel();
+        model.part().modelFile(multipart).addModel().condition(CableBlock.NORTH, true);
+        model.part().modelFile(multipart).rotationY(90).addModel().condition(CableBlock.EAST, true);
+        model.part().modelFile(multipart).rotationX(180).addModel().condition(CableBlock.SOUTH, true);
+        model.part().modelFile(multipart).rotationY(270).addModel().condition(CableBlock.WEST, true);
+        model.part().modelFile(multipart).rotationX(270).addModel().condition(CableBlock.UP, true);
+        model.part().modelFile(multipart).rotationX(90).addModel().condition(CableBlock.DOWN, true);
+    }
 
     private void energyDischarger(Tier tier) {
         var BLOCK = "energy_discharger";
@@ -141,8 +136,9 @@ public class PowahStateModelsProvider extends BlockStateProvider {
                         .texture("side", "powah:block/" + BLOCK + "_side")
                         .texture("comps", "powah:block/" + BLOCK + "_comps")
                         .texture("ov", "powah:block/" + tier.getName() + "_ov"),
-                List.of(0, 0, 0, 0, 270, 90),
-                List.of(0, 180, 270, 90, 0, 0));
+                List.of(270, 90, 0, 0, 0, 0),
+                List.of(0, 0, 180, 0, 90, 270));
+        // u,d,s,n,e,w
     }
 
     private void energyHopper(Tier tier) {
@@ -156,6 +152,7 @@ public class PowahStateModelsProvider extends BlockStateProvider {
                         .texture("ov", "powah:block/" + tier.getName() + "_ov"),
                 List.of(270, 90, 0, 0, 0, 0),
                 List.of(0, 0, 180, 0, 90, 270));
+
     }
 
     private void furnatorGen(Tier tier) {
@@ -168,8 +165,8 @@ public class PowahStateModelsProvider extends BlockStateProvider {
                         .texture("top", "powah:block/" + BLOCK + "_top")
                         .texture("lit", "powah:block/" + BLOCK + "_unlit")
                         .texture("ov", "powah:block/" + tier.getName() + "_ov"),
-                List.of(0, 0, 0, 0, 90, 270),
-                List.of(180, 0, 90, 270, 0, 0));
+                List.of(90, 270, 0, 0, 0, 0),
+                List.of(0, 0, 180, 0, 90, 270));
     }
 
     private void magmatorGem(Tier tier) {
@@ -177,8 +174,7 @@ public class PowahStateModelsProvider extends BlockStateProvider {
         var BLOCK = "magmator";
 
         var Xrot = List.of(90, 270, 0, 0, 0, 0);
-        var Yrot = List.of(0, 0, 0, 180, 270, 90);
-        // u,d,s,n,e,w
+        var Yrot = List.of(0, 0, 180, 0, 90, 270);
 
         getVariantBuilder(getBlock(BLOCK, tier)).forAllStates(s -> {
             Direction dir = s.getValue(BlockStateProperties.FACING);
@@ -210,9 +206,15 @@ public class PowahStateModelsProvider extends BlockStateProvider {
         return tierParent(b, t, "");
     }
 
-    private BlockModelBuilder tierParent(String b, Tier t, String extra) {
-        return models().withExistingParent(getPath(getBlock(b, t)) + extra, Powah.MOD_ID + ":block/" + b);
+    private BlockModelBuilder tierParent(String b, Tier t, String nameExtra) {
+        return tierParent(b, t, nameExtra,"");
     }
+
+    private BlockModelBuilder tierParent(String b, Tier t, String nameExtra,String parentExtra) {
+        return models().withExistingParent(getPath(getBlock(b, t)) + nameExtra, Powah.MOD_ID + ":block/" + b + parentExtra);
+    }
+
+
 
     private Block getBlock(String block, Tier t) {
         return BuiltInRegistries.BLOCK
