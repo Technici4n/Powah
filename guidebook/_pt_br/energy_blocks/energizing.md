@@ -26,7 +26,7 @@ O Orbe não requer energia, mas as varas devem ser colocadas em cabos ou qualque
 <Row>
 <RecipesFor id="powah:energizing_orb" />
 </Row>
-|                                                 | Capacidade                                                  | E/S Máximo                                               |
+|                                                 | Capacidade                                                  | E/S Máxima                                               |
 | ----------------------------------------------- | ----------------------------------------------------------- | -------------------------------------------------------- |
 | <ItemLink id="powah:energizing_rod_starter" />  | <powah:EnergyCapacity id="powah:energizing_rod_starter" />  | <powah:EnergyMaxIO id="powah:energizing_rod_starter" />  |
 | <ItemLink id="powah:energizing_rod_basic" />    | <powah:EnergyCapacity id="powah:energizing_rod_basic" />    | <powah:EnergyMaxIO id="powah:energizing_rod_basic" />    |
