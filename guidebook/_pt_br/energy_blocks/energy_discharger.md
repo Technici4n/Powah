@@ -20,7 +20,7 @@ item_ids:
 
 O Descarregador de Energia é um bloco usado para drenar energia (FE) de itens carregados e, em seguida, armazená-la em um buffer interno se conectado por meio de cabos para extrair a energia armazenada e reutilizá-la novamente. 
 
-|                                                    | Capacidade                                                     | I/O Máximo                                                  |
+|                                                    | Capacidade                                                     | E/S Máximo                                                  |
 | -------------------------------------------------- | -------------------------------------------------------------- | ----------------------------------------------------------- |
 | <ItemLink id="powah:energy_discharger_starter" />  | <powah:EnergyCapacity id="powah:energy_discharger_starter" />  | <powah:EnergyMaxIO id="powah:energy_discharger_starter" />  |
 | <ItemLink id="powah:energy_discharger_basic" />    | <powah:EnergyCapacity id="powah:energy_discharger_basic" />    | <powah:EnergyMaxIO id="powah:energy_discharger_basic" />    |
