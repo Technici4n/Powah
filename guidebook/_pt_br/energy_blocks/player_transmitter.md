@@ -20,7 +20,7 @@ item_ids:
 
 O Transmissor de Jogador é um bloco usado para carregar itens sem fio no inventário do jogador vinculado, incluindo slots de armadura e mão secundaria em qualquer lugar na mesma dimensão quando tem um cartão de ligação normal e entre dimensões quando tem um cartão de ligação dimensional. 
 
-|                                                     | Capacidade                                                      | E/S Máximo                                                   |
+|                                                     | Capacidade                                                      | E/S Máxima                                                   |
 | --------------------------------------------------- | --------------------------------------------------------------- | ------------------------------------------------------------ |
 | <ItemLink id="powah:player_transmitter_starter" />  | <powah:EnergyCapacity id="powah:player_transmitter_starter" />  | <powah:EnergyMaxIO id="powah:player_transmitter_starter" />  |
 | <ItemLink id="powah:player_transmitter_basic" />    | <powah:EnergyCapacity id="powah:player_transmitter_basic" />    | <powah:EnergyMaxIO id="powah:player_transmitter_basic" />    |
