@@ -200,9 +200,16 @@ public class AbstractTileEntity<V extends IVariant, B extends AbstractBlock<V, B
     }
 
     public boolean checkRedstone() {
+        Redstone redstoneMode = getRedstoneMode();
+
+        // avoid checking redstone if mode is IGNORE
+        // getBestNeighborSignal is relatively expensive and should not be called if not needed
+        if (Redstone.IGNORE.equals(redstoneMode))
+            return true;
+
         boolean power = this.level != null && this.level.getBestNeighborSignal(this.worldPosition) > 0;
-        return Redstone.IGNORE.equals(getRedstoneMode()) || power && Redstone.ON.equals(getRedstoneMode())
-                || !power && Redstone.OFF.equals(getRedstoneMode());
+        return power && Redstone.ON.equals(redstoneMode)
+                || !power && Redstone.OFF.equals(redstoneMode);
     }
 
     public void sync() {
