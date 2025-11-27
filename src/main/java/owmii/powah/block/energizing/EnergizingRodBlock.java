@@ -9,6 +9,7 @@ import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
 import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.renderer.GameRenderer;
 import net.minecraft.client.resources.language.I18n;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -159,6 +160,7 @@ public class EnergizingRodBlock extends AbstractEnergyBlock<EnergyConfig, Energi
             int y = mc.getWindow().getGuiScaledHeight();
             String s = ChatFormatting.GRAY + I18n.get("info.lollipop.stored") + ": " + I18n.get("info.lollipop.fe.stored",
                     Util.addCommas(rod.getEnergy().getEnergyStored()), Util.numFormat(rod.getEnergy().getCapacity()));
+            RenderSystem.setShader(GameRenderer::getPositionTexShader);
             RenderSystem.setShaderTexture(0, ResourceLocation.fromNamespaceAndPath("lollipop", "textures/gui/ov_energy.png"));
             Draw.drawTexturedModalRect(gui, x - 37 - 1, y - 80, 0, 0, 74, 9, 0);
             Draw.gaugeH(x - 37, y - 79, 72, 16, 0, 9, ((EnergizingRodTile) te).getEnergy());
