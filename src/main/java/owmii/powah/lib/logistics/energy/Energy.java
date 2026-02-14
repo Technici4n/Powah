@@ -1,6 +1,5 @@
 package owmii.powah.lib.logistics.energy;
 
-import java.util.Objects;
 import java.util.Optional;
 import java.util.function.Consumer;
 import net.minecraft.nbt.CompoundTag;
@@ -263,8 +262,17 @@ public class Energy {
         public Item(ItemStack stack, long capacity, long maxExtract, long maxReceive) {
             super(capacity, maxExtract, maxReceive);
             this.stack = stack;
-            long stored = Objects.requireNonNullElse(stack.get(PowahComponents.ENERGY_STORED), 0L);
-            this.setStored(stored);
+            var energyStored = stack.get(PowahComponents.ENERGY_STORED);
+            if (energyStored != null) {
+                this.setStored(energyStored);
+            } else {
+                var beState = stack.get(PowahComponents.STORED_BLOCK_ENTITY_STATE);
+                if (beState != null) {
+                    this.read(beState.copyTag(), false, false);
+                } else {
+                    this.setStored(0);
+                }
+            }
         }
 
         private void write() {
