@@ -9,8 +9,8 @@ import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import owmii.powah.lib.logistics.energy.Energy;
 
 public class Draw {
-    final float uScale = 1f / 0x100;
-    final float vScale = 1f / 0x100;
+    static final float uScale = 1f / 0x100;
+    static final float vScale = 1f / 0x100;
 
     public static void gaugeV(TextureAtlasSprite sprite, int x, int y, int w, int h, int cap, int cur) {
         if (cap > 0 && cur > 0) {
