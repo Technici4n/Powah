@@ -70,7 +70,7 @@ public class CableBlockEntity extends PowahBaseEnergyStorageBlockEntity<CableBlo
 
     public boolean isActive() {
         if (getLevel() instanceof ServerLevel serverLevel) {
-            return serverLevel.getChunkSource().isPositionTicking(ChunkPos.asLong(getBlockPos()));
+            return serverLevel.getChunkSource().isPositionTicking(ChunkPos.pack(getBlockPos()));
         }
         return false;
     }

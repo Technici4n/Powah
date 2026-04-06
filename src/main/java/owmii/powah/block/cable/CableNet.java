@@ -26,7 +26,7 @@ public class CableNet {
             return;
         }
 
-        var chunkPos = ChunkPos.asLong(cable.getBlockPos());
+        var chunkPos = ChunkPos.pack(cable.getBlockPos());
         var previousCable = loadedCables.computeIfAbsent(level, l -> new Long2ObjectOpenHashMap<>())
                 .computeIfAbsent(chunkPos, l -> new Long2ObjectOpenHashMap<>())
                 .put(cable.getBlockPos().asLong(), cable);
@@ -48,7 +48,7 @@ public class CableNet {
             return; // The full-chunk cleanup already took care of the entire level
         }
         var blockPos = cable.getBlockPos();
-        var chunkPos = ChunkPos.asLong(blockPos);
+        var chunkPos = ChunkPos.pack(blockPos);
         var chunkMap = levelMap.get(chunkPos);
         if (chunkMap == null) {
             return; // The full-chunk cleanup already took care of the entire chunk
@@ -68,7 +68,7 @@ public class CableNet {
 
     @Nullable
     private static CableBlockEntity getCableAt(Long2ObjectMap<Long2ObjectMap<CableBlockEntity>> levelMap, BlockPos pos) {
-        var chunkMap = levelMap.get(ChunkPos.asLong(pos));
+        var chunkMap = levelMap.get(ChunkPos.pack(pos));
         if (chunkMap == null) {
             return null;
         }
@@ -140,7 +140,7 @@ public class CableNet {
         if (levelMap == null) {
             return; // No cables in this level
         }
-        var chunkMap = levelMap.remove(chunk.getPos().toLong());
+        var chunkMap = levelMap.remove(chunk.getPos().pack());
         if (chunkMap == null) {
             return; // No cables in this chunk anyway
         }
