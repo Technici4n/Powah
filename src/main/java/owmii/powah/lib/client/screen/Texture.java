@@ -2,7 +2,7 @@ package owmii.powah.lib.client.screen;
 
 import java.util.HashMap;
 import java.util.Map;
-import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.client.renderer.RenderPipelines;
 import net.minecraft.resources.Identifier;
 import owmii.powah.lib.logistics.Redstone;
@@ -58,20 +58,20 @@ public class Texture {
         this.th = th;
     }
 
-    public void drawScalableW(GuiGraphics gui, float size, int x, int y) {
+    public void drawScalableW(GuiGraphicsExtractor gui, float size, int x, int y) {
         scaleW((int) (size * this.width)).draw(gui, x, y);
     }
 
-    public void drawScalableH(GuiGraphics gui, float size, int x, int y) {
+    public void drawScalableH(GuiGraphicsExtractor gui, float size, int x, int y) {
         int i = (int) (size * this.height);
         scaleH(i).moveV(this.height - i).draw(gui, x, y + this.height - i);
     }
 
-    public void draw(GuiGraphics gui, int x, int y) {
+    public void draw(GuiGraphicsExtractor gui, int x, int y) {
         draw(gui, x, y, -1);
     }
 
-    public void draw(GuiGraphics gui, int x, int y, int color) {
+    public void draw(GuiGraphicsExtractor gui, int x, int y, int color) {
         if (!isEmpty()) {
             gui.blit(RenderPipelines.GUI_TEXTURED, getLocation(), x, y, getU(), getV(), getWidth(), getHeight(), getWidth(), getHeight(), this.tw,
                     this.th, color);

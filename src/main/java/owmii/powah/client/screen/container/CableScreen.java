@@ -2,7 +2,7 @@ package owmii.powah.client.screen.container;
 
 import java.util.List;
 import net.minecraft.ChatFormatting;
-import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.client.resources.language.I18n;
 import net.minecraft.core.Direction;
 import net.minecraft.network.chat.Component;
@@ -50,11 +50,11 @@ public class CableScreen extends PowahBaseEnergyScreen<CableBlockEntity, CableMe
     }
 
     @Override
-    protected void drawForeground(GuiGraphics gui, int mouseX, int mouseY) {
+    protected void drawForeground(GuiGraphicsExtractor gui, int mouseX, int mouseY) {
         super.drawForeground(gui, mouseX, mouseY);
         String title = I18n.get("info.lollipop.side." + this.side.getName(), ChatFormatting.DARK_GRAY);
         int width = this.font.width(title);
-        gui.drawString(font, title, this.imageWidth / 2 - width / 2, 10, 0xFF555555, false);
+        gui.text(font, title, this.imageWidth / 2 - width / 2, 10, 0xFF555555, false);
     }
 
     @Override

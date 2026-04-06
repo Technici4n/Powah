@@ -3,7 +3,7 @@ package owmii.powah.lib.client.util;
 import com.mojang.math.Transformation;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
-import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.FormattedText;
 import net.minecraft.network.chat.Style;
@@ -20,10 +20,10 @@ public class Text {
         return Style.EMPTY.withColor(TextColor.fromRgb(color));
     }
 
-    public static void drawString(GuiGraphics gui, FormattedText text, float x, float y, int w, int h, int color) {
+    public static void drawString(GuiGraphicsExtractor gui, FormattedText text, float x, float y, int w, int h, int color) {
         Minecraft mc = Minecraft.getInstance();
         Font font = mc.font;
-        var matrix4f = Transformation.identity().getMatrix();
+        var matrix4f = Transformation.IDENTITY.getMatrix();
         for (FormattedCharSequence processor : font.split(text, w)) {
             // TODO: 26.1 MultiBufferSource.BufferSource impl = gui.bufferSource();
             // TODO: 26.1 font.drawInBatch(processor, x, y, color, false, matrix4f, impl, Font.DisplayMode.NORMAL, 0, 15728880);

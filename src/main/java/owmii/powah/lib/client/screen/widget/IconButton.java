@@ -4,7 +4,7 @@ import java.util.List;
 import java.util.function.Supplier;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
-import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.gui.components.Tooltip;
 import net.minecraft.client.resources.sounds.SimpleSoundInstance;
@@ -63,7 +63,7 @@ public class IconButton extends Button {
     }
 
     @Override
-    protected void renderContents(GuiGraphics gui, int mouseX, int mouseY, float pt) {
+    protected void extractContents(GuiGraphicsExtractor gui, int mouseX, int mouseY, float pt) {
         if (isHovered) {
             if (tooltipSupplier != null) {
                 setTooltip(createTooltip());
@@ -81,7 +81,7 @@ public class IconButton extends Button {
             int width = f.width(s);
             TextColor c = getMessage().getStyle().getColor();
             int color = ARGB.opaque(c == null ? 0x555555 : c.getValue());
-            gui.drawString(f, s,
+            gui.text(f, s,
                     Math.round(this.xOffset + this.getX() + 0.5F + this.width / 2.0F - width / 2.0F),
                     Math.round(this.yOffset + this.getY() + this.height / 2.0F - 4),
                     color,
@@ -90,8 +90,8 @@ public class IconButton extends Button {
         if (!this.stack.isEmpty()) {
             int x = (int) Math.round(this.xOffset + this.getX() - 8.0D + this.width / 2.0F);
             int y = (int) Math.round(this.yOffset + this.getY() - 8.0D + this.height / 2.0F);
-            gui.renderFakeItem(stack, x, y);
-            gui.renderItemDecorations(f, stack, x, y);
+            gui.fakeItem(stack, x, y);
+            gui.itemDecorations(f, stack, x, y);
         }
     }
 

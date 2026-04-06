@@ -10,7 +10,7 @@ import mezz.jei.api.recipe.RecipeIngredientRole;
 import mezz.jei.api.recipe.types.IRecipeType;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.Identifier;
@@ -37,19 +37,19 @@ public class JeiReactorFuelCategory extends AbstractCategory<JeiReactorFuelCateg
     }
 
     @Override
-    public void draw(Recipe recipe, IRecipeSlotsView recipeSlotsView, GuiGraphics guiGraphics, double mouseX, double mouseY) {
+    public void draw(Recipe recipe, IRecipeSlotsView recipeSlotsView, GuiGraphicsExtractor guiGraphics, double mouseX, double mouseY) {
 
         var amount = Component.translatable("info.lollipop.amount")
                 .append(": ")
                 .append(Component.translatable("info.lollipop.mb", recipe.reactorFuel.fuelAmount()));
 
         var minecraft = Minecraft.getInstance();
-        guiGraphics.drawString(minecraft.font, amount, 30, 3, 0xff444444, false);
+        guiGraphics.text(minecraft.font, amount, 30, 3, 0xff444444, false);
 
         var coloredTemperature = Component.literal(String.valueOf(recipe.reactorFuel.temperature())).withStyle(ChatFormatting.DARK_RED);
         var temperatureText = Component.translatable("info.lollipop.temperature").append(": ")
                 .append(Component.translatable("info.lollipop.temperature.c", coloredTemperature));
-        guiGraphics.drawString(minecraft.font, temperatureText, 30, 15, 0xff444444, false);
+        guiGraphics.text(minecraft.font, temperatureText, 30, 15, 0xff444444, false);
     }
 
     public static List<Recipe> createRecipes() {

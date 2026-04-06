@@ -4,7 +4,7 @@ import com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
-import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.client.resources.language.I18n;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.entity.player.Player;
@@ -18,7 +18,7 @@ import owmii.powah.util.Util;
 
 public class EnergizingOrbHudRenderer implements BlockHudRenderer {
     @Override
-    public boolean renderHud(GuiGraphics gui, BlockState state, Level world, BlockPos pos, Player player, BlockHitResult result,
+    public boolean renderHud(GuiGraphicsExtractor gui, BlockState state, Level world, BlockPos pos, Player player, BlockHitResult result,
             @Nullable BlockEntity te) {
         if (te instanceof EnergizingOrbBlockEntity orb) {
             if (orb.getBuffer().getCapacity() > 0) {
@@ -30,8 +30,8 @@ public class EnergizingOrbHudRenderer implements BlockHudRenderer {
                 String s = "" + ChatFormatting.GREEN + orb.getBuffer().getPercent() + "%";
                 String s1 = ChatFormatting.GRAY + I18n.get("info.lollipop.fe.stored", Util.addCommas(orb.getBuffer().getEnergyStored()),
                         Util.numFormat(orb.getBuffer().getCapacity()));
-                gui.drawString(font, s, Math.round(x - (font.width(s) / 2.0f)), y - 90, 0xffffffff);
-                gui.drawString(font, s1, Math.round(x - (font.width(s1) / 2.0f)), y - 75, 0xffffffff);
+                gui.text(font, s, Math.round(x - (font.width(s) / 2.0f)), y - 90, 0xffffffff);
+                gui.text(font, s1, Math.round(x - (font.width(s1) / 2.0f)), y - 75, 0xffffffff);
                 RenderSystem.getModelViewStack().popMatrix();
             }
         }

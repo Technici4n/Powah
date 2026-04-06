@@ -3,7 +3,7 @@ package owmii.powah.lib.client.screen.container;
 import com.google.common.collect.Lists;
 import java.util.List;
 import net.minecraft.ChatFormatting;
-import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.client.renderer.Rect2i;
 import net.minecraft.core.Direction;
 import net.minecraft.network.chat.Component;
@@ -82,7 +82,7 @@ public class PowahBaseEnergyScreen<T extends PowahBaseEnergyStorageBlockEntity<?
     }
 
     @Override
-    protected void drawBackground(GuiGraphics guiGraphics, float partialTicks, int mouseX, int mouseY) {
+    protected void drawBackground(GuiGraphicsExtractor guiGraphics, float partialTicks, int mouseX, int mouseY) {
         super.drawBackground(guiGraphics, partialTicks, mouseX, mouseY);
         if (hasConfigButtons()) {
             Texture.CONFIG_BTN_BG.draw(guiGraphics, this.configButtons[1].getX() - 8, this.configButtons[1].getY() - 4);

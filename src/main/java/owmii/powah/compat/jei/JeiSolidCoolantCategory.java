@@ -8,7 +8,7 @@ import mezz.jei.api.recipe.RecipeIngredientRole;
 import mezz.jei.api.recipe.types.IRecipeType;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.client.resources.language.I18n;
 import net.minecraft.network.chat.Component;
 import owmii.powah.Powah;
@@ -33,12 +33,12 @@ public class JeiSolidCoolantCategory extends AbstractCategory<SolidCoolant> {
     }
 
     @Override
-    public void draw(SolidCoolant recipe, IRecipeSlotsView recipeSlotsView, GuiGraphics guiGraphics, double mouseX, double mouseY) {
+    public void draw(SolidCoolant recipe, IRecipeSlotsView recipeSlotsView, GuiGraphicsExtractor guiGraphics, double mouseX, double mouseY) {
         var minecraft = Minecraft.getInstance();
-        guiGraphics.drawString(minecraft.font, I18n.get("info.lollipop.amount") + ": " + I18n.get("info.lollipop.mb", recipe.amount()), 30, 3,
+        guiGraphics.text(minecraft.font, I18n.get("info.lollipop.amount") + ": " + I18n.get("info.lollipop.mb", recipe.amount()), 30, 3,
                 0xFF444444,
                 false);
-        guiGraphics.drawString(minecraft.font, I18n.get("info.lollipop.temperature") + ": "
+        guiGraphics.text(minecraft.font, I18n.get("info.lollipop.temperature") + ": "
                 + I18n.get("info.lollipop.temperature.c", "" + ChatFormatting.DARK_AQUA + recipe.temperature()), 30, 15, 0xFF444444, false);
     }
 }

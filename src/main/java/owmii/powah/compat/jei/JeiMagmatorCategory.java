@@ -7,7 +7,7 @@ import mezz.jei.api.recipe.IFocusGroup;
 import mezz.jei.api.recipe.RecipeIngredientRole;
 import mezz.jei.api.recipe.types.IRecipeType;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.network.chat.Component;
 import owmii.powah.Powah;
 import owmii.powah.block.Blcks;
@@ -32,8 +32,8 @@ public class JeiMagmatorCategory extends AbstractCategory<MagmatorFuel> {
     }
 
     @Override
-    public void draw(MagmatorFuel recipe, IRecipeSlotsView recipeSlotsView, GuiGraphics guiGraphics, double mouseX, double mouseY) {
+    public void draw(MagmatorFuel recipe, IRecipeSlotsView recipeSlotsView, GuiGraphicsExtractor guiGraphics, double mouseX, double mouseY) {
         var minecraft = Minecraft.getInstance();
-        guiGraphics.drawString(minecraft.font, recipe.heat() + " FE/100 mb", 27, 9, 0xFF444444, false);
+        guiGraphics.text(minecraft.font, recipe.heat() + " FE/100 mb", 27, 9, 0xFF444444, false);
     }
 }

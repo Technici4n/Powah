@@ -8,7 +8,7 @@ import mezz.jei.api.recipe.RecipeIngredientRole;
 import mezz.jei.api.recipe.types.IRecipeType;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.client.resources.language.I18n;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.level.block.Blocks;
@@ -40,9 +40,9 @@ public class JeiHeatSourceCategory extends AbstractCategory<PassiveHeatSource> {
     }
 
     @Override
-    public void draw(PassiveHeatSource recipe, IRecipeSlotsView recipeSlotsView, GuiGraphics guiGraphics, double mouseX, double mouseY) {
+    public void draw(PassiveHeatSource recipe, IRecipeSlotsView recipeSlotsView, GuiGraphicsExtractor guiGraphics, double mouseX, double mouseY) {
         var minecraft = Minecraft.getInstance();
-        guiGraphics.drawString(minecraft.font, ChatFormatting.DARK_GRAY + I18n.get("info.lollipop.temperature") + ": "
+        guiGraphics.text(minecraft.font, ChatFormatting.DARK_GRAY + I18n.get("info.lollipop.temperature") + ": "
                 + ChatFormatting.RESET + I18n.get("info.lollipop.temperature.c", recipe.heat()), 30, 9, 0xFFc43400, false);
     }
 }

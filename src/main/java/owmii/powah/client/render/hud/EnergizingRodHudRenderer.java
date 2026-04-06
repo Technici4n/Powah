@@ -4,7 +4,7 @@ import com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
-import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.client.renderer.RenderPipelines;
 import net.minecraft.client.resources.language.I18n;
 import net.minecraft.core.BlockPos;
@@ -21,7 +21,7 @@ import owmii.powah.util.Util;
 
 public class EnergizingRodHudRenderer implements BlockHudRenderer {
     @Override
-    public boolean renderHud(GuiGraphics gui, BlockState state, Level world, BlockPos pos, Player player, BlockHitResult result,
+    public boolean renderHud(GuiGraphicsExtractor gui, BlockState state, Level world, BlockPos pos, Player player, BlockHitResult result,
             @Nullable BlockEntity te) {
         if (te instanceof EnergizingRodBlockEntity rod) {
             RenderSystem.getModelViewStack().pushMatrix();
@@ -41,7 +41,7 @@ public class EnergizingRodHudRenderer implements BlockHudRenderer {
                     74, 9,
                     256, 256);
             Draw.gaugeH(gui, energyOverlay, x - 37, y - 79, 72, 16, 0, 9, rod.getEnergy());
-            gui.drawString(font, s, Math.round(x - (font.width(s) / 2.0f)), y - 67, 0xffffffff);
+            gui.text(font, s, Math.round(x - (font.width(s) / 2.0f)), y - 67, 0xffffffff);
             RenderSystem.getModelViewStack().popMatrix();
         }
         return true;

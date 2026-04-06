@@ -5,7 +5,7 @@ import java.util.List;
 import java.util.function.BiConsumer;
 import java.util.function.Supplier;
 import net.minecraft.ChatFormatting;
-import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.client.input.MouseButtonEvent;
 import net.minecraft.network.chat.Component;
 import net.minecraft.util.ARGB;
@@ -36,8 +36,7 @@ public class PowahBaseBlockEntityScreen<T extends PowahBaseBlockEntity<?> & IInv
         this.te = container.blockEntity;
     }
 
-    @Override
-    protected void renderTooltip(GuiGraphics gui, int x, int y) {
+    protected void extractTooltip(GuiGraphicsExtractor gui, int x, int y) {
         for (var tankArea : tankAreas) {
             if (tankArea.contains(x - leftPos, y - topPos)) {
                 var tank = tankArea.tank().get();
@@ -58,7 +57,7 @@ public class PowahBaseBlockEntityScreen<T extends PowahBaseBlockEntity<?> & IInv
             }
         }
 
-        super.renderTooltip(gui, x, y);
+        super.extractTooltip(gui, x, y);
     }
 
     @Override
@@ -106,7 +105,7 @@ public class PowahBaseBlockEntityScreen<T extends PowahBaseBlockEntity<?> & IInv
     }
 
     @Override
-    protected void drawBackground(GuiGraphics guiGraphics, float partialTicks, int mouseX, int mouseY) {
+    protected void drawBackground(GuiGraphicsExtractor guiGraphics, float partialTicks, int mouseX, int mouseY) {
         super.drawBackground(guiGraphics, partialTicks, mouseX, mouseY);
         if (hasRedstone()) {
             Texture.REDSTONE_BTN_BG.draw(guiGraphics, this.redStoneButton.getX() - 2, this.redStoneButton.getY() - 4);

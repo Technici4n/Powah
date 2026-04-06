@@ -1,6 +1,6 @@
 package owmii.powah.client.screen.container;
 
-import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.client.resources.language.I18n;
 import net.minecraft.network.chat.Component;
 import net.minecraft.util.ARGB;
@@ -18,18 +18,18 @@ public class EnergyCellScreen extends PowahBaseEnergyScreen<EnergyCellBlockEntit
     }
 
     @Override
-    protected void drawBackground(GuiGraphics guiGraphics, float partialTicks, int mouseX, int mouseY) {
+    protected void drawBackground(GuiGraphicsExtractor guiGraphics, float partialTicks, int mouseX, int mouseY) {
         super.drawBackground(guiGraphics, partialTicks, mouseX, mouseY);
         Textures.ENERGY_CELL_GAUGE.drawScalableW(guiGraphics, this.te.getEnergy().subSized(), this.leftPos + 31, this.topPos + 6);
     }
 
     @Override
-    protected void drawForeground(GuiGraphics gui, int mouseX, int mouseY) {
+    protected void drawForeground(GuiGraphicsExtractor gui, int mouseX, int mouseY) {
         super.drawForeground(gui, mouseX, mouseY);
         int a = ARGB.black(0.4f);
         Energy e = this.te.getEnergy();
         String s = Util.addCommas(e.getStored()) + "/" + Util.numFormat(e.getCapacity()) + " FE";
-        gui.drawString(font, this.te.isCreative() ? I18n.get("info.powah.unlimited") : s, 38, 13, a, false);
-        gui.drawString(font, Util.numFormat(e.getMaxExtract()) + " FE/t", 38, 27, a, false);
+        gui.text(font, this.te.isCreative() ? I18n.get("info.powah.unlimited") : s, 38, 13, a, false);
+        gui.text(font, Util.numFormat(e.getMaxExtract()) + " FE/t", 38, 27, a, false);
     }
 }

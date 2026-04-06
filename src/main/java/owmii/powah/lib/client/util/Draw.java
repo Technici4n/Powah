@@ -1,7 +1,7 @@
 package owmii.powah.lib.client.util;
 
 import com.mojang.blaze3d.pipeline.RenderPipeline;
-import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.client.renderer.RenderPipelines;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.resources.Identifier;
@@ -9,8 +9,8 @@ import owmii.powah.lib.logistics.energy.Energy;
 
 public class Draw {
 
-    public static void gaugeV(GuiGraphics gui, RenderPipeline pipeline, TextureAtlasSprite sprite, int x, int y, int w, int h, int cap, int cur,
-            int color) {
+    public static void gaugeV(GuiGraphicsExtractor gui, RenderPipeline pipeline, TextureAtlasSprite sprite, int x, int y, int w, int h, int cap,
+            int cur, int color) {
         if (cap > 0 && cur > 0) {
             int i = (int) (((float) cur / cap) * h);
             final int j = i / 16;
@@ -40,11 +40,11 @@ public class Draw {
         }
     }
 
-    public static void gaugeH(GuiGraphics gui, Identifier texture, int x, int y, int w, int h, int uvX, int uvY, Energy energy) {
+    public static void gaugeH(GuiGraphicsExtractor gui, Identifier texture, int x, int y, int w, int h, int uvX, int uvY, Energy energy) {
         gaugeH(gui, texture, x, y, w, h, uvX, uvY, energy.getCapacity(), energy.getStored());
     }
 
-    public static void gaugeH(GuiGraphics gui, Identifier texture, int x, int y, int w, int h, int uvX, int uvY, long cap, long cur) {
+    public static void gaugeH(GuiGraphicsExtractor gui, Identifier texture, int x, int y, int w, int h, int uvX, int uvY, long cap, long cur) {
         if (cap > 0 && cur > 0) {
             w = (int) (((float) cur / cap) * w);
             gui.blit(

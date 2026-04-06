@@ -2,7 +2,7 @@ package owmii.powah.lib.client.screen.container;
 
 import java.util.ArrayList;
 import java.util.List;
-import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.client.renderer.Rect2i;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.player.Inventory;
@@ -20,37 +20,37 @@ public class PowahBaseContainerScreen<C extends BaseMenu> extends net.minecraft.
     }
 
     @Override
-    public void render(GuiGraphics gui, int mouseX, int mouseY, float partialTicks) {
-        super.render(gui, mouseX, mouseY, partialTicks);
-        renderTooltip(gui, mouseX, mouseY);
+    public void extractRenderState(GuiGraphicsExtractor gui, int mouseX, int mouseY, float partialTicks) {
+        super.extractRenderState(gui, mouseX, mouseY, partialTicks);
+        extractTooltip(gui, mouseX, mouseY);
     }
 
     @Override
-    protected void renderBg(GuiGraphics gui, float partialTicks, int mouseX, int mouseY) {
+    public void extractBackground(GuiGraphicsExtractor gui, int mouseX, int mouseY, float partialTicks) {
         drawBackground(gui, partialTicks, mouseX, mouseY);
     }
 
     @Override
-    protected void renderLabels(GuiGraphics gui, int mouseX, int mouseY) {
+    protected void extractLabels(GuiGraphicsExtractor gui, int mouseX, int mouseY) {
         drawForeground(gui, mouseX, mouseY);
     }
 
-    protected void drawBackground(GuiGraphics gui, float partialTicks, int mouseX, int mouseY) {
+    protected void drawBackground(GuiGraphicsExtractor gui, float partialTicks, int mouseX, int mouseY) {
         this.backGround.draw(gui, this.leftPos, this.topPos);
     }
 
-    protected void drawForeground(GuiGraphics gui, int mouseX, int mouseY) {
+    protected void drawForeground(GuiGraphicsExtractor gui, int mouseX, int mouseY) {
         drawTitle(gui, 0, 0);
     }
 
-    protected void drawTitle(GuiGraphics gui, int x, int y) {
+    protected void drawTitle(GuiGraphicsExtractor gui, int x, int y) {
         String title = this.title.getString();
         int width = this.font.width(title);
-        gui.drawString(this.font, title, x + this.imageWidth / 2 - width / 2, y - 14, 0xff999999);
+        gui.text(this.font, title, x + this.imageWidth / 2 - width / 2, y - 14, 0xff999999);
     }
 
     @Override
-    public void renderSlot(GuiGraphics gui, Slot slot, int mouseX, int mouseY) {
+    public void extractSlot(GuiGraphicsExtractor gui, Slot slot, int mouseX, int mouseY) {
         if (slot instanceof ITexturedSlot<?> base) {
             int x = slot.x;
             int y = slot.y;
@@ -59,7 +59,7 @@ public class PowahBaseContainerScreen<C extends BaseMenu> extends net.minecraft.
                 base.getOverlay().draw(gui, x, y);
             }
         }
-        super.renderSlot(gui, slot, mouseX, mouseY);
+        super.extractSlot(gui, slot, mouseX, mouseY);
     }
 
     public boolean isMouseOver(double mouseX, double mouseY, int w, int h) {

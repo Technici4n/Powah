@@ -3,7 +3,7 @@ package owmii.powah.client.screen.container;
 import java.util.ArrayList;
 import java.util.List;
 import net.minecraft.ChatFormatting;
-import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.player.Inventory;
 import owmii.powah.api.PowahAPI;
@@ -57,7 +57,7 @@ public class ReactorScreen extends PowahBaseEnergyScreen<ReactorBlockEntity, Rea
     }
 
     @Override
-    protected void drawBackground(GuiGraphics guiGraphics, float partialTicks, int mouseX, int mouseY) {
+    protected void drawBackground(GuiGraphicsExtractor guiGraphics, float partialTicks, int mouseX, int mouseY) {
         super.drawBackground(guiGraphics, partialTicks, mouseX, mouseY);
         Textures.REACTOR_GAUGE.drawScalableH(guiGraphics, this.te.getEnergy().subSized(), this.leftPos + 5, this.topPos + 5);
         Textures.REACTOR_GAUGE_URN.drawScalableH(guiGraphics, this.te.fuel.subSized(), this.leftPos + 103, this.topPos + 13);
@@ -70,8 +70,8 @@ public class ReactorScreen extends PowahBaseEnergyScreen<ReactorBlockEntity, Rea
     }
 
     @Override
-    protected void renderTooltip(GuiGraphics gui, int mouseX, int mouseY) {
-        super.renderTooltip(gui, mouseX, mouseY);
+    protected void extractTooltip(GuiGraphicsExtractor gui, int mouseX, int mouseY) {
+        super.extractTooltip(gui, mouseX, mouseY);
         if (Textures.REACTOR_GAUGE.isMouseOver(this.leftPos + 5, this.topPos + 5, mouseX, mouseY)) {
             List<Component> list = new ArrayList<>();
             Energy energy = this.te.getEnergy();

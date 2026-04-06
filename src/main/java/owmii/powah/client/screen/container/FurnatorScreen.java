@@ -3,7 +3,7 @@ package owmii.powah.client.screen.container;
 import java.util.ArrayList;
 import java.util.List;
 import net.minecraft.ChatFormatting;
-import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.network.chat.Component;
 import net.minecraft.util.ARGB;
 import net.minecraft.world.entity.player.Inventory;
@@ -37,7 +37,7 @@ public class FurnatorScreen extends PowahBaseEnergyScreen<FurnatorBlockEntity, F
     }
 
     @Override
-    protected void drawBackground(GuiGraphics guiGraphics, float partialTicks, int mouseX, int mouseY) {
+    protected void drawBackground(GuiGraphicsExtractor guiGraphics, float partialTicks, int mouseX, int mouseY) {
         super.drawBackground(guiGraphics, partialTicks, mouseX, mouseY);
         Textures.FURNATOR_GAUGE.drawScalableH(guiGraphics, this.te.getEnergy().subSized(), this.leftPos + 5, this.topPos + 5);
         Textures.FURNATOR_CARBON_GAUGE.drawScalableH(guiGraphics, this.te.getCarbon().subSized(), this.leftPos + 110, this.topPos + 18);
@@ -46,8 +46,8 @@ public class FurnatorScreen extends PowahBaseEnergyScreen<FurnatorBlockEntity, F
     }
 
     @Override
-    protected void renderTooltip(GuiGraphics gui, int mouseX, int mouseY) {
-        super.renderTooltip(gui, mouseX, mouseY);
+    protected void extractTooltip(GuiGraphicsExtractor gui, int mouseX, int mouseY) {
+        super.extractTooltip(gui, mouseX, mouseY);
         if (Textures.FURNATOR_GAUGE.isMouseOver(this.leftPos + 5, this.topPos + 5, mouseX, mouseY)) {
             List<Component> list = new ArrayList<>();
             Energy energy = this.te.getEnergy();

@@ -8,7 +8,7 @@ import mezz.jei.api.recipe.RecipeIngredientRole;
 import mezz.jei.api.recipe.types.IRecipeType;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.client.resources.language.I18n;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.Items;
@@ -33,9 +33,9 @@ public class JeiFluidCoolantCategory extends AbstractCategory<FluidCoolant> {
     }
 
     @Override
-    public void draw(FluidCoolant recipe, IRecipeSlotsView recipeSlotsView, GuiGraphics guiGraphics, double mouseX, double mouseY) {
+    public void draw(FluidCoolant recipe, IRecipeSlotsView recipeSlotsView, GuiGraphicsExtractor guiGraphics, double mouseX, double mouseY) {
         var minecraft = Minecraft.getInstance();
-        guiGraphics.drawString(minecraft.font, I18n.get("info.lollipop.temperature") + ": "
+        guiGraphics.text(minecraft.font, I18n.get("info.lollipop.temperature") + ": "
                 + I18n.get("info.lollipop.temperature.c", "" + ChatFormatting.DARK_AQUA + recipe.coldness()), 30, 9, 0xFF444444, false);
     }
 }

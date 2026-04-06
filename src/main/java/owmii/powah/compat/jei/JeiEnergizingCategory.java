@@ -10,7 +10,7 @@ import mezz.jei.api.recipe.IFocusGroup;
 import mezz.jei.api.recipe.RecipeIngredientRole;
 import mezz.jei.api.recipe.types.IRecipeType;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.client.resources.language.I18n;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.crafting.RecipeHolder;
@@ -51,11 +51,11 @@ public class JeiEnergizingCategory extends AbstractCategory<RecipeHolder<Energiz
     }
 
     @Override
-    public void draw(RecipeHolder<EnergizingRecipe> recipeHolder, IRecipeSlotsView recipeSlotsView, GuiGraphics guiGraphics, double mouseX,
+    public void draw(RecipeHolder<EnergizingRecipe> recipeHolder, IRecipeSlotsView recipeSlotsView, GuiGraphicsExtractor guiGraphics, double mouseX,
             double mouseY) {
         var recipe = recipeHolder.value();
         var minecraft = Minecraft.getInstance();
-        guiGraphics.drawString(minecraft.font, I18n.get("info.lollipop.fe", Util.addCommas(recipe.getEnergy())), 2, 29, 0xFF444444, false);
+        guiGraphics.text(minecraft.font, I18n.get("info.lollipop.fe", Util.addCommas(recipe.getEnergy())), 2, 29, 0xFF444444, false);
 
         arrow.draw(guiGraphics, 105, 5);
     }
