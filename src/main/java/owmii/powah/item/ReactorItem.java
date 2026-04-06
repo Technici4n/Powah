@@ -38,10 +38,10 @@ public class ReactorItem extends EnergyBlockItem<ReactorBlock> {
             return InteractionResult.FAIL;
         ItemStack stack = context.getItemInHand();
         if (player.getInventory().countItem(stack.getItem()) < 36 && !player.isCreative()) {
-            player.displayClientMessage(Component
+            player.sendOverlayMessage(Component
                     .translatable("chat.powah.not.enough.blocks",
                             "" + ChatFormatting.YELLOW + (36 - player.getInventory().countItem(stack.getItem())) + ChatFormatting.RED)
-                    .withStyle(ChatFormatting.RED), true);
+                    .withStyle(ChatFormatting.RED));
             return InteractionResult.FAIL;
         }
         BlockPos pos = context.getClickedPos();

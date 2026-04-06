@@ -126,17 +126,15 @@ public class EnergizingOrbBlock extends PowahBaseBlock<EnergizingOrbBlock> imple
                             V3d v3d = V3d.from(rodPos);
                             if ((int) v3d.distance(pos) <= Powah.config().general.energizing_range) {
                                 rod.setOrbPos(pos);
-                                player.displayClientMessage(Component.translatable("chat.powah.wrench.link.done").withStyle(ChatFormatting.GOLD),
-                                        true);
+                                player.sendOverlayMessage(Component.translatable("chat.powah.wrench.link.done").withStyle(ChatFormatting.GOLD));
                             } else {
-                                player.displayClientMessage(Component.translatable("chat.powah.wrench.link.fail").withStyle(ChatFormatting.RED),
-                                        true);
+                                player.sendOverlayMessage(Component.translatable("chat.powah.wrench.link.fail").withStyle(ChatFormatting.RED));
                             }
                         }
                         stack.remove(PowahComponents.LINK_ROD_POS);
                     } else {
                         stack.set(PowahComponents.LINK_ORB_POS, pos);
-                        player.displayClientMessage(Component.translatable("chat.powah.wrench.link.start").withStyle(ChatFormatting.YELLOW), true);
+                        player.sendOverlayMessage(Component.translatable("chat.powah.wrench.link.start").withStyle(ChatFormatting.YELLOW));
                     }
                     return true;
                 }

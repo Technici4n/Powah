@@ -62,8 +62,8 @@ public class BindingCardItem extends PowahBaseItem {
                     playerIn.getDisplayName().getString()));
             return InteractionResult.SUCCESS.heldItemTransformedTo(stack);
         } else if (!playerIn.getUUID().equals(boundPlayer.gameProfileId())) {
-            playerIn.displayClientMessage(
-                    Component.translatable("chat.powah.no.binding", boundPlayer.name()).withStyle(ChatFormatting.DARK_RED), true);
+            playerIn.sendOverlayMessage(
+                    Component.translatable("chat.powah.no.binding", boundPlayer.name()).withStyle(ChatFormatting.DARK_RED));
             return InteractionResult.FAIL;
         }
         return InteractionResult.PASS;

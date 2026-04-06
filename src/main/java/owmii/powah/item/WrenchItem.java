@@ -119,11 +119,10 @@ public class WrenchItem extends PowahBaseItem implements IWrench {
         ItemStack stack = playerIn.getItemInHand(handIn);
         if (playerIn.isShiftKeyDown()) {
             nextWrenchMode(stack);
-            playerIn.displayClientMessage(
+            playerIn.sendOverlayMessage(
                     Component.translatable("info.powah.wrench.mode",
                             Component.translatable("info.powah.wrench.mode." + getWrenchMode(stack).name().toLowerCase())
-                                    .withStyle(ChatFormatting.YELLOW)),
-                    true);
+                                    .withStyle(ChatFormatting.YELLOW)));
             return InteractionResult.SUCCESS;
         }
         return super.use(worldIn, playerIn, handIn);
