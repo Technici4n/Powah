@@ -15,6 +15,7 @@ import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.level.saveddata.SavedData;
 import net.minecraft.world.level.saveddata.SavedDataType;
+import owmii.powah.Powah;
 import owmii.powah.lib.block.IOwnable;
 import owmii.powah.lib.logistics.energy.Energy;
 
@@ -25,7 +26,7 @@ public class EnderNetwork extends SavedData {
 
     private static final Codec<EnderNetwork> CODEC = Packed.CODEC.xmap(EnderNetwork::new, EnderNetwork::getData);
 
-    private static final SavedDataType<EnderNetwork> TYPE = new SavedDataType<>(NAME, EnderNetwork::new, CODEC);
+    private static final SavedDataType<EnderNetwork> TYPE = new SavedDataType<>(Powah.id(NAME), EnderNetwork::new, CODEC);
 
     private final Map<UUID, ImmutableList<Energy>> map = new HashMap<>();
 
