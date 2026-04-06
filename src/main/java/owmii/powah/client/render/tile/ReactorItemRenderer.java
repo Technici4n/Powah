@@ -9,7 +9,6 @@ import net.minecraft.client.renderer.rendertype.RenderTypes;
 import net.minecraft.client.renderer.special.NoDataSpecialModelRenderer;
 import net.minecraft.client.renderer.special.SpecialModelRenderer;
 import net.minecraft.resources.Identifier;
-import net.minecraft.world.item.ItemDisplayContext;
 import org.joml.Vector3fc;
 import owmii.powah.Powah;
 import owmii.powah.block.Tier;
@@ -28,8 +27,7 @@ public class ReactorItemRenderer implements NoDataSpecialModelRenderer {
     }
 
     @Override
-    public void submit(ItemDisplayContext type,
-            PoseStack poseStack,
+    public void submit(PoseStack poseStack,
             SubmitNodeCollector submitNodeCollector,
             int lightCoords,
             int overlayCoords,
