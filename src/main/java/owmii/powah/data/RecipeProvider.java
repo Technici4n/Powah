@@ -11,6 +11,7 @@ import net.minecraft.data.recipes.SimpleCookingRecipeBuilder;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.tags.ItemTags;
 import net.minecraft.world.item.Items;
+import net.minecraft.world.item.crafting.CookingBookCategory;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.crafting.Recipe;
 import net.neoforged.neoforge.common.Tags;
@@ -1924,10 +1925,12 @@ public class RecipeProvider extends net.minecraft.data.recipes.RecipeProvider {
     }
 
     private void smelting() {
-        SimpleCookingRecipeBuilder.smelting(Ingredient.of(Itms.URANINITE_RAW), RecipeCategory.MISC, Itms.URANINITE.toStack(), 0.7f, 200)
+        SimpleCookingRecipeBuilder
+                .smelting(Ingredient.of(Itms.URANINITE_RAW), RecipeCategory.MISC, CookingBookCategory.MISC, Itms.URANINITE, 0.7f, 200)
                 .unlockedBy(getHasName(Itms.URANINITE_RAW), has(Itms.URANINITE_RAW))
                 .save(output, makeId("smelting/uraninite_from_raw"));
-        SimpleCookingRecipeBuilder.blasting(Ingredient.of(Itms.URANINITE_RAW), RecipeCategory.MISC, Itms.URANINITE.toStack(), 0.7f, 100)
+        SimpleCookingRecipeBuilder
+                .blasting(Ingredient.of(Itms.URANINITE_RAW), RecipeCategory.MISC, CookingBookCategory.MISC, Itms.URANINITE, 0.7f, 100)
                 .unlockedBy(getHasName(Itms.URANINITE_RAW), has(Itms.URANINITE_RAW))
                 .save(output, makeId("smelting/uraninite_from_raw_blasting"));
     }
