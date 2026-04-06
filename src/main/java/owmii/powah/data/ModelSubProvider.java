@@ -13,11 +13,11 @@ import net.minecraft.client.data.models.blockstates.MultiPartGenerator;
 import net.minecraft.client.data.models.blockstates.MultiVariantGenerator;
 import net.minecraft.client.data.models.model.ModelInstance;
 import net.minecraft.client.data.models.model.ModelTemplate;
-import net.minecraft.client.data.models.model.TextureMapping;
 import net.minecraft.client.data.models.model.TextureSlot;
 import net.minecraft.client.data.models.model.TexturedModel;
 import net.minecraft.client.renderer.block.dispatch.Variant;
 import net.minecraft.client.renderer.block.dispatch.VariantMutator;
+import net.minecraft.client.resources.model.sprite.Material;
 import net.minecraft.resources.Identifier;
 import net.minecraft.util.random.WeightedList;
 import net.minecraft.world.level.block.Block;
@@ -65,7 +65,7 @@ public abstract class ModelSubProvider {
     protected void simpleBlockAndItem(Block block, String textureName) {
         blockModels.createTrivialBlock(
                 block,
-                TexturedModel.CUBE.updateTexture(mapping -> mapping.put(TextureSlot.ALL, Powah.id(textureName))));
+                TexturedModel.CUBE.updateTexture(mapping -> mapping.put(TextureSlot.ALL, new Material(Powah.id(textureName)))));
         // item falls back automatically to the block model
     }
 
@@ -107,14 +107,6 @@ public abstract class ModelSubProvider {
             BlockState blockState,
             Property<T> property) {
         return conditionBuilder.term(property, blockState.getValue(property));
-    }
-
-    protected static Identifier getBlockTexture(Block block) {
-        return TextureMapping.getBlockTexture(block);
-    }
-
-    protected static Identifier getBlockTexture(Block block, String suffix) {
-        return TextureMapping.getBlockTexture(block, suffix);
     }
 
     protected static MultiVariant customBlockStateModel(CustomUnbakedBlockStateModel model) {

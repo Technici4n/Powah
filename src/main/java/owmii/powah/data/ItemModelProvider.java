@@ -7,6 +7,7 @@ import net.minecraft.client.data.models.model.ItemModelUtils;
 import net.minecraft.client.data.models.model.ModelLocationUtils;
 import net.minecraft.client.data.models.model.ModelTemplates;
 import net.minecraft.client.data.models.model.TextureMapping;
+import net.minecraft.client.resources.model.sprite.Material;
 import net.minecraft.world.level.ItemLike;
 import owmii.powah.Powah;
 import owmii.powah.components.PowahComponents;
@@ -57,10 +58,10 @@ public class ItemModelProvider extends ModelSubProvider {
 
     private void card(ItemLike item, String texture, String boundTexture) {
         var model = ModelTemplates.FLAT_ITEM.create(item.asItem(),
-                TextureMapping.layer0(Powah.id(texture)),
+                TextureMapping.layer0(new Material(Powah.id(texture))), // TODO
                 itemModels.modelOutput);
         var boundModel = ModelTemplates.FLAT_ITEM.create(ModelLocationUtils.getModelLocation(item.asItem(), "_bound"),
-                TextureMapping.layer0(Powah.id(boundTexture)),
+                TextureMapping.layer0(new Material(Powah.id(boundTexture))), // TODO
                 itemModels.modelOutput);
         itemModels.itemModelOutput.accept(item.asItem(), ItemModelUtils.conditional(
                 ItemModelUtils.hasComponent(PowahComponents.BOUND_PLAYER),
@@ -69,7 +70,7 @@ public class ItemModelProvider extends ModelSubProvider {
     }
 
     private void flatSingleLayer(ItemLike item, String texture) {
-        var model = ModelTemplates.FLAT_ITEM.create(item.asItem(), TextureMapping.layer0(Powah.id(texture)),
+        var model = ModelTemplates.FLAT_ITEM.create(item.asItem(), TextureMapping.layer0(new Material(Powah.id(texture))), // TODO
                 itemModels.modelOutput);
         itemModels.itemModelOutput.accept(item.asItem(), ItemModelUtils.plainModel(model));
     }
