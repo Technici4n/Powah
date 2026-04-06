@@ -1,4 +1,4 @@
-@NonnullDefault
+@NullMarked
 package owmii.powah.inventory;
 
-import org.lwjgl.system.NonnullDefault;
+import org.jspecify.annotations.NullMarked;

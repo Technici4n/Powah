@@ -1,4 +1,4 @@
-@NonnullDefault
+@NullMarked
 package owmii.powah.block.reactor;
 
-import org.lwjgl.system.NonnullDefault;
+import org.jspecify.annotations.NullMarked;

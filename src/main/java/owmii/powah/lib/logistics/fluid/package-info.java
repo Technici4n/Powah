@@ -1,4 +1,4 @@
-@NonnullDefault
+@NullMarked
 package owmii.powah.lib.logistics.fluid;
 
-import org.lwjgl.system.NonnullDefault;
+import org.jspecify.annotations.NullMarked;

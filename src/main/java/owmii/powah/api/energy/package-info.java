@@ -1,4 +1,4 @@
-@NonnullDefault
+@NullMarked
 package owmii.powah.api.energy;
 
-import org.lwjgl.system.NonnullDefault;
+import org.jspecify.annotations.NullMarked;
