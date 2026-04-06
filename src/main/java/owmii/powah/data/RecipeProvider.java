@@ -10,6 +10,7 @@ import net.minecraft.data.recipes.RecipeOutput;
 import net.minecraft.data.recipes.SimpleCookingRecipeBuilder;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.tags.ItemTags;
+import net.minecraft.world.item.ItemStackTemplate;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.crafting.CookingBookCategory;
 import net.minecraft.world.item.crafting.Ingredient;
@@ -1886,42 +1887,43 @@ public class RecipeProvider extends net.minecraft.data.recipes.RecipeProvider {
     }
 
     private void energizingRecipes() {
-        output.accept(makeId("energizing/blazing_crystal"),
-                new EnergizingRecipe(Itms.BLAZING_CRYSTAL.toStack(), 120000, List.of(Ingredient.of(Items.BLAZE_POWDER),
+        output.accept(makeId("energizing/blazing_crystal"), new EnergizingRecipe(
+                new ItemStackTemplate(Itms.BLAZING_CRYSTAL.asItem()), 120000, List.of(Ingredient.of(Items.BLAZE_POWDER),
                         Ingredient.of(Items.BLAZE_POWDER), Ingredient.of(Items.BLAZE_POWDER), Ingredient.of(Items.BLAZE_POWDER))),
                 null);
-        output.accept(makeId("energizing/blazing_crystal_2"),
-                new EnergizingRecipe(Itms.BLAZING_CRYSTAL.toStack(), 120000, List.of(tag(Tags.Items.RODS_BLAZE))), null);
-        output.accept(makeId("energizing/charged_snowball"),
-                new EnergizingRecipe(Itms.CHARGED_SNOWBALL.toStack(), 500000, List.of(Ingredient.of(Items.SNOWBALL))), null);
-        output.accept(makeId("energizing/dry_ice"), new EnergizingRecipe(Blcks.DRY_ICE.toStack(), 10000,
+        output.accept(makeId("energizing/blazing_crystal_2"), new EnergizingRecipe(
+                new ItemStackTemplate(Itms.BLAZING_CRYSTAL.asItem()), 120000, List.of(tag(Tags.Items.RODS_BLAZE))), null);
+        output.accept(makeId("energizing/charged_snowball"), new EnergizingRecipe(
+                new ItemStackTemplate(Itms.CHARGED_SNOWBALL.asItem()), 500000, List.of(Ingredient.of(Items.SNOWBALL))), null);
+        output.accept(makeId("energizing/dry_ice"), new EnergizingRecipe(new ItemStackTemplate(Blcks.DRY_ICE.asItem()), 10000,
                 List.of(tag(ITags.Items.ICES_BLUE), tag(ITags.Items.ICES_BLUE))), null);
         output.accept(makeId("energizing/ender_core"),
-                new EnergizingRecipe(Itms.ENDER_CORE.toStack(), 50000,
+                new EnergizingRecipe(new ItemStackTemplate(Itms.ENDER_CORE.asItem()), 50000,
                         List.of(Ingredient.of(Items.ENDER_EYE), Ingredient.of(Itms.DIELECTRIC_CASING), Ingredient.of(Itms.CAPACITOR_BASIC_TINY))),
                 null);
-        output.accept(makeId("energizing/energized_steel"), new EnergizingRecipe(Itms.ENERGIZED_STEEL.toStack(2), 10000,
-                List.of(tag(Tags.Items.INGOTS_IRON), tag(Tags.Items.INGOTS_GOLD))), null);
-        output.accept(makeId("energizing/niotic_crystal"),
-                new EnergizingRecipe(Itms.NIOTIC_CRYSTAL.toStack(), 300000, List.of(tag(Tags.Items.GEMS_DIAMOND))), null);
+        output.accept(makeId("energizing/energized_steel"), new EnergizingRecipe(new ItemStackTemplate(Itms.ENERGIZED_STEEL.asItem(), 2),
+                10000, List.of(tag(Tags.Items.INGOTS_IRON), tag(Tags.Items.INGOTS_GOLD))), null);
+        output.accept(makeId("energizing/niotic_crystal"), new EnergizingRecipe(new ItemStackTemplate(Itms.NIOTIC_CRYSTAL.asItem()),
+                300000, List.of(tag(Tags.Items.GEMS_DIAMOND))), null);
         output.accept(makeId("energizing/nitro_crystal"),
-                new EnergizingRecipe(Itms.NITRO_CRYSTAL.toStack(16), 20000000,
-                        List.of(tag(Tags.Items.NETHER_STARS), tag(Tags.Items.STORAGE_BLOCKS_REDSTONE),
-                                tag(Tags.Items.STORAGE_BLOCKS_REDSTONE), Ingredient.of(Blcks.BLAZING_CRYSTAL))),
+                new EnergizingRecipe(new ItemStackTemplate(Itms.NITRO_CRYSTAL.asItem(), 16), 20000000,
+                        List.of(tag(Tags.Items.NETHER_STARS), tag(Tags.Items.STORAGE_BLOCKS_REDSTONE), tag(Tags.Items.STORAGE_BLOCKS_REDSTONE),
+                                Ingredient.of(Blcks.BLAZING_CRYSTAL))),
                 null);
-        output.accept(makeId("energizing/spirited_crystal"),
-                new EnergizingRecipe(Itms.SPIRITED_CRYSTAL.toStack(), 1000000, List.of(tag(Tags.Items.GEMS_EMERALD))), null);
-        output.accept(makeId("energizing/uraninite_from_ore"),
-                new EnergizingRecipe(Itms.URANINITE.toStack(5), 50000, List.of(tag(ITags.Items.URANINITE_ORE_REGULAR))), null);
-        output.accept(makeId("energizing/uraninite_from_ore_dense"),
-                new EnergizingRecipe(Itms.URANINITE.toStack(10), 100000, List.of(tag(ITags.Items.URANINITE_ORE_DENSE))), null);
-        output.accept(makeId("energizing/uraninite_from_ore_poor"),
-                new EnergizingRecipe(Itms.URANINITE.toStack(3), 25000, List.of(tag(ITags.Items.URANINITE_ORE_POOR))), null);
-        output.accept(makeId("energizing/uraninite_from_raw"),
-                new EnergizingRecipe(Itms.URANINITE.toStack(2), 2000, List.of(Ingredient.of(Itms.URANINITE_RAW))), null);
-        output.withConditions(new NotCondition(new TagEmptyCondition<>(ITags.Items.URANIUM_INGOTS)))
-                .accept(makeId("energizing/uraninite_from_uranium"),
-                        new EnergizingRecipe(Itms.URANINITE.toStack(), 30000, List.of(tag(ITags.Items.URANIUM_INGOTS))), null);
+        output.accept(makeId("energizing/spirited_crystal"), new EnergizingRecipe(
+                new ItemStackTemplate(Itms.SPIRITED_CRYSTAL.asItem()), 1000000, List.of(tag(Tags.Items.GEMS_EMERALD))), null);
+        output.accept(makeId("energizing/uraninite_from_ore"), new EnergizingRecipe(new ItemStackTemplate(Itms.URANINITE.asItem(), 5),
+                50000, List.of(tag(ITags.Items.URANINITE_ORE_REGULAR))), null);
+        output.accept(makeId("energizing/uraninite_from_ore_dense"), new EnergizingRecipe(
+                new ItemStackTemplate(Itms.URANINITE.asItem(), 10), 100000, List.of(tag(ITags.Items.URANINITE_ORE_DENSE))), null);
+        output.accept(makeId("energizing/uraninite_from_ore_poor"), new EnergizingRecipe(
+                new ItemStackTemplate(Itms.URANINITE.asItem(), 3), 25000, List.of(tag(ITags.Items.URANINITE_ORE_POOR))), null);
+        output.accept(makeId("energizing/uraninite_from_raw"), new EnergizingRecipe(new ItemStackTemplate(Itms.URANINITE.asItem(), 2),
+                2000, List.of(Ingredient.of(Itms.URANINITE_RAW))), null);
+        output.withConditions(new NotCondition(new TagEmptyCondition<>(ITags.Items.URANIUM_INGOTS))).accept(
+                makeId("energizing/uraninite_from_uranium"),
+                new EnergizingRecipe(new ItemStackTemplate(Itms.URANINITE.asItem()), 30000, List.of(tag(ITags.Items.URANIUM_INGOTS))),
+                null);
     }
 
     private void smelting() {

@@ -6,13 +6,13 @@ import com.mojang.serialization.codecs.RecordCodecBuilder;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
-import net.minecraft.core.HolderLookup;
 import net.minecraft.core.NonNullList;
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.codec.ByteBufCodecs;
 import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.resources.Identifier;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.ItemStackTemplate;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.crafting.PlacementInfo;
 import net.minecraft.world.item.crafting.Recipe;
@@ -27,12 +27,12 @@ import owmii.powah.recipe.Recipes;
 
 public class EnergizingRecipe implements Recipe<RecipeInput> {
     public static final Identifier ID = Powah.id("energizing");
-    private final ItemStack output;
+    private final ItemStackTemplate output;
     private final long energy;
     private final NonNullList<Ingredient> ingredients;
 
     public static final MapCodec<EnergizingRecipe> CODEC = RecordCodecBuilder.mapCodec(builder -> builder.group(
-            ItemStack.CODEC.fieldOf("result").forGetter(e -> e.output),
+            ItemStackTemplate.CODEC.fieldOf("result").forGetter(e -> e.output),
             Codec.LONG.fieldOf("energy").forGetter(e -> e.energy),
             Ingredient.CODEC.listOf(1, 16)
                     .fieldOf("ingredients")
@@ -40,14 +40,14 @@ public class EnergizingRecipe implements Recipe<RecipeInput> {
             .apply(builder, EnergizingRecipe::new));
 
     public static final StreamCodec<RegistryFriendlyByteBuf, EnergizingRecipe> STREAM_CODEC = StreamCodec.composite(
-            ItemStack.STREAM_CODEC,
+            ItemStackTemplate.STREAM_CODEC,
             EnergizingRecipe::getResultItem,
             ByteBufCodecs.VAR_LONG, EnergizingRecipe::getEnergy,
             Ingredient.CONTENTS_STREAM_CODEC.apply(ByteBufCodecs.list()),
             EnergizingRecipe::getIngredients,
             EnergizingRecipe::new);
 
-    public EnergizingRecipe(ItemStack output, long energy, List<Ingredient> ingredients) {
+    public EnergizingRecipe(ItemStackTemplate output, long energy, List<Ingredient> ingredients) {
         this.output = output;
         this.energy = energy;
         this.ingredients = NonNullList.copyOf(ingredients);
@@ -78,11 +78,11 @@ public class EnergizingRecipe implements Recipe<RecipeInput> {
     }
 
     @Override
-    public ItemStack assemble(RecipeInput inv, HolderLookup.Provider registry) {
-        return this.output.copy();
+    public ItemStack assemble(RecipeInput inv) {
+        return this.output.create();
     }
 
-    public ItemStack getResultItem() {
+    public ItemStackTemplate getResultItem() {
         return output;
     }
 
@@ -123,15 +123,16 @@ public class EnergizingRecipe implements Recipe<RecipeInput> {
         return true;
     }
 
-    public static class Serializer implements RecipeSerializer<EnergizingRecipe> {
-        @Override
-        public MapCodec<EnergizingRecipe> codec() {
-            return CODEC;
-        }
-
-        @Override
-        public StreamCodec<RegistryFriendlyByteBuf, EnergizingRecipe> streamCodec() {
-            return STREAM_CODEC;
-        }
+    // TODO
+    @Override
+    public boolean showNotification() {
+        return false;
     }
+
+    // TODO
+    @Override
+    public String group() {
+        return "";
+    }
+
 }

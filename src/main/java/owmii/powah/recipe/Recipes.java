@@ -12,8 +12,9 @@ public class Recipes {
     public static final DeferredRegister<RecipeSerializer<?>> DR_SERIALIZER = DeferredRegister.create(Registries.RECIPE_SERIALIZER, Powah.MOD_ID);
     public static final DeferredRegister<RecipeType<?>> DR_TYPE = DeferredRegister.create(Registries.RECIPE_TYPE, Powah.MOD_ID);
 
-    public static final Supplier<EnergizingRecipe.Serializer> ENERGIZING_SERIALIZER = DR_SERIALIZER.register("energizing",
-            EnergizingRecipe.Serializer::new);
+    public static final Supplier<RecipeSerializer<EnergizingRecipe>> ENERGIZING_SERIALIZER = DR_SERIALIZER.register("energizing",
+            () -> new RecipeSerializer<>(EnergizingRecipe.CODEC, EnergizingRecipe.STREAM_CODEC));
+
     public static final Supplier<RecipeType<EnergizingRecipe>> ENERGIZING = DR_TYPE.register("energizing", () -> new RecipeType<>() {
         public String toString() {
             return EnergizingRecipe.ID.toString();

@@ -47,7 +47,7 @@ public class JeiEnergizingCategory extends AbstractCategory<RecipeHolder<Energiz
             }
         }
 
-        builder.addSlot(RecipeIngredientRole.OUTPUT, 137, 5).setOutputSlotBackground().add(recipe.getResultItem());
+        builder.addSlot(RecipeIngredientRole.OUTPUT, 137, 5).setOutputSlotBackground().add(recipe.getResultItem().create());
     }
 
     @Override

@@ -127,7 +127,7 @@ public class EnergizingOrbBlockEntity extends PowahBaseTickingBlockEntity<Energi
             if (this.recipe != null) {
                 this.buffer.produce(filled);
                 if (this.buffer.isFull()) {
-                    ItemStack stack = this.recipe.value().getResultItem();
+                    ItemStack stack = this.recipe.value().getResultItem().create();
                     this.inv.clear();
                     this.inv.setStackInSlot(0, stack.copy());
                     this.buffer.setCapacity(0);
