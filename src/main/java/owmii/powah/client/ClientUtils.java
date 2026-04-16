@@ -1,10 +1,10 @@
 package owmii.powah.client;
 
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.renderer.texture.TextureAtlas;
+import net.minecraft.client.renderer.block.FluidModel;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
-import net.minecraft.client.resources.model.Material;
-import net.neoforged.neoforge.client.extensions.common.IClientFluidTypeExtensions;
+import net.minecraft.world.level.material.FluidState;
+import net.neoforged.neoforge.client.fluid.FluidTintSource;
 import net.neoforged.neoforge.fluids.FluidStack;
 
 public final class ClientUtils {
@@ -12,13 +12,18 @@ public final class ClientUtils {
     }
 
     public static TextureAtlasSprite getStillTexture(FluidStack fluidStack) {
-        var renderProps = IClientFluidTypeExtensions.of(fluidStack.getFluid());
-        var spriteId = renderProps.getStillTexture(fluidStack);
-        return Minecraft.getInstance().getAtlasManager().get(new Material(TextureAtlas.LOCATION_BLOCKS, spriteId));
+        FluidState fluidState = fluidStack.getFluid().defaultFluidState();
+        FluidModel fluidModel = Minecraft.getInstance().getModelManager().getFluidStateModelSet().get(fluidState);
+        return fluidModel.stillMaterial().sprite();
     }
 
     public static int getFluidColor(FluidStack fluidStack) {
-        var renderProps = IClientFluidTypeExtensions.of(fluidStack.getFluid());
-        return renderProps.getTintColor(fluidStack);
+        FluidState fluidState = fluidStack.getFluid().defaultFluidState();
+        FluidModel fluidModel = Minecraft.getInstance().getModelManager().getFluidStateModelSet().get(fluidState);
+        FluidTintSource fluidTintSource = fluidModel.fluidTintSource();
+        if (fluidTintSource != null)
+            return fluidTintSource.color(fluidStack.getFluid().defaultFluidState());
+        else
+            return 0xFFFFFFFF;
     }
 }
