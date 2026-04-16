@@ -1,7 +1,10 @@
 package owmii.powah.lib.client.util;
 
 import com.mojang.blaze3d.pipeline.BlendFunction;
+import com.mojang.blaze3d.pipeline.ColorTargetState;
+import com.mojang.blaze3d.pipeline.DepthStencilState;
 import com.mojang.blaze3d.pipeline.RenderPipeline;
+import com.mojang.blaze3d.platform.CompareOp;
 import com.mojang.blaze3d.vertex.DefaultVertexFormat;
 import com.mojang.blaze3d.vertex.VertexFormat;
 import net.minecraft.client.renderer.RenderPipelines;
@@ -12,7 +15,7 @@ import owmii.powah.Powah;
 
 public class RenderTypes {
     public static final RenderPipeline GUI_TEXTURED_NOBLEND = RenderPipelines.GUI_TEXTURED.toBuilder()
-            .withoutBlend()
+            .withColorTargetState(ColorTargetState.DEFAULT)
             .withLocation(Powah.id("gui_textured_noblend"))
             .build();
 
@@ -20,9 +23,9 @@ public class RenderTypes {
             .withVertexShader("core/position_tex_color")
             .withFragmentShader("core/position_tex_color")
             .withSampler("Sampler0")
-            .withBlend(BlendFunction.LIGHTNING)
-            .withDepthWrite(true)
-            .withVertexFormat(DefaultVertexFormat.POSITION_COLOR, VertexFormat.Mode.QUADS)
+            .withColorTargetState(new ColorTargetState(BlendFunction.LIGHTNING))
+            .withDepthStencilState(DepthStencilState.DEFAULT)
+            .withVertexFormat(DefaultVertexFormat.POSITION_TEX_COLOR, VertexFormat.Mode.QUADS)
             .withLocation(Powah.id("reactor_overlay"))
             .build();
 
@@ -30,9 +33,9 @@ public class RenderTypes {
             .withVertexShader("core/position_tex_color")
             .withFragmentShader("core/position_tex_color")
             .withSampler("Sampler0")
-            .withBlend(BlendFunction.LIGHTNING)
+            .withColorTargetState(new ColorTargetState(BlendFunction.LIGHTNING))
             .withCull(false)
-            .withDepthWrite(false)
+            .withDepthStencilState(new DepthStencilState(CompareOp.LESS_THAN_OR_EQUAL, false))
             .withVertexFormat(DefaultVertexFormat.POSITION_TEX_COLOR, VertexFormat.Mode.QUADS)
             .withLocation(Powah.id("blended_no_depth"))
             .build();
