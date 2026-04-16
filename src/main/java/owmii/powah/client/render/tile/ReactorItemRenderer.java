@@ -50,7 +50,7 @@ public class ReactorItemRenderer implements NoDataSpecialModelRenderer {
         reactorPartModel.root().getExtentsForGui(poseStack, output);
     }
 
-    public record Unbaked(Tier tier) implements SpecialModelRenderer.Unbaked {
+    public record Unbaked(Tier tier) implements SpecialModelRenderer.Unbaked<Void> {
         public static final MapCodec<ReactorItemRenderer.Unbaked> MAP_CODEC = RecordCodecBuilder.mapCodec(builder -> builder.group(
                 Tier.CODEC.fieldOf("tier").forGetter(Unbaked::tier)).apply(builder, Unbaked::new));
 
@@ -60,7 +60,7 @@ public class ReactorItemRenderer implements NoDataSpecialModelRenderer {
         }
 
         @Override
-        public SpecialModelRenderer<?> bake(SpecialModelRenderer.BakingContext context) {
+        public ReactorItemRenderer bake(SpecialModelRenderer.BakingContext context) {
             return new ReactorItemRenderer(context, tier);
         }
     }
