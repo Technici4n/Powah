@@ -62,8 +62,8 @@ public class FurnatorBlockEntity extends PowahBaseGeneratorBlockEntity<FurnatorB
                     if (burnTime > 0) {
                         long perFuelTick = Powah.config().general.energy_per_fuel_tick;
                         this.carbon.setAll(burnTime * perFuelTick);
-                        if (!stack.getCraftingRemainder().isEmpty()) {
-                            this.inv.setStackInSlot(1, stack.getCraftingRemainder());
+                        if (stack.getCraftingRemainder() != null) {
+                            this.inv.setStackInSlot(1, stack.getCraftingRemainder().create());
                         } else {
                             stack.shrink(1);
                         }

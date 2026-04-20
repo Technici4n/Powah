@@ -350,7 +350,7 @@ public class ReactorBlockEntity extends PowahBaseGeneratorBlockEntity<ReactorBlo
         if (slot == 1) {
             return ReactorFuel.getFuel(stack.getItem()) != null;
         } else if (slot == 2) {
-            return stack.getBurnTime(RecipeType.SMELTING, getLevel().fuelValues()) > 0 && stack.getCraftingRemainder().isEmpty();
+            return stack.getBurnTime(RecipeType.SMELTING, getLevel().fuelValues()) > 0 && stack.getCraftingRemainder() == null;
         } else if (slot == 3) {
             return stack.is(Tags.Items.DUSTS_REDSTONE) || stack.is(Tags.Items.STORAGE_BLOCKS_REDSTONE);
         } else if (slot == 4) {
