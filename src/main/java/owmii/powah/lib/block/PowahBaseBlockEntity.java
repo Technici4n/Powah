@@ -170,9 +170,9 @@ public class PowahBaseBlockEntity<B extends PowahBaseBlock<B>> extends BlockEnti
     }
 
     public ItemStack storeToStack(ItemStack stack) {
-        var nbt = new CompoundTag();
         var output = TagValueOutput.createWithContext(new ProblemReporter.ScopedCollector(LOG), getLevel().registryAccess());
         writeStorable(output);
+        var nbt = output.buildResult();
         if (!nbt.isEmpty() && keepStorable()) {
             stack.set(PowahComponents.STORED_BLOCK_ENTITY_STATE, CustomData.of(nbt));
         }
