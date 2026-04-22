@@ -10,6 +10,7 @@ import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.phys.BlockHitResult;
 import owmii.powah.block.energizing.EnergizingOrbBlock;
 import owmii.powah.data.ITags;
+import owmii.powah.lib.block.PowahBaseBlockEntity;
 import owmii.powah.lib.block.PowahBaseEnergyBlock;
 
 public final class Wrench {
@@ -28,7 +29,12 @@ public final class Wrench {
             var entity = world.getBlockEntity(pos);
             world.setBlockAndUpdate(pos, Blocks.AIR.defaultBlockState());
             if (!player.isCreative()) {
-                Block.dropResources(state, world, pos, entity);
+                if (entity instanceof PowahBaseBlockEntity powahBaseBlockEntity) {
+                    ItemStack stack1 = powahBaseBlockEntity.storeToStack(new ItemStack(state.getBlock()));
+                    Block.popResource(world, pos, stack1);
+                } else {
+                    Block.dropResources(state, world, pos, entity);
+                }
             }
             // Play a cool sound
             var group = state.getSoundType();
