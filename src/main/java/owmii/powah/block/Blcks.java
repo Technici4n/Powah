@@ -43,11 +43,12 @@ public class Blcks {
     public static final TieredBlockReg ENERGY_CABLE = new TieredBlockReg(DR, "energy_cable",
             (variant, props) -> new CableBlock(metalNoSolid(props, 2.0f, 20.0f).noCollision(), variant), Tier.getNormalVariants());
     public static final TieredBlockReg ENDER_GATE = new TieredBlockReg(DR, "ender_gate",
-            (variant, props) -> new EnderGateBlock(metalNoSolid(props, 2.0f, 20.0f).noCollision(), variant), Tier.getNormalVariants());
+            (variant, props) -> new EnderGateBlock(metalNoSolid(props, 2.0f, 20.0f).noCollision().noLootTable(), variant), Tier.getNormalVariants());
     public static final DeferredBlock<Block> ENERGIZING_ORB = DR.registerBlock("energizing_orb",
             props -> new EnergizingOrbBlock(metalNoSolid(props, 2.0f, 20.0f)));
     public static final TieredBlockReg ENERGIZING_ROD = new TieredBlockReg(DR, "energizing_rod",
-            (variant, props) -> new EnergizingRodBlock(metalNoSolid(props, 2.0f, 20.0f).noCollision(), variant), Tier.getNormalVariants());
+            (variant, props) -> new EnergizingRodBlock(metalNoSolid(props, 2.0f, 20.0f).noCollision().noLootTable(), variant),
+            Tier.getNormalVariants());
     public static final TieredBlockReg FURNATOR = new TieredBlockReg(DR, "furnator",
             (variant, props) -> new FurnatorBlock(metalNoSolid(props, 2.0f, 20.0f), variant), Tier.getNormalVariants());
     public static final TieredBlockReg MAGMATOR = new TieredBlockReg(DR, "magmator",
