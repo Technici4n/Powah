@@ -123,13 +123,11 @@ public class EnergizingRecipe implements Recipe<RecipeInput> {
         return true;
     }
 
-    // TODO
     @Override
     public boolean showNotification() {
         return false;
     }
 
-    // TODO
     @Override
     public String group() {
         return "";
