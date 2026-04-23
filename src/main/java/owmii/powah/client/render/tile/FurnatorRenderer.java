@@ -39,6 +39,7 @@ public class FurnatorRenderer implements BlockEntityRenderer<FurnatorBlockEntity
             ModelFeatureRenderer.@Nullable CrumblingOverlay breakProgress) {
         BlockEntityRenderer.super.extractRenderState(blockEntity, state, partialTicks, cameraPosition, breakProgress);
         state.burning = blockEntity.isBurning();
+        state.side = blockEntity.getBlockState().getValue(BlockStateProperties.HORIZONTAL_FACING);
     }
 
     @Override
@@ -50,11 +51,9 @@ public class FurnatorRenderer implements BlockEntityRenderer<FurnatorBlockEntity
             poseStack.translate(0.5, 0.5, 0.5);
             poseStack.mulPose(Axis.XN.rotationDegrees(180.0f));
             poseStack.scale(0.97F, 0.97F, 0.97F);
-            // TODO 26.1 - Mithi83 - blockState is private now, is there a better way?
-            var side = state.blockState.getValue(BlockStateProperties.HORIZONTAL_FACING);
             var renderType = RenderTypes.text(sprite.atlasLocation());
             submitNodeCollector.submitCustomGeometry(poseStack, renderType, (pose, buffer) -> {
-                Cube.create(pose.pose(), buffer).side(side).bright().draw(sprite);
+                Cube.create(pose.pose(), buffer).side(state.side).bright().draw(sprite);
             });
             poseStack.popPose();
         }
