@@ -58,10 +58,10 @@ public class ItemModelProvider extends ModelSubProvider {
 
     private void card(ItemLike item, String texture, String boundTexture) {
         var model = ModelTemplates.FLAT_ITEM.create(item.asItem(),
-                TextureMapping.layer0(new Material(Powah.id(texture))), // TODO
+                TextureMapping.layer0(new Material(Powah.id(texture))),
                 itemModels.modelOutput);
         var boundModel = ModelTemplates.FLAT_ITEM.create(ModelLocationUtils.getModelLocation(item.asItem(), "_bound"),
-                TextureMapping.layer0(new Material(Powah.id(boundTexture))), // TODO
+                TextureMapping.layer0(new Material(Powah.id(boundTexture))),
                 itemModels.modelOutput);
         itemModels.itemModelOutput.accept(item.asItem(), ItemModelUtils.conditional(
                 ItemModelUtils.hasComponent(PowahComponents.BOUND_PLAYER),
@@ -70,7 +70,7 @@ public class ItemModelProvider extends ModelSubProvider {
     }
 
     private void flatSingleLayer(ItemLike item, String texture) {
-        var model = ModelTemplates.FLAT_ITEM.create(item.asItem(), TextureMapping.layer0(new Material(Powah.id(texture))), // TODO
+        var model = ModelTemplates.FLAT_ITEM.create(item.asItem(), TextureMapping.layer0(new Material(Powah.id(texture))),
                 itemModels.modelOutput);
         itemModels.itemModelOutput.accept(item.asItem(), ItemModelUtils.plainModel(model));
     }
