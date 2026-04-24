@@ -9,7 +9,7 @@ import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.Item;
 import owmii.powah.Powah;
 import owmii.powah.item.Itms;
-import top.theillusivec4.curios.api.CuriosApi;
+import top.theillusivec4.curios.api.CuriosResources;
 
 public class CurioTagsProvider extends net.neoforged.neoforge.common.data.ItemTagsProvider {
 
@@ -37,7 +37,7 @@ public class CurioTagsProvider extends net.neoforged.neoforge.common.data.ItemTa
          *      Types</a>
          */
         private static TagKey<Item> tag(String name) {
-            return ItemTags.create(Identifier.fromNamespaceAndPath(CuriosApi.MODID, name));
+            return ItemTags.create(Identifier.fromNamespaceAndPath(CuriosResources.MOD_ID, name));
         }
     }
 }
