@@ -9,7 +9,6 @@ import net.minecraft.world.entity.monster.EnderMan;
 import net.minecraft.world.entity.monster.Endermite;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
-import net.neoforged.neoforge.items.ItemHandlerHelper;
 import owmii.powah.Powah;
 import owmii.powah.lib.item.PowahBaseItem;
 
@@ -27,7 +26,7 @@ public class PhotoelectricPaneItem extends PowahBaseItem {
                     if (!playerIn.isCreative()) {
                         stack1.shrink(1);
                     }
-                    ItemHandlerHelper.giveItemToPlayer(playerIn, new ItemStack(Itms.LENS_OF_ENDER.get()));
+                    playerIn.getInventory().placeItemBackInInventory(new ItemStack(Itms.LENS_OF_ENDER.get()));
                     target.playSound(SoundEvents.ENDERMAN_DEATH, 0.5F, 1.0F);
                     target.remove(Entity.RemovalReason.KILLED);
                 }

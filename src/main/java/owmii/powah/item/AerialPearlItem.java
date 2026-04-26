@@ -10,7 +10,6 @@ import net.minecraft.world.entity.monster.zombie.Zombie;
 import net.minecraft.world.entity.monster.zombie.ZombieVillager;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
-import net.neoforged.neoforge.items.ItemHandlerHelper;
 import owmii.powah.Powah;
 import owmii.powah.lib.item.PowahBaseItem;
 
@@ -28,7 +27,7 @@ public class AerialPearlItem extends PowahBaseItem {
                         || target.getClass() == Husk.class) {
                     if (!playerIn.level().isClientSide()) {
                         ItemStack stack1 = playerIn.getItemInHand(hand);
-                        ItemHandlerHelper.giveItemToPlayer(playerIn, new ItemStack(Itms.PLAYER_AERIAL_PEARL.get()));
+                        playerIn.getInventory().placeItemBackInInventory(new ItemStack(Itms.PLAYER_AERIAL_PEARL.get()));
                         target.playSound(SoundEvents.ZOMBIE_DEATH, 0.5F, 1.0F);
                         target.remove(Entity.RemovalReason.KILLED);
                         if (!playerIn.isCreative()) {
