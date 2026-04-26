@@ -62,15 +62,19 @@ public class EnergizingOrbRenderer implements BlockEntityRenderer<EnergizingOrbB
             }
         }
 
-        state.rotation = blockEntity.getOrbUp().getRotation();
+        state.orbUp = blockEntity.getOrbUp();
     }
 
     @Override
     public void submit(EnergizingOrbRendererState state, PoseStack poseStack, SubmitNodeCollector submitNodeCollector, CameraRenderState camera) {
         if (!state.outputItem.isEmpty() || state.inputItems.length > 0) {
+            double x = 0.5 + state.orbUp.getStepX() * 0.1;
+            double y = 0.5 + state.orbUp.getStepY() * 0.1;
+            double z = 0.5 + state.orbUp.getStepZ() * 0.1;
+
             if (!state.outputItem.isEmpty()) {
                 poseStack.pushPose();
-                poseStack.translate(0.5D, 0.6D, 0.5D);
+                poseStack.translate(x, y, z);
                 poseStack.mulPose(Axis.YP.rotationDegrees(-state.ticks * 360.0F));
                 poseStack.scale(0.35F, 0.35F, 0.35F);
                 state.outputItem.submit(poseStack, submitNodeCollector, state.lightCoords, OverlayTexture.NO_OVERLAY, 0);
@@ -82,9 +86,9 @@ public class EnergizingOrbRenderer implements BlockEntityRenderer<EnergizingOrbB
                     V3d v3d1 = circled.get(i);
                     poseStack.pushPose();
                     if (inputs.length == 1) {
-                        poseStack.translate(0.5D, 0.6D, 0.5D);
+                        poseStack.translate(x, y, z);
                     } else {
-                        poseStack.translate(v3d1.x + 0.5D, v3d1.y + 0.6D, v3d1.z + 0.5D);
+                        poseStack.translate(v3d1.x + x, v3d1.y + y, v3d1.z + z);
                     }
                     poseStack.scale(0.35F, 0.35F, 0.35F);
                     poseStack.mulPose(Axis.YP.rotationDegrees(-state.ticks * 360.0F));
@@ -96,7 +100,7 @@ public class EnergizingOrbRenderer implements BlockEntityRenderer<EnergizingOrbB
 
         poseStack.pushPose();
         poseStack.translate(0.5D, 0.5D, 0.5D);
-        poseStack.mulPose(state.rotation);
+        poseStack.mulPose(state.orbUp.getRotation());
         poseStack.translate(0.0D, 0.1D, 0.0D);
         poseStack.scale(1.8F, 1.8F, 1.8F);
         var renderType = model.renderType(OrbModel.TEXTURE);
