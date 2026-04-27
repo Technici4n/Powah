@@ -9,6 +9,7 @@ import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
+import net.minecraft.core.Direction;
 import net.minecraft.world.item.ItemDisplayContext;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.phys.Vec3;
@@ -31,12 +32,17 @@ public class EnergizingOrbRenderer extends AbstractTileRenderer<EnergizingOrbTil
     public void render(EnergizingOrbTile te, float pt, PoseStack matrix, MultiBufferSource rtb, Minecraft mc, ClientLevel world, LocalPlayer player,
             int light, int ov) {
         Inventory inv = te.getInventory();
+        Direction up = te.getOrbUp();
+        double x = 0.5 + up.getStepX() * 0.1;
+        double y = 0.5 + up.getStepY() * 0.1;
+        double z = 0.5 + up.getStepZ() * 0.1;
+
         if (!inv.isEmpty()) {
             float ticks = (te.ticks + pt) / 200.0F;
             ItemStack output = inv.getStackInSlot(0);
             if (!output.isEmpty()) {
                 matrix.pushPose();
-                matrix.translate(0.5D, 0.6D, 0.5D);
+                matrix.translate(x, y, z);
                 matrix.mulPose(Axis.YP.rotationDegrees(-ticks * 360.0F));
                 matrix.scale(0.35F, 0.35F, 0.35F);
                 mc.getItemRenderer().renderStatic(output, ItemDisplayContext.FIXED, light, ov, matrix, rtb, world, 0);
@@ -50,9 +56,9 @@ public class EnergizingOrbRenderer extends AbstractTileRenderer<EnergizingOrbTil
                     if (!stack.isEmpty()) {
                         matrix.pushPose();
                         if (stacks.size() == 1) {
-                            matrix.translate(0.5D, 0.6D, 0.5D);
+                            matrix.translate(x, y, z);
                         } else {
-                            matrix.translate(v3d1.x + 0.5D, v3d1.y + 0.6D, v3d1.z + 0.5D);
+                            matrix.translate(v3d1.x + x, v3d1.y + y, v3d1.z + z);
                         }
                         matrix.scale(0.35F, 0.35F, 0.35F);
                         matrix.mulPose(Axis.YP.rotationDegrees(-ticks * 360.0F));
@@ -65,7 +71,7 @@ public class EnergizingOrbRenderer extends AbstractTileRenderer<EnergizingOrbTil
 
         matrix.pushPose();
         matrix.translate(0.5D, 0.5D, 0.5D);
-        matrix.mulPose(te.getOrbUp().getRotation());
+        matrix.mulPose(up.getRotation());
         matrix.translate(0.0D, 0.1D, 0.0D);
         matrix.scale(1.8F, 1.8F, 1.8F);
         model.render(te, this, matrix, rtb, light, ov);
