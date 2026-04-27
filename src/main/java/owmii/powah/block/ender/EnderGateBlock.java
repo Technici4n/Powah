@@ -9,6 +9,7 @@ import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.BlockGetter;
+import net.minecraft.world.level.block.SimpleWaterloggedBlock;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
@@ -25,7 +26,7 @@ import owmii.powah.lib.block.AbstractTileEntity;
 import owmii.powah.lib.item.EnergyBlockItem;
 import owmii.powah.lib.logistics.inventory.AbstractContainer;
 
-public class EnderGateBlock extends AbstractEnergyBlock<EnderConfig, EnderGateBlock> {
+public class EnderGateBlock extends AbstractEnergyBlock<EnderConfig, EnderGateBlock> implements SimpleWaterloggedBlock {
     private static final Map<Direction, VoxelShape> SHAPES = new HashMap<>();
 
     public EnderGateBlock(Properties properties, Tier variant) {
