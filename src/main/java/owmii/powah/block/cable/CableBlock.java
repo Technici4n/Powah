@@ -124,15 +124,15 @@ public class CableBlock extends AbstractEnergyBlock<CableConfig, CableBlock> imp
 
     private BlockState createCableState(Level world, BlockPos pos) {
         final BlockState state = defaultBlockState();
-        boolean[] north = canAttach(state, world, pos, Direction.NORTH);
-        boolean[] south = canAttach(state, world, pos, Direction.SOUTH);
-        boolean[] west = canAttach(state, world, pos, Direction.WEST);
-        boolean[] east = canAttach(state, world, pos, Direction.EAST);
-        boolean[] up = canAttach(state, world, pos, Direction.UP);
-        boolean[] down = canAttach(state, world, pos, Direction.DOWN);
+        boolean north = canAttach(world, pos, Direction.NORTH);
+        boolean south = canAttach(world, pos, Direction.SOUTH);
+        boolean west = canAttach(world, pos, Direction.WEST);
+        boolean east = canAttach(world, pos, Direction.EAST);
+        boolean up = canAttach(world, pos, Direction.UP);
+        boolean down = canAttach(world, pos, Direction.DOWN);
         FluidState fluidState = world.getFluidState(pos);
-        return state.setValue(NORTH, north[0] && !north[1]).setValue(SOUTH, south[0] && !south[1]).setValue(WEST, west[0] && !west[1])
-                .setValue(EAST, east[0] && !east[1]).setValue(UP, up[0] && !up[1]).setValue(DOWN, down[0] && !down[1])
+        return state.setValue(NORTH, north).setValue(SOUTH, south).setValue(WEST, west)
+                .setValue(EAST, east).setValue(UP, up).setValue(DOWN, down)
                 .setValue(BlockStateProperties.WATERLOGGED, fluidState.getType() == Fluids.WATER);
     }
 
@@ -176,9 +176,8 @@ public class CableBlock extends AbstractEnergyBlock<CableConfig, CableBlock> imp
         super.onPlace(state, world, pos, oldState, isMoving);
     }
 
-    public boolean[] canAttach(BlockState state, Level world, BlockPos pos, Direction direction) {
-        return new boolean[] { world.getBlockState(pos.relative(direction)).getBlock() == this || canConnectEnergy(world, pos, direction),
-                canConnectEnergy(world, pos, direction) };
+    public boolean canAttach(Level world, BlockPos pos, Direction direction) {
+        return world.getBlockState(pos.relative(direction)).getBlock() == this || canConnectEnergy(world, pos, direction);
     }
 
     public boolean canConnectEnergy(Level world, BlockPos pos, Direction direction) {
