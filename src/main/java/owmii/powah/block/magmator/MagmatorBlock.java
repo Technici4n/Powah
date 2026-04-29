@@ -28,7 +28,6 @@ import owmii.powah.lib.logistics.inventory.AbstractContainer;
 public class MagmatorBlock extends AbstractGeneratorBlock<MagmatorBlock> {
     public MagmatorBlock(Properties properties, Tier variant) {
         super(properties, variant);
-        setDefaultState();
     }
 
     @Override

@@ -22,7 +22,6 @@ import owmii.powah.lib.logistics.inventory.AbstractContainer;
 public class EnergyHopperBlock extends AbstractEnergyBlock<ChargingConfig, EnergyHopperBlock> {
     public EnergyHopperBlock(Properties properties, Tier variant) {
         super(properties, variant);
-        setDefaultState();
         this.shapes.put(Direction.UP, box(0, 0, 0, 16, 12, 16));
         this.shapes.put(Direction.DOWN, box(0, 4, 0, 16, 16, 16));
         this.shapes.put(Direction.NORTH, box(0, 0, 4, 16, 16, 16));

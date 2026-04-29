@@ -29,7 +29,6 @@ import owmii.powah.lib.logistics.inventory.AbstractContainer;
 public class FurnatorBlock extends AbstractGeneratorBlock<FurnatorBlock> implements SimpleWaterloggedBlock {
     public FurnatorBlock(Properties properties, Tier variant) {
         super(properties, variant);
-        setDefaultState();
     }
 
     @Override
