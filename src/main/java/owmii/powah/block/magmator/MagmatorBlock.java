@@ -27,7 +27,6 @@ import owmii.powah.lib.logistics.inventory.BaseMenu;
 public class MagmatorBlock extends PowahBaseGeneratorBlock<MagmatorBlock> {
     public MagmatorBlock(Properties properties, Tier tier) {
         super(properties, Powah.config().generators.magmators, tier);
-        setDefaultState();
     }
 
     @Override

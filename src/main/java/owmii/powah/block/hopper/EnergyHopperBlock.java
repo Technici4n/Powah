@@ -26,7 +26,6 @@ public class EnergyHopperBlock extends PowahBaseEnergyBlock<EnergyHopperBlock> {
         var config = Powah.config().devices.hoppers;
         super(properties, tier, () -> config.getCapacity(tier), () -> config.getTransfer(tier));
         chargingRateSupplier = () -> config.getChargingRate(tier);
-        setDefaultState();
         this.shapes.put(Direction.UP, box(0, 0, 0, 16, 12, 16));
         this.shapes.put(Direction.DOWN, box(0, 4, 0, 16, 16, 16));
         this.shapes.put(Direction.NORTH, box(0, 0, 4, 16, 16, 16));

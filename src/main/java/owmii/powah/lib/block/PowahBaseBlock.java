@@ -61,6 +61,7 @@ public abstract class PowahBaseBlock<B extends PowahBaseBlock<B>> extends Block 
         this.shapes.put(Direction.SOUTH, Shapes.block());
         this.shapes.put(Direction.EAST, Shapes.block());
         this.shapes.put(Direction.WEST, Shapes.block());
+        setDefaultState();
     }
 
     public static VoxelShape box(double x1, double y1, double z1, double x2, double y2, double z2) {

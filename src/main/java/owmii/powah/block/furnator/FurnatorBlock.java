@@ -28,7 +28,6 @@ import owmii.powah.lib.logistics.inventory.BaseMenu;
 public class FurnatorBlock extends PowahBaseGeneratorBlock<FurnatorBlock> implements SimpleWaterloggedBlock {
     public FurnatorBlock(Properties properties, Tier tier) {
         super(properties, Powah.config().generators.furnators, tier);
-        setDefaultState();
     }
 
     @Override
