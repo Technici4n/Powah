@@ -60,7 +60,7 @@ public class Blcks {
     public static final TieredBlockReg REACTOR = new TieredBlockReg(DR, "reactor",
             (variant, props) -> new ReactorBlock(metalNoSolid(props, 2.0f, 20.0f), variant), Tier.getNormalVariants());
     public static final TieredBlockReg PLAYER_TRANSMITTER = new TieredBlockReg(DR, "player_transmitter",
-            (variant, props) -> new PlayerTransmitterBlock(metalNoSolid(props, 2.0f, 20.0f), variant), Tier.getNormalVariants());
+            (variant, props) -> new PlayerTransmitterBlock(metalNoSolid(props, 2.0f, 20.0f).noLootTable(), variant), Tier.getNormalVariants());
     public static final TieredBlockReg ENERGY_HOPPER = new TieredBlockReg(DR, "energy_hopper",
             (variant, props) -> new EnergyHopperBlock(metalNoSolid(props, 2.0f, 20.0f), variant), Tier.getNormalVariants());
     public static final TieredBlockReg ENERGY_DISCHARGER = new TieredBlockReg(DR, "energy_discharger",
