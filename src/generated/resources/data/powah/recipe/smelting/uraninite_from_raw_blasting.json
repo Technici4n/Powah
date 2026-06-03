@@ -5,7 +5,6 @@
   "experience": 0.7,
   "ingredient": "powah:uraninite_raw",
   "result": {
-    "count": 1,
     "id": "powah:uraninite"
   }
 }

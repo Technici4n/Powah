@@ -1,4 +1,4 @@
-  {
+{
   "model": {
     "type": "minecraft:special",
     "base": "powah:block/reactor_basic",
