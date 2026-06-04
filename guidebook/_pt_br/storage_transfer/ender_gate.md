@@ -22,7 +22,7 @@ Transfira energia entre o bloco adjacente e a rede ender.
 
 Diferente da Célula do Ender você não pode Atualizar a rede dela. 
 
-|                                             | I/O Máximo                                           |
+|                                             | E/S Máxima                                           |
 | ------------------------------------------- | ---------------------------------------------------- |
 | <ItemLink id="powah:ender_gate_starter" />  | <powah:EnergyMaxIO id="powah:ender_gate_starter" />  |
 | <ItemLink id="powah:ender_gate_basic" />    | <powah:EnergyMaxIO id="powah:ender_gate_basic" />    |

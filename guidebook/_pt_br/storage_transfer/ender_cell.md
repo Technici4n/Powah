@@ -22,7 +22,7 @@ A Célula do Ender é um bloco usado para armazenar energia (FE) para um canal e
 
 Você pode acessar a energia armazenada de um canal selecionado de qualquer lugar do mundo se a Célula do Ender da qual deseja transferir energia tiver um canal ativo com uma capacidade válida. 
 
-|                                             | I/O Máximo                                           |
+|                                             | E/S Máxima                                           |
 | ------------------------------------------- | ---------------------------------------------------- |
 | <ItemLink id="powah:ender_cell_starter" />  | <powah:EnergyMaxIO id="powah:ender_cell_starter" />  |
 | <ItemLink id="powah:ender_cell_basic" />    | <powah:EnergyMaxIO id="powah:ender_cell_basic" />    |

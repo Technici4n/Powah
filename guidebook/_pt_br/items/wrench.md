@@ -12,9 +12,9 @@ item_ids:
 
 A Chave Inglesa possui 3 modos: 
 
-Modo de configuração: usado para alterar a configuração de I/O dos cabos. 
+Modo de configuração: usado para alterar a configuração de E/S dos cabos. 
 
-Modo de link: usado para vincular blocos vinculáveis como Orbe Energizante e Hastes. 
+Modo de link: usado para vincular blocos vinculáveis como Orbe Energizante e Varas. 
 
 Modo de rotação: usado para girar blocos horizontalmente. 
 

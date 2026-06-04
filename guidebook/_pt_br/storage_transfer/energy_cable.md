@@ -22,7 +22,7 @@ Os cabos são usados para transferir energia entre máquinas.
 
 Você pode alterar o modo de transferência clicando com o botão direito em um cabo usando <ItemLink id="powah:wrench" /> com o modo de configuração selecionado. 
 
-|                                               | I/O Máximo                                             |
+|                                               | E/S Máxima                                             |
 | --------------------------------------------- | ------------------------------------------------------ |
 | <ItemLink id="powah:energy_cable_starter" />  | <powah:EnergyMaxIO id="powah:energy_cable_starter" />  |
 | <ItemLink id="powah:energy_cable_basic" />    | <powah:EnergyMaxIO id="powah:energy_cable_basic" />    |
