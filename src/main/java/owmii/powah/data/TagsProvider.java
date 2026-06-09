@@ -6,6 +6,7 @@ import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.data.PackOutput;
 import net.minecraft.data.tags.ItemTagsProvider;
 import net.minecraft.tags.BlockTags;
+import net.minecraft.tags.ItemTags;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.level.block.Block;
 import net.neoforged.neoforge.common.Tags;
@@ -102,6 +103,8 @@ public class TagsProvider {
             tag(ITags.Items.WRENCHES).add(Itms.WRENCH.get());
 
             tag(ITags.Items.QUARTZ_BLOCKS).add(net.minecraft.world.item.Items.QUARTZ_BLOCK);
+
+            tag(ItemTags.BOOKSHELF_BOOKS).add(Itms.BOOK.get());
 
             // BlockItem tags below
 
