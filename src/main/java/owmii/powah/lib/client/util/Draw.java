@@ -9,6 +9,9 @@ import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import owmii.powah.lib.logistics.energy.Energy;
 
 public class Draw {
+    static final float uScale = 1f / 0x100;
+    static final float vScale = 1f / 0x100;
+
     public static void gaugeV(TextureAtlasSprite sprite, int x, int y, int w, int h, int cap, int cur) {
         if (cap > 0 && cur > 0) {
             var buffer = Tesselator.getInstance().begin(VertexFormat.Mode.QUADS, DefaultVertexFormat.POSITION_TEX);
@@ -48,18 +51,15 @@ public class Draw {
         if (cap > 0 && cur > 0) {
             w = (int) (((float) cur / cap) * w);
             var buffer = Tesselator.getInstance().begin(VertexFormat.Mode.QUADS, DefaultVertexFormat.POSITION_TEX);
-            buffer.addVertex(x, y + h, 0).setUv(uvX, uvY + h);
-            buffer.addVertex(x + w, y + h, 0).setUv(uvX + w, uvY + h);
-            buffer.addVertex(x + w, y, 0).setUv(uvX + w, uvY);
-            buffer.addVertex(x, y, 0).setUv(uvX, uvY);
+            buffer.addVertex(x, y + h, 0).setUv(uvX * uScale, (uvY + h) * vScale);
+            buffer.addVertex(x + w, y + h, 0).setUv((uvX + w) * uScale, (uvY + h) * vScale);
+            buffer.addVertex(x + w, y, 0).setUv((uvX + w) * uScale, uvY * vScale);
+            buffer.addVertex(x, y, 0).setUv(uvX * uScale, uvY * vScale);
             BufferUploader.drawWithShader(buffer.buildOrThrow());
         }
     }
 
     public static void drawTexturedModalRect(GuiGraphics gui, int x, int y, int u, int v, int width, int height, float zLevel) {
-        final float uScale = 1f / 0x100;
-        final float vScale = 1f / 0x100;
-
         var wr = Tesselator.getInstance().begin(VertexFormat.Mode.QUADS, DefaultVertexFormat.POSITION_TEX);
         var matrix = gui.pose().last().pose();
         wr.addVertex(matrix, x, y + height, zLevel).setUv(u * uScale, ((v + height) * vScale));
