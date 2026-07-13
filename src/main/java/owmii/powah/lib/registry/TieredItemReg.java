@@ -6,8 +6,10 @@ import java.util.EnumSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-import java.util.function.Supplier;
+import net.minecraft.resources.ResourceKey;
 import net.minecraft.world.item.Item;
+import net.neoforged.neoforge.registries.DeferredHolder;
+import net.neoforged.neoforge.registries.DeferredItem;
 import net.neoforged.neoforge.registries.DeferredRegister;
 import owmii.powah.block.Tier;
 
@@ -15,7 +17,7 @@ public class TieredItemReg {
     private final String name;
     private final EnumSet<Tier> tiers;
 
-    private final Map<Tier, Supplier<Item>> all = new EnumMap<>(Tier.class);
+    private final Map<Tier, DeferredItem<Item>> all = new EnumMap<>(Tier.class);
 
     public TieredItemReg(DeferredRegister.Items dr, String name, Factory factory, Tier[] variants) {
         this.name = name;
@@ -32,7 +34,11 @@ public class TieredItemReg {
     }
 
     public List<Item> getAll() {
-        return all.values().stream().map(Supplier::get).toList();
+        return all.values().stream().map(DeferredHolder::get).toList();
+    }
+
+    public List<ResourceKey<Item>> getAllResourceKeys() {
+        return all.values().stream().map(DeferredHolder::getKey).toList();
     }
 
     public Set<Tier> getTiers() {

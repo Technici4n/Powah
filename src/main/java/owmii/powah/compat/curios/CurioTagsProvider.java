@@ -4,6 +4,7 @@ import java.util.concurrent.CompletableFuture;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.data.PackOutput;
 import net.minecraft.resources.Identifier;
+import net.minecraft.resources.ResourceKey;
 import net.minecraft.tags.ItemTags;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.Item;
@@ -24,7 +25,7 @@ public class CurioTagsProvider extends net.neoforged.neoforge.common.data.ItemTa
 
     @Override
     protected void addTags(HolderLookup.Provider arg) {
-        tag(CurioTags.CURIO).add(Itms.BATTERY.getAll().toArray(new Item[0]));
+        tag(CurioTags.CURIO).add(Itms.BATTERY.getAllResourceKeys().toArray(new ResourceKey[0]));
     }
 
     public static class CurioTags {

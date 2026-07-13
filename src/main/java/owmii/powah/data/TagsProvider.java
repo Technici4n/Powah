@@ -4,6 +4,8 @@ import java.util.concurrent.CompletableFuture;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.data.PackOutput;
+import net.minecraft.references.BlockItemIds;
+import net.minecraft.resources.ResourceKey;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.tags.ItemTags;
 import net.minecraft.tags.TagKey;
@@ -26,34 +28,34 @@ public class TagsProvider {
         protected void addTags(HolderLookup.Provider provider) {
             // Remove non-dry ice if Forge handles them in the future
             tag(ITags.Blocks.ICES).addTag(ITags.Blocks.ICES_ICE).addTag(ITags.Blocks.ICES_PACKED).addTag(ITags.Blocks.ICES_BLUE);
-            tag(ITags.Blocks.ICES_ICE).add(net.minecraft.world.level.block.Blocks.ICE);
-            tag(ITags.Blocks.ICES_PACKED).add(net.minecraft.world.level.block.Blocks.PACKED_ICE);
-            tag(ITags.Blocks.ICES_BLUE).add(net.minecraft.world.level.block.Blocks.BLUE_ICE);
+            tag(ITags.Blocks.ICES_ICE).add(BlockItemIds.ICE.block());
+            tag(ITags.Blocks.ICES_PACKED).add(BlockItemIds.PACKED_ICE.block());
+            tag(ITags.Blocks.ICES_BLUE).add(BlockItemIds.BLUE_ICE.block());
             tag(ITags.Blocks.ICES).addTag(ITags.Blocks.ICES_DRY);
-            tag(ITags.Blocks.ICES_DRY).add(Blcks.DRY_ICE.get());
+            tag(ITags.Blocks.ICES_DRY).add(Blcks.DRY_ICE.getKey());
 
-            tag(ITags.Blocks.URANINITE_ORE).add(Blcks.URANINITE_ORE.get()).add(Blcks.URANINITE_ORE_POOR.get())
-                    .add(Blcks.URANINITE_ORE_DENSE.get());
-            tag(ITags.Blocks.URANINITE_ORE).add(Blcks.DEEPSLATE_URANINITE_ORE.get()).add(Blcks.DEEPSLATE_URANINITE_ORE_POOR.get())
-                    .add(Blcks.DEEPSLATE_URANINITE_ORE_DENSE.get());
+            tag(ITags.Blocks.URANINITE_ORE).add(Blcks.URANINITE_ORE.getKey()).add(Blcks.URANINITE_ORE_POOR.getKey())
+                    .add(Blcks.URANINITE_ORE_DENSE.getKey());
+            tag(ITags.Blocks.URANINITE_ORE).add(Blcks.DEEPSLATE_URANINITE_ORE.getKey()).add(Blcks.DEEPSLATE_URANINITE_ORE_POOR.getKey())
+                    .add(Blcks.DEEPSLATE_URANINITE_ORE_DENSE.getKey());
             tag(Tags.Blocks.ORES).addTag(ITags.Blocks.URANINITE_ORE);
 
-            tag(ITags.Blocks.URANINITE_ORE_REGULAR).add(Blcks.URANINITE_ORE.get(), Blcks.DEEPSLATE_URANINITE_ORE.get());
+            tag(ITags.Blocks.URANINITE_ORE_REGULAR).add(Blcks.URANINITE_ORE.getKey(), Blcks.DEEPSLATE_URANINITE_ORE.getKey());
             tag(Tags.Blocks.ORES).addTag(ITags.Blocks.URANINITE_ORE_REGULAR);
 
-            tag(ITags.Blocks.URANINITE_ORE_POOR).add(Blcks.URANINITE_ORE_POOR.get(), Blcks.DEEPSLATE_URANINITE_ORE_POOR.get());
+            tag(ITags.Blocks.URANINITE_ORE_POOR).add(Blcks.URANINITE_ORE_POOR.getKey(), Blcks.DEEPSLATE_URANINITE_ORE_POOR.getKey());
             tag(Tags.Blocks.ORES).addTag(ITags.Blocks.URANINITE_ORE_POOR);
 
-            tag(ITags.Blocks.URANINITE_ORE_DENSE).add(Blcks.URANINITE_ORE_DENSE.get(), Blcks.DEEPSLATE_URANINITE_ORE_DENSE.get());
+            tag(ITags.Blocks.URANINITE_ORE_DENSE).add(Blcks.URANINITE_ORE_DENSE.getKey(), Blcks.DEEPSLATE_URANINITE_ORE_DENSE.getKey());
             tag(Tags.Blocks.ORES).addTag(ITags.Blocks.URANINITE_ORE_DENSE);
 
-            tag(Tags.Blocks.ORES_IN_GROUND_DEEPSLATE).add(Blcks.DEEPSLATE_URANINITE_ORE.get(),
-                    Blcks.DEEPSLATE_URANINITE_ORE_DENSE.get(), Blcks.DEEPSLATE_URANINITE_ORE_POOR.get());
-            tag(Tags.Blocks.ORES_IN_GROUND_STONE).add(Blcks.URANINITE_ORE.get(), Blcks.URANINITE_ORE_DENSE.get(),
-                    Blcks.URANINITE_ORE_POOR.get());
+            tag(Tags.Blocks.ORES_IN_GROUND_DEEPSLATE).add(Blcks.DEEPSLATE_URANINITE_ORE.getKey(),
+                    Blcks.DEEPSLATE_URANINITE_ORE_DENSE.getKey(), Blcks.DEEPSLATE_URANINITE_ORE_POOR.getKey());
+            tag(Tags.Blocks.ORES_IN_GROUND_STONE).add(Blcks.URANINITE_ORE.getKey(), Blcks.URANINITE_ORE_DENSE.getKey(),
+                    Blcks.URANINITE_ORE_POOR.getKey());
 
-            tag(Tags.Blocks.STORAGE_BLOCKS).add(Blcks.URANINITE.get());
-            tag(ITags.Blocks.URANINITE_BLOCK).add(Blcks.URANINITE.get());
+            tag(Tags.Blocks.STORAGE_BLOCKS).add(Blcks.URANINITE.getKey());
+            tag(ITags.Blocks.URANINITE_BLOCK).add(Blcks.URANINITE.getKey());
 
             varReg(ITags.Blocks.ENERGY_CELLS, Blcks.ENERGY_CELL);
             varReg(ITags.Blocks.ENDER_CELLS, Blcks.ENDER_CELL);
@@ -72,7 +74,7 @@ public class TagsProvider {
             // All of our blocks are mineable with a pickaxe
             for (var block : BuiltInRegistries.BLOCK) {
                 if (BuiltInRegistries.BLOCK.getKey(block).getNamespace().equals(Powah.MOD_ID)) {
-                    tag(BlockTags.MINEABLE_WITH_PICKAXE).add(block);
+                    tag(BlockTags.MINEABLE_WITH_PICKAXE).add(BuiltInRegistries.BLOCK.getResourceKey(block).orElseThrow());
                 }
             }
             // However the uraninite ores require at least an iron pickaxe
@@ -80,7 +82,7 @@ public class TagsProvider {
         }
 
         private void varReg(TagKey<Block> tagKey, TieredBlockReg tieredBlock) {
-            tag(tagKey).add(tieredBlock.getArr());
+            tag(tagKey).add(tieredBlock.getAllResourceKeys().toArray(new ResourceKey[0]));
         }
     }
 
@@ -91,17 +93,18 @@ public class TagsProvider {
 
         @Override
         protected void addTags(HolderLookup.Provider arg) {
-            tag(ITags.Items.URANINITE_RAW).add(Itms.URANINITE_RAW.get());
+            tag(ITags.Items.URANINITE_RAW).add(Itms.URANINITE_RAW.getKey());
             tag(Tags.Items.RAW_MATERIALS).addTag(ITags.Items.URANINITE_RAW);
 
-            tag(Tags.Items.INGOTS).add(Itms.ENERGIZED_STEEL.get());
-            tag(Tags.Items.GEMS).add(Itms.BLAZING_CRYSTAL.get(), Itms.NIOTIC_CRYSTAL.get(), Itms.SPIRITED_CRYSTAL.get(), Itms.NITRO_CRYSTAL.get());
+            tag(Tags.Items.INGOTS).add(Itms.ENERGIZED_STEEL.getKey());
+            tag(Tags.Items.GEMS).add(Itms.BLAZING_CRYSTAL.getKey(), Itms.NIOTIC_CRYSTAL.getKey(), Itms.SPIRITED_CRYSTAL.getKey(),
+                    Itms.NITRO_CRYSTAL.getKey());
 
-            tag(ITags.Items.WRENCHES).add(Itms.WRENCH.get());
+            tag(ITags.Items.WRENCHES).add(Itms.WRENCH.getKey());
 
-            tag(ITags.Items.QUARTZ_BLOCKS).add(net.minecraft.world.item.Items.QUARTZ_BLOCK);
+            tag(ITags.Items.QUARTZ_BLOCKS).add(BlockItemIds.QUARTZ_BLOCK.item());
 
-            tag(ItemTags.BOOKSHELF_BOOKS).add(Itms.BOOK.get());
+            tag(ItemTags.BOOKSHELF_BOOKS).add(Itms.BOOK.getKey());
 
             // BlockItem tags below
 
