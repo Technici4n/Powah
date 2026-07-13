@@ -75,7 +75,7 @@ public class ReactorBlock extends PowahBaseGeneratorBlock<ReactorBlock> {
         } else if (tileentity instanceof ReactorBlockEntity reactor) {
             if (reactor.isBuilt()) {
                 Tank tank = reactor.getTank();
-                if (FluidUtil.interactWithFluidHandler(pPlayer, pHand, pPos, tank)) {
+                if (FluidUtil.interactWithFluidHandler(pPlayer, pHand, pPos, tank, null)) {
                     reactor.sync();
                     return InteractionResult.SUCCESS;
                 }

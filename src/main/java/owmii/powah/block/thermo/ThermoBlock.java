@@ -46,7 +46,7 @@ public class ThermoBlock extends PowahBaseGeneratorBlock<ThermoBlock> {
         BlockEntity tile = pLevel.getBlockEntity(pPos);
         if (tile instanceof ThermoBlockEntity genTile) {
             Tank tank = genTile.getTank();
-            if (FluidUtil.interactWithFluidHandler(pPlayer, pHand, pPos, tank)) {
+            if (FluidUtil.interactWithFluidHandler(pPlayer, pHand, pPos, tank, null)) {
                 genTile.sync();
                 return InteractionResult.SUCCESS;
             }
