@@ -18,7 +18,7 @@ public class HudHandler {
         NeoForge.EVENT_BUS.addListener((RenderGuiEvent.Post event) -> {
             var gui = event.getGuiGraphics();
             Minecraft mc = Minecraft.getInstance();
-            if (mc.screen == null) {
+            if (mc.gui.screen() == null) {
                 Player player = mc.player;
                 Level world = mc.level;
                 if (world != null && player != null) {
