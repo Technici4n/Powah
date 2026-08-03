@@ -5,6 +5,7 @@ import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.world.Clearable;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.component.CustomData;
@@ -21,7 +22,8 @@ import owmii.powah.lib.logistics.inventory.Inventory;
 import owmii.powah.lib.registry.IVariant;
 
 @SuppressWarnings("unchecked")
-public class AbstractTileEntity<V extends IVariant, B extends AbstractBlock<V, B>> extends BlockEntity implements IBlockEntity, IRedstoneInteract {
+public class AbstractTileEntity<V extends IVariant, B extends AbstractBlock<V, B>> extends BlockEntity
+        implements IBlockEntity, IRedstoneInteract, Clearable {
     /**
      * Used when this is instance of {@link IInventoryHolder}
      **/
@@ -158,6 +160,11 @@ public class AbstractTileEntity<V extends IVariant, B extends AbstractBlock<V, B
         if (storedState != null) {
             readStorable(storedState.copyTag(), level.registryAccess());
         }
+    }
+
+    @Override
+    public void clearContent() {
+        this.inv.clear();
     }
 
     @Override
