@@ -11,7 +11,9 @@ public class CableMenu extends BaseEnergyMenu<CableBlockEntity> {
 
     public CableMenu(int id, Inventory inventory, FriendlyByteBuf buffer) {
         super(Containers.CABLE.get(), id, inventory, buffer);
-        this.side = Direction.from3DDataValue(buffer.readInt());
+        if (buffer.readableBytes() >= 4) {
+            this.side = Direction.from3DDataValue(buffer.readInt());
+        }
     }
 
     public CableMenu(int id, Inventory inventory, CableBlockEntity te) {
