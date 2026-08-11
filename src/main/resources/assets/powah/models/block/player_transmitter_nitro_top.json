@@ -1,6 +1,0 @@
-{
-  "parent": "powah:block/player_transmitter_top",
-  "textures": {
-	"var": "powah:block/player_transmitter_nitro_var"
-  }
-}

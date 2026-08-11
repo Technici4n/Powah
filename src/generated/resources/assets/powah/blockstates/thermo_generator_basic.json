@@ -1,0 +1,7 @@
+{
+  "variants": {
+    "": {
+      "model": "powah:block/thermo_generator_basic"
+    }
+  }
+}

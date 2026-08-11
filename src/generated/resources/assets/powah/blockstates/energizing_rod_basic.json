@@ -1,0 +1,56 @@
+{
+  "variants": {
+    "facing=down,waterlogged=false": {
+      "model": "powah:block/energizing_rod_basic"
+    },
+    "facing=down,waterlogged=true": {
+      "model": "powah:block/energizing_rod_basic"
+    },
+    "facing=east,waterlogged=false": {
+      "model": "powah:block/energizing_rod_basic",
+      "x": 90,
+      "y": 270
+    },
+    "facing=east,waterlogged=true": {
+      "model": "powah:block/energizing_rod_basic",
+      "x": 90,
+      "y": 270
+    },
+    "facing=north,waterlogged=false": {
+      "model": "powah:block/energizing_rod_basic",
+      "x": 90,
+      "y": 180
+    },
+    "facing=north,waterlogged=true": {
+      "model": "powah:block/energizing_rod_basic",
+      "x": 90,
+      "y": 180
+    },
+    "facing=south,waterlogged=false": {
+      "model": "powah:block/energizing_rod_basic",
+      "x": 90
+    },
+    "facing=south,waterlogged=true": {
+      "model": "powah:block/energizing_rod_basic",
+      "x": 90
+    },
+    "facing=up,waterlogged=false": {
+      "model": "powah:block/energizing_rod_basic",
+      "x": 180
+    },
+    "facing=up,waterlogged=true": {
+      "model": "powah:block/energizing_rod_basic",
+      "x": 180
+    },
+    "facing=west,waterlogged=false": {
+      "model": "powah:block/energizing_rod_basic",
+      "x": 90,
+      "y": 90
+    },
+    "facing=west,waterlogged=true": {
+      "model": "powah:block/energizing_rod_basic",
+      "x": 90,
+      "y": 90
+    }
+  }
+}

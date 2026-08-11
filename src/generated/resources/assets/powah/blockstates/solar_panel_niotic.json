@@ -1,0 +1,44 @@
+{
+  "multipart": [
+    {
+      "apply": {
+        "model": "powah:block/solar_panel_niotic"
+      }
+    },
+    {
+      "apply": {
+        "model": "powah:block/solar_panel_niotic_frame"
+      },
+      "when": {
+        "north": "true"
+      }
+    },
+    {
+      "apply": {
+        "model": "powah:block/solar_panel_niotic_frame",
+        "y": 90
+      },
+      "when": {
+        "east": "true"
+      }
+    },
+    {
+      "apply": {
+        "model": "powah:block/solar_panel_niotic_frame",
+        "y": 180
+      },
+      "when": {
+        "south": "true"
+      }
+    },
+    {
+      "apply": {
+        "model": "powah:block/solar_panel_niotic_frame",
+        "y": 270
+      },
+      "when": {
+        "west": "true"
+      }
+    }
+  ]
+}

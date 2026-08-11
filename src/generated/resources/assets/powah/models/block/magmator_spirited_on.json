@@ -1,0 +1,10 @@
+{
+  "parent": "powah:block/magmator",
+  "textures": {
+    "face": "powah:block/magmator_face_lit",
+    "inside": "powah:block/magmator_inside",
+    "ov": "powah:block/spirited_ov",
+    "side": "powah:block/magmator_side",
+    "top": "powah:block/magmator_top"
+  }
+}

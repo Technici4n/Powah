@@ -1,6 +1,0 @@
-{
-  "parent": "powah:block/solar_panel_frame",
-  "textures": {
-	"frame": "powah:block/solar_panel_basic_frame"
-  }
-}

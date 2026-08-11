@@ -1,7 +1,0 @@
-{
-  "parent": "powah:block/energizing_rod",
-  "textures": {
-	"gem": "powah:block/energizing_rod_blazing_gem",
-	"rod": "powah:block/energizing_rod"
-  }
-}
