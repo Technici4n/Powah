@@ -136,7 +136,7 @@ public class CableBlock extends PowahBaseEnergyBlock<CableBlock> implements Simp
     @Override
     public InteractionResult useWithoutItem(BlockState state, Level world, BlockPos pos, Player player, BlockHitResult result) {
         Optional<Direction> hitSide = getHitSide(result.getLocation(), pos);
-        if (hitSide.isPresent() && !canConnectEnergy(world, pos, hitSide.get())) {
+        if (hitSide.isEmpty() || !canConnectEnergy(world, pos, hitSide.get())) {
             return InteractionResult.FAIL;
         }
         return super.useWithoutItem(state, world, pos, player, result);
