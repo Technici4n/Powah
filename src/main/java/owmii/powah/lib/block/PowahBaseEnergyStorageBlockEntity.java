@@ -4,6 +4,8 @@ import com.google.common.primitives.Ints;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
@@ -81,6 +83,22 @@ public abstract class PowahBaseEnergyStorageBlockEntity<B extends PowahBaseEnerg
         this.energy.setTransfer(getEnergyTransfer());
         getSideConfig().init();
         sync();
+    }
+
+    @Override
+    public void onPlaced(Level level, BlockState state, @Nullable LivingEntity placer, ItemStack stack) {
+        super.onPlaced(level, state, placer, stack);
+        /* Overwrite the energy stored from the saved block entity state */
+        this.energy.readFromItem(stack);
+    }
+
+    @Override
+    public ItemStack storeToStack(ItemStack stack) {
+        if (keepStorable()) {
+            /* Transfer the energy from the block entity state before writing it */
+            this.energy.writeToItem(stack);
+        }
+        return super.storeToStack(stack);
     }
 
     protected long extractFromSides(Level world) {
