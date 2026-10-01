@@ -1,13 +1,10 @@
 package owmii.powah.client.handler;
 
-import com.mojang.blaze3d.vertex.PoseStack;
-import com.mojang.blaze3d.vertex.VertexConsumer;
 import java.util.List;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.renderer.state.level.CameraRenderState;
+import net.minecraft.client.renderer.rendertype.RenderType;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
-import net.minecraft.resources.Identifier;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.ItemStack;
@@ -15,16 +12,16 @@ import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.Vec3;
-import org.joml.Quaternionf;
+import net.neoforged.neoforge.client.event.SubmitCustomGeometryEvent;
 import owmii.powah.Powah;
 import owmii.powah.item.ReactorItem;
 import owmii.powah.lib.client.util.Render;
 import owmii.powah.lib.client.util.RenderTypes;
 
 public class ReactorOverlayHandler {
-    static final Identifier OV_TEXTURE = Powah.id("textures/misc/reactor_ov.png");
+    private static final RenderType RENDER_TYPE = RenderTypes.createReactorOverlay(Powah.id("textures/misc/reactor_ov.png"));
 
-    public static void onRenderLast(PoseStack poseStack, CameraRenderState camera) {
+    public static void onSubmitCustomGeometry(SubmitCustomGeometryEvent event) {
         Minecraft mc = Minecraft.getInstance();
         net.minecraft.world.entity.player.Player player = mc.player;
         if (player == null || mc.level == null)
@@ -69,12 +66,10 @@ public class ReactorOverlayHandler {
                     color = 0xcf040e;
                 }
             }
+            var poseStack = event.getPoseStack();
             poseStack.pushPose();
 
-            Vec3 projectedView = camera.pos;
-            Quaternionf rotation = new Quaternionf(camera.orientation);
-            rotation.invert();
-            poseStack.mulPose(rotation);
+            Vec3 projectedView = event.getLevelRenderState().cameraRenderState.pos;
             poseStack.translate(-projectedView.x, -projectedView.y, -projectedView.z);
 
             poseStack.translate(-1.0D, 0.001D, -1.0D);
@@ -82,19 +77,18 @@ public class ReactorOverlayHandler {
             float g = (color >> 8 & 0xFF) / 255.0F;
             float b = (color & 0xFF) / 255.0F;
 
-            var buffers = mc.renderBuffers().bufferSource();
-            var renderType = RenderTypes.createReactorOverlay(OV_TEXTURE);
-            VertexConsumer buffer = buffers.getBuffer(renderType);
-            buffer.addVertex(poseStack.last().pose(), pos.getX(), pos.getY(), pos.getZ() + 3).setColor(r, g, b, 1.0F).setUv(0.0F, 1.0F)
-                    .setLight(Render.MAX_LIGHT);
-            buffer.addVertex(poseStack.last().pose(), pos.getX() + 3, pos.getY(), pos.getZ() + 3).setColor(r, g, b, 1.0F).setUv(1.0F, 1.0F)
-                    .setLight(Render.MAX_LIGHT);
-            buffer.addVertex(poseStack.last().pose(), pos.getX() + 3, pos.getY(), pos.getZ()).setColor(r, g, b, 1.0F).setUv(1.0F, 0.0F)
-                    .setLight(Render.MAX_LIGHT);
-            buffer.addVertex(poseStack.last().pose(), pos.getX(), pos.getY(), pos.getZ()).setColor(r, g, b, 1.0F).setUv(0.0F, 0.0F)
-                    .setLight(Render.MAX_LIGHT);
+            event.getSubmitNodeCollector().submitCustomGeometry(poseStack, RENDER_TYPE, (pose, vertexConsumer) -> {
+                vertexConsumer.addVertex(pose, pos.getX(), pos.getY(), pos.getZ() + 3).setColor(r, g, b, 1.0F).setUv(0.0F, 1.0F)
+                        .setLight(Render.MAX_LIGHT);
+                vertexConsumer.addVertex(pose, pos.getX() + 3, pos.getY(), pos.getZ() + 3).setColor(r, g, b, 1.0F).setUv(1.0F, 1.0F)
+                        .setLight(Render.MAX_LIGHT);
+                vertexConsumer.addVertex(pose, pos.getX() + 3, pos.getY(), pos.getZ()).setColor(r, g, b, 1.0F).setUv(1.0F, 0.0F)
+                        .setLight(Render.MAX_LIGHT);
+                vertexConsumer.addVertex(pose, pos.getX(), pos.getY(), pos.getZ()).setColor(r, g, b, 1.0F).setUv(0.0F, 0.0F)
+                        .setLight(Render.MAX_LIGHT);
+            });
+
             poseStack.popPose();
-            buffers.endBatch(renderType);
         }
     }
 }

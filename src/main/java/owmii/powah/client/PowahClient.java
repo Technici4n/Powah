@@ -14,7 +14,6 @@ import net.neoforged.neoforge.client.event.ClientPlayerNetworkEvent;
 import net.neoforged.neoforge.client.event.RecipesReceivedEvent;
 import net.neoforged.neoforge.client.event.RegisterRenderPipelinesEvent;
 import net.neoforged.neoforge.client.event.RegisterSpecialModelRendererEvent;
-import net.neoforged.neoforge.client.event.RenderLevelStageEvent;
 import net.neoforged.neoforge.common.NeoForge;
 import org.jspecify.annotations.Nullable;
 import owmii.powah.Powah;
@@ -50,9 +49,7 @@ public final class PowahClient {
         modEventBus.addListener(this::registerSpecialItemRenderers);
         modEventBus.addListener(this::registerRenderPipelines);
 
-        NeoForge.EVENT_BUS.addListener((RenderLevelStageEvent.AfterLevel event) -> {
-            ReactorOverlayHandler.onRenderLast(event.getPoseStack(), event.getLevelRenderState().cameraRenderState);
-        });
+        NeoForge.EVENT_BUS.addListener(ReactorOverlayHandler::onSubmitCustomGeometry);
         NeoForge.EVENT_BUS.addListener((RecipesReceivedEvent event) -> {
             ENERGIZING_RECIPES.clear();
             ENERGIZING_RECIPES.addAll(event.getRecipeMap().byType(Recipes.ENERGIZING.get()));
