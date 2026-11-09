@@ -29,8 +29,11 @@ public class CableNet {
         var chunkPos = ChunkPos.pack(cable.getBlockPos());
         var previousCable = loadedCables.computeIfAbsent(level, l -> new Long2ObjectOpenHashMap<>())
                 .computeIfAbsent(chunkPos, l -> new Long2ObjectOpenHashMap<>())
-                .put(cable.getBlockPos().asLong(), cable);
+                .putIfAbsent(cable.getBlockPos().asLong(), cable);
 
+        if (previousCable == cable) {
+            return;
+        }
         if (previousCable != null) {
             throw new RuntimeException("Cable added to position %s, but there was already one there?".formatted(cable.getBlockPos()));
         }
@@ -53,9 +56,10 @@ public class CableNet {
         if (chunkMap == null) {
             return; // The full-chunk cleanup already took care of the entire chunk
         }
-        if (chunkMap.remove(blockPos.asLong()) != cable) {
-            throw new RuntimeException("Removed wrong cable from position %s".formatted(blockPos));
+        if (chunkMap.get(blockPos.asLong()) != cable) {
+            return; // Already removed, or a newer instance owns this position.
         }
+        chunkMap.remove(blockPos.asLong());
         if (chunkMap.isEmpty()) {
             levelMap.remove(chunkPos);
         }
