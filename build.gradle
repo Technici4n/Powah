@@ -177,7 +177,8 @@ if (project.version != "0.0.0") {
                 curseforge {
                     token = cfToken
                     id = "633483" // Required, must be a string, ID of CurseForge project
-                    gameVersions = [curseforgeGameVersion]
+                    // CurseForge now requires the environment(s) to be set; unified-publishing 0.1.14+ maps these to environment tags
+                    gameVersions = [curseforgeGameVersion, "Client", "Server"]
                 }
             }
 
