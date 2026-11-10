@@ -33,7 +33,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "powah:crafting/energy_discharger_blazing"
+        "recipes": "powah:crafting/energy_discharger_blazing"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

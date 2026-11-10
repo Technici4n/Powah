@@ -23,7 +23,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "powah:crafting/reactor_hardened"
+        "recipes": "powah:crafting/reactor_hardened"
       },
       "trigger": "minecraft:recipe_unlocked"
     },

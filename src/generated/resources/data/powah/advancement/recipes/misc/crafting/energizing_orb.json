@@ -33,7 +33,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "powah:crafting/energizing_orb"
+        "recipes": "powah:crafting/energizing_orb"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

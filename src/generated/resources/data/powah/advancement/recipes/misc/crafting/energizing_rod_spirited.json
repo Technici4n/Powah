@@ -43,7 +43,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "powah:crafting/energizing_rod_spirited"
+        "recipes": "powah:crafting/energizing_rod_spirited"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

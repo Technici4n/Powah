@@ -8,6 +8,7 @@ import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.network.chat.Component;
+import net.minecraft.util.Prediction;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
@@ -58,7 +59,7 @@ public class EnergizingOrbBlock extends PowahBaseBlock<EnergizingOrbBlock> imple
             ItemStack output = inv.getStackInSlot(0);
             if (held.isEmpty() || !output.isEmpty()) {
                 if (!level.isClientSide()) {
-                    player.getInventory().placeItemBackInInventory(inv.removeNext());
+                    player.getInventory().placeItemBackInInventory(inv.removeNext(), Prediction.SERVER_ONLY);
                 }
                 return InteractionResult.SUCCESS;
             } else {

@@ -43,7 +43,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "powah:crafting/player_tranmitter_basic"
+        "recipes": "powah:crafting/player_tranmitter_basic"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

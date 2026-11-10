@@ -3,7 +3,7 @@
   "criteria": {
     "has_the_recipe": {
       "conditions": {
-        "recipe": "powah:crafting/thermo_generator_niotic"
+        "recipes": "powah:crafting/thermo_generator_niotic"
       },
       "trigger": "minecraft:recipe_unlocked"
     },

@@ -33,7 +33,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "powah:crafting/capacitor_hardened"
+        "recipes": "powah:crafting/capacitor_hardened"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

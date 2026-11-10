@@ -33,7 +33,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "powah:crafting/capacitor_niotic"
+        "recipes": "powah:crafting/capacitor_niotic"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

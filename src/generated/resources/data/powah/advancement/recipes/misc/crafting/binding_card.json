@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "powah:crafting/binding_card"
+        "recipes": "powah:crafting/binding_card"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

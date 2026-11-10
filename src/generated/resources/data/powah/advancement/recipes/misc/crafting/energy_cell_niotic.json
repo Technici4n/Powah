@@ -43,7 +43,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "powah:crafting/energy_cell_niotic"
+        "recipes": "powah:crafting/energy_cell_niotic"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

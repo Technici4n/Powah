@@ -33,7 +33,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "powah:crafting/energy_cell_starter"
+        "recipes": "powah:crafting/energy_cell_starter"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

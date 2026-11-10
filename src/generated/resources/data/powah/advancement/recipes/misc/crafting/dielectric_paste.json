@@ -33,7 +33,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "powah:crafting/dielectric_paste"
+        "recipes": "powah:crafting/dielectric_paste"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

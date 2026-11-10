@@ -43,7 +43,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "powah:crafting/magmator_basic"
+        "recipes": "powah:crafting/magmator_basic"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

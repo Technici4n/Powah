@@ -53,7 +53,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "powah:crafting/battery_niotic"
+        "recipes": "powah:crafting/battery_niotic"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

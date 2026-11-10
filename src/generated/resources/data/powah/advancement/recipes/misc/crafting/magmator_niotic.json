@@ -43,7 +43,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "powah:crafting/magmator_niotic"
+        "recipes": "powah:crafting/magmator_niotic"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

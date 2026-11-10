@@ -33,7 +33,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "powah:crafting/cable_spirited"
+        "recipes": "powah:crafting/cable_spirited"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

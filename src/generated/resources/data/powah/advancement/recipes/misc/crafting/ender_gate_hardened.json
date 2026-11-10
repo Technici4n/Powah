@@ -33,7 +33,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "powah:crafting/ender_gate_hardened"
+        "recipes": "powah:crafting/ender_gate_hardened"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

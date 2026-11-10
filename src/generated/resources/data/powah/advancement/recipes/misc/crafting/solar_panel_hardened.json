@@ -43,7 +43,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "powah:crafting/solar_panel_hardened"
+        "recipes": "powah:crafting/solar_panel_hardened"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

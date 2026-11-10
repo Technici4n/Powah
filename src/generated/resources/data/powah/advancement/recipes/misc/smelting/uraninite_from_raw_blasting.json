@@ -3,7 +3,7 @@
   "criteria": {
     "has_the_recipe": {
       "conditions": {
-        "recipe": "powah:smelting/uraninite_from_raw_blasting"
+        "recipes": "powah:smelting/uraninite_from_raw_blasting"
       },
       "trigger": "minecraft:recipe_unlocked"
     },

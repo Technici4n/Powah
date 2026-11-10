@@ -49,7 +49,7 @@ public class FurnatorRenderer implements BlockEntityRenderer<FurnatorBlockEntity
 
             poseStack.pushPose();
             poseStack.translate(0.5, 0.5, 0.5);
-            poseStack.mulPose(Axis.XN.rotationDegrees(180.0f));
+            poseStack.rotateDegrees(Axis.XN, 180.0f);
             poseStack.scale(0.97F, 0.97F, 0.97F);
             var renderType = RenderTypes.text(sprite.atlasLocation());
             submitNodeCollector.submitCustomGeometry(poseStack, renderType, (pose, buffer) -> {

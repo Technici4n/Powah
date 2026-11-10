@@ -14,9 +14,9 @@ import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.levelgen.GenerationStep;
 import net.minecraft.world.level.levelgen.VerticalAnchor;
-import net.minecraft.world.level.levelgen.feature.ConfiguredFeature;
+import net.minecraft.world.level.levelgen.feature.BlockReplacement;
 import net.minecraft.world.level.levelgen.feature.Feature;
-import net.minecraft.world.level.levelgen.feature.configurations.OreConfiguration;
+import net.minecraft.world.level.levelgen.feature.OreFeature;
 import net.minecraft.world.level.levelgen.placement.HeightRangePlacement;
 import net.minecraft.world.level.levelgen.placement.PlacedFeature;
 import net.minecraft.world.level.levelgen.structure.templatesystem.TagMatchTest;
@@ -42,20 +42,20 @@ public class Features {
     public static final ResourceKey<PlacedFeature> PLACED_URANINITE_DENSE = ResourceKey.create(Registries.PLACED_FEATURE,
             Powah.id("uraninite_ore_dense"));
 
-    public static final ResourceKey<ConfiguredFeature<?, ?>> DRY_ICE = ResourceKey.create(Registries.CONFIGURED_FEATURE, Powah.id("dry_ice"));
-    public static final ResourceKey<ConfiguredFeature<?, ?>> URANINITE_POOR = ResourceKey.create(Registries.CONFIGURED_FEATURE,
+    public static final ResourceKey<Feature> DRY_ICE = ResourceKey.create(Registries.FEATURE, Powah.id("dry_ice"));
+    public static final ResourceKey<Feature> URANINITE_POOR = ResourceKey.create(Registries.FEATURE,
             Powah.id("uraninite_ore_poor"));
-    public static final ResourceKey<ConfiguredFeature<?, ?>> URANINITE = ResourceKey.create(Registries.CONFIGURED_FEATURE, Powah.id("uraninite_ore"));
-    public static final ResourceKey<ConfiguredFeature<?, ?>> URANINITE_DENSE = ResourceKey.create(Registries.CONFIGURED_FEATURE,
+    public static final ResourceKey<Feature> URANINITE = ResourceKey.create(Registries.FEATURE, Powah.id("uraninite_ore"));
+    public static final ResourceKey<Feature> URANINITE_DENSE = ResourceKey.create(Registries.FEATURE,
             Powah.id("uraninite_ore_dense"));
 
-    public static void initConfiguredFeatures(BootstrapContext<ConfiguredFeature<?, ?>> bootstrap) {
+    public static void initFeatures(BootstrapContext<Feature> bootstrap) {
 
-        registerConfiguredFeature(bootstrap, DRY_ICE, Blcks.DRY_ICE, Blcks.DRY_ICE, 17);
-        registerConfiguredFeature(bootstrap, URANINITE_POOR, Blcks.URANINITE_ORE_POOR,
+        registerOreFeature(bootstrap, DRY_ICE, Blcks.DRY_ICE, Blcks.DRY_ICE, 17);
+        registerOreFeature(bootstrap, URANINITE_POOR, Blcks.URANINITE_ORE_POOR,
                 Blcks.DEEPSLATE_URANINITE_ORE_POOR, 5);
-        registerConfiguredFeature(bootstrap, URANINITE, Blcks.URANINITE_ORE, Blcks.DEEPSLATE_URANINITE_ORE, 4);
-        registerConfiguredFeature(bootstrap, URANINITE_DENSE, Blcks.URANINITE_ORE_DENSE,
+        registerOreFeature(bootstrap, URANINITE, Blcks.URANINITE_ORE, Blcks.DEEPSLATE_URANINITE_ORE, 4);
+        registerOreFeature(bootstrap, URANINITE_DENSE, Blcks.URANINITE_ORE_DENSE,
                 Blcks.DEEPSLATE_URANINITE_ORE_DENSE, 3);
 
     }
@@ -72,22 +72,21 @@ public class Features {
 
     }
 
-    private static void registerConfiguredFeature(BootstrapContext<ConfiguredFeature<?, ?>> bootstrap,
-            ResourceKey<ConfiguredFeature<?, ?>> key,
+    private static void registerOreFeature(BootstrapContext<Feature> bootstrap,
+            ResourceKey<Feature> key,
             Supplier<Block> block, Supplier<Block> deepslateBlock,
             int amountPerVein) {
         var target = List.of(
-                OreConfiguration.target(new TagMatchTest(BlockTags.STONE_ORE_REPLACEABLES), block.get().defaultBlockState()),
-                OreConfiguration.target(new TagMatchTest(BlockTags.DEEPSLATE_ORE_REPLACEABLES), deepslateBlock.get().defaultBlockState()));
-        var conf = new ConfiguredFeature<>(Feature.ORE, new OreConfiguration(target, amountPerVein));
-        bootstrap.register(key, conf);
+                BlockReplacement.replace(new TagMatchTest(BlockTags.STONE_ORE_REPLACEABLES), block.get().defaultBlockState()),
+                BlockReplacement.replace(new TagMatchTest(BlockTags.DEEPSLATE_ORE_REPLACEABLES), deepslateBlock.get().defaultBlockState()));
+        bootstrap.register(key, new OreFeature(target, amountPerVein));
     }
 
     private static void registerPlacedFeature(BootstrapContext<PlacedFeature> bootstrap,
             ResourceKey<PlacedFeature> key,
-            ResourceKey<ConfiguredFeature<?, ?>> configuredId,
+            ResourceKey<Feature> configuredId,
             int veinsPerChunk, int maxY) {
-        var configuredFeature = bootstrap.lookup(Registries.CONFIGURED_FEATURE).get(configuredId)
+        var configuredFeature = bootstrap.lookup(Registries.FEATURE).get(configuredId)
                 .orElseThrow();
 
         var placed = new PlacedFeature(configuredFeature,

@@ -43,7 +43,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "powah:crafting/furnator_blazing"
+        "recipes": "powah:crafting/furnator_blazing"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

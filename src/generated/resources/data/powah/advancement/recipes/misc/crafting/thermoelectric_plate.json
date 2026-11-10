@@ -33,7 +33,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "powah:crafting/thermoelectric_plate"
+        "recipes": "powah:crafting/thermoelectric_plate"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

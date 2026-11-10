@@ -1,13 +1,11 @@
 package owmii.powah.data;
 
 import java.util.List;
-import java.util.concurrent.CompletableFuture;
-import net.minecraft.core.HolderLookup;
+import net.minecraft.advancements.Advancement;
 import net.minecraft.core.registries.Registries;
-import net.minecraft.data.PackOutput;
 import net.minecraft.data.recipes.RecipeCategory;
-import net.minecraft.data.recipes.RecipeOutput;
 import net.minecraft.data.recipes.SimpleCookingRecipeBuilder;
+import net.minecraft.data.worldgen.BootstrapContext;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.tags.ItemTags;
 import net.minecraft.world.item.ItemStackTemplate;
@@ -25,8 +23,8 @@ import owmii.powah.block.energizing.EnergizingRecipe;
 import owmii.powah.item.Itms;
 
 public class RecipeProvider extends net.minecraft.data.recipes.RecipeProvider {
-    public RecipeProvider(HolderLookup.Provider registries, RecipeOutput output) {
-        super(registries, output);
+    public RecipeProvider(BootstrapContext<Recipe<?>> recipeOutput, BootstrapContext<Advancement> advancementOutput) {
+        super(recipeOutput, advancementOutput);
     }
 
     @Override
@@ -1937,19 +1935,4 @@ public class RecipeProvider extends net.minecraft.data.recipes.RecipeProvider {
                 .save(output, makeId("smelting/uraninite_from_raw_blasting"));
     }
 
-    public static final class Runner extends net.minecraft.data.recipes.RecipeProvider.Runner {
-        public Runner(PackOutput output, CompletableFuture<HolderLookup.Provider> lookupProvider) {
-            super(output, lookupProvider);
-        }
-
-        @Override
-        protected net.minecraft.data.recipes.RecipeProvider createRecipeProvider(HolderLookup.Provider lookupProvider, RecipeOutput output) {
-            return new RecipeProvider(lookupProvider, output);
-        }
-
-        @Override
-        public String getName() {
-            return "Powah recipes";
-        }
-    }
 }

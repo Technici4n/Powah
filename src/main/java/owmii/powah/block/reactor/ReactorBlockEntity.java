@@ -2,9 +2,9 @@ package owmii.powah.block.reactor;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.storage.ValueInput;
@@ -21,6 +21,7 @@ import owmii.powah.lib.logistics.fluid.Tank;
 import owmii.powah.recipe.ReactorFuel;
 import owmii.powah.util.ChargeUtil;
 import owmii.powah.util.EnergyUtil;
+import owmii.powah.util.FuelUtil;
 import owmii.powah.util.Ticker;
 import owmii.powah.util.Util;
 
@@ -281,7 +282,7 @@ public class ReactorBlockEntity extends PowahBaseGeneratorBlockEntity<ReactorBlo
         if (this.carbon.isEmpty()) {
             ItemStack stack = this.inv.getStackInSlot(2);
             if (!stack.isEmpty()) {
-                int carbon = stack.getBurnTime(RecipeType.SMELTING, getLevel().fuelValues());
+                int carbon = FuelUtil.getBurnTime((ServerLevel) world, this, stack);
                 if (carbon > 0) {
                     this.carbon.setAll(carbon);
                     this.carbonTemp = 180;
@@ -350,7 +351,7 @@ public class ReactorBlockEntity extends PowahBaseGeneratorBlockEntity<ReactorBlo
         if (slot == 1) {
             return ReactorFuel.getFuel(stack.getItem()) != null;
         } else if (slot == 2) {
-            return stack.getBurnTime(RecipeType.SMELTING, getLevel().fuelValues()) > 0 && stack.getCraftingRemainder() == null;
+            return FuelUtil.isFuel(stack) && stack.getCraftingRemainder() == null;
         } else if (slot == 3) {
             return stack.is(Tags.Items.DUSTS_REDSTONE) || stack.is(Tags.Items.STORAGE_BLOCKS_REDSTONE);
         } else if (slot == 4) {

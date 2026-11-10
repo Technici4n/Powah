@@ -33,7 +33,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "powah:crafting/cable_blazing"
+        "recipes": "powah:crafting/cable_blazing"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

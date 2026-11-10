@@ -83,8 +83,8 @@ public class EnergizingRodRenderer implements BlockEntityRenderer<EnergizingRodB
             float f5 = (float) Math.acos(Mth.clamp(vec3d2.y, -1.0, 1.0));
             float f6 = (float) Mth.atan2(vec3d2.z, vec3d2.x);
 
-            poseStack.mulPose(Axis.YP.rotationDegrees((((float) Math.PI / 2F) - f6) * (180F / (float) Math.PI)));
-            poseStack.mulPose(Axis.XP.rotationDegrees(f5 * (180F / (float) Math.PI)));
+            poseStack.rotate(Axis.YP, ((float) Math.PI / 2F) - f6);
+            poseStack.rotate(Axis.XP, f5);
 
             float d1 = f2 * 0.0F;
 

@@ -75,7 +75,7 @@ public class EnergizingOrbRenderer implements BlockEntityRenderer<EnergizingOrbB
             if (!state.outputItem.isEmpty()) {
                 poseStack.pushPose();
                 poseStack.translate(x, y, z);
-                poseStack.mulPose(Axis.YP.rotationDegrees(-state.ticks * 360.0F));
+                poseStack.rotateDegrees(Axis.YP, -state.ticks * 360.0F);
                 poseStack.scale(0.35F, 0.35F, 0.35F);
                 state.outputItem.submit(poseStack, submitNodeCollector, state.lightCoords, OverlayTexture.NO_OVERLAY, 0);
                 poseStack.popPose();
@@ -91,7 +91,7 @@ public class EnergizingOrbRenderer implements BlockEntityRenderer<EnergizingOrbB
                         poseStack.translate(v3d1.x + x, v3d1.y + y, v3d1.z + z);
                     }
                     poseStack.scale(0.35F, 0.35F, 0.35F);
-                    poseStack.mulPose(Axis.YP.rotationDegrees(-state.ticks * 360.0F));
+                    poseStack.rotateDegrees(Axis.YP, -state.ticks * 360.0F);
                     inputs[i].submit(poseStack, submitNodeCollector, state.lightCoords, OverlayTexture.NO_OVERLAY, 0);
                     poseStack.popPose();
                 }
@@ -100,11 +100,11 @@ public class EnergizingOrbRenderer implements BlockEntityRenderer<EnergizingOrbB
 
         poseStack.pushPose();
         poseStack.translate(0.5D, 0.5D, 0.5D);
-        poseStack.mulPose(state.orbUp.getRotation());
+        poseStack.rotate(state.orbUp.getRotation());
         poseStack.translate(0.0D, 0.1D, 0.0D);
         poseStack.scale(1.8F, 1.8F, 1.8F);
         var renderType = model.renderType(OrbModel.TEXTURE);
-        submitNodeCollector.submitModel(model, state, poseStack, renderType, state.lightCoords, OverlayTexture.NO_OVERLAY, 0, null);
+        submitNodeCollector.submitModel(model, state, poseStack, renderType, state.lightCoords, OverlayTexture.NO_OVERLAY, 0);
         poseStack.popPose();
     }
 }

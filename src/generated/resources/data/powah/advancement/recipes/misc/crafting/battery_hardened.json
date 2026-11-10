@@ -53,7 +53,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "powah:crafting/battery_hardened"
+        "recipes": "powah:crafting/battery_hardened"
       },
       "trigger": "minecraft:recipe_unlocked"
     }
