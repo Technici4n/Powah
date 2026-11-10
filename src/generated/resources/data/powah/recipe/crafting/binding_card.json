@@ -1,6 +1,5 @@
 {
   "type": "minecraft:crafting_shaped",
-  "category": "misc",
   "key": {
     "b": "powah:blank_card",
     "f": "minecraft:rotten_flesh",

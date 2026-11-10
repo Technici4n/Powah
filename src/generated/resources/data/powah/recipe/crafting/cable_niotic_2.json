@@ -1,6 +1,5 @@
 {
   "type": "minecraft:crafting_shaped",
-  "category": "misc",
   "key": {
     "c": "powah:capacitor_niotic",
     "d": "powah:dielectric_rod_horizontal",

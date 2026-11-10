@@ -2,14 +2,16 @@ package owmii.powah.lib.registry;
 
 import java.util.LinkedHashMap;
 import java.util.List;
-import java.util.function.Supplier;
+import net.minecraft.resources.ResourceKey;
+import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockBehaviour;
+import net.neoforged.neoforge.registries.DeferredBlock;
 import net.neoforged.neoforge.registries.DeferredRegister;
 import owmii.powah.block.Tier;
 import owmii.powah.lib.block.PowahBaseEnergyBlock;
 
 public class TieredBlockReg {
-    private final LinkedHashMap<Tier, Supplier<PowahBaseEnergyBlock<?>>> all = new LinkedHashMap<>();
+    private final LinkedHashMap<Tier, DeferredBlock<PowahBaseEnergyBlock<?>>> all = new LinkedHashMap<>();
 
     public TieredBlockReg(DeferredRegister.Blocks dr, String name, Factory factory, Tier[] variants) {
         for (Tier variant : variants) {
@@ -23,7 +25,11 @@ public class TieredBlockReg {
     }
 
     public List<? extends PowahBaseEnergyBlock<?>> getAll() {
-        return all.values().stream().map(Supplier::get).toList();
+        return all.values().stream().map(DeferredBlock::get).toList();
+    }
+
+    public List<ResourceKey<Block>> getAllResourceKeys() {
+        return all.values().stream().map(DeferredBlock::getKey).toList();
     }
 
     public PowahBaseEnergyBlock<?> get(Tier variant) {

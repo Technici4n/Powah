@@ -1,6 +1,5 @@
 {
   "type": "minecraft:crafting_shaped",
-  "category": "misc",
   "key": {
     "c": "powah:energy_cell_starter",
     "d": "powah:dielectric_casing",

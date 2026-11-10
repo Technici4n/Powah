@@ -5,6 +5,7 @@ import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntitySpawnReason;
 import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.EntityTypes;
 import net.minecraft.world.entity.LightningBolt;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.monster.Blaze;
@@ -42,7 +43,7 @@ public class ChargedSnowballEntity extends ThrowableItemProjectile {
         }
 
         if (level() instanceof ServerLevel) {
-            LightningBolt lightningboltentity = EntityType.LIGHTNING_BOLT.create(level(), EntitySpawnReason.EVENT);
+            LightningBolt lightningboltentity = EntityTypes.LIGHTNING_BOLT.create(level(), EntitySpawnReason.EVENT);
             if (lightningboltentity != null) {
                 lightningboltentity.moveOrInterpolateTo(Vec3.atBottomCenterOf(blockPosition()));
                 lightningboltentity.setCause(getOwner() instanceof ServerPlayer sp ? sp : null);

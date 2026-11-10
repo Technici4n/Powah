@@ -1,6 +1,5 @@
 {
   "type": "minecraft:crafting_shaped",
-  "category": "misc",
   "key": {
     "b": "powah:crystal_niotic",
     "c": "powah:energy_cell_blazing",

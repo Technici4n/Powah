@@ -1,6 +1,5 @@
 {
   "type": "minecraft:crafting_shaped",
-  "category": "misc",
   "key": {
     "i": "minecraft:iron_bars",
     "p": "powah:dielectric_paste"

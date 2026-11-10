@@ -56,7 +56,7 @@ public class MagmatorBlock extends PowahBaseGeneratorBlock<MagmatorBlock> {
         BlockEntity tile = pLevel.getBlockEntity(pPos);
         if (tile instanceof MagmatorBlockEntity magmator) {
             Tank tank = magmator.getTank();
-            if (FluidUtil.interactWithFluidHandler(pPlayer, pHand, pPos, tank)) {
+            if (FluidUtil.interactWithFluidHandler(pPlayer, pHand, pPos, tank, null)) {
                 magmator.sync();
                 return InteractionResult.SUCCESS;
             }
