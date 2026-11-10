@@ -2,10 +2,12 @@ package owmii.powah.lib.logistics.energy;
 
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.storage.ValueInput;
 import net.minecraft.world.level.storage.ValueOutput;
 import net.neoforged.neoforge.transfer.transaction.SnapshotJournal;
 import net.neoforged.neoforge.transfer.transaction.TransactionContext;
+import owmii.powah.components.PowahComponents;
 import owmii.powah.util.Util;
 
 public class Energy extends SnapshotJournal<Long> {
@@ -99,6 +101,23 @@ public class Energy extends SnapshotJournal<Long> {
             output.putLong("max_extract_" + key, this.maxExtract);
             output.putLong("max_receive_" + key, this.maxReceive);
         }
+    }
+
+    public void readFromItem(ItemStack stack) {
+        var energyStored = stack.get(PowahComponents.ENERGY_STORED);
+        if (energyStored != null) {
+            /*
+             * This bypasses the usual clamping to max capacity because it happens before the capacity is set.
+             * It is done later via setCapacity()
+             */
+            this.stored = energyStored;
+        }
+    }
+
+    public void writeToItem(ItemStack stack) {
+        /* Transfer the stored energy from the block entity state to the item form */
+        stack.set(PowahComponents.ENERGY_STORED, this.stored);
+        this.stored = 0;
     }
 
     public long insertEnergy(long maxReceive, TransactionContext tx) {
