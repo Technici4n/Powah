@@ -1,5 +1,6 @@
 package owmii.powah.lib.client.screen.container;
 
+import com.mojang.blaze3d.platform.InputConstants;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.function.BiConsumer;
@@ -62,10 +63,10 @@ public class PowahBaseBlockEntityScreen<T extends PowahBaseBlockEntity<?> & IInv
 
     @Override
     public boolean mouseClicked(MouseButtonEvent event, boolean doubleClick) {
-        if (event.button() == 0 || event.button() == 1) {
+        if (event.button() == InputConstants.MOUSE_BUTTON_LEFT || event.button() == InputConstants.MOUSE_BUTTON_RIGHT) {
             for (var tankArea : tankAreas) {
                 if (tankArea.contains(event.x() - leftPos, event.y() - topPos)) {
-                    menu.interactWithTank(event.button() == 1);
+                    menu.interactWithTank(event.button() == InputConstants.MOUSE_BUTTON_RIGHT);
                     return true;
                 }
             }
