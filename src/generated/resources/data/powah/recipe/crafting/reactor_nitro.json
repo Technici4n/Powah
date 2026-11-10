@@ -1,6 +1,5 @@
 {
   "type": "minecraft:crafting_shaped",
-  "category": "misc",
   "key": {
     "l": "powah:capacitor_nitro",
     "r": "powah:reactor_spirited",

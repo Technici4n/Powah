@@ -1,6 +1,5 @@
 {
   "type": "minecraft:crafting_shaped",
-  "category": "misc",
   "key": {
     "d": "powah:dielectric_paste",
     "l": "minecraft:lapis_lazuli",

@@ -1,6 +1,5 @@
 {
   "type": "minecraft:crafting_shaped",
-  "category": "misc",
   "key": {
     "c": "powah:battery_blazing",
     "i": "powah:capacitor_niotic",

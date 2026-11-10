@@ -31,6 +31,7 @@ dependencyResolutionManagement {
             url = "https://maven.blamejared.com/"
             content {
                 includeGroup "mezz.jei"
+                includeGroup "net.mezzdev.config"
             }
         }
         maven {
@@ -53,13 +54,6 @@ dependencyResolutionManagement {
             url = "https://maven.terraformersmc.com/releases/"
             content {
                 includeGroup "dev.emi"
-            }
-        }
-        maven {
-            name = 'GuideME Snapshots'
-            url = 'https://central.sonatype.com/repository/maven-snapshots/'
-            content {
-                includeModule('org.appliedenergistics', 'guideme')
             }
         }
         mavenCentral()

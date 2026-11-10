@@ -1,6 +1,5 @@
 {
   "type": "minecraft:crafting_shaped",
-  "category": "misc",
   "key": {
     "c": "powah:dielectric_casing",
     "e": "powah:energizing_rod_basic",

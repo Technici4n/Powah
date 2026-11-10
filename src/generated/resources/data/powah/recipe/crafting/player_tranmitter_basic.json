@@ -1,6 +1,5 @@
 {
   "type": "minecraft:crafting_shaped",
-  "category": "misc",
   "key": {
     "c": "powah:dielectric_casing",
     "i": "powah:capacitor_basic",

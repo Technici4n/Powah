@@ -5,6 +5,7 @@ import com.mojang.blaze3d.pipeline.BlendFunction;
 import com.mojang.blaze3d.pipeline.ColorTargetState;
 import com.mojang.blaze3d.pipeline.DepthStencilState;
 import com.mojang.blaze3d.pipeline.RenderPipeline;
+import com.mojang.blaze3d.platform.CompareOp;
 import com.mojang.blaze3d.vertex.DefaultVertexFormat;
 import net.minecraft.client.renderer.BindGroupLayouts;
 import net.minecraft.client.renderer.RenderPipelines;
@@ -36,7 +37,8 @@ public class RenderTypes {
             .withBindGroupLayout(BindGroupLayouts.SAMPLER0)
             .withColorTargetState(new ColorTargetState(BlendFunction.LIGHTNING))
             .withCull(false)
-            .withDepthStencilState(DepthStencilState.DEFAULT) // TODO double-check that: It was LESS_THAN_OR_EQUAL in 26.1 and worked there
+            // 26.2 uses reverse-Z depth, so the old LESS_THAN_OR_EQUAL test becomes GREATER_THAN_OR_EQUAL
+            .withDepthStencilState(new DepthStencilState(CompareOp.GREATER_THAN_OR_EQUAL, false))
             .withVertexBinding(0, DefaultVertexFormat.POSITION_TEX_COLOR)
             .withPrimitiveTopology(PrimitiveTopology.QUADS)
             .withLocation(Powah.id("blended_no_depth"))

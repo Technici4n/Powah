@@ -1,6 +1,5 @@
 {
   "type": "minecraft:crafting_shaped",
-  "category": "misc",
   "key": {
     "b": "powah:crystal_blazing",
     "c": "powah:capacitor_basic_large",

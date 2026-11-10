@@ -1,6 +1,5 @@
 {
   "type": "minecraft:crafting_shaped",
-  "category": "misc",
   "key": {
     "c": "minecraft:redstone_block",
     "i": "powah:capacitor_basic",

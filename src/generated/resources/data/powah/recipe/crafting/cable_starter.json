@@ -1,6 +1,5 @@
 {
   "type": "minecraft:crafting_shaped",
-  "category": "misc",
   "key": {
     "d": "powah:dielectric_rod_horizontal",
     "i": "minecraft:iron_nugget",
