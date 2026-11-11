@@ -43,7 +43,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "powah:crafting/energizing_rod_basic"
+        "recipes": "powah:crafting/energizing_rod_basic"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

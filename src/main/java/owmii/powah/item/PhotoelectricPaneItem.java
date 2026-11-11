@@ -1,11 +1,12 @@
 package owmii.powah.item;
 
 import net.minecraft.sounds.SoundEvents;
+import net.minecraft.util.Prediction;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.monster.EnderMan;
+import net.minecraft.world.entity.monster.Enderman;
 import net.minecraft.world.entity.monster.Endermite;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
@@ -20,13 +21,13 @@ public class PhotoelectricPaneItem extends PowahBaseItem {
     @Override
     public InteractionResult interactLivingEntity(ItemStack stack, Player playerIn, LivingEntity target, InteractionHand hand) {
         if (Powah.config().general.lens_of_ender) {
-            if (target.getClass() == EnderMan.class || target.getClass() == Endermite.class) {
+            if (target.getClass() == Enderman.class || target.getClass() == Endermite.class) {
                 if (!playerIn.level().isClientSide()) {
                     ItemStack stack1 = playerIn.getItemInHand(hand);
                     if (!playerIn.isCreative()) {
                         stack1.shrink(1);
                     }
-                    playerIn.getInventory().placeItemBackInInventory(new ItemStack(Itms.LENS_OF_ENDER.get()));
+                    playerIn.getInventory().placeItemBackInInventory(new ItemStack(Itms.LENS_OF_ENDER.get()), Prediction.SERVER_ONLY);
                     target.playSound(SoundEvents.ENDERMAN_DEATH, 0.5F, 1.0F);
                     target.remove(Entity.RemovalReason.KILLED);
                 }

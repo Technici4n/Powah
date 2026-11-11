@@ -10,6 +10,7 @@ import net.minecraft.core.Direction;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceKey;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.stats.Stats;
 import net.minecraft.util.RandomSource;
@@ -104,7 +105,7 @@ public abstract class PowahBaseBlock<B extends PowahBaseBlock<B>> extends Block 
     }
 
     @Override
-    public void playerDestroy(Level world, Player player, BlockPos pos, BlockState state, @Nullable BlockEntity te, ItemStack stack) {
+    public void playerDestroy(ServerLevel world, ServerPlayer player, BlockPos pos, BlockState state, @Nullable BlockEntity te, ItemStack stack) {
         if (te instanceof PowahBaseBlockEntity) {
             PowahBaseBlockEntity tile = (PowahBaseBlockEntity) te;
             ItemStack stack1 = tile.storeToStack(new ItemStack(this));

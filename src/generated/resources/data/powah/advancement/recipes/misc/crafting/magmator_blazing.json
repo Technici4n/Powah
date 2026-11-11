@@ -43,7 +43,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "powah:crafting/magmator_blazing"
+        "recipes": "powah:crafting/magmator_blazing"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

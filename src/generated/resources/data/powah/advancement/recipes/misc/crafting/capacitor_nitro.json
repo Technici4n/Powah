@@ -33,7 +33,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "powah:crafting/capacitor_nitro"
+        "recipes": "powah:crafting/capacitor_nitro"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

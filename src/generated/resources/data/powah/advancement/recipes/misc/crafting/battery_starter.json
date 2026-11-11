@@ -33,7 +33,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "powah:crafting/battery_starter"
+        "recipes": "powah:crafting/battery_starter"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

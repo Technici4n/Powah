@@ -33,7 +33,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "powah:crafting/ender_cell_spirited"
+        "recipes": "powah:crafting/ender_cell_spirited"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

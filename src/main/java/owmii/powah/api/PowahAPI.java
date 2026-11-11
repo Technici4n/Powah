@@ -47,7 +47,7 @@ public class PowahAPI {
      * @return the heat of the block;
      **/
     public static int getHeatSource(Block block) {
-        var config = BuiltInRegistries.BLOCK.getData(PassiveHeatSourceConfig.BLOCK_DATA_MAP, BuiltInRegistries.BLOCK.wrapAsHolder(block).getKey());
+        var config = BuiltInRegistries.BLOCK.getData(PassiveHeatSourceConfig.BLOCK_DATA_MAP, BuiltInRegistries.BLOCK.wrapAsHolder(block).keyOrNull());
         if (config == null) {
             return 0;
         }
@@ -61,7 +61,7 @@ public class PowahAPI {
      * @return the heat of the block;
      **/
     public static int getHeatSource(Fluid fluid) {
-        var config = BuiltInRegistries.FLUID.getData(PassiveHeatSourceConfig.FLUID_DATA_MAP, BuiltInRegistries.FLUID.wrapAsHolder(fluid).getKey());
+        var config = BuiltInRegistries.FLUID.getData(PassiveHeatSourceConfig.FLUID_DATA_MAP, BuiltInRegistries.FLUID.wrapAsHolder(fluid).keyOrNull());
         if (config == null) {
             return 0;
         }

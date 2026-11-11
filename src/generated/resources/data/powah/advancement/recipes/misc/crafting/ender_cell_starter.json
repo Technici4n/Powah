@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "powah:crafting/ender_cell_starter"
+        "recipes": "powah:crafting/ender_cell_starter"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

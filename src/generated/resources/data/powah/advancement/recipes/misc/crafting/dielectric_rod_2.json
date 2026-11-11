@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "powah:crafting/dielectric_rod_2"
+        "recipes": "powah:crafting/dielectric_rod_2"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

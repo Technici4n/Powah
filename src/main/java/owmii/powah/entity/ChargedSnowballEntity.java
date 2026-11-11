@@ -45,7 +45,7 @@ public class ChargedSnowballEntity extends ThrowableItemProjectile {
         if (level() instanceof ServerLevel) {
             LightningBolt lightningboltentity = EntityTypes.LIGHTNING_BOLT.create(level(), EntitySpawnReason.EVENT);
             if (lightningboltentity != null) {
-                lightningboltentity.moveOrInterpolateTo(Vec3.atBottomCenterOf(blockPosition()));
+                lightningboltentity.snapTo(Vec3.atBottomCenterOf(blockPosition()));
                 lightningboltentity.setCause(getOwner() instanceof ServerPlayer sp ? sp : null);
                 level().addFreshEntity(lightningboltentity);
             }

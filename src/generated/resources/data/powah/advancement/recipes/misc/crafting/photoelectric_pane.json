@@ -33,7 +33,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "powah:crafting/photoelectric_pane"
+        "recipes": "powah:crafting/photoelectric_pane"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

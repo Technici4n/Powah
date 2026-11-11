@@ -43,7 +43,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "powah:crafting/energy_hopper_nitro"
+        "recipes": "powah:crafting/energy_hopper_nitro"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

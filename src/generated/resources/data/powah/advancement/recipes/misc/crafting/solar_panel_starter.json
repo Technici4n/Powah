@@ -43,7 +43,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "powah:crafting/solar_panel_starter"
+        "recipes": "powah:crafting/solar_panel_starter"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

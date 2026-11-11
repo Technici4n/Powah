@@ -33,7 +33,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "powah:crafting/cable_hardened"
+        "recipes": "powah:crafting/cable_hardened"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

@@ -33,7 +33,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "powah:crafting/cable_nitro"
+        "recipes": "powah:crafting/cable_nitro"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

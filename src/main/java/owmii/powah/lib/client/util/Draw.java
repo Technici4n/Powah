@@ -1,6 +1,6 @@
 package owmii.powah.lib.client.util;
 
-import com.mojang.blaze3d.pipeline.RenderPipeline;
+import com.mojang.renderpearl.api.pipeline.RenderPipeline;
 import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.client.renderer.RenderPipelines;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
@@ -19,22 +19,13 @@ public class Draw {
                 int height = l == j ? k : 16;
                 int yy = (y - (l + 1) * 16) + h;
                 if (height > 0) {
+                    // Show only the left w columns and bottom `height` rows of the 16x16 sprite, unscaled.
+                    // GuiGraphicsExtractor#innerBlit is private since 26.3, so clip a full blit instead
+                    // (this is also how vanilla draws partial sprites).
                     int m = 16 - height;
-                    int n = 16 - w;
-                    float uMin = sprite.getU0();
-                    float uMax = sprite.getU1();
-                    float vMin = sprite.getV0();
-                    float vMax = sprite.getV1();
-                    uMax = uMax - n / 16.0F * (uMax - uMin);
-                    vMin = vMin - m / 16.0F * (vMin - vMax);
-                    gui.innerBlit(
-                            pipeline,
-                            sprite.atlasLocation(),
-                            x, x + w,
-                            yy + m, yy + 16,
-                            uMin, uMax,
-                            vMin, vMax,
-                            color);
+                    gui.enableScissor(x, yy + m, x + w, yy + 16);
+                    gui.blitSprite(pipeline, sprite, x, yy, 16, 16, color);
+                    gui.disableScissor();
                 }
             }
         }

@@ -23,7 +23,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "powah:crafting/reactor_nitro"
+        "recipes": "powah:crafting/reactor_nitro"
       },
       "trigger": "minecraft:recipe_unlocked"
     },

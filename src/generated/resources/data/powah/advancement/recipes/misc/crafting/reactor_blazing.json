@@ -23,7 +23,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "powah:crafting/reactor_blazing"
+        "recipes": "powah:crafting/reactor_blazing"
       },
       "trigger": "minecraft:recipe_unlocked"
     },

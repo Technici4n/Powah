@@ -70,6 +70,7 @@ public class Powah {
         modEventBus.addListener(Network::register);
         modEventBus.addListener(this::registerDataTypeMaps);
         modEventBus.addListener(PowahDataGenerator::gatherData);
+        modEventBus.addListener(PowahDataGenerator::gatherRegistryEntries);
 
         NeoForge.EVENT_BUS.addListener((OnDatapackSyncEvent event) -> {
             event.sendRecipes(Recipes.ENERGIZING.get());

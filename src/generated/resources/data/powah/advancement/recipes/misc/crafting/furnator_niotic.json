@@ -43,7 +43,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "powah:crafting/furnator_niotic"
+        "recipes": "powah:crafting/furnator_niotic"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

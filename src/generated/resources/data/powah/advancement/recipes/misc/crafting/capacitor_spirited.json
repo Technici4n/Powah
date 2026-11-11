@@ -33,7 +33,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "powah:crafting/capacitor_spirited"
+        "recipes": "powah:crafting/capacitor_spirited"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

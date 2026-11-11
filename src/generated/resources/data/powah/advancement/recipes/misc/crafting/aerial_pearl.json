@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "powah:crafting/aerial_pearl"
+        "recipes": "powah:crafting/aerial_pearl"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

@@ -48,7 +48,7 @@ public class ReactorPartRenderer implements BlockEntityRenderer<ReactorPartBlock
         poseStack.translate(0.5, 0.5, 0.5);
         poseStack.scale(1.0f, -1.0f, -1.0f);
         var renderType = RenderTypes.entitySolid(getTexture(state.tier));
-        submitNodeCollector.submitModel(reactorPartModel, state, poseStack, renderType, state.lightCoords, OverlayTexture.NO_OVERLAY, 0, null);
+        submitNodeCollector.submitModel(reactorPartModel, state, poseStack, renderType, state.lightCoords, OverlayTexture.NO_OVERLAY, 0);
         poseStack.popPose();
     }
 }

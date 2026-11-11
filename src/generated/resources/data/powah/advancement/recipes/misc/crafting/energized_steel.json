@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "powah:crafting/energized_steel"
+        "recipes": "powah:crafting/energized_steel"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

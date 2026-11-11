@@ -1,6 +1,7 @@
 package owmii.powah.item;
 
 import net.minecraft.sounds.SoundEvents;
+import net.minecraft.util.Prediction;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.Entity;
@@ -27,7 +28,7 @@ public class AerialPearlItem extends PowahBaseItem {
                         || target.getClass() == Husk.class) {
                     if (!playerIn.level().isClientSide()) {
                         ItemStack stack1 = playerIn.getItemInHand(hand);
-                        playerIn.getInventory().placeItemBackInInventory(new ItemStack(Itms.PLAYER_AERIAL_PEARL.get()));
+                        playerIn.getInventory().placeItemBackInInventory(new ItemStack(Itms.PLAYER_AERIAL_PEARL.get()), Prediction.SERVER_ONLY);
                         target.playSound(SoundEvents.ZOMBIE_DEATH, 0.5F, 1.0F);
                         target.remove(Entity.RemovalReason.KILLED);
                         if (!playerIn.isCreative()) {

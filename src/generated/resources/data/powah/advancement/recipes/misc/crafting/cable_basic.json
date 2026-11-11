@@ -33,7 +33,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "powah:crafting/cable_basic"
+        "recipes": "powah:crafting/cable_basic"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

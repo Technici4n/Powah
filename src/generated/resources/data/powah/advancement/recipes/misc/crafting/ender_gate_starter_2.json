@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "powah:crafting/ender_gate_starter_2"
+        "recipes": "powah:crafting/ender_gate_starter_2"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

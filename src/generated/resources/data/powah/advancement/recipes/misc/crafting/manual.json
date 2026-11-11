@@ -23,7 +23,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "powah:crafting/manual"
+        "recipes": "powah:crafting/manual"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

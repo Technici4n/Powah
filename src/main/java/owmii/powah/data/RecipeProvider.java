@@ -1,13 +1,11 @@
 package owmii.powah.data;
 
 import java.util.List;
-import java.util.concurrent.CompletableFuture;
-import net.minecraft.core.HolderLookup;
+import net.minecraft.advancements.Advancement;
 import net.minecraft.core.registries.Registries;
-import net.minecraft.data.PackOutput;
 import net.minecraft.data.recipes.RecipeCategory;
-import net.minecraft.data.recipes.RecipeOutput;
 import net.minecraft.data.recipes.SimpleCookingRecipeBuilder;
+import net.minecraft.data.worldgen.BootstrapContext;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.tags.ItemTags;
 import net.minecraft.world.item.ItemStackTemplate;
@@ -25,8 +23,8 @@ import owmii.powah.block.energizing.EnergizingRecipe;
 import owmii.powah.item.Itms;
 
 public class RecipeProvider extends net.minecraft.data.recipes.RecipeProvider {
-    public RecipeProvider(HolderLookup.Provider registries, RecipeOutput output) {
-        super(registries, output);
+    public RecipeProvider(BootstrapContext<Recipe<?>> recipeOutput, BootstrapContext<Advancement> advancementOutput) {
+        super(recipeOutput, advancementOutput);
     }
 
     @Override
@@ -984,10 +982,10 @@ public class RecipeProvider extends net.minecraft.data.recipes.RecipeProvider {
                 .pattern("gcg")
                 .pattern("rrr")
                 .define('r', Itms.DIELECTRIC_ROD_HORIZONTAL)
-                .define('g', Tags.Items.GLASS_BLOCKS)
+                .define('g', Tags.BlockItems.GLASS_BLOCKS.item())
                 .define('c', Itms.DIELECTRIC_CASING)
                 .unlockedBy(getHasName(Itms.DIELECTRIC_ROD_HORIZONTAL), has(Itms.DIELECTRIC_ROD_HORIZONTAL))
-                .unlockedBy("has_glass", has(Tags.Items.GLASS_BLOCKS))
+                .unlockedBy("has_glass", has(Tags.BlockItems.GLASS_BLOCKS.item()))
                 .unlockedBy(getHasName(Itms.DIELECTRIC_CASING), has(Itms.DIELECTRIC_CASING))
                 .save(output, makeId("crafting/energizing_orb"));
     }
@@ -1383,10 +1381,10 @@ public class RecipeProvider extends net.minecraft.data.recipes.RecipeProvider {
                 .pattern("dld")
                 .pattern("lpl")
                 .pattern("dld")
-                .define('p', Tags.Items.GLASS_PANES)
+                .define('p', Tags.BlockItems.GLASS_PANES.item())
                 .define('l', Items.LAPIS_LAZULI)
                 .define('d', Itms.DIELECTRIC_PASTE)
-                .unlockedBy("has_glass_panes", has(Tags.Items.GLASS_PANES))
+                .unlockedBy("has_glass_panes", has(Tags.BlockItems.GLASS_PANES.item()))
                 .unlockedBy(getHasName(Items.LAPIS_LAZULI), has(Items.LAPIS_LAZULI))
                 .unlockedBy(getHasName(Itms.DIELECTRIC_PASTE), has(Itms.DIELECTRIC_PASTE))
                 .save(output, makeId("crafting/photoelectric_pane"));
@@ -1907,7 +1905,8 @@ public class RecipeProvider extends net.minecraft.data.recipes.RecipeProvider {
                 300000, List.of(tag(Tags.Items.GEMS_DIAMOND))), null);
         output.accept(makeId("energizing/nitro_crystal"),
                 new EnergizingRecipe(new ItemStackTemplate(Itms.NITRO_CRYSTAL.asItem(), 16), 20000000,
-                        List.of(tag(Tags.Items.NETHER_STARS), tag(Tags.Items.STORAGE_BLOCKS_REDSTONE), tag(Tags.Items.STORAGE_BLOCKS_REDSTONE),
+                        List.of(tag(Tags.Items.NETHER_STARS), tag(Tags.BlockItems.STORAGE_BLOCKS_REDSTONE.item()),
+                                tag(Tags.BlockItems.STORAGE_BLOCKS_REDSTONE.item()),
                                 Ingredient.of(Blcks.BLAZING_CRYSTAL))),
                 null);
         output.accept(makeId("energizing/spirited_crystal"), new EnergizingRecipe(
@@ -1937,19 +1936,4 @@ public class RecipeProvider extends net.minecraft.data.recipes.RecipeProvider {
                 .save(output, makeId("smelting/uraninite_from_raw_blasting"));
     }
 
-    public static final class Runner extends net.minecraft.data.recipes.RecipeProvider.Runner {
-        public Runner(PackOutput output, CompletableFuture<HolderLookup.Provider> lookupProvider) {
-            super(output, lookupProvider);
-        }
-
-        @Override
-        protected net.minecraft.data.recipes.RecipeProvider createRecipeProvider(HolderLookup.Provider lookupProvider, RecipeOutput output) {
-            return new RecipeProvider(lookupProvider, output);
-        }
-
-        @Override
-        public String getName() {
-            return "Powah recipes";
-        }
-    }
 }

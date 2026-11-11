@@ -38,7 +38,7 @@ public class ReactorItemRenderer implements NoDataSpecialModelRenderer {
         poseStack.translate(0.5, 0.5, 0.5);
         poseStack.scale(1.0f, -1.0f, -1.0f);
         var renderType = RenderTypes.entitySolid(ReactorPartRenderer.getTexture(tier));
-        submitNodeCollector.submitModel(reactorPartModel, new Object(), poseStack, renderType, lightCoords, overlayCoords, outlineColor, null);
+        submitNodeCollector.submitModel(reactorPartModel, new Object(), poseStack, renderType, lightCoords, overlayCoords, outlineColor);
         poseStack.popPose();
     }
 

@@ -3,7 +3,7 @@
   "criteria": {
     "has_the_recipe": {
       "conditions": {
-        "recipe": "powah:crafting/uraninite_block"
+        "recipes": "powah:crafting/uraninite_block"
       },
       "trigger": "minecraft:recipe_unlocked"
     },

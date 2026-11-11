@@ -43,7 +43,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "powah:crafting/energizing_rod_nitro"
+        "recipes": "powah:crafting/energizing_rod_nitro"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

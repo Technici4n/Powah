@@ -43,7 +43,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "powah:crafting/furnator_spirited"
+        "recipes": "powah:crafting/furnator_spirited"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

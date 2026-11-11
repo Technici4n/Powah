@@ -43,7 +43,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "powah:crafting/magmator_spirited"
+        "recipes": "powah:crafting/magmator_spirited"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

@@ -43,7 +43,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "powah:crafting/magmator_hardened"
+        "recipes": "powah:crafting/magmator_hardened"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

@@ -43,7 +43,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "powah:crafting/furnator_nitro"
+        "recipes": "powah:crafting/furnator_nitro"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

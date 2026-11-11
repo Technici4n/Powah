@@ -33,7 +33,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "powah:crafting/dielectric_casing"
+        "recipes": "powah:crafting/dielectric_casing"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

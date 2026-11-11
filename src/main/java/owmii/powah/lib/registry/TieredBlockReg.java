@@ -29,7 +29,7 @@ public class TieredBlockReg {
     }
 
     public List<ResourceKey<Block>> getAllResourceKeys() {
-        return all.values().stream().map(DeferredBlock::getKey).toList();
+        return all.values().stream().map(DeferredBlock::key).toList();
     }
 
     public PowahBaseEnergyBlock<?> get(Tier variant) {

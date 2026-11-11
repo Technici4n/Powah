@@ -33,7 +33,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "powah:crafting/ender_gate_blazing"
+        "recipes": "powah:crafting/ender_gate_blazing"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

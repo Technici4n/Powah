@@ -43,7 +43,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "powah:crafting/solar_panel_niotic"
+        "recipes": "powah:crafting/solar_panel_niotic"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

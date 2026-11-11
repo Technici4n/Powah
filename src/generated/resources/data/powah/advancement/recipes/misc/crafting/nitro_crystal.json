@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "powah:crafting/nitro_crystal"
+        "recipes": "powah:crafting/nitro_crystal"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

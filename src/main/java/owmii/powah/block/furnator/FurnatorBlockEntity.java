@@ -1,8 +1,8 @@
 package owmii.powah.block.furnator;
 
 import net.minecraft.core.BlockPos;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.storage.ValueInput;
@@ -12,6 +12,7 @@ import owmii.powah.block.Tiles;
 import owmii.powah.lib.block.IInventoryHolder;
 import owmii.powah.lib.block.PowahBaseGeneratorBlockEntity;
 import owmii.powah.util.ChargeUtil;
+import owmii.powah.util.FuelUtil;
 import owmii.powah.util.Ticker;
 
 public class FurnatorBlockEntity extends PowahBaseGeneratorBlockEntity<FurnatorBlock> implements IInventoryHolder {
@@ -58,7 +59,7 @@ public class FurnatorBlockEntity extends PowahBaseGeneratorBlockEntity<FurnatorB
             if (this.carbon.isEmpty()) {
                 ItemStack stack = this.inv.getStackInSlot(1);
                 if (!stack.isEmpty()) {
-                    int burnTime = stack.getBurnTime(RecipeType.SMELTING, getLevel().fuelValues());
+                    int burnTime = FuelUtil.getBurnTime((ServerLevel) world, this, stack);
                     if (burnTime > 0) {
                         long perFuelTick = Powah.config().general.energy_per_fuel_tick;
                         this.carbon.setAll(burnTime * perFuelTick);
@@ -103,7 +104,7 @@ public class FurnatorBlockEntity extends PowahBaseGeneratorBlockEntity<FurnatorB
 
     @Override
     public boolean canInsert(int index, ItemStack stack) {
-        return index == 1 && stack.getBurnTime(RecipeType.SMELTING, getLevel().fuelValues()) > 0
+        return index == 1 && FuelUtil.isFuel(stack)
                 || index == 0 && ChargeUtil.isChargeableItem(stack);
     }
 
