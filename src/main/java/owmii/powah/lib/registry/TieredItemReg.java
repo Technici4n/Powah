@@ -38,7 +38,7 @@ public class TieredItemReg {
     }
 
     public List<ResourceKey<Item>> getAllResourceKeys() {
-        return all.values().stream().map(DeferredHolder::getKey).toList();
+        return all.values().stream().map(DeferredHolder::key).toList();
     }
 
     public Set<Tier> getTiers() {

@@ -982,10 +982,10 @@ public class RecipeProvider extends net.minecraft.data.recipes.RecipeProvider {
                 .pattern("gcg")
                 .pattern("rrr")
                 .define('r', Itms.DIELECTRIC_ROD_HORIZONTAL)
-                .define('g', Tags.Items.GLASS_BLOCKS)
+                .define('g', Tags.BlockItems.GLASS_BLOCKS.item())
                 .define('c', Itms.DIELECTRIC_CASING)
                 .unlockedBy(getHasName(Itms.DIELECTRIC_ROD_HORIZONTAL), has(Itms.DIELECTRIC_ROD_HORIZONTAL))
-                .unlockedBy("has_glass", has(Tags.Items.GLASS_BLOCKS))
+                .unlockedBy("has_glass", has(Tags.BlockItems.GLASS_BLOCKS.item()))
                 .unlockedBy(getHasName(Itms.DIELECTRIC_CASING), has(Itms.DIELECTRIC_CASING))
                 .save(output, makeId("crafting/energizing_orb"));
     }
@@ -1381,10 +1381,10 @@ public class RecipeProvider extends net.minecraft.data.recipes.RecipeProvider {
                 .pattern("dld")
                 .pattern("lpl")
                 .pattern("dld")
-                .define('p', Tags.Items.GLASS_PANES)
+                .define('p', Tags.BlockItems.GLASS_PANES.item())
                 .define('l', Items.LAPIS_LAZULI)
                 .define('d', Itms.DIELECTRIC_PASTE)
-                .unlockedBy("has_glass_panes", has(Tags.Items.GLASS_PANES))
+                .unlockedBy("has_glass_panes", has(Tags.BlockItems.GLASS_PANES.item()))
                 .unlockedBy(getHasName(Items.LAPIS_LAZULI), has(Items.LAPIS_LAZULI))
                 .unlockedBy(getHasName(Itms.DIELECTRIC_PASTE), has(Itms.DIELECTRIC_PASTE))
                 .save(output, makeId("crafting/photoelectric_pane"));
@@ -1905,7 +1905,8 @@ public class RecipeProvider extends net.minecraft.data.recipes.RecipeProvider {
                 300000, List.of(tag(Tags.Items.GEMS_DIAMOND))), null);
         output.accept(makeId("energizing/nitro_crystal"),
                 new EnergizingRecipe(new ItemStackTemplate(Itms.NITRO_CRYSTAL.asItem(), 16), 20000000,
-                        List.of(tag(Tags.Items.NETHER_STARS), tag(Tags.Items.STORAGE_BLOCKS_REDSTONE), tag(Tags.Items.STORAGE_BLOCKS_REDSTONE),
+                        List.of(tag(Tags.Items.NETHER_STARS), tag(Tags.BlockItems.STORAGE_BLOCKS_REDSTONE.item()),
+                                tag(Tags.BlockItems.STORAGE_BLOCKS_REDSTONE.item()),
                                 Ingredient.of(Blcks.BLAZING_CRYSTAL))),
                 null);
         output.accept(makeId("energizing/spirited_crystal"), new EnergizingRecipe(

@@ -255,7 +255,7 @@ public class ReactorBlockEntity extends PowahBaseGeneratorBlockEntity<ReactorBlo
             ItemStack stack = this.inv.getStackInSlot(3);
             if (stack.is(Tags.Items.DUSTS_REDSTONE)) {
                 this.redstone.setAll(18);
-            } else if (stack.is(Tags.Items.STORAGE_BLOCKS_REDSTONE)) {
+            } else if (stack.is(Tags.BlockItems.STORAGE_BLOCKS_REDSTONE.item())) {
                 this.redstone.setAll(162);
             }
             this.redstoneTemp = 120;
@@ -353,7 +353,7 @@ public class ReactorBlockEntity extends PowahBaseGeneratorBlockEntity<ReactorBlo
         } else if (slot == 2) {
             return FuelUtil.isFuel(stack) && stack.getCraftingRemainder() == null;
         } else if (slot == 3) {
-            return stack.is(Tags.Items.DUSTS_REDSTONE) || stack.is(Tags.Items.STORAGE_BLOCKS_REDSTONE);
+            return stack.is(Tags.Items.DUSTS_REDSTONE) || stack.is(Tags.BlockItems.STORAGE_BLOCKS_REDSTONE.item());
         } else if (slot == 4) {
             var coolant = PowahAPI.getSolidCoolant(stack.getItem());
             return coolant.amount() > 0 && coolant.temperature() < 2;

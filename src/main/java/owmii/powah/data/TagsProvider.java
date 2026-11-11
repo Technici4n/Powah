@@ -32,30 +32,30 @@ public class TagsProvider {
             tag(ITags.Blocks.ICES_PACKED).add(BlockItemIds.PACKED_ICE.block());
             tag(ITags.Blocks.ICES_BLUE).add(BlockItemIds.BLUE_ICE.block());
             tag(ITags.Blocks.ICES).addTag(ITags.Blocks.ICES_DRY);
-            tag(ITags.Blocks.ICES_DRY).add(Blcks.DRY_ICE.getKey());
+            tag(ITags.Blocks.ICES_DRY).add(Blcks.DRY_ICE.key());
 
-            tag(ITags.Blocks.URANINITE_ORE).add(Blcks.URANINITE_ORE.getKey()).add(Blcks.URANINITE_ORE_POOR.getKey())
-                    .add(Blcks.URANINITE_ORE_DENSE.getKey());
-            tag(ITags.Blocks.URANINITE_ORE).add(Blcks.DEEPSLATE_URANINITE_ORE.getKey()).add(Blcks.DEEPSLATE_URANINITE_ORE_POOR.getKey())
-                    .add(Blcks.DEEPSLATE_URANINITE_ORE_DENSE.getKey());
-            tag(Tags.Blocks.ORES).addTag(ITags.Blocks.URANINITE_ORE);
+            tag(ITags.Blocks.URANINITE_ORE).add(Blcks.URANINITE_ORE.key()).add(Blcks.URANINITE_ORE_POOR.key())
+                    .add(Blcks.URANINITE_ORE_DENSE.key());
+            tag(ITags.Blocks.URANINITE_ORE).add(Blcks.DEEPSLATE_URANINITE_ORE.key()).add(Blcks.DEEPSLATE_URANINITE_ORE_POOR.key())
+                    .add(Blcks.DEEPSLATE_URANINITE_ORE_DENSE.key());
+            tag(Tags.BlockItems.ORES.block()).addTag(ITags.Blocks.URANINITE_ORE);
 
-            tag(ITags.Blocks.URANINITE_ORE_REGULAR).add(Blcks.URANINITE_ORE.getKey(), Blcks.DEEPSLATE_URANINITE_ORE.getKey());
-            tag(Tags.Blocks.ORES).addTag(ITags.Blocks.URANINITE_ORE_REGULAR);
+            tag(ITags.Blocks.URANINITE_ORE_REGULAR).add(Blcks.URANINITE_ORE.key(), Blcks.DEEPSLATE_URANINITE_ORE.key());
+            tag(Tags.BlockItems.ORES.block()).addTag(ITags.Blocks.URANINITE_ORE_REGULAR);
 
-            tag(ITags.Blocks.URANINITE_ORE_POOR).add(Blcks.URANINITE_ORE_POOR.getKey(), Blcks.DEEPSLATE_URANINITE_ORE_POOR.getKey());
-            tag(Tags.Blocks.ORES).addTag(ITags.Blocks.URANINITE_ORE_POOR);
+            tag(ITags.Blocks.URANINITE_ORE_POOR).add(Blcks.URANINITE_ORE_POOR.key(), Blcks.DEEPSLATE_URANINITE_ORE_POOR.key());
+            tag(Tags.BlockItems.ORES.block()).addTag(ITags.Blocks.URANINITE_ORE_POOR);
 
-            tag(ITags.Blocks.URANINITE_ORE_DENSE).add(Blcks.URANINITE_ORE_DENSE.getKey(), Blcks.DEEPSLATE_URANINITE_ORE_DENSE.getKey());
-            tag(Tags.Blocks.ORES).addTag(ITags.Blocks.URANINITE_ORE_DENSE);
+            tag(ITags.Blocks.URANINITE_ORE_DENSE).add(Blcks.URANINITE_ORE_DENSE.key(), Blcks.DEEPSLATE_URANINITE_ORE_DENSE.key());
+            tag(Tags.BlockItems.ORES.block()).addTag(ITags.Blocks.URANINITE_ORE_DENSE);
 
-            tag(Tags.Blocks.ORES_IN_GROUND_DEEPSLATE).add(Blcks.DEEPSLATE_URANINITE_ORE.getKey(),
-                    Blcks.DEEPSLATE_URANINITE_ORE_DENSE.getKey(), Blcks.DEEPSLATE_URANINITE_ORE_POOR.getKey());
-            tag(Tags.Blocks.ORES_IN_GROUND_STONE).add(Blcks.URANINITE_ORE.getKey(), Blcks.URANINITE_ORE_DENSE.getKey(),
-                    Blcks.URANINITE_ORE_POOR.getKey());
+            tag(Tags.BlockItems.ORES_IN_GROUND_DEEPSLATE.block()).add(Blcks.DEEPSLATE_URANINITE_ORE.key(),
+                    Blcks.DEEPSLATE_URANINITE_ORE_DENSE.key(), Blcks.DEEPSLATE_URANINITE_ORE_POOR.key());
+            tag(Tags.BlockItems.ORES_IN_GROUND_STONE.block()).add(Blcks.URANINITE_ORE.key(), Blcks.URANINITE_ORE_DENSE.key(),
+                    Blcks.URANINITE_ORE_POOR.key());
 
-            tag(Tags.Blocks.STORAGE_BLOCKS).add(Blcks.URANINITE.getKey());
-            tag(ITags.Blocks.URANINITE_BLOCK).add(Blcks.URANINITE.getKey());
+            tag(Tags.BlockItems.STORAGE_BLOCKS.block()).add(Blcks.URANINITE.key());
+            tag(ITags.Blocks.URANINITE_BLOCK).add(Blcks.URANINITE.key());
 
             varReg(ITags.Blocks.ENERGY_CELLS, Blcks.ENERGY_CELL);
             varReg(ITags.Blocks.ENDER_CELLS, Blcks.ENDER_CELL);
@@ -93,18 +93,18 @@ public class TagsProvider {
 
         @Override
         protected void addTags(HolderLookup.Provider arg) {
-            tag(ITags.Items.URANINITE_RAW).add(Itms.URANINITE_RAW.getKey());
+            tag(ITags.Items.URANINITE_RAW).add(Itms.URANINITE_RAW.key());
             tag(Tags.Items.RAW_MATERIALS).addTag(ITags.Items.URANINITE_RAW);
 
-            tag(Tags.Items.INGOTS).add(Itms.ENERGIZED_STEEL.getKey());
-            tag(Tags.Items.GEMS).add(Itms.BLAZING_CRYSTAL.getKey(), Itms.NIOTIC_CRYSTAL.getKey(), Itms.SPIRITED_CRYSTAL.getKey(),
-                    Itms.NITRO_CRYSTAL.getKey());
+            tag(Tags.Items.INGOTS).add(Itms.ENERGIZED_STEEL.key());
+            tag(Tags.Items.GEMS).add(Itms.BLAZING_CRYSTAL.key(), Itms.NIOTIC_CRYSTAL.key(), Itms.SPIRITED_CRYSTAL.key(),
+                    Itms.NITRO_CRYSTAL.key());
 
-            tag(ITags.Items.WRENCHES).add(Itms.WRENCH.getKey());
+            tag(ITags.Items.WRENCHES).add(Itms.WRENCH.key());
 
             tag(ITags.Items.QUARTZ_BLOCKS).add(BlockItemIds.QUARTZ_BLOCK.item());
 
-            tag(ItemTags.BOOKSHELF_BOOKS).add(Itms.BOOK.getKey());
+            tag(ItemTags.BOOKSHELF_BOOKS).add(Itms.BOOK.key());
 
             // BlockItem tags below
 
@@ -119,11 +119,11 @@ public class TagsProvider {
             copy(ITags.Blocks.URANINITE_ORE_REGULAR, ITags.Items.URANINITE_ORE_REGULAR);
             copy(ITags.Blocks.URANINITE_ORE_DENSE, ITags.Items.URANINITE_ORE_DENSE);
             copy(ITags.Blocks.URANINITE_ORE_POOR, ITags.Items.URANINITE_ORE_POOR);
-            copy(Tags.Blocks.ORES, Tags.Items.ORES);
-            copy(Tags.Blocks.ORES_IN_GROUND_DEEPSLATE, Tags.Items.ORES_IN_GROUND_DEEPSLATE);
-            copy(Tags.Blocks.ORES_IN_GROUND_STONE, Tags.Items.ORES_IN_GROUND_STONE);
+            copy(Tags.BlockItems.ORES.block(), Tags.BlockItems.ORES.item());
+            copy(Tags.BlockItems.ORES_IN_GROUND_DEEPSLATE.block(), Tags.BlockItems.ORES_IN_GROUND_DEEPSLATE.item());
+            copy(Tags.BlockItems.ORES_IN_GROUND_STONE.block(), Tags.BlockItems.ORES_IN_GROUND_STONE.item());
 
-            copy(Tags.Blocks.STORAGE_BLOCKS, Tags.Items.STORAGE_BLOCKS);
+            copy(Tags.BlockItems.STORAGE_BLOCKS.block(), Tags.BlockItems.STORAGE_BLOCKS.item());
             copy(ITags.Blocks.URANINITE_BLOCK, ITags.Items.URANINITE_BLOCK);
 
             copy(ITags.Blocks.ENERGY_CELLS, ITags.Items.ENERGY_CELLS);
