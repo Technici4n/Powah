@@ -3,6 +3,8 @@ package owmii.powah.block.cable;
 import com.google.common.collect.Iterables;
 import com.google.common.primitives.Ints;
 import java.util.EnumSet;
+import java.util.Iterator;
+import java.util.List;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.server.level.ServerLevel;
@@ -80,7 +82,22 @@ public class CableBlockEntity extends PowahBaseEnergyStorageBlockEntity<CableBlo
             CableNet.calculateNetwork(this);
         }
         startIndex %= net.cableList.size();
-        return Iterables.concat(net.cableList.subList(startIndex, net.cableList.size()), net.cableList.subList(0, startIndex));
+        return new CableTraversal(net.cableList, startIndex);
+    }
+
+    private static final class CableTraversal implements Iterable<CableBlockEntity> {
+        final List<CableBlockEntity> cables;
+        final int start;
+
+        CableTraversal(List<CableBlockEntity> cables, int start) {
+            this.cables = cables;
+            this.start = start;
+        }
+
+        @Override
+        public Iterator<CableBlockEntity> iterator() {
+            return Iterables.concat(cables.subList(start, cables.size()), cables.subList(0, start)).iterator();
+        }
     }
 
     @Override
@@ -159,7 +176,16 @@ public class CableBlockEntity extends PowahBaseEnergyStorageBlockEntity<CableBlo
         try {
             startIndex++;
 
-            for (var cable : cables) {
+            // Keep getCables overrides working, but avoid concatenated iterators for the normal network.
+            var indexed = cables instanceof CableTraversal traversal ? traversal : null;
+            var iterator = indexed == null ? cables.iterator() : null;
+            int cableIndex = indexed == null ? 0 : indexed.start;
+            for (int remainingCables = indexed == null ? 0 : indexed.cables.size();
+                    indexed == null ? iterator.hasNext() : remainingCables > 0; remainingCables--) {
+                var cable = indexed == null ? iterator.next() : indexed.cables.get(cableIndex);
+                if (indexed != null && ++cableIndex == indexed.cables.size()) {
+                    cableIndex = 0;
+                }
                 long amount = maxReceive - received;
                 if (amount <= 0)
                     break;
