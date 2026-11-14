@@ -69,13 +69,13 @@ public class EnergizingOrbBlock extends AbstractBlock<IVariant.Single, Energizin
             ItemStack output = inv.getStackInSlot(0);
             if (held.isEmpty() || !output.isEmpty()) {
                 if (!level.isClientSide) {
-                    player.getInventory().placeItemBackInInventory(inv.removeNext());
+                    player.getInventory().placeItemBackInInventory(output.isEmpty() ? inv.removeNext() : inv.setSlotEmpty(0));
                 }
                 return ItemInteractionResult.SUCCESS;
             } else {
                 ItemStack copy = held.copy();
                 copy.setCount(1);
-                if (!inv.addNext(copy).isEmpty() && !player.isCreative()) {
+                if (inv.insertItem(copy, false).isEmpty() && !player.isCreative()) {
                     held.shrink(1);
                 }
                 return ItemInteractionResult.SUCCESS;
