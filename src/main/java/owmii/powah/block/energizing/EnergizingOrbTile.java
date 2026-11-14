@@ -36,6 +36,7 @@ public class EnergizingOrbTile extends AbstractTickableTile<IVariant.Single, Ene
     @Nullable
     private int[] activeCounts;
     private boolean outputFull;
+    private ItemStack outputFilter = ItemStack.EMPTY;
     @Nullable
     private ResourceLocation recipeId;
     @Nullable
@@ -67,6 +68,7 @@ public class EnergizingOrbTile extends AbstractTickableTile<IVariant.Single, Ene
             }
         }
         outputFull = nbt.getBoolean("output_full");
+        outputFilter = ItemStack.parseOptional(registries, nbt.getCompound("output_filter"));
         recipe = null;
         recipeManager = null;
     }
@@ -82,6 +84,9 @@ public class EnergizingOrbTile extends AbstractTickableTile<IVariant.Single, Ene
         }
         nbt.putBoolean("contain_recipe", this.containRecipe);
         nbt.putBoolean("output_full", outputFull);
+        if (!outputFilter.isEmpty()) {
+            nbt.put("output_filter", outputFilter.save(registries));
+        }
         return super.writeSync(nbt, registries);
     }
 
@@ -180,6 +185,9 @@ public class EnergizingOrbTile extends AbstractTickableTile<IVariant.Single, Ene
         activeCounts = null;
         for (var candidate : recipes) {
             if (recipe != null && RECIPE_ORDER.compare(recipe, candidate) <= 0) {
+                continue;
+            }
+            if (!outputFilter.isEmpty() && !Stack.equals(outputFilter, candidate.value().getResultItem(level.registryAccess()))) {
                 continue;
             }
             int count = candidate.value().getIngredients().size();
@@ -282,6 +290,27 @@ public class EnergizingOrbTile extends AbstractTickableTile<IVariant.Single, Ene
 
     public void setContainRecipe(boolean containRecipe) {
         this.containRecipe = containRecipe;
+    }
+
+    public int getActiveCount(int slot) {
+        return activeCounts == null ? 0 : activeCounts[slot];
+    }
+
+    public boolean hasActiveBatch() {
+        return activeCounts != null;
+    }
+
+    public boolean isOutputFull() {
+        return outputFull;
+    }
+
+    public ItemStack getOutputFilter() {
+        return outputFilter;
+    }
+
+    public void setOutputFilter(ItemStack sample) {
+        outputFilter = sample.copyWithCount(1);
+        checkRecipe();
     }
 
     public Energy getBuffer() {

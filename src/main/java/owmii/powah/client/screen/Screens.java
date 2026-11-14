@@ -4,6 +4,7 @@ import net.neoforged.neoforge.client.event.RegisterMenuScreensEvent;
 import owmii.powah.client.screen.container.CableScreen;
 import owmii.powah.client.screen.container.DischargerScreen;
 import owmii.powah.client.screen.container.EnderCellScreen;
+import owmii.powah.client.screen.container.EnergizingOrbScreen;
 import owmii.powah.client.screen.container.EnergyCellScreen;
 import owmii.powah.client.screen.container.EnergyHopperScreen;
 import owmii.powah.client.screen.container.FurnatorScreen;
@@ -16,6 +17,7 @@ import owmii.powah.inventory.Containers;
 
 public class Screens {
     public static void register(RegisterMenuScreensEvent event) {
+        event.register(Containers.ENERGIZING_ORB.get(), EnergizingOrbScreen::new);
         event.register(Containers.ENERGY_CELL.get(), EnergyCellScreen::new);
         event.register(Containers.ENDER_CELL.get(), EnderCellScreen::new);
         event.register(Containers.FURNATOR.get(), FurnatorScreen::new);

@@ -4,9 +4,22 @@
   "textures": {
 	"0": "powah:block/energizing_orb",
 	"1": "powah:block/energizing_orb_base",
+	"panel": "powah:block/energizing_orb_panel",
 	"particle": "powah:block/energizing_orb"
   },
   "elements": [
+	{
+	  "from": [2.95, 1, 2.95],
+	  "to": [13.05, 4.5, 13.05],
+	  "faces": {
+		"north": {"uv": [0, 0, 16, 6], "texture": "#panel"},
+		"east": {"uv": [0, 0, 16, 6], "texture": "#panel"},
+		"south": {"uv": [0, 0, 16, 6], "texture": "#panel"},
+		"west": {"uv": [0, 0, 16, 6], "texture": "#panel"},
+		"up": {"uv": [0, 1, 11, 12], "texture": "#1"},
+		"down": {"uv": [0, 1, 11, 12], "texture": "#1"}
+	  }
+	},
 	{
 	  "from": [4, 3, 4],
 	  "to": [12, 6, 12],
