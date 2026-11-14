@@ -4,7 +4,6 @@ import com.mojang.serialization.Codec;
 import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.core.NonNullList;
@@ -12,6 +11,7 @@ import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.codec.ByteBufCodecs;
 import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.util.ExtraCodecs;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.crafting.Recipe;
@@ -31,7 +31,7 @@ public class EnergizingRecipe implements Recipe<RecipeInput> {
     public static final MapCodec<EnergizingRecipe> CODEC = RecordCodecBuilder.mapCodec(builder -> builder.group(
             ItemStack.CODEC.fieldOf("result").forGetter(e -> e.output),
             Codec.LONG.fieldOf("energy").forGetter(e -> e.energy),
-            Ingredient.LIST_CODEC_NONEMPTY
+            ExtraCodecs.nonEmptyList(Ingredient.CODEC_NONEMPTY.listOf())
                     .fieldOf("ingredients")
                     .forGetter(e -> e.ingredients))
             .apply(builder, EnergizingRecipe::new));
@@ -52,26 +52,30 @@ public class EnergizingRecipe implements Recipe<RecipeInput> {
 
     @Override
     public boolean matches(RecipeInput inv, Level world) {
-        List<Ingredient> stacks = new ArrayList<>(getIngredients());
-        for (int i = 1; i < inv.size(); i++) {
+        return matches(inv, 1, 0, new ArrayList<>(getIngredients()));
+    }
+
+    private boolean matches(RecipeInput inv, int slot, int used, List<Ingredient> remaining) {
+        for (int i = slot; i < inv.size(); i++) {
             ItemStack stack = inv.getItem(i);
-            if (!stack.isEmpty()) {
-                boolean flag = false;
-                Iterator<Ingredient> itr = stacks.iterator();
-                while (itr.hasNext()) {
-                    Ingredient ingredient = itr.next();
-                    if (ingredient.test(stack)) {
-                        flag = true;
-                        itr.remove();
-                        break;
+            if (stack.getCount() <= used) {
+                used = 0;
+                continue;
+            }
+            // A broad tag may need to leave this item for a more specific ingredient.
+            for (int j = 0; j < remaining.size(); j++) {
+                Ingredient ingredient = remaining.get(j);
+                if (ingredient.test(stack)) {
+                    remaining.remove(j);
+                    if (matches(inv, i, used + 1, remaining)) {
+                        return true;
                     }
-                }
-                if (!flag) {
-                    return false;
+                    remaining.add(j, ingredient);
                 }
             }
+            return false;
         }
-        return stacks.isEmpty();
+        return remaining.isEmpty();
     }
 
     @Override

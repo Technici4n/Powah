@@ -40,7 +40,7 @@ public class EnergizingOrbRenderer extends AbstractTileRenderer<EnergizingOrbTil
         if (!inv.isEmpty()) {
             float ticks = (te.ticks + pt) / 200.0F;
             ItemStack output = inv.getStackInSlot(0);
-            if (!output.isEmpty()) {
+            if (!te.hasActiveBatch() && !output.isEmpty()) {
                 matrix.pushPose();
                 matrix.translate(x, y, z);
                 matrix.mulPose(Axis.YP.rotationDegrees(-ticks * 360.0F));
@@ -48,7 +48,17 @@ public class EnergizingOrbRenderer extends AbstractTileRenderer<EnergizingOrbTil
                 mc.getItemRenderer().renderStatic(output, ItemDisplayContext.FIXED, light, ov, matrix, rtb, world, 0);
                 matrix.popPose();
             } else {
-                List<ItemStack> stacks = new ArrayList<>(inv.getNonEmptyStacks());
+                List<ItemStack> stacks = new ArrayList<>();
+                for (int slot = 1; slot < inv.getSlots(); slot++) {
+                    ItemStack stack = inv.getStackInSlot(slot);
+                    if (stack.isEmpty()) {
+                        continue;
+                    }
+                    int count = te.hasActiveBatch() ? te.getActiveCount(slot) : 1;
+                    for (int item = 0; item < count; item++) {
+                        stacks.add(stack);
+                    }
+                }
                 List<V3d> circled = V3d.from(Vec3.ZERO).circled(stacks.size(), 0.1D);
                 for (int i = 0; i < circled.size(); i++) {
                     V3d v3d1 = circled.get(i);

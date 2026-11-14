@@ -10,6 +10,8 @@ import owmii.powah.Powah;
 public class Containers {
     public static final DeferredRegister<MenuType<?>> DR = DeferredRegister.create(Registries.MENU, Powah.MOD_ID);
 
+    public static final Supplier<MenuType<EnergizingOrbContainer>> ENERGIZING_ORB = DR.register("energizing_orb",
+            () -> IMenuTypeExtension.create(EnergizingOrbContainer::new));
     public static final Supplier<MenuType<EnergyCellContainer>> ENERGY_CELL = DR.register("energy_cell",
             () -> IMenuTypeExtension.create(EnergyCellContainer::create));
     public static final Supplier<MenuType<EnderCellContainer>> ENDER_CELL = DR.register("ender_cell",

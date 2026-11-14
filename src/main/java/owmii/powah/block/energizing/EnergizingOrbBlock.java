@@ -3,7 +3,9 @@ package owmii.powah.block.energizing;
 import static net.minecraft.world.phys.shapes.Shapes.join;
 
 import com.mojang.blaze3d.systems.RenderSystem;
+import java.util.EnumMap;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
@@ -15,8 +17,10 @@ import net.minecraft.core.Direction;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.ItemInteractionResult;
+import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.SimpleWaterloggedBlock;
 import net.minecraft.world.level.block.entity.BlockEntity;
@@ -25,6 +29,8 @@ import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.Vec3;
 import net.minecraft.world.phys.shapes.BooleanOp;
+import net.minecraft.world.phys.shapes.CollisionContext;
+import net.minecraft.world.phys.shapes.VoxelShape;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.api.distmarker.OnlyIn;
 import org.jetbrains.annotations.Nullable;
@@ -32,15 +38,19 @@ import owmii.powah.Powah;
 import owmii.powah.api.wrench.IWrenchable;
 import owmii.powah.api.wrench.WrenchMode;
 import owmii.powah.components.PowahComponents;
+import owmii.powah.inventory.EnergizingOrbContainer;
 import owmii.powah.item.WrenchItem;
 import owmii.powah.lib.block.AbstractBlock;
+import owmii.powah.lib.block.AbstractTileEntity;
 import owmii.powah.lib.client.handler.IHud;
-import owmii.powah.lib.logistics.inventory.Inventory;
+import owmii.powah.lib.logistics.inventory.AbstractContainer;
 import owmii.powah.lib.registry.IVariant;
 import owmii.powah.util.Util;
 import owmii.powah.util.math.V3d;
 
 public class EnergizingOrbBlock extends AbstractBlock<IVariant.Single, EnergizingOrbBlock> implements SimpleWaterloggedBlock, IWrenchable, IHud {
+    private final Map<Direction, VoxelShape> panelOutlines = new EnumMap<>(Direction.class);
+
     public EnergizingOrbBlock(Properties properties) {
         super(properties);
         setStateProps(state -> state.setValue(BlockStateProperties.FACING, Direction.DOWN));
@@ -51,6 +61,44 @@ public class EnergizingOrbBlock extends AbstractBlock<IVariant.Single, Energizin
                 join(box(3.5D, 3.5D, 11.0D, 12.5D, 12.5D, 1.77D), box(2.5D, 2.5D, 15.0D, 13.5D, 13.5D, 16.0D), BooleanOp.OR));
         this.shapes.put(Direction.WEST, join(box(14.23D, 3.5D, 3.5D, 5.0D, 12.5D, 12.5D), box(0.0D, 2.5D, 2.5D, 1.0D, 13.5D, 13.5D), BooleanOp.OR));
         this.shapes.put(Direction.EAST, join(box(11.0D, 3.5D, 3.5D, 1.77D, 12.5D, 12.5D), box(15.0D, 2.5D, 2.5D, 16.0D, 13.5D, 13.5D), BooleanOp.OR));
+        for (Direction mount : Direction.values()) {
+            double start = mount.getAxisDirection() == Direction.AxisDirection.NEGATIVE ? 0 : 11;
+            VoxelShape panel = switch (mount.getAxis()) {
+            case X -> box(start, 2.5, 2.5, start + 5, 13.5, 13.5);
+            case Y -> box(2.5, start, 2.5, 13.5, start + 5, 13.5);
+            case Z -> box(2.5, 2.5, start, 13.5, 13.5, start + 5);
+            };
+            panelOutlines.put(mount, join(shapes.get(mount), panel, BooleanOp.OR));
+        }
+    }
+
+    @Override
+    public VoxelShape getShape(BlockState state, BlockGetter level, BlockPos pos, CollisionContext context) {
+        return panelOutlines.get(state.getValue(BlockStateProperties.FACING));
+    }
+
+    // Only the targeting outline includes the larger panel hit area.
+    @Override
+    public VoxelShape getCollisionShape(BlockState state, BlockGetter level, BlockPos pos, CollisionContext context) {
+        return super.getShape(state, level, pos, context);
+    }
+
+    @Override
+    public VoxelShape getOcclusionShape(BlockState state, BlockGetter level, BlockPos pos) {
+        return shapes.get(state.getValue(BlockStateProperties.FACING));
+    }
+
+    private static boolean canOpenPanel(BlockState state, Player player, BlockHitResult hit) {
+        if (player.isShiftKeyDown() || !player.getMainHandItem().isEmpty() || !player.getOffhandItem().isEmpty()) {
+            return false;
+        }
+        Direction mount = state.getValue(BlockStateProperties.FACING);
+        Vec3 local = hit.getLocation().subtract(Vec3.atLowerCornerOf(hit.getBlockPos()));
+        double depth = local.get(mount.getAxis());
+        if (mount.getAxisDirection() == Direction.AxisDirection.POSITIVE) {
+            depth = 1 - depth;
+        }
+        return depth <= 5.0 / 16;
     }
 
     @Nullable
@@ -64,24 +112,36 @@ public class EnergizingOrbBlock extends AbstractBlock<IVariant.Single, Energizin
             BlockHitResult hitResult) {
         BlockEntity tileentity = level.getBlockEntity(pos);
         if (tileentity instanceof EnergizingOrbTile) {
+            if (canOpenPanel(state, player, hitResult)) {
+                return ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;
+            }
             EnergizingOrbTile orb = (EnergizingOrbTile) tileentity;
-            Inventory inv = orb.getInventory();
+            var inv = orb.getInventory();
             ItemStack output = inv.getStackInSlot(0);
             if (held.isEmpty() || !output.isEmpty()) {
                 if (!level.isClientSide) {
-                    player.getInventory().placeItemBackInInventory(inv.removeNext());
+                    player.getInventory().placeItemBackInInventory(output.isEmpty() ? inv.removeNext() : inv.setSlotEmpty(0));
                 }
                 return ItemInteractionResult.SUCCESS;
             } else {
                 ItemStack copy = held.copy();
                 copy.setCount(1);
-                if (!inv.addNext(copy).isEmpty() && !player.isCreative()) {
+                if (inv.insertItem(copy, false).isEmpty() && !player.isCreative()) {
                     held.shrink(1);
                 }
                 return ItemInteractionResult.SUCCESS;
             }
         }
         return super.useItemOn(held, state, level, pos, player, hand, hitResult);
+    }
+
+    @Nullable
+    @Override
+    public AbstractContainer getContainer(int id, Inventory inventory, AbstractTileEntity te, BlockHitResult result) {
+        if (te instanceof EnergizingOrbTile orb && canOpenPanel(orb.getBlockState(), inventory.player, result)) {
+            return new EnergizingOrbContainer(id, inventory, orb);
+        }
+        return null;
     }
 
     @Override
@@ -187,14 +247,18 @@ public class EnergizingOrbBlock extends AbstractBlock<IVariant.Single, Energizin
     public boolean renderHud(GuiGraphics gui, BlockState state, Level world, BlockPos pos, Player player, BlockHitResult result,
             @Nullable BlockEntity te) {
         if (te instanceof EnergizingOrbTile orb) {
+            Minecraft mc = Minecraft.getInstance();
+            int x = mc.getWindow().getGuiScaledWidth() / 2;
+            int y = mc.getWindow().getGuiScaledHeight();
+            if (canOpenPanel(state, player, result)) {
+                gui.drawCenteredString(mc.font, Component.translatable("gui.powah.orb.open"), x, y - 104, 0xffffff);
+            }
             if (orb.getBuffer().getCapacity() > 0) {
                 RenderSystem.getModelViewStack().pushMatrix();
                 RenderSystem.enableBlend();
-                Minecraft mc = Minecraft.getInstance();
                 Font font = mc.font;
-                int x = mc.getWindow().getGuiScaledWidth() / 2;
-                int y = mc.getWindow().getGuiScaledHeight();
-                String s = "" + ChatFormatting.GREEN + orb.getBuffer().getPercent() + "%";
+                String s = orb.isOutputFull() ? I18n.get("gui.powah.orb.output_full")
+                        : "" + ChatFormatting.GREEN + orb.getBuffer().getPercent() + "%";
                 String s1 = ChatFormatting.GRAY + I18n.get("info.lollipop.fe.stored", Util.addCommas(orb.getBuffer().getEnergyStored()),
                         Util.numFormat(orb.getBuffer().getCapacity()));
                 gui.drawString(font, s, Math.round(x - (font.width(s) / 2.0f)), y - 90, 0xffffff);
