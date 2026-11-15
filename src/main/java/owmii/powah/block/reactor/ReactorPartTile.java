@@ -1,10 +1,12 @@
 package owmii.powah.block.reactor;
 
+import java.util.Objects;
 import java.util.Optional;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.NbtUtils;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
@@ -21,7 +23,8 @@ import owmii.powah.lib.block.AbstractTileEntity;
 import owmii.powah.util.NBT;
 
 public class ReactorPartTile extends AbstractTileEntity<Tier, ReactorBlock> {
-    private BlockPos corePos = BlockPos.ZERO;
+    @Nullable
+    private BlockPos corePos;
     private boolean extractor;
     private boolean built;
 
@@ -46,26 +49,27 @@ public class ReactorPartTile extends AbstractTileEntity<Tier, ReactorBlock> {
         super.readSync(compound, registries);
         this.built = compound.getBoolean("built");
         this.extractor = compound.getBoolean("extractor");
-        this.corePos = NBT.readPos(compound, "core_pos");
+        setCorePos(NbtUtils.readBlockPos(compound, "core_pos").orElse(null));
     }
 
     @Override
     public CompoundTag writeSync(CompoundTag compound, HolderLookup.Provider registries) {
         compound.putBoolean("built", this.built);
         compound.putBoolean("extractor", this.extractor);
-        NBT.writePos(compound, this.corePos, "core_pos");
+        if (this.corePos != null) {
+            NBT.writePos(compound, this.corePos, "core_pos");
+        }
         return super.writeSync(compound, registries);
     }
 
     public void demolish(Level world) {
-        BlockEntity tile = world.getBlockEntity(this.corePos);
-        if (tile instanceof ReactorTile reactor) {
-            reactor.demolish(world);
-        }
+        core().ifPresent(reactor -> reactor.demolish(world));
     }
 
     @Nullable
     public IEnergyStorage getCoreEnergyStorage() {
+        if (corePos == null)
+            return null;
         if (this.level instanceof ServerLevel serverLevel) {
             if (coreEnergyCache == null) {
                 coreEnergyCache = BlockCapabilityCache.create(Capabilities.EnergyStorage.BLOCK, serverLevel, getCorePos(), null);
@@ -78,6 +82,8 @@ public class ReactorPartTile extends AbstractTileEntity<Tier, ReactorBlock> {
 
     @Nullable
     public IItemHandler getCoreItemHandler() {
+        if (corePos == null)
+            return null;
         if (this.level instanceof ServerLevel serverLevel) {
             if (coreItemCache == null) {
                 coreItemCache = BlockCapabilityCache.create(Capabilities.ItemHandler.BLOCK, serverLevel, getCorePos(), null);
@@ -90,6 +96,8 @@ public class ReactorPartTile extends AbstractTileEntity<Tier, ReactorBlock> {
 
     @Nullable
     public IFluidHandler getCoreFluidHandler() {
+        if (corePos == null)
+            return null;
         if (this.level instanceof ServerLevel serverLevel) {
             if (coreFluidCache == null) {
                 coreFluidCache = BlockCapabilityCache.create(Capabilities.FluidHandler.BLOCK, serverLevel, getCorePos(), null);
@@ -101,7 +109,7 @@ public class ReactorPartTile extends AbstractTileEntity<Tier, ReactorBlock> {
     }
 
     public Optional<ReactorTile> core() {
-        if (this.level != null) {
+        if (this.level != null && this.corePos != null) {
             BlockEntity tile = this.level.getBlockEntity(this.corePos);
             if (tile instanceof ReactorTile reactorTile) {
                 return Optional.of(reactorTile);
@@ -111,12 +119,16 @@ public class ReactorPartTile extends AbstractTileEntity<Tier, ReactorBlock> {
     }
 
     public BlockPos getCorePos() {
-        return this.corePos;
+        return this.corePos != null ? this.corePos : BlockPos.ZERO;
     }
 
-    public void setCorePos(BlockPos corePos) {
-        if (!corePos.equals(this.corePos)) {
+    public void setCorePos(@Nullable BlockPos corePos) {
+        if (!Objects.equals(corePos, this.corePos)) {
             this.corePos = corePos;
+            // Each cache watches a fixed position. Recreate it on the next lookup.
+            coreEnergyCache = null;
+            coreItemCache = null;
+            coreFluidCache = null;
             invalidateCapabilities();
         }
     }
