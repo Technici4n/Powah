@@ -224,9 +224,9 @@ public class ReactorTile extends AbstractEnergyProvider<ReactorBlock> implements
         }
         double temp = Math.min(this.baseTemp + this.carbonTemp + this.redstoneTemp, this.temp.getMax());
         if (!this.tank.isEmpty()) {
-            int coldness = -PowahAPI.getCoolant(this.tank.getFluid().getFluid()).orElse(0);
-            int i = Math.abs(coldness + this.solidCoolantTemp) + 1;
-            temp /= i;
+            int liquidCooling = -PowahAPI.getCoolant(this.tank.getFluid().getFluid()).orElse(0);
+            long solidCooling = Math.abs((long) this.solidCoolantTemp);
+            temp /= 1 + liquidCooling + solidCooling;
             sync(5);
         }
         if (this.temp.getTicks() < temp) {
