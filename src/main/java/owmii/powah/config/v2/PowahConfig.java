@@ -23,8 +23,10 @@ import me.shedaniel.autoconfig.annotation.Config;
 import me.shedaniel.autoconfig.serializer.JanksonConfigSerializer;
 import me.shedaniel.cloth.clothconfig.shadowed.blue.endless.jankson.Comment;
 import me.shedaniel.cloth.clothconfig.shadowed.blue.endless.jankson.Jankson;
+import me.shedaniel.cloth.clothconfig.shadowed.blue.endless.jankson.JsonObject;
 import me.shedaniel.cloth.clothconfig.shadowed.blue.endless.jankson.JsonPrimitive;
 import me.shedaniel.cloth.clothconfig.shadowed.blue.endless.jankson.api.DeserializationException;
+import me.shedaniel.cloth.clothconfig.shadowed.blue.endless.jankson.api.Marshaller;
 import net.minecraft.IdentifierException;
 import net.minecraft.resources.Identifier;
 import owmii.powah.config.v2.annotations.DoubleRange;
@@ -159,9 +161,36 @@ public class PowahConfig implements ConfigData {
         }
     }
 
+    // Each device supplies its own defaults, even when devices share a config class.
+    private static void readOverrides(JsonObject entries, Object defaults, Marshaller marshaller) throws DeserializationException {
+        for (var field : defaults.getClass().getFields()) {
+            var entry = entries.get(field.getName());
+            if (entry == null) {
+                continue;
+            }
+            try {
+                if (field.getType().getPackageName().startsWith("owmii.powah.config")) {
+                    if (!(entry instanceof JsonObject section)) {
+                        throw new DeserializationException("Expected config section: " + field.getName());
+                    }
+                    readOverrides(section, field.get(defaults), marshaller);
+                } else {
+                    field.set(defaults, marshaller.marshallCarefully(field.getType(), entry));
+                }
+            } catch (IllegalAccessException | IllegalArgumentException exception) {
+                throw new DeserializationException("Failed to read config field: " + field.getName(), exception);
+            }
+        }
+    }
+
     public static ConfigHolder<PowahConfig> register() {
         return AutoConfig.register(PowahConfig.class, (cfg, cfgClass) -> {
             var janksonBuilder = Jankson.builder();
+            janksonBuilder.registerDeserializer(JsonObject.class, PowahConfig.class, (entries, marshaller) -> {
+                var config = new PowahConfig();
+                readOverrides(entries, config, marshaller);
+                return config;
+            });
             // Resource Location
             janksonBuilder.registerDeserializer(String.class, Identifier.class, (string, marshaller) -> {
                 try {
